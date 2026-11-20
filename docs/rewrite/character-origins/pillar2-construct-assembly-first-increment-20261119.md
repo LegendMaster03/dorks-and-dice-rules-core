@@ -438,3 +438,47 @@ Gameplay must still authorize any real operating transition. Synthetic
 tests cover JSON serialization, exact installation rebinding, stale or
 forged configurations, operating mode changes, restoration, critical
 power loss, and nonmutation of permanent traits and synergies.
+
+## Finite source resource-consumption preview
+
+The procedure can now evaluate **one discrete resource-consumption step**
+for power sources with native-authored `resourceKind`,
+`resourceCapacity`, and `resourceUsePerStep`. The source's instantaneous
+`powerOutput` remains independent of its resource units and remaining
+endurance. These new fields are not assigned unapproved values in the
+first-party power-source inventory.
+
+`NativeConstructOperatingSession.PreviewResourceStep` receives a hypothetical
+current balance for each installed source housing. Its native source must
+declare a nonempty resource kind, positive finite capacity, and positive
+per-step cost no greater than its capacity. A balance must be present for
+each exact installed instance, range-bound to the catalog-authored capacity,
+and contain no additional IDs. Missing resource authoring is unresolved;
+it is **not** an implicit grant of infinite power. Sources with a different
+operating principle that cannot be described by finite units require a
+separate operating model.
+
+Insufficient resource suppresses the selected source's output and
+source-specific functional capabilities without uninstalling its housing.
+The existing dependency, overloaded-circuit, critical shutdown, and runtime
+Origin grant-applicability machinery then evaluates the consequences.
+`UnavailablePowerSourceInstanceIds` is an opt-in operating-state
+suppression overlay, validated against installed source housings; authored
+operating modes cannot restore the output of an unavailable source.
+
+A valid operating configuration consumes the exact native per-step amount
+for each operational source. Disabled sources consume no resources. A
+source that reaches zero at the end of a successful step becomes unavailable
+*next* step. An invalid operating configuration does not consume resources
+and cannot advance. `NativeConstructResourceStepPreview` provides
+per-instance before/consumed/after values, any unavailable source IDs,
+the resulting operating evaluation, and an explicit `CanAdvance` flag.
+
+The resource balances are **caller-owned hypothetical state**, not trusted
+proof of resource acquisition, past consumption, fuel replenishment, or
+an authoritative character sheet ledger. No preview commits its output
+or establishes time units, recharge, energy efficiency, refueling, automatic
+redistribution, or delayed failure. Synthetic acceptance fixtures cover
+consumption, the last available step, depletion effects and Origin grant
+suppression, disabled sources, invalid balances, unbalanced source duration,
+and forged outage references.

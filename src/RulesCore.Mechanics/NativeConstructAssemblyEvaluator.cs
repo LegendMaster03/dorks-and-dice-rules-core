@@ -29,6 +29,8 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 "The current bounded evaluator supports at most 256 instances; this is a software limit, not an anatomical limit.");
 
         var parts = new Dictionary<string, Part>(StringComparer.Ordinal);
+        var unavailableSources = (request.UnavailablePowerSourceInstanceIds ?? [])
+            .ToHashSet(StringComparer.Ordinal);
         long knownMaterialCost = 0;
         long knownModificationCost = 0;
         foreach (var instance in request.Components)
@@ -157,6 +159,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             // The power source is independent of its containing hardware.
             // Power output is supplied by a selected native source, never by
             // a client-provided numerical claim. Storage/endurance is distinct.
+            var sourceAvailable = !unavailableSources.Contains(instance.InstanceId);
             var hasSourceSlot = false;
             if (raw.TryGetProperty("powerSourceSlot", out var sourceSlot))
             {
@@ -211,16 +214,26 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                             NativeOriginIssueSeverity.Unresolved,
                             "This power source has no authored simultaneous output.");
                     }
-                    extraDemand += Number(source.Definition,
+                    var sourceDemand = Number(source.Definition,
                         "powerDemand", sourcePath, Issue) ?? 0;
-                    addedProvides.AddRange(Texts(source.Definition,
-                        "provides", sourcePath, Issue));
-                    addedNeeds.AddRange(Requirements(source.Definition, sourcePath, Issue));
+                    var sourceProvides = Texts(source.Definition,
+                        "provides", sourcePath, Issue);
+                    var sourceNeeds = Requirements(source.Definition, sourcePath, Issue);
+                    if (sourceAvailable)
+                    {
+                        extraDemand += sourceDemand;
+                        addedProvides.AddRange(sourceProvides);
+                        addedNeeds.AddRange(sourceNeeds);
+                    }
                 }
             }
             // A source sets the housing's baseline output. An explicitly
             // authored operating mode may override that output.
             output = selectedMode?.PowerOutput ?? baseOutput;
+            // An exhausted mechanism cannot create output through a mode.
+            // The housing remains physically present and separately costed.
+            if (instance.PowerSourceId is not null && !sourceAvailable)
+                output = 0;
             // Add-ons supply additional capabilities and requirements; mode
             // overrides still apply only to the base component properties.
             provides = provides.Concat(addedProvides).Distinct(StringComparer.Ordinal).ToArray();
@@ -273,7 +286,24 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
 
             parts.Add(instance.InstanceId, new(instance, cost, demand, output,
                 provides, needs, Text(raw, "shutdownConsequence"), modeTraits,
-                mountInterfaces, acceptsMountInterfaces, outputKnown, continuous));
+                mountInterfaces, acceptsMountInterfaces, outputKnown, continuous,
+                instance.PowerSourceId is not null && sourceAvailable));
+        }
+
+        // Fail closed on nonexistent, duplicated, or non-source outages.
+        if ((request.UnavailablePowerSourceInstanceIds?.Count ?? 0) > 256)
+            Issue("construct-unavailable-source-count-invalid",
+                "unavailablePowerSourceInstanceIds", NativeOriginIssueSeverity.Invalid,
+                "At most 256 installed sources can be marked unavailable.");
+        var outageSeen = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var id in (request.UnavailablePowerSourceInstanceIds ?? []).Take(257))
+        {
+            if (string.IsNullOrWhiteSpace(id) || !outageSeen.Add(id) ||
+                !parts.TryGetValue(id, out var sourcePart) ||
+                string.IsNullOrWhiteSpace(sourcePart.Instance.PowerSourceId))
+                Issue("construct-unavailable-source-invalid",
+                    "unavailablePowerSourceInstanceIds", NativeOriginIssueSeverity.Invalid,
+                    "Outages must reference distinct installed power-source housings.");
         }
 
         var links = parts.Keys.ToDictionary(x => x,
@@ -566,7 +596,9 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 return new NativeConstructComponentState(id, part.Instance.DefinitionId,
                     true, active, active ? part.Provides : [], part.Instance.Enabled,
                     part.Instance.ModeId,
-                    active ? part.OperationalOriginTraitIds : [], part.RequiresContinuousPower);
+                    active ? part.OperationalOriginTraitIds : [], part.RequiresContinuousPower,
+                    part.Instance.PowerSourceId is null ? null :
+                        part.SourceAvailable && active);
             }).ToArray();
 
         // Keep requested power separate from the subset that actually
@@ -612,7 +644,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         int? PowerDemand, int PowerOutput, string[] Provides, string[][] Requirements,
         string? ShutdownConsequence, string[] OperationalOriginTraitIds,
         string[] MountInterfaces, string[] AcceptsMountInterfaces,
-        bool OutputKnown, bool RequiresContinuousPower);
+        bool OutputKnown, bool RequiresContinuousPower, bool SourceAvailable);
 
     private sealed record OperatingMode(string Id, int? PowerDemand, int? PowerOutput,
         string[]? Provides, string[][]? Requirements, string[] OperationalOriginTraitIds);
@@ -768,13 +800,14 @@ public sealed record NativeConstructPowerConnection(
 public sealed record NativeConstructAssemblyRequest(
     IReadOnlyList<NativeConstructComponentInstance> Components,
     int? InitialAllowance = null, bool InitialConstruction = true,
-    IReadOnlyList<NativeConstructPowerConnection>? PowerConnections = null);
+    IReadOnlyList<NativeConstructPowerConnection>? PowerConnections = null,
+    IReadOnlyList<string>? UnavailablePowerSourceInstanceIds = null);
 
 public sealed record NativeConstructComponentState(
     string InstanceId, string DefinitionId, bool Installed, bool Operational,
     IReadOnlyList<string> ActiveCapabilities, bool RequestedEnabled,
     string? ModeId = null, IReadOnlyList<string>? ActiveOperationalOriginTraitIds = null,
-    bool RequiresContinuousPower = false);
+    bool RequiresContinuousPower = false, bool? SourceSupplyingPower = null);
 
 public sealed record NativeConstructFailure(string InstanceId, string ConsequenceId);
 

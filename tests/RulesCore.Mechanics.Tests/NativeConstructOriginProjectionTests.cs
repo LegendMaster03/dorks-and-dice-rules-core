@@ -91,12 +91,34 @@ public sealed class NativeConstructOriginProjectionTests
                     {"id":"forged","powerDemand":0,"provides":["arbitrary"],
                      "operationalOriginTraitIds":["trait.fixture.blast"]}
                   ]},
+                 {"id":"construct-component.fuel-housing","kind":"construct-component",
+                  "name":"Fuel Housing","constructionCost":2,"powerDemand":0,
+                  "powerSourceSlot":true,"provides":["power-housing"]},
+                 {"id":"construct-component.fuel-load","kind":"construct-component",
+                  "name":"Fuel Powered Sensor","constructionCost":1,"powerDemand":3,
+                  "requiresAnyOf":[["power-housing"]],
+                  "requiresContinuousPower":true,
+                  "shutdownConsequence":"critical-sensor-loss",
+                  "operationalOriginTraitIds":["trait.fixture.extended-senses"]},
                  {"id":"construct-component.unknown","kind":"construct-component",
                   "name":"Bad reference","constructionCost":1,"powerDemand":0,
                   "installedOriginTraitIds":["trait.fixture.missing"]},
                  {"id":"construct-component.choice","kind":"construct-component",
                   "name":"Unbound choice","constructionCost":1,"powerDemand":0,
                   "installedOriginTraitIds":["trait.fixture.choice"]}
+                ]
+                """);
+            File.WriteAllText(Path.Combine(native, "power-sources.json"), """
+                [
+                 {"id":"construct-power-source.finite","kind":"construct-power-source",
+                  "name":"Finite generator","constructionCost":1,"powerOutput":4,
+                  "compatibleComponentCapabilities":["power-housing"],
+                  "resourceKind":"fuel-unit","resourceCapacity":5,
+                  "resourceUsePerStep":2},
+                 {"id":"construct-power-source.unknown-endurance",
+                  "kind":"construct-power-source","name":"Unbalanced endurance",
+                  "constructionCost":1,"powerOutput":4,
+                  "compatibleComponentCapabilities":["power-housing"]}
                 ]
                 """);
             File.WriteAllText(Path.Combine(native, "trait.json"), """
@@ -822,6 +844,135 @@ public sealed class NativeConstructOriginProjectionTests
             requestedModes: new Dictionary<string, string> { ["tool"] = "tether" });
         Assert.Null(unbalanced.Preset);
         Assert.False(unbalanced.Evaluation.IsOperatingConfigurationValid);
+    }
+
+
+    private static NativeConstructAssemblyRequest FuelAssembly(
+        string source = "construct-power-source.finite") =>
+        new([
+            Part("generator", "fuel-housing", links: ["sensor"]) with
+                { PowerSourceId = source },
+            Part("sensor", "fuel-load")
+        ], InitialAllowance: 20);
+
+    [Fact]
+    public void ResourceUseIsNativeBoundedAndLastAvailableStepCanFinish()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var origin = JsonSerializer.Serialize(built.Origin.Profile);
+        var first = session.PreviewResourceStep(
+            new Dictionary<string, int> { ["generator"] = 5 });
+        Assert.True(first.CanAdvance);
+        var balance = Assert.Single(first.Sources);
+        Assert.Equal("fuel-unit", balance.ResourceKind);
+        Assert.Equal(2, balance.Consumed);
+        Assert.Equal(3, balance.After);
+        Assert.Equal(true, first.Evaluation!.Assembly.Components.Single(x =>
+            x.InstanceId == "generator").SourceSupplyingPower);
+        var final = session.PreviewResourceStep(
+            new Dictionary<string, int> { ["generator"] = 2 });
+        Assert.True(final.CanAdvance);
+        Assert.Equal(0, Assert.Single(final.Sources).After);
+        Assert.Equal(origin, JsonSerializer.Serialize(built.Origin.Profile));
+    }
+
+    [Fact]
+    public void ExhaustedSourceStopsSupplyAndSuppressesPoweredEntitlements()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var step = built.OperatingSession!.PreviewResourceStep(
+            new Dictionary<string, int> { ["generator"] = 1 });
+        Assert.False(step.CanAdvance);
+        Assert.Equal(new[] { "generator" }, step.UnavailablePowerSourceInstanceIds);
+        Assert.Equal(0, Assert.Single(step.Sources).Consumed);
+        Assert.Equal(1, Assert.Single(step.Sources).After);
+        Assert.Equal(false, step.Evaluation!.Assembly.Components.Single(x =>
+            x.InstanceId == "generator").SourceSupplyingPower);
+        Assert.False(step.Evaluation.Assembly.Components.Single(x =>
+            x.InstanceId == "sensor").Operational);
+        Assert.All(step.Evaluation.Assembly.Components, c => Assert.True(c.Installed));
+        Assert.Contains(step.Evaluation.Assembly.ShutdownConsequences, x =>
+            x.InstanceId == "sensor" && x.ConsequenceId == "critical-sensor-loss");
+        var grant = built.Origin.Profile!.Current.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.extended-senses");
+        Assert.Contains(grant.Id, step.Evaluation.InactiveOriginGrantIds);
+    }
+
+    [Fact]
+    public void DisabledSourceNeverConsumesResources()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var step = built.OperatingSession!.PreviewResourceStep(
+            new Dictionary<string, int> { ["generator"] = 4 },
+            new Dictionary<string, bool>
+                { ["generator"] = false, ["sensor"] = false });
+        Assert.True(step.CanAdvance);
+        Assert.Equal(4, Assert.Single(step.Sources).After);
+        Assert.Equal(0, Assert.Single(step.Sources).Consumed);
+        Assert.Equal(false, step.Evaluation!.Assembly.Components.Single(x =>
+            x.InstanceId == "generator").SourceSupplyingPower);
+    }
+
+    [Fact]
+    public void InvalidResourceBalancesAndUnbalancedSourcesFailClosed()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        foreach (var balances in new[]
+        {
+            new Dictionary<string, int>(),
+            new Dictionary<string, int> { ["generator"] = -1 },
+            new Dictionary<string, int> { ["generator"] = 6 },
+            new Dictionary<string, int> { ["generator"] = 3, ["fake"] = 7 }
+        })
+        {
+            var invalid = session.PreviewResourceStep(balances);
+            Assert.False(invalid.CanAdvance);
+            Assert.Null(invalid.Evaluation);
+            Assert.Empty(invalid.Sources);
+            Assert.Contains(invalid.Issues, x =>
+                x.Severity == NativeOriginIssueSeverity.Invalid);
+        }
+        var unknown = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.unknown-endurance"));
+        Assert.True(unknown.IsMechanicallyAuthorized);
+        var unresolved = unknown.OperatingSession!.PreviewResourceStep(
+            new Dictionary<string, int> { ["generator"] = 3 });
+        Assert.False(unresolved.CanAdvance);
+        Assert.Null(unresolved.Evaluation);
+        Assert.Contains(unresolved.Issues, x =>
+            x.Code == "construct-resource-model-unresolved");
+    }
+
+    [Fact]
+    public void UnavailableSourceMustReferenceAnInstalledSourceHousing()
+    {
+        using var fixture = new Fixture();
+        var evaluator = new NativeConstructAssemblyEvaluator(fixture.Catalog);
+        var invalid = evaluator.Evaluate(FuelAssembly() with
+        {
+            UnavailablePowerSourceInstanceIds = ["sensor"]
+        });
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, invalid.Status);
+        Assert.Contains(invalid.Issues, x =>
+            x.Code == "construct-unavailable-source-invalid");
+        var outage = evaluator.Evaluate(FuelAssembly() with
+        {
+            UnavailablePowerSourceInstanceIds = ["generator"]
+        });
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, outage.Status);
+        Assert.Equal(0, Assert.Single(outage.PowerNetworks!).AvailableOutput);
+        Assert.Contains(outage.Issues, x =>
+            x.Code == "construct-power-overallocated");
     }
 
 }

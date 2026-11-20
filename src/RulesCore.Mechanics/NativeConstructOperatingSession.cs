@@ -12,6 +12,7 @@ namespace RulesCore.Mechanics;
 public sealed class NativeConstructOperatingSession
 {
     private readonly NativeConstructAssemblyRequest _baseline;
+    private readonly NativeCatalogSnapshot _catalog;
     private readonly NativeConstructAssemblyEvaluator _assembly;
     private readonly string[] _originGrantIds;
     private sealed record OperationalInput(string InstanceId, string TraitId);
@@ -23,6 +24,7 @@ public sealed class NativeConstructOperatingSession
     internal NativeConstructOperatingSession(NativeCatalogSnapshot catalog,
         NativeConstructAssemblyRequest approvedAssembly, NativeOriginProfile approvedProfile)
     {
+        _catalog = catalog;
         _assembly = new NativeConstructAssemblyEvaluator(catalog);
         _baseline = new NativeConstructAssemblyRequest(
             approvedAssembly.Components.Select(instance => instance with
@@ -34,7 +36,9 @@ public sealed class NativeConstructOperatingSession
                 EnhancementIds = instance.EnhancementIds?.ToArray()
             }).ToArray(),
             approvedAssembly.InitialAllowance, InitialConstruction: true,
-            PowerConnections: approvedAssembly.PowerConnections?.ToArray());
+            PowerConnections: approvedAssembly.PowerConnections?.ToArray(),
+            UnavailablePowerSourceInstanceIds:
+                approvedAssembly.UnavailablePowerSourceInstanceIds?.ToArray());
 
         _instanceIds = _baseline.Components.Select(x => x.InstanceId)
             .ToHashSet(StringComparer.Ordinal);
@@ -108,7 +112,8 @@ public sealed class NativeConstructOperatingSession
     /// </summary>
     public NativeConstructOperatingStateResult EvaluateConfiguration(
         IReadOnlyDictionary<string, bool>? requestedEnabled = null,
-        IReadOnlyDictionary<string, string>? requestedModes = null)
+        IReadOnlyDictionary<string, string>? requestedModes = null,
+        IReadOnlyList<string>? unavailablePowerSourceInstanceIds = null)
     {
         requestedEnabled ??= new Dictionary<string, bool>(StringComparer.Ordinal);
         requestedModes ??= new Dictionary<string, string>(StringComparer.Ordinal);
@@ -129,6 +134,9 @@ public sealed class NativeConstructOperatingSession
 
         var configured = _baseline with
         {
+            UnavailablePowerSourceInstanceIds =
+                unavailablePowerSourceInstanceIds ??
+                _baseline.UnavailablePowerSourceInstanceIds,
             Components = _baseline.Components.Select(instance => instance with
             {
                 Enabled = requestedEnabled.TryGetValue(instance.InstanceId, out var enabled)
@@ -322,6 +330,94 @@ public sealed class NativeConstructOperatingSession
             interrupted.Where(x => sourceParts[x].RequiresContinuousPower).ToArray());
     }
 
+
+    /// <summary>
+    /// Preview one finite resource-consumption step from a caller-owned
+    /// balance snapshot. This is not an authorization to refill resources
+    /// or proof that an external ledger contains the supplied balances.
+    /// </summary>
+    public NativeConstructResourceStepPreview PreviewResourceStep(
+        IReadOnlyDictionary<string, int> remainingResources,
+        IReadOnlyDictionary<string, bool>? requestedEnabled = null,
+        IReadOnlyDictionary<string, string>? requestedModes = null)
+    {
+        ArgumentNullException.ThrowIfNull(remainingResources);
+        var issues = new List<NativeOriginContractIssue>();
+        var installed = _baseline.Components.Where(x => x.PowerSourceId is not null)
+            .OrderBy(x => x.InstanceId, StringComparer.Ordinal).ToArray();
+        var known = installed.Select(x => x.InstanceId)
+            .ToHashSet(StringComparer.Ordinal);
+        var sources = new List<(NativeConstructComponentInstance Part,
+            string Kind, int Capacity, int Usage, int Remaining)>();
+        foreach (var part in installed)
+        {
+            var path = "resources." + part.InstanceId;
+            if (!_catalog.TryGetById(part.PowerSourceId!, out var native) ||
+                native?.Category != "construct-power-source")
+            {
+                issues.Add(new("construct-resource-source-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "A resource source must resolve to a native installed power source."));
+                continue;
+            }
+            var raw = native.Definition;
+            var kind = raw.TryGetProperty("resourceKind", out var kindValue) &&
+                kindValue.ValueKind == JsonValueKind.String ? kindValue.GetString() : null;
+            var capacity = raw.TryGetProperty("resourceCapacity", out var capacityValue) &&
+                capacityValue.ValueKind == JsonValueKind.Number &&
+                capacityValue.TryGetInt32(out var c) && c > 0 ? c : 0;
+            var usage = raw.TryGetProperty("resourceUsePerStep", out var usageValue) &&
+                usageValue.ValueKind == JsonValueKind.Number &&
+                usageValue.TryGetInt32(out var u) && u > 0 ? u : 0;
+            if (string.IsNullOrWhiteSpace(kind) || capacity == 0 ||
+                usage == 0 || usage > capacity)
+            {
+                issues.Add(new("construct-resource-model-unresolved", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "Finite resource kind, positive capacity and viable per-step cost must be authored."));
+                continue;
+            }
+            if (!remainingResources.TryGetValue(part.InstanceId, out var remaining) ||
+                remaining < 0 || remaining > capacity)
+            {
+                issues.Add(new("construct-resource-balance-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "The source balance must exist within its native capacity."));
+                continue;
+            }
+            sources.Add((part, kind!, capacity, usage, remaining));
+        }
+        foreach (var id in remainingResources.Keys)
+            if (!known.Contains(id))
+                issues.Add(new("construct-resource-instance-invalid", "resources",
+                    NativeOriginIssueSeverity.Invalid,
+                    "Only installed native sources can have resource balances."));
+        if (issues.Count > 0)
+            return new(null, [], [], issues.ToArray());
+
+        // The unavailable-source overlay removes source output, not the
+        // source housing or any of its installed Origin entitlements.
+        var unavailable = sources.Where(x => x.Remaining < x.Usage)
+            .Select(x => x.Part.InstanceId).OrderBy(x => x, StringComparer.Ordinal)
+            .ToArray();
+        var operating = EvaluateConfiguration(requestedEnabled, requestedModes,
+            unavailable);
+        var states = operating.Assembly.Components.ToDictionary(x =>
+            x.InstanceId, StringComparer.Ordinal);
+        var canSpend = operating.IsOperatingConfigurationValid;
+        var result = sources.Select(x =>
+        {
+            var consumed = canSpend && states.TryGetValue(x.Part.InstanceId,
+                out var component) && component.SourceSupplyingPower == true
+                ? x.Usage : 0;
+            return new NativeConstructResourceSourceState(
+                x.Part.InstanceId, x.Part.PowerSourceId!, x.Kind,
+                x.Capacity, x.Remaining, consumed, x.Remaining - consumed,
+                x.Remaining >= x.Usage);
+        }).ToArray();
+        return new(operating, result, unavailable, []);
+    }
+
     /// <summary>
     /// Preview ranked optional shedding without changing the approved Origin.
     /// Shutdown candidates are explicitly ordered, least desired first.
@@ -491,4 +587,26 @@ public sealed record NativeConstructOperatingTransitionPreview(
         // recovery target if it leaves a continuous-power load offline.
         After.Operating.Assembly.Components.All(x =>
             !x.RequiresContinuousPower || x.Operational);
+}
+
+/// <summary>
+/// One resource counter belongs to one installed source and an authored
+/// resource kind. This is not an energy-output or recharge specification.
+/// </summary>
+public sealed record NativeConstructResourceSourceState(
+    string InstanceId, string PowerSourceId, string ResourceKind,
+    int Capacity, int Before, int Consumed, int After, bool SufficientForStep);
+
+/// <summary>
+/// Advisory finite-resource result. A gameplay ledger must separately
+/// authenticate current balances and authorize any durable consumption.
+/// </summary>
+public sealed record NativeConstructResourceStepPreview(
+    NativeConstructOperatingStateResult? Evaluation,
+    IReadOnlyList<NativeConstructResourceSourceState> Sources,
+    IReadOnlyList<string> UnavailablePowerSourceInstanceIds,
+    IReadOnlyList<NativeOriginContractIssue> Issues)
+{
+    public bool CanAdvance => Evaluation?.IsOperatingConfigurationValid == true &&
+        Issues.Count == 0;
 }
