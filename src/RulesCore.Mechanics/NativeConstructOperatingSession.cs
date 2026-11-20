@@ -15,7 +15,10 @@ public sealed class NativeConstructOperatingSession
     private readonly NativeCatalogSnapshot _catalog;
     private readonly NativeConstructAssemblyEvaluator _assembly;
     private readonly string[] _originGrantIds;
-    private sealed record OperationalInput(string InstanceId, string TraitId);
+    private sealed record OperationalInput(
+        string InstanceId, string TraitId, string SourceDefinitionId,
+        string OccurrencePath, bool IsPowerSource,
+        IReadOnlyList<string>? ActiveComponentModes);
     private readonly IReadOnlyDictionary<string, OperationalInput[]> _operationalInputs;
     private readonly IReadOnlyDictionary<string, string[]> _synergyInputs;
     private readonly HashSet<string> _instanceIds;
@@ -54,13 +57,15 @@ public sealed class NativeConstructOperatingSession
 
         // A record copy also retains the authorized optional parent and mount
         // interface selections. Runtime callers cannot reparent installed parts.
-        // Catalog-authored operational trait references identify *which*
-        // component instances an effective grant requires at runtime.
-        // The common Origin engine already verified the complete grant and
-        // its source candidates. No new result is synthesized from this map.
+        // Preserve the exact authorized native source occurrence for each
+        // candidate. A component, material, design, enhancement and power
+        // source may all offer the same canonical trait, but they are not
+        // interchangeable operating providers. No grants are synthesized here.
         var operationalCandidates = operationalOffers.ToDictionary(
             offer => offer.CandidateId,
-            offer => new OperationalInput(offer.InstanceId, offer.TraitId),
+            offer => new OperationalInput(offer.InstanceId, offer.TraitId,
+                offer.SourceDefinitionId, offer.OccurrencePath,
+                offer.IsPowerSource, offer.ActiveComponentModes),
             StringComparer.Ordinal);
 
         var needs = new Dictionary<string, OperationalInput[]>(StringComparer.Ordinal);
@@ -142,8 +147,10 @@ public sealed class NativeConstructOperatingSession
             StringComparer.Ordinal);
         var active = _originGrantIds.ToHashSet(StringComparer.Ordinal);
 
-        // Mode-dependent applicability needs both an operational component and
-        // a selected mode which explicitly authorizes this exact trait.
+        // In addition to the evaluator's combined active trait set, validate
+        // the selected offer's own operating source. An unselected housing
+        // cannot substitute for an offline source, and an installed design
+        // cannot substitute for a component trait disabled by its current mode.
         // Invalid or overallocated configurations never activate powered grants.
         foreach (var (grantId, providers) in _operationalInputs)
             if (!state.IsAuthorized || providers.Any(input =>
@@ -151,7 +158,12 @@ public sealed class NativeConstructOperatingSession
                 !component.Operational ||
                 component.ActiveOperationalOriginTraitIds is null ||
                 !component.ActiveOperationalOriginTraitIds.Contains(input.TraitId,
-                    StringComparer.Ordinal)))
+                    StringComparer.Ordinal) ||
+                (input.IsPowerSource && component.SourceSupplyingPower != true) ||
+                (input.ActiveComponentModes is not null &&
+                    (component.ModeId is null ||
+                     !input.ActiveComponentModes.Contains(component.ModeId,
+                         StringComparer.Ordinal)))))
                 active.Remove(grantId);
 
         // Native synergies retain the same authorized effective grant record.
