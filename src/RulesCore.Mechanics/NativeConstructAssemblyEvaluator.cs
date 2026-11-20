@@ -30,6 +30,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
 
         var parts = new Dictionary<string, Part>(StringComparer.Ordinal);
         long knownMaterialCost = 0;
+        long knownModificationCost = 0;
         foreach (var instance in request.Components)
         {
             if (instance is null || string.IsNullOrWhiteSpace(instance.InstanceId) ||
@@ -71,6 +72,145 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             var needs = selectedMode?.Requirements ?? baseNeeds;
             var modeTraits = selectedMode?.OperationalOriginTraitIds ?? allowedTraits;
             var slots = Texts(raw, "materialSlots", path, Issue);
+
+            // A design and its optional enhancements are catalog definitions,
+            // not duplicated material-specific components or client-supplied effects.
+            // They contribute to the installed cost even when switched off.
+            var addedProvides = new List<string>();
+            var addedNeeds = new List<string[]>();
+            long extraDemand = 0;
+
+            void ApplyOption(string? selectedId, string category, string field)
+            {
+                if (string.IsNullOrWhiteSpace(selectedId) ||
+                    !catalog.TryGetById(selectedId, out var option) ||
+                    option?.Category != category)
+                {
+                    Issue("construct-option-reference-invalid", path + "." + field,
+                        NativeOriginIssueSeverity.Invalid,
+                        "A selected option must resolve to the appropriate native Construct catalog.");
+                    return;
+                }
+                var optionPath = path + "." + field;
+                var compatible = Texts(option.Definition,
+                    "compatibleComponentCapabilities", optionPath, Issue);
+                if (compatible.Length == 0 ||
+                    !compatible.Any(cap => baseProvides.Contains(cap, StringComparer.Ordinal)))
+                {
+                    Issue("construct-option-incompatible", optionPath,
+                        NativeOriginIssueSeverity.Invalid,
+                        "The authored option does not support this component's base capabilities.");
+                    return;
+                }
+                var optionCost = Number(option.Definition, "constructionCost",
+                    optionPath, Issue);
+                if (optionCost is int priced) knownModificationCost += priced;
+                else if (request.InitialConstruction)
+                    Issue("construct-option-cost-unresolved", optionPath,
+                        NativeOriginIssueSeverity.Unresolved,
+                        "The option has no authored construction cost.");
+                // Option powerDemand is incremental, unlike a selected operating
+                // mode which replaces the component's general demand.
+                extraDemand += Number(option.Definition, "powerDemand",
+                    optionPath, Issue) ?? 0;
+                addedProvides.AddRange(Texts(option.Definition, "provides",
+                    optionPath, Issue));
+                addedNeeds.AddRange(Requirements(option.Definition, optionPath, Issue));
+            }
+
+            if (instance.DesignId is string design)
+                ApplyOption(design, "construct-design", "designId");
+            if ((instance.EnhancementIds?.Count ?? 0) > 32)
+                Issue("construct-enhancement-count-invalid", path + ".enhancementIds",
+                    NativeOriginIssueSeverity.Invalid,
+                    "At most 32 enhancement selections can be evaluated per component.");
+            var seenEnhancements = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var enhancementId in instance.EnhancementIds ?? [])
+            {
+                if (string.IsNullOrWhiteSpace(enhancementId) ||
+                    !seenEnhancements.Add(enhancementId))
+                {
+                    Issue("construct-enhancement-selection-invalid",
+                        path + ".enhancementIds", NativeOriginIssueSeverity.Invalid,
+                        "Enhancements must have distinct nonempty catalog identities.");
+                    continue;
+                }
+                ApplyOption(enhancementId, "construct-enhancement", "enhancementIds");
+            }
+
+            // The power source is independent of its containing hardware.
+            // Power output is supplied by a selected native source, never by
+            // a client-provided numerical claim. Storage/endurance is distinct.
+            var hasSourceSlot = false;
+            if (raw.TryGetProperty("powerSourceSlot", out var sourceSlot))
+            {
+                if (sourceSlot.ValueKind is not (JsonValueKind.True or JsonValueKind.False))
+                    Issue("construct-power-source-slot-invalid", path + ".powerSourceSlot",
+                        NativeOriginIssueSeverity.Invalid,
+                        "The authored power-source slot must be a boolean.");
+                hasSourceSlot = sourceSlot.ValueKind == JsonValueKind.True;
+            }
+            if (!hasSourceSlot && instance.PowerSourceId is not null)
+                Issue("construct-power-source-unexpected", path + ".powerSourceId",
+                    NativeOriginIssueSeverity.Invalid,
+                    "This component has no authored power-source slot.");
+            if (hasSourceSlot && string.IsNullOrWhiteSpace(instance.PowerSourceId))
+                Issue("construct-power-source-required", path + ".powerSourceId",
+                    NativeOriginIssueSeverity.Incomplete,
+                    "An installed power-source housing needs a selected mechanism.");
+            if (hasSourceSlot && !string.IsNullOrWhiteSpace(instance.PowerSourceId))
+            {
+                if (!catalog.TryGetById(instance.PowerSourceId, out var source) ||
+                    source?.Category != "construct-power-source")
+                {
+                    Issue("construct-power-source-unknown", path + ".powerSourceId",
+                        NativeOriginIssueSeverity.Invalid,
+                        "The selected source must be a native Construct power source.");
+                }
+                else
+                {
+                    var sourcePath = path + ".powerSourceId";
+                    var compatible = Texts(source.Definition,
+                        "compatibleComponentCapabilities", sourcePath, Issue);
+                    if (compatible.Length == 0 ||
+                        !compatible.Any(cap => baseProvides.Contains(cap, StringComparer.Ordinal)))
+                        Issue("construct-power-source-incompatible", sourcePath,
+                            NativeOriginIssueSeverity.Invalid,
+                            "The selected source is not compatible with this housing.");
+                    var sourceCost = Number(source.Definition,
+                        "constructionCost", sourcePath, Issue);
+                    if (sourceCost is int priced) knownModificationCost += priced;
+                    else if (request.InitialConstruction)
+                        Issue("construct-power-source-cost-unresolved", sourcePath,
+                            NativeOriginIssueSeverity.Unresolved,
+                            "The selected source's construction cost has not been authored.");
+                    var sourceOutput = Number(source.Definition,
+                        "powerOutput", sourcePath, Issue);
+                    if (sourceOutput is int authoredOutput)
+                        baseOutput = authoredOutput;
+                    else
+                        Issue("construct-power-source-output-unresolved", sourcePath,
+                            NativeOriginIssueSeverity.Unresolved,
+                            "This power source has no authored simultaneous output.");
+                    extraDemand += Number(source.Definition,
+                        "powerDemand", sourcePath, Issue) ?? 0;
+                    addedProvides.AddRange(Texts(source.Definition,
+                        "provides", sourcePath, Issue));
+                    addedNeeds.AddRange(Requirements(source.Definition, sourcePath, Issue));
+                }
+            }
+            // Add-ons supply additional capabilities and requirements; mode
+            // overrides still apply only to the base component properties.
+            provides = provides.Concat(addedProvides).Distinct(StringComparer.Ordinal).ToArray();
+            needs = needs.Concat(addedNeeds).ToArray();
+            if (demand is int authoredDemand)
+                demand = extraDemand > int.MaxValue - authoredDemand
+                    ? null : (int)(authoredDemand + extraDemand);
+            if (extraDemand > int.MaxValue || demand is null && extraDemand > 0)
+                Issue("construct-power-demand-overflow", path + ".powerDemand",
+                    NativeOriginIssueSeverity.Invalid,
+                    "Combined power demand exceeds the supported numerical limit.");
+
             foreach (var slot in slots)
             {
                 if (instance.Materials is null || !instance.Materials.TryGetValue(slot, out var materialId))
@@ -194,7 +334,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 "Requested simultaneous demand exceeds output in this connected power network.");
         }
 
-        long knownCost = knownMaterialCost;
+        long knownCost = knownMaterialCost + knownModificationCost;
         foreach (var part in parts.Values)
         {
             if (part.ConstructionCost is int cost) knownCost += cost;
@@ -391,7 +531,9 @@ public sealed record NativeConstructComponentInstance(
     string InstanceId, string DefinitionId,
     IReadOnlyDictionary<string, string>? Materials = null,
     IReadOnlyList<string>? ConnectedTo = null,
-    bool Enabled = true, string? ModeId = null);
+    bool Enabled = true, string? ModeId = null,
+    string? DesignId = null, IReadOnlyList<string>? EnhancementIds = null,
+    string? PowerSourceId = null);
 
 public sealed record NativeConstructAssemblyRequest(
     IReadOnlyList<NativeConstructComponentInstance> Components,
