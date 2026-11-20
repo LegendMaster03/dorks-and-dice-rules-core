@@ -359,7 +359,8 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal(HttpStatusCode.Unauthorized, anonymous.Code);
 
         var first = await SendAsync(acquire);
-        Assert.Equal(HttpStatusCode.OK, first.Code);
+        Assert.True(first.Code == HttpStatusCode.OK,
+            "Acquisition HTTP " + (int)first.Code + ": " + first.Body.GetRawText());
         Assert.False(first.Body.GetProperty("committed").GetBoolean());
         Assert.False(first.Body.GetProperty("effectiveMechanicsReady").GetBoolean());
         var planned = first.Body.GetProperty("plan");
