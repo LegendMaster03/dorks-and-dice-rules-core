@@ -29,7 +29,8 @@ public sealed class NativeConstructOperatingSession
                 Materials = instance.Materials is null ? null
                     : new Dictionary<string, string>(instance.Materials,
                         StringComparer.Ordinal),
-                ConnectedTo = instance.ConnectedTo?.ToArray()
+                ConnectedTo = instance.ConnectedTo?.ToArray(),
+                EnhancementIds = instance.EnhancementIds?.ToArray()
             }).ToArray(),
             approvedAssembly.InitialAllowance, InitialConstruction: true);
 

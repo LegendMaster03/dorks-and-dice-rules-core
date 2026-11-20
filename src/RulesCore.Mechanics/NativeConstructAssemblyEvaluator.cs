@@ -199,6 +199,9 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     addedNeeds.AddRange(Requirements(source.Definition, sourcePath, Issue));
                 }
             }
+            // A source sets the housing's baseline output. An explicitly
+            // authored operating mode may override that output.
+            output = selectedMode?.PowerOutput ?? baseOutput;
             // Add-ons supply additional capabilities and requirements; mode
             // overrides still apply only to the base component properties.
             provides = provides.Concat(addedProvides).Distinct(StringComparer.Ordinal).ToArray();

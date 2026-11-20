@@ -119,5 +119,339 @@
     "materialSlots": [
       "line"
     ]
+  },
+  {
+    "id": "construct-component.power-source-housing",
+    "kind": "construct-component",
+    "name": "Power-source housing",
+    "rulesStatus": "component-candidate; cost and output not balanced",
+    "description": "A configurable housing for a selected power-source mechanism. Housing and source are separate installed definitions.",
+    "provides": [
+      "power-housing",
+      "power-distribution"
+    ],
+    "powerSourceSlot": true,
+    "powerDemand": 0,
+    "materialSlots": [
+      "housing"
+    ]
+  },
+  {
+    "id": "construct-component.limb-assembly",
+    "kind": "construct-component",
+    "name": "Limb assembly",
+    "description": "Supports a configurable manipulator, locomotor or other appendage; no anatomical count or shape is required.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "structural-support",
+      "limb-support"
+    ],
+    "materialSlots": [
+      "limb"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.sensory-array",
+    "kind": "construct-component",
+    "name": "Sensory array",
+    "description": "Supports a configurable sense or measurement subsystem; perception traits are not automatically granted.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "sensory-interface"
+    ],
+    "materialSlots": [
+      "sensor"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.control-module",
+    "kind": "construct-component",
+    "name": "Control module",
+    "description": "A control and coordination interface for dependent assemblies; no automatic intelligence or creature consciousness is implied.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "control"
+    ],
+    "materialSlots": [
+      "controller"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.mechanical-transmission",
+    "kind": "construct-component",
+    "name": "Mechanical transmission",
+    "description": "Delivers motion from a compatible driving mechanism.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "mechanical-transmission"
+    ],
+    "materialSlots": [
+      "transmission"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.ball-joint",
+    "kind": "construct-component",
+    "name": "Ball joint",
+    "description": "A multi-axis articulation alternative, dependent on suitable structural attachment.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "articulation"
+    ],
+    "materialSlots": [
+      "joint"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.wing-assembly",
+    "kind": "construct-component",
+    "name": "Wing assembly",
+    "description": "A wing-shaped support assembly that may be configured for authored locomotion or weapon use.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "wing-support"
+    ],
+    "materialSlots": [
+      "wing"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.locomotion-unit",
+    "kind": "construct-component",
+    "name": "Locomotion unit",
+    "description": "Generic ground locomotion support adaptable to different arrangements; it does not itself grant a speed.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "locomotion-interface"
+    ],
+    "materialSlots": [
+      "contact"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.protective-plating",
+    "kind": "construct-component",
+    "name": "Protective plating",
+    "description": "A protective covering; armor values depend on later authored material, design and balancing rules.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "enclosure",
+      "protective-surface"
+    ],
+    "materialSlots": [
+      "plating"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.crystal-eye",
+    "kind": "construct-component",
+    "name": "Crystal eye",
+    "description": "Crystal visual hardware described on Warforged; any sense or perception grant must be separately authored.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "visual-hardware"
+    ],
+    "materialSlots": [
+      "crystal"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.docent-interface",
+    "kind": "construct-component",
+    "name": "Docent interface",
+    "description": "Interface for a docent-like control or coordination network; independent of the control source.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "control-interface"
+    ],
+    "materialSlots": [
+      "interface"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.auxiliary-control-node",
+    "kind": "construct-component",
+    "name": "Auxiliary control node",
+    "description": "A supporting control node for distributed systems.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "control-support"
+    ],
+    "materialSlots": [
+      "node"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.crew-compartment",
+    "kind": "construct-component",
+    "name": "Crew compartment",
+    "description": "A compartment usable for carrying occupants when capacity and access are authored.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "enclosure",
+      "transport-interior"
+    ],
+    "materialSlots": [
+      "housing"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.passenger-platform",
+    "kind": "construct-component",
+    "name": "Passenger platform",
+    "description": "A structural platform for carried passengers subject to size and capacity rules.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "transport-platform"
+    ],
+    "materialSlots": [
+      "platform"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.armblade-mount",
+    "kind": "construct-component",
+    "name": "Armblade mount",
+    "description": "Weapon mount inspired by Warforged armblades. No weapon damage is granted without an approved canonical rule.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "equipment-mount",
+      "integrated-melee-interface"
+    ],
+    "materialSlots": [
+      "mount"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.bolt-launcher-mount",
+    "kind": "construct-component",
+    "name": "Bolt launcher mount",
+    "description": "Integrated projectile mounting for authored ranged equipment.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "equipment-mount",
+      "projectile-interface"
+    ],
+    "materialSlots": [
+      "mount"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.javelin-launcher-mount",
+    "kind": "construct-component",
+    "name": "Javelin launcher mount",
+    "description": "Mount for an authored javelin launching mechanism.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "equipment-mount",
+      "projectile-interface"
+    ],
+    "materialSlots": [
+      "mount"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.heavy-strike-mount",
+    "kind": "construct-component",
+    "name": "Heavy strike mount",
+    "description": "Mount for a heavy integrated striking component, such as an axe or hammer configuration.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "equipment-mount",
+      "integrated-melee-interface"
+    ],
+    "materialSlots": [
+      "mount"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.eldritch-turret-mount",
+    "kind": "construct-component",
+    "name": "Eldritch turret mount",
+    "description": "Mounting interface for an authored magical turret mechanism.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "equipment-mount",
+      "arcane-weapon-interface"
+    ],
+    "materialSlots": [
+      "mount"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.energy-emitter-mount",
+    "kind": "construct-component",
+    "name": "Energy emitter mount",
+    "description": "Mounting interface for an authored beam or elemental projector.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "equipment-mount",
+      "energy-weapon-interface"
+    ],
+    "materialSlots": [
+      "mount"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.shield-mount",
+    "kind": "construct-component",
+    "name": "Shield mount",
+    "description": "Mounting interface for a shield or protective device.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "equipment-mount",
+      "defensive-interface"
+    ],
+    "materialSlots": [
+      "mount"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.storage-compartment",
+    "kind": "construct-component",
+    "name": "Storage compartment",
+    "description": "Internal compartment for non-powered storage; quantities and capacities remain to be defined.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "storage"
+    ],
+    "materialSlots": [
+      "housing"
+    ],
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-component.maintenance-interface",
+    "kind": "construct-component",
+    "name": "Maintenance interface",
+    "description": "A service port for repair or replacement of systems.",
+    "rulesStatus": "catalog-candidate; mechanical values not balanced",
+    "provides": [
+      "maintenance-interface"
+    ],
+    "materialSlots": [
+      "interface"
+    ],
+    "powerDemand": 0
   }
 ]
