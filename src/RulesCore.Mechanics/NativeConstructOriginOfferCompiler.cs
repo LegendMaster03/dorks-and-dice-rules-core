@@ -10,7 +10,10 @@ namespace RulesCore.Mechanics;
 /// </summary>
 internal static class NativeConstructOriginOfferCompiler
 {
-    internal sealed record OperationalOffer(string CandidateId, string InstanceId, string TraitId);
+    internal sealed record OperationalOffer(
+        string CandidateId, string InstanceId, string TraitId,
+        string SourceDefinitionId, string OccurrencePath, bool IsPowerSource,
+        IReadOnlyList<string>? ActiveComponentModes);
     internal sealed record Compilation(
         IReadOnlyList<NativeOriginCandidate> Candidates,
         IReadOnlyList<NativeOriginContractIssue> Issues,
@@ -285,7 +288,33 @@ internal static class NativeConstructOriginOfferCompiler
                         RequiredChoices: choices,
                         UnresolvedEvidence: unresolved));
                     if (field == "operationalOriginTraitIds")
-                        operational.Add(new(candidateId, instanceId, id!));
+                    {
+                        // A candidate's native occurrence determines its runtime
+                        // provider. Another source offering the same canonical ID
+                        // must never substitute for the authorized occurrence.
+                        // Only the base component is gated by its authored modes;
+                        // separately installed options keep their own provenance.
+                        string[]? activeComponentModes = null;
+                        if (context.Length == 0 &&
+                            sourceDefinitionJson.TryGetProperty("operatingModes",
+                                out var modes) &&
+                            modes.ValueKind == JsonValueKind.Array)
+                            activeComponentModes = modes.EnumerateArray()
+                                .Where(mode => mode.ValueKind == JsonValueKind.Object &&
+                                    mode.TryGetProperty("id", out var modeId) &&
+                                    modeId.ValueKind == JsonValueKind.String &&
+                                    mode.TryGetProperty("operationalOriginTraitIds",
+                                        out var modeTraits) &&
+                                    modeTraits.ValueKind == JsonValueKind.Array &&
+                                    modeTraits.EnumerateArray().Any(trait =>
+                                        trait.ValueKind == JsonValueKind.String &&
+                                        trait.GetString() == id))
+                                .Select(mode => mode.GetProperty("id").GetString()!)
+                                .ToArray();
+                        operational.Add(new(candidateId, instanceId, id!,
+                            sourceDefinition.Id, path, context == "power-source",
+                            activeComponentModes));
+                    }
                 }
             }
         }
