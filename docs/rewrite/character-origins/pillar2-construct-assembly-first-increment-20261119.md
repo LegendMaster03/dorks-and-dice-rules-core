@@ -539,3 +539,46 @@ Synthetic acceptance tests cover conservation and post-transfer operation,
 nonmutation, underflow/overflow and forged inputs, required physical
 contact, incompatible resource kinds, sealed and malformed transfer
 ports, and preservation of trusted source outages.
+
+## In-process trusted resource ledger and revision-checked commits
+
+An internal `NativeConstructResourceLedger` now owns a private copy of
+installed finite-resource balances. It can only be opened through the
+trusted operating session's internal `OpenTrustedResourceLedger` entrypoint
+after the host has separately authenticated the initial resource balances.
+All balances are checked against the same native source definitions and
+capacity restrictions as the existing previews. Client-supplied preview
+balances are **not** accepted as authoritative state.
+
+The ledger provides revision-numbered detached snapshots and two internal
+atomic operations, `TryCommitStep` and `TryCommitTransfer`. Both compare
+the caller's expected revision with the current in-process revision under a
+single lock and recompute the full operation against the ledger's current
+balances. A successful step consumes only the native-authored quantities
+of operable power sources. A successful transfer conserves units and
+does **not** also advance or consume the optional `NextStep` preview.
+Unknown instances, exhausted sources, insufficient capacity, invalid
+configurations, or stale revisions fail without changing any balance.
+Each successful operation produces a receipt with the operation kind,
+previous/new revision, and complete per-instance before/after deltas.
+
+**Scope and authorization boundary:** the mutable ledger and its creation
+and commit operations are internal Mechanics APIs, not client endpoints.
+They require an already-authorized Construct operating session and an
+external trusted host to validate the initial balances and gameplay
+permission for each operation. The in-process lock prevents concurrent
+double-spending within **one ledger instance**, but the revision is not
+durable or globally unique. There is no database, no hosted persistence,
+no cross-process transaction, and no authorization of physical interaction
+or time advancement in this increment. A future host integration must
+persist the ledger revision and balances atomically and bind them to the
+authorized character/build; it must never construct independent writable
+ledgers from unauthenticated client state.
+
+Test-only friend assembly visibility permits Mechanics acceptance tests
+without publishing a general resource-write surface. Synthetic tests
+cover detached snapshots, repeated/stale revision conflicts, successful
+consumption and conserved transfer, transfer without accidental step
+consumption, invalid starting balances, forged/over-capacity transactions,
+continuing authorized source outages, Origin immutability, and concurrent
+attempts with a shared expected revision.

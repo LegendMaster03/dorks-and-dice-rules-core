@@ -420,6 +420,23 @@ public sealed class NativeConstructOperatingSession
         return (sources.ToArray(), issues.ToArray());
     }
 
+
+    /// <summary>
+    /// Initialize an in-process resource ledger from balances that a trusted
+    /// host has already authenticated. This entrypoint deliberately is not
+    /// exposed to client requests: validating native bounds alone cannot
+    /// prove resource acquisition or previous consumption.
+    /// </summary>
+    internal NativeConstructResourceLedgerOpenResult OpenTrustedResourceLedger(
+        IReadOnlyDictionary<string, int> trustedBalances)
+    {
+        ArgumentNullException.ThrowIfNull(trustedBalances);
+        var (_, issues) = ResolveFiniteResources(trustedBalances);
+        return issues.Length > 0
+            ? new(null, issues)
+            : new(new NativeConstructResourceLedger(this, trustedBalances), []);
+    }
+
     /// <summary>
     /// Preview a conserved transfer between two *directly physically attached*
     /// finite reservoirs. Both native mechanisms must explicitly author a

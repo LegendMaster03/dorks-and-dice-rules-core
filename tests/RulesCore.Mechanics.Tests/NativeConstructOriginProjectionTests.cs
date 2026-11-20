@@ -1183,4 +1183,155 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Equal(0, transfer.NextStep.Sources.Sum(x => x.Consumed));
     }
 
+
+    [Fact]
+    public void TrustedResourceLedgerCommitsConsumptionAndRejectsStaleReplays()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var originalProfile = JsonSerializer.Serialize(built.Origin.Profile);
+        var opened = built.OperatingSession!.OpenTrustedResourceLedger(
+            new Dictionary<string, int> { ["generator"] = 5 });
+        Assert.Empty(opened.Issues);
+        var ledger = Assert.IsType<NativeConstructResourceLedger>(opened.Ledger);
+        var detached = ledger.Snapshot();
+        var mutable = Assert.IsType<Dictionary<string, int>>(detached.Balances);
+        mutable["generator"] = 0;
+        Assert.Equal(5, ledger.Snapshot().Balances["generator"]);
+
+        var first = ledger.TryCommitStep(0);
+        Assert.True(first.Committed);
+        Assert.Equal("operating-step", first.Receipt!.Operation);
+        Assert.Equal(0, first.Receipt.PreviousRevision);
+        Assert.Equal(1, first.Receipt.NewRevision);
+        Assert.Equal(3, first.Snapshot.Balances["generator"]);
+        Assert.Equal(2, Assert.Single(first.Receipt.Changes).Before -
+            Assert.Single(first.Receipt.Changes).After);
+
+        var duplicate = ledger.TryCommitStep(0);
+        Assert.False(duplicate.Committed);
+        Assert.Equal(1, duplicate.Snapshot.Revision);
+        Assert.Null(duplicate.Receipt);
+        Assert.Contains(duplicate.Issues, x =>
+            x.Code == "construct-resource-ledger-revision-conflict");
+
+        var second = ledger.TryCommitStep(1);
+        Assert.True(second.Committed);
+        Assert.Equal(0, second.Snapshot.Balances["generator"]);
+        var exhausted = ledger.TryCommitStep(2);
+        Assert.False(exhausted.Committed);
+        Assert.Equal(2, exhausted.Snapshot.Revision);
+        Assert.Equal(0, exhausted.Snapshot.Balances["generator"]);
+        Assert.Equal(originalProfile, JsonSerializer.Serialize(built.Origin.Profile));
+    }
+
+    [Fact]
+    public void TrustedLedgerTransferCommitsWithoutSpendingTheNextStep()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: DualReservoirAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var opened = built.OperatingSession!.OpenTrustedResourceLedger(
+            new Dictionary<string, int> { ["generator"] = 1, ["donor"] = 4 });
+        var ledger = Assert.IsType<NativeConstructResourceLedger>(opened.Ledger);
+
+        var transfer = ledger.TryCommitTransfer(0, "donor", "generator", 2);
+        Assert.True(transfer.Committed);
+        Assert.Equal("reservoir-transfer", transfer.Receipt!.Operation);
+        Assert.Equal(5, transfer.Receipt.Changes.Sum(x => x.Before));
+        Assert.Equal(5, transfer.Receipt.Changes.Sum(x => x.After));
+        Assert.Equal(3, transfer.Snapshot.Balances["generator"]);
+        Assert.Equal(2, transfer.Snapshot.Balances["donor"]);
+        Assert.True(transfer.Transfer!.NextStep!.CanAdvance);
+
+        // The next operating step consumes fuel only when committed.
+        var step = ledger.TryCommitStep(1);
+        Assert.True(step.Committed);
+        Assert.Equal(1, step.Snapshot.Balances["generator"]);
+        Assert.Equal(2, step.Snapshot.Balances["donor"]);
+        Assert.Equal(2, ledger.Snapshot().Revision);
+    }
+
+    [Fact]
+    public void LedgerRejectsInvalidInitialBalancesAndNeverMintsResources()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: DualReservoirAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        foreach (var balances in new[]
+        {
+            new Dictionary<string, int> { ["generator"] = 5 },
+            new Dictionary<string, int> { ["generator"] = 1, ["donor"] = 6 },
+            new Dictionary<string, int> { ["generator"] = 1, ["donor"] = 4,
+                ["fabricated"] = 2 }
+        })
+        {
+            var rejected = session.OpenTrustedResourceLedger(balances);
+            Assert.Null(rejected.Ledger);
+            Assert.NotEmpty(rejected.Issues);
+        }
+
+        var opened = session.OpenTrustedResourceLedger(
+            new Dictionary<string, int> { ["generator"] = 4, ["donor"] = 2 });
+        var ledger = Assert.IsType<NativeConstructResourceLedger>(opened.Ledger);
+        var invalid = ledger.TryCommitTransfer(0, "donor", "generator", 2);
+        Assert.False(invalid.Committed);
+        Assert.Null(invalid.Receipt);
+        Assert.Equal(0, invalid.Snapshot.Revision);
+        Assert.Equal(6, invalid.Snapshot.Balances.Values.Sum());
+
+        var forged = ledger.TryCommitTransfer(0, "fabricated", "generator", 1);
+        Assert.False(forged.Committed);
+        Assert.Equal(0, ledger.Snapshot().Revision);
+        Assert.Equal(6, ledger.Snapshot().Balances.Values.Sum());
+    }
+
+    [Fact]
+    public void LedgerPermitsConservedTransfersDuringOutagesWithoutReactivation()
+    {
+        using var fixture = new Fixture();
+        var assembly = DualReservoirAssembly();
+        var approvedOutage = assembly with
+        {
+            Components = assembly.Components.Select(x => x.InstanceId == "sensor"
+                ? x with { Enabled = false } : x).ToArray(),
+            UnavailablePowerSourceInstanceIds = ["generator"]
+        };
+        var built = Evaluate(fixture, assembly: approvedOutage);
+        Assert.True(built.IsMechanicallyAuthorized);
+        var ledger = Assert.IsType<NativeConstructResourceLedger>(
+            built.OperatingSession!.OpenTrustedResourceLedger(
+                new Dictionary<string, int> { ["generator"] = 1, ["donor"] = 4 }).Ledger);
+        var transferred = ledger.TryCommitTransfer(0, "donor", "generator", 2);
+        Assert.True(transferred.Committed);
+        Assert.False(transferred.Transfer!.NextStep!.CanAdvance);
+        Assert.Equal(3, ledger.Snapshot().Balances["generator"]);
+
+        // Additional fuel can not clear an outage owned by trusted state.
+        var powering = ledger.TryCommitStep(1,
+            requestedEnabled: new Dictionary<string, bool> { ["sensor"] = true });
+        Assert.False(powering.Committed);
+        Assert.Equal(1, ledger.Snapshot().Revision);
+        Assert.Equal(3, ledger.Snapshot().Balances["generator"]);
+    }
+
+    [Fact]
+    public void ConcurrentRevisionAttemptsCommitAtMostOnce()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var ledger = Assert.IsType<NativeConstructResourceLedger>(
+            built.OperatingSession!.OpenTrustedResourceLedger(
+                new Dictionary<string, int> { ["generator"] = 5 }).Ledger);
+        var outcomes = Enumerable.Range(0, 12)
+            .AsParallel()
+            .Select(_ => ledger.TryCommitStep(0)).ToArray();
+        Assert.Single(outcomes, x => x.Committed);
+        Assert.Equal(1, ledger.Snapshot().Revision);
+        Assert.Equal(3, ledger.Snapshot().Balances["generator"]);
+    }
+
 }
