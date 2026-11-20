@@ -102,6 +102,27 @@ public sealed class NativeCraftingRecoveryTests
     }
 
     [Fact]
+    public void ExceptionalRecoveryDoesNotInheritOrdinaryDisenchantingConditions()
+    {
+        var custom = NativeCraftingRecovery.Evaluate(
+            Disenchant("Artifact", 5) with {
+                ExceptionalDisenchantingAuthorized = true,
+                SourceMinimumRanks = 5,
+                IsPermanent = null,
+                IsAttunedToAnother = null,
+                MinutesSpent = null
+            });
+        Assert.True(custom.Eligible);
+
+        var unapproved = NativeCraftingRecovery.Evaluate(
+            Disenchant("Artifact", 5) with {
+                ExceptionalDisenchantingAuthorized = false,
+                SourceMinimumRanks = 5
+            });
+        Assert.Equal("ineligible", unapproved.Status);
+    }
+
+    [Fact]
     public void SalvagingUsesSourceDefinedRequirementsWithoutGuessingAYield()
     {
         var unknown = NativeCraftingRecovery.Evaluate(

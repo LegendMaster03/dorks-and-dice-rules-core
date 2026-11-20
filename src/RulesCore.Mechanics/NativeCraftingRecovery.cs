@@ -42,6 +42,8 @@ public static class NativeCraftingRecovery
         var missing = new List<string>();
         var denied = new List<string>();
         int? minimum = null;
+        var ordinaryDisenchanting = request.Operation ==
+            NativeRecoveryOperation.Disenchant;
 
         if (!Enum.IsDefined(request.Operation) ||
             request.SourceMinimumRanks is < 0 or > 1_000_000)
@@ -72,29 +74,38 @@ public static class NativeCraftingRecovery
                     else if (request.SourceMinimumRanks is null)
                         missing.Add("exceptional-recovery-rank-unresolved");
                     else
+                    {
+                        // An exceptional recovery is a different authored
+                        // procedure. Do not impose ordinary disenchanting's
+                        // permanence, attunement or timing rules on it.
+                        ordinaryDisenchanting = false;
                         minimum = request.SourceMinimumRanks;
+                    }
                 }
                 else
                     minimum = (int)rarity + 1;
             }
 
-            if (request.IsPermanent is null)
-                missing.Add("item-permanence-unresolved");
-            else if (!request.IsPermanent.Value)
-                denied.Add("item-not-permanent");
+            if (ordinaryDisenchanting)
+            {
+                if (request.IsPermanent is null)
+                    missing.Add("item-permanence-unresolved");
+                else if (!request.IsPermanent.Value)
+                    denied.Add("item-not-permanent");
 
-            if (request.IsAttunedToAnother is null)
-                missing.Add("item-attunement-unresolved");
-            else if (request.IsAttunedToAnother.Value)
-                denied.Add("item-attuned-to-another");
+                if (request.IsAttunedToAnother is null)
+                    missing.Add("item-attunement-unresolved");
+                else if (request.IsAttunedToAnother.Value)
+                    denied.Add("item-attuned-to-another");
 
-            // Warcraft's ordinary disenchanting requires one hour. Salvage
-            // durations are defined separately by their source procedures.
-            if (request.MinutesSpent is null ||
-                request.MinutesSpent > 1_000_000)
-                missing.Add("disenchanting-time-unresolved");
-            else if (request.MinutesSpent < 60)
-                denied.Add("disenchanting-time-insufficient");
+                // Warcraft's ordinary disenchanting requires one hour.
+                // Salvage and exceptional procedures define their own time.
+                if (request.MinutesSpent is null ||
+                    request.MinutesSpent > 1_000_000)
+                    missing.Add("disenchanting-time-unresolved");
+                else if (request.MinutesSpent < 60)
+                    denied.Add("disenchanting-time-insufficient");
+            }
         }
 
         if (minimum is int level && request.SourceMinimumRanks is int authored)
