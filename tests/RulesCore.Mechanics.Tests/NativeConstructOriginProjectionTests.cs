@@ -133,7 +133,11 @@ public sealed class NativeConstructOriginProjectionTests
                   "compatibleComponentCapabilities":["power-housing"],
                   "resourceKind":"fuel-unit","resourceCapacity":5,
                   "resourceUsePerStep":2,
-                  "resourceTransferOut":true,"resourceTransferIn":true,
+                  "resourceTransferOut":true,"resourceTransferIn":true},
+                 {"id":"construct-power-source.trait-generator",
+                  "kind":"construct-power-source","name":"Trait generator",
+                  "constructionCost":1,"powerOutput":4,
+                  "compatibleComponentCapabilities":["power-housing"],
                   "installedOriginTraitIds":["trait.fixture.source-passive"],
                   "operationalOriginTraitIds":["trait.fixture.source-active"]},
                  {"id":"construct-power-source.sealed","kind":"construct-power-source",
@@ -1401,7 +1405,7 @@ public sealed class NativeConstructOriginProjectionTests
             Part("aptitude", "aptitude"),
             new NativeConstructComponentInstance("generator",
                 "construct-component.fuel-housing",
-                PowerSourceId: "construct-power-source.finite")
+                PowerSourceId: "construct-power-source.trait-generator")
         ], InitialAllowance: 20);
 
     [Fact]
@@ -1419,7 +1423,8 @@ public sealed class NativeConstructOriginProjectionTests
 
         var manifestations = new NativeOriginManifestation[]
         {
-            new("type", "construct:intrinsic:creatureType"),
+            new("type", "construct:intrinsic:creatureType",
+                SelectedValue: JsonSerializer.SerializeToElement("construct")),
             new("size", "construct:intrinsic:size", Choices:
                 [new("size", ["large"])]),
             new("plate", Candidate("trait.fixture.passive-plate")),
@@ -1494,7 +1499,8 @@ public sealed class NativeConstructOriginProjectionTests
         {
             Manifestations =
             [
-                new("type", "construct:intrinsic:creatureType"),
+                new("type", "construct:intrinsic:creatureType",
+                SelectedValue: JsonSerializer.SerializeToElement("construct")),
                 new("size", "construct:intrinsic:size", Choices:
                     [new("size", ["giant"])]),
                 new("ability", ability.Id, Choices:
@@ -1509,7 +1515,8 @@ public sealed class NativeConstructOriginProjectionTests
         {
             Manifestations =
             [
-                new("type", "construct:intrinsic:creatureType"),
+                new("type", "construct:intrinsic:creatureType",
+                SelectedValue: JsonSerializer.SerializeToElement("construct")),
                 new("size", "construct:intrinsic:size"),
                 new("ability", ability.Id)
             ]
