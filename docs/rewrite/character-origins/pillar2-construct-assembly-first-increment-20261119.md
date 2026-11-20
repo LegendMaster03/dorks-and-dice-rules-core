@@ -121,3 +121,76 @@ These runtime results are *views*, not new gameplay entitlements or permanent ch
 ### Synthetic acceptance additions
 
 `NativeConstructOriginProjectionTests` now includes fixture-only tests for retained powered entitlements, active/inactive allocation, transitive synergy applicability, loss of supply, excess simultaneous demand, rejection of unknown component IDs, caller-side input mutation after authorization, and stable permanent Origin serialization.
+
+## Authored operating modes (third implementation increment)
+
+Operating modes are **construct-specific** runtime configurations, not new
+universal Origination procedures or independently acquired characteristics.
+Each installed native component may optionally declare an `operatingModes`
+array. The selected mode is stored on that component **instance** as
+`ModeId`, allowing two identical components to operate in different modes.
+
+Each authored mode supports:
+
+| Field | Behavior |
+|---|---|
+| `id` | Unique, path-safe identifier within that component |
+| `powerDemand` | Overrides the component's general demand when present |
+| `powerOutput` | Overrides the component's general output when present |
+| `provides` | Replaces the component's available capabilities when present |
+| `requiresAnyOf` | Replaces the component's functional requirements when present |
+| `operationalOriginTraitIds` | Exact operational traits allowed to apply in this mode |
+
+If an operating mode declares `provides` as an empty array, it provides no
+functional capabilities in that mode. If `requiresAnyOf` is an empty array,
+it has no mode-specific capability prerequisites. If either field is absent,
+the component's general value is inherited. Power demand/output also inherit
+general values unless a mode supplies a corresponding number.
+
+Each `operationalOriginTraitIds` list on a mode must be a subset of the
+component's catalog-authored operational entitlement list. Missing lists
+activate **no** powered traits. An installed component may retain multiple
+canonical Origin entitlements while only the currently selected mode makes
+a subset usable. An operating mode never creates an entitlement.
+
+**Example (synthetic design only):** A multifunctional arm may use a
+`stowed` mode (no operating demand or specialized capability), a
+`tether` mode (tether operation and appropriate demand), or a `blast`
+mode (ranged mechanism and its own demand). The same assembly is present
+in all three modes. No attack, movement bonus, or official item is granted
+merely by defining these labels.
+
+### Validation and runtime integration
+
+- A component with authored operating modes requires an explicit selected
+  mode ID in its installation. A component without such definitions rejects
+  mode IDs. Mode IDs are unique, path-safe and bounded to 32 per component.
+- The assembly evaluator validates **every authored mode's** trait list
+  against the native component, including modes not currently selected.
+  Undeclared operational traits fail closed.
+- The evaluator resolves power, capability providers, requirements, and
+  dependency closure from the chosen mode before computing operational state.
+  Its component state records the mode and currently active canonical trait IDs.
+- `NativeConstructOperatingSession.EvaluateConfiguration` accepts **only**
+  per-instance enabled-flag and selected-mode overrides for a previously
+  authorized construction snapshot. It does not add parts or change their
+  materials, connections, configuration costs, source identities, or installed
+  Origin entitlements.
+- The existing `EvaluateAllocation` remains a compatibility shorthand for
+  enabled-flag changes. Neither method persists a new Origin profile.
+- No inherent grant is active solely because its canonical trait appears
+  in another mode. Already-issued synergies lose runtime applicability when
+  their authorized powered inputs become inapplicable. Origin provenance
+  and historical construction records do not change.
+
+### Open design boundaries
+
+These are deliberately not approved or implemented here: required actions
+or time to switch modes; operating-mode cooldowns; limited activation uses;
+deploy/retract animations; authored constraints spanning multiple components'
+mode selections; energy storage and recharge; full power management with
+automatic load shedding; installation/modification economy; material quantity
+scaling; and actual first-party mode power values or gameplay effects.
+
+First-party reference components continue to have no approved balance values.
+All mode behavior is demonstrated through isolated synthetic test fixtures.
