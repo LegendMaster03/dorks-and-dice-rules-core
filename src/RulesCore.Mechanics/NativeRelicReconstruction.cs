@@ -107,3 +107,69 @@ public static class NativeRelicReconstruction
         else if (!value.Value) denied.Add(label + "-missing");
     }
 }
+
+
+/// <summary>
+/// Resolves the explicitly attempted assembly of a previously qualified relic.
+/// Ordinary relics require a source-defined History DC (15 for Warcraft); a
+/// failed attempt cannot repeat until another matching fragment is acquired.
+/// Six qualified magic fragments instead assemble an item of the DM's chosen
+/// eligible rarity, without a separate History assembly roll.
+/// </summary>
+public sealed record NativeRelicAssemblyRequest(
+    NativeRelicReconstructionRequest Reconstruction,
+    int? HistoryCheckTotal = null,
+    int HistoryDifficultyClass = 15,
+    bool PreviousAttemptFailed = false,
+    int? AdditionalMatchingFragmentsSinceFailure = null);
+
+public sealed record NativeRelicAssemblyResult(
+    string Status, bool? Assembled, int? DifficultyClass,
+    IReadOnlyList<string> Reasons);
+
+/// <summary>
+/// Read-only adjudication. No check is rolled and no relic, magical item,
+/// fragment, or retry state is awarded or consumed. All item choices,
+/// fragment provenance and prior failed-attempt history remain caller-owned.
+/// </summary>
+public static class NativeRelicAssembly
+{
+    public static NativeRelicAssemblyResult Resolve(NativeRelicAssemblyRequest request)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        if (request.Reconstruction is null ||
+            request.HistoryDifficultyClass is < 1 or > 100_000 ||
+            request.HistoryCheckTotal is < -1_000_000 or > 1_000_000 ||
+            request.AdditionalMatchingFragmentsSinceFailure is < 0 or > 1_000_000)
+            return new("unresolved", null, null, ["invalid-relic-assembly-input"]);
+
+        var qualification = NativeRelicReconstruction.Evaluate(request.Reconstruction);
+        if (qualification.CanAttempt != true)
+            return new(qualification.Status, null, null, qualification.Reasons);
+
+        if (request.Reconstruction.MagicalResult)
+            return new("resolved", true, null, []);
+
+        // The Warcraft ordinary-relic retry rule concerns additional matching
+        // fragments acquired AFTER the failure, not the original six fragments
+        // still present in the character's inventory.
+        if (request.PreviousAttemptFailed)
+        {
+            if (request.AdditionalMatchingFragmentsSinceFailure is null)
+                return new("unresolved", null, request.HistoryDifficultyClass,
+                    ["additional-fragment-history-unresolved"]);
+            if (request.AdditionalMatchingFragmentsSinceFailure == 0)
+                return new("ineligible", null, request.HistoryDifficultyClass,
+                    ["additional-matching-fragment-required-after-failure"]);
+        }
+
+        if (request.HistoryCheckTotal is null)
+            return new("unresolved", null, request.HistoryDifficultyClass,
+                ["history-check-unresolved"]);
+
+        return request.HistoryCheckTotal >= request.HistoryDifficultyClass
+            ? new("resolved", true, request.HistoryDifficultyClass, [])
+            : new("resolved", false, request.HistoryDifficultyClass,
+                ["failed-history-check"]);
+    }
+}

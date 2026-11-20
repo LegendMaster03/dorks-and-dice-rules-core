@@ -79,6 +79,65 @@ public sealed class NativeRelicReconstructionTests
     }
 
     [Fact]
+    public void OrdinaryRelicAssemblyRequiresSuccessfulHistoryCheck()
+    {
+        var passed = NativeRelicAssembly.Resolve(new(Relic(), HistoryCheckTotal: 15));
+        Assert.Equal("resolved", passed.Status);
+        Assert.True(passed.Assembled);
+        Assert.Equal(15, passed.DifficultyClass);
+
+        var failed = NativeRelicAssembly.Resolve(new(Relic(), HistoryCheckTotal: 14));
+        Assert.Equal("resolved", failed.Status);
+        Assert.False(failed.Assembled);
+        Assert.Contains("failed-history-check", failed.Reasons);
+    }
+
+    [Fact]
+    public void FailedAssemblyCannotBeRepeatedWithoutNewMatchingFragment()
+    {
+        var blocked = NativeRelicAssembly.Resolve(new(
+            Relic(), HistoryCheckTotal: 19, PreviousAttemptFailed: true,
+            AdditionalMatchingFragmentsSinceFailure: 0));
+        Assert.Equal("ineligible", blocked.Status);
+        Assert.Null(blocked.Assembled);
+
+        var unknown = NativeRelicAssembly.Resolve(new(
+            Relic(), HistoryCheckTotal: 20, PreviousAttemptFailed: true));
+        Assert.Equal("unresolved", unknown.Status);
+
+        var allowed = NativeRelicAssembly.Resolve(new(
+            Relic() with {
+                AvailableFragments = [new("source:dwarf", false, 7)]
+            }, HistoryCheckTotal: 15, PreviousAttemptFailed: true,
+            AdditionalMatchingFragmentsSinceFailure: 1));
+        Assert.True(allowed.Assembled);
+    }
+
+    [Fact]
+    public void MagicFragmentsUseRarityQualificationWithoutHistoryRoll()
+    {
+        var result = NativeRelicAssembly.Resolve(new(
+            Relic(true, "Rare", 3)));
+        Assert.Equal("resolved", result.Status);
+        Assert.True(result.Assembled);
+        Assert.Null(result.DifficultyClass);
+
+        var rejected = NativeRelicAssembly.Resolve(new(
+            Relic(true, "Legendary", 3)));
+        Assert.Equal("ineligible", rejected.Status);
+        Assert.Null(rejected.Assembled);
+    }
+
+    [Fact]
+    public void InvalidHistoryDcDoesNotResolveAssembly()
+    {
+        var invalid = NativeRelicAssembly.Resolve(new(
+            Relic(), HistoryCheckTotal: 15, HistoryDifficultyClass: 0));
+        Assert.Equal("unresolved", invalid.Status);
+        Assert.Null(invalid.Assembled);
+    }
+
+    [Fact]
     public void InvalidFragmentDataIsNotTreatedAsAvailableLoot()
     {
         var bad = NativeRelicReconstruction.Evaluate(
