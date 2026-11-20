@@ -1389,4 +1389,134 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Equal(3, ledger.Snapshot().Balances["generator"]);
     }
 
+    private static NativeConstructAssemblyRequest CompleteSyntheticConstruct() =>
+        new([
+            Part("power", "power", links: ["plate", "scanner", "generator", "aptitude"]),
+            Part("plate", "plate") with
+            {
+                DesignId = "construct-design.reinforced",
+                EnhancementIds = ["construct-enhancement.active-plate"]
+            },
+            Part("scanner", "scanner"),
+            Part("aptitude", "aptitude"),
+            new NativeConstructComponentInstance("generator",
+                "construct-component.fuel-housing",
+                PowerSourceId: "construct-power-source.finite")
+        ], InitialAllowance: 20);
+
+    [Fact]
+    public void CompleteCustomConstructUsesSharedIntrinsicsChoicesAndInstalledOptions()
+    {
+        using var fixture = new Fixture();
+        var assembly = CompleteSyntheticConstruct();
+        var discovery = Evaluate(fixture, Proposal(NativeOriginIntent.Custom), assembly);
+        Assert.True(discovery.Assembly.IsAuthorized,
+            string.Join("; ", discovery.Assembly.Issues.Select(x => x.Code)));
+        Assert.Equal(14, discovery.Assembly.KnownConstructionCost);
+        var candidates = discovery.Origin.EvaluatedProposal.Candidates;
+        string Candidate(string id) => candidates.Single(x =>
+            x.Identity.MechanicalDefinitionId == id).Id;
+
+        var manifestations = new NativeOriginManifestation[]
+        {
+            new("type", "construct:intrinsic:creatureType"),
+            new("size", "construct:intrinsic:size", Choices:
+                [new("size", ["large"])]),
+            new("plate", Candidate("trait.fixture.passive-plate")),
+            new("steel", Candidate("trait.fixture.material-trait")),
+            new("reinforcement", Candidate("trait.fixture.design-trait")),
+            new("active-plate", Candidate("trait.fixture.enhancement-active")),
+            new("core", Candidate("trait.fixture.source-passive")),
+            new("core-active", Candidate("trait.fixture.source-active")),
+            new("aptitude", Candidate("trait.fixture.ability-choice"), Choices:
+                [new("abilityChoice", ["wisdom"])])
+        };
+        var originProposal = Proposal(NativeOriginIntent.Custom) with
+        {
+            Manifestations = manifestations
+        };
+        var completed = Evaluate(fixture, originProposal, assembly);
+        Assert.True(completed.IsMechanicallyAuthorized,
+            string.Join("; ", completed.Origin.Issues.Select(x => x.Code)));
+        var profile = completed.Origin.Profile!;
+        Assert.Equal(NativeOriginEventStage.Completed, profile.History.Single(x =>
+            x.Id == "construction:construct-origin-test").Stage);
+        Assert.Equal("construct", profile.Underlying.InherentGrants.Single(x =>
+            x.Identity.IntrinsicSlotId == "creatureType").EffectiveValue!.Value.GetString());
+        Assert.Equal("large", profile.Underlying.InherentGrants.Single(x =>
+            x.Identity.IntrinsicSlotId == "size").EffectiveValue!.Value.GetString());
+        var aptitude = profile.Underlying.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.ability-choice");
+        Assert.Equal("wisdom", Assert.Single(aptitude.ResolvedChoices!).
+            SelectedOptionIds.Single());
+
+        foreach (var (definition, sourceId) in new[]
+        {
+            ("trait.fixture.material-trait", "construct-material.steel"),
+            ("trait.fixture.design-trait", "construct-design.reinforced"),
+            ("trait.fixture.enhancement-active", "construct-enhancement.active-plate"),
+            ("trait.fixture.source-passive", "construct-power-source.finite")
+        })
+            Assert.Equal(sourceId, profile.Underlying.InherentGrants.Single(x =>
+                x.Identity.MechanicalDefinitionId == definition)
+                .Identity.Occurrence.Source.Id);
+
+        var initialGrants = JsonSerializer.Serialize(profile.Underlying.InherentGrants);
+        var off = completed.OperatingSession!.EvaluateAllocation(
+            new Dictionary<string, bool>
+            {
+                ["plate"] = false,
+                ["generator"] = false
+            });
+        Assert.True(off.IsOperatingConfigurationValid,
+            string.Join("; ", off.Issues.Select(x => x.Code)));
+        var poweredPlate = profile.Underlying.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.enhancement-active");
+        var poweredSource = profile.Underlying.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.source-active");
+        var passiveMaterial = profile.Underlying.InherentGrants.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.material-trait");
+        Assert.Contains(poweredPlate.Id, off.InactiveOriginGrantIds);
+        Assert.Contains(poweredSource.Id, off.InactiveOriginGrantIds);
+        Assert.Contains(passiveMaterial.Id, off.ApplicableOriginGrantIds);
+        Assert.Equal(initialGrants, JsonSerializer.Serialize(profile.Underlying.InherentGrants));
+    }
+
+    [Fact]
+    public void ConstructIntrinsicAndTraitChoicesRejectUnauthorizedSelections()
+    {
+        using var fixture = new Fixture();
+        var assembly = CompleteSyntheticConstruct();
+        var discovered = Evaluate(fixture, Proposal(NativeOriginIntent.Custom), assembly);
+        var ability = discovered.Origin.EvaluatedProposal.Candidates.Single(x =>
+            x.Identity.MechanicalDefinitionId == "trait.fixture.ability-choice");
+        var invalid = Evaluate(fixture, Proposal(NativeOriginIntent.Custom) with
+        {
+            Manifestations =
+            [
+                new("type", "construct:intrinsic:creatureType"),
+                new("size", "construct:intrinsic:size", Choices:
+                    [new("size", ["giant"])]),
+                new("ability", ability.Id, Choices:
+                    [new("abilityChoice", ["charisma"])])
+            ]
+        }, assembly);
+        Assert.False(invalid.IsMechanicallyAuthorized);
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, invalid.Origin.Status);
+        Assert.Contains(invalid.Origin.Issues, x => x.Code == "dependent-choice-invalid");
+
+        var missing = Evaluate(fixture, Proposal(NativeOriginIntent.Custom) with
+        {
+            Manifestations =
+            [
+                new("type", "construct:intrinsic:creatureType"),
+                new("size", "construct:intrinsic:size"),
+                new("ability", ability.Id)
+            ]
+        }, assembly);
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, missing.Origin.Status);
+        Assert.Contains(missing.Origin.Issues, x =>
+            x.Code == "dependent-choice-incomplete");
+    }
+
 }
