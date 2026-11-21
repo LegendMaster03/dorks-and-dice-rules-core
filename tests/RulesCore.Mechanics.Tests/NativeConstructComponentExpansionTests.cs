@@ -326,7 +326,7 @@ public sealed class NativeConstructComponentExpansionTests
     }
 
     [Fact]
-    public void InfernalFirstPartySourceUsesRestFuelAndExtraFuelForOverdrive()
+    public void InfernalFirstPartySourceUsesRestFuelAndTemporaryEmpowerment()
     {
         var catalog = Catalog();
         Assert.True(catalog.TryGetById(
@@ -334,18 +334,24 @@ public sealed class NativeConstructComponentExpansionTests
         Assert.Equal("construct-power-source", source!.Category);
         var infernal = source.Definition;
         Assert.Equal(8, infernal.GetProperty("powerOutput").GetInt32());
-        Assert.Equal(12, infernal.GetProperty("overdrivePowerOutput").GetInt32());
-        Assert.Equal(50, infernal.GetProperty("overdriveIncreasePercent").GetInt32());
+        Assert.False(infernal.TryGetProperty("overdrivePowerOutput", out _));
+        Assert.False(infernal.TryGetProperty("overdriveIncreasePercent", out _));
         var sustaining = infernal.GetProperty("longRestSustenance");
         Assert.Equal("infernal-engine-fuel-charge",
             sustaining.GetProperty("resourceKind").GetString());
         Assert.Equal(1, sustaining.GetProperty("unitsPerLongRest").GetInt32());
         Assert.Equal("continues-at-normal-output-with-infernal-instability-or-overheating",
             infernal.GetProperty("fuelShortagePolicy").GetString());
-        Assert.Equal("additional-infernal-fuel-per-use",
-            infernal.GetProperty("overdriveFuelPolicy").GetString());
+        var empowerment = infernal.GetProperty("infernalEmpowerment");
+        Assert.Equal("host-verified-additional-infernal-fuel-consumption",
+            empowerment.GetProperty("activation").GetString());
+        Assert.Equal("until-next-long-rest",
+            empowerment.GetProperty("duration").GetString());
+        Assert.Equal(0, empowerment.GetProperty("powerOutputBonus").GetInt32());
         Assert.Equal("not-yet-authored",
-            infernal.GetProperty("overdriveDurationStatus").GetString());
+            empowerment.GetProperty("effectStatus").GetString());
+        Assert.Equal("not-yet-authored",
+            empowerment.GetProperty("additionalFuelQuantityStatus").GetString());
         Assert.True(catalog.TryGetById(
             infernal.GetProperty("craftingRecipeId").GetString()!,
             out var recipe));
