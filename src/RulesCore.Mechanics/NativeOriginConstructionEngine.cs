@@ -566,7 +566,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 _nativeLinks.VerifyEffectiveLinks(proposal, resourceBound, Verified);
             issues.AddRange(linkedIssues);
             var (closedGrants, closureIssues) =
-                _constraints.VerifyEffectiveRequirements(proposal, linkedGrants, Verified);
+                _constraints.VerifyEffectiveConstraints(proposal, linkedGrants, Verified);
             issues.AddRange(closureIssues);
             effective = closedGrants;
             if (effective.Count == previousCount)

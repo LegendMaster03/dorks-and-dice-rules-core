@@ -75,32 +75,13 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
                             "More characteristics were selected than the authored limit.");
                     break;
                 case NativeOriginRelationshipKind.LinkedParameters:
-                    if (subjects.Length == 0 || conditions.Length == 0 ||
-                        constraint.LinkedParameterPaths is null ||
+                    if (conditions.Length == 0 || constraint.LinkedParameterPaths is null ||
                         constraint.LinkedParameterPaths.Count == 0)
-                    {
                         Block("linked-parameter-incomplete", NativeOriginIssueSeverity.Incomplete,
                             "Linked mechanical choices require both ends and authored parameter paths.");
-                        break;
-                    }
-                    foreach (var (source, target) in constraint.LinkedParameterPaths)
-                    {
-                        foreach (var s in subjects)
-                        foreach (var t in conditions)
-                        {
-                            if (s.Grant.Parameters?.TryGetValue(source, out var a) != true ||
-                                t.Grant.Parameters?.TryGetValue(target, out var b) != true)
-                            {
-                                Block("linked-parameter-unbound",
-                                    NativeOriginIssueSeverity.Incomplete,
-                                    "The selected manifestations lack a required parameter binding.");
-                                continue;
-                            }
-                            if (!JsonElement.DeepEquals(a, b))
-                                Block("linked-parameter-conflict", NativeOriginIssueSeverity.Conflict,
-                                    "The linked parameter values do not agree.");
-                        }
-                    }
+                    // Authorship is verified above, but values may be populated only
+                    // after reconciliation and source-dependent trait binding.
+                    // Compare the final effective parameters in the closure pass.
                     break;
                 default:
                     Block("constraint-semantics-unsupported", NativeOriginIssueSeverity.Unresolved,
@@ -124,14 +105,13 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
 
 
     /// <summary>
-    /// Close authored or authenticated prerequisites over the *effective* grant
-    /// set. Initial selection is not enough: reconciliation, parameter binding,
-    /// resource binding and other prerequisite failures may have removed an
-    /// initially selected companion. Repeat until no dependent grant is left
-    /// relying on a subsequently removed grant.
+    /// Close authored prerequisites and linked parameters over the *effective*
+    /// grants. A selected gene's parameters may be bound by another selected
+    /// gene only after reconciliation. Re-evaluate until nothing relies on a
+    /// suppressed companion or on a stale parameter value.
     /// </summary>
     public (IReadOnlyList<NativeOriginEffectiveGrant> Grants,
-        IReadOnlyList<NativeOriginContractIssue> Issues) VerifyEffectiveRequirements(
+        IReadOnlyList<NativeOriginContractIssue> Issues) VerifyEffectiveConstraints(
         NativeOriginProposal proposal, IReadOnlyList<NativeOriginEffectiveGrant> effective,
         Func<string, string, NativeTableRuleDecision?> verified)
     {
@@ -143,7 +123,8 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
             .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
         var requirements = (proposal.Constraints ?? [])
             .Where(x => x is not null &&
-                x.Kind == NativeOriginRelationshipKind.Requires &&
+                x.Kind is (NativeOriginRelationshipKind.Requires or
+                    NativeOriginRelationshipKind.LinkedParameters) &&
                 x.Subjects is { Count: > 0 } && x.Conditions is not null)
             .OrderBy(x => x.Id, StringComparer.Ordinal)
             .ToArray();
@@ -173,19 +154,73 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
                 if (subjects.Length == 0)
                     continue;
 
-                var conditions = remaining.Count(grant =>
+                var conditions = remaining.Where(grant =>
                     requirement.Conditions.Any(selector =>
-                        MatchesEffective(selector, grant, offered)));
-                if (conditions >= (requirement.Minimum ?? requirement.Conditions.Count))
-                    continue;
+                        MatchesEffective(selector, grant, offered))).ToArray();
 
-                issues.Add(new("effective-required-mechanic-missing",
-                    "constraints." + requirement.Id, NativeOriginIssueSeverity.Incomplete,
-                    "A required characteristic is absent from the final effective grant set."));
-                var blocked = subjects.Select(x => x.Id)
-                    .ToHashSet(StringComparer.Ordinal);
-                remaining.RemoveAll(x => blocked.Contains(x.Id));
-                changed = true;
+                if (requirement.Kind == NativeOriginRelationshipKind.Requires)
+                {
+                    if (conditions.Length >=
+                        (requirement.Minimum ?? requirement.Conditions.Count))
+                        continue;
+                    issues.Add(new("effective-required-mechanic-missing",
+                        "constraints." + requirement.Id, NativeOriginIssueSeverity.Incomplete,
+                        "A required characteristic is absent from the final effective grant set."));
+                    Drop(subjects);
+                    continue;
+                }
+
+                // Apply verified this exact authored/table constraint already.
+                // Check its parameter equality only now, when source-dependent
+                // parameters have been bound and all suppressions are known.
+                if (requirement.LinkedParameterPaths is not { Count: > 0 })
+                    continue;
+                if (conditions.Length == 0)
+                {
+                    issues.Add(new("effective-linked-parameter-counterpart-missing",
+                        "constraints." + requirement.Id, NativeOriginIssueSeverity.Incomplete,
+                        "The linked gene's counterpart is absent from the effective Origin."));
+                    Drop(subjects);
+                    continue;
+                }
+
+                string? problem = null;
+                foreach (var pair in requirement.LinkedParameterPaths
+                    .OrderBy(x => x.Key, StringComparer.Ordinal))
+                {
+                    foreach (var subject in subjects)
+                    foreach (var condition in conditions)
+                    {
+                        if (subject.Parameters?.TryGetValue(pair.Key, out var source) != true ||
+                            condition.Parameters?.TryGetValue(pair.Value, out var target) != true)
+                        {
+                            problem = "effective-linked-parameter-unbound";
+                            break;
+                        }
+                        if (!JsonElement.DeepEquals(source, target))
+                        {
+                            problem = "effective-linked-parameter-conflict";
+                            break;
+                        }
+                    }
+                    if (problem is not null) break;
+                }
+                if (problem is null) continue;
+                var conflict = problem == "effective-linked-parameter-conflict";
+                issues.Add(new(problem, "constraints." + requirement.Id,
+                    conflict ? NativeOriginIssueSeverity.Conflict :
+                        NativeOriginIssueSeverity.Incomplete,
+                    conflict ? "The bound gene parameters disagree." :
+                        "The effective genes lack a required bound parameter."));
+                Drop(conflict ? subjects.Concat(conditions) : subjects);
+
+                void Drop(IEnumerable<NativeOriginEffectiveGrant> grants)
+                {
+                    var removed = grants.Select(x => x.Id)
+                        .ToHashSet(StringComparer.Ordinal);
+                    if (remaining.RemoveAll(x => removed.Contains(x.Id)) > 0)
+                        changed = true;
+                }
             }
         } while (changed);
 
