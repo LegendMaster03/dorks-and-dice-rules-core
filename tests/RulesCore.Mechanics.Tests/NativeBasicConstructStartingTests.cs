@@ -28,13 +28,13 @@ public sealed class NativeBasicConstructStartingTests
     }
 
     private static (NativeCatalogSnapshot Catalog, NativeConstructAssemblyRequest Assembly)
-        Reference()
+        Reference(string fileName = "construct-basic-starting-build-20261120.json")
     {
         var root = DataRoot();
         var catalog = NativeCatalogLoader.Load(NativeRulesetLayout.Resolve(
             Path.Combine(root, "rulesets"), "first-party-001"));
         using var data = JsonDocument.Parse(File.ReadAllText(Path.Combine(
-            root, "reference", "construct-basic-starting-build-20261120.json")));
+            root, "reference", fileName)));
         var assembly = JsonSerializer.Deserialize<NativeConstructAssemblyRequest>(
             data.RootElement.GetProperty("assembly").GetRawText(),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
@@ -158,6 +158,90 @@ public sealed class NativeBasicConstructStartingTests
         // Missing a day's ration does not independently shut down the engine.
         Assert.Equal(8, Assert.Single(built.OperatingSession!
             .EvaluateConfiguration().Assembly.PowerNetworks!).AvailableOutput);
+    }
+
+    [Fact]
+    public void OrdinaryWalkingUsesTheSameVerifiedConstructMovementView()
+    {
+        var (catalog, assembly) = Reference();
+        var built = Construct(catalog, assembly);
+        Assert.True(built.IsMechanicallyAuthorized);
+
+        var movement = NativeOriginMovementModeProjector.ProjectConstruct(
+            catalog, built);
+        Assert.Equal("resolved", movement.Status);
+        var walk = Assert.Single(movement.Modes);
+        Assert.Equal("walk", walk.Mode);
+        Assert.Equal(30, walk.SpeedFeet);
+        Assert.Equal("trait.construct.ordinary-ground-movement",
+            walk.DefinitionId);
+        Assert.True(movement.PreviewOnly);
+
+        // A power-disabled locomotion unit remains installed and paid for,
+        // but may not grant walking speed through a stale Origin trait.
+        var disabled = NativeOriginMovementModeProjector.ProjectConstruct(
+            catalog, built, new Dictionary<string, bool>
+            {
+                ["drive"] = false
+            });
+        Assert.Equal("none", disabled.Status);
+        Assert.Empty(disabled.Modes);
+        Assert.Equal("medium", built.Assembly.DerivedCreatureSize);
+        Assert.Contains(built.Origin.Profile!.Current.InherentGrants, grant =>
+            grant.Identity.MechanicalDefinitionId ==
+            "trait.construct.ordinary-ground-movement");
+    }
+
+    [Theory]
+    [InlineData("construct-lightweight-starting-build-20261121.json")]
+    [InlineData("construct-armored-starting-build-20261121.json")]
+    public void ProvisionalMaterialAndSurfaceVariantsReconstructThroughSameOrigin(
+        string fileName)
+    {
+        var (catalog, baselineRequest) = Reference();
+        var baseline = new NativeConstructAssemblyEvaluator(catalog)
+            .Evaluate(baselineRequest);
+        Assert.True(baseline.IsAuthorized);
+        var (_, proposed) = Reference(fileName);
+        var result = Construct(catalog, proposed);
+        Assert.True(result.IsMechanicallyAuthorized,
+            string.Join("; ", result.Origin.Issues.Select(x => x.Code)));
+        Assert.Equal(200, proposed.InitialAllowance);
+        Assert.Equal(187, result.Assembly.KnownConstructionCost);
+        Assert.Equal("medium", result.Assembly.DerivedCreatureSize);
+        Assert.NotNull(result.Assembly.RequiredConstructionResources);
+        Assert.True(result.Assembly.KnownRetainedMaterialMassPounds.HasValue);
+        Assert.True(baseline.KnownRetainedMaterialMassPounds.HasValue);
+
+        var movement = NativeOriginMovementModeProjector.ProjectConstruct(
+            catalog, result);
+        Assert.Contains(movement.Modes, x =>
+            x.Mode == "walk" && x.SpeedFeet == 30);
+        var network = Assert.Single(result.Assembly.PowerNetworks!.Where(
+            n => n.ComponentInstanceIds.Contains("generator")));
+        Assert.Equal(8, network.AvailableOutput);
+        Assert.Equal(7, network.RequestedDemand);
+
+        if (fileName.Contains("lightweight", StringComparison.Ordinal))
+        {
+            Assert.Equal(baseline.KnownRetainedMaterialMassPounds.Value - 40,
+                result.Assembly.KnownRetainedMaterialMassPounds.Value);
+            Assert.Empty(result.Assembly.PhysicalSurfaces.Where(
+                x => x.ProtectedRegionId is not null));
+        }
+        else
+        {
+            Assert.Equal(baseline.KnownRetainedMaterialMassPounds.Value + 42,
+                result.Assembly.KnownRetainedMaterialMassPounds.Value);
+            Assert.Contains(result.Assembly.PhysicalSurfaces, surface =>
+                surface.InstanceId == "outer-shell" &&
+                surface.MaterialDefinitionId == "construct-material.steel" &&
+                surface.ProtectedRegionId == "front-hull");
+        }
+        // Physical material evidence cannot silently mint protection or
+        // certify unrestricted movement before load rules are authored.
+        Assert.NotNull(result.Assembly.PhysicalLoad);
+        Assert.Equal("unresolved", result.Assembly.PhysicalLoad!.Status);
     }
 
     [Fact]
