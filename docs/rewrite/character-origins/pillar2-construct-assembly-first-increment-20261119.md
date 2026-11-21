@@ -1,5 +1,8 @@
 # Pillar 2 — Construct Assembly initial implementation increment
 
+
+> **Current playtest follow-up (2026-11-20):** The earlier statements below that no starting allowance exists describe the pre-playtest state. The working branch now sets a **provisional 200-point** allowance and provides a [163-point basic starting Construct](pillar2-construct-basic-playtest-20261120.md). This does not approve the remaining recipe/material values for production.
+
 **Branch:** `feature/pillar2-construct-assembly-20261119`
 **Baseline:** `4bb764f702bec348c111603c3accd18f48e50e0e`
 **Scope:** Construct-specific component catalog and a bounded diagnostic assembly evaluator.
