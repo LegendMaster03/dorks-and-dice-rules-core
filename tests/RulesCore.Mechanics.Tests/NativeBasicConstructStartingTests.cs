@@ -245,6 +245,69 @@ public sealed class NativeBasicConstructStartingTests
     }
 
     [Fact]
+    public void PostCreationExpansionHasNoStartingPointCapButNeedsAuthorization()
+    {
+        var (catalog, baseline) = Reference();
+        var (_, armored) = Reference(
+            "construct-armored-starting-build-20261121.json");
+        var installedPlate = armored.Components.Single(x =>
+            x.InstanceId == "outer-shell");
+        var secondPlate = installedPlate with
+        {
+            InstanceId = "rear-shell",
+            ProtectedRegionId = "rear-hull"
+        };
+        var expanded = baseline with
+        {
+            Components = baseline.Components
+                .Concat([installedPlate, secondPlate]).ToArray(),
+            InitialConstruction = false,
+            InitialAllowance = null
+        };
+        var preview = new NativeConstructAssemblyEvaluator(catalog)
+            .Evaluate(expanded);
+        Assert.True(preview.IsAuthorized,
+            string.Join("; ", preview.Issues.Select(x => x.Code)));
+        Assert.Equal(211, preview.KnownConstructionCost);
+        Assert.True(preview.KnownConstructionCost > 200);
+
+        var proposal = new NativeOriginProposal(
+            "modification-proposal", NativeOriginIntent.Custom,
+            new("rule.creature-origination", "construct-assembly"),
+            [], [], []);
+        var origin = new NativeConstructOriginConstructionService(catalog)
+            .Evaluate(new(new(proposal), expanded));
+        Assert.False(origin.IsMechanicallyAuthorized);
+        Assert.Contains(origin.Origin.Issues, issue =>
+            issue.Code == "construct-modification-authorization-deferred");
+        // A valid proposed attachment is not a free inventory transaction
+        // or permission to overwrite a previously approved Origin.
+    }
+
+    [Fact]
+    public void UnknownMaterialIsRejectedRatherThanQuotedAsFree()
+    {
+        var (catalog, baseline) = Reference();
+        var changed = baseline with
+        {
+            Components = baseline.Components.Select(x =>
+                x.InstanceId == "frame"
+                ? x with
+                {
+                    Materials = new Dictionary<string, string>
+                    {
+                        ["frame"] = "construct-material.not-in-catalog"
+                    }
+                }
+                : x).ToArray()
+        };
+        var quote = new NativeConstructAssemblyEvaluator(catalog)
+            .Evaluate(changed);
+        Assert.False(quote.IsAuthorized);
+        Assert.NotEmpty(quote.Issues);
+    }
+
+    [Fact]
     public void DailyRationEvaluationIsSharedAndDoesNotAddExtraRestCosts()
     {
         var minimum = NativeDailyRationEvaluator.AssessDay(-5, 0, false);
