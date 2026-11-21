@@ -158,7 +158,15 @@ internal sealed record NativeConstructSolarLedgerOpenResult(
 internal sealed record NativeConstructSolarLedgerSnapshot(
     long Revision, IReadOnlyDictionary<string, long> StoredPowerUnitMinutes,
     IReadOnlyDictionary<string, long> ConsecutiveDeficitMinutes,
-    IReadOnlyDictionary<string, int> ExhaustionEventsIssued);
+    IReadOnlyDictionary<string, int> ExhaustionEventsIssued)
+{
+    /// <summary>
+    /// Host-side recovery must not remove solar-deprivation exhaustion while
+    /// an operating source remains in an unresolved continuous deficit.
+    /// </summary>
+    public bool BlocksSolarExhaustionRecovery =>
+        ConsecutiveDeficitMinutes.Values.Any(minutes => minutes > 0);
+}
 
 internal sealed record NativeConstructSolarLedgerChange(
     string InstanceId, long Before, long After);
