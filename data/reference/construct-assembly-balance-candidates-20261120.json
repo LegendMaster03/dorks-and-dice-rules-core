@@ -2,7 +2,8 @@
   "_meta": {
     "status": "candidate values for quantitative assembly comparisons; first-party origin remains unplayable without approved allowance, verified size, and remaining canonical traits",
     "scope": "Construct Assembly recipe-input resource prices, not mechanical power or economic market prices",
-    "unchangedRules": "No per-component purchase cost and no post-creation allowance ceiling"
+    "unchangedRules": "No per-component purchase cost and no post-creation allowance ceiling",
+    "massStatus": "Known retained material mass is only a lower-bound subtotal, not an authorized complete body weight or encumbrance calculation"
   },
   "candidateStartingAllowance": 220,
   "candidateResourceUnitCosts": {
@@ -193,6 +194,7 @@
     "Evaluate resource cost separately from movement, survivability, offense, senses, weight and actions.",
     "Test unpowered hardware as installed mass rather than free usable traits.",
     "Check the same assembly under different material choices rather than assuming price equals capability.",
-    "Require a general mass/encumbrance mechanical consequence before claiming the overbuild is self-balancing."
+    "Require a general mass/encumbrance mechanical consequence before claiming the overbuild is self-balancing.",
+    "Compare known retained steel mass across repeated physical components, and with material substitutions; test actual mobility only after universal carrying/encumbrance mechanics are integrated."
   ]
 }

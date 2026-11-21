@@ -11,7 +11,7 @@
 - 6 existing power-source mechanisms linked to recipes, with provisional simultaneous-output figures.
 - 8 existing materials described with qualitative physical profiles; density, weight, resilience, and damage interaction are not yet mechanically authorized.
 - 8 candidate supplemental crafting inputs needed for source recipes, including one intermediate alchemical product. These are ingredient definitions, **not** new Construct Assembly components.
-- 46 exact-output recipes, all referencing existing native competency IDs. The alchemical actuator illustrates a two-stage recipe whose intermediate is not charged twice.
+- 52 exact-output recipes, all referencing existing native competency IDs. The alchemical actuator illustrates a two-stage recipe whose intermediate is not charged twice.
 
 ## Rules and authoring boundaries
 

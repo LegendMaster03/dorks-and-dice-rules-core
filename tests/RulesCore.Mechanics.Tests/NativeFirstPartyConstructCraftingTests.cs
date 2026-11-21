@@ -52,6 +52,9 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.True(wood.IsAuthorized);
         Assert.Equal(32, steel.KnownConstructionCost);
         Assert.Equal(16, wood.KnownConstructionCost);
+        Assert.Equal(56, steel.KnownRetainedMaterialMassPounds);
+        Assert.Equal(16, wood.KnownRetainedMaterialMassPounds);
+        Assert.Empty(steel.UnresolvedRetainedMassMaterials!);
         Assert.Equal(8, steel.RequiredConstructionResources!["construct-material.steel"]);
         Assert.Equal(8, wood.RequiredConstructionResources!["construct-material.wood"]);
         Assert.DoesNotContain("construct-material.steel",
@@ -115,6 +118,9 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.True(assembly.IsAuthorized,
             string.Join("; ", assembly.Issues.Select(issue => issue.Code)));
         Assert.Equal(80, assembly.KnownConstructionCost);
+        // Plating remains physically installed (and contributes to measured
+        // retained mass) even when its operational state is disabled.
+        Assert.Equal(140, assembly.KnownRetainedMaterialMassPounds);
         Assert.Equal(20,
             assembly.RequiredConstructionResources!["construct-material.steel"]);
         Assert.All(assembly.Components.Where(c => c.InstanceId.StartsWith("plate-")),
@@ -174,6 +180,7 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.Equal(size, result.DerivedCreatureSize);
         Assert.Equal(quantity,
             result.RequiredConstructionResources!["construct-material.steel"]);
+        Assert.Equal(quantity * 7, result.KnownRetainedMaterialMassPounds);
         Assert.Equal(cost, result.KnownConstructionCost);
     }
 
