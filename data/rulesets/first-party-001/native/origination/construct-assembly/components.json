@@ -293,15 +293,7 @@
     ],
     "craftingRecipeId": "crafting-recipe.construct-component.locomotion-unit",
     "powerDemand": 1,
-    "maximumGrossLoadPounds": 300,
-    "sharesLoadSupport": true,
-    "movementLoadProfile": {
-      "mode": "walk",
-      "normalSpeedFeet": 30,
-      "loadedSpeedFeet": 15,
-      "loadedAtPercent": 75,
-      "overloadedSpeedFeet": 0
-    }
+    "sharesLoadSupport": true
   },
   {
     "id": "construct-component.protective-plating",
