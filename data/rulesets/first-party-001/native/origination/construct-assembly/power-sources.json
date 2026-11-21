@@ -57,8 +57,8 @@
     "id": "construct-power-source.infernal-engine",
     "kind": "construct-power-source",
     "name": "Infernal Engine",
-    "rulesStatus": "owner-approved long-rest fuel, 8-unit normal output despite missed sustenance, and fuel-activated empowerment through next long rest; exact empowerment effect, fuel quantity and instability consequence require design",
-    "description": "An infernal generator sustaining normal 8-unit output with fuel consumed at long rests. Missed sustenance causes instability without shutting it down. Additional infernal fuel activates a temporary empowerment until the next long rest; this does not raise general power output.",
+    "rulesStatus": "owner-approved 8-unit output, long-rest fuel, and once-per-turn fire-damage Infernal Empowerment; damage amount, qualifying attacks, fuel quantity and instability remain unresolved",
+    "description": "An infernal generator with long-rest sustaining fuel. Missed sustenance imposes instability without shutting down normal power. Additional fuel activates Infernal Empowerment until the next long rest, granting a once-per-turn fire-damage enhancement once its damage value and trigger are separately authored.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
@@ -75,8 +75,12 @@
       "activation": "host-verified-additional-infernal-fuel-consumption",
       "duration": "until-next-long-rest",
       "powerOutputBonus": 0,
-      "effectStatus": "not-yet-authored",
-      "additionalFuelQuantityStatus": "not-yet-authored"
+      "effectStatus": "approved-shape-pending-damage-and-trigger",
+      "additionalFuelQuantityStatus": "not-yet-authored",
+      "damageType": "fire",
+      "maximumApplicationsPerTurn": 1,
+      "damageAmountStatus": "not-yet-authored",
+      "qualifyingAttackStatus": "not-yet-authored"
     }
   },
   {
