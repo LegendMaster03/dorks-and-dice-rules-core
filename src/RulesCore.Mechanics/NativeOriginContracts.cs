@@ -229,10 +229,33 @@ public sealed record NativeOriginIndependentGrantApplicability(
 /// role is implicit in this value type; the owning profile distinguishes them.
 /// A mixed or custom configuration may have no first-party Species label.
 /// </summary>
+/// <summary>
+/// One inherited biological gene or physical intrinsic instance. Presence is
+/// heritable evidence, not an effective grant. Expression is derived from the
+/// configuration's current grants through SourceCandidateId; unexpressed
+/// instances are latent, not a separately authored or limited state.
+/// </summary>
+public sealed record NativeOriginBiologicalGeneInstance(
+    string Id, string SourceCandidateId,
+    NativeOriginCharacteristicIdentity Identity,
+    JsonElement? ConfiguredValue = null,
+    IReadOnlyDictionary<string, JsonElement>? Parameters = null,
+    IReadOnlyList<NativeOriginChoiceSelection>? ResolvedChoices = null,
+    NativeOriginInheritedGeneEvidence? InheritedFrom = null);
+
+/// <summary>
+/// The immediate verified contributor snapshot for one inherited instance.
+/// It retains no transitive pedigree or independently grantable authority.
+/// </summary>
+public sealed record NativeOriginInheritedGeneEvidence(
+    string ContributorId, string ContributorProfileId, string ContributorRevision,
+    string SourceInstanceId, bool SourceWasGrant);
+
 public sealed record NativeOriginCurrentConfiguration(
     string? SpeciesId, string? AncestryId,
     IReadOnlyList<NativeOriginEffectiveGrant> InherentGrants,
-    string? ProfileId = null);
+    string? ProfileId = null,
+    IReadOnlyList<NativeOriginBiologicalGeneInstance>? BiologicalGenes = null);
 
 /// <summary>
 /// A completed historical reconstruction may retain its former baseline for audit,
@@ -277,8 +300,17 @@ public sealed record NativeOriginActiveTemporaryTransformation(
 /// A null plan preserves the existing manifestation-only construction contract;
 /// a nonnull plan opts into explicit transmission checks.
 /// </summary>
+/// <summary>
+/// Optional configuration for a transmitted but unexpressed instance.
+/// Values and parameters cannot bypass original offers; authored persistent
+/// choices must be fully resolved before such an instance is inheritable.
+/// </summary>
+public sealed record NativeOriginBiologicalGeneConfiguration(
+    string CandidateId, IReadOnlyList<NativeOriginChoiceSelection>? Choices = null);
+
 public sealed record NativeOriginBiologicalTransmissionPlan(
-    IReadOnlyList<string> CandidateIds);
+    IReadOnlyList<string> CandidateIds,
+    IReadOnlyList<NativeOriginBiologicalGeneConfiguration>? LatentConfigurations = null);
 
 public sealed record NativeOriginProposal(
     string Id, NativeOriginIntent Intent, NativeOriginMethodReference Method,
