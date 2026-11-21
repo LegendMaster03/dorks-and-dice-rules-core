@@ -108,12 +108,20 @@ internal static class NativeConstructRecipeVariantResolver
         NativeConstructResolvedRecipeVariant? ValidateRecipe(string recipeId, string? size)
         {
             if (!catalog.TryGetById(recipeId, out var recipe) ||
-                recipe?.Category != "crafting-recipe" ||
-                !recipe.Definition.TryGetProperty("producesDefinitionId", out var product) ||
+                recipe?.Category != "crafting-recipe")
+            {
+                issue(selectedVariantId is null ? "crafting-quote-recipe-invalid" :
+                    "construct-construction-variant-recipe-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "The selected manufacturing recipe must exist in the native catalog.");
+                return null;
+            }
+            if (!recipe.Definition.TryGetProperty("producesDefinitionId", out var product) ||
                 product.ValueKind != JsonValueKind.String ||
                 product.GetString() != sourceDefinitionId)
             {
-                issue("construct-construction-variant-product-invalid", path,
+                issue(selectedVariantId is null ? "crafting-quote-product-mismatch" :
+                    "construct-construction-variant-product-invalid", path,
                     NativeOriginIssueSeverity.Invalid,
                     "The selected recipe must manufacture its exact native source definition.");
                 return null;
