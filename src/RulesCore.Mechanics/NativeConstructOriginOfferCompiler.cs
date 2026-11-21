@@ -30,14 +30,16 @@ internal static class NativeConstructOriginOfferCompiler
             issues.Add(new(code, path, severity, detail));
 
         void AddIntrinsic(string slot, string path, JsonElement? value,
-            IReadOnlyList<NativeOriginChoiceRequirement>? choices = null)
+            IReadOnlyList<NativeOriginChoiceRequirement>? choices = null,
+            string? sourceId = null)
         {
+            var actualSource = sourceId ?? proposal.Method.RuleId;
             var source = new NativeOriginSourceReference(NativeOriginSourceKind.Native,
-                proposal.Method.RuleId);
+                actualSource);
             var occurrence = new NativeOriginSourceOccurrence(source, path);
             offers.Add(new("construct:intrinsic:" + slot,
                 new(NativeOriginCharacteristicKind.Intrinsic, occurrence,
-                    proposal.Method.RuleId + "#" + path, IntrinsicSlotId: slot),
+                    actualSource + "#" + path, IntrinsicSlotId: slot),
                 new(NativeOriginEligibility.Eligible,
                     RuleReference: proposal.Method.RuleId,
                     Explanation: "Authored intrinsic selection of the Construct Assembly method."),
@@ -137,6 +139,28 @@ internal static class NativeConstructOriginOfferCompiler
                         }
                     }
                 }
+            }
+        }
+
+        // A body-defining construction variant can establish size only through
+        // its exact source-bound manufacturing recipe. This is not a freely
+        // selected method-level intrinsic or a mandatory structural frame.
+        if (proposal.Intent == NativeOriginIntent.Custom)
+        {
+            var derived = NativeConstructBodySizeResolver.Resolve(
+                catalog, assembly.Components, Issue);
+            if (derived is not null)
+            {
+                if (offers.Any(x => x.Identity.IntrinsicSlotId == "size"))
+                    Issue("construct-body-size-method-conflict", "method.constructIntrinsics.size",
+                        NativeOriginIssueSeverity.Conflict,
+                        "Method-authored and part-derived creature sizes cannot both apply.");
+                else
+                    AddIntrinsic("size",
+                        "/constructionVariants/" + derived.VariantId +
+                        "/instance/" + derived.InstanceId,
+                        JsonSerializer.SerializeToElement(derived.Size),
+                        sourceId: derived.DefinitionId);
             }
         }
 

@@ -89,8 +89,13 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 continue;
             }
             var raw = definition.Definition;
+            if (instance.ConstructionVariantId is not null && !recipeCostMethod.HasValue)
+                Issue("construct-variant-needs-recipe-cost-model", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "A manufacturing variant needs an authored recipe-input construction method.");
             if (recipeCostMethod.HasValue)
-                recipeSelections.Add(new(definition.Id, instance.Materials));
+                recipeSelections.Add(new(definition.Id, instance.Materials,
+                    instance.ConstructionVariantId));
             var cost = recipeCostMethod.HasValue ? 0 :
                 Number(raw, "constructionCost", path, Issue);
             var baseDemand = Number(raw, "powerDemand", path, Issue);
@@ -581,6 +586,8 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 "Requested simultaneous demand exceeds output in this connected power network.");
         }
 
+        var derivedSize = NativeConstructBodySizeResolver.Resolve(
+            catalog, request.Components, Issue);
         long knownCost = knownMaterialCost + knownModificationCost;
         IReadOnlyDictionary<string, long>? requiredIngredients = null;
         if (recipeCostMethod is JsonElement costMethod)
@@ -709,7 +716,8 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                         : NativeOriginConstructionStatus.Authorized;
         return new(status, knownCost, states, failures, issues, powerStates)
         {
-            RequiredConstructionResources = requiredIngredients
+            RequiredConstructionResources = requiredIngredients,
+            DerivedCreatureSize = derivedSize?.Size
         };
     }
 
@@ -861,7 +869,8 @@ public sealed record NativeConstructComponentInstance(
     bool Enabled = true, string? ModeId = null,
     string? DesignId = null, IReadOnlyList<string>? EnhancementIds = null,
     string? PowerSourceId = null,
-    string? ParentInstanceId = null, string? MountInterfaceId = null);
+    string? ParentInstanceId = null, string? MountInterfaceId = null,
+    string? ConstructionVariantId = null);
 
 /// <summary>
 /// A passive, undirected power path between directly connected components.
@@ -906,5 +915,7 @@ public sealed record NativeConstructAssemblyResult(
     // Native recipe-input quotation exposes the sourced ingredient bill.
     // It is advisory for initial creation, not an inventory withdrawal.
     public IReadOnlyDictionary<string, long>? RequiredConstructionResources { get; init; }
+    // A verified body-defining construction variant, not independent player size.
+    public string? DerivedCreatureSize { get; init; }
     public bool IsAuthorized => Status == NativeOriginConstructionStatus.Authorized;
 }

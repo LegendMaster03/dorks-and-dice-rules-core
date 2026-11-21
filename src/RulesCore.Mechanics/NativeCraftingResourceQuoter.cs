@@ -9,7 +9,8 @@ namespace RulesCore.Mechanics;
 /// The caller supplies the already-validated selected material slots, not a price.
 /// </summary>
 internal sealed record NativeCraftingQuotedSelection(
-    string SourceDefinitionId, IReadOnlyDictionary<string, string>? MaterialSlots);
+    string SourceDefinitionId, IReadOnlyDictionary<string, string>? MaterialSlots,
+    string? ConstructionVariantId = null);
 
 internal sealed record NativeCraftingResourceQuote(
     long KnownCost, IReadOnlyDictionary<string, long> RequiredResources,
@@ -78,33 +79,11 @@ internal static class NativeCraftingResourceQuoter
                     "The constructed product must be a native definition.");
                 continue;
             }
-            if (!source.Definition.TryGetProperty("craftingRecipeId", out var recipeRef) ||
-                recipeRef.ValueKind == JsonValueKind.Null)
-            {
-                Issue("crafting-quote-recipe-unresolved", path,
-                    NativeOriginIssueSeverity.Unresolved,
-                    "The selected product has no authored manufacturing recipe.");
-                continue;
-            }
-            if (recipeRef.ValueKind != JsonValueKind.String ||
-                string.IsNullOrWhiteSpace(recipeRef.GetString()) ||
-                !catalog.TryGetById(recipeRef.GetString()!, out var recipe) ||
-                recipe?.Category != "crafting-recipe")
-            {
-                Issue("crafting-quote-recipe-invalid", path,
-                    NativeOriginIssueSeverity.Invalid,
-                    "The recipe reference must resolve to a native crafting recipe.");
-                continue;
-            }
-            if (!recipe.Definition.TryGetProperty("producesDefinitionId", out var product) ||
-                product.ValueKind != JsonValueKind.String ||
-                product.GetString() != selection.SourceDefinitionId)
-            {
-                Issue("crafting-quote-product-mismatch", path,
-                    NativeOriginIssueSeverity.Invalid,
-                    "A selected recipe must produce the exact authorized product.");
-                continue;
-            }
+            var resolved = NativeConstructRecipeVariantResolver.Resolve(
+                catalog, selection.SourceDefinitionId, selection.ConstructionVariantId,
+                path, Issue);
+            if (resolved is null) continue;
+            catalog.TryGetById(resolved.RecipeId, out var recipe);
 
             var before = issues.Count;
             var usedMaterialSlots = new HashSet<string>(StringComparer.Ordinal);
