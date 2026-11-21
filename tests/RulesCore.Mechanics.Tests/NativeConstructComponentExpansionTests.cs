@@ -62,12 +62,12 @@ public sealed class NativeConstructComponentExpansionTests
     }
 
     [Theory]
-    [InlineData("climbing-attachment", "climbing", "climb")]
-    [InlineData("flight-propulsion", "flying", "fly")]
-    [InlineData("excavation-drive", "burrowing", "burrow")]
-    [InlineData("aquatic-propulsion", "swimming", "swim")]
+    [InlineData("climbing-attachment", "climbing", "climb", 20)]
+    [InlineData("flight-propulsion", "flying", "fly", 30)]
+    [InlineData("excavation-drive", "burrowing", "burrow", 15)]
+    [InlineData("aquatic-propulsion", "swimming", "swim", 20)]
     public void MovementComponentsReferToCanonicalModeCandidates(
-        string componentSlug, string traitName, string mode)
+        string componentSlug, string traitName, string mode, int speedFeet)
     {
         var catalog = Catalog();
         Assert.True(catalog.TryGetById("construct-component." + componentSlug,
@@ -80,24 +80,68 @@ public sealed class NativeConstructComponentExpansionTests
         var effect = canonical.Definition.GetProperty("trait");
         Assert.Equal(mode, effect.GetProperty("movementMode").GetString());
         Assert.True(effect.GetProperty("requiresOperationalComponent").GetBoolean());
-        Assert.False(effect.TryGetProperty("speedFeet", out _));
+        Assert.Equal(speedFeet, effect.GetProperty("speedFeet").GetInt32());
     }
 
     [Fact]
-    public void UnbalancedFlightAssemblyIsUnresolvedRatherThanFree()
+    public void FlightBuildHasManufacturingCostAndOperationalMovement()
     {
         var catalog = Catalog();
-        var part = new NativeConstructComponentInstance(
+        var cwd = new DirectoryInfo(AppContext.BaseDirectory);
+        while (cwd is not null && !File.Exists(Path.Combine(cwd.FullName,
+            "data", "reference", "construct-basic-starting-build-20261120.json")))
+            cwd = cwd.Parent;
+        Assert.NotNull(cwd);
+        using var json = JsonDocument.Parse(File.ReadAllText(Path.Combine(
+            cwd!.FullName, "data", "reference",
+            "construct-basic-starting-build-20261120.json")));
+        var basis = JsonSerializer.Deserialize<NativeConstructAssemblyRequest>(
+            json.RootElement.GetProperty("assembly").GetRawText(),
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+
+        var flight = new NativeConstructComponentInstance(
             "flight", "construct-component.flight-propulsion",
             Materials: new Dictionary<string, string>
-            { ["propulsor"] = "construct-material.steel" });
-        var result = new NativeConstructAssemblyEvaluator(catalog).Evaluate(
-            new NativeConstructAssemblyRequest([part], InitialAllowance: 200));
-        Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Status);
-        Assert.Contains(result.Issues, issue =>
-            issue.Code == "crafting-quote-recipe-unresolved");
-        Assert.Contains(result.Issues, issue =>
-            issue.Code == "construct-power-demand-unresolved");
+                { ["propulsor"] = "construct-material.wood" },
+            ConnectedTo: ["generator"]);
+        var assembly = basis with
+        {
+            Components = basis.Components.Select(x =>
+                x.InstanceId == "drive" ? x with { Enabled = false } : x)
+                .Append(flight).ToArray()
+        };
+        var assessment = new NativeConstructAssemblyEvaluator(catalog).Evaluate(assembly);
+        Assert.True(assessment.IsAuthorized,
+            string.Join("; ", assessment.Issues.Select(x => x.Code)));
+        Assert.Equal(183, assessment.KnownConstructionCost);
+        Assert.Equal(8, Assert.Single(assessment.PowerNetworks!).RequestedDemand);
+
+        var proposal = new NativeOriginProposal(
+            "playtest-flying-construct", NativeOriginIntent.Custom,
+            new("rule.creature-origination", "construct-assembly"), [], [], []);
+        var service = new NativeConstructOriginConstructionService(catalog);
+        var draft = service.Evaluate(new(new(proposal), assembly));
+        var manifestations = draft.Origin.EvaluatedProposal.Candidates
+            .Select((candidate, i) => new NativeOriginManifestation(
+                "playtest-flight-" + i, candidate.Id,
+                SelectedValue: candidate.Identity.Kind ==
+                    NativeOriginCharacteristicKind.Intrinsic
+                    ? candidate.OfferedValue : null)).ToArray();
+        var built = service.Evaluate(new(new(proposal with
+            { Manifestations = manifestations }), assembly));
+        Assert.True(built.IsMechanicallyAuthorized,
+            string.Join("; ", built.Origin.Issues.Select(x => x.Code)));
+
+        var flightMode = NativeOriginMovementModeProjector
+            .ProjectConstruct(catalog, built);
+        Assert.Equal("resolved", flightMode.Status);
+        var fly = Assert.Single(flightMode.Modes, mode => mode.Mode == "fly");
+        Assert.Equal(30, fly.SpeedFeet);
+        Assert.Equal("construct-component.flight-propulsion", fly.SourceId);
+
+        var disabled = NativeOriginMovementModeProjector.ProjectConstruct(
+            catalog, built, new Dictionary<string, bool> { ["flight"] = false });
+        Assert.DoesNotContain(disabled.Modes, mode => mode.Mode == "fly");
     }
 
     [Fact]
@@ -157,7 +201,7 @@ public sealed class NativeConstructComponentExpansionTests
     }
 
     [Fact]
-    public void AdditionalMaterialsAreRealUnpricedDefinitions()
+    public void AdditionalMaterialsHavePlaytestPricesAndPhysicalMass()
     {
         var catalog = Catalog();
         foreach (var slug in new[]
@@ -173,24 +217,25 @@ public sealed class NativeConstructComponentExpansionTests
                 material.Definition.GetProperty("physicalProfile").ValueKind);
         }
 
-        // A genuinely selected but still unpriced material is not free.
+        // Newly selectable materials must participate in the standard quote
+        // and retained-mass accounting, rather than being treated as free.
         var plated = new NativeConstructComponentInstance("glass-plating",
             "construct-component.protective-plating",
             Materials: new Dictionary<string, string>
                 { ["plating"] = "construct-material.glass" });
         var assessment = new NativeConstructAssemblyEvaluator(catalog).Evaluate(
             new NativeConstructAssemblyRequest([plated], InitialAllowance: 200));
-        Assert.Equal(NativeOriginConstructionStatus.Unresolved, assessment.Status);
-        Assert.Contains(assessment.Issues, issue =>
-            issue.Code == "crafting-quote-resource-price-unresolved");
-        Assert.Contains("construct-material.glass",
-            assessment.UnresolvedRetainedMassMaterials ?? []);
+        Assert.True(assessment.IsAuthorized,
+            string.Join("; ", assessment.Issues.Select(x => x.Code)));
+        Assert.Equal(24, assessment.KnownConstructionCost);
+        Assert.Equal(30, assessment.KnownRetainedMaterialMassPounds);
+        Assert.True(assessment.IsBodyMassComplete);
     }
 
     [Theory]
     [InlineData("operator-station")]
     [InlineData("deployable-unit-bay")]
-    public void AdvancedControlAndDeploymentRequireAuthoredProduction(string slug)
+    public void AdvancedControlAndDeploymentResolveManufacturingRecipes(string slug)
     {
         var catalog = Catalog();
         Assert.True(catalog.TryGetById("construct-component." + slug,
@@ -200,12 +245,15 @@ public sealed class NativeConstructComponentExpansionTests
         var installed = new NativeConstructComponentInstance(slug,
             component.Id, Materials: new Dictionary<string, string>
                 { [materialSlot] = "construct-material.steel" });
+        var recipeId = component.Definition.GetProperty("craftingRecipeId").GetString()!;
+        Assert.True(catalog.TryGetById(recipeId, out var recipe));
+        Assert.Equal(component.Id,
+            recipe!.Definition.GetProperty("producesDefinitionId").GetString());
+        Assert.True(component.Definition.GetProperty("powerDemand").GetInt32() >= 0);
         var assessment = new NativeConstructAssemblyEvaluator(catalog).Evaluate(
             new NativeConstructAssemblyRequest([installed], InitialAllowance: 200));
-        Assert.Equal(NativeOriginConstructionStatus.Unresolved, assessment.Status);
-        Assert.Contains(assessment.Issues, issue =>
-            issue.Code == "crafting-quote-recipe-unresolved");
-        Assert.Contains(assessment.Issues, issue =>
-            issue.Code == "construct-power-demand-unresolved");
+        Assert.DoesNotContain(assessment.Issues, issue =>
+            issue.Code is "crafting-quote-recipe-unresolved" or
+                "construct-power-demand-unresolved");
     }
 }
