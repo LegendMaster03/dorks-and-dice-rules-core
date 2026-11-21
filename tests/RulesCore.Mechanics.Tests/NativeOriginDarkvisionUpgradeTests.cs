@@ -62,7 +62,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
 
         public NativeCatalogSnapshot Snapshot { get; }
 
-        public AlteredCatalog(JsonNode? trait)
+        public AlteredCatalog(JsonNode? trait, int? innateThresholdFeet = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             var native = Path.Combine(package, "native");
@@ -82,6 +82,26 @@ public sealed class NativeOriginDarkvisionUpgradeTests
                     ["name"] = "Cavernous Sight",
                     ["trait"] = trait.DeepClone()
                 });
+            if (innateThresholdFeet is { } threshold)
+            {
+                // The native threshold is a ruleset setting, not a property
+                // written into any Darkvision-bearing Species definition.
+                definitions.Add(new JsonObject
+                {
+                    ["id"] = "rule.creature-origination",
+                    ["kind"] = "rule",
+                    ["darkvisionSensitivity"] = new JsonObject
+                    {
+                        ["innateRangeThresholdFeet"] = threshold,
+                        ["drawbackTraitId"] = "trait.sunlight-sensitivity",
+                        ["appliesTo"] = "total-innate-darkvision",
+                        ["temporaryMagicalVision"] = "excluded"
+                    }
+                });
+                Assert.True(Catalog().TryGetById(
+                    "trait.sunlight-sensitivity", out var sunlight));
+                definitions.Add(JsonNode.Parse(sunlight!.Definition.GetRawText()));
+            }
             File.WriteAllText(Path.Combine(native, "fixture.json"),
                 definitions.ToJsonString());
             Snapshot = NativeCatalogLoader.Load(
@@ -543,5 +563,20 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         Assert.Equal("condition.dazzled", after.RequiredSunlightSensitivity?.ConditionId);
         Assert.Equal("remove-exposure-or-use-effective-protection",
             after.RequiredSunlightSensitivity?.End);
+    }
+
+    [Theory]
+    [InlineData(59, true)]
+    [InlineData(60, false)]
+    [InlineData(120, false)]
+    public void RulesetThresholdChangesTheDrawbackWithoutEditingTheNativeTrait(
+        int thresholdFeet, bool expectedSensitive)
+    {
+        using var altered = new AlteredCatalog(CanonicalCavernousSight(), thresholdFeet);
+        var view = NativeOriginDarkvisionProjector.Project(altered.Snapshot, DirectStone(), 4);
+        Assert.Equal("resolved", view.Status);
+        Assert.Equal(60, view.Darkvision!.RangeFeet);
+        Assert.Equal(thresholdFeet, view.InnateSensitivityThresholdFeet);
+        Assert.Equal(expectedSensitive, view.RequiredSunlightSensitivity is not null);
     }
 }
