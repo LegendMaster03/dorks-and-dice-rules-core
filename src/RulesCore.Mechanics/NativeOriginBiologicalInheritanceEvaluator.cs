@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using RulesCore.Content;
 
@@ -234,7 +236,7 @@ internal sealed class NativeOriginBiologicalInheritanceEvaluator(
                 }
             }
             genes.Add(new NativeOriginBiologicalGeneInstance(
-                "gene:" + proposal.Id + ":" + candidate.Id, candidate.Id,
+                LocalInstanceId(proposal.Id, candidate.Id), candidate.Id,
                 candidate.Identity, value,
                 simpleExpression ? grants[0].Parameters :
                     inheritedGene?.Parameters ?? inheritedGrant?.Parameters ??
@@ -244,6 +246,13 @@ internal sealed class NativeOriginBiologicalInheritanceEvaluator(
 
         return (genes, issues, maxInherited, maxExpressed);
     }
+
+    // A nested candidate ID contains its parent's instance ID. Hash that local
+    // source rather than embedding the entire pedigree in every new ID.
+    private static string LocalInstanceId(string proposalId, string candidateId) =>
+        "gene:" + proposalId + ":" +
+        Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(candidateId)))
+            [..24].ToLowerInvariant();
 
     private static bool Int(JsonElement source, string property, out int result)
     {
