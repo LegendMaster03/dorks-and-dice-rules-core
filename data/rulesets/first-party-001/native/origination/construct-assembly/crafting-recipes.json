@@ -1049,38 +1049,6 @@
     ]
   },
   {
-    "id": "crafting-recipe.construct-power-source.artificial-life-core",
-    "kind": "crafting-recipe",
-    "name": "Artificial-life core — manufacture",
-    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
-    "producesDefinitionId": "construct-power-source.artificial-life-core",
-    "stages": [
-      {
-        "stepId": "manufacture",
-        "competencyId": "competency.alchemy",
-        "minimumRanks": 4,
-        "dependencies": [],
-        "inputs": [
-          {
-            "materialId": "construct-material.crystal",
-            "amount": 2,
-            "retainedInProduct": true
-          },
-          {
-            "materialId": "crafting-material.arcane-catalyst",
-            "amount": 2
-          },
-          {
-            "materialId": "crafting-material.fine-mechanisms",
-            "amount": 2,
-            "retainedInProduct": true
-          }
-        ],
-        "outputs": []
-      }
-    ]
-  },
-  {
     "id": "crafting-recipe.construct-power-source.solar-crystal",
     "kind": "crafting-recipe",
     "name": "Solar/rechargeable crystal — manufacture",
