@@ -1,93 +1,105 @@
-# Pillar 2 — Infernal Engine: ordinary sustenance and Overdrive fuel
+# Pillar 2 — Infernal Engine: Sustenance and Infernal Empowerment
 
-**Status:** Owner-approved operating direction (November 21, 2026), with
-specific instability consequences, fuel availability, and Overdrive
-duration unresolved. Candidate first-party implementation awaits
-integrated acceptance.
+**Status:** Owner-approved basic fuel and empowerment model (November 21,
+2026); the enhancement's actual benefit and the instability penalty
+are not yet approved. Candidate implementation requires integrated
+acceptance and authoritative game-host fuel and rest tracking.
 
-The Infernal Engine draws inspiration from *Baldur's Gate 3* and
-*Baldur's Gate: Descent into Avernus*. Their fuel and temperature
-mechanics are reference ideas, **not** mandatory Dorks & Dice rules,
-lore, or text.
+*Baldur's Gate 3* and *Baldur's Gate: Descent into Avernus* are
+conceptual inspiration. No external setting's wording or lore is
+incorporated as a mandatory Dorks & Dice rule.
 
 ## Approved operating principles
 
-| Property | Decision |
+| Property | Design |
 | --- | --- |
-| Normal output | 8 power units |
-| Shared Overdrive output | 12 power units (+50%) |
-| Ordinary fuel | Sustaining infernal fuel, consumed at a long rest |
-| Ordinary fuel accounting | One normalized infernal-engine fuel charge per long rest |
-| If ordinary fuel is unavailable | Continues supplying normal output, with an instability/overheating consequence |
-| Activating Overdrive | Requires additional deliberately supplied infernal fuel |
-| Overdrive duration and quantity | Unresolved; do not derive from soul coins or other external material |
-| Instability/overheating severity and progression | Unresolved; to be separately designed and balanced |
-| Ordinary fuel types | Campaign-adjudicated; soul coins are an optional example, not a requirement |
+| Normal output | **8 power units** |
+| General power Overdrive | **None** for this source |
+| Ordinary sustenance | Infernal fuel paid at each long rest |
+| Sustenance accounting | One normalized infernal-fuel charge per long rest |
+| Missing sustenance | **Normal 8-unit output continues** with a separate instability/overheating drawback |
+| Infernal Empowerment | Activated through **additional, deliberately consumed infernal fuel** |
+| Empowerment duration | **Until the next long rest** |
+| Empowerment effect | **Not yet approved**; a temporary combat enhancement is intended |
+| Empowerment power-output bonus | **0** |
+| Additional fuel cost/quantity | Not yet specified |
+| Instability/overheating consequence | Not yet specified |
 
-The single normalized sustaining-fuel charge is a bookkeeping unit for
-**one long-rest supply**; it is not a claim about the physical quantity,
-material recipe, or market price of infernal fuel. If the fuel was not
-available at the long rest, the engine **does not shut down or lose
-normal power**. The game host must apply the associated drawback, but
-its exact numerical effect is deliberately not invented in this pass.
+The single sustaining-fuel charge represents the normalized supply
+needed at a long rest; the specific substance, quantity, recipe and
+price have not been balanced. A missed sustaining-fuel payment does
+not shut down the engine. The host must adjudicate an instability or
+overheating drawback, whose actual game effect remains undecided.
 
-Overdrive requires an **additional fuel payment**, separate from the
-long-rest sustenance. The host must authorize that expenditure through
-actual inventory transactions. A declaration that fuel has been
-provided is not an inventory mutation, and no quantity, duration, or
-cooldown is defined before those values are approved.
+**Infernal Empowerment replaces the earlier Infernal Overdrive
+proposal.** No extra fuel increases general available power from 8
+to 12 units. Additional fuel instead confers a temporary condition
+lasting until the next long rest. The combat effect is deliberately
+unimplemented until approved. It must not silently grant +1d4 fire
+damage, extra attacks, an additional power output, or any other
+unapproved benefit.
 
-The potential heat problem provides a useful interaction with cooling,
-containment, and heat-resistant materials in Construct Assembly, but
-those possible mitigations confer **no automatic benefit** until they
-receive separate rules and balance approval.
+The enhancement's activation is a real fuel expenditure to be
+authorized by the host against inventory. The operating preview
+accepts an already verified **active-empowerment condition**, not a
+new free fuel payment whenever power is evaluated. The next long
+rest ends that condition; the engine's normal sustaining-fuel cost
+for that rest is a separate transaction.
 
-## Gameplay consequences and source distinction
+## Narrative and engineering distinction
 
-The Infernal Engine's operator controls whether to supply sustaining
-fuel and when to spend additional fuel on Overdrive. The engine's
-instability can become a problem when its sustenance is neglected.
+Karlach's Infernal Engine in *Baldur's Gate 3* is an example of
+infernal machinery requiring stabilization. Its soul-coin-powered
+temporary enhancement and the demon-ichor boost for infernal war
+machines in *Descent into Avernus* are different inspirations for
+a temporary ability. They do **not** establish an obligation to use
+soul coins as the only fuel or to add a random catastrophe table.
 
-The Solar Collector instead uses environmental light, a finite battery,
-and an exhaustion consequence after the available energy is
-insufficient. The Soul-Powered Core retains an entirely **separate
-narrative tradeoff**: involuntary soul capture and imprisonment,
-campaign-defined soul consumption, and the approved soul-extraction
-procedure. Do not assign the soul core ordinary starvation,
-exhaustion, or infernal instability as an attempt to standardize all
-generators.
+Cooling systems, insulation, engine metallurgy, and infernal heat
+resistance are potential future integration points with Construct
+Assembly. None automatically removes the unspecified missing-fuel
+penalty or changes the empowerment effect without approval.
 
-## Candidate implementation boundaries
+The Solar Collector has its separate exhaustion drawback after a
+battery deficit. The Soul-Powered Core retains its **different
+narrative tradeoff** of involuntary capture and imprisonment; it
+does not inherit a fuel-shortage or overheating penalty.
 
-- First-party source content declares long-rest sustenance, normal
-  output, Overdrive output and the obligation to adjudicate instability
-  after missed fuel. The manufacturing recipe stays unchanged.
-- `PreviewInfernalOperation` takes externally verified sustaining-fuel
-  and additional-Overdrive-fuel flags. It reports source output and
-  whether instability adjudication is required.
-- A source lacking an authenticated current operating context cannot
-  acquire a valid runtime power grant through a generic evaluation.
-  This validation failure **is not** the mechanical effect of fuel
-  shortage: an explicitly unfueled but adjudicated source still
-  contributes 8 normal power units.
-- The preview does not spend fuel, impose a specific heat penalty,
-  schedule the next long rest, or keep Overdrive active for an invented
-  number of rounds.
-- The host must prevent player-supplied booleans from bypassing actual
-  fuel inventory, long-rest events, or instability consequences.
-- No change is made to the Soul-Powered Core's capture, custody,
-  consumption, or extraction rules.
+## Candidate implementation and trust boundary
 
-## Remaining decisions and tests
+- The native source definition contains only 8 general power units.
+  It has no `overdrivePowerOutput` field.
+- `infernalEmpowerment` declares activation through authenticated
+  additional fuel, an end point of `until-next-long-rest`, zero
+  generic output bonus, and an explicit unresolved benefit.
+- `PreviewInfernalOperation` reports ordinary fuel compliance,
+  host-verified active empowerment, engine output, and whether the
+  unfinalized stability penalty must be adjudicated.
+- The evaluator **rejects** an infernal output override that claims
+  more than its fixed normal rating; other generators retain their
+  separate Overdrive models.
+- A no-context generic runtime evaluation cannot certify infernal
+  fuel and instability state. The 8-unit rating is still available
+  when the host confirms that ordinary sustenance was missed.
+- The host must persist the temporary condition, expire it at the
+  next long rest, validate the fuel expenditure, and enforce the
+  resulting combat effects once separately approved.
+- Preview interfaces neither spend fuel nor apply any combat bonus.
+  No fuel conversion, duration in rounds, or heat-damage formula
+  is being invented.
+- The existing ingredient-based manufacturing recipe is unchanged.
 
-1. Define what counts as infernal fuel, whether different fuels are
-   interchangeable, and how their availability and crafting work.
-2. Establish the real gameplay effect of insufficient long-rest
-   sustenance, including whether heat-resistance/cooling can mitigate it.
-3. Set the exact additional fuel cost and duration of Overdrive.
-4. Test the source against the existing power-network, multi-source
-   dispatch, inventory, rest, and Construct Assembly infrastructure
-   after the stack is integrated.
+## Outstanding design choices
 
-No final Overdrive timer, heat progression formula, or inferred soul
-fuel requirement is part of this approval.
+1. The actual temporary benefit of Infernal Empowerment, such as
+   fire damage or a different combat capability, and any limits
+   needed to avoid disproportionate benefits for multiattack builds.
+2. Acceptable infernal fuels and the exact **additional** fuel cost
+   per empowerment activation.
+3. The concrete instability/overheating penalty and how cooling
+   and materials may modify it.
+4. Host integration for inventory consumption, long rests, temporary
+   effects, and recovery, followed by WorkChat acceptance tests.
+
+The common +50% Overdrive principle remains available to other
+power sources, but it is not applied to the Infernal Engine.
