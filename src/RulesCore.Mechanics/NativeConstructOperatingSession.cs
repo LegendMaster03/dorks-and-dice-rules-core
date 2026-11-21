@@ -359,6 +359,13 @@ public sealed class NativeConstructOperatingSession
                     out var state) && state.SourceSupplyingPower == true)
                 .Sum(x => (long)x.EffectiveOutput);
             var nonSolarOutput = Math.Max(0, network.AvailableOutput - solarCapacity);
+            var activeSolarCount = inNetwork.Count(x =>
+                componentById.TryGetValue(x.Part.InstanceId, out var state) &&
+                state.SourceSupplyingPower == true);
+            if (network.RequestedDemand > 0 && activeSolarCount > 1)
+                issues.Add(new("construct-solar-multiple-source-allocation-unresolved",
+                    "solar.powerNetworks", NativeOriginIssueSeverity.Unresolved,
+                    "More than one active solar source requires an approved dispatch priority."));
             if (network.RequestedDemand > 0 && solarCapacity > 0 &&
                 nonSolarOutput > 0)
                 issues.Add(new("construct-solar-shared-network-allocation-unresolved",
