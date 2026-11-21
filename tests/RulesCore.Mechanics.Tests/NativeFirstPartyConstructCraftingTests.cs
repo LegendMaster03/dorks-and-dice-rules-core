@@ -237,7 +237,7 @@ public sealed class NativeFirstPartyConstructCraftingTests
     }
 
     [Fact]
-    public void ProvisionalLoadSupportDetectsHeavyArmorWithoutBanningInstallation()
+    public void HeavyInstalledSurfacesRemainPhysicalWithoutAssumedLocomotionCapacity()
     {
         var catalog = Catalog();
         var parts = new List<NativeConstructComponentInstance>
@@ -253,15 +253,10 @@ public sealed class NativeFirstPartyConstructCraftingTests
                 "plating", "steel", enabled: false));
 
         var result = Quote(catalog, [.. parts]);
-        Assert.True(result.IsAuthorized,
-            string.Join("; ", result.Issues.Select(x => x.Code)));
+        Assert.True(result.IsAuthorized);
         Assert.NotNull(result.PhysicalLoad);
-        Assert.Equal("overloaded", result.PhysicalLoad.Status);
-        Assert.Equal(300, result.PhysicalLoad.VerifiedSupportCapacityPounds);
-        Assert.True(result.PhysicalLoad.MinimumDeficitPounds > 0);
-        Assert.Equal("stalled", result.PhysicalMovement?.Status);
-        Assert.Equal("walk", result.PhysicalMovement?.Mode);
-        Assert.Equal(0, result.PhysicalMovement?.SpeedFeet);
+        Assert.Equal("unresolved", result.PhysicalLoad.Status);
+        Assert.Null(result.PhysicalLoad.VerifiedSupportCapacityPounds);
         Assert.All(parts, part =>
             Assert.Contains(result.Components, state =>
                 state.InstanceId == part.InstanceId && state.Installed));
@@ -277,30 +272,28 @@ public sealed class NativeFirstPartyConstructCraftingTests
     }
 
     [Fact]
-    public void PoweredSupportsCanShareLoadWithoutProvingUnknownCompleteMass()
+    public void LoadSharingMetadataDoesNotInventNumericalCapacity()
     {
         var catalog = Catalog();
         var components = new List<NativeConstructComponentInstance>
         {
             Part("housing", "power-source-housing", "housing", "steel",
                 powerSource: "construct-power-source.mechanical-engine",
-                links: ["drive-a", "drive-b", "plate-0", "plate-1",
-                        "plate-2", "plate-3", "plate-4", "plate-5"]),
+                links: ["drive-a", "drive-b"]),
             Part("drive-a", "locomotion-unit", "contact", "steel"),
             Part("drive-b", "locomotion-unit", "contact", "steel")
         };
-        for (var i = 0; i < 6; i++)
-            components.Add(Part("plate-" + i, "protective-plating",
-                "plating", "steel", enabled: false));
-
         var result = Quote(catalog, [.. components]);
         Assert.True(result.IsAuthorized);
         Assert.Equal("unresolved", result.PhysicalLoad?.Status);
-        Assert.Equal(600, result.PhysicalLoad?.VerifiedSupportCapacityPounds);
-        Assert.Null(result.PhysicalLoad?.WithinSupportCapacity);
-        Assert.Equal("unresolved", result.PhysicalMovement?.Status);
-        Assert.Null(result.PhysicalMovement?.SpeedFeet);
-        Assert.Equal(30, result.PhysicalMovement?.UpperBoundSpeedFeet);
+        Assert.Null(result.PhysicalLoad?.VerifiedSupportCapacityPounds);
+        Assert.Equal(2, result.PhysicalLoadSupports.Count);
+        Assert.All(result.PhysicalLoadSupports, x =>
+        {
+            Assert.True(x.Operating);
+            Assert.True(x.SharesLoad);
+            Assert.Null(x.MaximumGrossLoadPounds);
+        });
     }
 
     [Fact]
@@ -328,7 +321,7 @@ public sealed class NativeFirstPartyConstructCraftingTests
     }
 
     [Fact]
-    public void OfflineDriveCannotGrantMovementEvenWhenHardwareRemainsInstalled()
+    public void OfflineDriveRemainsInstalledWithoutClaimingLoadSupport()
     {
         var catalog = Catalog();
         var parts = new[]
@@ -341,12 +334,13 @@ public sealed class NativeFirstPartyConstructCraftingTests
         };
         var result = Quote(catalog, parts);
         Assert.All(result.Components, x => Assert.True(x.Installed));
-        Assert.Equal("unavailable", result.PhysicalMovement?.Status);
-        Assert.Null(result.PhysicalMovement?.SpeedFeet);
+        var drive = Assert.Single(result.PhysicalLoadSupports);
+        Assert.False(drive.Operating);
+        Assert.Null(drive.MaximumGrossLoadPounds);
     }
 
     [Fact]
-    public void LightInstalledHardwareStillNeedsCompleteMassBeforeSpeedGrant()
+    public void ActiveDriveWithUnauthoredCapacityCannotProveMovement()
     {
         var catalog = Catalog();
         var result = Quote(catalog,
@@ -354,15 +348,13 @@ public sealed class NativeFirstPartyConstructCraftingTests
                 powerSource: "construct-power-source.mechanical-engine",
                 links: ["drive"]),
             Part("drive", "locomotion-unit", "contact", "wood"));
-        Assert.True(result.IsAuthorized,
-            string.Join("; ", result.Issues.Select(x => x.Code)));
-        Assert.Equal("unresolved", result.PhysicalMovement?.Status);
-        Assert.Null(result.PhysicalMovement?.SpeedFeet);
-        Assert.Equal(30, result.PhysicalMovement?.UpperBoundSpeedFeet);
+        Assert.True(result.IsAuthorized);
+        Assert.Equal("unresolved", result.PhysicalLoad?.Status);
+        Assert.Null(Assert.Single(result.PhysicalLoadSupports).MaximumGrossLoadPounds);
     }
 
     [Fact]
-    public void InstalledSteelPlatesProvideLocalProtectionCandidatesButNoGlobalArmor()
+    public void InstalledPlatesIdentifyLocalCoverageWithoutInventingArmor()
     {
         var catalog = Catalog();
         var parts = new[]
@@ -375,19 +367,16 @@ public sealed class NativeFirstPartyConstructCraftingTests
                 enabled: false) with { ProtectedRegionId = "limb" }
         };
         var result = Quote(catalog, parts);
-        Assert.True(result.IsAuthorized,
-            string.Join("; ", result.Issues.Select(x => x.Code)));
+        Assert.True(result.IsAuthorized);
         var shell = NativePhysicalProtectionEvaluator.Evaluate(
             "shell", result.PhysicalSurfaces);
         var limb = NativePhysicalProtectionEvaluator.Evaluate(
             "limb", result.PhysicalSurfaces);
         var uncovered = NativePhysicalProtectionEvaluator.Evaluate(
             "control-node", result.PhysicalSurfaces);
-        Assert.Equal("candidate", shell.Status);
-        Assert.Equal(4, shell.KnownCandidateFlatDamageReduction);
+        Assert.Equal("present", shell.Status);
         Assert.Equal(2, shell.ContributingSurfaces.Count);
-        Assert.Equal("candidate", limb.Status);
-        Assert.Equal(0, limb.KnownCandidateFlatDamageReduction);
+        Assert.Equal("present", limb.Status);
         Assert.Equal("none", uncovered.Status);
         Assert.All(result.Components, state =>
             Assert.Empty(state.ActiveOperationalOriginTraitIds!));
@@ -407,7 +396,7 @@ public sealed class NativeFirstPartyConstructCraftingTests
     }
 
     [Fact]
-    public void TooMuchPassivePlateMaterialCanStallWalkingWithoutRemovingTheArmor()
+    public void RepeatedPlatesDoNotAuthorizeAutomaticStallOrStackedDamageReduction()
     {
         var catalog = Catalog();
         var parts = new List<NativeConstructComponentInstance>
@@ -425,14 +414,14 @@ public sealed class NativeFirstPartyConstructCraftingTests
 
         var built = Quote(catalog, [.. parts]);
         Assert.True(built.IsAuthorized);
-        Assert.Equal("stalled", built.PhysicalMovement?.Status);
-        Assert.Equal(0, built.PhysicalMovement?.SpeedFeet);
+        Assert.Equal("unresolved", built.PhysicalLoad?.Status);
+        Assert.Null(built.PhysicalLoad?.VerifiedSupportCapacityPounds);
         Assert.Equal(6, built.PhysicalSurfaces.Count(x =>
             x.ProtectedRegionId == "outer-shell"));
-        var hypothetical = NativePhysicalProtectionEvaluator.Evaluate(
+        var coverage = NativePhysicalProtectionEvaluator.Evaluate(
             "outer-shell", built.PhysicalSurfaces);
-        Assert.Equal("candidate", hypothetical.Status);
-        Assert.Equal(12, hypothetical.KnownCandidateFlatDamageReduction);
+        Assert.Equal("present", coverage.Status);
+        Assert.Equal(6, coverage.ContributingSurfaces.Count);
     }
 
     [Fact]
@@ -445,7 +434,6 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.Equal(56, build.KnownRetainedMaterialMassPounds);
         Assert.True(build.IsBodyMassComplete);
         Assert.Empty(build.ProductsWithUncertifiedMass!);
-        Assert.Null(build.PhysicalMovement);
     }
 
     [Fact]
@@ -463,7 +451,7 @@ public sealed class NativeFirstPartyConstructCraftingTests
     }
 
     [Fact]
-    public void CertifiedBodyAndDriveCanBeReevaluatedUsingTrustedPayloadScenario()
+    public void CertifiedBodyAndDriveStillNeedApprovedCapacityAndInventoryEvidence()
     {
         var catalog = Catalog();
         var build = Quote(catalog,
@@ -475,37 +463,24 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.True(build.IsAuthorized);
         Assert.True(build.IsBodyMassComplete);
         Assert.Empty(build.ProductsWithUncertifiedMass!);
-        // Housing: 10 lb wood; drive: 8 lb wood + 2 lb mechanisms;
-        // engine: 21 lb iron + 4 lb mechanisms.
         Assert.Equal(45, build.KnownRetainedMaterialMassPounds);
-        // Character inventory has not provided its authoritative load yet:
-        // construction preview must not turn absent payload into zero.
         Assert.Equal("unresolved", build.PhysicalLoad?.Status);
-        Assert.Null(build.PhysicalMovement?.SpeedFeet);
         var support = Assert.Single(build.PhysicalLoadSupports);
         Assert.Equal("drive", support.SourceId);
         Assert.True(support.Operating);
-        Assert.Equal(300, support.MaximumGrossLoadPounds);
+        Assert.Null(support.MaximumGrossLoadPounds);
 
-        // An independent trusted inventory caller can supply its measured
-        // payload to the general evaluator without editing the Origin state.
+        // Even a hypothetical complete inventory payload cannot create an
+        // unauthored locomotion capacity or an automatic speed rule.
         var bodyMass = build.KnownRetainedMaterialMassPounds!.Value;
-        var unloaded = NativePhysicalLoadEvaluator.Evaluate(
-            bodyMass, true, 0, build.PhysicalLoadSupports);
-        var loaded = NativePhysicalLoadEvaluator.Evaluate(
-            bodyMass, true, 250, build.PhysicalLoadSupports);
-        var overloaded = NativePhysicalLoadEvaluator.Evaluate(
-            bodyMass, true, 300, build.PhysicalLoadSupports);
-        NativePhysicalMovementSource[] sources =
-        [
-            new("drive", true, new("walk", 30, 15, 75, 0))
-        ];
-        Assert.Equal(30, NativePhysicalMovementEvaluator.Evaluate(
-            unloaded, sources).SpeedFeet);
-        Assert.Equal(15, NativePhysicalMovementEvaluator.Evaluate(
-            loaded, sources).SpeedFeet);
-        Assert.Equal("stalled", NativePhysicalMovementEvaluator.Evaluate(
-            overloaded, sources).Status);
+        foreach (var payload in new long[] { 0, 250, 300 })
+        {
+            var assessed = NativePhysicalLoadEvaluator.Evaluate(
+                bodyMass, true, payload, build.PhysicalLoadSupports);
+            Assert.Equal("unresolved", assessed.Status);
+            Assert.Null(assessed.VerifiedSupportCapacityPounds);
+        }
         Assert.All(build.Components, part => Assert.True(part.Installed));
     }
+
 }
