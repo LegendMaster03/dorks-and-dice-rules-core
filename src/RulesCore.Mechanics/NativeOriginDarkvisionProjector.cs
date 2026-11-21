@@ -140,9 +140,9 @@ public static class NativeOriginDarkvisionProjector
                 !canonical.TryGetProperty("addToExistingDarkvisionFeet", out var add) ||
                 add.ValueKind != JsonValueKind.Number ||
                 !add.TryGetInt32(out var added) || added is <= 0 or > 1_000_000 ||
-                !canonical.TryGetProperty("requiredCharacterLevel", out var threshold) ||
-                threshold.ValueKind != JsonValueKind.Number ||
-                !threshold.TryGetInt32(out var unlock) || unlock <= 0 ||
+                !canonical.TryGetProperty("requiredCharacterLevel", out var unlockField) ||
+                unlockField.ValueKind != JsonValueKind.Number ||
+                !unlockField.TryGetInt32(out var unlock) || unlock <= 0 ||
                 !canonical.TryGetProperty("stacking", out var stacking) ||
                 stacking.ValueKind != JsonValueKind.String ||
                 stacking.GetString() != "once-per-feature" ||

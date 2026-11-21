@@ -83,7 +83,7 @@ class Pillar2NarrativeHeritageTests(unittest.TestCase):
         self.assertTrue(report["canExactlyReconstructAllModeledTargetCharacteristics"])
         self.assertEqual([], self.annotate(report)["narrativeHypotheses"])
 
-    def test_hypothesis_does_not_allow_unoffered_earthbound_manifestation(self):
+    def test_unoffered_source_occurrence_requires_eligibility(self):
         inputs = [
             contributor("gnome", "species.gnome"),
             contributor("dwarf", "species.dwarf"),
