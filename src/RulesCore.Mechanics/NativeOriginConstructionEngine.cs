@@ -642,7 +642,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         }
         resolved = resolved.Concat(derived).ToArray();
         issues.AddRange(NativeOriginBiologicalTransmissionValidator.ReviewExpression(
-            transmission, resolved));
+            transmission, proposal, resolved));
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
         // selected, reconciled value in each universal physical foundation slot
