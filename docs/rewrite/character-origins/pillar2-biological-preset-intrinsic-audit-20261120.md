@@ -102,3 +102,31 @@ to saved Origin JSON; do not silently rewrite historical contributor IDs,
 source occurrence paths, or table authorization evidence. For previously
 saved Powerful Build or spell grants, an identity-only rewrite is not a valid
 mechanical update: reconstruct and revalidate against current native rules.
+
+### Replaying a committed direct Origin across the ID change
+
+For a trusted direct biological Origin export, run the native offline migration
+with the exact saved and current native catalogs. The supplied roots are the
+respective `data/rulesets` directories. The current root must have the reviewed
+biological gene migration manifest in the adjacent `data/migrations` directory.
+
+```bash
+dotnet run --project tools/NativeOriginCatalogMigration -- \
+  /path/to/old/data/rulesets data/rulesets stored-origin.json migrated-origin.json
+```
+
+The export accepts `fingerprint`, `proposal`, and `profile`, plus optional
+`character` (the same trusted NativeCharacterRequest used for progression) and
+`ledger`. A saved ledger requires the character input. Run the migration on the
+original stored export, before applying the ID-only rewrite. The tool replays the
+proposal against both catalogs, verifies the past committed profile, and compares
+the two reconstructions using the reviewed canonical ID map. Only display
+metadata in trait payloads may differ. Changed mechanics, source provenance,
+choices, or resource courses require manual reconciliation.
+
+The result carries the exact freshly reconstructed profile and current catalog
+fingerprint. A compatible existing ledger retains all remaining casts and gains
+one revision. It is never initialized during migration. Save the new profile and
+ledger together after checking the stored revision and fingerprint. The output
+file is new, and the operator can keep the old export for audit. Mixed Origins,
+reconstructions and changed resource courses require their own migration review.

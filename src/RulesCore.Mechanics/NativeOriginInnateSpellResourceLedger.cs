@@ -297,6 +297,61 @@ public static class NativeOriginInnateSpellResourceLedger
     }
 
     /// <summary>
+    /// Compute a catalog-only migration for an authenticated, already spent
+    /// ledger. The host must verify both catalog snapshots, both reconstructed
+    /// Origins, the reviewed trait ID map and the stored revision before commit.
+    /// </summary>
+    public static NativeOriginInnateSpellLedgerResult MigrateCatalog(
+        NativeCatalogSnapshot previousCatalog, NativeOriginConstructionResult previousOrigin,
+        NativeCharacterProjection previousCharacter, NativeCatalogSnapshot currentCatalog,
+        NativeOriginConstructionResult currentOrigin, NativeCharacterProjection currentCharacter,
+        NativeOriginInnateSpellLedgerState state, long expectedRevision,
+        IReadOnlyDictionary<string, string> reviewedTraitIds)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(reviewedTraitIds);
+        var previous = Resolve(previousCatalog, previousOrigin, previousCharacter);
+        if (previous.Reason is not null)
+            return Fail(previous.Reason);
+        var current = Resolve(currentCatalog, currentOrigin, currentCharacter);
+        if (current.Reason is not null)
+            return Fail(current.Reason);
+
+        var oldView = previous.Projection!;
+        var newView = current.Projection!;
+        var oldPools = Pools(oldView);
+        var newPools = Pools(newView);
+        if (oldPools is null || newPools is null)
+            return Fail("spell-free-use-pools-invalid");
+        var problem = ValidateSnapshot(previousCatalog, previousOrigin, oldView,
+            state, expectedRevision, oldPools,
+            legacyProjectionFingerprint: LegacyPreparationFingerprint(oldView));
+        if (problem is not null)
+            return Fail(problem);
+        if (state.RulesetId != currentCatalog.RulesetId ||
+            state.CatalogFingerprint == currentCatalog.Fingerprint ||
+            state.OriginProfileId != currentOrigin.Profile!.Id ||
+            state.ProposalId != currentOrigin.EvaluatedProposal.Id ||
+            state.CharacterLevel != newView.CharacterLevel ||
+            !oldPools.SequenceEqual(newPools) ||
+            !oldView.Spells.OrderBy(x => x.GrantId, StringComparer.Ordinal)
+                .Select(x => x with
+                {
+                    TraitId = reviewedTraitIds.GetValueOrDefault(x.TraitId, x.TraitId)
+                })
+                .SequenceEqual(newView.Spells.OrderBy(x => x.GrantId, StringComparer.Ordinal)))
+            return Fail("spell-ledger-catalog-course-changed");
+
+        return new("resolved", state with
+        {
+            CatalogFingerprint = currentCatalog.Fingerprint,
+            ProjectionFingerprint = Fingerprint(newView),
+            Revision = state.Revision + 1,
+            RemainingFreeCasts = state.RemainingFreeCasts.ToFrozenDictionary(StringComparer.Ordinal)
+        });
+    }
+
+    /// <summary>
     /// Verify an exact table decision outcome against both native projections.
     /// The table chooses the final remaining count, not a hidden algorithm.
     /// Its native maximum is still authoritative, and the decision must
@@ -351,14 +406,16 @@ public static class NativeOriginInnateSpellResourceLedger
         NativeCatalogSnapshot catalog, NativeOriginConstructionResult origin,
         NativeOriginInnateSpellProgressionProjector.View projection,
         NativeOriginInnateSpellLedgerState state, long expectedRevision,
-        IReadOnlyDictionary<string, int> allowed)
+        IReadOnlyDictionary<string, int> allowed, string? legacyProjectionFingerprint = null)
     {
         if (state.RulesetId != catalog.RulesetId ||
             state.CatalogFingerprint != catalog.Fingerprint ||
             state.OriginProfileId != origin.Profile!.Id ||
             state.ProposalId != origin.EvaluatedProposal.Id ||
             state.CharacterLevel != projection.CharacterLevel ||
-            state.ProjectionFingerprint != Fingerprint(projection))
+            (state.ProjectionFingerprint != Fingerprint(projection) &&
+                (legacyProjectionFingerprint is null ||
+                    state.ProjectionFingerprint != legacyProjectionFingerprint)))
             return "spell-ledger-snapshot-mismatch";
 
         if (state.Revision < 0 || state.Revision == long.MaxValue ||
@@ -425,6 +482,26 @@ public static class NativeOriginInnateSpellResourceLedger
             .ToArray();
         var bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(
             new { view.CharacterLevel, Spells = canonical }));
+        return Convert.ToHexString(SHA256.HashData(bytes));
+    }
+
+    // Pre-canonical ledgers serialized a default false AlwaysPrepared field.
+    // Only catalog migration can read that format. A true prepared spell was a
+    // mechanical difference and requires manual reconciliation.
+    private static string LegacyPreparationFingerprint(
+        NativeOriginInnateSpellProgressionProjector.View view)
+    {
+        var oldSpells = view.Spells.OrderBy(x => x.GrantId, StringComparer.Ordinal)
+            .Select(x => new
+            {
+                x.GrantId, x.TraitId, x.SourceId, x.SpellId, x.Availability,
+                x.UnlockCharacterLevel, x.SpellcastingAbility, x.AtWill,
+                AlwaysPrepared = false,
+                x.SlotCasting, x.FreeUsesPerRecharge, x.FreeUsesFormula, x.Recharge,
+                x.FreeCastSpellLevel
+            }).ToArray();
+        var bytes = JsonSerializer.SerializeToUtf8Bytes(
+            new { view.CharacterLevel, Spells = oldSpells });
         return Convert.ToHexString(SHA256.HashData(bytes));
     }
 
