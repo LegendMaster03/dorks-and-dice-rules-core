@@ -66,6 +66,7 @@ class ConstructAssemblyBalanceResearchTests(unittest.TestCase):
             "overbuilt-wood-plating": (225, 294, 0),
             "overbuilt-stone-plating": (225, 546, 12),
             "overbuilt-cloth-plating": (189, 258, 0),
+            "overbuilt-five-stone-one-cloth-plating": (219, 498, 10),
         }
         for case_id, numbers in expected.items():
             row = self.rows[case_id]
@@ -77,6 +78,10 @@ class ConstructAssemblyBalanceResearchTests(unittest.TestCase):
         self.assertGreater(
             self.rows["overbuilt-stone-plating"]["knownMinimumRetainedMassLb"],
             self.rows["all-steel-overbuilt"]["knownMinimumRetainedMassLb"])
+        mixed = self.rows["overbuilt-five-stone-one-cloth-plating"]
+        self.assertEqual(1, mixed["candidateAllowanceHeadroom"])
+        self.assertFalse(mixed["massComplete"])
+        self.assertEqual(900, mixed["nominalGrossLoadSupportCeilingLb"])
 
     def test_intermediate_ingredient_not_purchased_twice(self):
         actuator = _manufacture(

@@ -24,7 +24,7 @@ The source-defined *nominal power output* assumes the installed source could be 
 
 ## Reproduced source quantities
 
-The candidate starting allowance is **220 points, unapproved**. All numbers below are provisional, and each scenario currently has *incomplete* mass accounting.
+The candidate starting allowance is **220 points, unapproved**. The ten source-based comparisons below are provisional, and each scenario currently has *incomplete* mass accounting.
 
 | Assembly | Resource cost | Known minimum mass (lb) | Requested demand / nominal output | Maximum potential gross support (lb) | Hypothetical same-region DR sum |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -36,6 +36,7 @@ The candidate starting allowance is **220 points, unapproved**. All numbers belo
 | Overbuilt with wood plating, 3 drives | 225 | 294 | 4 / 4 | 900 | 0 |
 | Overbuilt with stone plating, 3 drives | 225 | 546 | 4 / 4 | 900 | 12 |
 | Overbuilt with cloth plating, 3 drives | 189 | 258 | 4 / 4 | 900 | 0 |
+| Overbuilt with five stone plates and one cloth plate, 3 drives | 219 | 498 | 4 / 4 | 900 | 10 |
 | Small nonhumanoid Construct | 95 | 58 | 3 / 5 | 300 | 0 |
 
 **No row demonstrates a fully operational or playable Construct.** No row proves a speed or attack capability. The provisional protection sums do not prove actual covered area, attack applicability, stacking, bypass, or effective Armor Class.
@@ -67,7 +68,7 @@ With six independent plating components and all other construction choices uncha
 - Wood changes the total to **225 points and 294 lb**, with **zero** candidate protection.
 - Cloth changes the total to **189 points and 258 lb**, also with **zero** candidate protection.
 
-Stone is **72 points cheaper than steel** for the same *provisional* per-layer DR in these assumptions, at the cost of **72 additional pounds**. With three candidate drives, the minimum 546 lb is still below the nominal 675 lb (75%) loaded-speed threshold. If the unmeasured mass and payload turn out small enough and all drives operate, the intended additional mass penalty might not apply. These data do not justify changing the source values yet, but they identify a potential pricing/protection mismatch.
+Stone is **72 points cheaper than steel** for the same *provisional* per-layer DR in these assumptions, at the cost of **72 additional pounds**. Replacing just one stone plate with cloth yields a **219-point** assembly (1 point under the candidate allowance), with **498 lb known minimum mass** and a hypothetical single-region protection sum of **10**. This mixed-material result is particularly sensitive to the allowance choice: nominal three-drive support is still 900 lb and nominal demand equals output at 4. With three candidate drives, both 498 lb and the all-stone minimum 546 lb are below the nominal 675 lb (75%) loaded-speed threshold. If the unmeasured mass and payload turn out small enough and all drives operate, the intended additional mass penalty might not apply. These data do not justify changing the source values yet, but they identify a potential pricing/protection mismatch.
 
 **Implication:** Price, protective coverage, durability and mobility must be compared as a joint configuration. Candidate local protection values are **not** a license to stack six DR layers in an actual attack resolution.
 

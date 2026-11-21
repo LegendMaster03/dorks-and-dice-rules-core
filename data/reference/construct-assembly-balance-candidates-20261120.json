@@ -5,7 +5,7 @@
     "unchangedRules": "No per-component purchase cost and no post-creation allowance ceiling",
     "massStatus": "The three illustrative builds currently have partial, lower-bound retained mass even though selected first-party component recipes have provisional complete-mass certificates.",
     "sampleMethod": "Preliminary arithmetic from recipe-input material quantities, selected materials and selected power-source recipes, with all cost values provisional; sample assembly links, functional dependencies and physical envelopes require authoring.",
-    "balancingStatus": "Nine native recipe-based sensitivity comparisons recorded in docs/rewrite/character-origins/pillar2-construct-quantitative-sensitivity-20261120.md. No approval of 220-point allowance, movement, DR stacking, fuel availability or first-party character authorization."
+    "balancingStatus": "Ten native recipe-based sensitivity comparisons recorded in docs/rewrite/character-origins/pillar2-construct-quantitative-sensitivity-20261120.md. No approval of 220-point allowance, movement, DR stacking, fuel availability or first-party character authorization."
   },
   "candidateStartingAllowance": 220,
   "candidateResourceUnitCosts": {

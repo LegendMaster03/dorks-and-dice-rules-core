@@ -270,6 +270,12 @@ def scenarios(reference: dict[str, Any]) -> list[dict[str, Any]]:
             if part[1] == "protective-plating":
                 part[2] = material
         variants.append(sample)
+    mixed = copy.deepcopy(by_id["all-steel-overbuilt"])
+    mixed["id"] = "overbuilt-five-stone-one-cloth-plating"
+    for part in mixed["components"]:
+        if part[1] == "protective-plating":
+            part[2] = "cloth" if part[0] == "plate-6" else "stone"
+    variants.append(mixed)
     return base + variants
 
 
