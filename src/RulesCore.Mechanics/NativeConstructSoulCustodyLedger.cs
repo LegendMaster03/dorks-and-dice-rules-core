@@ -68,7 +68,7 @@ internal sealed class NativeConstructSoulCustodyLedger
         IReadOnlyList<NativeConstructSoulCustodyRecord> authenticatedRecords)
     {
         _session = session;
-        _records = authenticatedRecords.ToDictionary(x => x.SoulId,
+        _records = authenticatedRecords.ToDictionary(x => x.DeathEventId,
             StringComparer.Ordinal);
         _deathEvents = authenticatedRecords.Select(x => x.DeathEventId)
             .ToHashSet(StringComparer.Ordinal);
@@ -101,7 +101,9 @@ internal sealed class NativeConstructSoulCustodyLedger
             if (string.IsNullOrWhiteSpace(deathEventId) ||
                 string.IsNullOrWhiteSpace(soulId) ||
                 deathEventId.Length > 256 || soulId.Length > 256 ||
-                _deathEvents.Contains(deathEventId) || _records.ContainsKey(soulId))
+                _deathEvents.Contains(deathEventId) || _records.Values.Any(x =>
+                    x.SoulId == soulId &&
+                    x.Disposition == NativeConstructSoulDisposition.Imprisoned))
                 return Reject("construct-soul-custody-identity-invalid",
                     "Capture requires unique nonempty death and soul identities.");
             var candidate = _session.PreviewAutomaticSoulCapture(
@@ -130,7 +132,7 @@ internal sealed class NativeConstructSoulCustodyLedger
             if (!authority.ConfirmCapture(deathEventId, soulId, selected))
                 return Reject("construct-soul-custody-event-unverified",
                     "The host has not authenticated the death and capture.");
-            _records.Add(soulId, new(soulId, selected, deathEventId,
+            _records.Add(deathEventId, new(soulId, selected, deathEventId,
                 NativeConstructSoulDisposition.Imprisoned));
             _deathEvents.Add(deathEventId);
             _revision++;
@@ -153,9 +155,9 @@ internal sealed class NativeConstructSoulCustodyLedger
             if (expectedRevision != _revision || _revision == long.MaxValue)
                 return Reject("construct-soul-custody-revision-invalid",
                     "The soul-custody ledger revision is stale or exhausted.");
-            if (string.IsNullOrWhiteSpace(soulId) ||
-                !_records.TryGetValue(soulId, out var record) ||
-                record.Disposition != NativeConstructSoulDisposition.Imprisoned ||
+            var record = _records.Values.FirstOrDefault(x => x.SoulId == soulId &&
+                x.Disposition == NativeConstructSoulDisposition.Imprisoned);
+            if (string.IsNullOrWhiteSpace(soulId) || record is null ||
                 outcome == NativeConstructSoulDisposition.Imprisoned ||
                 !Enum.IsDefined(outcome))
                 return Reject("construct-soul-custody-resolution-invalid",
@@ -165,7 +167,7 @@ internal sealed class NativeConstructSoulCustodyLedger
                 return Reject("construct-soul-custody-resolution-unverified",
                     "The host has not confirmed a valid rescue or consumption event.");
 
-            _records[soulId] = record with { Disposition = outcome };
+            _records[record.DeathEventId] = record with { Disposition = outcome };
             _revision++;
             return new(true, Current(), []);
         }
