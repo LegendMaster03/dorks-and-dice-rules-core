@@ -13,6 +13,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
     private readonly NativeOriginSourceDeconstructor _deconstructor = new(catalog);
     private readonly NativeOriginNativeLinkedSelectionEvaluator _nativeLinks = new(catalog);
     private readonly NativeOriginBiologicalTransmissionEvaluator _biological = new(catalog);
+    private readonly NativeOriginBiologicalInheritanceEvaluator _inheritance = new(catalog);
     private readonly NativeOriginReconciler _reconciler = new(catalog);
     private readonly NativeOriginConstraintEvaluator _constraints = new(catalog);
     private readonly NativeOriginSynergyEvaluator _synergies = new(catalog);
@@ -84,6 +85,21 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             .GroupBy(x => x.CandidateId, StringComparer.Ordinal)
             .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
         issues.AddRange(nativeLinkIssues);
+        // Only trusted snapshots can supply a carried, previously unexpressed
+        // gene. An older direct profile still exposes its effective grants.
+        var parentGeneOffers = trustedProposal.Contributors
+            .Where(x => x is not null && verifiedManifested.Contains(x.Id) &&
+                x.ManifestedProfile?.BiologicalGenes is not null)
+            .SelectMany(x => x.ManifestedProfile!.BiologicalGenes!.Select(gene => new
+            {
+                CandidateId = "nested:" + x.Id + ":gene:" + gene.Id,
+                ProfileId = x.Source.Id,
+                ProfileRevision = x.Source.Version!,
+                ContributorId = x.Id,
+                Gene = gene
+            }))
+            .GroupBy(x => x.CandidateId, StringComparer.Ordinal)
+            .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
         var candidates = discovered.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var manifests = (discovered.Manifestations ?? []).ToList();
         var selected = new HashSet<string>(manifests.Select(x => x.CandidateId),
@@ -167,7 +183,9 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 Verified("source", candidate.Identity.Occurrence.Source.Id);
             return d is not null &&
                 JsonString(d.EffectiveOutcome, "eligibility") == "eligible" &&
-                selected.Contains(candidate.Id)
+                (selected.Contains(candidate.Id) ||
+                 proposal.BiologicalTransmission?.CandidateIds?.Contains(candidate.Id,
+                     StringComparer.Ordinal) == true)
                 ? candidate with { SelectionBasis = new(NativeOriginEligibility.DmAuthorized,
                     TableDecisionId: d.Id) } : candidate;
         }).ToArray() };
@@ -517,6 +535,17 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             var grant = new NativeOriginEffectiveGrant("grant:" + manifest.Id, manifest.Id,
                 candidate.Identity, [candidate.Id], value,
                 manifest.SelectedParameters ?? candidate.OfferedParameters, choices, basis);
+            if (parentGeneOffers.TryGetValue(candidate.Id, out var previousGene))
+            {
+                // The inherited instance may have been latent in its parent.
+                // Previously configured finite choices travel unchanged.
+                grant = grant with
+                {
+                    ResolvedChoices = previousGene.Gene.ResolvedChoices,
+                    ParameterSources = previousGene.Gene.Parameters?.Keys.ToDictionary(
+                        key => key, _ => candidate.Id, StringComparer.Ordinal)
+                };
+            }
             if (inheritedOffers.TryGetValue(candidate.Id, out var prior))
             {
                 // The original choices and configured mechanics are inherited as
@@ -641,8 +670,14 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             verifiedDmDecisionIds.Add(grant.Authorization!.TableDecisionId!);
         }
         resolved = resolved.Concat(derived).ToArray();
-        issues.AddRange(NativeOriginBiologicalTransmissionValidator.ReviewExpression(
-            transmission, proposal, resolved));
+        var (inheritedGenes, geneIssues, _, _) = _inheritance.Evaluate(
+            proposal, transmission, resolved, verifiedManifested, authority, Verified);
+        issues.AddRange(geneIssues);
+        if (Verified("biological-inheritance", proposal.Id) is { } capacityDecision)
+        {
+            usedDm = true;
+            verifiedDmDecisionIds.Add(capacityDecision.Id);
+        }
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
         // selected, reconciled value in each universal physical foundation slot
@@ -698,7 +733,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         var profileId = "origin:" + proposal.Id;
         var underlying = proposal.ExistingConfiguration ??
             new NativeOriginCurrentConfiguration(configuredSpecies, configuredAncestry,
-                resolved, profileId);
+                resolved, profileId, transmission.Explicit ? inheritedGenes : null);
         var current = proposal.ExistingEffectiveConfiguration ?? underlying;
         var history = (proposal.History ?? []).ToList();
         var addedConstructionEvent = !history.Any(x => x.Id == "construction:" + proposal.Id);
