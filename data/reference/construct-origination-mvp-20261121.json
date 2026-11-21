@@ -12,6 +12,11 @@
       "expectedConstructionPoints": 163
     },
     {
+      "file": "construct-small-starting-build-20261121.json",
+      "purpose": "recipe-bound Small body size changes the reconstructed Origin intrinsic without a standalone size toggle",
+      "expectedConstructionPoints": 147
+    },
+    {
       "file": "construct-lightweight-starting-build-20261121.json",
       "purpose": "material substitution changes recipe cost and known retained mass without unapproved bonus",
       "expectedConstructionPoints": 187
@@ -30,6 +35,7 @@
   ],
   "requiredDemoBehaviors": [
     "reconstruct-source-verified-origin-grants",
+    "size-is-derived-from-source-verified-structural-recipe-variant",
     "walking-speed-projected-from-trusted-enabled-locomotion",
     "disable-locomotion-removes-current-walking-availability",
     "recipe-ingredient-cost-within-provisional-starting-allocation",
