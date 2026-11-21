@@ -109,9 +109,12 @@ by general component power, connectivity, and authorization rules.
 - An energy accumulator does not output power until a source-authorized
   charging/discharging contract exists. The projectile launcher is different
   from an equipment mount, and a substance projector need not be a weapon.
-- The original 31 component payloads and the six power-source definitions
-  remain unchanged. This pass extends the component, material, enhancement,
-  and design catalogs without introducing a mandatory body topology.
+- This component-expansion pass did not change the original 31 component
+  payloads or the power-source definitions then in the catalog. The
+  artificial-life core was subsequently removed by an approved design
+  decision; five power sources remain. This pass extends the component,
+  material, enhancement, and design catalogs without introducing a
+  mandatory body topology.
 
 ## Follow-up authoring
 
