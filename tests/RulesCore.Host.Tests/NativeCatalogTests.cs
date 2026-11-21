@@ -33,6 +33,45 @@ public sealed class NativeCatalogTests
     }
 
     [Fact]
+    public void ConstructComponentPathSuppliesStableCatalogIdentity()
+    {
+        using var f = new Fixture();
+        f.Native("origination/construct-assembly/components/control/control-module.json",
+            """{"name":"Control module","powerDemand":1,"provides":["control"]}""");
+        var catalog = f.Load();
+        Assert.Single(catalog.Search(category: "construct-component").Items);
+        Assert.True(catalog.TryGetById("construct-component.control-module", out var component));
+        Assert.Equal("construct-component", component!.Category);
+        Assert.Equal("Control module", component.Name);
+        Assert.Equal("native/origination/construct-assembly/components/control/control-module.json",
+            component.SourcePath);
+        Assert.Equal("construct-component.control-module",
+            component.Definition.GetProperty("id").GetString());
+        Assert.Equal("construct-component",
+            component.Definition.GetProperty("kind").GetString());
+        Assert.Equal(1, component.Definition.GetProperty("powerDemand").GetInt32());
+    }
+
+    [Fact]
+    public void ConstructComponentPathRejectsConflictingOrInvalidAuthoredMetadata()
+    {
+        using var mismatch = new Fixture();
+        mismatch.Native("origination/construct-assembly/components/control/eye.json",
+            """{"id":"construct-component.other","name":"Eye"}""");
+        Assert.Equal("invalid_native_json", Failure(mismatch).ReasonCode);
+
+        using var malformed = new Fixture();
+        malformed.Native("origination/construct-assembly/components/control/BadName.json",
+            """{"name":"Invalid path"}""");
+        Assert.Equal("invalid_native_json", Failure(malformed).ReasonCode);
+
+        using var wrongShape = new Fixture();
+        wrongShape.Native("origination/construct-assembly/components/control/eye.json",
+            """[{"name":"Eye"}]""");
+        Assert.Equal("invalid_native_json", Failure(wrongShape).ReasonCode);
+    }
+
+    [Fact]
     public void NormalizedOriginTraitsPreserveCatalogProjectionAndCanonicalIdentity()
     {
         var catalog = NativeCatalogLoader.Load(RepositoryLocation());
@@ -437,7 +476,13 @@ public sealed class NativeCatalogTests
                 }
             }
 
-            if (root.ValueKind == JsonValueKind.Array)
+            var rel = Path.GetRelativePath(nativeDirectory, path).Replace('\\', '/');
+            if (rel.StartsWith("origination/construct-assembly/components/", StringComparison.Ordinal))
+            {
+                var name = Path.GetFileNameWithoutExtension(path);
+                inventory.Add(("construct-component." + name, "construct-component"));
+            }
+            else if (root.ValueKind == JsonValueKind.Array)
                 Add(root.EnumerateArray());
             else if (root.TryGetProperty("id", out _))
                 Add(new[] { root });

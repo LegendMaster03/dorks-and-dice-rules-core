@@ -84,7 +84,16 @@ public static class NativeCatalogLoader
             ValidateProperties(document.RootElement, "invalid_native_json");
             var relative = "native/" + Path.GetRelativePath(native, file)
                 .Replace(Path.DirectorySeparatorChar, '/');
-            ParseFile(document.RootElement, relative, expected.RulesetId, entities, identities);
+            if (relative.StartsWith("native/origination/construct-assembly/components/", StringComparison.Ordinal))
+            {
+                // A component's stable identity and catalog category come from its
+                // type directory and filename. Expand them before ordinary catalog
+                // validation so every downstream consumer sees the existing schema.
+                using var expanded = ExpandConstructComponent(document.RootElement, relative);
+                ParseFile(expanded.RootElement, relative, expected.RulesetId, entities, identities);
+            }
+            else
+                ParseFile(document.RootElement, relative, expected.RulesetId, entities, identities);
         }
 
         if (entities.Count == 0)
@@ -101,6 +110,51 @@ public static class NativeCatalogLoader
         var fingerprint = Fingerprint(expected.RulesetId, schemaVersion, resolvedEntities);
         return new NativeCatalogSnapshot(expected.RulesetId, schemaVersion, fingerprint,
             resolvedEntities, traitReferences);
+    }
+
+    /// <summary>
+    /// Expand path-derived identity only within the dedicated Construct component
+    /// catalog. Other native entities and legacy component fixtures keep their
+    /// explicit id/kind contract. The functional directory is an authoring group,
+    /// not a new gameplay classification or part of the stable component ID.
+    /// </summary>
+    private static JsonDocument ExpandConstructComponent(JsonElement root, string path)
+    {
+        const string prefix = "native/origination/construct-assembly/components/";
+        var parts = path[prefix.Length..].Split('/');
+        if (parts.Length != 2 || !parts[1].EndsWith(".json", StringComparison.Ordinal))
+            throw Invalid("invalid_native_json", "Construct components require a type directory and a JSON filename.");
+
+        var componentType = parts[0];
+        var stem = parts[1][..^".json".Length];
+        // Lowercase, hyphen-separated, path-safe names are required. Their
+        // stability protects IDs and avoids ambiguous names on other platforms.
+        static bool ValidSlug(string value) =>
+            value.Length > 0 && Regex.IsMatch(value,
+                @"^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
+
+        if (!ValidSlug(componentType) || !ValidSlug(stem) ||
+            root.ValueKind != JsonValueKind.Object)
+            throw Invalid("invalid_native_json", "Invalid Construct component path or definition.");
+
+        var expectedId = "construct-component." + stem;
+        if (root.TryGetProperty("id", out _) && ReadString(root, "id") != expectedId ||
+            root.TryGetProperty("kind", out _) && ReadString(root, "kind") != "construct-component")
+            throw Invalid("invalid_native_json", "Construct component metadata conflicts with its path.");
+
+        using var buffer = new MemoryStream();
+        using (var writer = new Utf8JsonWriter(buffer))
+        {
+            writer.WriteStartObject();
+            writer.WriteString("id", expectedId);
+            writer.WriteString("kind", "construct-component");
+            foreach (var property in root.EnumerateObject())
+                if (property.Name is not ("id" or "kind"))
+                    property.WriteTo(writer);
+            writer.WriteEndObject();
+        }
+        return JsonDocument.Parse(buffer.ToArray(), JsonOptions);
     }
 
     private static void ParseFile(JsonElement root, string path, string rulesetId,

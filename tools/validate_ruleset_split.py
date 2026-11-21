@@ -45,7 +45,7 @@ def validate_native_tree(root):
     for path in sorted(root.rglob("*.json")):
         try:
             document = read_json(path)
-            records = top_level_records(document)
+            records = top_level_records(document, path=path, native_root=root)
         except (ValueError, UnicodeError) as exc:
             errors.append(f"{path}: invalid JSON: {exc}")
             continue
