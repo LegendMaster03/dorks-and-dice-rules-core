@@ -8,7 +8,8 @@ namespace RulesCore.Mechanics;
 public sealed record NativeOriginBiologicalOffer(
     NativeOriginCandidate Candidate,
     IReadOnlyList<string> AttemptedManifestationIds,
-    IReadOnlyList<string> EffectiveGrantIds);
+    IReadOnlyList<string> EffectiveGrantIds,
+    bool ProposedForTransmission = false);
 
 /// <summary>
 /// Combines eligible occurrences of one mechanical identity without erasing
@@ -30,7 +31,8 @@ public sealed record NativeOriginBiologicalCharacteristicGroup(
 /// </summary>
 public sealed record NativeOriginBiologicalCombination(
     string ProposalId,
-    IReadOnlyList<NativeOriginBiologicalCharacteristicGroup> Characteristics);
+    IReadOnlyList<NativeOriginBiologicalCharacteristicGroup> Characteristics,
+    bool ExplicitTransmissionPlan = false);
 
 internal static class NativeOriginBiologicalCombinationProjector
 {
@@ -68,6 +70,9 @@ internal static class NativeOriginBiologicalCombinationProjector
                     .OrderBy(id => id, StringComparer.Ordinal).ToArray(),
                 StringComparer.Ordinal);
         var effective = result.Profile?.Underlying.InherentGrants ?? [];
+        var proposed = (proposal.BiologicalTransmission?.CandidateIds ?? [])
+            .Where(id => !string.IsNullOrWhiteSpace(id))
+            .ToHashSet(StringComparer.Ordinal);
 
         var groups = offers
             .GroupBy(candidate => (
@@ -97,12 +102,14 @@ internal static class NativeOriginBiologicalCombinationProjector
                         attempts.GetValueOrDefault(candidate.Id) ?? [],
                         expressions.Where(grant =>
                             grant.SourceCandidateIds.Contains(candidate.Id, StringComparer.Ordinal))
-                            .Select(grant => grant.Id).ToArray()))
+                            .Select(grant => grant.Id).ToArray(),
+                        proposed.Contains(candidate.Id)))
                     .ToArray();
                 return new NativeOriginBiologicalCharacteristicGroup(
                     group.Key.Kind, group.Key.Id, candidateOffers, expressions);
             })
             .ToArray();
-        return new NativeOriginBiologicalCombination(proposal.Id, groups);
+        return new NativeOriginBiologicalCombination(proposal.Id, groups,
+            proposal.BiologicalTransmission is not null);
     }
 }
