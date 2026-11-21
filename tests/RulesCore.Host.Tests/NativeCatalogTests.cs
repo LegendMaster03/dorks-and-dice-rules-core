@@ -49,6 +49,8 @@ public sealed class NativeCatalogTests
             component.Definition.GetProperty("id").GetString());
         Assert.Equal("construct-component",
             component.Definition.GetProperty("kind").GetString());
+        Assert.Equal("control",
+            component.Definition.GetProperty("componentCategory").GetString());
         Assert.Equal(1, component.Definition.GetProperty("powerDemand").GetInt32());
     }
 
@@ -59,6 +61,11 @@ public sealed class NativeCatalogTests
         mismatch.Native("origination/construct-assembly/components/control/eye.json",
             """{"id":"construct-component.other","name":"Eye"}""");
         Assert.Equal("invalid_native_json", Failure(mismatch).ReasonCode);
+
+        using var categoryMismatch = new Fixture();
+        categoryMismatch.Native("origination/construct-assembly/components/sensing/eye.json",
+            """{"name":"Eye","componentCategory":"control"}""");
+        Assert.Equal("invalid_native_json", Failure(categoryMismatch).ReasonCode);
 
         using var malformed = new Fixture();
         malformed.Native("origination/construct-assembly/components/control/BadName.json",

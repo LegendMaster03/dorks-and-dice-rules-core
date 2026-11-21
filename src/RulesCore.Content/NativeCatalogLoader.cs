@@ -115,8 +115,8 @@ public static class NativeCatalogLoader
     /// <summary>
     /// Expand path-derived identity only within the dedicated Construct component
     /// catalog. Other native entities and legacy component fixtures keep their
-    /// explicit id/kind contract. The functional directory is an authoring group,
-    /// not a new gameplay classification or part of the stable component ID.
+    /// explicit id/kind contract. The functional directory supplies a queryable componentCategory, not
+    /// a new gameplay mechanic or part of the stable component ID.
     /// </summary>
     private static JsonDocument ExpandConstructComponent(JsonElement root, string path)
     {
@@ -140,7 +140,9 @@ public static class NativeCatalogLoader
 
         var expectedId = "construct-component." + stem;
         if (root.TryGetProperty("id", out _) && ReadString(root, "id") != expectedId ||
-            root.TryGetProperty("kind", out _) && ReadString(root, "kind") != "construct-component")
+            root.TryGetProperty("kind", out _) && ReadString(root, "kind") != "construct-component" ||
+            root.TryGetProperty("componentCategory", out _) &&
+                ReadString(root, "componentCategory") != componentType)
             throw Invalid("invalid_native_json", "Construct component metadata conflicts with its path.");
 
         using var buffer = new MemoryStream();
@@ -149,8 +151,9 @@ public static class NativeCatalogLoader
             writer.WriteStartObject();
             writer.WriteString("id", expectedId);
             writer.WriteString("kind", "construct-component");
+            writer.WriteString("componentCategory", componentType);
             foreach (var property in root.EnumerateObject())
-                if (property.Name is not ("id" or "kind"))
+                if (property.Name is not ("id" or "kind" or "componentCategory"))
                     property.WriteTo(writer);
             writer.WriteEndObject();
         }

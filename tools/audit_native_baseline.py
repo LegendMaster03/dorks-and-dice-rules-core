@@ -21,9 +21,12 @@ def top_level_records(document, *, path=None, native_root=None):
             if not isinstance(document, dict):
                 raise ValueError("Construct component must be a single JSON object")
             ident = "construct-component." + stem
-            if document.get("id", ident) != ident or document.get("kind", "construct-component") != "construct-component":
+            if (document.get("id", ident) != ident or
+                    document.get("kind", "construct-component") != "construct-component" or
+                    document.get("componentCategory", component_type) != component_type):
                 raise ValueError("Construct component metadata conflicts with its path")
-            return [{**document, "id": ident, "kind": "construct-component"}]
+            return [{**document, "id": ident, "kind": "construct-component",
+                     "componentCategory": component_type}]
     if isinstance(document, dict):
         if "id" in document:
             return [document]
