@@ -3,7 +3,7 @@
 **Date:** 2026-11-21  
 **Repository:** `LegendMaster03/dorks-and-dice-rules-core`  
 **Scope:** First biological Combine increment; source-preserving read-only construction output  
-**Status:** Implemented on a feature branch, subject to tests and review. Not final genetic transmission, expression, or balance policy.
+**Status:** Combine projection and optional explicit transmission selection implemented on a feature branch, subject to tests and review. Not final genetic transmission, latent expression, or balance policy.
 
 ## Boundary in the universal procedure
 
@@ -50,6 +50,51 @@ Player-directed choice is the current biological selection policy. No random inh
 
 A future gene-transmission model should use these stable contributor/occurrence identities and explicit dependencies, not infer independent inheritance of arbitrary sub-effects. The previously agreed Daggerheart comparison informs how linked sub-traits and shared parameter values remain coherent; it does **not** require a shallow gene model or immediate UI simplification.
 
+## Explicit biological transmission selection (increment 2)
+
+The optional `NativeOriginProposal.BiologicalTransmission` contains a
+`NativeOriginBiologicalTransmissionPlan` with exact contributor-local
+`CandidateIds`. It is a player **proposal**, not a certified genetic
+record or an independent grant source. It is distinct from each
+`NativeOriginManifestation`, which remains responsible for expression
+parameters, choice values and actual grant construction.
+
+- **Null plan:** existing manifestation-only proposals continue working,
+  including saved drafts and nonbiological methods. This compatibility mode
+  does not infer or persist any hidden transmitted state.
+- **Explicit nonnull plan:** only listed, catalog-eligible biological or
+  appropriately authenticated table-authorized contributor offers may be
+  expressed. A manifestation without a corresponding selected source is
+  unresolved and cannot mint a grant.
+- **Authored reconciliation still controls expression:** selecting a source
+  is not selecting parameters freely, satisfying dependencies, or authorizing
+  stacking. The construction engine still processes relationships, choices,
+  dependent resource owners and the final effective grant closure.
+- **Unexpressed selection:** because no rule authorizes retaining latent genes,
+  any selected offer that does not participate in an effective inherent grant
+  remains unresolved. It does not enter a playable Origin as hidden heredity.
+  Derived synergies do not count as expression of their input genes.
+- **Provenance and review:** `BiologicalCombination` marks an offer
+  `ProposedForTransmission`, explicitly labeling client intent rather than
+  authority. Invalid candidates, duplicates, method mismatches and unsupported
+  sources cannot authorize a profile.
+- **Persistence boundary:** the plan serializes as part of the **evaluated
+  proposal**, not as new hereditary state inside `NativeOriginProfile`.
+  Effective inherent grants remain the authoritative inheritable state
+  when they are verified in later generations.
+
+The opt-in plan is the minimal next sequencing contract. It does **not**
+establish an inheritance quota, a parent/allele ratio, dominant/recessive
+expression, trait-level latent storage, genetic randomization, or a final
+allocation cost. The exact number of transmitted genes is still subject
+to later balance and procedure design. A player may transmit multiple offers
+of the same canonical gene when needed for a separately authored recombination,
+but identical evidence is not multiplied into independent effects.
+
+Focused tests cover the match between plan and manifestation, missing
+transmission, unused transmission, forged/duplicate source IDs, nonbiological
+methods, backward compatibility, and unauthorized historical contributors.
+
 ## Implementation and validation
 
 - `NativeOriginBiologicalCombination` is a read-only, serialized result alongside `EvaluatedProposal` and `Profile`.
@@ -57,6 +102,6 @@ A future gene-transmission model should use these stable contributor/occurrence 
 - It does not write to `NativeOriginProfile`, reinterpret source parameters, add grants, or change the outcome's authorization status.
 - Focused tests cover two differently configured donors offering the same canonical gene, selection/expression, identical donors, nonbiological methods, and unverified historical ancestry.
 
-**Next actionable design choice:** Specify an explicit biological transmitted-gene state and selection policy, including whether suppression can be inherited. The model must preserve linked gene parameters, source-contributor scopes, authored dependencies, and the complete physical foundation while leaving numeric allocation and UI for their separate passes. This read-only Combine increment does not settle that choice.
+**Next actionable design choice:** Decide whether any transmitted-but-unexpressed material may persist and how an authored transmission-capacity policy would apply. The model must preserve linked gene parameters, source-contributor scopes, authored dependencies, and the complete physical foundation while leaving numeric allocation and UI for their separate passes. This read-only Combine increment does not settle that choice.
 
 **Integration dependency:** This branch starts from draft PR #180's source-neutral flat gene catalog; PR #179's linked-parameter finalization is a separate draft change. They should be integrated and tested together before treating cross-gene expression closure as finished. Do not merge into `main` without approval.
