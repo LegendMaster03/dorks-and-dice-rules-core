@@ -2,15 +2,26 @@
   {
     "id": "construct-power-source.solar-crystal",
     "kind": "construct-power-source",
-    "name": "Solar/rechargeable crystal",
-    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "A rechargeable crystal source requiring an authored charging and storage model.",
+    "name": "Solar energy collector",
+    "rulesStatus": "approved solar output, generation and starting storage playtest values; host-verified exposure and persistence pending",
+    "description": "A solar-driven magical generator with an integrated rechargeable battery. Sunlight generates energy, surplus collection recharges storage, and depleted storage supplies temporary shortfalls. Concentrated sunlight, as determined by the DM, enables overdrive.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
     "operatingPrinciple": "solar-recharge",
     "craftingRecipeId": "crafting-recipe.construct-power-source.solar-crystal",
-    "powerOutput": 5
+    "powerOutput": 8,
+    "overdrivePowerOutput": 12,
+    "overdriveIncreasePercent": 50,
+    "solarCollectionPower": {
+      "none": 0,
+      "indirect": 8,
+      "direct": 16,
+      "concentrated": 24
+    },
+    "storageCapacityPowerUnitHours": 96,
+    "storageResourceKind": "solar-energy",
+    "overdriveCondition": "dm-confirmed-concentrated-sunlight"
   },
   {
     "id": "construct-power-source.soul-gem",
