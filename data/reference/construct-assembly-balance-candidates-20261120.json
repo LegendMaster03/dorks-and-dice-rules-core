@@ -5,7 +5,7 @@
     "unchangedRules": "No per-component purchase cost and no post-creation allowance ceiling",
     "massStatus": "The three illustrative builds currently have partial, lower-bound retained mass even though selected first-party component recipes have provisional complete-mass certificates.",
     "sampleMethod": "Preliminary arithmetic from recipe-input material quantities, selected materials and selected power-source recipes, with all cost values provisional; sample assembly links, functional dependencies and physical envelopes require authoring.",
-    "balancingStatus": "Ten native recipe-based sensitivity comparisons recorded in docs/rewrite/character-origins/pillar2-construct-quantitative-sensitivity-20261120.md. No approval of 220-point allowance, movement, DR stacking, fuel availability or first-party character authorization."
+    "balancingStatus": "Ten native recipe-based sensitivity comparisons recorded in docs/rewrite/character-origins/pillar2-construct-quantitative-sensitivity-20261120.md. No approval of 220-point allowance, movement, DR stacking, fuel availability or first-party character authorization. After boundary cleanup, nominal drive support and hypothetical layer DR are research-only values in this reference file, not native effects."
   },
   "candidateStartingAllowance": 220,
   "candidateResourceUnitCosts": {
@@ -220,5 +220,19 @@
     "Require a general mass/encumbrance mechanical consequence before claiming the overbuild is self-balancing.",
     "Compare known retained steel mass across repeated physical components, and with material substitutions; test actual mobility only after universal carrying/encumbrance mechanics are integrated.",
     "Body self-mass cannot be treated as ordinary carried inventory. A future universal physical load and locomotion capacity rule must reconcile self-mass, payload, drive output, terrain and movement without assuming fixed anatomy."
-  ]
+  ],
+  "candidateResearchOnlyPhysicalAssumptions": {
+    "hypotheticalGrossLoadSupportPerDrivePounds": 300,
+    "hypotheticalFlatDamageReductionPerProtectiveLayer": {
+      "construct-material.steel": 2,
+      "construct-material.darkwood": 1,
+      "construct-material.stone": 2,
+      "construct-material.crystal": 1,
+      "construct-material.alchemical-fiber": 0,
+      "construct-material.wood": 0,
+      "construct-material.cloth": 0,
+      "construct-material.iron": 1
+    },
+    "note": "Withdrawn from native executable component/material definitions. These numbers exist only for historical sensitivity comparisons; they do not define capacity, movement, coverage or damage reduction."
+  }
 }
