@@ -1164,6 +1164,29 @@ public sealed class NativeConstructOriginProjectionTests
     }
 
     [Fact]
+    public void MixedFiniteAndUnmeteredSourcesNeedBalancesOnlyForFiniteSources()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: DualReservoirAssembly(
+            "construct-power-source.unmetered"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var expected = new Dictionary<string, int> { ["generator"] = 4 };
+        var preview = session.PreviewResourceStep(expected);
+        Assert.True(preview.CanAdvance);
+        Assert.Single(preview.Sources);
+        Assert.Equal("generator", preview.Sources[0].InstanceId);
+        Assert.Equal(2, preview.Sources[0].Consumed);
+
+        var opened = session.OpenTrustedResourceLedger(expected);
+        var ledger = Assert.IsType<NativeConstructResourceLedger>(opened.Ledger);
+        var step = ledger.TryCommitStep(0);
+        Assert.True(step.Committed);
+        Assert.Single(step.Snapshot.Balances);
+        Assert.Equal(2, step.Snapshot.Balances["generator"]);
+    }
+
+    [Fact]
     public void ReplenishmentUsesAuthoredMethodTrustedAuthorityAndLedgerRevision()
     {
         using var fixture = new Fixture();
