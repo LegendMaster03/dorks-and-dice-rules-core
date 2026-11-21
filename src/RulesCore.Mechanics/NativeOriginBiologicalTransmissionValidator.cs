@@ -103,13 +103,37 @@ internal static class NativeOriginBiologicalTransmissionValidator
     /// </summary>
     public static IReadOnlyList<NativeOriginContractIssue> ReviewExpression(
         NativeOriginBiologicalTransmissionReview transmission,
+        NativeOriginProposal proposal,
         IReadOnlyList<NativeOriginEffectiveGrant> grants)
     {
         if (!transmission.Explicit) return [];
 
-        var expressed = (grants ?? []).Where(x => x?.Synergy is null)
-            .SelectMany(x => x.SourceCandidateIds)
-            .ToHashSet(StringComparer.Ordinal);
+        var candidates = (proposal.Candidates ?? [])
+            .Where(candidate => candidate?.Id is not null)
+            .GroupBy(candidate => candidate.Id, StringComparer.Ordinal)
+            .ToDictionary(group => group.Key, group => group.First(), StringComparer.Ordinal);
+        var expressed = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var grant in grants ?? [])
+        {
+            if (grant?.Synergy is not null) continue;
+            foreach (var sourceId in grant.SourceCandidateIds ?? [])
+            {
+                if (!candidates.TryGetValue(sourceId, out var candidate) ||
+                    candidate.Identity?.Kind != grant.Identity.Kind)
+                    continue;
+                var sameMechanic = grant.Identity.Kind switch
+                {
+                    NativeOriginCharacteristicKind.Trait =>
+                        candidate.Identity.MechanicalDefinitionId ==
+                            grant.Identity.MechanicalDefinitionId,
+                    NativeOriginCharacteristicKind.Intrinsic =>
+                        candidate.Identity.IntrinsicSlotId ==
+                            grant.Identity.IntrinsicSlotId,
+                    _ => false
+                };
+                if (sameMechanic) expressed.Add(sourceId);
+            }
+        }
         return transmission.CandidateIds
             .Where(id => !expressed.Contains(id))
             .OrderBy(id => id, StringComparer.Ordinal)
