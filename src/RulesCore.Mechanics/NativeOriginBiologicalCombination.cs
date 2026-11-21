@@ -75,7 +75,8 @@ internal static class NativeOriginBiologicalCombinationProjector
             .ToArray();
 
         var attempts = (proposal.Manifestations ?? [])
-            .Where(manifestation => manifestation is not null)
+            .Where(manifestation => manifestation is not null &&
+                !string.IsNullOrWhiteSpace(manifestation.CandidateId))
             .GroupBy(manifestation => manifestation.CandidateId, StringComparer.Ordinal)
             .ToDictionary(group => group.Key,
                 group => (IReadOnlyList<string>)group.Select(x => x.Id)
