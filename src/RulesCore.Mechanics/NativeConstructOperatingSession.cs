@@ -113,7 +113,7 @@ public sealed class NativeConstructOperatingSession
         IReadOnlyDictionary<string, bool>? requestedEnabled,
         IReadOnlyDictionary<string, string>? requestedModes,
         IReadOnlyList<string>? unavailablePowerSourceInstanceIds,
-        IReadOnlyDictionary<string, int>? trustedSolarOutputs)
+        IReadOnlyDictionary<string, int>? trustedSourceOutputs)
     {
         requestedEnabled ??= new Dictionary<string, bool>(StringComparer.Ordinal);
         requestedModes ??= new Dictionary<string, string>(StringComparer.Ordinal);
@@ -132,17 +132,25 @@ public sealed class NativeConstructOperatingSession
                     "Operating changes may only address instances in the authorized assembly.")]);
         }
 
-        // Installed source ratings are enough for creation but not for
-        // an authenticated in-play solar operating interval.
-        var needsSolarContext = trustedSolarOutputs is null &&
-            _baseline.Components.Any(x =>
-                x.PowerSourceId == "construct-power-source.solar-crystal");
-        IReadOnlyDictionary<string, int>? evaluatedOutputs = needsSolarContext
-            ? _baseline.Components.Where(x =>
-                    x.PowerSourceId == "construct-power-source.solar-crystal")
-                .ToDictionary(x => x.InstanceId, _ => 0,
-                    StringComparer.Ordinal)
-            : trustedSolarOutputs;
+        // Rated output alone is insufficient to authorize a solar or
+        // soul-driven generator in play. A source without trusted operating
+        // context contributes zero, and its powered traits remain inactive.
+        var contextualSources = _baseline.Components
+            .Where(x => x.PowerSourceId is
+                "construct-power-source.solar-crystal" or
+                "construct-power-source.soul-gem")
+            .ToArray();
+        var missingContext = contextualSources.Where(x =>
+            trustedSourceOutputs is null ||
+            !trustedSourceOutputs.ContainsKey(x.InstanceId)).ToArray();
+        Dictionary<string, int>? evaluatedOutputs = trustedSourceOutputs is null &&
+            missingContext.Length == 0 ? null
+            : (trustedSourceOutputs ?? new Dictionary<string, int>(
+                StringComparer.Ordinal)).ToDictionary(
+                    pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
+        if (evaluatedOutputs is not null)
+            foreach (var source in missingContext)
+                evaluatedOutputs[source.InstanceId] = 0;
         var outOfEnergy = evaluatedOutputs is null
             ? Array.Empty<string>()
             : evaluatedOutputs.Where(x => x.Value == 0)
@@ -151,8 +159,8 @@ public sealed class NativeConstructOperatingSession
         {
             // Never let a transient operating request clear a source outage
             // already captured in the trusted installation snapshot.
-            // A solar source supplying zero usable power must also be marked
-            // unavailable, not merely have its network output reduced to zero.
+            // A conditional generator supplying zero power must also be
+            // unavailable for native dependency and shutdown reconciliation.
             UnavailablePowerSourceInstanceIds =
                 (_baseline.UnavailablePowerSourceInstanceIds ?? [])
                     .Concat(unavailablePowerSourceInstanceIds ?? [])
@@ -168,15 +176,19 @@ public sealed class NativeConstructOperatingSession
         };
         var state = _assembly.EvaluateWithSourceOutputOverrides(
             configured, evaluatedOutputs);
-        if (needsSolarContext)
+        if (missingContext.Length > 0)
             return new(state, [], _originGrantIds,
-                state.Issues.Concat([
+                state.Issues.Concat(missingContext.Select(x =>
                     new NativeOriginContractIssue(
-                        "construct-solar-operating-context-required",
+                        x.PowerSourceId == "construct-power-source.solar-crystal"
+                            ? "construct-solar-operating-context-required"
+                            : "construct-soul-operating-context-required",
                         "operatingConfiguration",
                         NativeOriginIssueSeverity.Unresolved,
-                        "Solar operating power requires a validated sunlight and battery interval.")
-                ]).ToArray());
+                        x.PowerSourceId == "construct-power-source.solar-crystal"
+                            ? "Solar power requires validated light and battery state."
+                            : "Soul-core power requires DM-adjudicated fuel availability.")))
+                    .ToArray());
         var componentStates = state.Components.ToDictionary(x => x.InstanceId,
             StringComparer.Ordinal);
         var active = _originGrantIds.ToHashSet(StringComparer.Ordinal);
@@ -433,6 +445,182 @@ public sealed class NativeConstructOperatingSession
             ? new(null, inspected.Issues)
             : new(new NativeConstructSolarEnergyLedger(this,
                 authenticatedBalances), []);
+    }
+
+    /// <summary>
+    /// Evaluate a hypothetical soul-fueled operating configuration.
+    /// Soul-energy availability is a DM decision: no invented fuel quantity,
+    /// timed depletion, queue, or implicit replenishment is computed here.
+    /// The host must authenticate this state before committing gameplay.
+    /// </summary>
+    public NativeConstructSoulCoreOperationPreview PreviewSoulCoreOperation(
+        IReadOnlyDictionary<string, bool> dmAdjudicatedEnergyAvailable,
+        IReadOnlyDictionary<string, bool>? overdriveRequested = null,
+        IReadOnlyDictionary<string, bool>? requestedEnabled = null,
+        IReadOnlyDictionary<string, string>? requestedModes = null)
+    {
+        ArgumentNullException.ThrowIfNull(dmAdjudicatedEnergyAvailable);
+        overdriveRequested ??= new Dictionary<string, bool>(StringComparer.Ordinal);
+        var issues = new List<NativeOriginContractIssue>();
+        var installed = _baseline.Components.Where(x =>
+                x.PowerSourceId == "construct-power-source.soul-gem")
+            .OrderBy(x => x.InstanceId, StringComparer.Ordinal).ToArray();
+        var ids = installed.Select(x => x.InstanceId)
+            .ToHashSet(StringComparer.Ordinal);
+        if (ids.Count == 0)
+            issues.Add(new("construct-soul-core-absent", "soul",
+                NativeOriginIssueSeverity.Incomplete,
+                "Soul-core operation requires an installed native soul source."));
+        if (dmAdjudicatedEnergyAvailable.Keys.Concat(overdriveRequested.Keys)
+            .Any(id => !ids.Contains(id)))
+            issues.Add(new("construct-soul-core-instance-invalid", "soul",
+                NativeOriginIssueSeverity.Invalid,
+                "Soul-core decisions must reference installed native source instances."));
+
+        var output = new Dictionary<string, int>(StringComparer.Ordinal);
+        var states = new List<NativeConstructSoulCoreSourceState>();
+        foreach (var part in installed)
+        {
+            var path = "soul." + part.InstanceId;
+            if (!dmAdjudicatedEnergyAvailable.TryGetValue(
+                part.InstanceId, out var energyAvailable))
+            {
+                issues.Add(new("construct-soul-energy-undetermined", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The DM must determine whether usable soul energy remains."));
+                continue;
+            }
+            if (!_catalog.TryGetById(part.PowerSourceId!, out var native) ||
+                native?.Category != "construct-power-source")
+            {
+                issues.Add(new("construct-soul-core-definition-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Soul-core operating values must resolve to native content."));
+                continue;
+            }
+            var raw = native.Definition;
+            var normal = 0;
+            var maximum = 0;
+            var hasNormal = raw.TryGetProperty("powerOutput", out var basePower) &&
+                basePower.ValueKind == JsonValueKind.Number &&
+                basePower.TryGetInt32(out normal);
+            var hasOverdrive = raw.TryGetProperty("overdrivePowerOutput",
+                out var enhanced) && enhanced.ValueKind == JsonValueKind.Number &&
+                enhanced.TryGetInt32(out maximum);
+            if (!hasNormal || !hasOverdrive || normal <= 0 ||
+                maximum != normal + (long)normal / 2)
+            {
+                issues.Add(new("construct-soul-output-unresolved", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "Native normal power and 50% Overdrive output are required."));
+                continue;
+            }
+            var boosted = overdriveRequested.TryGetValue(part.InstanceId,
+                out var requested) && requested && energyAvailable;
+            var assigned = energyAvailable ? (boosted ? maximum : normal) : 0;
+            output[part.InstanceId] = assigned;
+            states.Add(new(part.InstanceId, energyAvailable, boosted, assigned));
+        }
+        if (issues.Count > 0)
+            return new(null, [], issues);
+
+        var evaluated = EvaluateConfigurationCore(
+            requestedEnabled, requestedModes, null, output);
+        return new(evaluated, states, []);
+    }
+
+    /// <summary>
+    /// Identify every installed soul core within range of a DM-authenticated
+    /// eligible death. This is passive and independent of the housing's
+    /// enabled flag. It does not select among overlapping cores, mutate
+    /// captured-soul history, or decide whether a soul is eligible.
+    /// </summary>
+    public NativeConstructSoulCapturePreview PreviewAutomaticSoulCapture(
+        bool eligibleSoul,
+        IReadOnlyDictionary<string, int> distancesFeetBySource)
+    {
+        ArgumentNullException.ThrowIfNull(distancesFeetBySource);
+        var issues = new List<NativeOriginContractIssue>();
+        var installed = _baseline.Components.Where(x =>
+                x.PowerSourceId == "construct-power-source.soul-gem")
+            .OrderBy(x => x.InstanceId, StringComparer.Ordinal).ToArray();
+        var ids = installed.Select(x => x.InstanceId)
+            .ToHashSet(StringComparer.Ordinal);
+        if (distancesFeetBySource.Keys.Any(id => !ids.Contains(id)))
+            issues.Add(new("construct-soul-capture-instance-invalid", "soulCapture",
+                NativeOriginIssueSeverity.Invalid,
+                "Death proximity must reference only installed soul cores."));
+        var matches = new List<NativeConstructSoulCaptureCandidate>();
+        foreach (var part in installed)
+        {
+            var path = "soulCapture." + part.InstanceId;
+            if (!distancesFeetBySource.TryGetValue(part.InstanceId, out var distance) ||
+                distance < 0)
+            {
+                issues.Add(new("construct-soul-capture-distance-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "An authenticated nonnegative distance is required for each installed core."));
+                continue;
+            }
+            if (!_catalog.TryGetById(part.PowerSourceId!, out var native) ||
+                native?.Category != "construct-power-source" ||
+                !native.Definition.TryGetProperty("captureRangeFeet",
+                    out var captureRange) ||
+                captureRange.ValueKind != JsonValueKind.Number ||
+                !captureRange.TryGetInt32(out var radius) || radius <= 0)
+            {
+                issues.Add(new("construct-soul-capture-range-unresolved", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The native soul source must specify its approved candidate capture radius."));
+                continue;
+            }
+            if (eligibleSoul && distance <= radius)
+                matches.Add(new(part.InstanceId, distance, radius));
+        }
+        return new(eligibleSoul,
+            issues.Count == 0 ? matches : [],
+            issues.ToArray());
+    }
+
+    /// <summary>
+    /// Open an in-process custody ledger from records already authenticated
+    /// by the host. This does not infer consumption or create a starting soul.
+    /// The host must still persist committed death and rescue transitions.
+    /// </summary>
+    internal NativeConstructSoulCustodyOpenResult OpenTrustedSoulCustodyLedger(
+        IReadOnlyList<NativeConstructSoulCustodyRecord> authenticatedRecords)
+    {
+        ArgumentNullException.ThrowIfNull(authenticatedRecords);
+        var sources = _baseline.Components.Where(x =>
+                x.PowerSourceId == "construct-power-source.soul-gem")
+            .Select(x => x.InstanceId).ToHashSet(StringComparer.Ordinal);
+        var issues = new List<NativeOriginContractIssue>();
+        if (sources.Count == 0)
+            issues.Add(new("construct-soul-custody-core-missing",
+                "soulCustody", NativeOriginIssueSeverity.Incomplete,
+                "An installed soul-powered core is required."));
+        var currentlyImprisonedSoulIds =
+            new HashSet<string>(StringComparer.Ordinal);
+        var deathIds = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var record in authenticatedRecords)
+        {
+            if (record is null || string.IsNullOrWhiteSpace(record.SoulId) ||
+                string.IsNullOrWhiteSpace(record.DeathEventId) ||
+                record.SoulId.Length > 256 ||
+                record.DeathEventId.Length > 256 ||
+                !sources.Contains(record.CoreInstanceId) ||
+                !Enum.IsDefined(record.Disposition) ||
+                (record.Disposition == NativeConstructSoulDisposition.Imprisoned &&
+                    !currentlyImprisonedSoulIds.Add(record.SoulId)) ||
+                !deathIds.Add(record.DeathEventId))
+                issues.Add(new("construct-soul-custody-record-invalid",
+                    "soulCustody.records", NativeOriginIssueSeverity.Invalid,
+                    "Each source-verified soul and death identity must occur once."));
+        }
+        return issues.Count > 0
+            ? new(null, issues)
+            : new(new NativeConstructSoulCustodyLedger(this,
+                authenticatedRecords), []);
     }
 
     /// <summary>

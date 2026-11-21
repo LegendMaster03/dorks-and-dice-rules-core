@@ -257,6 +257,37 @@ public sealed class NativeConstructComponentExpansionTests
                 "construct-power-demand-unresolved");
     }
     [Fact]
+    public void SoulCoreFirstPartySourceHasNoInventedSoulCapacityOrConsumptionClock()
+    {
+        var catalog = Catalog();
+        Assert.True(catalog.TryGetById("construct-power-source.soul-gem",
+            out var source));
+        Assert.Equal("construct-power-source", source!.Category);
+        var core = source.Definition;
+        Assert.Equal(8, core.GetProperty("powerOutput").GetInt32());
+        Assert.Equal(12, core.GetProperty("overdrivePowerOutput").GetInt32());
+        Assert.Equal(50, core.GetProperty("overdriveIncreasePercent").GetInt32());
+        Assert.Equal(30, core.GetProperty("captureRangeFeet").GetInt32());
+        Assert.Equal("automatic-unselective",
+            core.GetProperty("capturePolicy").GetString());
+        Assert.Equal("no-fixed-soul-cap",
+            core.GetProperty("storagePolicy").GetString());
+        Assert.Equal("inherently-active-independent-of-construct-power",
+            core.GetProperty("operatingPolicy").GetString());
+        Assert.Equal("dm-adjudicated",
+            core.GetProperty("energyAvailabilityPolicy").GetString());
+        Assert.Equal("intentionally-unspecified",
+            core.GetProperty("consumptionRatePolicy").GetString());
+        Assert.False(core.TryGetProperty("resourceCapacity", out _));
+        Assert.False(core.TryGetProperty("resourceUsePerStep", out _));
+        Assert.False(core.TryGetProperty("dailySustenance", out _));
+        Assert.True(catalog.TryGetById(
+            core.GetProperty("craftingRecipeId").GetString()!, out var recipe));
+        Assert.Equal(source.Id,
+            recipe!.Definition.GetProperty("producesDefinitionId").GetString());
+    }
+
+    [Fact]
     public void SolarFirstPartySourceAuthorsApprovedOutputCollectionAndBattery()
     {
         var catalog = Catalog();

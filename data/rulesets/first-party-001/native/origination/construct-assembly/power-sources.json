@@ -26,15 +26,25 @@
   {
     "id": "construct-power-source.soul-gem",
     "kind": "construct-power-source",
-    "name": "Soul gem",
-    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "A soul-energy storage mechanism. Naming and acquisition implications are unresolved.",
+    "name": "Soul-powered core",
+    "rulesStatus": "owner-approved narrative behavior; candidate 8/12 output and 30-foot radius; soul-energy sufficiency and consumption remain DM-adjudicated",
+    "description": "An inherently active magical generator that automatically imprisons eligible souls released by deaths within its capture range. Capture is involuntary and has no fixed storage limit. Captured souls fuel power; their consumption and the nature of the core's interior are intentionally undefined.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
     "operatingPrinciple": "soul-energy",
     "craftingRecipeId": "crafting-recipe.construct-power-source.soul-gem",
-    "powerOutput": 6
+    "powerOutput": 8,
+    "overdrivePowerOutput": 12,
+    "overdriveIncreasePercent": 50,
+    "captureRangeFeet": 30,
+    "captureTrigger": "eligible-soul-released-by-death-within-range",
+    "capturePolicy": "automatic-unselective",
+    "storagePolicy": "no-fixed-soul-cap",
+    "operatingPolicy": "inherently-active-independent-of-construct-power",
+    "energyAvailabilityPolicy": "dm-adjudicated",
+    "consumptionRatePolicy": "intentionally-unspecified",
+    "overdriveFuelUsePolicy": "accelerated-consumption-unquantified"
   },
   {
     "id": "construct-power-source.infernal-engine",
