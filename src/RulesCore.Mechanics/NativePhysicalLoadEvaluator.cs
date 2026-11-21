@@ -106,4 +106,4 @@ public sealed record NativePhysicalSurface(
     string? Rigidity, string? Combustibility, bool Operational,
     // Explicit installed region identity is an arbitrary physical segment,
     // not a body-wide protection entitlement or mandatory anatomy.
-    string? ProtectedRegionId = null, int? CandidateFlatDamageReduction = null);
+    string? ProtectedRegionId = null);
