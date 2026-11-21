@@ -235,4 +235,89 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.Contains(result.Issues, x =>
             x.Code == "construct-construction-variant-invalid");
     }
+
+    [Fact]
+    public void ProvisionalLoadSupportDetectsHeavyArmorWithoutBanningInstallation()
+    {
+        var catalog = Catalog();
+        var parts = new List<NativeConstructComponentInstance>
+        {
+            Part("housing", "power-source-housing", "housing", "steel",
+                powerSource: "construct-power-source.mechanical-engine",
+                links: ["drive", "plate-0", "plate-1", "plate-2",
+                        "plate-3", "plate-4", "plate-5"]),
+            Part("drive", "locomotion-unit", "contact", "steel")
+        };
+        for (var index = 0; index < 6; index++)
+            parts.Add(Part("plate-" + index, "protective-plating",
+                "plating", "steel", enabled: false));
+
+        var result = Quote(catalog, [.. parts]);
+        Assert.True(result.IsAuthorized,
+            string.Join("; ", result.Issues.Select(x => x.Code)));
+        Assert.NotNull(result.PhysicalLoad);
+        Assert.Equal("overloaded", result.PhysicalLoad.Status);
+        Assert.Equal(300, result.PhysicalLoad.VerifiedSupportCapacityPounds);
+        Assert.True(result.PhysicalLoad.MinimumDeficitPounds > 0);
+        Assert.All(parts, part =>
+            Assert.Contains(result.Components, state =>
+                state.InstanceId == part.InstanceId && state.Installed));
+        Assert.Equal(6, result.PhysicalSurfaces.Count(x =>
+            x.Role == "protective-surface"));
+        Assert.All(result.PhysicalSurfaces.Where(x =>
+            x.Role == "protective-surface"), surface =>
+        {
+            Assert.Equal("construct-material.steel", surface.MaterialDefinitionId);
+            Assert.Equal("rigid", surface.Rigidity);
+            Assert.False(surface.Operational);
+        });
+    }
+
+    [Fact]
+    public void PoweredSupportsCanShareLoadWithoutProvingUnknownCompleteMass()
+    {
+        var catalog = Catalog();
+        var components = new List<NativeConstructComponentInstance>
+        {
+            Part("housing", "power-source-housing", "housing", "steel",
+                powerSource: "construct-power-source.mechanical-engine",
+                links: ["drive-a", "drive-b", "plate-0", "plate-1",
+                        "plate-2", "plate-3", "plate-4", "plate-5"]),
+            Part("drive-a", "locomotion-unit", "contact", "steel"),
+            Part("drive-b", "locomotion-unit", "contact", "steel")
+        };
+        for (var i = 0; i < 6; i++)
+            components.Add(Part("plate-" + i, "protective-plating",
+                "plating", "steel", enabled: false));
+
+        var result = Quote(catalog, [.. components]);
+        Assert.True(result.IsAuthorized);
+        Assert.Equal("unresolved", result.PhysicalLoad?.Status);
+        Assert.Equal(600, result.PhysicalLoad?.VerifiedSupportCapacityPounds);
+        Assert.Null(result.PhysicalLoad?.WithinSupportCapacity);
+    }
+
+    [Fact]
+    public void SteelHardwareIsNotAutomaticallyDefensiveArmor()
+    {
+        var catalog = Catalog();
+        var result = Quote(catalog, Part("eye", "crystal-eye", "crystal", "steel",
+            enabled: false));
+        Assert.True(result.IsAuthorized);
+        Assert.Empty(result.PhysicalSurfaces);
+    }
+
+    [Fact]
+    public void UnpoweredProtectiveMaterialRemainsVisibleWithoutArmorGrant()
+    {
+        var catalog = Catalog();
+        var result = Quote(catalog, Part("plating", "protective-plating",
+            "plating", "cloth", enabled: false));
+        var layer = Assert.Single(result.PhysicalSurfaces);
+        Assert.Equal("protective-surface", layer.Role);
+        Assert.Equal("construct-material.cloth", layer.MaterialDefinitionId);
+        Assert.Equal("flexible", layer.Rigidity);
+        Assert.False(layer.Operational);
+        Assert.Empty(result.Components.Single().ActiveOperationalOriginTraitIds!);
+    }
 }
