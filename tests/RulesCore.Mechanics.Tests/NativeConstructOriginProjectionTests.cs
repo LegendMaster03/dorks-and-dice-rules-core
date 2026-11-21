@@ -1090,7 +1090,10 @@ public sealed class NativeConstructOriginProjectionTests
         var empty = session.PreviewSolarOperation(
             new Dictionary<string, long> { ["generator"] = 0 }, noLight, 60);
         Assert.False(empty.CanAdvance);
-        Assert.All(empty.Evaluation!.Assembly.Components,
+        Assert.False(empty.Evaluation!.Assembly.Components
+            .Single(x => x.InstanceId == "generator").SourceSupplyingPower);
+        Assert.Equal(0, empty.Evaluation.Assembly.PowerNetworks!.Single().AvailableOutput);
+        Assert.All(empty.Evaluation.Assembly.Components,
             state => Assert.True(state.Installed));
     }
 
