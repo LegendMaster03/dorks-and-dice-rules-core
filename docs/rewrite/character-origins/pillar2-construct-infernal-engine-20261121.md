@@ -1,9 +1,10 @@
 # Pillar 2 — Infernal Engine: Sustenance and Infernal Empowerment
 
-**Status:** Owner-approved basic fuel and empowerment model (November 21,
-2026); the enhancement's actual benefit and the instability penalty
-are not yet approved. Candidate implementation requires integrated
-acceptance and authoritative game-host fuel and rest tracking.
+**Status:** Owner-approved fuel model and once-per-turn fire-damage
+Empowerment direction (November 21, 2026). The damage quantity,
+qualifying attack types, and instability penalty remain undecided.
+Candidate implementation requires integrated acceptance and
+authoritative game-host fuel and rest tracking.
 
 *Baldur's Gate 3* and *Baldur's Gate: Descent into Avernus* are
 conceptual inspiration. No external setting's wording or lore is
@@ -20,7 +21,9 @@ incorporated as a mandatory Dorks & Dice rule.
 | Missing sustenance | **Normal 8-unit output continues** with a separate instability/overheating drawback |
 | Infernal Empowerment | Activated through **additional, deliberately consumed infernal fuel** |
 | Empowerment duration | **Until the next long rest** |
-| Empowerment effect | **Not yet approved**; a temporary combat enhancement is intended |
+| Empowerment effect | Bonus **fire damage**, at most **once per turn** |
+| Empowerment damage die / amount | Not yet specified |
+| Qualifying attack types / triggers | Not yet specified |
 | Empowerment power-output bonus | **0** |
 | Additional fuel cost/quantity | Not yet specified |
 | Instability/overheating consequence | Not yet specified |
@@ -34,10 +37,12 @@ overheating drawback, whose actual game effect remains undecided.
 **Infernal Empowerment replaces the earlier Infernal Overdrive
 proposal.** No extra fuel increases general available power from 8
 to 12 units. Additional fuel instead confers a temporary condition
-lasting until the next long rest. The combat effect is deliberately
-unimplemented until approved. It must not silently grant +1d4 fire
-damage, extra attacks, an additional power output, or any other
-unapproved benefit.
+lasting until the next long rest. The approved combat-effect direction is **bonus fire damage at most once
+per turn**, avoiding an unrestricted bonus on every attack in a
+multiattack sequence. The exact damage value and the attacks that
+qualify are not approved, so the gameplay modifier remains
+unimplemented. It must not silently grant +1d4 fire damage, extra
+attacks, an additional power output, or any other unapproved benefit.
 
 The enhancement's activation is a real fuel expenditure to be
 authorized by the host against inventory. The operating preview
@@ -71,7 +76,9 @@ does not inherit a fuel-shortage or overheating penalty.
   It has no `overdrivePowerOutput` field.
 - `infernalEmpowerment` declares activation through authenticated
   additional fuel, an end point of `until-next-long-rest`, zero
-  generic output bonus, and an explicit unresolved benefit.
+  generic output bonus, and the approved fire-damage / once-per-turn
+  effect shape. The specific damage and triggering attacks are explicit
+  unresolved parameters.
 - `PreviewInfernalOperation` reports ordinary fuel compliance,
   host-verified active empowerment, engine output, and whether the
   unfinalized stability penalty must be adjudicated.
@@ -91,9 +98,10 @@ does not inherit a fuel-shortage or overheating penalty.
 
 ## Outstanding design choices
 
-1. The actual temporary benefit of Infernal Empowerment, such as
-   fire damage or a different combat capability, and any limits
-   needed to avoid disproportionate benefits for multiattack builds.
+1. The **damage amount** of Infernal Empowerment and its
+   **qualifying attacks/triggers**. Fire damage with a maximum of one
+   application per turn is already approved. The system must not
+   grant damage until the missing parameters are defined.
 2. Acceptable infernal fuels and the exact **additional** fuel cost
    per empowerment activation.
 3. The concrete instability/overheating penalty and how cooling
