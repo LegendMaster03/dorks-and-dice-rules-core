@@ -14,7 +14,7 @@ Three separate decisions are required:
 2. **Configured value:** Does the selected value materially change the strength or functionality of that characteristic? If so, document a separate valuation case even if the canonical definition remains shared.
 3. **Whole-profile interaction:** Does its contribution depend on other effective characteristics, linked source choices, or shared pools? Evaluate the combination, not a sum of isolated labels.
 
-The other Pillar 2 development track is extending configuration-aware pricing. At this baseline, the allocation ledger primarily keys each effective grant by `intrinsic:<slot>` or `trait:<canonical-origin-trait-id>`; it **does not yet provide a completed, approved configured-value price taxonomy**. Recording that two configurations need different valuations does not make the existing gate enforce them.
+At the original `9f50ab70` documentation baseline, the ledger primarily keyed grants by `intrinsic:<slot>` or `trait:<canonical-origin-trait-id>`. The integrated pricing implementation now permits authored `NativeOriginAllocationPrice.Configurations` to select one replacement load from the effective value, bound parameters, choices, canonical definition, or resource-owner presence. Missing or ambiguous required configurations fail closed, and unrecognized mechanics remain unresolved. **This is a configurable mechanism, not an approved configured-value price taxonomy or numerical schedule.**
 
 ## Comparison dimensions
 
@@ -75,7 +75,7 @@ Use this table for each effective characteristic or coherent bundle:
 | Disposition | Meaning | Next action |
 | --- | --- | --- |
 | **Reviewed equivalent** | Same complete supported mechanic and configured values as a genuinely reviewed existing case | Reuse approved price **when one exists** |
-| **Variant needs calibration** | Existing canonical identity but materially different numeric/conditional/spell/resource configuration | Document configuration discriminator; await configurable-price integration/review |
+| **Variant needs calibration** | Existing canonical identity but materially different numeric/conditional/spell/resource configuration | Document configuration selector and exact mechanical distinction; await valuation review/calibration |
 | **New mechanic unpriced** | No existing equivalent, or missing mechanical interpretation | Author complete semantic definition; obtain integration review and later valuation |
 | **Interaction unpriced** | Effective coexistence/combination changes capability beyond isolated effects | Identify actual interacting grants, prerequisites, and candidate interaction policy |
 | **Manual DM adjudication** | Table can play a precisely ruled effect but the engine cannot validate or execute it | Record the scoped outcome and software limitation; no fictitious engine success |

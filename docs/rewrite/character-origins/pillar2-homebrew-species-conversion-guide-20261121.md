@@ -4,6 +4,8 @@
 **Evidence baseline:** `9f50ab70a37be69a6748603d210fa9406ba7ea59` (November 21, 2026)  
 **Audience:** DMs converting a third-party Species, and authors proposing native Dorks & Dice content
 
+**Integration note:** Explicit inherited-instance combinations are now mechanically supported when the table provides a verified `origin-synergy` rule with `inputEvidence: "inherited-gene"`, selected exact instances, and a fixed canonical `origin-trait` result. Configuration-aware prices may apply to that resulting effective grant. This does not authorize any unreviewed Species, combination output, or numerical price.
+
 This guide explains how to represent an unfamiliar Species through the same characteristics used by ordinary Species and other Character Origins. It does **not** grant permission to use third-party text, automatically publish new native content, certify gameplay balance, or make an unimplemented effect executable.
 
 ## The short procedure
@@ -64,7 +66,7 @@ An author should submit (a) the source and legal attribution, (b) a normalized c
 
 The existing biological combination exposes exact source offers, selected transmission, expression attempts, and effective grants. A selected inherited gene may remain latent; only surviving effective grants supply abilities and prerequisites. The default capacities in `rules/creature-origination.json` are two inherited instances and one expressed instance **per canonical kind**, not a two-feature creation limit and not a power budget. Do not assume Mendelian dominance, two mandatory parents, stacking duplicates, free upgrades, or that historical ancestors supply current entitlements.
 
-A stronger characteristic assembled from multiple inherited genes requires explicit permitted combination authoring and validation. The parallel inherited-gene-combinations track is responsible for that extension; this guide specifies desired semantics only.
+A stronger characteristic assembled from multiple inherited genes requires explicit permitted combination authoring and validation. The integrated inherited-gene mechanism accepts exact authenticated instance selections and an authored fixed canonical result; it does not derive upgrades or AC values from two donors automatically. The effective combined result is subject to the same creation-allocation policy as other active traits. See [inherited combinations](pillar2-inherited-gene-combinations-20261121.md).
 
 ## DM rulings and unresolved cases
 

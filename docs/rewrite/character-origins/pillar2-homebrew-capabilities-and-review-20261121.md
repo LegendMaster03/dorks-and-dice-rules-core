@@ -4,6 +4,8 @@
 **Documentation branch:** `docs/pillar2-homebrew-conversion-framework-20261121`  
 **Review scope:** Manual homebrew Species conversion; no new mechanics APIs, default prices, inheritance-combination rules, or WorkChat acceptance in this track.
 
+**Post-baseline integration status:** The integrated Pillar 2 branch now supports effective-value configuration pricing and explicitly selected, authenticated inherited-gene combinations with fixed canonical trait output. The capability labels below deliberately describe the earlier `9f50ab70` baseline, not the integrated code. Consult [configured characteristic pricing](pillar2-configured-characteristic-pricing.md) and [inherited combinations](pillar2-inherited-gene-combinations-20261121.md) for their bounded contracts. Neither creates a universal homebrew interpreter, an approved numerical price, or a balanced first-party allowance.
+
 **Labels:** **Supported** = observed relevant capability at the baseline; **Partial** = real implementation with bounded semantics or separate host work; **Not supported** = manual procedure or future integration required. These labels describe repository capabilities, **not** whether a custom Species is permitted at a particular table or has been balanced.
 
 ## Manual procedure versus actual software
