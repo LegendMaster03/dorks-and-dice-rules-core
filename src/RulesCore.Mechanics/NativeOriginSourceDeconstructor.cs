@@ -153,9 +153,31 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                         "Historical references are not a replacement for a current manifested profile.");
                     continue;
                 }
+                // A constructed parent's authenticated gene instances are the
+                // complete selectable genetic state, including unexpressed ones.
+                // The grant list remains the fallback for older/direct profiles
+                // without an explicit biological instance for that same grant.
+                var genes = contributor.ManifestedProfile.BiologicalGenes ?? [];
+                foreach (var gene in genes)
+                {
+                    if (gene?.Identity is null || string.IsNullOrWhiteSpace(gene.Id)) continue;
+                    var id = "nested:" + contributor.Id + ":gene:" + gene.Id;
+                    candidates.TryAdd(id, new NativeOriginCandidate(id, gene.Identity,
+                        new(NativeOriginEligibility.Unreviewed, Explanation:
+                            "Authenticated inherited gene instance, not an automatic grant."),
+                        contributor.Id, gene.ConfiguredValue, gene.Parameters));
+                }
                 foreach (var grant in contributor.ManifestedProfile.InherentGrants ?? [])
                 {
-                    if (grant?.Identity is null) continue;
+                    if (grant?.Identity is null || grant.Synergy is not null ||
+                        genes.Any(gene => gene is not null &&
+                            gene.Identity.Kind == grant.Identity.Kind &&
+                            gene.Identity.MechanicalDefinitionId ==
+                                grant.Identity.MechanicalDefinitionId &&
+                            gene.Identity.IntrinsicSlotId == grant.Identity.IntrinsicSlotId &&
+                            grant.SourceCandidateIds.Contains(
+                                gene.SourceCandidateId, StringComparer.Ordinal)))
+                        continue;
                     var id = "nested:" + contributor.Id + ":" + grant.Id;
                     candidates.TryAdd(id, new NativeOriginCandidate(id, grant.Identity,
                         new(NativeOriginEligibility.Unreviewed, Explanation:
