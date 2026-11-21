@@ -12,7 +12,8 @@
     "provides": [
       "reinforced-mount"
     ],
-    "craftingRecipeId": "crafting-recipe.construct-enhancement.reinforced-mount"
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.reinforced-mount",
+    "powerDemand": 0
   },
   {
     "id": "construct-enhancement.concealed-compartment",
@@ -27,7 +28,8 @@
     "provides": [
       "concealed-storage"
     ],
-    "craftingRecipeId": "crafting-recipe.construct-enhancement.concealed-compartment"
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.concealed-compartment",
+    "powerDemand": 0
   },
   {
     "id": "construct-enhancement.tether-deployment",
@@ -43,7 +45,8 @@
     "provides": [
       "tether-deployment"
     ],
-    "craftingRecipeId": "crafting-recipe.construct-enhancement.tether-deployment"
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.tether-deployment",
+    "powerDemand": 0
   },
   {
     "id": "construct-enhancement.environmental-sealing",
@@ -58,7 +61,8 @@
     "provides": [
       "environmental-sealing"
     ],
-    "craftingRecipeId": "crafting-recipe.construct-enhancement.environmental-sealing"
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.environmental-sealing",
+    "powerDemand": 0
   },
   {
     "id": "construct-enhancement.specialized-grip",
@@ -72,7 +76,8 @@
     "provides": [
       "specialized-grip"
     ],
-    "craftingRecipeId": "crafting-recipe.construct-enhancement.specialized-grip"
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.specialized-grip",
+    "powerDemand": 0
   },
   {
     "id": "construct-enhancement.vibration-sensing",

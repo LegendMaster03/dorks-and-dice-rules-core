@@ -12,7 +12,8 @@
     "provides": [
       "reinforced-structure"
     ],
-    "craftingRecipeId": "crafting-recipe.construct-design.reinforced-frame"
+    "craftingRecipeId": "crafting-recipe.construct-design.reinforced-frame",
+    "powerDemand": 0
   },
   {
     "id": "construct-design.articulated",
@@ -28,7 +29,8 @@
     "provides": [
       "articulated-structure"
     ],
-    "craftingRecipeId": "crafting-recipe.construct-design.articulated"
+    "craftingRecipeId": "crafting-recipe.construct-design.articulated",
+    "powerDemand": 0
   },
   {
     "id": "construct-design.flexible",
@@ -44,7 +46,8 @@
     "provides": [
       "flexible-structure"
     ],
-    "craftingRecipeId": "crafting-recipe.construct-design.flexible"
+    "craftingRecipeId": "crafting-recipe.construct-design.flexible",
+    "powerDemand": 0
   },
   {
     "id": "construct-design.compartmentalized",
@@ -59,7 +62,8 @@
     "provides": [
       "compartmentalized-housing"
     ],
-    "craftingRecipeId": "crafting-recipe.construct-design.compartmentalized"
+    "craftingRecipeId": "crafting-recipe.construct-design.compartmentalized",
+    "powerDemand": 0
   },
   {
     "id": "construct-design.wheeled-drive",
