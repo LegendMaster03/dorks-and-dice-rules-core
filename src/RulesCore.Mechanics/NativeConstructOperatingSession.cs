@@ -113,7 +113,7 @@ public sealed class NativeConstructOperatingSession
         IReadOnlyDictionary<string, bool>? requestedEnabled,
         IReadOnlyDictionary<string, string>? requestedModes,
         IReadOnlyList<string>? unavailablePowerSourceInstanceIds,
-        IReadOnlyDictionary<string, int>? trustedSolarOutputs)
+        IReadOnlyDictionary<string, int>? trustedSourceOutputs)
     {
         requestedEnabled ??= new Dictionary<string, bool>(StringComparer.Ordinal);
         requestedModes ??= new Dictionary<string, string>(StringComparer.Ordinal);
@@ -132,17 +132,25 @@ public sealed class NativeConstructOperatingSession
                     "Operating changes may only address instances in the authorized assembly.")]);
         }
 
-        // Installed source ratings are enough for creation but not for
-        // an authenticated in-play solar operating interval.
-        var needsSolarContext = trustedSolarOutputs is null &&
-            _baseline.Components.Any(x =>
-                x.PowerSourceId == "construct-power-source.solar-crystal");
-        IReadOnlyDictionary<string, int>? evaluatedOutputs = needsSolarContext
-            ? _baseline.Components.Where(x =>
-                    x.PowerSourceId == "construct-power-source.solar-crystal")
-                .ToDictionary(x => x.InstanceId, _ => 0,
-                    StringComparer.Ordinal)
-            : trustedSolarOutputs;
+        // Rated output alone is insufficient to authorize a solar or
+        // soul-driven generator in play. A source without trusted operating
+        // context contributes zero, and its powered traits remain inactive.
+        var contextualSources = _baseline.Components
+            .Where(x => x.PowerSourceId is
+                "construct-power-source.solar-crystal" or
+                "construct-power-source.soul-gem")
+            .ToArray();
+        var missingContext = contextualSources.Where(x =>
+            trustedSourceOutputs is null ||
+            !trustedSourceOutputs.ContainsKey(x.InstanceId)).ToArray();
+        Dictionary<string, int>? evaluatedOutputs = trustedSourceOutputs is null &&
+            missingContext.Length == 0 ? null
+            : new Dictionary<string, int>(trustedSourceOutputs ??
+                new Dictionary<string, int>(StringComparer.Ordinal),
+                StringComparer.Ordinal);
+        if (evaluatedOutputs is not null)
+            foreach (var source in missingContext)
+                evaluatedOutputs[source.InstanceId] = 0;
         var outOfEnergy = evaluatedOutputs is null
             ? Array.Empty<string>()
             : evaluatedOutputs.Where(x => x.Value == 0)
@@ -151,8 +159,8 @@ public sealed class NativeConstructOperatingSession
         {
             // Never let a transient operating request clear a source outage
             // already captured in the trusted installation snapshot.
-            // A solar source supplying zero usable power must also be marked
-            // unavailable, not merely have its network output reduced to zero.
+            // A conditional generator supplying zero power must also be
+            // unavailable for native dependency and shutdown reconciliation.
             UnavailablePowerSourceInstanceIds =
                 (_baseline.UnavailablePowerSourceInstanceIds ?? [])
                     .Concat(unavailablePowerSourceInstanceIds ?? [])
@@ -168,15 +176,19 @@ public sealed class NativeConstructOperatingSession
         };
         var state = _assembly.EvaluateWithSourceOutputOverrides(
             configured, evaluatedOutputs);
-        if (needsSolarContext)
+        if (missingContext.Length > 0)
             return new(state, [], _originGrantIds,
-                state.Issues.Concat([
+                state.Issues.Concat(missingContext.Select(x =>
                     new NativeOriginContractIssue(
-                        "construct-solar-operating-context-required",
+                        x.PowerSourceId == "construct-power-source.solar-crystal"
+                            ? "construct-solar-operating-context-required"
+                            : "construct-soul-operating-context-required",
                         "operatingConfiguration",
                         NativeOriginIssueSeverity.Unresolved,
-                        "Solar operating power requires a validated sunlight and battery interval.")
-                ]).ToArray());
+                        x.PowerSourceId == "construct-power-source.solar-crystal"
+                            ? "Solar power requires validated light and battery state."
+                            : "Soul-core power requires DM-adjudicated fuel availability.")))
+                    .ToArray());
         var componentStates = state.Components.ToDictionary(x => x.InstanceId,
             StringComparer.Ordinal);
         var active = _originGrantIds.ToHashSet(StringComparer.Ordinal);
