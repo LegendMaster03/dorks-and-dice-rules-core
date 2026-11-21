@@ -1071,6 +1071,108 @@ public sealed class NativeConstructOriginProjectionTests
             new Dictionary<string, bool> { ["fake"] = true }).CanOperate);
     }
 
+    private sealed class TestSoulAuthority(bool approved = true) :
+        INativeConstructSoulCustodyAuthority
+    {
+        public bool ConfirmCapture(string deathEventId, string soulId,
+            string receivingCoreInstanceId) => approved;
+
+        public bool ConfirmResolution(string soulId, string coreInstanceId,
+            NativeConstructSoulDisposition outcome) => approved;
+    }
+
+    [Fact]
+    public void SoulCustodyRequiresAuthenticatedCaptureAndExtraordinaryResolution()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.soul-gem"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var opened = built.OperatingSession!.OpenTrustedSoulCustodyLedger(
+            Array.Empty<NativeConstructSoulCustodyRecord>());
+        Assert.Empty(opened.Issues);
+        var ledger = Assert.IsType<NativeConstructSoulCustodyLedger>(
+            opened.Ledger);
+        var nearby = new Dictionary<string, int> { ["generator"] = 20 };
+
+        var refused = ledger.TryRecordDeath(0, "death-1", "ally",
+            true, nearby, new TestSoulAuthority(false));
+        Assert.False(refused.Committed);
+        Assert.Empty(ledger.Snapshot().Records);
+
+        var captured = ledger.TryRecordDeath(0, "death-1", "ally",
+            true, nearby, new TestSoulAuthority());
+        Assert.True(captured.Committed);
+        Assert.True(captured.Snapshot.IsImprisoned("ally"));
+        Assert.Equal(NativeConstructSoulDisposition.Imprisoned,
+            Assert.Single(captured.Snapshot.Records).Disposition);
+
+        var replay = ledger.TryRecordDeath(0, "death-1", "ally",
+            true, nearby, new TestSoulAuthority());
+        Assert.False(replay.Committed);
+        Assert.Equal(1, ledger.Snapshot().Revision);
+
+        var unauthorizedRescue = ledger.TryResolveSoul(1, "ally",
+            NativeConstructSoulDisposition.Extracted,
+            new TestSoulAuthority(false));
+        Assert.False(unauthorizedRescue.Committed);
+        Assert.True(ledger.Snapshot().IsImprisoned("ally"));
+
+        var rescued = ledger.TryResolveSoul(1, "ally",
+            NativeConstructSoulDisposition.Extracted,
+            new TestSoulAuthority());
+        Assert.True(rescued.Committed);
+        Assert.False(rescued.Snapshot.IsImprisoned("ally"));
+        Assert.Equal(NativeConstructSoulDisposition.Extracted,
+            Assert.Single(rescued.Snapshot.Records).Disposition);
+
+        // Resurrection and a later death may result in a second episode
+        // for the same soul without erasing its first captivity.
+        var recaptured = ledger.TryRecordDeath(2, "death-2", "ally",
+            true, nearby, new TestSoulAuthority());
+        Assert.True(recaptured.Committed);
+        Assert.True(recaptured.Snapshot.IsImprisoned("ally"));
+        Assert.Equal(2, recaptured.Snapshot.Records.Count);
+
+        var consumed = ledger.TryResolveSoul(3, "ally",
+            NativeConstructSoulDisposition.Consumed,
+            new TestSoulAuthority());
+        Assert.True(consumed.Committed);
+        Assert.False(consumed.Snapshot.IsImprisoned("ally"));
+        Assert.Contains(consumed.Snapshot.Records,
+            x => x.Disposition == NativeConstructSoulDisposition.Consumed);
+    }
+
+    [Fact]
+    public void SoulCustodyHasNoArtificialStorageLimitOrDepletionSchedule()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.soul-gem"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var ledger = Assert.IsType<NativeConstructSoulCustodyLedger>(
+            built.OperatingSession!.OpenTrustedSoulCustodyLedger(
+                Array.Empty<NativeConstructSoulCustodyRecord>()).Ledger);
+        var near = new Dictionary<string, int> { ["generator"] = 5 };
+        var authority = new TestSoulAuthority();
+        for (var n = 0; n < 128; n++)
+        {
+            var result = ledger.TryRecordDeath(n, "encounter-" + n,
+                "enemy-" + n, true, near, authority);
+            Assert.True(result.Committed);
+        }
+        Assert.Equal(128, ledger.Snapshot().Records.Count);
+        Assert.All(ledger.Snapshot().Records, x =>
+            Assert.Equal(NativeConstructSoulDisposition.Imprisoned,
+                x.Disposition));
+
+        // No elapsed-time API consumes or removes these souls.
+        Assert.False(ledger.TryRecordDeath(128, "outside", "stranger",
+            true, new Dictionary<string, int> { ["generator"] = 31 },
+            authority).Committed);
+        Assert.Equal(128, ledger.Snapshot().Records.Count);
+    }
+
     private sealed class TestSolarAuthority(bool approved = true) :
         INativeConstructSolarIntervalAuthority
     {
