@@ -3,20 +3,21 @@ using RulesCore.Content;
 namespace RulesCore.Mechanics;
 
 /// <summary>
-/// A DM/host-verified Infernal Engine state. It is not a fuel transaction.
-/// Missing ordinary sustenance does not eliminate normal power. The
-/// resulting instability/overheating penalty remains to be authored.
+/// DM/host-verified Infernal Engine operating state, not a fuel transaction.
+/// Normal output remains available even without sustaining fuel. Infernal
+/// Empowerment is a temporary condition that expires at the next long rest;
+/// its combat benefit has not yet been designed or approved.
 /// </summary>
 public sealed record NativeConstructInfernalSourceState(
     string InstanceId, bool LongRestFuelProvided,
-    bool OverdriveFuelProvided, bool RequiresInstabilityAdjudication,
+    bool EmpowermentActive, bool RequiresInstabilityAdjudication,
     int AvailablePowerOutput);
 
 /// <summary>
-/// A source-specific operating projection, not authorization to create
-/// infernal fuel, discharge a soul coin or keep Overdrive active for an
-/// invented duration. The host must verify fuel expenditure and apply the
-/// overdue sustaining-fuel consequence before committing game state.
+/// Source-specific operating projection, not permission to manufacture fuel,
+/// activate empowerment for free, or impose an unapproved combat benefit.
+/// The host must authenticate the extra-fuel activation, end the condition
+/// at the next long rest, and adjudicate ordinary fuel-shortage penalties.
 /// </summary>
 public sealed record NativeConstructInfernalOperationPreview(
     NativeConstructOperatingStateResult? Evaluation,
@@ -28,4 +29,7 @@ public sealed record NativeConstructInfernalOperationPreview(
 
     public bool RequiresInstabilityAdjudication =>
         Sources.Any(x => x.RequiresInstabilityAdjudication);
+
+    public bool HasActiveEmpowerment =>
+        Sources.Any(x => x.EmpowermentActive);
 }
