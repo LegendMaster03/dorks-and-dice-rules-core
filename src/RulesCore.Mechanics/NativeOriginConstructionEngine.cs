@@ -783,7 +783,109 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             verifiedTableSynergies);
         issues.AddRange(profileReview.Issues.Where(x =>
             x.Code is not ("profile-outcome-unresolved" or "profile-outcome-conflict")));
+
+        // Initial creation may be subject to a host-configured allocation
+        // policy. This is deliberately separate from transmission capacities:
+        // genotype records are free, but their expressed effective grants are
+        // priced with the same complete-grant ledger as conventional presets.
+        // A missing or partial required price schedule cannot be treated as a
+        // zero-cost allowance. Existing baselines and post-origination changes
+        // do not retroactively consume a creation budget.
+        NativeOriginAllocationAssessment? creationAllocation = null;
+        var isInitialBiologicalCreation = !reconstructionTarget &&
+            proposal.ExistingConfiguration is null &&
+            proposal.Intent is NativeOriginIntent.Direct or NativeOriginIntent.Mixed or
+                NativeOriginIntent.Custom &&
+            proposal.Method.RuleId == "rule.creature-origination" &&
+            proposal.Method.MethodId == "biological";
+        if (isInitialBiologicalCreation &&
+            (request.RequireCreationAllocation ||
+             request.CreationAllocationPolicy is not null))
+        {
+            var allocationRuling = Verified("creation-allocation", proposal.Id);
+            var effectivePolicy = request.CreationAllocationPolicy;
+            var waived = false;
+            if (allocationRuling is not null)
+            {
+                var outcome = allocationRuling.EffectiveOutcome;
+                if (ReadBool(outcome, "waive") == true)
+                    waived = true;
+                else if (outcome.ValueKind == JsonValueKind.Object &&
+                    outcome.TryGetProperty("allowance", out var allowance) &&
+                    allowance.ValueKind == JsonValueKind.Number &&
+                    allowance.TryGetInt32(out var revisedAllowance) &&
+                    revisedAllowance >= 0 && effectivePolicy is not null)
+                    effectivePolicy = effectivePolicy with
+                    {
+                        Allowance = revisedAllowance
+                    };
+                else
+                    Add("creation-allocation-ruling-invalid", "creationAllocation",
+                        NativeOriginIssueSeverity.Invalid,
+                        "An authorized creation allocation ruling needs waive=true or a nonnegative allowance for a configured policy.");
+                usedDm = true;
+                verifiedDmDecisionIds.Add(allocationRuling.Id);
+            }
+            if (waived)
+            {
+                creationAllocation = new NativeOriginAllocationAssessment(
+                    "dm-waived", effectivePolicy?.Revision,
+                    effectivePolicy?.Allowance, null, [], [], [], PreviewOnly: false);
+            }
+            else
+            {
+                // Check construction independently of the budget: the shared
+                // assessor must not report that an incomplete Origin is valid
+                // merely because the present subset is inexpensive.
+                var beforeAllocation = new NativeOriginConstructionResult(
+                    Status(), proposal, profile, issues);
+                creationAllocation = NativeOriginAllocationPreview.AssessCreation(
+                    catalog, beforeAllocation, effectivePolicy);
+                switch (creationAllocation.Status)
+                {
+                    case "within-allowance":
+                        break;
+                    case "over-allowance":
+                        Add("creation-allocation-exceeded", "creationAllocation",
+                            NativeOriginIssueSeverity.Conflict,
+                            "The complete expressed Origin exceeds the configured creation budget.");
+                        break;
+                    case "invalid-policy":
+                        Add("creation-allocation-policy-invalid", "creationAllocation",
+                            NativeOriginIssueSeverity.Invalid,
+                            "The host-provided creation allocation price schedule is malformed.");
+                        break;
+                    case "not-configured":
+                        Add("creation-allocation-unconfigured", "creationAllocation",
+                            NativeOriginIssueSeverity.Unresolved,
+                            "Initial biological creation requires an approved complete budget and price schedule.");
+                        break;
+                    default:
+                        Add("creation-allocation-unresolved", "creationAllocation",
+                            NativeOriginIssueSeverity.Unresolved,
+                            "The complete expressed Origin could not be valued using the configured creation policy.");
+                        break;
+                }
+            }
+        }
+
         var status = Status();
+        // The profile is a nonplayable preview if the creation budget fails,
+        // even when all individual traits were otherwise authenticated.
+        if (status != preliminary || usedDm)
+            profile = profile with
+            {
+                Adjudication = status == NativeOriginConstructionStatus.Authorized
+                    ? new NativeOriginDecisionBasis(
+                        usedDm ? NativeOriginAdjudication.DmAuthorized :
+                            NativeOriginAdjudication.Supported,
+                        usedDm ? null : proposal.Method.RuleId,
+                        usedDm ? verifiedDmDecisionIds.FirstOrDefault() : null)
+                    : new NativeOriginDecisionBasis(
+                        status == NativeOriginConstructionStatus.Conflicting
+                            ? NativeOriginAdjudication.Conflict :
+                                NativeOriginAdjudication.Unresolved)
+            };
         // An evaluation preview must not claim an Origin event already happened.
         // Only an authorized result promotes this evaluation's event to completed.
         if (addedConstructionEvent && status == NativeOriginConstructionStatus.Authorized)
@@ -796,7 +898,8 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 .ThenBy(x => x.Code, StringComparer.Ordinal).Distinct().ToArray());
         return outcome with
         {
-            BiologicalCombination = NativeOriginBiologicalCombinationProjector.Build(outcome)
+            BiologicalCombination = NativeOriginBiologicalCombinationProjector.Build(outcome),
+            CreationAllocation = creationAllocation
         };
 
         void Add(string code, string path, NativeOriginIssueSeverity severity, string detail) =>
