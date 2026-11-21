@@ -24,10 +24,10 @@ public sealed record NativeOriginBiologicalCharacteristicGroup(
     IReadOnlyList<NativeOriginEffectiveGrant> Expressions);
 
 /// <summary>
-/// Read-only evidence for the Combine operation of biological origination.
-/// This does not decide which genes were genetically transmitted, whether an
-/// unexpressed gene can persist, or how many genes a descendant may inherit.
-/// Those are separate procedure policies, not inferred from candidate offers.
+/// Source-preserving Combine output for biological origination. Availability,
+/// proposed inheritance, evaluated hereditary instances, and effective grants
+/// remain independently represented. Latency is derived from the final grant
+/// set rather than treated as a separate, assignable trait.
 /// </summary>
 /// <summary>
 /// Expression is evaluated against effective grants; absence is the derived
