@@ -4,10 +4,11 @@ using RulesCore.Content;
 namespace RulesCore.Mechanics;
 
 /// <summary>
-/// A hypothetical, read-only allocation policy. It is never part of the
-/// authorization pipeline: passing a policy here neither creates a grant nor
-/// establishes table authority. Its revision must identify an explicit design
-/// candidate, not the ruleset's implicit default.
+/// A complete allocation price schedule. Preview assessments are always
+/// non-authoritative; the construction engine can separately enforce a
+/// host-supplied schedule during initial character creation. A policy does
+/// not grant traits or establish table authority. No numerical default
+/// is implied while calibration remains incomplete.
 /// </summary>
 public sealed record NativeOriginAllocationPolicy(
     string Revision, string RuleId, string MethodId, int Allowance,
@@ -41,9 +42,10 @@ public sealed record NativeOriginAllocationCharge(
     IReadOnlyList<string> CharacteristicKeys);
 
 /// <summary>
-/// An allocation assessment never changes the status of its Origin. Even a
-/// within-allowance result is an experimental comparison, not a mechanical
-/// authorization, a power score, or an approved construction budget.
+/// A public preview never changes Origin authorization. The creation gate
+/// reuses the same ledger, marks PreviewOnly=false and explicitly incorporates
+/// the result in construction Status. A passed budget never authorizes an
+/// otherwise unsupported grant or certifies the price schedule as balanced.
 /// </summary>
 public sealed record NativeOriginAllocationAssessment(
     string Status, string? PolicyRevision, int? Allowance, int? CommittedLoad,
@@ -128,9 +130,8 @@ public static class NativeOriginAllocationPreview
             return Finish("invalid-policy", policy.Revision, policy.Allowance,
                 null, [], ["allocation-policy-malformed-or-overlapping"]);
 
-        // A configured policy may be tried against an incomplete construction
-        // without declaring that missing grants are free. Such a preview is
-        // explicitly incomplete regardless of the hypothetical cost result.
+        // Incomplete construction cannot become affordable by omitting
+        // unresolved grants. This holds for previews and enforced creation.
         if (result.Status != NativeOriginConstructionStatus.Authorized)
             issues.Add("origin-not-authorized-for-allocation");
         // Explicit cost data does not turn a custom or unrecognized payload
