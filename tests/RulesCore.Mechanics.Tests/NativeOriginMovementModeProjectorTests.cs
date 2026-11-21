@@ -71,8 +71,11 @@ public sealed class NativeOriginMovementModeProjectorTests
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         Assert.Equal(3, foundation.Length);
-        var traits = selectedTraitIds.Select(id =>
-            Assert.Single(offers, x => x.Identity.MechanicalDefinitionId == id)).ToArray();
+        // Each requested trait belongs to the corresponding contributor.
+        // Two contributors may now offer the same canonical gene ID.
+        var traits = selectedTraitIds.Select((id, i) =>
+            Assert.Single(offers, x => x.ContributorId == "source-" + i &&
+                x.Identity.MechanicalDefinitionId == id)).ToArray();
         Assert.All(traits, x =>
             Assert.Equal(NativeOriginEligibility.Eligible, x.SelectionBasis.Eligibility));
 
@@ -218,7 +221,8 @@ public sealed class NativeOriginMovementModeProjectorTests
             Assert.Single(result.Profile!.Underlying.InherentGrants.Where(y =>
                 y.Id == x.GrantId));
         });
-        Assert.Equal(2, view.Modes.Select(x => x.DefinitionId).Distinct().Count());
+        Assert.Single(view.Modes.Select(x => x.DefinitionId).Distinct());
+        Assert.Equal(2, view.Modes.Select(x => x.SourceId).Distinct().Count());
     }
 
     [Fact]
