@@ -49,11 +49,12 @@ class CuratedIdentityReviewTests(unittest.TestCase):
             {"species.dragonborn#trait:low-light-vision",
              "species.elf#trait:low-light-vision",
              "species.gnome#trait:low-light-vision",
-             "species.orc#trait:low-light-vision"},
+             "species.orc#trait:low-light-vision",
+             "species.tiefling#trait:low-light-vision"},
             set(lowlight["sourceOccurrenceIds"]),
         )
         self.assertEqual(
-            8, report["literalOccurrenceCoverageCount"]
+            11, report["literalOccurrenceCoverageCount"]
         )
         self.assertEqual(
             {"identical-complete-authored-content"},
@@ -65,28 +66,20 @@ class CuratedIdentityReviewTests(unittest.TestCase):
             for x in groups.values()
         ))
 
-    def test_tiefling_low_light_same_rule_but_prose_change_stays_review(self):
+    def test_consolidated_low_light_and_natural_climber_have_exact_evidence(self):
         report = self.audit()
-        finding = next(
-            x for x in report["semanticReviewQueue"]
-            if x["reviewId"] == "study.review.low-light-tiefling"
-        )
-        self.assertEqual(
-            "same-structure-different-prose",
-            finding["observedEvidence"],
-        )
-        self.assertEqual("unresolved", finding["semanticEquivalence"])
-
-    def test_red_copper_natural_climber_stays_review_not_automatic_identity(self):
-        report = self.audit()
-        finding = next(
-            x for x in report["semanticReviewQueue"]
-            if x["reviewId"] == "study.review.natural-climber"
-        )
-        self.assertEqual(
-            "same-structure-different-prose", finding["observedEvidence"]
-        )
-        self.assertEqual("unresolved", finding["semanticEquivalence"])
+        identities = {
+            group["candidateDefinitionId"]: set(group["sourceOccurrenceIds"])
+            for group in report["identicalAuthoredGroups"]
+        }
+        self.assertIn("species.tiefling#trait:low-light-vision",
+                      identities["study.definition.low-light-vision"])
+        self.assertEqual({
+            "ancestry.dragonborn.red#trait:natural-climber",
+            "ancestry.dragonborn.copper#trait:natural-climber",
+        }, identities["study.definition.natural-climber"])
+        self.assertEqual(["study.review.powerful-build"],
+                         [x["reviewId"] for x in report["semanticReviewQueue"]])
 
     def test_orc_goliath_powerful_build_remains_a_different_mechanic(self):
         report = self.audit()
@@ -129,22 +122,23 @@ class CuratedIdentityReviewTests(unittest.TestCase):
         ):
             self.audit(catalog=mutated)
 
-    def test_near_match_fails_when_structured_mechanics_change(self):
+    def test_consolidated_gene_fails_on_mechanical_drift(self):
         mutated = copy.deepcopy(self.catalog)
         mutated["ancestry.dragonborn.copper"]["traits"][0]["speedFeet"] = 20
         with self.assertRaisesRegex(
-            CuratedIdentityReviewError, "Near-match evidence changed"
+            CuratedIdentityReviewError, "Complete authored definition drift"
         ):
             self.audit(catalog=mutated)
 
-    def test_near_match_fails_if_prose_converges(self):
+    def test_distinct_powerful_build_mechanics_remain_under_review(self):
         mutated = copy.deepcopy(self.catalog)
-        red_desc = mutated["ancestry.dragonborn.red"]["traits"][0][
-            "description"
-        ]
-        mutated["ancestry.dragonborn.copper"]["traits"][0][
-            "description"
-        ] = red_desc
+        goliath = mutated["species.goliath"]["traits"]
+        orc = mutated["species.orc"]["traits"]
+        goliath_build = next(x for x in goliath if x["id"] == "powerful-build")
+        orc_build = next(x for x in orc if x["id"] == "powerful-build")
+        # Eliminating the mechanical difference invalidates the open review.
+        orc_build.clear()
+        orc_build.update(copy.deepcopy(goliath_build))
         with self.assertRaisesRegex(
             CuratedIdentityReviewError, "Near-match evidence changed"
         ):

@@ -99,7 +99,7 @@ class SharedSpeciesFoundationTests(unittest.TestCase):
         traits = [x for x in report["distinctConfiguredOffers"]
                   if x["kind"] == "trait"
                   and x["identity"] ==
-                  "species.dragonborn#trait:draconic-resistance"]
+                  "species.dragonborn#trait:damage-type-resistance"]
         self.assertEqual(2, len(traits))
         self.assertEqual(
             {"fire", "lightning"},
@@ -113,7 +113,7 @@ class SharedSpeciesFoundationTests(unittest.TestCase):
                     if x["sourceId"] == "species.dragonborn")
         self.assertEqual(
             1, base["traitOccurrenceIds"].count(
-                "species.dragonborn#trait:draconic-resistance"
+                "species.dragonborn#trait:damage-type-resistance"
             ),
         )
         self.assertNotIn("manifestedCharacteristics", report)

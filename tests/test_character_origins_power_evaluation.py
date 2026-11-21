@@ -830,7 +830,7 @@ class PowerEvaluationTests(unittest.TestCase):
         """Minimal faithful field shapes for a diagnostic, not authored data."""
         profile = self.profile("species.dwarf")
         profile["traits"] = {
-            "trait.goliath.hill.hills-tumble": {"id": "hills-tumble", "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
+            "trait.hills-tumble": {"id": "hills-tumble", "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
                      "targetMaximumSize": "large", "applyCondition": "condition.prone",
                      "additionalSavingThrow": False,
                      "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
@@ -840,14 +840,14 @@ class PowerEvaluationTests(unittest.TestCase):
                          "savingThrow": {"ability": "strength"},
                          "applyConditionOnFailedSave": "condition.prone",
                          "sharedUsesFromTrait": "hills-tumble"}},
-            "trait.goliath.stone.stones-endurance": {"id": "stones-endurance", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
+            "trait.stones-endurance": {"id": "stones-endurance", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
                           "activation": {"action": "reaction", "trigger": "when-you-take-damage"},
                           "damageReduction": {"dice": "1d12", "appliesTo": "triggering-damage"}},
-            "trait.goliath.stone.stone-strike": {"id": "stone-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
+            "trait.stone-strike": {"id": "stone-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
                       "oncePerTurn": True, "extraDamage": {"dice": "1d6", "damageType": "force"},
                       "onFailedSave": {"forcedMovementFeet": 10},
                       "sharedUsesFromTrait": "stones-endurance"},
-            "trait.goliath.frost.frosts-chill": {"id": "frosts-chill", "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
+            "trait.frosts-chill": {"id": "frosts-chill", "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
                       "extraDamage": {"dice": "1d6", "damageType": "cold"},
                       "speedReduction": {"feet": 10, "endsAt":"start-of-your-next-turn"},
                       "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
@@ -856,9 +856,9 @@ class PowerEvaluationTests(unittest.TestCase):
                           "savingThrow": {"ability": "constitution"},
                           "onFailedSave": {"speedSetFeet": 0, "endsAt":"start-of-your-next-turn"},
                           "sharedUsesFromTrait": "frosts-chill"}},
-            "trait.goliath.storm.storms-thunder": {"id": "storms-thunder", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
+            "trait.storms-thunder": {"id": "storms-thunder", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
                         "activation": {"action": "reaction", "trigger": "when-a-creature-within-range-deals-damage-to-you"}},
-            "trait.goliath.storm.storm-strike": {"id": "storm-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
+            "trait.storm-strike": {"id": "storm-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
                       "oncePerTurn": True, "extraDamage": {"dice": "1d6", "damageType": "lightning"},
                       "savingThrow": {"ability": "constitution"},
                       "onFailedSave": {"attackRollMode": "disadvantage", "endsAt":"start-of-your-next-turn"},
@@ -929,11 +929,11 @@ class PowerEvaluationTests(unittest.TestCase):
         # Replace Storm with Stone; a confirmed hit still qualifies even if
         # the original weapon did no damage (e.g., was resisted).
         e["strikeOpportunities"][0].update(
-            traitId="trait.goliath.stone.stone-strike", dealtDamage=False)
+            traitId="trait.stone-strike", dealtDamage=False)
         stone = power.evaluate(profile, self.catalog, 1, e)
         self.assertEqual("activated", stone["strikeEventTrace"][0]["status"])
         self.assertEqual(3.5, stone["metrics"]["strike_gross_extra_damage_on_confirmed_hits"])
-        e["strikeOpportunities"][0]["traitId"] = "trait.goliath.hill.hills-tumble"
+        e["strikeOpportunities"][0]["traitId"] = "trait.hills-tumble"
         hill = power.evaluate(profile, self.catalog, 1, e)
         self.assertEqual("hit-without-required-damage", hill["strikeEventTrace"][0]["status"])
 
@@ -942,7 +942,7 @@ class PowerEvaluationTests(unittest.TestCase):
         e = copy.deepcopy(next(x["scenario"] for x in self.scenario_suite()["contexts"]
                      if x["id"] == "goliath-storm-disadvantage-window"))
         e["strikeOpportunities"][0].update(
-            traitId="trait.goliath.stone.stone-strike", targetIsCreature=False)
+            traitId="trait.stone-strike", targetIsCreature=False)
         stone = power.evaluate(profile, self.catalog, 1, e)
         self.assertEqual("activated", stone["strikeEventTrace"][0]["status"])
         self.assertNotIn("strike_expected_enemy_forced_movement_feet", stone["metrics"])
@@ -951,12 +951,12 @@ class PowerEvaluationTests(unittest.TestCase):
         profile = self.synthetic_goliath("stone")
         scene = copy.deepcopy(next(x["scenario"] for x in self.scenario_suite()["contexts"]
                      if x["id"] == "goliath-storm-disadvantage-window"))
-        scene["strikeOpportunities"][0]["traitId"] = "trait.goliath.stone.stone-strike"
+        scene["strikeOpportunities"][0]["traitId"] = "trait.stone-strike"
         scene["reactionDamageEvents"] = [{
             "id":"damage", "round":1, "amount":20, "damageType":"slashing",
             "isAttackHit":True, "attackerVisible":True, "reactionAvailable":True}]
         result = power.evaluate(profile, self.catalog, 1, scene)
-        self.assertIn({"traitId": "trait.goliath.stone.stones-endurance",
+        self.assertIn({"traitId": "trait.stones-endurance",
                        "reason": "joint-offense-defense-resource-plan-unresolved"},
                       result["unmodeled"])
 

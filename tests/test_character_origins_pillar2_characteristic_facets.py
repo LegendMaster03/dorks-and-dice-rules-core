@@ -170,9 +170,14 @@ class OriginCharacteristicFacetTests(unittest.TestCase):
         self.assertTrue(
             collisions["amphibious"]["mechanicalFieldsIdentical"]
         )
-        self.assertIn("darkness", collisions)
-        self.assertFalse(
-            collisions["darkness"]["mechanicalFieldsIdentical"]
+        # Known and prepared Darkness are distinct mechanical definitions;
+        # neither relies on a source-specific prefix for its identity.
+        self.assertNotIn("darkness", collisions)
+        self.assertNotEqual(
+            next(x["id"] for x in self.catalog["ancestry.elf.drow"]["traits"]
+                 if x.get("spell") == "darkness"),
+            next(x["id"] for x in self.catalog["ancestry.tiefling.infernal"]["traits"]
+                 if x.get("spell") == "darkness"),
         )
         self.assertGreaterEqual(
             len(collisions["powerful-build"]["occurrenceIds"]), 2

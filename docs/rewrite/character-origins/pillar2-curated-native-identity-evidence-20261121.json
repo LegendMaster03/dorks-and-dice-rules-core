@@ -1,0 +1,45 @@
+{
+  "status": "review-evidence-only",
+  "identicalAuthoredGroups": [
+    {
+      "candidateDefinitionId": "study.definition.amphibious-air-water",
+      "sourceOccurrenceIds": [
+        "ancestry.dragonborn.black#trait:amphibious",
+        "ancestry.dragonborn.green#trait:amphibious",
+        "ancestry.dragonborn.bronze#trait:amphibious",
+        "ancestry.dragonborn.gold#trait:amphibious"
+      ],
+      "evidence": "same-complete-authored-definition"
+    },
+    {
+      "candidateDefinitionId": "study.definition.low-light-vision",
+      "sourceOccurrenceIds": [
+        "species.dragonborn#trait:low-light-vision",
+        "species.elf#trait:low-light-vision",
+        "species.gnome#trait:low-light-vision",
+        "species.orc#trait:low-light-vision",
+        "species.tiefling#trait:low-light-vision"
+      ],
+      "evidence": "same-complete-authored-definition"
+    },
+    {
+      "candidateDefinitionId": "study.definition.natural-climber",
+      "sourceOccurrenceIds": [
+        "ancestry.dragonborn.red#trait:natural-climber",
+        "ancestry.dragonborn.copper#trait:natural-climber"
+      ],
+      "evidence": "same-complete-authored-definition"
+    }
+  ],
+  "semanticReviewGroups": [
+    {
+      "reviewId": "study.review.powerful-build",
+      "sourceOccurrenceIds": [
+        "species.orc#trait:powerful-build",
+        "species.goliath#trait:powerful-build"
+      ],
+      "expectedEvidence": "same-local-id-different-structure",
+      "notes": "Orc includes pushing, dragging and lifting equivalence; Goliath grants grapple-escape advantage. Similar names do not make these grants equivalent."
+    }
+  ]
+}
