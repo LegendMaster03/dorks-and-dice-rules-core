@@ -107,6 +107,26 @@ public sealed class NativeOriginCreationAllocationGateTests
     }
 
     [Fact]
+    public void InnateSpellComponentsUseTheNativeCharacterLevelUnlocks()
+    {
+        var drow = Direct() with { SelectedAncestryId = "ancestry.elf.drow" };
+        var ability = Assert.Single(Evaluate(drow).EvaluatedProposal.Candidates,
+            x => x.Identity.IntrinsicSlotId == "spellcastingAbility");
+        drow = drow with
+        {
+            Manifestations = [new("drow-choice", ability.Id,
+                Choices: [new(Assert.Single(ability.RequiredChoices!).Id, ["charisma"])])]
+        };
+        var baseline = Evaluate(drow);
+        var result = Evaluate(drow, Policy(100, baseline));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        var components = result.CreationAllocation!.Components.ToDictionary(x => x.Key);
+        Assert.Equal(1, components["trait:trait.dancing-lights"].UnlockLevel);
+        Assert.Equal(3, components["trait:trait.faerie-fire"].UnlockLevel);
+        Assert.Equal(5, components["trait:trait.darkness"].UnlockLevel);
+    }
+
+    [Fact]
     public void RequiredPolicyMissingFailsClosedWithoutChangingLegacyOptOut()
     {
         var proposal = Mixed();

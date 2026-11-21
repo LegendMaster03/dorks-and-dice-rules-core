@@ -167,6 +167,16 @@ public static class NativeOriginAllocationPreview
             x.UnlockLevel is null || x.Key.StartsWith("unknown:", StringComparison.Ordinal)))
             issues.Add("allocation-definition-unresolved:" + component.Key + ":" +
                 component.GrantId);
+        var unsupported = grants.Where(g => g.Identity.Kind == NativeOriginCharacteristicKind.Trait &&
+                g.Identity.MechanicalDefinitionId is { } id &&
+                catalog.TryGetById(id, out var entity) && entity?.Category == "origin-trait" &&
+                entity.Definition.TryGetProperty("trait", out var canonical) &&
+                (!NativeOriginBiologicalTraitShape.IsRecognized(canonical) ||
+                 creationScope && (g.EffectiveValue is not { } actual ||
+                     !NativeOriginBiologicalTraitShape.IsRecognized(actual))))
+            .Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
+        foreach (var id in unsupported)
+            issues.Add("allocation-mechanic-unsupported:" + id);
 
         var candidates = result.EvaluatedProposal.Candidates
             .GroupBy(x => x.Id, StringComparer.Ordinal)
@@ -216,6 +226,8 @@ public static class NativeOriginAllocationPreview
         void Price(NativeOriginAllocationPrice entry,
             IReadOnlyList<NativeOriginAllocationComponent> members)
         {
+            if (members.Any(x => unsupported.Contains(x.GrantId)))
+                return;
             var actual = members.ToDictionary(x => x.Key,
                 x => grantsById[x.GrantId], StringComparer.Ordinal);
             var chosen = NativeOriginAllocationPriceResolver.Select(
@@ -255,7 +267,8 @@ public static class NativeOriginAllocationPreview
             .OrderBy(x => x.Id, StringComparer.Ordinal))
         {
             var members = interaction.RequiredKeys.Select(key => components
-                .Where(component => component.Key == key).ToArray()).ToArray();
+                .Where(component => component.Key == key &&
+                    !unsupported.Contains(component.GrantId)).ToArray()).ToArray();
             if (members.Any(group => group.Length == 0))
                 continue;
             charges.Add(new(interaction.Id, interaction.Load,
@@ -324,10 +337,7 @@ public static class NativeOriginAllocationPreview
             !trait.Definition.TryGetProperty("trait", out var definition) ||
             definition.ValueKind != JsonValueKind.Object)
             return null;
-        if (!definition.TryGetProperty("requiredCharacterLevel", out var level))
-            return 1;
-        return level.ValueKind == JsonValueKind.Number &&
-            level.TryGetInt32(out var value) && value >= 1 ? value : null;
+        return NativeOriginUnlockLevel.Read(definition);
     }
 
     private static bool SharesContributor(

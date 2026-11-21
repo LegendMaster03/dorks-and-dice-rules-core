@@ -28,6 +28,28 @@ public sealed class NativeOriginInheritedCombinationTests
         throw new InvalidOperationException("First-party native ruleset missing.");
     }
 
+    private static NativeCatalogSnapshot CatalogWithUnfamiliarTrait(
+        DirectoryInfo temporary, string mechanics)
+    {
+        var source = new DirectoryInfo(AppContext.BaseDirectory);
+        while (source is not null && !Directory.Exists(Path.Combine(source.FullName, "data", "rulesets")))
+            source = source.Parent;
+        if (source is null)
+            throw new InvalidOperationException("First-party native ruleset missing.");
+        var previous = Path.Combine(source.FullName, "data", "rulesets", "first-party-001");
+        var package = Directory.CreateDirectory(Path.Combine(temporary.FullName, "first-party-001"));
+        File.Copy(Path.Combine(previous, "manifest.json"), Path.Combine(package.FullName, "manifest.json"));
+        foreach (var file in Directory.EnumerateFiles(Path.Combine(previous, "native"), "*.json",
+                     SearchOption.AllDirectories))
+        {
+            var destination = Path.Combine(package.FullName, Path.GetRelativePath(previous, file));
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(file, destination);
+        }
+        File.WriteAllText(Path.Combine(package.FullName, "native", "unfamiliar.json"), mechanics);
+        return NativeCatalogLoader.Load(NativeRulesetLayout.Resolve(temporary.FullName, "first-party-001"));
+    }
+
     private sealed class Authority : INativeOriginAuthority
     {
         public bool Authorizes(NativeTableRuleDecision decision, NativeTableDecisionScope scope) =>
@@ -152,6 +174,74 @@ public sealed class NativeOriginInheritedCombinationTests
         Assert.Equal(JsonSerializer.Serialize(combined),
             JsonSerializer.Serialize(Assert.Single(repeat.Profile!.Underlying.InherentGrants,
                 g => g.Synergy?.InheritedInputs is { Count: 2 })));
+    }
+
+    [Fact]
+    public void CombinedExpressionMustSatisfyAnAuthenticatedFinalParameterLink()
+    {
+        var catalog = Catalog();
+        var combination = Rule();
+        var (proposal, _) = Choose(catalog, tableRules: [combination]);
+        var constraint = new NativeOriginConstraint("linked-combination",
+            NativeOriginRelationshipKind.LinkedParameters,
+            [new(MechanicalDefinitionId: "trait.amphibious")],
+            [new(MechanicalDefinitionId: "trait.ancestral-aptitude")],
+            LinkedParameterPaths: new Dictionary<string, string> { ["variant"] = "variant" },
+            TableDecisionId: "linked-combination-decision");
+        var ruling = new NativeTableRuleDecision(constraint.TableDecisionId!,
+            new("dm", "approved"), new("campaign", ScopeId), new("constraint", constraint.Id),
+            JsonSerializer.SerializeToElement(new { enforce = true }));
+
+        var result = Evaluate(catalog, proposal with
+        {
+            Constraints = [constraint],
+            TableDecisions = [combination, ruling]
+        }, new Authority());
+
+        Assert.Equal(NativeOriginConstructionStatus.Incomplete, result.Status);
+        Assert.Contains(result.Issues, x => x.Code == "effective-linked-parameter-counterpart-missing");
+        Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
+            grant => grant.Identity.MechanicalDefinitionId == "trait.amphibious");
+        Assert.All(result.BiologicalCombination!.InheritedInstances!.Where(
+            x => x.Gene.Identity.MechanicalDefinitionId == "trait.powerful-build"),
+            x => Assert.True(x.IsLatent));
+    }
+
+    [Theory]
+    [InlineData("""{"exampleWaterTopologyEffect":{"rangeFeet":20}}""")]
+    [InlineData("""{"damage":{"dice":"1d6","exampleWaterTopologyEffect":true}}""")]
+    public void AnUnfamiliarCanonicalEffectCannotBeAnInheritedExpression(string trait)
+    {
+        const string resultId = "trait.fixture.unfamiliar";
+        var temporary = Directory.CreateTempSubdirectory("origin-unfamiliar-");
+        try
+        {
+            using var payload = JsonDocument.Parse(trait);
+            var catalog = CatalogWithUnfamiliarTrait(temporary, JsonSerializer.Serialize(new
+            {
+                id = resultId, kind = "origin-trait", name = "Unfamiliar Effect",
+                trait = payload.RootElement
+            }));
+            var (proposal, _) = Choose(catalog, tableRules: [Rule(result: resultId)]);
+            var pricedKeys = new[] { "intrinsic:creatureType", "intrinsic:size",
+                "intrinsic:walkingSpeedFeet", "trait:" + resultId };
+            var policy = new NativeOriginAllocationPolicy("unfamiliar-fixture",
+                "rule.creature-origination", "biological", 4,
+                pricedKeys.Select(key => new NativeOriginAllocationPrice(key, 1, [key])).ToArray());
+            var result = new NativeOriginConstructionEngine(catalog).Evaluate(new(proposal,
+                new("campaign", ScopeId), AutoManifestDirectDefaults: false,
+                RequireCreationAllocation: true, CreationAllocationPolicy: policy),
+                new Authority());
+            Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Status);
+            Assert.Equal("unresolved", result.CreationAllocation!.Status);
+            Assert.Contains(result.Issues, x => x.Code == "synergy-authoring-invalid");
+            Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
+                grant => grant.Identity.MechanicalDefinitionId == resultId);
+        }
+        finally
+        {
+            temporary.Delete(recursive: true);
+        }
     }
 
     [Fact]

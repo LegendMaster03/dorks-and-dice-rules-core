@@ -239,6 +239,17 @@ internal sealed class NativeOriginConstraintEvaluator(NativeCatalogSnapshot cata
                 !JsonElement.DeepEquals(expected, parameter)))
             return false;
 
+        // A derived characteristic has its own identity. Its inputs
+        // provide evidence and cannot satisfy selectors for effective grants.
+        if (grant.Synergy is not null)
+            return selector.CandidateId is null &&
+                (selector.MechanicalDefinitionId is null ||
+                    selector.MechanicalDefinitionId == grant.Identity.MechanicalDefinitionId) &&
+                (selector.IntrinsicSlotId is null ||
+                    selector.IntrinsicSlotId == grant.Identity.IntrinsicSlotId) &&
+                (selector.SourceId is null ||
+                    selector.SourceId == grant.Identity.Occurrence.Source.Id);
+
         // Resolve every selector field against ONE verified offer. A consolidated
         // grant may cite several sources, but fields from unrelated offers must
         // not be combined into a forged selector match.

@@ -128,9 +128,10 @@ internal sealed class NativeOriginNativeLinkedSelectionEvaluator(
                 link.Conditions[0].CandidateId : null;
             if (subject is null || required is null) continue;
             var beneficiaries = effective.Where(g =>
+                g.Synergy is null &&
                 g.SourceCandidateIds.Contains(subject, StringComparer.Ordinal)).ToArray();
             if (beneficiaries.Length == 0 ||
-                effective.Any(g => g.SourceCandidateIds.Contains(required,
+                effective.Any(g => g.Synergy is null && g.SourceCandidateIds.Contains(required,
                     StringComparer.Ordinal))) continue;
             foreach (var grant in beneficiaries)
             {

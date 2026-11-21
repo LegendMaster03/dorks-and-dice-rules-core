@@ -365,7 +365,8 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
     internal NativeOriginContractReview ReviewProfileVerified(
         NativeOriginProfile profile, NativeOriginProposal? proposal,
         IReadOnlyList<NativeTableRuleDecision> verifiedTableSynergies,
-        int? verifiedMaxExpressedInstancesPerKind = null)
+        int? verifiedMaxExpressedInstancesPerKind = null,
+        IReadOnlySet<string>? suppressedSynergyGrantIds = null)
     {
         ArgumentNullException.ThrowIfNull(profile);
         var issues = new List<NativeOriginContractIssue>();
@@ -645,8 +646,11 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                         "A positive authored expression limit is required to review combinations.");
             }
             var (ordinary, _) = evaluator.Evaluate(proposal,
-                direct.Concat(inheritedExpressions).ToArray(), verifiedTableSynergies);
-            var recomputed = inheritedExpressions.Concat(ordinary).ToArray();
+                direct.Concat(inheritedExpressions.Where(x =>
+                    suppressedSynergyGrantIds?.Contains(x.Id) != true)).ToArray(),
+                verifiedTableSynergies);
+            var recomputed = inheritedExpressions.Concat(ordinary).Where(x =>
+                suppressedSynergyGrantIds?.Contains(x.Id) != true).ToArray();
             expectedSynergies = recomputed.ToDictionary(x => x.Id, StringComparer.Ordinal);
             foreach (var derived in recomputed)
                 if (!baselineGrants.ContainsKey(derived.Id))

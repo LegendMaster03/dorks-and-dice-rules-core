@@ -489,6 +489,13 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                 Invalid(ownerId, "Interaction must identify an authorized, canonical, fixed Origin trait with a matching target.");
                 continue;
             }
+            var inherited = item.TryGetProperty("inputEvidence", out var evidenceType) &&
+                evidenceType.GetString() == "inherited-gene";
+            if (inherited && !NativeOriginBiologicalTraitShape.IsRecognized(effect))
+            {
+                Invalid(ownerId, "An inherited expression result has an unsupported biological mechanic.");
+                continue;
+            }
             var groups = new List<Input>();
             var valid = true;
             var total = 0;
@@ -549,9 +556,7 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                 continue;
             }
             results.Add(new(ownerId, id, resultTraitId, groups, effect.Clone(),
-                tableDecisionId,
-                item.TryGetProperty("inputEvidence", out var evidenceType) &&
-                evidenceType.GetString() == "inherited-gene"));
+                tableDecisionId, inherited));
         }
         return results.OrderBy(Key, StringComparer.Ordinal).ToArray();
 

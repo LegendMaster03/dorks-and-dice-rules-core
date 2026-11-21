@@ -103,9 +103,7 @@ public static class NativeOriginInnateSpellProgressionProjector
                 reasons.Add("spell-definition-ambiguous:" + grant.Id);
                 continue;
             }
-            var unlock = 1; // A native creation-time spell without a level is level 1.
-            if (authored.TryGetProperty("level", out var level) &&
-                (!level.TryGetInt32(out unlock) || unlock is < 1 or > 1000))
+            if (NativeOriginUnlockLevel.Read(authored) is not int unlock)
             {
                 reasons.Add("spell-level-invalid:" + grant.Id);
                 continue;

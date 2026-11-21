@@ -584,43 +584,12 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                      ReadBool(decision.EffectiveOutcome, "enforce") == true))
                     verifiedDmDecisionIds.Add(decision.Id);
             }
-        var (resolved, reconciliationIssues, reconciliationDm) =
+        var (reconciled, reconciliationIssues, reconciliationDm) =
             _reconciler.Reconcile(proposal, constrained, Verified);
         issues.AddRange(reconciliationIssues);
         usedDm |= reconciliationDm;
-        // Every binder is monotonic: it can suppress an unsupported dependent,
-        // but never create a new grant. A general requirement may remove an
-        // otherwise valid resource/choice owner after its dependent was bound.
-        // Rerun the canonical binders to a fixed point so a dependent cannot
-        // retain a stale owner ID or source choice in the final profile.
-        IReadOnlyList<NativeOriginEffectiveGrant> effective = resolved;
-        while (true)
-        {
-            // Rebind from immutable reconciled input, not the previous pass's
-            // derived Parameters. Otherwise an auto-bound intrinsic parameter
-            // can appear inherited when its actual owner was just suppressed.
-            // Only grant IDs surviving the last pass may be reconsidered.
-            var survivingIds = effective.Select(x => x.Id)
-                .ToHashSet(StringComparer.Ordinal);
-            var inputs = resolved.Where(x => survivingIds.Contains(x.Id)).ToArray();
-            var previousCount = inputs.Length;
-            var (bound, bindingIssues) =
-                NativeOriginDependentBinder.Bind(catalog, proposal, inputs);
-            issues.AddRange(bindingIssues);
-            var (resourceBound, resourceIssues) =
-                NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
-            issues.AddRange(resourceIssues);
-            var (linkedGrants, linkedIssues) =
-                _nativeLinks.VerifyEffectiveLinks(proposal, resourceBound, Verified);
-            issues.AddRange(linkedIssues);
-            var (closedGrants, closureIssues) =
-                _constraints.VerifyEffectiveConstraints(proposal, linkedGrants, Verified);
-            issues.AddRange(closureIssues);
-            effective = closedGrants;
-            if (effective.Count == previousCount)
-                break;
-        }
-        resolved = effective;
+        var suppressedSynergies = new HashSet<string>(StringComparer.Ordinal);
+        var resolved = CloseEffective(reconciled);
         // Derive only from the final, already reconciled and dependency-closed
         // effective set. Derived results are rebuilt, not copied from old state.
         // Table-authored definitions use the same grammar as native rules, but
@@ -692,45 +661,24 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             // links against the remaining effective grants before any synergy pass.
             resolved = resolved.Where(grant => grant.Synergy is not null ||
                 !grant.SourceCandidateIds.Any(consumedGenes.Contains)).ToArray();
-            IReadOnlyList<NativeOriginEffectiveGrant> closed = resolved;
-            while (true)
-            {
-                var ids = closed.Select(grant => grant.Id)
-                    .ToHashSet(StringComparer.Ordinal);
-                var inputs = resolved.Where(grant => ids.Contains(grant.Id)).ToArray();
-                var previousCount = inputs.Length;
-                var (bound, bindingIssues) =
-                    NativeOriginDependentBinder.Bind(catalog, proposal, inputs);
-                issues.AddRange(bindingIssues);
-                var (resourceBound, resourceIssues) =
-                    NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
-                issues.AddRange(resourceIssues);
-                var (linked, linkedIssues) =
-                    _nativeLinks.VerifyEffectiveLinks(proposal, resourceBound, Verified);
-                issues.AddRange(linkedIssues);
-                var (remaining, closureIssues) =
-                    _constraints.VerifyEffectiveConstraints(proposal, linked, Verified);
-                issues.AddRange(closureIssues);
-                closed = remaining;
-                if (closed.Count == previousCount) break;
-            }
-            resolved = closed;
         }
 
-        // Inherited expressions are selected replacements; ordinary synergies
-        // remain automatic consequences of the final effective grant closure.
-        // They may depend on the one combined grant, never on a latent source.
+        // Validate the actual combined result before any ordinary synergy can
+        // use it. The inherited instances are provenance for the result.
+        if (combined.Count > 0)
+            resolved = CloseEffective(UnboundInputs(resolved).Concat(combined).ToArray());
         var (derived, synergyIssues) = _synergies.Evaluate(proposal,
-            resolved.Concat(combined).ToArray(), verifiedTableSynergies);
+            resolved, verifiedTableSynergies);
         issues.AddRange(synergyIssues);
-        foreach (var grant in combined.Concat(derived).Where(x =>
+        if (derived.Count > 0)
+            resolved = CloseEffective(UnboundInputs(resolved).Concat(derived).ToArray());
+        foreach (var grant in resolved.Where(x => x.Synergy is not null &&
             x.Authorization?.Adjudication == NativeOriginAdjudication.DmAuthorized &&
             x.Authorization.TableDecisionId is not null))
         {
             usedDm = true;
             verifiedDmDecisionIds.Add(grant.Authorization!.TableDecisionId!);
         }
-        resolved = resolved.Concat(combined).Concat(derived).ToArray();
         if (Verified("biological-inheritance", proposal.Id) is { } capacityDecision)
         {
             usedDm = true;
@@ -837,7 +785,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         // Do not demand that their original manifestations appear in this proposal.
         var profileReview = _validator.ReviewProfileVerified(profile,
             proposal.ExistingConfiguration is null ? proposal : null,
-            verifiedTableSynergies, maxExpressed);
+            verifiedTableSynergies, maxExpressed, suppressedSynergies);
         issues.AddRange(profileReview.Issues.Where(x =>
             x.Code is not ("profile-outcome-unresolved" or "profile-outcome-conflict")));
 
@@ -958,6 +906,49 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             BiologicalCombination = NativeOriginBiologicalCombinationProjector.Build(outcome),
             CreationAllocation = creationAllocation
         };
+
+        IEnumerable<NativeOriginEffectiveGrant> UnboundInputs(
+            IReadOnlyList<NativeOriginEffectiveGrant> effective)
+        {
+            var ids = effective.Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
+            return reconciled.Where(x => ids.Contains(x.Id))
+                .Concat(effective.Where(x => x.Synergy is not null));
+        }
+
+        IReadOnlyList<NativeOriginEffectiveGrant> CloseEffective(
+            IReadOnlyList<NativeOriginEffectiveGrant> initial)
+        {
+            IReadOnlyList<NativeOriginEffectiveGrant> surviving = initial;
+            while (true)
+            {
+                // Rebind from immutable phase input so a suppressed owner can
+                // never leave behind cached binding values or resource IDs.
+                var ids = surviving.Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
+                var inputs = initial.Where(g => ids.Contains(g.Id) &&
+                    (g.Synergy is null || g.Synergy.Inputs.All(x => ids.Contains(x.GrantId))))
+                    .ToArray();
+                var (bound, bindingIssues) =
+                    NativeOriginDependentBinder.Bind(catalog, proposal, inputs);
+                var (resourceBound, resourceIssues) =
+                    NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
+                var (linked, linkIssues) =
+                    _nativeLinks.VerifyEffectiveLinks(proposal, resourceBound, Verified);
+                var (closed, effectiveConstraintIssues) =
+                    _constraints.VerifyEffectiveConstraints(proposal, linked, Verified);
+                issues.AddRange(bindingIssues);
+                issues.AddRange(resourceIssues);
+                issues.AddRange(linkIssues);
+                issues.AddRange(effectiveConstraintIssues);
+                if (closed.Count == surviving.Count)
+                {
+                    var retained = closed.Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
+                    suppressedSynergies.UnionWith(initial.Where(x =>
+                        x.Synergy is not null && !retained.Contains(x.Id)).Select(x => x.Id));
+                    return closed;
+                }
+                surviving = closed;
+            }
+        }
 
         void Add(string code, string path, NativeOriginIssueSeverity severity, string detail) =>
             issues.Add(new(code, path, severity, detail));
