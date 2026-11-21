@@ -336,56 +336,6 @@ public sealed class NativeConstructOperatingSession
 
 
 
-    /// <summary>
-    /// Preview one adventuring day's routine fuel requirement for an installed
-    /// power source. A full fuel charge is treated like an ordinary 2014 food
-    /// ration; deprivation grants levels of the shared Exhaustion condition.
-    /// The caller must authenticate both elapsed days and inventory expenditure
-    /// before committing either result. This never disables source output.
-    /// </summary>
-    public NativeConstructDailyFuelPreview PreviewDailyFuel(
-        string housingInstanceId, int constitutionModifier,
-        int previousDaysWithoutFuel, bool fullDailyFuelSupplied)
-    {
-        static NativeConstructDailyFuelPreview Unresolved(
-            string code, string message) =>
-            new(null, 0, null,
-                [new NativeOriginContractIssue(code, "dailyFuel",
-                    NativeOriginIssueSeverity.Unresolved, message)]);
-
-        var housing = _baseline.Components.FirstOrDefault(x =>
-            x.InstanceId == housingInstanceId && x.PowerSourceId is not null);
-        if (housing is null ||
-            !_catalog.TryGetById(housing.PowerSourceId!, out var source) ||
-            source?.Category != "construct-power-source")
-            return Unresolved("construct-daily-fuel-source-unavailable",
-                "Daily fuel previews require a verified installed source.");
-
-        var definition = source.Definition;
-        if (!definition.TryGetProperty("dailyFuel", out var fuel) ||
-            fuel.ValueKind != JsonValueKind.Object ||
-            !fuel.TryGetProperty("resourceKind", out var kind) ||
-            kind.ValueKind != JsonValueKind.String ||
-            string.IsNullOrWhiteSpace(kind.GetString()) ||
-            !fuel.TryGetProperty("chargesPerDay", out var quantity) ||
-            quantity.ValueKind != JsonValueKind.Number ||
-            !quantity.TryGetInt32(out var charges) || charges != 1 ||
-            !fuel.TryGetProperty("deprivationRule", out var rule) ||
-            rule.ValueKind != JsonValueKind.String ||
-            rule.GetString() != "2014-food-starvation")
-            return Unresolved("construct-daily-fuel-model-unresolved",
-                "The selected source lacks the approved daily-ration model.");
-
-        if (previousDaysWithoutFuel < 0)
-            return Unresolved("construct-daily-fuel-history-invalid",
-                "The verified number of previous days without fuel must not be negative.");
-
-        var assessment = NativeDailyRationEvaluator.AssessDay(
-            constitutionModifier, previousDaysWithoutFuel, fullDailyFuelSupplied);
-        return new(kind.GetString(), fullDailyFuelSupplied ? charges : 0,
-            assessment, []);
-    }
-
     // The same native source bounds apply to resource consumption and
     // physical transfer. Caller-provided balances are hypothetical and
     // never become authority to mint or replenish resources.
@@ -820,13 +770,3 @@ public sealed record NativeConstructResourceTransferPreview(
 {
     public bool CanTransfer => Issues.Count == 0 && NextStep is not null;
 }
-
-
-/// <summary>
-/// Read-only proposal, not proof of fuel acquisition, time advancement,
-/// inventory expenditure, or an applied Exhaustion condition.
-/// </summary>
-public sealed record NativeConstructDailyFuelPreview(
-    string? ResourceKind, int ProposedFuelChargesUsed,
-    NativeDailyRationAssessment? Deprivation,
-    IReadOnlyList<NativeOriginContractIssue> Issues);
