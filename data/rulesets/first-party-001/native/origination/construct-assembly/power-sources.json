@@ -3,73 +3,108 @@
     "id": "construct-power-source.artificial-life-core",
     "kind": "construct-power-source",
     "name": "Artificial-life core",
-    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "A proposed source for self-sustaining artificial life. Its ability to bypass other construction limitations is not approved.",
+    "rulesStatus": "provisional source lifecycle; output, reserve size and replenishment rates are playtest candidates",
+    "description": "A self-sustaining artificial-life core. Provides its authored simultaneous output without consuming per-step fuel; does not waive construction, mass, power, connection, or shutdown limits.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
     "operatingPrinciple": "artificial-life",
     "craftingRecipeId": "crafting-recipe.construct-power-source.artificial-life-core",
-    "powerOutput": 6
+    "powerOutput": 6,
+    "resourceModel": "unmetered"
   },
   {
     "id": "construct-power-source.solar-crystal",
     "kind": "construct-power-source",
     "name": "Solar/rechargeable crystal",
-    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "A rechargeable crystal source requiring an authored charging and storage model.",
+    "rulesStatus": "provisional source lifecycle; output, reserve size and replenishment rates are playtest candidates",
+    "description": "Stores solar charge. Active output consumes a finite charge each operating step; an externally verified sunlight-exposure event can replenish the reservoir within capacity.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
     "operatingPrinciple": "solar-recharge",
     "craftingRecipeId": "crafting-recipe.construct-power-source.solar-crystal",
-    "powerOutput": 5
+    "powerOutput": 5,
+    "resourceModel": "finite",
+    "resourceKind": "solar-charge",
+    "resourceCapacity": 8,
+    "resourceUsePerStep": 1,
+    "resourceTransferOut": true,
+    "resourceTransferIn": true,
+    "replenishment": {
+      "method": "sunlight-exposure",
+      "unitsPerEvent": 2
+    }
   },
   {
     "id": "construct-power-source.soul-gem",
     "kind": "construct-power-source",
     "name": "Soul gem",
-    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "A soul-energy storage mechanism. Naming and acquisition implications are unresolved.",
+    "rulesStatus": "provisional source lifecycle; output, reserve size and replenishment rates are playtest candidates",
+    "description": "Draws on a finite store of bound soul energy. Depletion shuts off output; restoring charge requires a separately authorized soul-energy acquisition or binding event.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
     "operatingPrinciple": "soul-energy",
     "craftingRecipeId": "crafting-recipe.construct-power-source.soul-gem",
-    "powerOutput": 6
+    "powerOutput": 6,
+    "resourceModel": "finite",
+    "resourceKind": "soul-energy",
+    "resourceCapacity": 6,
+    "resourceUsePerStep": 1,
+    "replenishment": {
+      "method": "soul-energy-binding",
+      "unitsPerEvent": 3
+    }
   },
   {
     "id": "construct-power-source.infernal-engine",
     "kind": "construct-power-source",
     "name": "Infernal Engine",
-    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "An infernal-energy mechanism requiring separate fuel and failure rules.",
+    "rulesStatus": "provisional source lifecycle; output, reserve size and replenishment rates are playtest candidates",
+    "description": "Consumes a finite supply of infernal fuel to produce its authored output. An authenticated infernal-fuel offering replenishes its reservoir, and depletion suppresses output.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
     "operatingPrinciple": "infernal",
     "craftingRecipeId": "crafting-recipe.construct-power-source.infernal-engine",
-    "powerOutput": 8
+    "powerOutput": 8,
+    "resourceModel": "finite",
+    "resourceKind": "infernal-fuel",
+    "resourceCapacity": 8,
+    "resourceUsePerStep": 2,
+    "replenishment": {
+      "method": "infernal-fuel-offering",
+      "unitsPerEvent": 2
+    }
   },
   {
     "id": "construct-power-source.arcane-consuming-core",
     "kind": "construct-power-source",
     "name": "Arcane-consuming core",
-    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "Consumes an available arcane energy resource under separately authored operating rules.",
+    "rulesStatus": "provisional source lifecycle; output, reserve size and replenishment rates are playtest candidates",
+    "description": "Consumes a finite store of absorbed arcane energy. An independently authorized arcane-energy expenditure can replenish its reservoir; no spell slot or item is spent automatically.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
     "operatingPrinciple": "arcane-consumption",
     "craftingRecipeId": "crafting-recipe.construct-power-source.arcane-consuming-core",
-    "powerOutput": 6
+    "powerOutput": 6,
+    "resourceModel": "finite",
+    "resourceKind": "arcane-charge",
+    "resourceCapacity": 6,
+    "resourceUsePerStep": 1,
+    "replenishment": {
+      "method": "arcane-energy-transfer",
+      "unitsPerEvent": 1
+    }
   },
   {
     "id": "construct-power-source.mechanical-engine",
     "kind": "construct-power-source",
     "name": "Mechanical engine",
-    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "A basic mechanical generator with eight power output. Its daily sustenance is one ordinary mechanical-fuel charge instead of a food ration. Normal deprivation and recovery use the shared 2014 food-survival rules. Overdrive and fuel inventory transactions remain separately authored.",
+    "rulesStatus": "provisional source lifecycle; output, reserve size and replenishment rates are playtest candidates",
+    "description": "Produces eight simultaneous power units. Per-step operation has no separate finite charge meter; one ordinary mechanical-fuel charge replaces a daily food ration, with standard survival consequences for missed sustenance.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
@@ -79,6 +114,7 @@
     "dailySustenance": {
       "resourceKind": "mechanical-engine-fuel-charge",
       "unitsPerDay": 1
-    }
+    },
+    "resourceModel": "unmetered"
   }
 ]
