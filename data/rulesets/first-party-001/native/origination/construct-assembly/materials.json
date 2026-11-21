@@ -107,120 +107,130 @@
     "id": "construct-material.clay",
     "kind": "construct-material",
     "name": "Clay",
-    "rulesStatus": "candidate material; quantitative recipe mass, price, structural capacity, and gameplay effects unresolved",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
     "description": "Moldable mineral material for shaped or fired constructs; mechanical strength depends on processing and moisture.",
     "physicalProfile": {
-      "relativeMassCategory": "unresolved",
+      "relativeMassCategory": "medium",
       "rigidity": "condition-dependent",
       "combustibility": "noncombustible"
-    }
+    },
+    "massPoundsPerUnit": 5
   },
   {
     "id": "construct-material.terracotta",
     "kind": "construct-material",
     "name": "Terracotta",
-    "rulesStatus": "candidate material; quantitative recipe mass, price, structural capacity, and gameplay effects unresolved",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
     "description": "Fired clay body for plates, frames, and statues; can crack or fracture under unsuitable loading.",
     "physicalProfile": {
-      "relativeMassCategory": "unresolved",
+      "relativeMassCategory": "medium",
       "rigidity": "brittle",
       "combustibility": "noncombustible"
-    }
+    },
+    "massPoundsPerUnit": 6
   },
   {
     "id": "construct-material.ceramic",
     "kind": "construct-material",
     "name": "Ceramic",
-    "rulesStatus": "candidate material; quantitative recipe mass, price, structural capacity, and gameplay effects unresolved",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
     "description": "Manufactured rigid inorganic material for casings and precision parts; toughness depends on composition and firing.",
     "physicalProfile": {
-      "relativeMassCategory": "unresolved",
+      "relativeMassCategory": "medium",
       "rigidity": "brittle",
       "combustibility": "noncombustible"
-    }
+    },
+    "massPoundsPerUnit": 5
   },
   {
     "id": "construct-material.glass",
     "kind": "construct-material",
     "name": "Glass",
-    "rulesStatus": "candidate material; quantitative recipe mass, price, structural capacity, and gameplay effects unresolved",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
     "description": "Transparent or translucent rigid material for optics, shells, or structures; impact performance depends on treatment.",
     "physicalProfile": {
-      "relativeMassCategory": "unresolved",
+      "relativeMassCategory": "medium",
       "rigidity": "brittle",
       "combustibility": "noncombustible"
-    }
+    },
+    "massPoundsPerUnit": 5
   },
   {
     "id": "construct-material.bone",
     "kind": "construct-material",
     "name": "Bone",
-    "rulesStatus": "candidate material; quantitative recipe mass, price, structural capacity, and gameplay effects unresolved",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
     "description": "Hard biological structural material suitable for mechanical elements, subject to material grading and processing.",
     "physicalProfile": {
-      "relativeMassCategory": "unresolved",
+      "relativeMassCategory": "light",
       "rigidity": "rigid",
       "combustibility": "material-dependent"
-    }
+    },
+    "massPoundsPerUnit": 3
   },
   {
     "id": "construct-material.preserved-tissue",
     "kind": "construct-material",
     "name": "Preserved tissue",
-    "rulesStatus": "candidate material; quantitative recipe mass, price, structural capacity, and gameplay effects unresolved",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
     "description": "Processed biological tissue that may support organic-style construction; viability, degradation, and preservation are separately authored.",
     "physicalProfile": {
-      "relativeMassCategory": "unresolved",
+      "relativeMassCategory": "light",
       "rigidity": "condition-dependent",
       "combustibility": "material-dependent"
-    }
+    },
+    "massPoundsPerUnit": 2
   },
   {
     "id": "construct-material.amber",
     "kind": "construct-material",
     "name": "Amber",
-    "rulesStatus": "candidate material; quantitative recipe mass, price, structural capacity, and gameplay effects unresolved",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
     "description": "Hardened resin that may serve as a molded casing or optical material; its suitability depends on working conditions.",
     "physicalProfile": {
-      "relativeMassCategory": "unresolved",
+      "relativeMassCategory": "light",
       "rigidity": "rigid",
       "combustibility": "combustible"
-    }
+    },
+    "massPoundsPerUnit": 3
   },
   {
     "id": "construct-material.wax",
     "kind": "construct-material",
     "name": "Wax",
-    "rulesStatus": "candidate material; quantitative recipe mass, price, structural capacity, and gameplay effects unresolved",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
     "description": "A moldable organic material suitable for housings and flexible forms under compatible temperatures.",
     "physicalProfile": {
-      "relativeMassCategory": "unresolved",
+      "relativeMassCategory": "light",
       "rigidity": "condition-dependent",
       "combustibility": "combustible"
-    }
+    },
+    "massPoundsPerUnit": 2
   },
   {
     "id": "construct-material.paper",
     "kind": "construct-material",
     "name": "Paper",
-    "rulesStatus": "candidate material; quantitative recipe mass, price, structural capacity, and gameplay effects unresolved",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
     "description": "Thin flexible fibrous sheet material; not automatically suitable for load-bearing structures.",
     "physicalProfile": {
-      "relativeMassCategory": "unresolved",
+      "relativeMassCategory": "very-light",
       "rigidity": "flexible",
       "combustibility": "combustible"
-    }
+    },
+    "massPoundsPerUnit": 1
   },
   {
     "id": "construct-material.wicker",
     "kind": "construct-material",
     "name": "Wicker",
-    "rulesStatus": "candidate material; quantitative recipe mass, price, structural capacity, and gameplay effects unresolved",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
     "description": "Woven rods or fibers shaped into flexible or semi-rigid structures; construction quality governs its strength.",
     "physicalProfile": {
-      "relativeMassCategory": "unresolved",
+      "relativeMassCategory": "light",
       "rigidity": "flexible",
       "combustibility": "combustible"
-    }
+    },
+    "massPoundsPerUnit": 2
   }
 ]

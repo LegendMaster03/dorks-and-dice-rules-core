@@ -55,35 +55,37 @@
     "id": "trait.construct.climbing-movement",
     "name": "Construct Climbing Movement",
     "kind": "origin-trait",
-    "rulesStatus": "candidate movement-mode trait; numerical speed, physical support, and character-sheet binding unresolved",
+    "rulesStatus": "provisional playable movement-speed candidate; mobility, energy and physical-load balance require integrated testing",
     "trait": {
       "id": "climbing-movement",
       "name": "Climbing Movement",
       "description": "Supports climbing on compatible surfaces while installed and operational. An authorized climbing speed and surface limitations are required before the character can use this mode; no walking speed, fall protection, or universal adhesion is granted.",
       "movementMode": "climb",
       "grantsFallProtection": false,
-      "requiresOperationalComponent": true
+      "requiresOperationalComponent": true,
+      "speedFeet": 20
     }
   },
   {
     "id": "trait.construct.flying-movement",
     "name": "Construct Flying Movement",
     "kind": "origin-trait",
-    "rulesStatus": "candidate movement-mode trait; numerical speed, physical support, and character-sheet binding unresolved",
+    "rulesStatus": "provisional playable movement-speed candidate; mobility, energy and physical-load balance require integrated testing",
     "trait": {
       "id": "flying-movement",
       "name": "Flying Movement",
       "description": "Supports aerial movement while installed and operational, pending an authorized flying speed and lift/load rules. Does not grant hover, immunity to falling, or an unrestricted ability to fly.",
       "movementMode": "fly",
       "grantsHover": false,
-      "requiresOperationalComponent": true
+      "requiresOperationalComponent": true,
+      "speedFeet": 30
     }
   },
   {
     "id": "trait.construct.burrowing-movement",
     "name": "Construct Burrowing Movement",
     "kind": "origin-trait",
-    "rulesStatus": "candidate movement-mode trait; numerical speed, physical support, and character-sheet binding unresolved",
+    "rulesStatus": "provisional playable movement-speed candidate; mobility, energy and physical-load balance require integrated testing",
     "trait": {
       "id": "burrowing-movement",
       "name": "Burrowing Movement",
@@ -91,21 +93,23 @@
       "movementMode": "burrow",
       "negatesSuffocation": false,
       "leavesPermanentTraversableTunnel": false,
-      "requiresOperationalComponent": true
+      "requiresOperationalComponent": true,
+      "speedFeet": 15
     }
   },
   {
     "id": "trait.construct.swimming-movement",
     "name": "Construct Swimming Movement",
     "kind": "origin-trait",
-    "rulesStatus": "candidate movement-mode trait; numerical speed, physical support, and character-sheet binding unresolved",
+    "rulesStatus": "provisional playable movement-speed candidate; mobility, energy and physical-load balance require integrated testing",
     "trait": {
       "id": "swimming-movement",
       "name": "Swimming Movement",
       "description": "Supports self-propelled aquatic movement while installed and operational, pending an authorized swimming speed and applicable water conditions. Does not grant underwater breathing, pressure protection, or water breathing.",
       "movementMode": "swim",
       "grantsWaterBreathing": false,
-      "requiresOperationalComponent": true
+      "requiresOperationalComponent": true,
+      "speedFeet": 20
     }
   }
 ]
