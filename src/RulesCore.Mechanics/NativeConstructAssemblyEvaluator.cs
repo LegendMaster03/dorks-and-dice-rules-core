@@ -717,7 +717,6 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         // their components are powered down. Only verified operating
         // locomotion providers contribute usable load support.
         var loadSupports = new List<NativePhysicalLoadSupport>();
-        var movementSources = new List<NativePhysicalMovementSource>();
         var surfaces = new List<NativePhysicalSurface>();
         foreach (var part in parts.Values.OrderBy(x => x.Instance.InstanceId,
             StringComparer.Ordinal))
@@ -739,31 +738,6 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                         "Physical load-support sharing must be an authored boolean.");
                 var operating = activeIds.Contains(instanceId);
                 loadSupports.Add(new(instanceId, capacity, operating, shares));
-
-                NativePhysicalMovementLoadPolicy? policy = null;
-                if (definition.TryGetProperty("movementLoadProfile", out var profile))
-                {
-                    if (profile.ValueKind == JsonValueKind.Object &&
-                        Text(profile, "mode") is string mode &&
-                        !string.IsNullOrWhiteSpace(mode) &&
-                        Number(profile, "normalSpeedFeet", "components." + instanceId, Issue)
-                            is int normal &&
-                        Number(profile, "loadedSpeedFeet", "components." + instanceId, Issue)
-                            is int loaded &&
-                        Number(profile, "loadedAtPercent", "components." + instanceId, Issue)
-                            is int threshold &&
-                        Number(profile, "overloadedSpeedFeet",
-                            "components." + instanceId, Issue) is int overloadSpeed &&
-                        normal is > 0 and <= 100_000 && loaded <= normal &&
-                        overloadSpeed <= loaded && threshold is >= 1 and <= 100)
-                        policy = new(mode, normal, loaded, threshold, overloadSpeed);
-                    else
-                        Issue("construct-movement-profile-invalid",
-                            "components." + instanceId + ".movementLoadProfile",
-                            NativeOriginIssueSeverity.Invalid,
-                            "Movement requires a valid authored mode, speed tiers and load threshold.");
-                }
-                movementSources.Add(new(instanceId, operating, policy));
             }
             var role = part.Provides.Contains("protective-surface", StringComparer.Ordinal)
                 ? "protective-surface"
@@ -797,12 +771,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     profile.ValueKind == JsonValueKind.Object
                         ? Text(profile, "combustibility") : null,
                     activeIds.Contains(instanceId),
-                    protectedRegion,
-                    role == "protective-surface" &&
-                        profile.ValueKind == JsonValueKind.Object
-                        ? Number(profile, "candidateFlatDamageReductionPerProtectiveLayer",
-                            "components." + instanceId, Issue)
-                        : null));
+                    protectedRegion));
             }
         }
         // Support capacity is a property of the active hardware; a separate
@@ -818,9 +787,6 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     null, false, "connected-body-load-sharing-unresolved");
         }
 
-        var physicalMovement = movementSources.Count > 0
-            ? NativePhysicalMovementEvaluator.Evaluate(physicalLoad, movementSources)
-            : null;
 
         var status = issues.Any(x => x.Severity == NativeOriginIssueSeverity.Invalid)
             ? NativeOriginConstructionStatus.Invalid
@@ -843,7 +809,6 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             // The caller can evaluate a trusted inventory snapshot separately.
             // Merely supplying a hypothetical payload cannot authorize Origin.
             PhysicalLoadSupports = loadSupports.ToArray(),
-            PhysicalMovement = physicalMovement,
             PhysicalSurfaces = surfaces.ToArray()
         };
     }
@@ -1057,7 +1022,6 @@ public sealed record NativeConstructAssemblyResult(
     public NativePhysicalLoadAssessment? PhysicalLoad { get; init; }
     public IReadOnlyList<NativePhysicalLoadSupport> PhysicalLoadSupports { get; init; } = [];
     // Candidate source-bound movement only; not a persisted Origin speed grant.
-    public NativePhysicalMovementLoadResult? PhysicalMovement { get; init; }
     public IReadOnlyList<NativePhysicalSurface> PhysicalSurfaces { get; init; } = [];
     public bool IsAuthorized => Status == NativeOriginConstructionStatus.Authorized;
 }
