@@ -250,8 +250,10 @@ public static class NativeOriginDarkvisionProjector
             drawback.ValueKind != JsonValueKind.String ||
             string.IsNullOrWhiteSpace(drawback.GetString()) ||
             !policy.TryGetProperty("appliesTo", out var appliesTo) ||
+            appliesTo.ValueKind != JsonValueKind.String ||
             appliesTo.GetString() != "total-innate-darkvision" ||
             !policy.TryGetProperty("temporaryMagicalVision", out var temporary) ||
+            temporary.ValueKind != JsonValueKind.String ||
             temporary.GetString() != "excluded")
             return false;
         drawbackId = drawback.GetString()!;
