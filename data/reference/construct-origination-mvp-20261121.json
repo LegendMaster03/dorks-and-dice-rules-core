@@ -58,7 +58,6 @@
     }
   ],
   "excludedFromUnguidedMvp": [
-    "construct-power-source.arcane-consuming-core",
     "advanced-component-abilities-without-authored-operating-effects",
     "unapproved-flat-DR-or-armor-stacking",
     "unapproved-gross-load-capacity-and-movement-penalty-tiers"
