@@ -6,6 +6,7 @@ using Xunit;
 namespace RulesCore.Mechanics.Tests;
 
 /// <summary>
+/// Source-neutral canonical IDs must be used after gene catalog migration.
 /// Parameter links compare fully bound biological gene manifestations, not
 /// unbound early offers. Links are explicit native or authenticated table
 /// constraints; sharing a source or a parameter name creates no implicit link.
@@ -62,11 +63,11 @@ public sealed class NativeOriginLinkedParameterFinalizationTests
         var offers = Evaluate(draft).EvaluatedProposal.Candidates;
         var aptitude = Assert.Single(offers, x =>
             x.Identity.MechanicalDefinitionId ==
-            "trait.goliath.giant-ancestry-aptitude");
+            "trait.ancestral-aptitude");
         var link = new NativeOriginConstraint("linked-goliath-aptitude",
             NativeOriginRelationshipKind.LinkedParameters,
-            [new(MechanicalDefinitionId: "trait.goliath.stone.stone-strike")],
-            [new(MechanicalDefinitionId: "trait.goliath.stone.stone-throw")],
+            [new(MechanicalDefinitionId: "trait.stone-strike")],
+            [new(MechanicalDefinitionId: "trait.stone-throw")],
             LinkedParameterPaths: new Dictionary<string, string>
             {
                 ["giantAncestryAbility"] = "giantAncestryAbility"
@@ -87,9 +88,9 @@ public sealed class NativeOriginLinkedParameterFinalizationTests
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var grants = result.Profile!.Underlying.InherentGrants;
         var strike = Assert.Single(grants, x => x.Identity.MechanicalDefinitionId ==
-            "trait.goliath.stone.stone-strike");
+            "trait.stone-strike");
         var thrown = Assert.Single(grants, x => x.Identity.MechanicalDefinitionId ==
-            "trait.goliath.stone.stone-throw");
+            "trait.stone-throw");
         Assert.Equal("constitution",
             strike.Parameters!["giantAncestryAbility"].GetString());
         Assert.Equal("constitution",
@@ -105,8 +106,8 @@ public sealed class NativeOriginLinkedParameterFinalizationTests
         var draft = Direct("ancestry.dragonborn.red");
         var link = new NativeOriginConstraint("incompatible-linked-fields",
             NativeOriginRelationshipKind.LinkedParameters,
-            [new(MechanicalDefinitionId: "trait.dragonborn.breath-weapon")],
-            [new(MechanicalDefinitionId: "trait.dragonborn.draconic-resistance")],
+            [new(MechanicalDefinitionId: "trait.breath-weapon")],
+            [new(MechanicalDefinitionId: "trait.damage-type-resistance")],
             LinkedParameterPaths: new Dictionary<string, string>
             {
                 ["area"] = "damageType"
@@ -124,8 +125,8 @@ public sealed class NativeOriginLinkedParameterFinalizationTests
             x.Path == "constraints." + link.Id);
         Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId is
-                "trait.dragonborn.breath-weapon" or
-                "trait.dragonborn.draconic-resistance");
+                "trait.breath-weapon" or
+                "trait.damage-type-resistance");
     }
 
     [Fact]
@@ -134,8 +135,8 @@ public sealed class NativeOriginLinkedParameterFinalizationTests
         var draft = Direct("ancestry.goliath.stone");
         var link = new NativeOriginConstraint("unverified-gene-link",
             NativeOriginRelationshipKind.LinkedParameters,
-            [new(MechanicalDefinitionId: "trait.goliath.stone.stone-strike")],
-            [new(MechanicalDefinitionId: "trait.goliath.stone.stone-throw")],
+            [new(MechanicalDefinitionId: "trait.stone-strike")],
+            [new(MechanicalDefinitionId: "trait.stone-throw")],
             LinkedParameterPaths: new Dictionary<string, string>
             {
                 ["giantAncestryAbility"] = "giantAncestryAbility"
@@ -148,6 +149,6 @@ public sealed class NativeOriginLinkedParameterFinalizationTests
             x.Path == "constraints." + link.Id);
         Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-            "trait.goliath.stone.stone-strike");
+            "trait.stone-strike");
     }
 }
