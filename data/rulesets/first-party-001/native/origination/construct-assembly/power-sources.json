@@ -57,25 +57,27 @@
     "id": "construct-power-source.infernal-engine",
     "kind": "construct-power-source",
     "name": "Infernal Engine",
-    "rulesStatus": "owner-approved long-rest sustenance, normal fallback and extra-fuel Overdrive; exact overheating, fuel recipe and Overdrive duration require separate design",
-    "description": "An infernal generator consuming its ordinary sustaining fuel at a long rest. It continues supplying normal power without that fuel, but incurs infernal instability or overheating. Deliberately supplied additional fuel enables Overdrive.",
+    "rulesStatus": "owner-approved long-rest fuel, 8-unit normal output despite missed sustenance, and fuel-activated empowerment through next long rest; exact empowerment effect, fuel quantity and instability consequence require design",
+    "description": "An infernal generator sustaining normal 8-unit output with fuel consumed at long rests. Missed sustenance causes instability without shutting it down. Additional infernal fuel activates a temporary empowerment until the next long rest; this does not raise general power output.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
     "operatingPrinciple": "infernal",
     "craftingRecipeId": "crafting-recipe.construct-power-source.infernal-engine",
     "powerOutput": 8,
-    "overdrivePowerOutput": 12,
-    "overdriveIncreasePercent": 50,
     "longRestSustenance": {
       "resourceKind": "infernal-engine-fuel-charge",
       "unitsPerLongRest": 1
     },
     "fuelShortagePolicy": "continues-at-normal-output-with-infernal-instability-or-overheating",
-    "overdriveFuelPolicy": "additional-infernal-fuel-per-use",
-    "overdriveFuelQuantityStatus": "not-yet-authored",
-    "overdriveDurationStatus": "not-yet-authored",
-    "overheatingConsequencesStatus": "not-yet-authored"
+    "overheatingConsequencesStatus": "not-yet-authored",
+    "infernalEmpowerment": {
+      "activation": "host-verified-additional-infernal-fuel-consumption",
+      "duration": "until-next-long-rest",
+      "powerOutputBonus": 0,
+      "effectStatus": "not-yet-authored",
+      "additionalFuelQuantityStatus": "not-yet-authored"
+    }
   },
   {
     "id": "construct-power-source.arcane-consuming-core",
