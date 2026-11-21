@@ -197,7 +197,7 @@ public sealed class NativeBasicConstructStartingTests
     [InlineData("construct-armored-starting-build-20261121.json", 187, "medium")]
     [InlineData("construct-small-starting-build-20261121.json", 147, "small")]
     public void ProvisionalVariantsReconstructThroughSameOrigin(
-        string fileName, long expectedCost, string expectedSize)
+        string fileName, int expectedCost, string expectedSize)
     {
         var (catalog, baselineRequest) = Reference();
         var baseline = new NativeConstructAssemblyEvaluator(catalog)
@@ -208,7 +208,7 @@ public sealed class NativeBasicConstructStartingTests
         Assert.True(result.IsMechanicallyAuthorized,
             string.Join("; ", result.Origin.Issues.Select(x => x.Code)));
         Assert.Equal(200, proposed.InitialAllowance);
-        Assert.Equal(expectedCost, result.Assembly.KnownConstructionCost);
+        Assert.Equal((long)expectedCost, result.Assembly.KnownConstructionCost);
         Assert.Equal(expectedSize, result.Assembly.DerivedCreatureSize);
         Assert.Equal(expectedSize, result.Origin.Profile!.Underlying.InherentGrants
             .Single(x => x.Identity.IntrinsicSlotId == "size")
