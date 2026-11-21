@@ -152,6 +152,20 @@ public sealed class NativeConstructOperatingSession
         };
         var state = _assembly.EvaluateWithSourceOutputOverrides(
             configured, trustedSolarOutputs);
+        // Creation records only installed maximum output. In play, solar
+        // power is conditional on authenticated sunlight and battery state.
+        // A generic allocation request must not claim that the collector is
+        // supplying power in darkness with an empty battery.
+        if (trustedSolarOutputs is null && _baseline.Components.Any(x =>
+                x.PowerSourceId == "construct-power-source.solar-crystal"))
+            return new(state, [], _originGrantIds,
+                state.Issues.Concat([
+                    new NativeOriginContractIssue(
+                        "construct-solar-operating-context-required",
+                        "operatingConfiguration",
+                        NativeOriginIssueSeverity.Unresolved,
+                        "Solar operating power requires a validated sunlight and battery interval.")
+                ]).ToArray());
         var componentStates = state.Components.ToDictionary(x => x.InstanceId,
             StringComparer.Ordinal);
         var active = _originGrantIds.ToHashSet(StringComparer.Ordinal);
