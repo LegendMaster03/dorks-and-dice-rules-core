@@ -1404,10 +1404,10 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.True(afterReopen.Committed);
         Assert.Equal(0, Assert.Single(afterReopen.ExhaustionChanges!).NewExhaustionLevels);
         Assert.Equal(1, afterReopen.Snapshot.ExhaustionEventsIssued["generator"]);
-        Assert.False(session.OpenTrustedSolarLedger(
+        Assert.Null(session.OpenTrustedSolarLedger(
             first.Snapshot.StoredPowerUnitMinutes,
             new Dictionary<string, long> { ["fabricated"] = 1 },
-            first.Snapshot.ExhaustionEventsIssued).Ledger is not null);
+            first.Snapshot.ExhaustionEventsIssued).Ledger);
         var second = ledger.TryCommitInterval(1, dark, 60, authority);
         Assert.True(second.Committed);
         Assert.Equal(0, Assert.Single(second.ExhaustionChanges!).NewExhaustionLevels);
