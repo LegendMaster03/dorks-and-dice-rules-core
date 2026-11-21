@@ -73,5 +73,232 @@
       "specialized-grip"
     ],
     "craftingRecipeId": "crafting-recipe.construct-enhancement.specialized-grip"
+  },
+  {
+    "id": "construct-enhancement.vibration-sensing",
+    "kind": "construct-enhancement",
+    "name": "Vibration-sensing interface",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Adapts sensory hardware to register physical vibration. Does not independently grant tremorsense, a detection radius, or visibility through barriers.",
+    "compatibleComponentCapabilities": [
+      "sensory-interface"
+    ],
+    "provides": [
+      "vibration-sensing-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.active-ranging",
+    "kind": "construct-enhancement",
+    "name": "Active ranging interface",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Provides active sonar-like or pulse-ranging hardware for compatible sensors. Blindsight, emission restrictions, and detection distance are not granted by the enhancement alone.",
+    "compatibleComponentCapabilities": [
+      "sensory-interface"
+    ],
+    "provides": [
+      "active-ranging-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.magical-sensing",
+    "kind": "construct-enhancement",
+    "name": "Magical sensing interface",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Supports appropriate magical detection hardware when powered and separately authorized. It does not automatically cast a spell or reveal all magic.",
+    "compatibleComponentCapabilities": [
+      "sensory-interface"
+    ],
+    "provides": [
+      "magical-sensing-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.target-acquisition",
+    "kind": "construct-enhancement",
+    "name": "Target-acquisition interface",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Adds sensor processing useful for tracking or aiming; attack bonuses, advantage, and target visibility require separate combat or sensing rules.",
+    "compatibleComponentCapabilities": [
+      "sensory-interface",
+      "visual-hardware"
+    ],
+    "provides": [
+      "target-acquisition-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.clawed-grip",
+    "kind": "construct-enhancement",
+    "name": "Clawed gripping surface",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Adapts a manipulator to grip with shaped claws; no weapon attack, climbing speed, or special damage is automatically granted.",
+    "compatibleComponentCapabilities": [
+      "manipulation"
+    ],
+    "provides": [
+      "clawed-grip-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.precision-control",
+    "kind": "construct-enhancement",
+    "name": "Precision control linkage",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Enables fine control of an installed manipulator when sufficient actuator and control support is present; it grants no ability-score, tool, or skill bonus by itself.",
+    "compatibleComponentCapabilities": [
+      "manipulation"
+    ],
+    "provides": [
+      "precision-manipulation-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.interchangeable-tool-coupling",
+    "kind": "construct-enhancement",
+    "name": "Interchangeable tool coupling",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Provides a mechanical connection for fitted tools; does not supply a tool, proficiency, free hand, or action-economy exception.",
+    "compatibleComponentCapabilities": [
+      "manipulation"
+    ],
+    "provides": [
+      "interchangeable-tool-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.hazard-adapted-lining",
+    "kind": "construct-enhancement",
+    "name": "Hazard-adapted lining",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Provides a layer that can be configured for an authored hazard. No resistance, immunity, damage reduction, or environmental protection is granted without an approved material effect.",
+    "compatibleComponentCapabilities": [
+      "enclosure",
+      "protective-surface"
+    ],
+    "provides": [
+      "hazard-lining-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.energy-absorption-interface",
+    "kind": "construct-enhancement",
+    "name": "Energy absorption interface",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Adds an absorption pathway to protective hardware or energy storage. No damage negation, stored power gain, or healing occurs without an authored conversion rule.",
+    "compatibleComponentCapabilities": [
+      "protective-surface",
+      "energy-storage-interface"
+    ],
+    "provides": [
+      "energy-absorption-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.coverage-adaptation",
+    "kind": "construct-enhancement",
+    "name": "Protective coverage adaptation",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Adjusts the arrangement and coverage of protective surfaces; region coverage and Armor Class must be resolved by separate physical and armor rules.",
+    "compatibleComponentCapabilities": [
+      "protective-surface"
+    ],
+    "provides": [
+      "coverage-adaptation-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.programmed-instructions",
+    "kind": "construct-enhancement",
+    "name": "Programmed instructions",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Enables an authored limited instruction set for control hardware without providing consciousness, independent turns, or arbitrary autonomous behavior.",
+    "compatibleComponentCapabilities": [
+      "control"
+    ],
+    "provides": [
+      "programmed-instructions-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.supervisory-link",
+    "kind": "construct-enhancement",
+    "name": "Supervisory control link",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Allows a controller to coordinate other control nodes or devices under a future command protocol; does not itself create a shared pool of actions.",
+    "compatibleComponentCapabilities": [
+      "control",
+      "control-support"
+    ],
+    "provides": [
+      "supervisory-control-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.remote-command-receiver",
+    "kind": "construct-enhancement",
+    "name": "Remote command receiver",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Provides a physical input for remote instructions; the range, authority, signal security, and control effects require separately authored mechanics.",
+    "compatibleComponentCapabilities": [
+      "control"
+    ],
+    "provides": [
+      "remote-command-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.occupant-protection",
+    "kind": "construct-enhancement",
+    "name": "Occupant protection interface",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Provides a supported means of securing occupants within a compatible compartment or platform; no automatic saving throw, damage reduction, or crash protection.",
+    "compatibleComponentCapabilities": [
+      "transport-interior",
+      "transport-platform"
+    ],
+    "provides": [
+      "occupant-protection-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.compartment-access",
+    "kind": "construct-enhancement",
+    "name": "Compartment access mechanism",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Adds a mechanical access opening or hatch to an interior; does not grant a free action to enter or leave, nor modify creature capacity.",
+    "compatibleComponentCapabilities": [
+      "transport-interior"
+    ],
+    "provides": [
+      "compartment-access-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.environmental-support",
+    "kind": "construct-enhancement",
+    "name": "Environmental support interface",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Provides fittings for a controllable internal environment. Air supply, pressure control, heating, and resource consumption must be separately authored.",
+    "compatibleComponentCapabilities": [
+      "transport-interior"
+    ],
+    "provides": [
+      "environmental-support-interface"
+    ]
+  },
+  {
+    "id": "construct-enhancement.operator-controls",
+    "kind": "construct-enhancement",
+    "name": "Operator control station fittings",
+    "rulesStatus": "candidate enhancement; manufacturing cost, power needs, and mechanical effects not authorized",
+    "description": "Provides an accessible interface for an operator in a crew or platform area. Pilot proficiency, command priority, and action use are governed independently.",
+    "compatibleComponentCapabilities": [
+      "transport-interior",
+      "transport-platform"
+    ],
+    "provides": [
+      "operator-station-interface"
+    ]
   }
 ]

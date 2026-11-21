@@ -1,0 +1,11 @@
+{
+  "name": "Operator station",
+  "description": "Dedicated input and feedback hardware for an occupant or remote operator. Requires an authored link and command procedure to control other components; no extra actions, control privileges, or autonomous mind.",
+  "rulesStatus": "candidate physical component; recipe, power demand, capacity, and effective mechanics unresolved",
+  "provides": [
+    "operator-station-interface"
+  ],
+  "materialSlots": [
+    "console"
+  ]
+}
