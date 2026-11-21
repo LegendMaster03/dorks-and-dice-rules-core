@@ -27,7 +27,7 @@ from character_origins_source_inventory import read_catalog
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MAPPING = (
     ROOT / "docs/rewrite/character-origins/"
-    "pillar2-synthetic-characteristic-identity-mapping-20261111.json"
+    "pillar2-synthetic-characteristic-identity-mapping-20261121.json"
 )
 
 

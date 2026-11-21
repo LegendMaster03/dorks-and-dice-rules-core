@@ -213,7 +213,7 @@ class ReconciliationDecisionsTests(unittest.TestCase):
         self.assertEqual(0, len(result["globalContradictions"]))
         self.assertFalse(result["grantsIssued"])
 
-    def test_partial_mechanical_overlap_cannot_be_auto_consolidated(self):
+    def test_shared_powerful_build_definition_allows_only_evidence_consolidation(self):
         report = self.preview([
             direct("orc", "species.orc"),
             direct("goliath", "ancestry.goliath.cloud"),
@@ -221,20 +221,16 @@ class ReconciliationDecisionsTests(unittest.TestCase):
             "#trait:powerful-build"
         ))
         rel = self.relationship(
-            report, "related-trait-concept-distinct-definitions"
+            report, "explicit-identity-mapping-same-configuration"
         )
-        with self.assertRaisesRegex(
-            ReconciliationDecisionError, "Insufficient identity evidence"
-        ):
-            self.examine(
-                report, self.decision(rel, "consolidate-evidence")
-            )
         result = self.examine(
-            report, self.decision(rel, "preserve-both")
+            report, self.decision(rel, "consolidate-evidence")
         )
         self.assertEqual("complete-proposal-not-authorized",
                          result["reviewStatus"])
+        self.assertEqual("not-authorized", result["authorization"])
         self.assertEqual("not-evaluated", result["fullDependencyClosure"])
+        self.assertFalse(result["grantsIssued"])
 
     def test_deferred_relation_stays_incomplete(self):
         report = self.preview([
