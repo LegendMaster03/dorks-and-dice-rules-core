@@ -1,3 +1,15 @@
+/// <summary>
+/// A trusted host confirms the actual source event and all external resource
+/// spending. Calls must be idempotent and tied to an authoritative character,
+/// installation and revision; this local ledger does not provide persistence
+/// or an atomic transaction with the external resource owner.
+/// </summary>
+internal interface INativeConstructReplenishmentAuthority
+{
+    bool AuthorizeReplenishment(string instanceId, string powerSourceId,
+        string resourceKind, string method, int units, long expectedRevision);
+}
+
 using RulesCore.Content;
 
 namespace RulesCore.Mechanics;
@@ -86,6 +98,38 @@ internal sealed class NativeConstructResourceLedger
             var updated = preview.Sources.ToDictionary(
                 x => x.InstanceId, x => x.After, StringComparer.Ordinal);
             return Apply(updated, "reservoir-transfer", null, preview);
+        }
+    }
+
+    /// <summary>
+    /// Replenish one finite power source after a separate trusted host has
+    /// authenticated the source-specific recharge event and any consumed
+    /// external resources. Both checks occur under the local revision lock.
+    /// This still does not provide a cross-system durable transaction.
+    /// </summary>
+    internal NativeConstructResourceLedgerCommit TryCommitReplenishment(
+        long expectedRevision, string instanceId, string method, int amount,
+        INativeConstructReplenishmentAuthority authority)
+    {
+        ArgumentNullException.ThrowIfNull(authority);
+        lock (_gate)
+        {
+            var blocked = CheckRevision(expectedRevision);
+            if (blocked is not null) return blocked;
+            var preview = _operating.PreviewReplenishment(
+                _balances, instanceId, method, amount);
+            if (!preview.CanReplenish)
+                return Rejected("construct-resource-replenishment-not-authorized",
+                    "The source, method, amount or current balance does not permit this replenishment.");
+            var source = preview.Sources.Single(x => x.InstanceId == instanceId);
+            if (!authority.AuthorizeReplenishment(instanceId, source.PowerSourceId,
+                    source.ResourceKind, method, amount, _revision))
+                return Rejected("construct-resource-replenishment-external-denied",
+                    "The trusted host has not authorized the required external replenishment event.");
+
+            var updated = preview.Sources.ToDictionary(
+                x => x.InstanceId, x => x.After, StringComparer.Ordinal);
+            return Apply(updated, "resource-replenishment", null, null);
         }
     }
 
