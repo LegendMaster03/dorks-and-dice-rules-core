@@ -3,7 +3,8 @@
     "status": "candidate values for quantitative assembly comparisons; first-party origin remains unplayable without approved allowance, verified size, and remaining canonical traits",
     "scope": "Construct Assembly recipe-input resource prices, not mechanical power or economic market prices",
     "unchangedRules": "No per-component purchase cost and no post-creation allowance ceiling",
-    "massStatus": "Known retained material mass is only a lower-bound subtotal, not an authorized complete body weight or encumbrance calculation"
+    "massStatus": "Known retained material mass is only a lower-bound subtotal, not an authorized complete body weight or encumbrance calculation",
+    "sampleMethod": "Preliminary arithmetic from recipe-input material quantities, selected materials and selected power-source recipes, with all cost values provisional; sample assembly links, functional dependencies and physical envelopes require authoring."
   },
   "candidateStartingAllowance": 220,
   "candidateResourceUnitCosts": {
@@ -77,7 +78,12 @@
           null
         ]
       ],
-      "notes": "At provisional power output 4, the assembly can install all selected mechanisms but cannot operate every active demand (7) simultaneously without another source or power management."
+      "notes": "At provisional power output 4, the assembly can install all selected mechanisms but cannot operate every active demand (7) simultaneously without another source or power management. Complete quoted source costs include the mechanical engine. The known retained mass is not a complete body-weight or mobility projection.",
+      "bodyConstructionVariants": {
+        "frame": "medium"
+      },
+      "provisionalIngredientCost": 173,
+      "provisionalKnownRetainedMassPounds": 223
     },
     {
       "id": "all-steel-overbuilt",
@@ -156,12 +162,23 @@
           null
         ]
       ],
-      "notes": "The initial allowance will limit what is affordable during creation, but gameplay additions are unrestricted by that allowance. Encumbrance and protection are not yet numerically projected, so this is a required later balance case."
+      "notes": "The initial allowance will limit what is affordable during creation, but gameplay additions are unrestricted by that allowance. Encumbrance and protection are not yet numerically projected, so this is a required later balance case. These candidate values include the engine: initial 220-point sample allowance would be exceeded, but gameplay construction has no such ceiling.",
+      "bodyConstructionVariants": {
+        "frame": "medium"
+      },
+      "provisionalIngredientCost": 297,
+      "provisionalKnownRetainedMassPounds": 474
     },
     {
       "id": "minimal-nonhumanoid",
       "description": "Compact non-humanoid assembly with housing, control, sensory interface and separate locomotion; no forced limb count or fixed frame role.",
       "components": [
+        [
+          "body",
+          "external-casing",
+          "wood",
+          null
+        ],
         [
           "housing",
           "power-source-housing",
@@ -187,7 +204,12 @@
           null
         ]
       ],
-      "notes": "Demonstrates that physical form should not require a structural-frame instance. Creature size remains unresolved."
+      "notes": "Demonstrates that physical form should not require a structural-frame instance. Creature size remains unresolved. A small external casing defines the body size without requiring a structural frame; the solar crystal source is included in provisional costs.",
+      "bodyConstructionVariants": {
+        "body": "small"
+      },
+      "provisionalIngredientCost": 95,
+      "provisionalKnownRetainedMassPounds": 58
     }
   ],
   "balanceComparisons": [
@@ -195,6 +217,7 @@
     "Test unpowered hardware as installed mass rather than free usable traits.",
     "Check the same assembly under different material choices rather than assuming price equals capability.",
     "Require a general mass/encumbrance mechanical consequence before claiming the overbuild is self-balancing.",
-    "Compare known retained steel mass across repeated physical components, and with material substitutions; test actual mobility only after universal carrying/encumbrance mechanics are integrated."
+    "Compare known retained steel mass across repeated physical components, and with material substitutions; test actual mobility only after universal carrying/encumbrance mechanics are integrated.",
+    "Body self-mass cannot be treated as ordinary carried inventory. A future universal physical load and locomotion capacity rule must reconcile self-mass, payload, drive output, terrain and movement without assuming fixed anatomy."
   ]
 }

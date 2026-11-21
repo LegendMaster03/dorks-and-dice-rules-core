@@ -57,3 +57,15 @@ The generic resource quoter reports `KnownRetainedMaterialMassPounds` and any `U
 A complete mass total and ordinary universal encumbrance integration remain required before the rules can claim that excessively heavy steel assemblies impose their intended mobility tradeoff. These calculations remain general crafting/physical inventory concerns, not an invented Construct-only carrying-capacity system.
 
 The synthetic `NativeConstructBodySizeIntegrationTests` fixture exercises the complete Universal Origin pathway: manufactured shell variant → sourced size candidate → explicit manifestation → mechanically authorized custom profile, including rejection of a different client-asserted size. This proof is deliberately independent of first-party allowance approval.
+
+## Illustrative complete-build comparison (not approved balance)
+
+Using the current candidate recipe quantities and ingredient prices, the reference configurations produce the following **provisional** values, including selected power-source recipes:
+
+| Assembly | Resource cost | Known retained ingredient mass | Source-derived body size |
+| --- | ---: | ---: | --- |
+| Mechanical articulated body | 173 points | 223 lb (partial) | Medium frame variant |
+| Excessively plated steel body | 297 points | 474 lb (partial) | Medium frame variant |
+| Compact nonhumanoid body | 95 points | 58 lb (partial) | Small casing variant |
+
+These figures are not gameplay-approved values or actual effective mobility, durability or combat balance. In particular, **the body's own mass is not ordinary carried inventory**. A load calculation for a self-propelled Construct eventually needs to relate its self-mass and payload to the applicable universal locomotion and actuation limitations. Simply counting body mass against an ordinary humanoid carrying-capacity total would be unjustified. While a 220-point allowance is suggested in the analysis reference, no first-party initial allowance has been authorized.
