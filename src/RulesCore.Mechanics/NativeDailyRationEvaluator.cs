@@ -8,6 +8,30 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public static class NativeDailyRationEvaluator
 {
+    /// <summary>
+    /// The resource substituted for a normal daily food ration. This is a
+    /// generic sustenance requirement: food and mechanically fueled bodies
+    /// use the same deprivation and Exhaustion progression.
+    /// </summary>
+    public static NativeDailyRationAssessment AssessDay(
+        NativeDailyRationRequirement requirement, int suppliedUnits,
+        int constitutionModifier, int previousDaysWithoutFullRation)
+    {
+        ArgumentNullException.ThrowIfNull(requirement);
+        if (string.IsNullOrWhiteSpace(requirement.ResourceKind) ||
+            requirement.UnitsPerDay <= 0)
+            throw new ArgumentException(
+                "A ration needs a resource kind and a positive daily quantity.",
+                nameof(requirement));
+        if (suppliedUnits < 0)
+            throw new ArgumentOutOfRangeException(nameof(suppliedUnits));
+
+        // Supply must be authenticated by the inventory/character host.
+        // This read-only preview never spends the resource.
+        return AssessDay(constitutionModifier, previousDaysWithoutFullRation,
+            suppliedUnits >= requirement.UnitsPerDay);
+    }
+
     public static NativeDailyRationAssessment AssessDay(
         int constitutionModifier, int previousDaysWithoutFullRation,
         bool fullRationSupplied)
@@ -33,3 +57,12 @@ public static class NativeDailyRationEvaluator
 public sealed record NativeDailyRationAssessment(
     int ConsecutiveDaysWithoutFullRation, int DaysAllowedWithoutRation,
     int ExhaustionLevelsGained, string AppliedConditionId);
+
+
+/// <summary>
+/// A daily ration can be food or an approved substitute resource. The
+/// requirement does not create inventory, validate ownership, or grant
+/// replenishment. It identifies what the ordinary survival rules consume.
+/// </summary>
+public sealed record NativeDailyRationRequirement(
+    string ResourceKind, int UnitsPerDay);
