@@ -1,107 +1,65 @@
-# Pillar 2 — Biological Origination: Combine gene offers
+# Pillar 2 — Biological Origination: Combine, Transmission, and Expression
 
 **Date:** 2026-11-21  
 **Repository:** `LegendMaster03/dorks-and-dice-rules-core`  
-**Scope:** First biological Combine increment; source-preserving read-only construction output  
-**Status:** Combine projection and optional explicit transmission selection implemented on a feature branch, subject to tests and review. Not final genetic transmission, latent expression, or balance policy.
+**Branch:** `feature/biological-combine-gene-offers-20261121` (stacked on draft PR #180)  
+**Status:** Implemented as an opt-in construction contract; build and integrated acceptance still required.
 
-## Boundary in the universal procedure
+## Universal Origination boundary
 
-The universal Origin sequence remains **Deconstruct → Combine → Reconcile ↔ Manifest → Reconstruct**. Biological reproduction supplies an eligible pool of canonical genes and intrinsic physical characteristics to the **same** universal Origin construction engine. The existing engine already validates contributor eligibility, selects actual manifestations, resolves permitted compound parameters, reconciles overlaps, binds dependent traits and resources, and reconstructs effective grants.
+Biological reproduction is one method within **Deconstruct → Combine → Reconcile ↔ Manifest → Reconstruct**. Its genes use the same mechanical identities, manifestations, linked parameters, resource binding, reconciliation, and grant authorization as other Origin methods.
 
-This increment exposes the intervening **Combine** evidence as `NativeOriginConstructionResult.BiologicalCombination`; it does not create a second biological grant evaluator.
+- **Available:** Source-neutral, catalog-verified contributor offers. Each offer retains its exact Species/Ancestry occurrence, contributor ID, parameters, and choices.
+- **Inherited:** A player explicitly selects candidate instances in `NativeOriginProposal.BiologicalTransmission.CandidateIds`. That selection is intent until the engine validates its contributor and completes construction.
+- **Expressed:** An inherited instance contributes to an effective, reconciled, dependency-closed inherent grant.
+- **Latent:** An inherited instance contributes to no effective grant. Latency is **derived**, not independently stored, granted, or capped. An inherited gene never provides passive abilities, active traits, synergy inputs, or prerequisites merely by existing.
+- **Reconstructed:** The completed underlying configuration carries both `InherentGrants` (actual mechanics) and `BiologicalGenes` (configured hereditary instances). This avoids treating latent genes as entitlements.
 
-For each canonical gene (or physical intrinsic slot), the combination contains:
+The existing `NativeOriginConstructionResult.BiologicalCombination` still exposes canonical identity groups with exact offers, proposed transmission flags, manifestation attempts and effective grant references. Its `InheritedInstances` projection derives `IsLatent` from the final grant set. The persistent `NativeOriginBiologicalGeneInstance` itself has **no latent Boolean or independent expression authorization**.
 
-- A group keyed by mechanical definition ID or physical intrinsic slot, **not** by a particular Species/Ancestry name.
-- Separately identified contributor-local offers, retaining their complete native candidate identity, configured parameters, source occurrence, required choices, and verified eligibility.
-- Manifestation **attempt IDs** when the player selected a candidate. These remain attempts until authorized.
-- References to the **effective expression** grants which survive universal reconciliation, dependent binding and requirement closure. A grant may list multiple source candidates without multiplying its mechanics; its `ParameterSources`, `ResourceOwners`, and `InheritedFrom` evidence remain available in the effective grant.
-- An empty expression list when a candidate was not chosen or did not survive validation. **This is not a latent or inheritable suppressed gene.**
+## Approved default capacities
 
-Only first-party biologically eligible or authenticated table-authorized contributor offers enter this pool. Its absence for other methods is intentional; Construct Assembly retains its own procedure. The pool does not grant custom content by mere discovery.
+`data/rulesets/first-party-001/native/rules/creature-origination.json` authors:
 
-## Example: biological gene pool
+| Setting | Default |
+| --- | ---: |
+| `maxInheritedInstancesPerKind` | 2 |
+| `maxExpressedInstancesPerKind` | 1 |
 
-For Red Dragonborn and Bronze Dragonborn contributors:
+A kind is one canonical gene ID (for example, `trait.breath-weapon`) or one heritable intrinsic slot. Red and Bronze Breath Weapon configurations are **two distinct source instances of the same kind**. The limits apply **per kind**, not across all genes. There is **no** separate maximum latent count; any inherited instances not represented in effective grants are latent. Neither slot must be filled, and no expression is required for an otherwise valid inherited gene. Numeric defaults can be changed in the native rule during balance work; an authenticated, scoped `biological-inheritance` table decision can replace both limits in an individual construction.
 
-| Element | Red contributor | Bronze contributor |
-| --- | --- | --- |
-| Canonical characteristic | `trait.breath-weapon` | `trait.breath-weapon` |
-| Offer identity | Red source occurrence and contributor ID | Bronze source occurrence and contributor ID |
-| Configured evidence | Red's offered damage type and complete Breath Weapon area | Bronze's offered damage type and complete Breath Weapon area |
-| Before player choice | Eligible offer, not an effective grant | Eligible offer, not an effective grant |
+No dominant/recessive labels, allele probabilities, random inheritance, global inheritance budget, fixed parent count, primary Species, or automatic expression are imposed. Two identical offers remain two sources of genetic evidence, not duplicate mechanical benefits.
 
-The group contains **two evidence-bearing offers of one canonical gene**, not two automatic Breath Weapon uses. The separately approved `originComposition.recombinableParameters` rules control whether offered `damageType` and whole `area` may be chosen across contributors. Action economy, saving throw, usage pool, recharge and progression remain properties of the complete Breath Weapon definition. The pool itself does not independently unlock those parameters, authorize a new grant, or force any cross-gene resistance/warding alignment.
+### Example: two Orc contributors
 
-Two Orc contributors similarly produce two distinct offers of the shared `trait.powerful-build` gene. They do not automatically grant Powerful Build twice. A verified mixed contributor can only offer its actual current inherent grants; grandparent identities alone do not add candidates.
+A character inherits two `trait.powerful-build` instances, one from each contributor, but manifests only the second. The final configuration contains:
 
-## Transmission and expression remain distinct
+- Two records in `BiologicalGenes`, with their distinct source candidate IDs.
+- One effective `trait.powerful-build` grant in `InherentGrants`.
+- One expressed gene instance and one derived latent gene instance.
 
-The next procedure-specific contract must decide **what is transmitted** separately from **what is expressed**:
+Alternatively the character may manifest neither instance, leaving **both latent**; this does not require an additional latent-capacity parameter.
 
-1. **Available:** A verified contributor offers a configured gene or physical intrinsic.
-2. **Proposed transmission:** A player selects a transmitted genetic configuration under an authored or verified table policy. This is not interchangeable with an existing manifestation attempt.
-3. **Expression:** Transmission and the configuration's permitted dependencies/variants resolve to a valid manifested characteristic. Reconciliation and manifestation may iterate.
-4. **Suppressed / unexpressed:** The model may eventually record inherited material without an effective grant, but this is not authorized by the current default. The absence of an effective grant is not proof that latent hereditary material exists.
-5. **Reconstruction:** The resulting current Origin records only authorized effective characteristics; verified lineage remains audit evidence, not an independent gene source.
+### Example: differing Breath Weapon configurations
 
-Player-directed choice is the current biological selection policy. No random inheritance, fixed parent count, mandatory primary Species, percentage mixture, gene quota, point allowance, or automatic latent transmission is imposed. One contributor may have a nested mixed Origin, but only the authenticated **current** hereditary profile may supply new offers.
+Red and Bronze Dragonborn contribute separate `trait.breath-weapon` instances, each with its own offered damage and area parameters. Those configurations remain separate hereditary evidence. Any approved parameter recombination still belongs to existing authored reconciliation rules; a combined phenotype does not automatically erase the original source configurations or create a second effective Breath Weapon.
 
-A future gene-transmission model should use these stable contributor/occurrence identities and explicit dependencies, not infer independent inheritance of arbitrary sub-effects. The previously agreed Daggerheart comparison informs how linked sub-traits and shared parameter values remain coherent; it does **not** require a shallow gene model or immediate UI simplification.
+## Multigenerational inheritance
 
-## Explicit biological transmission selection (increment 2)
+A completed Origin's `Underlying.BiologicalGenes` survives JSON serialization. An application-authenticated current underlying profile may supply both latent and expressed instances to a descendant. The contributor authority checks the profile identity, revision, baseline grant authorization, and basic gene-record consistency. Only the **immediate verified current configuration** is eligible; unverified user snapshots, unrelated active forms, grandparent identifiers, and historical ancestry do not create new gene offers.
 
-The optional `NativeOriginProposal.BiologicalTransmission` contains a
-`NativeOriginBiologicalTransmissionPlan` with exact contributor-local
-`CandidateIds`. It is a player **proposal**, not a certified genetic
-record or an independent grant source. It is distinct from each
-`NativeOriginManifestation`, which remains responsible for expression
-parameters, choice values and actual grant construction.
+A descendant can select and manifest a gene that was latent in a verified parent. Parent choices are retained, not reopened by arbitrary client selections. The child's new instance records the verified parent profile ID, revision, source instance ID and whether the source was a legacy effective grant or a stored biological gene. This does not embed an unbounded pedigree. Previously completed profiles without a `BiologicalGenes` field remain readable and still expose authorized effective inherent grants.
 
-- **Null plan:** existing manifestation-only proposals continue working,
-  including saved drafts and nonbiological methods. This compatibility mode
-  does not infer or persist any hidden transmitted state.
-- **Explicit nonnull plan:** only listed, catalog-eligible biological or
-  appropriately authenticated table-authorized contributor offers may be
-  expressed. A manifestation without a corresponding selected source is
-  unresolved and cannot mint a grant.
-- **Authored reconciliation still controls expression:** selecting a source
-  is not selecting parameters freely, satisfying dependencies, or authorizing
-  stacking. The construction engine still processes relationships, choices,
-  dependent resource owners and the final effective grant closure.
-- **Unexpressed selection:** because no rule authorizes retaining latent genes,
-  any selected offer that does not participate in an effective inherent grant
-  remains unresolved. It does not enter a playable Origin as hidden heredity.
-  Derived synergies do not count as expression of their input genes.
-- **Provenance and review:** `BiologicalCombination` marks an offer
-  `ProposedForTransmission`, explicitly labeling client intent rather than
-  authority. Invalid candidates, duplicates, method mismatches and unsupported
-  sources cannot authorize a profile.
-- **Persistence boundary:** the plan serializes as part of the **evaluated
-  proposal**, not as new hereditary state inside `NativeOriginProfile`.
-  Effective inherent grants remain the authoritative inheritable state
-  when they are verified in later generations.
+Latent native instances requiring persistent creation choices can provide `LatentConfigurations` containing only validated authored choices. Unsupported choices, incomplete required options, open-catalog choices without trusted evidence, and unconfigured physical values do not become valid hereditary records. A previously configured inherited gene can not silently change its choices.
 
-The opt-in plan is the minimal next sequencing contract. It does **not**
-establish an inheritance quota, a parent/allele ratio, dominant/recessive
-expression, trait-level latent storage, genetic randomization, or a final
-allocation cost. The exact number of transmitted genes is still subject
-to later balance and procedure design. A player may transmit multiple offers
-of the same canonical gene when needed for a separately authored recombination,
-but identical evidence is not multiplied into independent effects.
+## Boundaries and unresolved work
 
-Focused tests cover the match between plan and manifestation, missing
-transmission, unused transmission, forged/duplicate source IDs, nonbiological
-methods, backward compatibility, and unauthorized historical contributors.
+An explicit transmission plan is opt-in for compatibility. When absent, legacy manifestation-only proposals retain their existing behavior and do not retroactively invent a latent genotype. Direct and nonbiological methods are unaffected by biological capacity enforcement.
 
-## Implementation and validation
+The first-party biological gene catalog still supplies verified eligibility. A player can not manufacture arbitrary canonical genes from historical ancestry or an untrusted nested profile. A selected candidate with invalid authoring dependencies cannot become a valid genotype just because it was not manifested.
 
-- `NativeOriginBiologicalCombination` is a read-only, serialized result alongside `EvaluatedProposal` and `Profile`.
-- The projector operates **after** final construction, so it can distinguish attempted manifestations from actual surviving effective grants.
-- It does not write to `NativeOriginProfile`, reinterpret source parameters, add grants, or change the outcome's authorization status.
-- Focused tests cover two differently configured donors offering the same canonical gene, selection/expression, identical donors, nonbiological methods, and unverified historical ancestry.
+The instance model retains source configuration when an expressed phenotype combines parameters across contributors. The precise hereditary treatment of **newly recombined** configurations, if different from their source instances, is a separate policy question. Likewise, a final global species-power budget and UI integration remain outside this increment.
 
-**Next actionable design choice:** Decide whether any transmitted-but-unexpressed material may persist and how an authored transmission-capacity policy would apply. The model must preserve linked gene parameters, source-contributor scopes, authored dependencies, and the complete physical foundation while leaving numeric allocation and UI for their separate passes. This read-only Combine increment does not settle that choice.
+**Testing:** Focused real-catalog regression cases cover two-source inheritance, either instance's expression, both-latent behavior, per-kind overcapacity, verified latent-to-expressed descendants, source provenance, historical/unverified rejection, and serialization. The tests still need to be run with the repository's .NET 10 SDK. PR #179's separately implemented linked-parameter finalization must be integrated and retested with PR #180 and this branch before declaring the full biology pipeline complete.
 
-**Integration dependency:** This branch starts from draft PR #180's source-neutral flat gene catalog; PR #179's linked-parameter finalization is a separate draft change. They should be integrated and tested together before treating cross-gene expression closure as finished. Do not merge into `main` without approval.
+**Merge policy:** This is a draft stacked PR. Do not change `main` without explicit approval.
