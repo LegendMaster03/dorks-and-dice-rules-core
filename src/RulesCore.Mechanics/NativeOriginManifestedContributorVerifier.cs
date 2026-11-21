@@ -59,6 +59,7 @@ internal static class NativeOriginManifestedContributorVerifier
                     (NativeOriginAdjudication.Supported or NativeOriginAdjudication.DmAuthorized) ||
                 record.Profile.Underlying.InherentGrants.Any(grant =>
                     grant is null || grant.Identity is null ||
+                    grant.SourceCandidateIds is null ||
                     grant.Authorization?.Adjudication is not
                         (NativeOriginAdjudication.Supported or NativeOriginAdjudication.DmAuthorized)) ||
                 !ValidGeneRecords(record.Profile.Underlying.BiologicalGenes))
