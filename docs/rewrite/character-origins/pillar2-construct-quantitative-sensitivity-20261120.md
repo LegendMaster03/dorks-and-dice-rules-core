@@ -2,13 +2,13 @@
 
 **Date:** November 20, 2026  
 **Branch:** `feature/construct-recipe-derived-starting-cost-20261120`  
-**Status:** Reproducible candidate analysis, not a first-party balance approval or gameplay authorization
+**Status:** Historical, reproducible candidate sensitivity analysis. The numerical load-support and flat-DR hypotheses below were explicitly withdrawn from native rules. No movement-tier policy is approved or implemented.
 
 ## Method and boundaries
 
 The paired comparison follows the endpoint-specific method in `pillar2-species-power-evaluation.md`: compare configurations under the same assumptions, state which physical resources and capabilities changed, and keep cost, body mass, power, movement, defense and actions in distinct units. There is no approved exchange rate between these domains.
 
-Source inputs are the actual first-party native `components.json`, `crafting-recipes.json`, `materials.json`, `crafting-ingredients.json` and `power-sources.json`, plus the candidate recipe-input unit values authored by `rule.creature-origination`. The three earlier reference builds and sensitivity variations live in `data/reference/construct-assembly-balance-candidates-20261120.json`.
+Source inputs include draft native recipes, materials, components and power sources, plus candidate recipe-input unit values in `rule.creature-origination`. **Invented nominal drive-support and hypothetical protective-layer DR values now live exclusively in `data/reference/construct-assembly-balance-candidates-20261120.json`, not in the native gameplay definitions.** The configurations and price comparison candidates also live in that reference file.
 
 Reproduce all nine results from the repository root:
 
@@ -20,7 +20,7 @@ python3 -m unittest discover -s tests -p 'test_construct_assembly_balance_resear
 
 The Python utility **independently audits authored ingredient arithmetic**, including selected body-size variants and manufacture-then-consume recipe stages. It refuses unknown ingredients, missing prices and mismatched recipe products. It deliberately does **not** replace the C# assembly evaluator, simulate connections, determine power-network availability, authorize inventory, assert protective coverage, or award Origin traits.
 
-The source-defined *nominal power output* assumes the installed source could be available. Total *requested power demand* assumes every installed powered component were operating. Consequently a positive shortfall disproves simultaneous full operation, but no shortfall does **not** establish that operation is possible. Gross load support is the sum of all installed candidate drives **assuming they are powered, mechanically connected, and compatible**; it is a ceiling, not a verified capacity for these reference fixtures. Retained mass remains a lower bound until **every** manufactured product's mass is certified. Regional DR sums assume hypothetical co-location of independently installed protective surfaces and are not damage mitigation.
+The source-defined *nominal power output* assumes the installed source could be available. Total *requested power demand* assumes every installed powered component were operating. Consequently a positive shortfall disproves simultaneous full operation, but no shortfall does **not** establish that operation is possible. The hypothetical gross-load-support totals use **reference-only, unapproved** drive capacity assumptions, not supported first-party hardware limits. Even under those assumptions, they would require power, connections and compatibility that these scenarios do not establish. Retained mass remains a lower bound until **every** manufactured product's mass is certified. Regional DR sums assume hypothetical co-location of independently installed protective surfaces and are not damage mitigation.
 
 ## Reproduced source quantities
 
@@ -55,7 +55,7 @@ Changing only its power source to the candidate Infernal Engine costs **39 addit
 
 The steel-plated build with one drive has **at least 414 lb** of retained mass against a **300 lb maximum candidate support**. Even with incomplete mass evidence, this can prove overload *if that drive is the verified applicable support*. A second drive increases candidate support to **600 lb** and raises known mass to **444 lb**, costing **22 more points**. A third increases support to **900 lb** at **474 lb**, again for **22 additional points**.
 
-With the provisional load threshold at 75%, the known minimum mass of the two-drive build is **74%** of nominal maximum support; the three-drive build is about **53%**. Neither percentage proves movement speed, because remaining manufactured mass, carried payload, power allocation and connections have not been verified. Nonetheless, an extra drive can potentially move a construction from a proven stall into an apparently unrestricted speed tier. This is an especially important balance sensitivity.
+The two-drive example's known minimum mass is 74% of its **reference-only hypothetical** support estimate; the three-drive example's is about 53%. **There is no approved 75% speed breakpoint or 30/15/0-foot tier mechanic.** These ratios are retained solely to illustrate how changing an assumed capacity alters a mathematical comparison. They do not prove any movement speed, stall condition, or effective drive support.
 
 **Implication:** Do not describe extreme steel construction as automatically self-balancing through slowness. The benefit and cost of installing additional drives must be evaluated together, including power use, mechanical compatibility, fuel, movement modes and payload. No arbitrary attachment count is required.
 
@@ -68,7 +68,7 @@ With six independent plating components and all other construction choices uncha
 - Wood changes the total to **225 points and 294 lb**, with **zero** candidate protection.
 - Cloth changes the total to **189 points and 258 lb**, also with **zero** candidate protection.
 
-Stone is **72 points cheaper than steel** for the same *provisional* per-layer DR in these assumptions, at the cost of **72 additional pounds**. Replacing just one stone plate with cloth yields a **219-point** assembly (1 point under the candidate allowance), with **498 lb known minimum mass** and a hypothetical single-region protection sum of **10**. This mixed-material result is particularly sensitive to the allowance choice: nominal three-drive support is still 900 lb and nominal demand equals output at 4. With three candidate drives, both 498 lb and the all-stone minimum 546 lb are below the nominal 675 lb (75%) loaded-speed threshold. If the unmeasured mass and payload turn out small enough and all drives operate, the intended additional mass penalty might not apply. These data do not justify changing the source values yet, but they identify a potential pricing/protection mismatch.
+Stone is **72 points cheaper than steel** for the same *provisional* per-layer DR in these assumptions, at the cost of **72 additional pounds**. Replacing just one stone plate with cloth yields a **219-point** assembly (1 point under the candidate allowance), with **498 lb known minimum mass** and a hypothetical single-region protection sum of **10**. This mixed-material result is particularly sensitive to the allowance choice: nominal three-drive support is still 900 lb and nominal demand equals output at 4. The hypothetical aggregate drive support is not a verified operating capacity, and no loaded-speed threshold is approved. Even a heavy plated assembly might offset some mass with additional locomotion hardware; the magnitude of that effect requires actual locomotion and material rules. These data do not justify changing the source values yet, but they identify a potential pricing/protection mismatch.
 
 **Implication:** Price, protective coverage, durability and mobility must be compared as a joint configuration. Candidate local protection values are **not** a license to stack six DR layers in an actual attack resolution.
 
@@ -76,7 +76,7 @@ Stone is **72 points cheaper than steel** for the same *provisional* per-layer D
 
 The Small nonhumanoid fixture costs **95 points** and has **58 lb known retained mass**, with nominal demand **3** against solar output **5**. However, its source lacks approved sensory/locomotion characteristic projections and complete operating/energy rules. The missing abilities can not be assigned a value of zero and compared with a complete biological Species.
 
-The previous conventional Species power evaluation uses a fixed **Medium Humanoid, 30-ft speed** reference for isolated effects and measures performance separately in movement access, successful tests, damage, resources and targeting. The present candidate Construct movement profiles offer a potential **30/15/0-ft** walk depending on verified load, but are **not yet canonical Origin movement grants**. Creature type, size, biological needs, limitations, sensory interfaces, passive protection and construction resources also differ.
+The previous conventional Species power evaluation uses a fixed **Medium Humanoid, 30-ft speed** reference for isolated effects and measures performance separately in movement access, successful tests, damage, resources and targeting. The former **30/15/0-ft** candidate Construct movement profile has been removed from executable runtime and native content. No replacement movement values have been approved. Creature type, size, biological needs, limitations, sensory interfaces, passive protection and construction resources also differ.
 
 **Implication:** A numeric claim such as “220 points equals a balanced conventional Species” is not yet defensible. Test explicit matched character scenarios with a legal, operating Construct before proposing such equivalence.
 
