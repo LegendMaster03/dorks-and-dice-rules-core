@@ -583,6 +583,45 @@ public sealed class NativeConstructOperatingSession
     }
 
     /// <summary>
+    /// Open an in-process custody ledger from records already authenticated
+    /// by the host. This does not infer consumption or create a starting soul.
+    /// The host must still persist committed death and rescue transitions.
+    /// </summary>
+    internal NativeConstructSoulCustodyOpenResult OpenTrustedSoulCustodyLedger(
+        IReadOnlyList<NativeConstructSoulCustodyRecord> authenticatedRecords)
+    {
+        ArgumentNullException.ThrowIfNull(authenticatedRecords);
+        var sources = _baseline.Components.Where(x =>
+                x.PowerSourceId == "construct-power-source.soul-gem")
+            .Select(x => x.InstanceId).ToHashSet(StringComparer.Ordinal);
+        var issues = new List<NativeOriginContractIssue>();
+        if (sources.Count == 0)
+            issues.Add(new("construct-soul-custody-core-missing",
+                "soulCustody", NativeOriginIssueSeverity.Incomplete,
+                "An installed soul-powered core is required."));
+        var soulIds = new HashSet<string>(StringComparer.Ordinal);
+        var deathIds = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var record in authenticatedRecords)
+        {
+            if (record is null || string.IsNullOrWhiteSpace(record.SoulId) ||
+                string.IsNullOrWhiteSpace(record.DeathEventId) ||
+                record.SoulId.Length > 256 ||
+                record.DeathEventId.Length > 256 ||
+                !sources.Contains(record.CoreInstanceId) ||
+                !Enum.IsDefined(record.Disposition) ||
+                !soulIds.Add(record.SoulId) ||
+                !deathIds.Add(record.DeathEventId))
+                issues.Add(new("construct-soul-custody-record-invalid",
+                    "soulCustody.records", NativeOriginIssueSeverity.Invalid,
+                    "Each source-verified soul and death identity must occur once."));
+        }
+        return issues.Count > 0
+            ? new(null, issues)
+            : new(new NativeConstructSoulCustodyLedger(this,
+                authenticatedRecords), []);
+    }
+
+    /// <summary>
     /// Capture an operating preset as ordinary data, not as authorization.
     /// Only configurations fully accepted by the current trusted evaluator
     /// may be captured. A saved preset must be revalidated before reuse.
