@@ -306,6 +306,14 @@ public sealed class NativeConstructComponentExpansionTests
         Assert.Equal(24, collection.GetProperty("concentrated").GetInt32());
         Assert.Equal("dm-confirmed-concentrated-sunlight",
             solar.GetProperty("overdriveCondition").GetString());
+        var solarFallback = solar.GetProperty("energyShortagePolicy");
+        Assert.Equal(8, solarFallback.GetProperty("fallbackPowerOutput").GetInt32());
+        Assert.Equal("exhaustion",
+            solarFallback.GetProperty("consequence").GetString());
+        Assert.Equal(1440,
+            solarFallback.GetProperty("additionalLevelPeriodMinutes").GetInt32());
+        Assert.True(solarFallback
+            .GetProperty("recoveryBlockedWhileShortageContinues").GetBoolean());
         Assert.True(catalog.TryGetById(
             solar.GetProperty("craftingRecipeId").GetString()!, out var recipe));
         Assert.Equal(source.Id,
@@ -315,6 +323,34 @@ public sealed class NativeConstructComponentExpansionTests
         Assert.Equal(8, mechanical!.Definition.GetProperty("powerOutput").GetInt32());
         Assert.Equal(1, mechanical.Definition
             .GetProperty("dailySustenance").GetProperty("unitsPerDay").GetInt32());
+    }
+
+    [Fact]
+    public void InfernalFirstPartySourceUsesRestFuelAndExtraFuelForOverdrive()
+    {
+        var catalog = Catalog();
+        Assert.True(catalog.TryGetById(
+            "construct-power-source.infernal-engine", out var source));
+        Assert.Equal("construct-power-source", source!.Category);
+        var infernal = source.Definition;
+        Assert.Equal(8, infernal.GetProperty("powerOutput").GetInt32());
+        Assert.Equal(12, infernal.GetProperty("overdrivePowerOutput").GetInt32());
+        Assert.Equal(50, infernal.GetProperty("overdriveIncreasePercent").GetInt32());
+        var sustaining = infernal.GetProperty("longRestSustenance");
+        Assert.Equal("infernal-engine-fuel-charge",
+            sustaining.GetProperty("resourceKind").GetString());
+        Assert.Equal(1, sustaining.GetProperty("unitsPerLongRest").GetInt32());
+        Assert.Equal("continues-at-normal-output-with-infernal-instability-or-overheating",
+            infernal.GetProperty("fuelShortagePolicy").GetString());
+        Assert.Equal("additional-infernal-fuel-per-use",
+            infernal.GetProperty("overdriveFuelPolicy").GetString());
+        Assert.Equal("not-yet-authored",
+            infernal.GetProperty("overdriveDurationStatus").GetString());
+        Assert.True(catalog.TryGetById(
+            infernal.GetProperty("craftingRecipeId").GetString()!,
+            out var recipe));
+        Assert.Equal(source.Id,
+            recipe!.Definition.GetProperty("producesDefinitionId").GetString());
     }
 
     [Fact]
