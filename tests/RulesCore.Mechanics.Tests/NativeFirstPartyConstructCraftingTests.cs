@@ -475,7 +475,9 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.True(build.IsAuthorized);
         Assert.True(build.IsBodyMassComplete);
         Assert.Empty(build.ProductsWithUncertifiedMass!);
-        Assert.Equal(43, build.KnownRetainedMaterialMassPounds);
+        // Housing: 10 lb wood; drive: 8 lb wood + 2 lb mechanisms;
+        // engine: 21 lb iron + 4 lb mechanisms.
+        Assert.Equal(45, build.KnownRetainedMaterialMassPounds);
         // Character inventory has not provided its authoritative load yet:
         // construction preview must not turn absent payload into zero.
         Assert.Equal("unresolved", build.PhysicalLoad?.Status);
@@ -487,12 +489,13 @@ public sealed class NativeFirstPartyConstructCraftingTests
 
         // An independent trusted inventory caller can supply its measured
         // payload to the general evaluator without editing the Origin state.
+        var bodyMass = build.KnownRetainedMaterialMassPounds!.Value;
         var unloaded = NativePhysicalLoadEvaluator.Evaluate(
-            43, true, 0, build.PhysicalLoadSupports);
+            bodyMass, true, 0, build.PhysicalLoadSupports);
         var loaded = NativePhysicalLoadEvaluator.Evaluate(
-            43, true, 250, build.PhysicalLoadSupports);
+            bodyMass, true, 250, build.PhysicalLoadSupports);
         var overloaded = NativePhysicalLoadEvaluator.Evaluate(
-            43, true, 300, build.PhysicalLoadSupports);
+            bodyMass, true, 300, build.PhysicalLoadSupports);
         NativePhysicalMovementSource[] sources =
         [
             new("drive", true, new("walk", 30, 15, 75, 0))
