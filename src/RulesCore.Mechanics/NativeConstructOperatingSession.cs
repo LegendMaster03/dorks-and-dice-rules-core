@@ -370,6 +370,33 @@ public sealed class NativeConstructOperatingSession
                 continue;
             }
             var raw = native.Definition;
+            var model = raw.TryGetProperty("resourceModel", out var authoredModel)
+                ? authoredModel.ValueKind == JsonValueKind.String
+                    ? authoredModel.GetString() : null
+                : "finite"; // Legacy finite-source fixtures omit this discriminator.
+            if (model == "unmetered")
+            {
+                if (raw.TryGetProperty("resourceKind", out _) ||
+                    raw.TryGetProperty("resourceCapacity", out _) ||
+                    raw.TryGetProperty("resourceUsePerStep", out _) ||
+                    raw.TryGetProperty("resourceTransferOut", out _) ||
+                    raw.TryGetProperty("resourceTransferIn", out _))
+                    issues.Add(new("construct-unmetered-source-invalid", path,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Unmetered sources cannot also author finite reserves or transfer ports."));
+                if (remainingResources.ContainsKey(part.InstanceId))
+                    issues.Add(new("construct-unmetered-balance-invalid", path,
+                        NativeOriginIssueSeverity.Invalid,
+                        "An unmetered source must not receive an invented finite balance."));
+                continue;
+            }
+            if (model != "finite")
+            {
+                issues.Add(new("construct-resource-model-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Power-source resourceModel must be finite or unmetered."));
+                continue;
+            }
             var kind = raw.TryGetProperty("resourceKind", out var kindValue) &&
                 kindValue.ValueKind == JsonValueKind.String ? kindValue.GetString() : null;
             var capacity = raw.TryGetProperty("resourceCapacity", out var capacityValue) &&
@@ -515,6 +542,73 @@ public sealed class NativeConstructOperatingSession
         // conditional on whether the new configuration can power all loads.
         var nextStep = PreviewResourceStep(balances, requestedEnabled, requestedModes);
         return new(snapshots, nextStep, []);
+    }
+
+    /// <summary>
+    /// Preview one source-specific replenishment event. The method and
+    /// maximum units must be native-authored, but the external condition
+    /// (sunlight, a soul resource, infernal fuel, or arcane expenditure) is
+    /// deliberately not accepted as a caller assertion here. A trusted host
+    /// must authorize that condition before committing any balance increase.
+    /// </summary>
+    public NativeConstructReplenishmentPreview PreviewReplenishment(
+        IReadOnlyDictionary<string, int> remainingResources,
+        string instanceId, string method, int amount)
+    {
+        ArgumentNullException.ThrowIfNull(remainingResources);
+        var (sources, existingIssues) = ResolveFiniteResources(remainingResources);
+        if (existingIssues.Length > 0)
+            return new([], null, existingIssues);
+
+        var errors = new List<NativeOriginContractIssue>();
+        var source = sources.SingleOrDefault(x => x.Part.InstanceId == instanceId);
+        if (source is null ||
+            !_catalog.TryGetById(source.Part.PowerSourceId!, out var native) ||
+            native?.Category != "construct-power-source")
+            return new([], null,
+                [new("construct-replenishment-source-invalid", "replenishment",
+                    NativeOriginIssueSeverity.Invalid,
+                    "The target must be an installed finite power source.")]);
+
+        var path = "replenishment." + source.Part.InstanceId;
+        var raw = native.Definition;
+        if (!raw.TryGetProperty("replenishment", out var refill) ||
+            refill.ValueKind != JsonValueKind.Object ||
+            !refill.TryGetProperty("method", out var authoredMethod) ||
+            authoredMethod.ValueKind != JsonValueKind.String ||
+            !refill.TryGetProperty("unitsPerEvent", out var authoredUnits) ||
+            authoredUnits.ValueKind != JsonValueKind.Number ||
+            !authoredUnits.TryGetInt32(out var maximum) ||
+            maximum < 1 || maximum > source.Capacity)
+        {
+            errors.Add(new("construct-replenishment-model-invalid", path,
+                NativeOriginIssueSeverity.Unresolved,
+                "The source requires an authored replenishment method and bounded event units."));
+        }
+        else if (method != authoredMethod.GetString())
+        {
+            errors.Add(new("construct-replenishment-method-invalid", path,
+                NativeOriginIssueSeverity.Invalid,
+                "The requested replenishment method is not authored for this source."));
+        }
+        if (amount <= 0 || amount > (long)source.Capacity - source.Remaining ||
+            (errors.Count == 0 &&
+             amount > refill.GetProperty("unitsPerEvent").GetInt32()))
+            errors.Add(new("construct-replenishment-amount-invalid", path,
+                NativeOriginIssueSeverity.Invalid,
+                "Replenishment must be positive and not exceed source capacity or authored per-event limit."));
+        if (errors.Count > 0)
+            return new([], null, errors.ToArray());
+
+        var states = sources.Select(x => new NativeConstructResourceTransferState(
+            x.Part.InstanceId, x.Part.PowerSourceId!, x.Kind, x.Capacity,
+            x.Remaining, x.Part.InstanceId == instanceId ? amount : 0,
+            x.Remaining + (x.Part.InstanceId == instanceId ? amount : 0))).ToArray();
+        var balances = states.ToDictionary(x => x.InstanceId, x => x.After,
+            StringComparer.Ordinal);
+        // Operational restart is a separate evaluation. A preview does not
+        // clear a trusted source outage or spend the subsequent operating step.
+        return new(states, PreviewResourceStep(balances), []);
     }
 
     /// <summary>
@@ -769,4 +863,16 @@ public sealed record NativeConstructResourceTransferPreview(
     IReadOnlyList<NativeOriginContractIssue> Issues)
 {
     public bool CanTransfer => Issues.Count == 0 && NextStep is not null;
+}
+
+/// <summary>
+/// An advisory recharge estimate, not a credit from an arbitrary player input.
+/// The trusted host must verify the event and any external resource expenditure.
+/// </summary>
+public sealed record NativeConstructReplenishmentPreview(
+    IReadOnlyList<NativeConstructResourceTransferState> Sources,
+    NativeConstructResourceStepPreview? NextStep,
+    IReadOnlyList<NativeOriginContractIssue> Issues)
+{
+    public bool CanReplenish => Issues.Count == 0 && NextStep is not null;
 }
