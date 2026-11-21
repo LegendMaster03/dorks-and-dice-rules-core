@@ -69,12 +69,17 @@
     "kind": "construct-power-source",
     "name": "Mechanical engine",
     "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "A mechanical generator driven by separately authored fuel or winding input.",
+    "description": "A basic mechanical generator with eight power output. Its ordinary fuel requirement is one standard charge per adventuring day, with deprivation handled using the 2014 starvation progression rather than immediate power loss. Overdrive, fuel inventory transactions, and other operating supplies remain separately authored.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
     "operatingPrinciple": "mechanical",
     "craftingRecipeId": "crafting-recipe.construct-power-source.mechanical-engine",
-    "powerOutput": 8
+    "powerOutput": 8,
+    "dailyFuel": {
+      "resourceKind": "mechanical-engine-fuel-charge",
+      "chargesPerDay": 1,
+      "deprivationRule": "2014-food-starvation"
+    }
   }
 ]
