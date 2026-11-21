@@ -10,7 +10,17 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catalog)
 {
-    public NativeConstructAssemblyResult Evaluate(NativeConstructAssemblyRequest request)
+    public NativeConstructAssemblyResult Evaluate(NativeConstructAssemblyRequest request) =>
+        EvaluateWithSourceOutputOverrides(request, null);
+
+    /// <summary>
+    /// Internal-only runtime capacity override for already-installed solar
+    /// mechanisms. Values are bounded against native authored output limits.
+    /// Public assembly requests never carry an arbitrary power-output claim.
+    /// </summary>
+    internal NativeConstructAssemblyResult EvaluateWithSourceOutputOverrides(
+        NativeConstructAssemblyRequest request,
+        IReadOnlyDictionary<string, int>? trustedSolarOutputs)
     {
         ArgumentNullException.ThrowIfNull(request);
         var issues = new List<NativeOriginContractIssue>();
@@ -31,6 +41,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         var parts = new Dictionary<string, Part>(StringComparer.Ordinal);
         var unavailableSources = (request.UnavailablePowerSourceInstanceIds ?? [])
             .ToHashSet(StringComparer.Ordinal);
+        var overriddenSourceIds = new HashSet<string>(StringComparer.Ordinal);
 
         // Native opt-in: reuse crafting recipes and resource-unit prices instead
         // of charging arbitrary finished-part prices. Older fixture content
@@ -282,6 +293,28 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             // A source sets the housing's baseline output. An explicitly
             // authored operating mode may override that output.
             output = selectedMode?.PowerOutput ?? baseOutput;
+            if (trustedSolarOutputs is not null &&
+                trustedSolarOutputs.TryGetValue(instance.InstanceId, out var solarOutput))
+            {
+                overriddenSourceIds.Add(instance.InstanceId);
+                // Only an installed solar source with its own native overdrive
+                // limit can receive an internally evaluated runtime output.
+                if (instance.PowerSourceId is null ||
+                    !catalog.TryGetById(instance.PowerSourceId, out var source) ||
+                    source?.Category != "construct-power-source" ||
+                    !source.Definition.TryGetProperty("operatingPrinciple",
+                        out var principle) ||
+                    principle.GetString() != "solar-recharge" ||
+                    !source.Definition.TryGetProperty("overdrivePowerOutput",
+                        out var ceiling) ||
+                    !ceiling.TryGetInt32(out var maxOutput) ||
+                    solarOutput < 0 || solarOutput > maxOutput)
+                    Issue("construct-solar-source-output-invalid",
+                        path + ".powerSourceId", NativeOriginIssueSeverity.Invalid,
+                        "Runtime solar power must be bounded by the installed native source.");
+                else
+                    output = solarOutput;
+            }
             // An exhausted mechanism cannot create output through a mode.
             // The housing remains physically present and separately costed.
             if (instance.PowerSourceId is not null && !sourceAvailable)
@@ -536,6 +569,13 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             }
             powerNetworks = ConnectedNetworks(powerLinks);
         }
+
+        if (trustedSolarOutputs is not null)
+            foreach (var id in trustedSolarOutputs.Keys)
+                if (!overriddenSourceIds.Contains(id))
+                    Issue("construct-solar-source-instance-invalid",
+                        "solarOutputOverrides", NativeOriginIssueSeverity.Invalid,
+                        "Runtime solar output may only refer to an installed native solar source.");
 
         var online = new HashSet<string>(StringComparer.Ordinal);
         // Fixed-point activation permits provider chains but cannot bootstrap
