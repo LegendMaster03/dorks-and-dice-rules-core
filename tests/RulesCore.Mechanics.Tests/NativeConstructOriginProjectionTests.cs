@@ -1392,6 +1392,22 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Equal(1, Assert.Single(first.ExhaustionChanges!).NewExhaustionLevels);
         Assert.Equal(1, first.Snapshot.ExhaustionEventsIssued["generator"]);
         Assert.Equal(60, first.Snapshot.ConsecutiveDeficitMinutes["generator"]);
+        Assert.True(first.Snapshot.BlocksSolarExhaustionRecovery);
+        var reopened = session.OpenTrustedSolarLedger(
+            first.Snapshot.StoredPowerUnitMinutes,
+            first.Snapshot.ConsecutiveDeficitMinutes,
+            first.Snapshot.ExhaustionEventsIssued);
+        Assert.Empty(reopened.Issues);
+        var resumedLedger = Assert.IsType<NativeConstructSolarEnergyLedger>(
+            reopened.Ledger);
+        var afterReopen = resumedLedger.TryCommitInterval(0, dark, 60, authority);
+        Assert.True(afterReopen.Committed);
+        Assert.Equal(0, Assert.Single(afterReopen.ExhaustionChanges!).NewExhaustionLevels);
+        Assert.Equal(1, afterReopen.Snapshot.ExhaustionEventsIssued["generator"]);
+        Assert.False(session.OpenTrustedSolarLedger(
+            first.Snapshot.StoredPowerUnitMinutes,
+            new Dictionary<string, long> { ["fabricated"] = 1 },
+            first.Snapshot.ExhaustionEventsIssued).Ledger is not null);
         var second = ledger.TryCommitInterval(1, dark, 60, authority);
         Assert.True(second.Committed);
         Assert.Equal(0, Assert.Single(second.ExhaustionChanges!).NewExhaustionLevels);
@@ -1411,6 +1427,7 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.True(restored.Committed);
         Assert.Equal(0, restored.Snapshot.ConsecutiveDeficitMinutes["generator"]);
         Assert.Equal(2, restored.Snapshot.ExhaustionEventsIssued["generator"]);
+        Assert.False(restored.Snapshot.BlocksSolarExhaustionRecovery);
 
         var resumed = ledger.TryCommitInterval(4, dark, 4000, authority);
         Assert.True(resumed.Committed);
