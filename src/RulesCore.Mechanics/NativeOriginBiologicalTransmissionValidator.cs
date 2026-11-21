@@ -5,7 +5,7 @@ namespace RulesCore.Mechanics;
 /// <summary>
 /// Authenticated, evaluated biological transmission intent. Only the construction
 /// engine can confirm whether a chosen contributor occurrence is actually
-/// available. These IDs describe intended heredity, not effective or latent grants.
+/// available. These IDs describe proposed heredity, not effective grants.
 /// </summary>
 internal sealed record NativeOriginBiologicalTransmissionReview(
     bool Explicit,
@@ -99,52 +99,4 @@ internal static class NativeOriginBiologicalTransmissionValidator
         return new(true, selected, issues);
     }
 
-    /// <summary>
-    /// With no approved persistent latent-gene policy, every transmitted offer
-    /// must actually participate in an effective inherent grant. Failed
-    /// expression stays unresolved; it never silently becomes a heritable gene.
-    /// </summary>
-    public static IReadOnlyList<NativeOriginContractIssue> ReviewExpression(
-        NativeOriginBiologicalTransmissionReview transmission,
-        NativeOriginProposal proposal,
-        IReadOnlyList<NativeOriginEffectiveGrant> grants)
-    {
-        if (!transmission.Explicit) return [];
-
-        var candidates = (proposal.Candidates ?? [])
-            .Where(candidate => candidate?.Id is not null)
-            .GroupBy(candidate => candidate.Id, StringComparer.Ordinal)
-            .ToDictionary(group => group.Key, group => group.First(), StringComparer.Ordinal);
-        var expressed = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var grant in grants ?? [])
-        {
-            if (grant?.Synergy is not null) continue;
-            foreach (var sourceId in grant.SourceCandidateIds ?? [])
-            {
-                if (!candidates.TryGetValue(sourceId, out var candidate) ||
-                    candidate.Identity?.Kind != grant.Identity.Kind)
-                    continue;
-                var sameMechanic = grant.Identity.Kind switch
-                {
-                    NativeOriginCharacteristicKind.Trait =>
-                        candidate.Identity.MechanicalDefinitionId ==
-                            grant.Identity.MechanicalDefinitionId,
-                    NativeOriginCharacteristicKind.Intrinsic =>
-                        candidate.Identity.IntrinsicSlotId ==
-                            grant.Identity.IntrinsicSlotId,
-                    _ => false
-                };
-                if (sameMechanic) expressed.Add(sourceId);
-            }
-        }
-        return transmission.CandidateIds
-            .Where(id => !expressed.Contains(id))
-            .OrderBy(id => id, StringComparer.Ordinal)
-            .Select(id => new NativeOriginContractIssue(
-                "biological-transmission-expression-unresolved",
-                "biologicalTransmission.candidateIds." + id,
-                NativeOriginIssueSeverity.Unresolved,
-                "This proposed transmitted source is not represented in an effective inherent grant; no persistent latent policy is authorized."))
-            .ToArray();
-    }
 }
