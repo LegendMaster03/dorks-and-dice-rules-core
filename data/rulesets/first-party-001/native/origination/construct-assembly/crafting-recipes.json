@@ -1144,33 +1144,6 @@
     ]
   },
   {
-    "id": "crafting-recipe.construct-power-source.arcane-consuming-core",
-    "kind": "crafting-recipe",
-    "name": "Arcane-consuming core — manufacture",
-    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
-    "producesDefinitionId": "construct-power-source.arcane-consuming-core",
-    "stages": [
-      {
-        "stepId": "manufacture",
-        "competencyId": "competency.alchemy",
-        "minimumRanks": 3,
-        "dependencies": [],
-        "inputs": [
-          {
-            "materialId": "construct-material.crystal",
-            "amount": 2,
-            "retainedInProduct": true
-          },
-          {
-            "materialId": "crafting-material.arcane-catalyst",
-            "amount": 3
-          }
-        ],
-        "outputs": []
-      }
-    ]
-  },
-  {
     "id": "crafting-recipe.construct-power-source.mechanical-engine",
     "kind": "crafting-recipe",
     "name": "Mechanical engine — manufacture",
