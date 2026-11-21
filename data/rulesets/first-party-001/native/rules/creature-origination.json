@@ -20,7 +20,7 @@
       "name": "Construct assembly",
       "description": "Construct Assembly evaluates installed physical components and their ordinary crafting recipes. The starting allowance purchases authorized ingredients, not finished component prices. Magical Animation and other supernatural origination processes remain distinct.",
       "initialConstructionCostModel": "recipe-inputs",
-      "costPolicyStatus": "candidate ingredient valuations, creature type and recipes; no first-party starting allowance approved",
+      "costPolicyStatus": "provisional 200-point starting playtest allowance; ingredient valuations and advanced content remain unbalanced",
       "constructIntrinsics": {
         "creatureType": "construct"
       },
@@ -40,7 +40,8 @@
         "crafting-material.sealing-compound": 5,
         "crafting-material.soul-essence": 20,
         "crafting-material.infernal-reagent": 18
-      }
+      },
+      "initialConstructionAllowance": 200
     },
     {
       "id": "elemental-manifestation",

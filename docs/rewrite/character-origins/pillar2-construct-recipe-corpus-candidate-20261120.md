@@ -1,5 +1,8 @@
 # Pillar 2 Construct Assembly — candidate first-party recipe corpus
 
+
+> **Current playtest follow-up (2026-11-20):** The earlier statements below that no starting allowance exists describe the pre-playtest state. The working branch now sets a **provisional 200-point** allowance and provides a [163-point basic starting Construct](pillar2-construct-basic-playtest-20261120.md). This does not approve the remaining recipe/material values for production.
+
 **Working branch:** `feature/construct-recipe-derived-starting-cost-20261120`
 
 **Status:** Draft first-party authoring; do not advertise these recipes, power numbers, or materials as balanced playable character options. The first-party Construct Assembly method selects the native `recipe-inputs` cost path, but intentionally has **no approved starting allowance or unit-price schedule**. The Origin service must therefore remain unresolved for an unapproved first-party starting Construct.
