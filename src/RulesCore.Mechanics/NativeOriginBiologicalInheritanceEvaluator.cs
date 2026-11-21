@@ -201,13 +201,42 @@ internal sealed class NativeOriginBiologicalInheritanceEvaluator(
                 }
             }
 
+            // A recombined effective grant may depend on two donor instances.
+            // Do not overwrite both distinct inherited configurations with
+            // the one combined phenotype. A one-source expression can retain
+            // its fully resolved current configuration.
+            var simpleExpression = expressed && grants.Length == 1 &&
+                grants[0].SourceCandidateIds.Count == 1;
+            var value = simpleExpression ? grants[0].EffectiveValue :
+                inheritedGene?.ConfiguredValue ?? inheritedGrant?.EffectiveValue ??
+                candidate.OfferedValue;
+            if (!expressed && value is null &&
+                candidate.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic)
+            {
+                foreach (var requirement in candidate.RequiredChoices ?? [])
+                {
+                    var choice = choices.FirstOrDefault(x =>
+                        x.RequirementId == requirement.Id);
+                    if (requirement.FiniteOptions is not null &&
+                        choice?.SelectedOptionIds is { Count: 1 } options &&
+                        requirement.FiniteOptions.Contains(options[0], StringComparer.Ordinal))
+                    {
+                        value = JsonSerializer.SerializeToElement(options[0]);
+                        break;
+                    }
+                }
+                if (value is null)
+                {
+                    Issue("biological-latent-intrinsic-value-incomplete", candidate.Id,
+                        NativeOriginIssueSeverity.Incomplete,
+                        "An inherited physical intrinsic needs a complete selected value.");
+                    continue;
+                }
+            }
             genes.Add(new NativeOriginBiologicalGeneInstance(
                 "gene:" + proposal.Id + ":" + candidate.Id, candidate.Id,
-                candidate.Identity,
-                expressed ? grants[0].EffectiveValue :
-                    inheritedGene?.ConfiguredValue ?? inheritedGrant?.EffectiveValue ??
-                    candidate.OfferedValue,
-                expressed ? grants[0].Parameters :
+                candidate.Identity, value,
+                simpleExpression ? grants[0].Parameters :
                     inheritedGene?.Parameters ?? inheritedGrant?.Parameters ??
                     candidate.OfferedParameters,
                 choices, inheritedFrom));
