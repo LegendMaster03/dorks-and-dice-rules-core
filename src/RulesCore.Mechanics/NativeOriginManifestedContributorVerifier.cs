@@ -98,14 +98,14 @@ internal static class NativeOriginManifestedContributorVerifier
                 gene.Identity?.Occurrence?.Source is null ||
                 string.IsNullOrWhiteSpace(gene.Identity.Occurrence.Source.Id) ||
                 string.IsNullOrWhiteSpace(gene.Identity.Occurrence.OccurrencePath) ||
-                gene.Identity.Kind switch
+                (gene.Identity.Kind switch
                 {
                     NativeOriginCharacteristicKind.Trait =>
                         string.IsNullOrWhiteSpace(gene.Identity.MechanicalDefinitionId),
                     NativeOriginCharacteristicKind.Intrinsic =>
                         string.IsNullOrWhiteSpace(gene.Identity.IntrinsicSlotId),
                     _ => true
-                } ||
+                }) ||
                 gene.InheritedFrom is { } parent &&
                 (string.IsNullOrWhiteSpace(parent.ContributorId) ||
                  string.IsNullOrWhiteSpace(parent.ContributorProfileId) ||
