@@ -14,6 +14,10 @@ internal static class NativeOriginAllocationPriceResolver
     internal sealed record Selection(int? Load, string? ConfigurationId = null,
         bool Ambiguous = false);
 
+    // A missing property is not the same as a missing effective payload.
+    // In particular, the latter must not match a cheaper "Absent" tier.
+    private enum ReadStatus { Found, Absent, Unresolved }
+
     internal static bool Valid(NativeOriginAllocationPrice entry)
     {
         if (entry.Configurations is null)
@@ -66,12 +70,12 @@ internal static class NativeOriginAllocationPriceResolver
     private static bool Matches(NativeCatalogSnapshot catalog,
         NativeOriginEffectiveGrant grant, NativeOriginAllocationPriceCondition condition)
     {
-        var found = TryRead(catalog, grant, condition.Path, out var actual);
+        var status = Read(catalog, grant, condition.Path, out var actual);
         return condition.Comparison switch
         {
-            NativeOriginAllocationComparison.Present => found,
-            NativeOriginAllocationComparison.Absent => !found,
-            NativeOriginAllocationComparison.Equals => found &&
+            NativeOriginAllocationComparison.Present => status == ReadStatus.Found,
+            NativeOriginAllocationComparison.Absent => status == ReadStatus.Absent,
+            NativeOriginAllocationComparison.Equals => status == ReadStatus.Found &&
                 condition.ExpectedValue is { } expected &&
                 JsonElement.DeepEquals(actual, expected),
             _ => false
@@ -85,11 +89,15 @@ internal static class NativeOriginAllocationPriceResolver
     /// never by unstable grant IDs. Definition is read only from the canonical
     /// catalog, allowing complete progression to be matched explicitly.
     /// </summary>
-    private static bool TryRead(NativeCatalogSnapshot catalog,
+    private static ReadStatus Read(NativeCatalogSnapshot catalog,
         NativeOriginEffectiveGrant grant, string path, out JsonElement actual)
     {
         actual = default;
         var parts = path.Split('/').Select(Unescape).ToArray();
+        if (parts[0] == "choices" && grant.ResolvedChoices is { } choices &&
+            choices.GroupBy(x => x.RequirementId, StringComparer.Ordinal)
+                .Any(x => x.Count() != 1))
+            return ReadStatus.Unresolved;
         JsonElement? root = parts[0] switch
         {
             "value" => grant.EffectiveValue,
@@ -104,21 +112,32 @@ internal static class NativeOriginAllocationPriceResolver
         };
         if (root is not { } current ||
             current.ValueKind is JsonValueKind.Undefined)
-            return false;
+            return parts[0] is "value" or "definition"
+                ? ReadStatus.Unresolved : ReadStatus.Absent;
         foreach (var part in parts.Skip(1))
         {
-            if (current.ValueKind == JsonValueKind.Object &&
-                current.TryGetProperty(part, out var property))
+            if (current.ValueKind == JsonValueKind.Object)
+            {
+                if (!current.TryGetProperty(part, out var property))
+                    return ReadStatus.Absent;
                 current = property;
-            else if (current.ValueKind == JsonValueKind.Array &&
-                int.TryParse(part, out var index) && index >= 0 &&
-                index < current.GetArrayLength())
+            }
+            else if (current.ValueKind == JsonValueKind.Array)
+            {
+                // Only canonical zero-based indices are recognized. "01",
+                // "+1", and whitespace cannot alias another selector path.
+                if (!int.TryParse(part, out var index) || index < 0 ||
+                    part != index.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                    return ReadStatus.Unresolved;
+                if (index >= current.GetArrayLength())
+                    return ReadStatus.Absent;
                 current = current[index];
+            }
             else
-                return false;
+                return ReadStatus.Unresolved;
         }
         actual = current;
-        return true;
+        return ReadStatus.Found;
     }
 
     private static JsonElement? Choices(NativeOriginEffectiveGrant grant)

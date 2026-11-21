@@ -24,13 +24,6 @@ public sealed record NativeOriginAllocationInteractionPrice(
     string Id, int Load, IReadOnlyList<string> RequiredKeys);
 
 /// <summary>
-/// Prices a complete characteristic or one inseparable group. MemberKeys use
-/// "intrinsic:slot-id" and "trait:canonical-origin-trait-id" notation.
-/// Whole-progression load covers every authored future unlock, not only the
-/// capabilities available at the current character level. A bundle requires
-/// all members to be selected from a shared contributing lineage.
-/// </summary>
-/// <summary>
 /// A configuration selector reads a complete effective grant, not a contributor
 /// offer. Paths are slash-separated JSON properties rooted at value, parameters,
 /// choices, definition, or resourceOwners. Missing is distinct from JSON null.
@@ -50,8 +43,11 @@ public sealed record NativeOriginAllocationPriceConfiguration(
     IReadOnlyList<NativeOriginAllocationPriceCondition> Conditions);
 
 /// <summary>
-/// When Configurations is supplied, a nonmatching effective configuration is
-/// unpriced unless the author explicitly opts into the base-load fallback.
+/// Prices a complete characteristic or one inseparable same-lineage group.
+/// MemberKeys use intrinsic:slot-id and trait:canonical-origin-trait-id.
+/// Whole-progression load covers future unlocks. When Configurations is
+/// supplied, a nonmatching effective configuration is unpriced unless
+/// the author explicitly opts into the base-load fallback.
 /// A null Configurations list retains the existing fixed-price contract.
 /// </summary>
 public sealed record NativeOriginAllocationPrice(

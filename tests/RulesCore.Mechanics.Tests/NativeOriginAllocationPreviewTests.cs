@@ -645,5 +645,16 @@ public sealed class NativeOriginAllocationPreviewTests
         Assert.Equal(14, always.CommittedLoad);
         Assert.Equal("unlimited-no-activation",
             Assert.Single(always.Charges, x => x.PriceId == "vision").ConfigurationId);
+
+        // An absent property on a real object can be a permanent ability.
+        // An entirely missing effective payload is not proof of permanence.
+        var unknown = ChangeGrant(chosenTrait, "trait:trait.low-light-vision",
+            grant => grant with { EffectiveValue = null });
+        var unresolved = NativeOriginAllocationPreview.Assess(Catalog(), unknown, policy);
+        Assert.Equal("unresolved", unresolved.Status);
+        Assert.Null(unresolved.CommittedLoad);
+        Assert.Contains(unresolved.Issues, x =>
+            x.StartsWith("allocation-configuration-unpriced:vision:",
+                StringComparison.Ordinal));
     }
 }
