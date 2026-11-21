@@ -111,7 +111,7 @@ public sealed class NativeOriginBiologicalTransmissionPlanTests
     }
 
     [Fact]
-    public void SelectedForTransmissionWithoutExpressionIsNotAnAuthorizedLatentGene()
+    public void SelectedForTransmissionWithoutExpressionPersistsAsLatentGene()
     {
         var (proposal, foundation, fey) = SelectElf();
         proposal = proposal with
@@ -122,12 +122,22 @@ public sealed class NativeOriginBiologicalTransmissionPlanTests
                 .Append(fey.Id).ToArray())
         };
         var result = Evaluate(proposal);
-        Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Status);
-        Assert.Contains(result.Issues, issue =>
-            issue.Code == "biological-transmission-expression-unresolved" &&
-            issue.Path.EndsWith(fey.Id, StringComparison.Ordinal));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Empty(result.Issues);
         Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
             grant => grant.Identity.MechanicalDefinitionId == "trait.fey-ancestry");
+        var stored = Assert.Single(result.Profile.Underlying.BiologicalGenes!, x =>
+            x.Identity.MechanicalDefinitionId == "trait.fey-ancestry");
+        Assert.Equal(fey.Id, stored.SourceCandidateId);
+        var projected = Assert.Single(result.BiologicalCombination!.InheritedInstances!, x =>
+            x.Gene.SourceCandidateId == fey.Id);
+        Assert.True(projected.IsLatent);
+        Assert.Empty(projected.ExpressionGrantIds);
+        var roundTrip = JsonSerializer.Deserialize<NativeOriginProfile>(
+            JsonSerializer.Serialize(result.Profile));
+        Assert.Equal(stored.Id,
+            Assert.Single(roundTrip!.Underlying.BiologicalGenes!, x =>
+                x.Identity.MechanicalDefinitionId == "trait.fey-ancestry").Id);
     }
 
     [Fact]
