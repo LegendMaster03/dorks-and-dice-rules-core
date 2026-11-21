@@ -134,9 +134,18 @@ public sealed class NativeConstructOriginProjectionTests
                  {"id":"construct-power-source.finite","kind":"construct-power-source",
                   "name":"Finite generator","constructionCost":1,"powerOutput":4,
                   "compatibleComponentCapabilities":["power-housing"],
+                  "resourceModel":"finite",
                   "resourceKind":"fuel-unit","resourceCapacity":5,
                   "resourceUsePerStep":2,
-                  "resourceTransferOut":true,"resourceTransferIn":true},
+                  "resourceTransferOut":true,"resourceTransferIn":true,
+                  "replenishment":{"method":"external-fuel-transfer","unitsPerEvent":3}},
+                 {"id":"construct-power-source.unmetered",
+                  "kind":"construct-power-source","name":"Unmetered Generator",
+                  "constructionCost":1,"powerOutput":4,
+                  "compatibleComponentCapabilities":["power-housing"],
+                  "resourceModel":"unmetered",
+                  "dailySustenance":{"resourceKind":"mechanical-fuel-charge",
+                    "unitsPerDay":1}},
                  {"id":"construct-power-source.trait-generator",
                   "kind":"construct-power-source","name":"Trait generator",
                   "constructionCost":1,"powerOutput":4,
@@ -1111,6 +1120,104 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Equal(0, step.Evaluation.Assembly.PowerNetworks!.Single().AvailableOutput);
         Assert.Equal(0, Assert.Single(step.Sources).Consumed);
         Assert.Equal(5, Assert.Single(step.Sources).After);
+    }
+
+    private sealed class FixtureRechargeAuthority(bool approved = true) :
+        INativeConstructReplenishmentAuthority
+    {
+        public bool AuthorizeReplenishment(string instanceId, string powerSourceId,
+            string resourceKind, string method, int units, long expectedRevision) =>
+            approved && instanceId == "generator" &&
+            powerSourceId == "construct-power-source.finite" &&
+            resourceKind == "fuel-unit" && method == "external-fuel-transfer" &&
+            units is >= 1 and <= 3;
+    }
+
+    [Fact]
+    public void UnmeteredSourceUsesNoInventedPerStepFuelOrStorage()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.unmetered"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var snapshot = session.PreviewResourceStep(new Dictionary<string, int>());
+        Assert.True(snapshot.CanAdvance);
+        Assert.Empty(snapshot.Sources);
+        Assert.True(snapshot.Evaluation!.Assembly.Components
+            .Single(x => x.InstanceId == "generator").SourceSupplyingPower);
+
+        var opened = session.OpenTrustedResourceLedger(
+            new Dictionary<string, int>());
+        var ledger = Assert.IsType<NativeConstructResourceLedger>(opened.Ledger);
+        Assert.True(ledger.TryCommitStep(0).Committed);
+        Assert.Empty(ledger.Snapshot().Balances);
+
+        var fabricated = session.PreviewResourceStep(
+            new Dictionary<string, int> { ["generator"] = 999 });
+        Assert.False(fabricated.CanAdvance);
+        Assert.Contains(fabricated.Issues,
+            issue => issue.Code == "construct-unmetered-balance-invalid");
+        var fakeRefill = session.PreviewReplenishment(
+            new Dictionary<string, int>(), "generator", "external-fuel-transfer", 2);
+        Assert.False(fakeRefill.CanReplenish);
+    }
+
+    [Fact]
+    public void ReplenishmentUsesAuthoredMethodTrustedAuthorityAndLedgerRevision()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var initial = new Dictionary<string, int> { ["generator"] = 1 };
+
+        Assert.False(session.PreviewResourceStep(initial).CanAdvance);
+        var preview = session.PreviewReplenishment(
+            initial, "generator", "external-fuel-transfer", 2);
+        Assert.True(preview.CanReplenish);
+        var reservoir = Assert.Single(preview.Sources);
+        Assert.Equal(1, reservoir.Before);
+        Assert.Equal(2, reservoir.Delta);
+        Assert.Equal(3, reservoir.After);
+        Assert.True(preview.NextStep!.CanAdvance);
+
+        var invalidMethod = session.PreviewReplenishment(
+            initial, "generator", "fabricated-refill", 2);
+        Assert.False(invalidMethod.CanReplenish);
+        var inflated = session.PreviewReplenishment(
+            initial, "generator", "external-fuel-transfer", 4);
+        Assert.False(inflated.CanReplenish);
+        var overCapacity = session.PreviewReplenishment(
+            new Dictionary<string, int> { ["generator"] = 5 },
+            "generator", "external-fuel-transfer", 1);
+        Assert.False(overCapacity.CanReplenish);
+
+        var ledger = Assert.IsType<NativeConstructResourceLedger>(
+            session.OpenTrustedResourceLedger(initial).Ledger);
+        var denied = ledger.TryCommitReplenishment(0,
+            "generator", "external-fuel-transfer", 2,
+            new FixtureRechargeAuthority(false));
+        Assert.False(denied.Committed);
+        Assert.Equal(0, ledger.Snapshot().Revision);
+        Assert.Equal(1, ledger.Snapshot().Balances["generator"]);
+
+        var credited = ledger.TryCommitReplenishment(0,
+            "generator", "external-fuel-transfer", 2,
+            new FixtureRechargeAuthority());
+        Assert.True(credited.Committed);
+        Assert.Equal("resource-replenishment", credited.Receipt!.Operation);
+        Assert.Equal(3, credited.Snapshot.Balances["generator"]);
+        Assert.Equal(1, credited.Snapshot.Revision);
+        var duplicate = ledger.TryCommitReplenishment(0,
+            "generator", "external-fuel-transfer", 2,
+            new FixtureRechargeAuthority());
+        Assert.False(duplicate.Committed);
+        Assert.Equal(3, ledger.Snapshot().Balances["generator"]);
+
+        var resumed = ledger.TryCommitStep(1);
+        Assert.True(resumed.Committed);
+        Assert.Equal(1, resumed.Snapshot.Balances["generator"]);
     }
 
     [Fact]
