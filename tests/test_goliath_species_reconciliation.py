@@ -72,7 +72,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
                          altitude["ignores"])
         self.assertIn("cold-damage-resistance", altitude["doesNotGrant"])
         self.assertIn("suffocation-immunity", altitude["doesNotGrant"])
-        self.assertFalse((WORKING / "origination/biological/species/base/goliath.json").exists())
+        self.assertFalse((WORKING / "species/base/goliath.json").exists())
 
     def test_powerful_build_and_large_form_are_distinct(self):
         traits = {t["id"]: t for t in self.base["traits"]}
@@ -230,7 +230,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
         self.assertEqual("data/rulesets/first-party-001/native/origination/biological/species/base/goliath.json",
                          row["path"])
         self.assertEqual(1, row["sourceRecords"])
-        self.assertFalse((WORKING / "origination/biological/species/base/goliath.json").exists())
+        self.assertFalse((WORKING / "species/base/goliath.json").exists())
 
 
 if __name__ == "__main__":

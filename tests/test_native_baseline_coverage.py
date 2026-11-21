@@ -213,7 +213,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
 
     def test_class_species_parent_structure(self):
         classes = {p.stem for p in (WORKING / "classes/base").glob("*.json")}
-        species = {p.stem for p in (WORKING / "origination/biological/species/base").glob("*.json")} | {p.stem for p in (AUTHORITATIVE / "origination/biological/species/base").glob("*.json")}
+        species = {p.stem for p in (WORKING / "species/base").glob("*.json")} | {p.stem for p in (AUTHORITATIVE / "origination/biological/species/base").glob("*.json")}
         self.assertEqual(12, len(classes))
         self.assertGreaterEqual(len(species), 10)
         for p in (WORKING / "classes/subclasses").glob("*/*.json"):
@@ -345,7 +345,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
                          [(x["characterLevel"], x["dice"]) for x in breath["damage"]["progression"]])
         self.assertEqual("selected-dragonborn-family-or-leaf", breath["areaFrom"])
         self.assertNotIn("shape", breath)
-        self.assertFalse((WORKING / "origination/biological/species/base/dragonborn.json").exists())
+        self.assertFalse((WORKING / "species/base/dragonborn.json").exists())
         row = next(r for r in self.entries if r["nativeId"] == "species.dragonborn")
         self.assertEqual("approved-native-reconciled", row["status"])
         self.assertEqual("data/rulesets/first-party-001/native/origination/biological/species/base/dragonborn.json",
