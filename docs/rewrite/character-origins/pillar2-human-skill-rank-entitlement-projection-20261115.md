@@ -7,7 +7,7 @@
 
 ## Scope and existing native definition
 
-Native `trait.human.adaptable-learning`, defined by `data/rulesets/first-party-001/native/traits/human/species.human.json`, already supplies two numerical effects:
+Native `trait.human.adaptable-learning`, defined by `data/rulesets/first-party-001/native/origination/biological/traits/human/species.human.json`, already supplies two numerical effects:
 
 - Four additional Skill ranks to allocate at **character level 1**.
 - One additional Skill rank at **every subsequent character level**.
