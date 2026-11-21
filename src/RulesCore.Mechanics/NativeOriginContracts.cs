@@ -270,6 +270,16 @@ public sealed record NativeOriginActiveTemporaryTransformation(
     IReadOnlyList<string>? EffectiveFormGrantIds = null,
     NativeOriginDecisionBasis? Authorization = null);
 
+/// <summary>
+/// Explicit player intent for biological transmission. Candidate IDs identify exact
+/// contributor offers rather than freely granting a canonical gene. The plan
+/// does not itself create effective grants or authorize latent inheritance.
+/// A null plan preserves the existing manifestation-only construction contract;
+/// a nonnull plan opts into explicit transmission checks.
+/// </summary>
+public sealed record NativeOriginBiologicalTransmissionPlan(
+    IReadOnlyList<string> CandidateIds);
+
 public sealed record NativeOriginProposal(
     string Id, NativeOriginIntent Intent, NativeOriginMethodReference Method,
     IReadOnlyList<NativeOriginContributor> Contributors,
@@ -292,7 +302,8 @@ public sealed record NativeOriginProposal(
     NativeOriginDecisionBasis? ExistingEffectiveConfigurationBasis = null,
     // Process classification is an eligibility input, not an effective creature-type
     // grant. A custom claim requires a verified process-type table decision.
-    string? ProcessCreatureTypeId = null);
+    string? ProcessCreatureTypeId = null,
+    NativeOriginBiologicalTransmissionPlan? BiologicalTransmission = null);
 
 /// <summary>
 /// Underlying is the latest authoritative Species/Ancestry baseline; Current is
