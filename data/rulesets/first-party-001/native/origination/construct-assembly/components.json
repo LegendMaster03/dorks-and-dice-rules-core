@@ -232,7 +232,10 @@
       "controller"
     ],
     "craftingRecipeId": "crafting-recipe.construct-component.control-module",
-    "powerDemand": 1
+    "powerDemand": 1,
+    "operationalOriginTraitIds": [
+      "trait.construct.ordinary-communication"
+    ]
   },
   {
     "id": "construct-component.mechanical-transmission",
@@ -293,7 +296,10 @@
     ],
     "craftingRecipeId": "crafting-recipe.construct-component.locomotion-unit",
     "powerDemand": 1,
-    "sharesLoadSupport": true
+    "sharesLoadSupport": true,
+    "operationalOriginTraitIds": [
+      "trait.construct.ordinary-ground-movement"
+    ]
   },
   {
     "id": "construct-component.protective-plating",
