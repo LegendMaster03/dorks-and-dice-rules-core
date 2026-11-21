@@ -284,7 +284,7 @@
     "kind": "construct-component",
     "name": "Locomotion unit",
     "description": "Generic ground locomotion support adaptable to different arrangements; it does not itself grant a speed. A provisional maximum gross supported load applies only while this unit is operational; multiple units share support only when the joint configuration is compatible.",
-    "rulesStatus": "candidate physical load-support and power demand; actual speed and load penalties unresolved",
+    "rulesStatus": "candidate walking speed tiers and gross-load capacity; unapproved balance parameters",
     "provides": [
       "locomotion-interface"
     ],
@@ -294,7 +294,14 @@
     "craftingRecipeId": "crafting-recipe.construct-component.locomotion-unit",
     "powerDemand": 1,
     "maximumGrossLoadPounds": 300,
-    "sharesLoadSupport": true
+    "sharesLoadSupport": true,
+    "movementLoadProfile": {
+      "mode": "walk",
+      "normalSpeedFeet": 30,
+      "loadedSpeedFeet": 15,
+      "loadedAtPercent": 75,
+      "overloadedSpeedFeet": 0
+    }
   },
   {
     "id": "construct-component.protective-plating",
