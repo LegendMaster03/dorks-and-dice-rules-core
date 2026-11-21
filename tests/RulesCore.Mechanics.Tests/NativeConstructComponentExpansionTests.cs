@@ -256,4 +256,58 @@ public sealed class NativeConstructComponentExpansionTests
             issue.Code is "crafting-quote-recipe-unresolved" or
                 "construct-power-demand-unresolved");
     }
+    [Fact]
+    public void SixFirstPartyPowerSourcesHaveDistinctOperatingModels()
+    {
+        var catalog = Catalog();
+        var sources = new[]
+        {
+            ("artificial-life-core", "unmetered", "", 0, 0),
+            ("solar-crystal", "finite", "sunlight-exposure", 8, 1),
+            ("soul-gem", "finite", "soul-energy-binding", 6, 1),
+            ("infernal-engine", "finite", "infernal-fuel-offering", 8, 2),
+            ("arcane-consuming-core", "finite", "arcane-energy-transfer", 6, 1),
+            ("mechanical-engine", "unmetered", "", 0, 0)
+        };
+        foreach (var (slug, model, method, capacity, usage) in sources)
+        {
+            Assert.True(catalog.TryGetById(
+                "construct-power-source." + slug, out var source), slug);
+            Assert.Equal("construct-power-source", source!.Category);
+            var authored = source.Definition;
+            Assert.True(authored.GetProperty("powerOutput").GetInt32() > 0);
+            Assert.Equal(model, authored.GetProperty("resourceModel").GetString());
+
+            if (model == "finite")
+            {
+                Assert.NotEmpty(authored.GetProperty("resourceKind").GetString()!);
+                Assert.Equal(capacity, authored.GetProperty("resourceCapacity").GetInt32());
+                Assert.Equal(usage, authored.GetProperty("resourceUsePerStep").GetInt32());
+                var recharge = authored.GetProperty("replenishment");
+                Assert.Equal(method, recharge.GetProperty("method").GetString());
+                Assert.InRange(recharge.GetProperty("unitsPerEvent").GetInt32(),
+                    1, capacity);
+            }
+            else
+            {
+                Assert.False(authored.TryGetProperty("resourceKind", out _));
+                Assert.False(authored.TryGetProperty("resourceCapacity", out _));
+                Assert.False(authored.TryGetProperty("resourceUsePerStep", out _));
+                Assert.False(authored.TryGetProperty("replenishment", out _));
+            }
+
+            var recipeId = authored.GetProperty("craftingRecipeId").GetString()!;
+            Assert.True(catalog.TryGetById(recipeId, out var recipe));
+            Assert.Equal(source.Id,
+                recipe!.Definition.GetProperty("producesDefinitionId").GetString());
+        }
+        var mechanical = catalog.Search(category: "construct-power-source",
+            limit: 100).Items.Single(x =>
+                x.Id == "construct-power-source.mechanical-engine").Definition;
+        var sustenance = mechanical.GetProperty("dailySustenance");
+        Assert.Equal("mechanical-engine-fuel-charge",
+            sustenance.GetProperty("resourceKind").GetString());
+        Assert.Equal(1, sustenance.GetProperty("unitsPerDay").GetInt32());
+    }
+
 }
