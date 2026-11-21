@@ -709,6 +709,66 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 unknownDemand, unknownOutput);
         }).OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
 
+        // Physical mass and protective surfaces remain visible even when
+        // their components are powered down. Only verified operating
+        // locomotion providers contribute usable load support.
+        var loadSupports = new List<NativePhysicalLoadSupport>();
+        var surfaces = new List<NativePhysicalSurface>();
+        foreach (var part in parts.Values.OrderBy(x => x.Instance.InstanceId,
+            StringComparer.Ordinal))
+        {
+            if (!catalog.TryGetById(part.Instance.DefinitionId, out var source) ||
+                source is null) continue;
+            var definition = source.Definition;
+            var instanceId = part.Instance.InstanceId;
+            if (part.Provides.Contains("locomotion-interface", StringComparer.Ordinal))
+            {
+                var capacity = Number(definition, "maximumGrossLoadPounds",
+                    "components." + instanceId, Issue);
+                var shares = definition.TryGetProperty("sharesLoadSupport", out var sharing) &&
+                    sharing.ValueKind == JsonValueKind.True;
+                if (definition.TryGetProperty("sharesLoadSupport", out sharing) &&
+                    sharing.ValueKind is not (JsonValueKind.True or JsonValueKind.False))
+                    Issue("construct-load-sharing-invalid", "components." + instanceId,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Physical load-support sharing must be an authored boolean.");
+                loadSupports.Add(new(instanceId, capacity,
+                    activeIds.Contains(instanceId), shares));
+            }
+            var role = part.Provides.Contains("protective-surface", StringComparer.Ordinal)
+                ? "protective-surface"
+                : part.Provides.Contains("enclosure", StringComparer.Ordinal)
+                    ? "enclosure" : null;
+            if (role is null || part.Instance.Materials is null) continue;
+            foreach (var slot in part.Instance.Materials.OrderBy(x => x.Key,
+                StringComparer.Ordinal))
+            {
+                if (!catalog.TryGetById(slot.Value, out var material) ||
+                    material?.Category != "construct-material") continue;
+                var profile = material.Definition.TryGetProperty("physicalProfile",
+                    out var rawProfile) && rawProfile.ValueKind == JsonValueKind.Object
+                    ? rawProfile : default;
+                surfaces.Add(new(instanceId, source.Id, slot.Key, material.Id, role,
+                    profile.ValueKind == JsonValueKind.Object
+                        ? Text(profile, "rigidity") : null,
+                    profile.ValueKind == JsonValueKind.Object
+                        ? Text(profile, "combustibility") : null,
+                    activeIds.Contains(instanceId)));
+            }
+        }
+        // Support capacity is a property of the active hardware; a separate
+        // island cannot silently carry the mass of another island. This
+        // assessment remains read-only and never prohibits installation.
+        NativePhysicalLoadAssessment? physicalLoad = null;
+        if (retainedMaterialMass is long mass)
+        {
+            physicalLoad = networks.Count == 1
+                ? NativePhysicalLoadEvaluator.Evaluate(mass, bodyMassComplete: false,
+                    carriedPayloadMassPounds: null, loadSupports)
+                : new NativePhysicalLoadAssessment("unresolved", mass, null, null,
+                    null, false, "connected-body-load-sharing-unresolved");
+        }
+
         var status = issues.Any(x => x.Severity == NativeOriginIssueSeverity.Invalid)
             ? NativeOriginConstructionStatus.Invalid
             : issues.Any(x => x.Severity == NativeOriginIssueSeverity.Conflict)
@@ -723,7 +783,9 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             RequiredConstructionResources = requiredIngredients,
             DerivedCreatureSize = derivedSize?.Size,
             KnownRetainedMaterialMassPounds = retainedMaterialMass,
-            UnresolvedRetainedMassMaterials = missingMassMaterials
+            UnresolvedRetainedMassMaterials = missingMassMaterials,
+            PhysicalLoad = physicalLoad,
+            PhysicalSurfaces = surfaces.ToArray()
         };
     }
 
@@ -927,5 +989,10 @@ public sealed record NativeConstructAssemblyResult(
     // and component masses must be reconciled before computing encumbrance.
     public long? KnownRetainedMaterialMassPounds { get; init; }
     public IReadOnlyList<string>? UnresolvedRetainedMassMaterials { get; init; }
+    // Neither the load assessment nor the material surfaces grant a speed,
+    // AC, resistance or damage reduction. They retain source-aware evidence
+    // needed to apply those universal rules after balance authoring.
+    public NativePhysicalLoadAssessment? PhysicalLoad { get; init; }
+    public IReadOnlyList<NativePhysicalSurface> PhysicalSurfaces { get; init; } = [];
     public bool IsAuthorized => Status == NativeOriginConstructionStatus.Authorized;
 }
