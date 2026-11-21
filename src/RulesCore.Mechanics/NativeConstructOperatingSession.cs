@@ -577,20 +577,20 @@ public sealed class NativeConstructOperatingSession
     }
 
     /// <summary>
-    /// Preview infernal generation using authenticated long-rest sustenance
-    /// and any separately expended Overdrive fuel. Without long-rest fuel,
-    /// the engine still generates normal power; the host must adjudicate its
-    /// instability or overheating penalty before advancing gameplay.
-    /// This preview cannot spend either kind of fuel or specify Overdrive time.
+    /// Preview Infernal Engine output and a host-authenticated empowerment
+    /// condition. Fuel for ordinary sustenance is paid at a long rest;
+    /// separate fuel activates empowerment until the next long rest.
+    /// The empowerment has no approved gameplay effect yet, and never
+    /// increases the generator's general 8-unit output.
     /// </summary>
     public NativeConstructInfernalOperationPreview PreviewInfernalOperation(
         IReadOnlyDictionary<string, bool> longRestFuelProvided,
-        IReadOnlyDictionary<string, bool>? additionalOverdriveFuelProvided = null,
+        IReadOnlyDictionary<string, bool>? dmVerifiedEmpowermentActive = null,
         IReadOnlyDictionary<string, bool>? requestedEnabled = null,
         IReadOnlyDictionary<string, string>? requestedModes = null)
     {
         ArgumentNullException.ThrowIfNull(longRestFuelProvided);
-        additionalOverdriveFuelProvided ??=
+        dmVerifiedEmpowermentActive ??=
             new Dictionary<string, bool>(StringComparer.Ordinal);
         var issues = new List<NativeOriginContractIssue>();
         var installed = _baseline.Components.Where(x =>
@@ -602,11 +602,11 @@ public sealed class NativeConstructOperatingSession
             issues.Add(new("construct-infernal-source-absent", "infernal",
                 NativeOriginIssueSeverity.Incomplete,
                 "Infernal operation requires an installed native Infernal Engine."));
-        if (longRestFuelProvided.Keys.Concat(additionalOverdriveFuelProvided.Keys)
+        if (longRestFuelProvided.Keys.Concat(dmVerifiedEmpowermentActive.Keys)
             .Any(id => !ids.Contains(id)))
             issues.Add(new("construct-infernal-instance-invalid", "infernal",
                 NativeOriginIssueSeverity.Invalid,
-                "Fuel decisions must reference installed Infernal Engines."));
+                "Infernal state must reference installed native engines."));
 
         var outputs = new Dictionary<string, int>(StringComparer.Ordinal);
         var sourceStates = new List<NativeConstructInfernalSourceState>();
@@ -630,26 +630,28 @@ public sealed class NativeConstructOperatingSession
             }
             var raw = native.Definition;
             var normal = 0;
-            var maximum = 0;
             if (!raw.TryGetProperty("powerOutput", out var outputValue) ||
                 outputValue.ValueKind != JsonValueKind.Number ||
-                !outputValue.TryGetInt32(out normal) ||
-                !raw.TryGetProperty("overdrivePowerOutput", out var boostedValue) ||
-                boostedValue.ValueKind != JsonValueKind.Number ||
-                !boostedValue.TryGetInt32(out maximum) ||
-                normal <= 0 || maximum != normal + (long)normal / 2)
+                !outputValue.TryGetInt32(out normal) || normal <= 0 ||
+                !raw.TryGetProperty("infernalEmpowerment", out var enhancement) ||
+                enhancement.ValueKind != JsonValueKind.Object ||
+                !enhancement.TryGetProperty("duration", out var duration) ||
+                duration.ValueKind != JsonValueKind.String ||
+                duration.GetString() != "until-next-long-rest" ||
+                !enhancement.TryGetProperty("powerOutputBonus", out var bonus) ||
+                bonus.ValueKind != JsonValueKind.Number ||
+                !bonus.TryGetInt32(out var powerBonus) || powerBonus != 0)
             {
-                issues.Add(new("construct-infernal-output-unresolved", path,
+                issues.Add(new("construct-infernal-model-unresolved", path,
                     NativeOriginIssueSeverity.Unresolved,
-                    "Infernal native output must support the shared 50% Overdrive."));
+                    "Infernal Empowerment must be authored without a power-output increase."));
                 continue;
             }
-            var fuelForOverdrive = additionalOverdriveFuelProvided
-                .TryGetValue(part.InstanceId, out var spent) && spent;
-            var output = fuelForOverdrive ? maximum : normal;
-            outputs[part.InstanceId] = output;
-            sourceStates.Add(new(part.InstanceId, fed, fuelForOverdrive,
-                !fed, output));
+            var empowered = dmVerifiedEmpowermentActive.TryGetValue(
+                part.InstanceId, out var active) && active;
+            outputs[part.InstanceId] = normal;
+            sourceStates.Add(new(part.InstanceId, fed, empowered,
+                !fed, normal));
         }
         if (issues.Count > 0)
             return new(null, [], issues);
