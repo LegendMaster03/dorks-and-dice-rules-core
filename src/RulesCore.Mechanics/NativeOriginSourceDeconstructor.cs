@@ -171,7 +171,7 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                 {
                     if (grant?.Identity is null ||
                         (genes.Count > 0 && grant.Synergy is not null) ||
-                        genes.Any(gene => gene is not null &&
+                        genes.Any(gene => gene?.Identity is not null &&
                             gene.Identity.Kind == grant.Identity.Kind &&
                             gene.Identity.MechanicalDefinitionId ==
                                 grant.Identity.MechanicalDefinitionId &&
