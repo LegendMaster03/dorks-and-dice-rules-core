@@ -1,11 +1,13 @@
 {
   "name": "Repair assembly",
   "description": "Equipment for servicing or repairing a Construct, possibly including its own parts. Repair resources, timing, target restrictions, and restored hit points require authored rules.",
-  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "rulesStatus": "provisional first-party playable construction candidate; advanced effect binding and balance still required",
   "provides": [
     "repair-interface"
   ],
   "materialSlots": [
     "repair-tool"
-  ]
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.repair-assembly",
+  "powerDemand": 1
 }

@@ -1,11 +1,13 @@
 {
   "name": "Operator station",
   "description": "Dedicated input and feedback hardware for an occupant or remote operator. Requires an authored link and command procedure to control other components; no extra actions, control privileges, or autonomous mind.",
-  "rulesStatus": "candidate physical component; recipe, power demand, capacity, and effective mechanics unresolved",
+  "rulesStatus": "provisional first-party playable construction candidate; advanced effect binding and balance still required",
   "provides": [
     "operator-station-interface"
   ],
   "materialSlots": [
     "console"
-  ]
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.operator-station",
+  "powerDemand": 1
 }

@@ -1,11 +1,13 @@
 {
   "name": "Restraint mechanism",
   "description": "Mechanism for holding or securing a target using clamps, bindings, or equivalent means. Does not itself grant a Grappled or Restrained condition, reach, attack, or saving throw DC.",
-  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "rulesStatus": "provisional first-party playable construction candidate; advanced effect binding and balance still required",
   "provides": [
     "restraint-interface"
   ],
   "materialSlots": [
     "restraint"
-  ]
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.restraint-mechanism",
+  "powerDemand": 1
 }
