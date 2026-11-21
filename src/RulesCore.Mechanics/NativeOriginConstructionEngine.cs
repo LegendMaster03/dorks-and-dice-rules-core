@@ -794,8 +794,8 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         NativeOriginAllocationAssessment? creationAllocation = null;
         var isInitialBiologicalCreation = !reconstructionTarget &&
             proposal.ExistingConfiguration is null &&
-            proposal.Intent is NativeOriginIntent.Direct or NativeOriginIntent.Mixed or
-                NativeOriginIntent.Custom &&
+            (proposal.Intent is NativeOriginIntent.Direct or NativeOriginIntent.Mixed or
+                NativeOriginIntent.Custom) &&
             proposal.Method.RuleId == "rule.creature-origination" &&
             proposal.Method.MethodId == "biological";
         if (isInitialBiologicalCreation &&
