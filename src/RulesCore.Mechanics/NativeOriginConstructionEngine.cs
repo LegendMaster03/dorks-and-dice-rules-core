@@ -13,6 +13,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
     private readonly NativeOriginSourceDeconstructor _deconstructor = new(catalog);
     private readonly NativeOriginNativeLinkedSelectionEvaluator _nativeLinks = new(catalog);
     private readonly NativeOriginBiologicalTransmissionEvaluator _biological = new(catalog);
+    private readonly NativeOriginBiologicalInheritanceEvaluator _inheritance = new(catalog);
     private readonly NativeOriginReconciler _reconciler = new(catalog);
     private readonly NativeOriginConstraintEvaluator _constraints = new(catalog);
     private readonly NativeOriginSynergyEvaluator _synergies = new(catalog);
@@ -84,6 +85,21 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             .GroupBy(x => x.CandidateId, StringComparer.Ordinal)
             .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
         issues.AddRange(nativeLinkIssues);
+        // Only trusted snapshots can supply a carried, previously unexpressed
+        // gene. An older direct profile still exposes its effective grants.
+        var parentGeneOffers = trustedProposal.Contributors
+            .Where(x => x is not null && verifiedManifested.Contains(x.Id) &&
+                x.ManifestedProfile?.BiologicalGenes is not null)
+            .SelectMany(x => x.ManifestedProfile!.BiologicalGenes!.Select(gene => new
+            {
+                CandidateId = "nested:" + x.Id + ":gene:" + gene.Id,
+                ProfileId = x.Source.Id,
+                ProfileRevision = x.Source.Version!,
+                ContributorId = x.Id,
+                Gene = gene
+            }))
+            .GroupBy(x => x.CandidateId, StringComparer.Ordinal)
+            .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
         var candidates = discovered.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var manifests = (discovered.Manifestations ?? []).ToList();
         var selected = new HashSet<string>(manifests.Select(x => x.CandidateId),
@@ -167,11 +183,18 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 Verified("source", candidate.Identity.Occurrence.Source.Id);
             return d is not null &&
                 JsonString(d.EffectiveOutcome, "eligibility") == "eligible" &&
-                selected.Contains(candidate.Id)
+                (selected.Contains(candidate.Id) ||
+                 proposal.BiologicalTransmission?.CandidateIds?.Contains(candidate.Id,
+                     StringComparer.Ordinal) == true)
                 ? candidate with { SelectionBasis = new(NativeOriginEligibility.DmAuthorized,
                     TableDecisionId: d.Id) } : candidate;
         }).ToArray() };
         candidates = proposal.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
+        // Transmission is a distinct player decision from manifestation.
+        // Validate against catalog-discovered, table-authenticated candidate
+        // eligibility; a proposal never self-authorizes heredity.
+        var transmission = NativeOriginBiologicalTransmissionValidator.Review(proposal, Verified);
+        issues.AddRange(transmission.Issues);
         var structural = _validator.ReviewProposal(proposal);
         issues.AddRange(structural.Issues.Where(x => !UnselectedOfferIssue(x, selected)));
         var nativeMethod = _validator.FindMethod(proposal.Method);
@@ -328,6 +351,20 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 continue;
             }
             if (!candidates.TryGetValue(manifest.CandidateId, out var candidate)) continue;
+            // When explicit transmission was requested, a manifestation
+            // cannot grant a gene that was never selected from the donor pool.
+            // A null plan continues to use the existing legacy selections.
+            if (transmission.Explicit &&
+                proposal.Intent == NativeOriginIntent.Mixed &&
+                proposal.Method.MethodId == "biological" &&
+                proposal.Method.RuleId == "rule.creature-origination" &&
+                !transmission.CandidateIds.Contains(candidate.Id))
+            {
+                Add("biological-expression-without-transmission", manifest.CandidateId,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "An expressed biological characteristic must first be selected for transmission.");
+                continue;
+            }
             var source = candidate.Identity.Occurrence.Source;
             var nativeSource = source.Kind == NativeOriginSourceKind.Native &&
                 catalog.TryGetById(source.Id, out var native) && native is not null;
@@ -498,6 +535,17 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             var grant = new NativeOriginEffectiveGrant("grant:" + manifest.Id, manifest.Id,
                 candidate.Identity, [candidate.Id], value,
                 manifest.SelectedParameters ?? candidate.OfferedParameters, choices, basis);
+            if (parentGeneOffers.TryGetValue(candidate.Id, out var previousGene))
+            {
+                // The inherited instance may have been latent in its parent.
+                // Previously configured finite choices travel unchanged.
+                grant = grant with
+                {
+                    ResolvedChoices = previousGene.Gene.ResolvedChoices,
+                    ParameterSources = previousGene.Gene.Parameters?.Keys.ToDictionary(
+                        key => key, _ => candidate.Id, StringComparer.Ordinal)
+                };
+            }
             if (inheritedOffers.TryGetValue(candidate.Id, out var prior))
             {
                 // The original choices and configured mechanics are inherited as
@@ -622,6 +670,15 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             verifiedDmDecisionIds.Add(grant.Authorization!.TableDecisionId!);
         }
         resolved = resolved.Concat(derived).ToArray();
+        var (inheritedGenes, geneIssues, _, _) = _inheritance.Evaluate(
+            proposal, transmission, resolved, verifiedManifested,
+            request.TrustedScope is null ? null : authority, Verified);
+        issues.AddRange(geneIssues);
+        if (Verified("biological-inheritance", proposal.Id) is { } capacityDecision)
+        {
+            usedDm = true;
+            verifiedDmDecisionIds.Add(capacityDecision.Id);
+        }
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
         // selected, reconciled value in each universal physical foundation slot
@@ -677,7 +734,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         var profileId = "origin:" + proposal.Id;
         var underlying = proposal.ExistingConfiguration ??
             new NativeOriginCurrentConfiguration(configuredSpecies, configuredAncestry,
-                resolved, profileId);
+                resolved, profileId, transmission.Explicit ? inheritedGenes : null);
         var current = proposal.ExistingEffectiveConfiguration ?? underlying;
         var history = (proposal.History ?? []).ToList();
         var addedConstructionEvent = !history.Any(x => x.Id == "construction:" + proposal.Id);
@@ -726,16 +783,124 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             verifiedTableSynergies);
         issues.AddRange(profileReview.Issues.Where(x =>
             x.Code is not ("profile-outcome-unresolved" or "profile-outcome-conflict")));
+
+        // Initial creation may be subject to a host-configured allocation
+        // policy. This is deliberately separate from transmission capacities:
+        // genotype records are free, but their expressed effective grants are
+        // priced with the same complete-grant ledger as conventional presets.
+        // A missing or partial required price schedule cannot be treated as a
+        // zero-cost allowance. Existing baselines and post-origination changes
+        // do not retroactively consume a creation budget.
+        NativeOriginAllocationAssessment? creationAllocation = null;
+        var isInitialBiologicalCreation = !reconstructionTarget &&
+            proposal.ExistingConfiguration is null &&
+            (proposal.Intent is NativeOriginIntent.Direct or NativeOriginIntent.Mixed or
+                NativeOriginIntent.Custom) &&
+            proposal.Method.RuleId == "rule.creature-origination" &&
+            proposal.Method.MethodId == "biological";
+        if (isInitialBiologicalCreation &&
+            (request.RequireCreationAllocation ||
+             request.CreationAllocationPolicy is not null))
+        {
+            var allocationRuling = Verified("creation-allocation", proposal.Id);
+            var effectivePolicy = request.CreationAllocationPolicy;
+            var waived = false;
+            if (allocationRuling is not null)
+            {
+                var outcome = allocationRuling.EffectiveOutcome;
+                if (ReadBool(outcome, "waive") == true)
+                    waived = true;
+                else if (outcome.ValueKind == JsonValueKind.Object &&
+                    outcome.TryGetProperty("allowance", out var allowance) &&
+                    allowance.ValueKind == JsonValueKind.Number &&
+                    allowance.TryGetInt32(out var revisedAllowance) &&
+                    revisedAllowance >= 0 && effectivePolicy is not null)
+                    effectivePolicy = effectivePolicy with
+                    {
+                        Allowance = revisedAllowance
+                    };
+                else
+                    Add("creation-allocation-ruling-invalid", "creationAllocation",
+                        NativeOriginIssueSeverity.Invalid,
+                        "An authorized creation allocation ruling needs waive=true or a nonnegative allowance for a configured policy.");
+                usedDm = true;
+                verifiedDmDecisionIds.Add(allocationRuling.Id);
+            }
+            if (waived)
+            {
+                creationAllocation = new NativeOriginAllocationAssessment(
+                    "dm-waived", effectivePolicy?.Revision,
+                    effectivePolicy?.Allowance, null, [], [], [], PreviewOnly: false);
+            }
+            else
+            {
+                // Check construction independently of the budget: the shared
+                // assessor must not report that an incomplete Origin is valid
+                // merely because the present subset is inexpensive.
+                var beforeAllocation = new NativeOriginConstructionResult(
+                    Status(), proposal, profile, issues);
+                creationAllocation = NativeOriginAllocationPreview.AssessCreation(
+                    catalog, beforeAllocation, effectivePolicy);
+                switch (creationAllocation.Status)
+                {
+                    case "within-allowance":
+                        break;
+                    case "over-allowance":
+                        Add("creation-allocation-exceeded", "creationAllocation",
+                            NativeOriginIssueSeverity.Conflict,
+                            "The complete expressed Origin exceeds the configured creation budget.");
+                        break;
+                    case "invalid-policy":
+                        Add("creation-allocation-policy-invalid", "creationAllocation",
+                            NativeOriginIssueSeverity.Invalid,
+                            "The host-provided creation allocation price schedule is malformed.");
+                        break;
+                    case "not-configured":
+                        Add("creation-allocation-unconfigured", "creationAllocation",
+                            NativeOriginIssueSeverity.Unresolved,
+                            "Initial biological creation requires an approved complete budget and price schedule.");
+                        break;
+                    default:
+                        Add("creation-allocation-unresolved", "creationAllocation",
+                            NativeOriginIssueSeverity.Unresolved,
+                            "The complete expressed Origin could not be valued using the configured creation policy.");
+                        break;
+                }
+            }
+        }
+
         var status = Status();
+        // The profile is a nonplayable preview if the creation budget fails,
+        // even when all individual traits were otherwise authenticated.
+        if (status != preliminary || usedDm)
+            profile = profile with
+            {
+                Adjudication = status == NativeOriginConstructionStatus.Authorized
+                    ? new NativeOriginDecisionBasis(
+                        usedDm ? NativeOriginAdjudication.DmAuthorized :
+                            NativeOriginAdjudication.Supported,
+                        usedDm ? null : proposal.Method.RuleId,
+                        usedDm ? verifiedDmDecisionIds.FirstOrDefault() : null)
+                    : new NativeOriginDecisionBasis(
+                        status == NativeOriginConstructionStatus.Conflicting
+                            ? NativeOriginAdjudication.Conflict :
+                                NativeOriginAdjudication.Unresolved)
+            };
         // An evaluation preview must not claim an Origin event already happened.
         // Only an authorized result promotes this evaluation's event to completed.
         if (addedConstructionEvent && status == NativeOriginConstructionStatus.Authorized)
             profile = profile with { History = history.Select(x =>
                 x.Id == "construction:" + proposal.Id
                     ? x with { Stage = NativeOriginEventStage.Completed } : x).ToArray() };
-        return new(status, proposal, status == NativeOriginConstructionStatus.Invalid ? null : profile,
+        var outcome = new NativeOriginConstructionResult(status, proposal,
+            status == NativeOriginConstructionStatus.Invalid ? null : profile,
             issues.OrderBy(x => x.Path, StringComparer.Ordinal)
                 .ThenBy(x => x.Code, StringComparer.Ordinal).Distinct().ToArray());
+        return outcome with
+        {
+            BiologicalCombination = NativeOriginBiologicalCombinationProjector.Build(outcome),
+            CreationAllocation = creationAllocation
+        };
 
         void Add(string code, string path, NativeOriginIssueSeverity severity, string detail) =>
             issues.Add(new(code, path, severity, detail));

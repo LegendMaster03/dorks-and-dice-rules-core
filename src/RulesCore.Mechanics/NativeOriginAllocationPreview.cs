@@ -4,14 +4,24 @@ using RulesCore.Content;
 namespace RulesCore.Mechanics;
 
 /// <summary>
-/// A hypothetical, read-only allocation policy. It is never part of the
-/// authorization pipeline: passing a policy here neither creates a grant nor
-/// establishes table authority. Its revision must identify an explicit design
-/// candidate, not the ruleset's implicit default.
+/// A complete allocation price schedule. Preview assessments are always
+/// non-authoritative; the construction engine can separately enforce a
+/// host-supplied schedule during initial character creation. A policy does
+/// not grant traits or establish table authority. No numerical default
+/// is implied while calibration remains incomplete.
 /// </summary>
 public sealed record NativeOriginAllocationPolicy(
     string Revision, string RuleId, string MethodId, int Allowance,
-    IReadOnlyList<NativeOriginAllocationPrice> Prices);
+    IReadOnlyList<NativeOriginAllocationPrice> Prices,
+    IReadOnlyList<NativeOriginAllocationInteractionPrice>? InteractionPrices = null);
+
+/// <summary>
+/// An additional cost for a specific coexisting set of effective mechanics.
+/// Interaction costs do not replace ordinary grant charges and can span
+/// different contributors; they apply only when every required key is active.
+/// </summary>
+public sealed record NativeOriginAllocationInteractionPrice(
+    string Id, int Load, IReadOnlyList<string> RequiredKeys);
 
 /// <summary>
 /// Prices a complete characteristic or one inseparable group. MemberKeys use
@@ -32,9 +42,10 @@ public sealed record NativeOriginAllocationCharge(
     IReadOnlyList<string> CharacteristicKeys);
 
 /// <summary>
-/// An allocation assessment never changes the status of its Origin. Even a
-/// within-allowance result is an experimental comparison, not a mechanical
-/// authorization, a power score, or an approved construction budget.
+/// A public preview never changes Origin authorization. The creation gate
+/// reuses the same ledger, marks PreviewOnly=false and explicitly incorporates
+/// the result in construction Status. A passed budget never authorizes an
+/// otherwise unsupported grant or certifies the price schedule as balanced.
 /// </summary>
 public sealed record NativeOriginAllocationAssessment(
     string Status, string? PolicyRevision, int? Allowance, int? CommittedLoad,
@@ -47,7 +58,23 @@ public static class NativeOriginAllocationPreview
 {
     public static NativeOriginAllocationAssessment Assess(
         NativeCatalogSnapshot catalog, NativeOriginConstructionResult result,
-        NativeOriginAllocationPolicy? policy = null)
+        NativeOriginAllocationPolicy? policy = null) =>
+        AssessCore(catalog, result, policy, creationScope: false);
+
+    /// <summary>
+    /// The creation gate uses the same price ledger as the read-only preview.
+    /// Direct Species presets and mixed/custom biological Origins are assessed
+    /// under one policy; a latent gene has no effective grant to charge.
+    /// Call only from the construction engine after all normal grant validation.
+    /// </summary>
+    internal static NativeOriginAllocationAssessment AssessCreation(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult result,
+        NativeOriginAllocationPolicy? policy) =>
+        AssessCore(catalog, result, policy, creationScope: true);
+
+    private static NativeOriginAllocationAssessment AssessCore(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult result,
+        NativeOriginAllocationPolicy? policy, bool creationScope)
     {
         ArgumentNullException.ThrowIfNull(catalog);
         ArgumentNullException.ThrowIfNull(result);
@@ -59,7 +86,12 @@ public static class NativeOriginAllocationPreview
                     StringComparer.Ordinal).ToArray(), Unlock(catalog, x)))
             .ToArray();
         var issues = new List<string>();
-        if (result.EvaluatedProposal.Intent != NativeOriginIntent.Mixed ||
+        var applicableIntent = creationScope
+            ? result.EvaluatedProposal.Intent is
+                (NativeOriginIntent.Direct or NativeOriginIntent.Mixed or
+                    NativeOriginIntent.Custom)
+            : result.EvaluatedProposal.Intent == NativeOriginIntent.Mixed;
+        if (!applicableIntent ||
             result.EvaluatedProposal.Method is null ||
             result.EvaluatedProposal.Method.RuleId != "rule.creature-origination" ||
             result.EvaluatedProposal.Method.MethodId != "biological")
@@ -67,7 +99,8 @@ public static class NativeOriginAllocationPreview
 
         if (policy is null)
             return Finish("not-configured", null, null, null, [],
-                ["biological-allocation-policy-not-approved"]);
+                [creationScope ? "creation-allocation-policy-not-configured" :
+                    "biological-allocation-policy-not-approved"]);
 
         if (string.IsNullOrWhiteSpace(policy.Revision) ||
             policy.RuleId != result.EvaluatedProposal.Method.RuleId ||
@@ -82,13 +115,25 @@ public static class NativeOriginAllocationPreview
                 policy.Prices.Count ||
             policy.Prices.SelectMany(x => x.MemberKeys)
                 .Distinct(StringComparer.Ordinal).Count() !=
-                policy.Prices.Sum(x => x.MemberKeys.Count))
+                policy.Prices.Sum(x => x.MemberKeys.Count) ||
+            (policy.InteractionPrices ?? []).Any(x => x is null ||
+                string.IsNullOrWhiteSpace(x.Id) || x.Load <= 0 ||
+                x.RequiredKeys is not { Count: >= 2 } ||
+                x.RequiredKeys.Any(string.IsNullOrWhiteSpace) ||
+                x.RequiredKeys.Distinct(StringComparer.Ordinal).Count() !=
+                    x.RequiredKeys.Count) ||
+            (policy.InteractionPrices ?? []).Select(x => x.Id)
+                .Concat(policy.Prices.Select(x => x.Id))
+                .Distinct(StringComparer.Ordinal).Count() !=
+                (policy.InteractionPrices?.Count ?? 0) + policy.Prices.Count ||
+            (policy.InteractionPrices ?? []).SelectMany(x => x.RequiredKeys)
+                .Any(key => !policy.Prices.SelectMany(x => x.MemberKeys)
+                    .Contains(key, StringComparer.Ordinal)))
             return Finish("invalid-policy", policy.Revision, policy.Allowance,
                 null, [], ["allocation-policy-malformed-or-overlapping"]);
 
-        // A configured policy may be tried against an incomplete construction
-        // without declaring that missing grants are free. Such a preview is
-        // explicitly incomplete regardless of the hypothetical cost result.
+        // Incomplete construction cannot become affordable by omitting
+        // unresolved grants. This holds for previews and enforced creation.
         if (result.Status != NativeOriginConstructionStatus.Authorized)
             issues.Add("origin-not-authorized-for-allocation");
         // Explicit cost data does not turn a custom or unrecognized payload
@@ -152,6 +197,24 @@ public static class NativeOriginAllocationPreview
             issues.Add("allocation-load-unpriced:" + component.Key + ":" +
                 component.GrantId);
 
+        // Interaction premiums are additive and explicitly authored. Every
+        // required mechanic must already be present as an effective grant.
+        // The source need not be the same contributor, unlike inseparable
+        // same-lineage bundles. No latent instance triggers an interaction.
+        foreach (var interaction in (policy.InteractionPrices ?? [])
+            .OrderBy(x => x.Id, StringComparer.Ordinal))
+        {
+            var members = interaction.RequiredKeys.Select(key => components
+                .Where(component => component.Key == key).ToArray()).ToArray();
+            if (members.Any(group => group.Length == 0))
+                continue;
+            charges.Add(new(interaction.Id, interaction.Load,
+                members.SelectMany(group => group.Select(x => x.GrantId))
+                    .Distinct(StringComparer.Ordinal)
+                    .OrderBy(x => x, StringComparer.Ordinal).ToArray(),
+                interaction.RequiredKeys));
+        }
+
         var checkedComponents = components.Select(x =>
             x with
             {
@@ -179,7 +242,8 @@ public static class NativeOriginAllocationPreview
             IReadOnlyList<string> errors,
             IReadOnlyList<NativeOriginAllocationComponent>? included = null) =>
             new(status, revision, allowance, total, included ?? components,
-                charges, errors.OrderBy(x => x, StringComparer.Ordinal).ToArray());
+                charges, errors.OrderBy(x => x, StringComparer.Ordinal).ToArray(),
+                PreviewOnly: !creationScope);
     }
 
     private static string Key(NativeOriginEffectiveGrant grant) =>

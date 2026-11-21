@@ -160,6 +160,8 @@
     }
   },
   "biologicalTransmission": {
+    "maxInheritedInstancesPerKind": 2,
+    "maxExpressedInstancesPerKind": 1,
     "heritableIntrinsicSlots": [
       "creatureType",
       "size",
@@ -168,6 +170,6 @@
     "selection": "player-directed",
     "absentTraitEligibility": "unresolved-without-authored-or-verified-table-permission",
     "scope": "Only mixed biological Origination with valid selectable native or authenticated manifested biological contributors. Canonical origin-trait definitions authored under native/origination/biological/genes/ are available as candidate genes, not automatic grants. Actual manifestation, source provenance, authored dependencies, choices, reconciliation, and table authority still apply; nonbiological methods do not inherit these genes by their location.",
-    "note": "Gene classification follows the biological directory rather than a per-trait inheritanceMethods whitelist. This does not establish latent inheritance, independent transmission contrary to authored relationships, final allocation costs, or complete gameplay projection for every gene."
+    "note": "Biological instance capacity applies per canonical gene identity (or heritable intrinsic slot), not as a global latent-gene quota. Latency is derived: an inherited instance that contributes to no effective grant is unexpressed. Neither instance presence nor latency confers a mechanical effect. Gene classification follows the biological directory; this does not establish dominance, recessiveness, final allocation costs, or independent transmission contrary to authored relationships."
   }
 }

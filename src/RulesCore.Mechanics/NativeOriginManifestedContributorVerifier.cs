@@ -59,8 +59,10 @@ internal static class NativeOriginManifestedContributorVerifier
                     (NativeOriginAdjudication.Supported or NativeOriginAdjudication.DmAuthorized) ||
                 record.Profile.Underlying.InherentGrants.Any(grant =>
                     grant is null || grant.Identity is null ||
+                    grant.SourceCandidateIds is null ||
                     grant.Authorization?.Adjudication is not
-                        (NativeOriginAdjudication.Supported or NativeOriginAdjudication.DmAuthorized)))
+                        (NativeOriginAdjudication.Supported or NativeOriginAdjudication.DmAuthorized)) ||
+                !ValidGeneRecords(record.Profile.Underlying.BiologicalGenes))
             {
                 // An invalid trusted lookup must not fall back to a caller-supplied
                 // snapshot. Its absence cannot manufacture any heritable offers.
@@ -80,5 +82,38 @@ internal static class NativeOriginManifestedContributorVerifier
             });
         }
         return (proposal with { Contributors = contributors }, verified, issues);
+    }
+
+    private static bool ValidGeneRecords(
+        IReadOnlyList<NativeOriginBiologicalGeneInstance>? genes)
+    {
+        if (genes is null) return true;
+        var seenIds = new HashSet<string>(StringComparer.Ordinal);
+        var seenCandidates = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var gene in genes)
+        {
+            if (gene is null || string.IsNullOrWhiteSpace(gene.Id) ||
+                string.IsNullOrWhiteSpace(gene.SourceCandidateId) ||
+                !seenIds.Add(gene.Id) ||
+                !seenCandidates.Add(gene.SourceCandidateId) ||
+                gene.Identity?.Occurrence?.Source is null ||
+                string.IsNullOrWhiteSpace(gene.Identity.Occurrence.Source.Id) ||
+                string.IsNullOrWhiteSpace(gene.Identity.Occurrence.OccurrencePath) ||
+                (gene.Identity.Kind switch
+                {
+                    NativeOriginCharacteristicKind.Trait =>
+                        string.IsNullOrWhiteSpace(gene.Identity.MechanicalDefinitionId),
+                    NativeOriginCharacteristicKind.Intrinsic =>
+                        string.IsNullOrWhiteSpace(gene.Identity.IntrinsicSlotId),
+                    _ => true
+                }) ||
+                gene.InheritedFrom is { } parent &&
+                (string.IsNullOrWhiteSpace(parent.ContributorId) ||
+                 string.IsNullOrWhiteSpace(parent.ContributorProfileId) ||
+                 string.IsNullOrWhiteSpace(parent.ContributorRevision) ||
+                 string.IsNullOrWhiteSpace(parent.SourceInstanceId)))
+                return false;
+        }
+        return true;
     }
 }
