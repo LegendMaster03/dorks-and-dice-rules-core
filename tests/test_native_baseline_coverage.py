@@ -331,9 +331,9 @@ class NativeSrdBaselineTests(unittest.TestCase):
         self.assertEqual(30, dragonborn["walkingSpeedFeet"])
         self.assertNotIn("darkvisionFeet", dragonborn)
         traits = {x["id"]: x for x in dragonborn["traits"]}
-        self.assertEqual({"low-light-vision", "draconic-resistance", "breath-weapon"}, set(traits))
+        self.assertEqual({"low-light-vision", "damage-type-resistance", "breath-weapon"}, set(traits))
         self.assertEqual("rule.low-light-vision", traits["low-light-vision"]["rule"])
-        self.assertEqual(50, traits["draconic-resistance"]["damageResistance"]["percent"])
+        self.assertEqual(50, traits["damage-type-resistance"]["damageResistance"]["percent"])
         breath = traits["breath-weapon"]
         self.assertEqual("one-attack", breath["activation"]["replaces"])
         self.assertEqual("proficiency-bonus", breath["uses"]["value"])
@@ -361,7 +361,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
                          chromatic["breathWeaponArea"])
         self.assertEqual(1, len(chromatic["traits"]))
         warding = chromatic["traits"][0]
-        self.assertEqual("chromatic-warding", warding["id"])
+        self.assertEqual("temporary-damage-immunity", warding["id"])
         self.assertEqual(5, warding["requiredCharacterLevel"])
         self.assertEqual("action", warding["activation"]["action"])
         self.assertEqual(1, warding["duration"]["minutes"])
