@@ -1,7 +1,7 @@
 # Homebrew Characteristic Comparison and Valuation Reference
 
 **Status:** Authoring and qualitative comparison rubric. **No approved numerical prices or creation allowance.**  
-**Inspected baseline:** \`9f50ab70a37be69a6748603d210fa9406ba7ea59\`  
+**Inspected baseline:** `9f50ab70a37be69a6748603d210fa9406ba7ea59`  
 **Companion:** [Homebrew Species Conversion Guide](pillar2-homebrew-species-conversion-guide-20261121.md)
 
 ## Purpose and comparison rule
@@ -14,7 +14,7 @@ Three separate decisions are required:
 2. **Configured value:** Does the selected value materially change the strength or functionality of that characteristic? If so, document a separate valuation case even if the canonical definition remains shared.
 3. **Whole-profile interaction:** Does its contribution depend on other effective characteristics, linked source choices, or shared pools? Evaluate the combination, not a sum of isolated labels.
 
-The other Pillar 2 development track is extending configuration-aware pricing. At this baseline, the allocation ledger primarily keys each effective grant by \`intrinsic:<slot>\` or \`trait:<canonical-origin-trait-id>\`; it **does not yet provide a completed, approved configured-value price taxonomy**. Recording that two configurations need different valuations does not make the existing gate enforce them.
+The other Pillar 2 development track is extending configuration-aware pricing. At this baseline, the allocation ledger primarily keys each effective grant by `intrinsic:<slot>` or `trait:<canonical-origin-trait-id>`; it **does not yet provide a completed, approved configured-value price taxonomy**. Recording that two configurations need different valuations does not make the existing gate enforce them.
 
 ## Comparison dimensions
 
@@ -37,7 +37,7 @@ For every category, consider **how often it applies** and **what problem it solv
 
 ## Equivalence, variants, and independent identities
 
-**Exact equivalent:** Same canonical mechanics and same effective configuration. Share the \`origin-trait\` definition and any approved valuation. Different Species sources remain separate provenance, not separate mechanics or automatic duplicate entitlements.
+**Exact equivalent:** Same canonical mechanics and same effective configuration. Share the `origin-trait` definition and any approved valuation. Different Species sources remain separate provenance, not separate mechanics or automatic duplicate entitlements.
 
 **Parameterized equivalent:** Same canonical function with an authored, valid choice (for example a spellcasting ability, damage type, or range). Reuse the canonical mechanic while recording the selected configuration and asking whether its power is materially different. Not every configuration is independently legal or currently selectable.
 
@@ -53,9 +53,9 @@ A proposed reuse record should include the exact old and new effects, differing 
 
 ## How the existing allocation mechanism works
 
-The public \`NativeOriginAllocationPreview.Assess\` is read-only and primarily evaluates mixed biological construction. The construction engine also has an **opt-in host-supplied initial creation gate** for **direct, mixed, and custom biological** Origins under the same biological method. These two entrypoints have different applicability and authority; do not describe the old preview's direct-method exemption as a rule for the enforced gate.
+The public `NativeOriginAllocationPreview.Assess` is read-only and primarily evaluates mixed biological construction. The construction engine also has an **opt-in host-supplied initial creation gate** for **direct, mixed, and custom biological** Origins under the same biological method. These two entrypoints have different applicability and authority; do not describe the old preview's direct-method exemption as a rule for the enforced gate.
 
-A \`NativeOriginAllocationPolicy\` has an explicit revision, rule ID, method ID, allowance, and positive \`NativeOriginAllocationPrice\` entries. It may add positive \`NativeOriginAllocationInteractionPrice\` entries for coexistence of explicitly specified effective mechanics.
+A `NativeOriginAllocationPolicy` has an explicit revision, rule ID, method ID, allowance, and positive `NativeOriginAllocationPrice` entries. It may add positive `NativeOriginAllocationInteractionPrice` entries for coexistence of explicitly specified effective mechanics.
 
 - **One effective grant is priced once**, even if several sources offered it. Distinct effective grants that survive reconciliation are distinct charges unless an approved bundle prices them as one.
 - A **multi-key bundle** means one complete inseparable package; the current ledger verifies that its effective members have shared contributor-lineage evidence. Bundles are not a shortcut to match unrelated donors.
@@ -66,7 +66,7 @@ A \`NativeOriginAllocationPolicy\` has an explicit revision, rule ID, method ID,
 - The current policy rejects nonpositive individual load entries, overlapping key coverage, and malformed interaction definitions. It does **not** implement arbitrary negative refunds for limitations.
 - A scoped, authenticated DM creation-allocation waiver or allowance adjustment is distinct from changing the catalog's normative price schedule. No client claim can waive the gate itself.
 
-These are accounting properties, **not** proof that the schedule reflects actual gameplay power. At this baseline no first-party numerical characteristic prices or starting allowance are approved. A local experimental ledger cannot be presented as a balanced published budget. See \`NativeOriginAllocationPreview.cs\` and \`pillar2-biological-combine-gene-offers-20261121.md\`.
+These are accounting properties, **not** proof that the schedule reflects actual gameplay power. At this baseline no first-party numerical characteristic prices or starting allowance are approved. A local experimental ledger cannot be presented as a balanced published budget. See `NativeOriginAllocationPreview.cs` and `pillar2-biological-combine-gene-offers-20261121.md`.
 
 ### Valuation disposition record
 
@@ -81,7 +81,7 @@ Use this table for each effective characteristic or coherent bundle:
 | **Manual DM adjudication** | Table can play a precisely ruled effect but the engine cannot validate or execute it | Record the scoped outcome and software limitation; no fictitious engine success |
 | **Mechanically unresolved** | Required behavior, dependency, or source permission is unknown | Resolve source/authoring before calling the Species complete |
 
-Do not record a numerical \`0\` for any of the last five categories merely to let a ledger pass. Do not price a fictional drawback as a transferable credit. If a limitation is inextricable from a benefit, compare that **complete combined package** against other complete packages.
+Do not record a numerical `0` for any of the last five categories merely to let a ledger pass. Do not price a fictional drawback as a transferable credit. If a limitation is inextricable from a benefit, compare that **complete combined package** against other complete packages.
 
 ## Complete-profile assessment before balance testing
 
@@ -107,6 +107,6 @@ Use reproducible encounter/character studies for screening, and playtests to ass
 
 ## Scope beyond biology
 
-Construct Assembly has component/material installation costs, resource production, power allocation, and operational applicability; these are not equivalent to a biological gene price. Magical creation and transformations have their own eligibility, duration, acquisition and replacement behavior. Authors may reuse \`trait.low-light-vision\` or another true canonical characteristic in any method that expressly grants it, but **must not transfer biological inheritance permissions, per-kind capacities, or the biological initial allowance** to that method.
+Construct Assembly has component/material installation costs, resource production, power allocation, and operational applicability; these are not equivalent to a biological gene price. Magical creation and transformations have their own eligibility, duration, acquisition and replacement behavior. Authors may reuse `trait.low-light-vision` or another true canonical characteristic in any method that expressly grants it, but **must not transfer biological inheritance permissions, per-kind capacities, or the biological initial allowance** to that method.
 
 For worked examples, see [Spellcasting, flight, Natural Armor, and unfamiliar Species](pillar2-homebrew-worked-conversions-20261121.md).

@@ -1,7 +1,7 @@
 # Worked Homebrew Species Conversions
 
 **Status:** Illustrative conversion exercises; **not** new selectable Species, approved traits, approved prices, or executable native JSON.  
-**Evidence baseline:** \`9f50ab70a37be69a6748603d210fa9406ba7ea59\`  
+**Evidence baseline:** `9f50ab70a37be69a6748603d210fa9406ba7ea59`  
 **Instructions:** First read the [conversion procedure](pillar2-homebrew-species-conversion-guide-20261121.md) and [comparison reference](pillar2-homebrew-characteristic-comparison-20261121.md).
 
 These examples show **what a DM must specify** and **which parts can map to real canonical mechanics**. They do not authorize custom creation, bypass acquisition restrictions, or claim to be ready-to-import schemas. All invented Species names, optional mechanics, level choices, and numeric *mechanical effects* below are **hypothetical teaching material**, not balance approval. No point costs are assigned.
@@ -16,7 +16,7 @@ For this **illustrative variant**, the table chooses:
 
 | Property | Fire Bolt-like cantrip | Chromatic Orb access |
 | --- | --- | --- |
-| Underlying spell | Exactly the canonical \`fire-bolt\` spell **if** intended effect matches; otherwise new authored effect | \`chromatic-orb\`, subject to verifying the available spell definition and rules edition |
+| Underlying spell | Exactly the canonical `fire-bolt` spell **if** intended effect matches; otherwise new authored effect | `chromatic-orb`, subject to verifying the available spell definition and rules edition |
 | Acquisition | Character level 1 | **Hypothetically** character level 3; choose level 1 instead only if source/table says so |
 | Uses | At will | One free casting per Long Rest |
 | Spellcasting ability | Charisma, selected/established from an authorized source-scoped casting-ability choice | Same source-scoped Charisma; **not** borrowed from an unrelated Species donor |
@@ -27,9 +27,9 @@ For this **illustrative variant**, the table chooses:
 | Progression | Follow the underlying cantrip's applicable spell scaling; do not create multiple Species charges for damage scaling | Remains once per Long Rest after unlock unless explicitly modified |
 | Dependencies | Verifiable spell identity and selected source-bound Charisma | Verifiable spell identity, source-bound Charisma, valid unlock level, functioning resource tracking |
 
-**Canonical reuse:** The repository contains \`trait.fire-bolt\`: at character level 1 it grants Fire Bolt at will and binds \`spellcastingAbility\` from a manifested intrinsic scoped to the actual source. Reuse this **only** if "similar to Fire Bolt" truly means the same mechanical spell. An alternate range, effect, damage type, or scaling requires review.
+**Canonical reuse:** The repository contains `trait.fire-bolt`: at character level 1 it grants Fire Bolt at will and binds `spellcastingAbility` from a manifested intrinsic scoped to the actual source. Reuse this **only** if "similar to Fire Bolt" truly means the same mechanical spell. An alternate range, effect, damage type, or scaling requires review.
 
-**New or additional authoring:** The baseline biological gene catalog does **not** contain a canonical Chromatic Orb Species gene. The table needs a properly reviewed innate-spell grant or new canonical trait that references an actual valid spell, with exact \`level\` (character unlock), \`freeUses\`, \`recharge\`, \`slotCasting\`, and source-scoped ability binding. \`trait.longstrider\` and \`trait.darkness\` demonstrate existing **related field patterns** for one free use per Long Rest, but both also explicitly allow slot casting; copying those without changing that permission would incorrectly expand this example. The actual spell semantics, casting components, and slot execution are distinct spell-system responsibilities, not implicit benefits of a grant.
+**New or additional authoring:** The baseline biological gene catalog does **not** contain a canonical Chromatic Orb Species gene. The table needs a properly reviewed innate-spell grant or new canonical trait that references an actual valid spell, with exact `level` (character unlock), `freeUses`, `recharge`, `slotCasting`, and source-scoped ability binding. `trait.longstrider` and `trait.darkness` demonstrate existing **related field patterns** for one free use per Long Rest, but both also explicitly allow slot casting; copying those without changing that permission would incorrectly expand this example. The actual spell semantics, casting components, and slot execution are distinct spell-system responsibilities, not implicit benefits of a grant.
 
 **Manifestation and valuation:** The final starting configuration contains both committed spell benefits (with Orb locked until the chosen level), plus all other Species foundation and features. It is not a complete playable Species merely because the spells were mapped. Price the full cantrip + later-unlocking Orb course as appropriate to the reviewed decomposition, avoiding double-charging a shared dependency. Until calibrated, both the unknown configured price and any missing semantic authoring remain visible.
 
@@ -43,7 +43,7 @@ Three features may all be called "Flight" while having very different behavior.
 | --- | --- | --- | --- |
 | **B1: Permanent winged flight** (hypothetical) | Fly Speed 30 feet at level 1 while wings function; no fixed duration | No use pool, no activation action; the source must define armor, equipment, and conditions | Author a verified perpetual flying mode; distinguish from hovering, flight spell effects, and nonfunctional wings |
 | **B2: Armor-restricted permanent flight** (hypothetical) | Fly Speed 30 feet at level 1 | Cannot fly while wearing medium or heavy armor; always-on when restriction is satisfied | Same speed as B1 but a materially different operational condition; ensure it can actually be checked |
-| **B3: Temporary spectral flight** (**existing native trait**, only from eligible acquisition) | Native \`trait.spectral-flight\`: at character level 5, Bonus Action grants flight speed equal to current walking speed and hover for 1 minute | One use per Long Rest; explicitly independent of Breath Weapon | Real authored definition, but its source eligibility, runtime application, and valuation must still be checked |
+| **B3: Temporary spectral flight** (**existing native trait**, only from eligible acquisition) | Native `trait.spectral-flight`: at character level 5, Bonus Action grants flight speed equal to current walking speed and hover for 1 minute | One use per Long Rest; explicitly independent of Breath Weapon | Real authored definition, but its source eligibility, runtime application, and valuation must still be checked |
 
 A fourth homebrew ability might grant flight for one minute **twice** per Long Rest or only while unarmored, or progress from temporary to permanent flight. That is a new configured or authored case until the exact semantics are supported. Do not substitute B3 because its name sounds appropriate.
 
@@ -63,7 +63,7 @@ An ability can be high-impact without being worth the **entire** creation allowa
 
 ## Example C — Natural Armor identity and an explicitly permitted improvement
 
-The baseline 85-file canonical biological gene directory has **no** \`trait.natural-armor\` entry. The following hypothetical definitions must be authored/reviewed before they can be real canonical grants. Existing generic AC rules do not automatically create an inherited Natural Armor gene.
+The baseline 85-file canonical biological gene directory has **no** `trait.natural-armor` entry. The following hypothetical definitions must be authored/reviewed before they can be real canonical grants. Existing generic AC rules do not automatically create an inherited Natural Armor gene.
 
 **Proposed candidate definition C1 (hypothetical):** "While not wearing armor, your base AC equals 13 + Dexterity modifier. You may use a shield under the ordinary applicable shield rules. Wearing armor uses the armor's normal AC calculation instead; do not add these base-AC formulas together."
 
@@ -97,19 +97,19 @@ This specification intentionally states more than a typical flavor paragraph. Th
 
 | Inherent characteristic | Exact proposed configuration | Existing reusable definition? | Disposition |
 | --- | --- | --- | --- |
-| Creature type | Humanoid | Native intrinsic slot \`creatureType\` | Reuse if source and selection are authorized |
-| Size | Medium | Native intrinsic slot \`size\` | Reuse if source and selection are authorized |
-| Walking Speed | 30 feet | Native intrinsic slot \`walkingSpeedFeet\` | Reuse if source and selection are authorized |
-| Amphibious | Breathe air and water indefinitely; **no** swim speed implied | \`trait.amphibious\` | Exact reuse |
-| Swim Speed | 15 feet; **no** water-breathing implied | \`trait.coldwater-swimmer\` | Exact reuse; separate from Amphibious |
-| Low-Light Vision | Dim Light as Bright Light, no sight through Darkness | \`trait.low-light-vision\` | Exact reuse |
+| Creature type | Humanoid | Native intrinsic slot `creatureType` | Reuse if source and selection are authorized |
+| Size | Medium | Native intrinsic slot `size` | Reuse if source and selection are authorized |
+| Walking Speed | 30 feet | Native intrinsic slot `walkingSpeedFeet` | Reuse if source and selection are authorized |
+| Amphibious | Breathe air and water indefinitely; **no** swim speed implied | `trait.amphibious` | Exact reuse |
+| Swim Speed | 15 feet; **no** water-breathing implied | `trait.coldwater-swimmer` | Exact reuse; separate from Amphibious |
+| Low-Light Vision | Dim Light as Bright Light, no sight through Darkness | `trait.low-light-vision` | Exact reuse |
 | Pressure Echo | Action; submerged in connected water; locations of nearby creatures within 20 feet; instant; once per Long Rest | **No matching canonical gene established** | New provisional trait; manual DM operation until validated/executable |
 
 **Unfamiliar mechanic authoring note (not executable JSON):**
 
 | Property | Hypothetical Pressure Echo requirement |
 | --- | --- |
-| Provisional identity | \`trait.example.pressure-echo\` (not a real catalog ID) |
+| Provisional identity | `trait.example.pressure-echo` (not a real catalog ID) |
 | Trigger and action | User chooses to activate using an Action, only while submerged in connected water |
 | Effect and area | Reports locations, not sight, of creatures in a 20-foot radius sharing the same continuous water; exclude targets fully blocked by solid barrier |
 | Uses and resource | One use per Long Rest, **independent** of any spell or other innate trait; attached to the Pressure Echo effective grant |
