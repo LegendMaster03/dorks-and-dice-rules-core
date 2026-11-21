@@ -197,9 +197,12 @@ public sealed class NativeOriginDrowLinkedSelectionTests
         Assert.DoesNotContain(result.Profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId == drawback.Identity.MechanicalDefinitionId);
         Assert.DoesNotContain(result.Issues, x => x.Code == "required-mechanic-missing");
-        Assert.Equal(120,
-            NativeOriginDarkvisionProjector.ProjectApprovedMixed(Catalog(), result)
-                .Darkvision!.RangeFeet);
+        var projected = NativeOriginDarkvisionProjector.ProjectApprovedMixed(Catalog(), result);
+        Assert.Equal(120, projected.Darkvision!.RangeFeet);
+        // A waiver of the source-local selection requirement does not waive the
+        // independent, ruleset-wide range threshold.
+        Assert.Equal("condition.dazzled",
+            projected.RequiredSunlightSensitivity?.ConditionId);
         Assert.Contains(result.EvaluatedProposal.Candidates, x => x.Id == vision.Id);
 
         var unverified = Evaluate(result.EvaluatedProposal);
