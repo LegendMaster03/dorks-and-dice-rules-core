@@ -1,15 +1,3 @@
-/// <summary>
-/// A trusted host confirms the actual source event and all external resource
-/// spending. Calls must be idempotent and tied to an authoritative character,
-/// installation and revision; this local ledger does not provide persistence
-/// or an atomic transaction with the external resource owner.
-/// </summary>
-internal interface INativeConstructReplenishmentAuthority
-{
-    bool AuthorizeReplenishment(string instanceId, string powerSourceId,
-        string resourceKind, string method, int units, long expectedRevision);
-}
-
 using RulesCore.Content;
 
 namespace RulesCore.Mechanics;
@@ -212,3 +200,16 @@ internal sealed record NativeConstructResourceLedgerCommit(
     IReadOnlyList<NativeOriginContractIssue> Issues,
     NativeConstructResourceStepPreview? Step = null,
     NativeConstructResourceTransferPreview? Transfer = null);
+
+/// <summary>
+/// A trusted host confirms the actual source event and all external resource
+/// spending. Calls must be idempotent and tied to an authoritative character,
+/// installation and revision; this local ledger does not provide persistence
+/// or an atomic transaction with the external resource owner.
+/// </summary>
+internal interface INativeConstructReplenishmentAuthority
+{
+    bool AuthorizeReplenishment(string instanceId, string powerSourceId,
+        string resourceKind, string method, int units, long expectedRevision);
+}
+
