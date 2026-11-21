@@ -125,9 +125,17 @@ escape communicates the intended risk.
 - `PreviewAutomaticSoulCapture` identifies installed candidate cores
   within the provided distances, without consulting their active
   power-allocation flags. It does not create or delete a soul record.
-- A persistent capture history and resurrection restrictions belong in
-  the authenticated gameplay host; the current preview interface is
-  insufficient to grant or release a soul.
+- The internal `NativeConstructSoulCustodyLedger` records individually
+  identified, host-verified captures, extraordinary extractions, and
+  DM-declared final consumption without a numerical capacity or timer.
+  Revision checks prevent stale replay. Its records retain previous capture
+  episodes when a rescued, resurrected soul is captured again later.
+- The authoritative gameplay host must persist these transitions and
+  enforce imprisonment-related resurrection restrictions. A preview or
+  in-process custody record alone does not alter persisted character state.
+  The core's power-sufficiency determination remains independent from
+  the list of souls: capturing one does not automatically grant a
+  quantifiable energy reserve or imply a specific consumption schedule.
 - If several generators share a power circuit, dispatch priority is not
   established by this source; do not invent a fuel-use allocation policy.
 - The preexisting manufacturing recipe is unchanged. Its candidate
