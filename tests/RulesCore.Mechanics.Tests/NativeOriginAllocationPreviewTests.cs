@@ -405,7 +405,7 @@ public sealed class NativeOriginAllocationPreviewTests
             x => x.Identity.IntrinsicSlotId == "size").EffectiveValue!.Value;
         var walk = Assert.Single(original.Profile.Underlying.InherentGrants,
             x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet").EffectiveValue!.Value;
-        var policy = Hypothetical(30, new("vision", 3,
+        var policy = Hypothetical(30, new NativeOriginAllocationPrice("vision", 3,
             ["trait:trait.low-light-vision"]));
         policy = policy with
         {
@@ -465,7 +465,7 @@ public sealed class NativeOriginAllocationPreviewTests
     public void MissingConfiguredPriceFailsClosedUnlessFallbackIsExplicit()
     {
         var original = ElfProfile();
-        var policy = Hypothetical(100, new("vision", 3,
+        var policy = Hypothetical(100, new NativeOriginAllocationPrice("vision", 3,
             ["trait:trait.low-light-vision"]));
         var size = Assert.Single(policy.Prices, x => x.Id == "size") with
         {
@@ -512,7 +512,7 @@ public sealed class NativeOriginAllocationPreviewTests
                 new("specific", 4, 3,
                     [EqualsValue("intrinsic:size", "value", sizeValue)])
             ]);
-        var source = Hypothetical(20, new("vision", 3,
+        var source = Hypothetical(20, new NativeOriginAllocationPrice("vision", 3,
             ["trait:trait.low-light-vision"]));
         NativeOriginAllocationPolicy Use(NativeOriginAllocationPrice chosen) =>
             source with
