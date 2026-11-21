@@ -47,7 +47,23 @@ public static class NativeOriginAllocationPreview
 {
     public static NativeOriginAllocationAssessment Assess(
         NativeCatalogSnapshot catalog, NativeOriginConstructionResult result,
-        NativeOriginAllocationPolicy? policy = null)
+        NativeOriginAllocationPolicy? policy = null) =>
+        AssessCore(catalog, result, policy, creationScope: false);
+
+    /// <summary>
+    /// The creation gate uses the same price ledger as the read-only preview.
+    /// Direct Species presets and mixed/custom biological Origins are assessed
+    /// under one policy; a latent gene has no effective grant to charge.
+    /// Call only from the construction engine after all normal grant validation.
+    /// </summary>
+    internal static NativeOriginAllocationAssessment AssessCreation(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult result,
+        NativeOriginAllocationPolicy? policy) =>
+        AssessCore(catalog, result, policy, creationScope: true);
+
+    private static NativeOriginAllocationAssessment AssessCore(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult result,
+        NativeOriginAllocationPolicy? policy, bool creationScope)
     {
         ArgumentNullException.ThrowIfNull(catalog);
         ArgumentNullException.ThrowIfNull(result);
@@ -59,7 +75,10 @@ public static class NativeOriginAllocationPreview
                     StringComparer.Ordinal).ToArray(), Unlock(catalog, x)))
             .ToArray();
         var issues = new List<string>();
-        if (result.EvaluatedProposal.Intent != NativeOriginIntent.Mixed ||
+        if ((creationScope
+                ? result.EvaluatedProposal.Intent is not
+                    (NativeOriginIntent.Direct or NativeOriginIntent.Mixed or NativeOriginIntent.Custom)
+                : result.EvaluatedProposal.Intent != NativeOriginIntent.Mixed) ||
             result.EvaluatedProposal.Method is null ||
             result.EvaluatedProposal.Method.RuleId != "rule.creature-origination" ||
             result.EvaluatedProposal.Method.MethodId != "biological")
@@ -67,7 +86,8 @@ public static class NativeOriginAllocationPreview
 
         if (policy is null)
             return Finish("not-configured", null, null, null, [],
-                ["biological-allocation-policy-not-approved"]);
+                [creationScope ? "creation-allocation-policy-not-configured" :
+                    "biological-allocation-policy-not-approved"]);
 
         if (string.IsNullOrWhiteSpace(policy.Revision) ||
             policy.RuleId != result.EvaluatedProposal.Method.RuleId ||
@@ -179,7 +199,8 @@ public static class NativeOriginAllocationPreview
             IReadOnlyList<string> errors,
             IReadOnlyList<NativeOriginAllocationComponent>? included = null) =>
             new(status, revision, allowance, total, included ?? components,
-                charges, errors.OrderBy(x => x, StringComparer.Ordinal).ToArray());
+                charges, errors.OrderBy(x => x, StringComparer.Ordinal).ToArray(),
+                PreviewOnly: !creationScope);
     }
 
     private static string Key(NativeOriginEffectiveGrant grant) =>
