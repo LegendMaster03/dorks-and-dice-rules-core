@@ -105,7 +105,15 @@ public sealed class NativeConstructOperatingSession
     public NativeConstructOperatingStateResult EvaluateConfiguration(
         IReadOnlyDictionary<string, bool>? requestedEnabled = null,
         IReadOnlyDictionary<string, string>? requestedModes = null,
-        IReadOnlyList<string>? unavailablePowerSourceInstanceIds = null)
+        IReadOnlyList<string>? unavailablePowerSourceInstanceIds = null) =>
+        EvaluateConfigurationCore(requestedEnabled, requestedModes,
+            unavailablePowerSourceInstanceIds, null);
+
+    private NativeConstructOperatingStateResult EvaluateConfigurationCore(
+        IReadOnlyDictionary<string, bool>? requestedEnabled,
+        IReadOnlyDictionary<string, string>? requestedModes,
+        IReadOnlyList<string>? unavailablePowerSourceInstanceIds,
+        IReadOnlyDictionary<string, int>? trustedSolarOutputs)
     {
         requestedEnabled ??= new Dictionary<string, bool>(StringComparer.Ordinal);
         requestedModes ??= new Dictionary<string, string>(StringComparer.Ordinal);
@@ -142,7 +150,8 @@ public sealed class NativeConstructOperatingSession
                     ? modeId : instance.ModeId
             }).ToArray()
         };
-        var state = _assembly.Evaluate(configured);
+        var state = _assembly.EvaluateWithSourceOutputOverrides(
+            configured, trustedSolarOutputs);
         var componentStates = state.Components.ToDictionary(x => x.InstanceId,
             StringComparer.Ordinal);
         var active = _originGrantIds.ToHashSet(StringComparer.Ordinal);
