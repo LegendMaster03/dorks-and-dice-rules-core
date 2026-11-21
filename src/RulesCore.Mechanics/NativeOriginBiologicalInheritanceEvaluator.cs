@@ -181,9 +181,9 @@ internal sealed class NativeOriginBiologicalInheritanceEvaluator(
             }
             // A newly selected native latent gene with an authored creation
             // choice needs an explicit, complete configuration.
-            var choices = expressed ? grants[0].ResolvedChoices :
+            var choices = (expressed ? grants[0].ResolvedChoices :
                 inheritedGene?.ResolvedChoices ?? inheritedGrant?.ResolvedChoices ??
-                configurations.GetValueOrDefault(candidate.Id)?.Choices ?? [];
+                configurations.GetValueOrDefault(candidate.Id)?.Choices) ?? [];
             if (!expressed)
             {
                 var requirements = candidate.RequiredChoices ?? [];
