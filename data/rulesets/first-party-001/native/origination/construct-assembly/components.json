@@ -223,7 +223,7 @@
     "id": "construct-component.control-module",
     "kind": "construct-component",
     "name": "Control module",
-    "description": "A control and coordination interface for dependent assemblies; no automatic intelligence or creature consciousness is implied.",
+    "description": "Coordinates dependent mechanisms and supports ordinary audible communication while operational. It does not inherently create consciousness, intelligence, or grant language knowledge.",
     "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
     "provides": [
       "control"
@@ -286,8 +286,8 @@
     "id": "construct-component.locomotion-unit",
     "kind": "construct-component",
     "name": "Locomotion unit",
-    "description": "Generic ground locomotion support adaptable to different arrangements; it does not itself grant a speed. A provisional maximum gross supported load applies only while this unit is operational; multiple units share support only when the joint configuration is compatible.",
-    "rulesStatus": "candidate walking speed tiers and gross-load capacity; unapproved balance parameters",
+    "description": "Generic ground locomotion support adaptable to different arrangements. Its operational trait supplies candidate ordinary ground movement, subject to applicable movement and physical-support rules. Additional units do not independently grant extra movement speed.",
+    "rulesStatus": "candidate ordinary ground-movement trait; numerical support capacity remains unapproved",
     "provides": [
       "locomotion-interface"
     ],
