@@ -148,13 +148,15 @@ public sealed class NativeConstructOriginProjectionTests
                  {"id":"construct-power-source.infernal-engine",
                   "kind":"construct-power-source","name":"Infernal Engine",
                   "constructionCost":1,"powerOutput":8,
-                  "overdrivePowerOutput":12,"overdriveIncreasePercent":50,
                   "compatibleComponentCapabilities":["power-housing"],
                   "operatingPrinciple":"infernal",
                   "longRestSustenance":{"resourceKind":"infernal-engine-fuel-charge",
                     "unitsPerLongRest":1},
                   "fuelShortagePolicy":"continues-at-normal-output-with-infernal-instability-or-overheating",
-                  "overdriveFuelPolicy":"additional-infernal-fuel-per-use"},
+                  "infernalEmpowerment":{"activation":"host-verified-additional-infernal-fuel-consumption",
+                    "duration":"until-next-long-rest","powerOutputBonus":0,
+                    "effectStatus":"not-yet-authored",
+                    "additionalFuelQuantityStatus":"not-yet-authored"}},
                  {"id":"construct-power-source.solar-crystal",
                   "kind":"construct-power-source","name":"Solar collector",
                   "constructionCost":1,"powerOutput":8,
@@ -1462,10 +1464,20 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Equal(8, Assert.Single(shorted.Sources).AvailablePowerOutput);
         Assert.Equal(8, shorted.Evaluation!.Assembly.PowerNetworks!.Single().AvailableOutput);
 
-        var boosted = session.PreviewInfernalOperation(
+        var empowered = session.PreviewInfernalOperation(
             fuelPaid, new Dictionary<string, bool> { ["generator"] = true });
-        Assert.True(boosted.CanOperate);
-        Assert.Equal(12, Assert.Single(boosted.Sources).AvailablePowerOutput);
+        Assert.True(empowered.CanOperate);
+        Assert.True(empowered.HasActiveEmpowerment);
+        Assert.True(Assert.Single(empowered.Sources).EmpowermentActive);
+        Assert.Equal(8, Assert.Single(empowered.Sources).AvailablePowerOutput);
+        Assert.Equal(8, empowered.Evaluation!.Assembly.PowerNetworks!.Single().AvailableOutput);
+        // The next long rest ends the externally authenticated condition.
+        // No automatic power grant or unapproved attack modifier is supplied.
+        var expired = session.PreviewInfernalOperation(
+            fuelPaid, new Dictionary<string, bool> { ["generator"] = false });
+        Assert.True(expired.CanOperate);
+        Assert.False(expired.HasActiveEmpowerment);
+        Assert.Equal(8, Assert.Single(expired.Sources).AvailablePowerOutput);
 
         Assert.False(session.PreviewInfernalOperation(
             new Dictionary<string, bool>()).CanOperate);
