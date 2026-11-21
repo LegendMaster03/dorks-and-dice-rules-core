@@ -150,14 +150,22 @@ public sealed class NativeConstructOperatingSession
                     ? modeId : instance.ModeId
             }).ToArray()
         };
+        // Installed ratings remain available to the creation evaluator.
+        // Runtime evaluation must not claim solar supply before validating
+        // the actual light and battery interval. A no-context request forces
+        // solar output to zero even in the component-state diagnostics.
+        var needsSolarContext = trustedSolarOutputs is null &&
+            _baseline.Components.Any(x =>
+                x.PowerSourceId == "construct-power-source.solar-crystal");
+        var evaluatedOutputs = needsSolarContext
+            ? _baseline.Components.Where(x =>
+                    x.PowerSourceId == "construct-power-source.solar-crystal")
+                .ToDictionary(x => x.InstanceId, _ => 0,
+                    StringComparer.Ordinal)
+            : trustedSolarOutputs;
         var state = _assembly.EvaluateWithSourceOutputOverrides(
-            configured, trustedSolarOutputs);
-        // Creation records only installed maximum output. In play, solar
-        // power is conditional on authenticated sunlight and battery state.
-        // A generic allocation request must not claim that the collector is
-        // supplying power in darkness with an empty battery.
-        if (trustedSolarOutputs is null && _baseline.Components.Any(x =>
-                x.PowerSourceId == "construct-power-source.solar-crystal"))
+            configured, evaluatedOutputs);
+        if (needsSolarContext)
             return new(state, [], _originGrantIds,
                 state.Issues.Concat([
                     new NativeOriginContractIssue(
