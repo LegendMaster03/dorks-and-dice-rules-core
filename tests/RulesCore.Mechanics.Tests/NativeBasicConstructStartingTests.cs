@@ -193,10 +193,11 @@ public sealed class NativeBasicConstructStartingTests
     }
 
     [Theory]
-    [InlineData("construct-lightweight-starting-build-20261121.json")]
-    [InlineData("construct-armored-starting-build-20261121.json")]
-    public void ProvisionalMaterialAndSurfaceVariantsReconstructThroughSameOrigin(
-        string fileName)
+    [InlineData("construct-lightweight-starting-build-20261121.json", 187, "medium")]
+    [InlineData("construct-armored-starting-build-20261121.json", 187, "medium")]
+    [InlineData("construct-small-starting-build-20261121.json", 147, "small")]
+    public void ProvisionalVariantsReconstructThroughSameOrigin(
+        string fileName, long expectedCost, string expectedSize)
     {
         var (catalog, baselineRequest) = Reference();
         var baseline = new NativeConstructAssemblyEvaluator(catalog)
@@ -207,8 +208,11 @@ public sealed class NativeBasicConstructStartingTests
         Assert.True(result.IsMechanicallyAuthorized,
             string.Join("; ", result.Origin.Issues.Select(x => x.Code)));
         Assert.Equal(200, proposed.InitialAllowance);
-        Assert.Equal(187, result.Assembly.KnownConstructionCost);
-        Assert.Equal("medium", result.Assembly.DerivedCreatureSize);
+        Assert.Equal(expectedCost, result.Assembly.KnownConstructionCost);
+        Assert.Equal(expectedSize, result.Assembly.DerivedCreatureSize);
+        Assert.Equal(expectedSize, result.Origin.Profile!.Underlying.InherentGrants
+            .Single(x => x.Identity.IntrinsicSlotId == "size")
+            .EffectiveValue!.Value.GetString());
         Assert.NotNull(result.Assembly.RequiredConstructionResources);
         Assert.True(result.Assembly.KnownRetainedMaterialMassPounds.HasValue);
         Assert.True(baseline.KnownRetainedMaterialMassPounds.HasValue);
@@ -229,7 +233,7 @@ public sealed class NativeBasicConstructStartingTests
             Assert.Empty(result.Assembly.PhysicalSurfaces.Where(
                 x => x.ProtectedRegionId is not null));
         }
-        else
+        else if (fileName.Contains("armored", StringComparison.Ordinal))
         {
             Assert.Equal(baseline.KnownRetainedMaterialMassPounds.Value + 42,
                 result.Assembly.KnownRetainedMaterialMassPounds.Value);
@@ -237,6 +241,13 @@ public sealed class NativeBasicConstructStartingTests
                 surface.InstanceId == "outer-shell" &&
                 surface.MaterialDefinitionId == "construct-material.steel" &&
                 surface.ProtectedRegionId == "front-hull");
+        }
+        else
+        {
+            Assert.Equal(baseline.KnownRetainedMaterialMassPounds.Value - 28,
+                result.Assembly.KnownRetainedMaterialMassPounds.Value);
+            Assert.Empty(result.Assembly.PhysicalSurfaces.Where(
+                x => x.ProtectedRegionId is not null));
         }
         // Physical material evidence cannot silently mint protection or
         // certify unrestricted movement before load rules are authored.
