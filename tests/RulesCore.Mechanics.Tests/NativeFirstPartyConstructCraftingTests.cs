@@ -360,4 +360,78 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.Null(result.PhysicalMovement?.SpeedFeet);
         Assert.Equal(30, result.PhysicalMovement?.UpperBoundSpeedFeet);
     }
+
+    [Fact]
+    public void InstalledSteelPlatesProvideLocalProtectionCandidatesButNoGlobalArmor()
+    {
+        var catalog = Catalog();
+        var parts = new[]
+        {
+            Part("plate-a", "protective-plating", "plating", "steel",
+                enabled: false) with { ProtectedRegionId = "shell" },
+            Part("plate-b", "protective-plating", "plating", "steel",
+                enabled: false) with { ProtectedRegionId = "shell" },
+            Part("plate-c", "protective-plating", "plating", "cloth",
+                enabled: false) with { ProtectedRegionId = "limb" }
+        };
+        var result = Quote(catalog, parts);
+        Assert.True(result.IsAuthorized,
+            string.Join("; ", result.Issues.Select(x => x.Code)));
+        var shell = NativePhysicalProtectionEvaluator.Evaluate(
+            "shell", result.PhysicalSurfaces);
+        var limb = NativePhysicalProtectionEvaluator.Evaluate(
+            "limb", result.PhysicalSurfaces);
+        var uncovered = NativePhysicalProtectionEvaluator.Evaluate(
+            "control-node", result.PhysicalSurfaces);
+        Assert.Equal("candidate", shell.Status);
+        Assert.Equal(4, shell.KnownCandidateFlatDamageReduction);
+        Assert.Equal(2, shell.ContributingSurfaces.Count);
+        Assert.Equal("candidate", limb.Status);
+        Assert.Equal(0, limb.KnownCandidateFlatDamageReduction);
+        Assert.Equal("none", uncovered.Status);
+        Assert.All(result.Components, state =>
+            Assert.Empty(state.ActiveOperationalOriginTraitIds!));
+    }
+
+    [Fact]
+    public void CasingCanNotDeclareProtectiveCoverageWithoutAuthoredCapability()
+    {
+        var catalog = Catalog();
+        var result = Quote(catalog,
+            Part("casing", "external-casing", "casing", "steel")
+                with { ProtectedRegionId = "shell" });
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, result.Status);
+        Assert.Contains(result.Issues,
+            issue => issue.Code == "construct-protection-region-invalid");
+        Assert.Null(Assert.Single(result.PhysicalSurfaces).ProtectedRegionId);
+    }
+
+    [Fact]
+    public void TooMuchPassivePlateMaterialCanStallWalkingWithoutRemovingTheArmor()
+    {
+        var catalog = Catalog();
+        var parts = new List<NativeConstructComponentInstance>
+        {
+            Part("housing", "power-source-housing", "housing", "steel",
+                powerSource: "construct-power-source.mechanical-engine",
+                links: ["drive", "plate-0", "plate-1", "plate-2",
+                        "plate-3", "plate-4", "plate-5"]),
+            Part("drive", "locomotion-unit", "contact", "steel")
+        };
+        for (var i = 0; i < 6; i++)
+            parts.Add(Part("plate-" + i, "protective-plating",
+                "plating", "steel", enabled: false)
+                with { ProtectedRegionId = "outer-shell" });
+
+        var built = Quote(catalog, [.. parts]);
+        Assert.True(built.IsAuthorized);
+        Assert.Equal("stalled", built.PhysicalMovement?.Status);
+        Assert.Equal(0, built.PhysicalMovement?.SpeedFeet);
+        Assert.Equal(6, built.PhysicalSurfaces.Count(x =>
+            x.ProtectedRegionId == "outer-shell"));
+        var hypothetical = NativePhysicalProtectionEvaluator.Evaluate(
+            "outer-shell", built.PhysicalSurfaces);
+        Assert.Equal("candidate", hypothetical.Status);
+        Assert.Equal(12, hypothetical.KnownCandidateFlatDamageReduction);
+    }
 }
