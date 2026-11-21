@@ -172,6 +172,11 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                     TableDecisionId: d.Id) } : candidate;
         }).ToArray() };
         candidates = proposal.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
+        // Transmission is a distinct player decision from manifestation.
+        // Validate against catalog-discovered, table-authenticated candidate
+        // eligibility; a proposal never self-authorizes heredity.
+        var transmission = NativeOriginBiologicalTransmissionValidator.Review(proposal, Verified);
+        issues.AddRange(transmission.Issues);
         var structural = _validator.ReviewProposal(proposal);
         issues.AddRange(structural.Issues.Where(x => !UnselectedOfferIssue(x, selected)));
         var nativeMethod = _validator.FindMethod(proposal.Method);
@@ -328,6 +333,20 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 continue;
             }
             if (!candidates.TryGetValue(manifest.CandidateId, out var candidate)) continue;
+            // When explicit transmission was requested, a manifestation
+            // cannot grant a gene that was never selected from the donor pool.
+            // A null plan continues to use the existing legacy selections.
+            if (transmission.Explicit &&
+                proposal.Intent == NativeOriginIntent.Mixed &&
+                proposal.Method.MethodId == "biological" &&
+                proposal.Method.RuleId == "rule.creature-origination" &&
+                !transmission.CandidateIds.Contains(candidate.Id))
+            {
+                Add("biological-expression-without-transmission", manifest.CandidateId,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "An expressed biological characteristic must first be selected for transmission.");
+                continue;
+            }
             var source = candidate.Identity.Occurrence.Source;
             var nativeSource = source.Kind == NativeOriginSourceKind.Native &&
                 catalog.TryGetById(source.Id, out var native) && native is not null;
@@ -622,6 +641,8 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             verifiedDmDecisionIds.Add(grant.Authorization!.TableDecisionId!);
         }
         resolved = resolved.Concat(derived).ToArray();
+        issues.AddRange(NativeOriginBiologicalTransmissionValidator.ReviewExpression(
+            transmission, resolved));
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
         // selected, reconciled value in each universal physical foundation slot
