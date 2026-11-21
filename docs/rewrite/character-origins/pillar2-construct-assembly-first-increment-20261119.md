@@ -225,12 +225,14 @@ candidates; their mechanics and resource costs remain provisional.
   multiple **distinct** enhancement IDs through `EnhancementIds`, subject
   to the current bounded evaluator. No design or enhancement is duplicated
   for each possible material.
-- `power-sources.json`: 6 previously discussed working concepts:
-  artificial-life core, solar/rechargeable crystal, soul gem, Infernal Engine,
-  arcane-consuming core and mechanical engine. A `powerSourceSlot` on a
-  component houses one selected `PowerSourceId`. The housing and power
-  mechanism are different definitions. A source must match its housing's
-  authored compatible component capabilities.
+- `power-sources.json`: The original reference inventory contained six
+  working concepts. The artificial-life core was subsequently rejected and
+  removed because it would allow Constructs to bypass fuel requirements.
+  The remaining five sources are solar/rechargeable crystal, soul gem,
+  Infernal Engine, arcane-consuming core, and the completed mechanical engine.
+  A `powerSourceSlot` on a component houses one selected `PowerSourceId`.
+  The housing and power mechanism are different definitions. A source must
+  match its housing's authored compatible component capabilities.
 
 ### Executable interpretation
 
