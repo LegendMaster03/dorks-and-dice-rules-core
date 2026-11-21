@@ -60,5 +60,113 @@
       "compartmentalized-housing"
     ],
     "craftingRecipeId": "crafting-recipe.construct-design.compartmentalized"
+  },
+  {
+    "id": "construct-design.wheeled-drive",
+    "kind": "construct-design",
+    "name": "Wheeled drive arrangement",
+    "rulesStatus": "candidate arrangement; cost, recipe, mechanical performance and balance unresolved",
+    "description": "Mounts rotating wheels for suitable ground movement; wheel count, traction, clearance, and walking speed remain governed by actual component and movement rules.",
+    "compatibleComponentCapabilities": [
+      "locomotion-interface"
+    ],
+    "provides": [
+      "wheeled-drive-arrangement"
+    ]
+  },
+  {
+    "id": "construct-design.tracked-drive",
+    "kind": "construct-design",
+    "name": "Tracked drive arrangement",
+    "rulesStatus": "candidate arrangement; cost, recipe, mechanical performance and balance unresolved",
+    "description": "Arranges a ground locomotion unit around articulated tracks; traction, terrain restrictions, wear, and load capacities require authored rules.",
+    "compatibleComponentCapabilities": [
+      "locomotion-interface"
+    ],
+    "provides": [
+      "tracked-drive-arrangement"
+    ]
+  },
+  {
+    "id": "construct-design.multi-legged-drive",
+    "kind": "construct-design",
+    "name": "Multi-legged drive arrangement",
+    "rulesStatus": "candidate arrangement; cost, recipe, mechanical performance and balance unresolved",
+    "description": "Coordinates multiple supported leg assemblies without prescribing a specific number of legs or granting additional actions or speed.",
+    "compatibleComponentCapabilities": [
+      "locomotion-interface",
+      "limb-support"
+    ],
+    "provides": [
+      "multi-legged-drive-arrangement"
+    ]
+  },
+  {
+    "id": "construct-design.rolling-body",
+    "kind": "construct-design",
+    "name": "Rolling body arrangement",
+    "rulesStatus": "candidate arrangement; cost, recipe, mechanical performance and balance unresolved",
+    "description": "Uses a rolling enclosure or other rotating body as ground support; articulation and power transmission must come from compatible installed hardware.",
+    "compatibleComponentCapabilities": [
+      "locomotion-interface",
+      "structural-support"
+    ],
+    "provides": [
+      "rolling-body-arrangement"
+    ]
+  },
+  {
+    "id": "construct-design.compliant-manipulator",
+    "kind": "construct-design",
+    "name": "Compliant manipulator arrangement",
+    "rulesStatus": "candidate arrangement; cost, recipe, mechanical performance and balance unresolved",
+    "description": "Provides a flexible manipulatory geometry; reach, grip strength, dexterity, and tool access still require suitable capabilities.",
+    "compatibleComponentCapabilities": [
+      "manipulation"
+    ],
+    "provides": [
+      "compliant-manipulation-arrangement"
+    ]
+  },
+  {
+    "id": "construct-design.layered-plating",
+    "kind": "construct-design",
+    "name": "Layered protective covering",
+    "rulesStatus": "candidate arrangement; cost, recipe, mechanical performance and balance unresolved",
+    "description": "Arranges multiple protective surfaces in layers with authored locations. Does not itself increase Armor Class, damage reduction, coverage, or resistances.",
+    "compatibleComponentCapabilities": [
+      "protective-surface"
+    ],
+    "provides": [
+      "layered-protection-arrangement"
+    ]
+  },
+  {
+    "id": "construct-design.distributed-control",
+    "kind": "construct-design",
+    "name": "Distributed control arrangement",
+    "rulesStatus": "candidate arrangement; cost, recipe, mechanical performance and balance unresolved",
+    "description": "Links primary and auxiliary controllers across an assembly; no additional consciousness, simultaneous actions, or immunity to control loss follows.",
+    "compatibleComponentCapabilities": [
+      "control",
+      "control-support"
+    ],
+    "provides": [
+      "distributed-control-topology"
+    ]
+  },
+  {
+    "id": "construct-design.multi-operator-control",
+    "kind": "construct-design",
+    "name": "Multiple-operator control arrangement",
+    "rulesStatus": "candidate arrangement; cost, recipe, mechanical performance and balance unresolved",
+    "description": "Organizes control stations for multiple operators. Separate operators do not gain extra turns or shared action resources by selecting the arrangement.",
+    "compatibleComponentCapabilities": [
+      "control",
+      "transport-interior"
+    ],
+    "provides": [
+      "multi-operator-coordination-interface"
+    ]
   }
 ]
