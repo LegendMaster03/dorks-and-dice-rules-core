@@ -259,6 +259,9 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.Equal("overloaded", result.PhysicalLoad.Status);
         Assert.Equal(300, result.PhysicalLoad.VerifiedSupportCapacityPounds);
         Assert.True(result.PhysicalLoad.MinimumDeficitPounds > 0);
+        Assert.Equal("stalled", result.PhysicalMovement?.Status);
+        Assert.Equal("walk", result.PhysicalMovement?.Mode);
+        Assert.Equal(0, result.PhysicalMovement?.SpeedFeet);
         Assert.All(parts, part =>
             Assert.Contains(result.Components, state =>
                 state.InstanceId == part.InstanceId && state.Installed));
@@ -295,6 +298,9 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.Equal("unresolved", result.PhysicalLoad?.Status);
         Assert.Equal(600, result.PhysicalLoad?.VerifiedSupportCapacityPounds);
         Assert.Null(result.PhysicalLoad?.WithinSupportCapacity);
+        Assert.Equal("unresolved", result.PhysicalMovement?.Status);
+        Assert.Null(result.PhysicalMovement?.SpeedFeet);
+        Assert.Equal(30, result.PhysicalMovement?.UpperBoundSpeedFeet);
     }
 
     [Fact]
@@ -319,5 +325,39 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.Equal("flexible", layer.Rigidity);
         Assert.False(layer.Operational);
         Assert.Empty(result.Components.Single().ActiveOperationalOriginTraitIds!);
+    }
+
+    [Fact]
+    public void OfflineDriveCannotGrantMovementEvenWhenHardwareRemainsInstalled()
+    {
+        var catalog = Catalog();
+        var parts = new[]
+        {
+            Part("housing", "power-source-housing", "housing", "steel",
+                enabled: false,
+                powerSource: "construct-power-source.mechanical-engine",
+                links: ["drive"]),
+            Part("drive", "locomotion-unit", "contact", "wood")
+        };
+        var result = Quote(catalog, parts);
+        Assert.All(result.Components, x => Assert.True(x.Installed));
+        Assert.Equal("unavailable", result.PhysicalMovement?.Status);
+        Assert.Null(result.PhysicalMovement?.SpeedFeet);
+    }
+
+    [Fact]
+    public void LightInstalledHardwareStillNeedsCompleteMassBeforeSpeedGrant()
+    {
+        var catalog = Catalog();
+        var result = Quote(catalog,
+            Part("housing", "power-source-housing", "housing", "wood",
+                powerSource: "construct-power-source.mechanical-engine",
+                links: ["drive"]),
+            Part("drive", "locomotion-unit", "contact", "wood"));
+        Assert.True(result.IsAuthorized,
+            string.Join("; ", result.Issues.Select(x => x.Code)));
+        Assert.Equal("unresolved", result.PhysicalMovement?.Status);
+        Assert.Null(result.PhysicalMovement?.SpeedFeet);
+        Assert.Equal(30, result.PhysicalMovement?.UpperBoundSpeedFeet);
     }
 }
