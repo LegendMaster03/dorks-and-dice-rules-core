@@ -23,7 +23,7 @@ from character_origins_source_inventory import read_catalog
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_EVIDENCE = (
     ROOT / "docs/rewrite/character-origins/"
-    "pillar2-curated-native-identity-evidence-20261111.json"
+    "pillar2-curated-native-identity-evidence-20261121.json"
 )
 EVIDENCE_TYPES = frozenset((
     "same-structure-different-prose",

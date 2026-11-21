@@ -60,9 +60,9 @@ public sealed class NativeOriginAllocationPreviewTests
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         var vision = offered.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision").ToArray();
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision").ToArray();
         var trance = Assert.Single(offered, x => x.ContributorId == "elf-1" &&
-            x.Identity.MechanicalDefinitionId == "trait.elf.trance");
+            x.Identity.MechanicalDefinitionId == "trait.trance");
         var choices = physical.Select((x, i) =>
             new NativeOriginManifestation("physical-" + i, x.Id,
                 SelectedValue: x.OfferedValue)).ToList();
@@ -97,9 +97,9 @@ public sealed class NativeOriginAllocationPreviewTests
     {
         var result = ElfProfile(includeTrance: true);
         var sight = new NativeOriginAllocationPrice("vision", 3,
-            ["trait:trait.shared.low-light-vision"]);
+            ["trait:trait.low-light-vision"]);
         var trance = new NativeOriginAllocationPrice("trance", 2,
-            ["trait:trait.elf.trance"]);
+            ["trait:trait.trance"]);
         var within = NativeOriginAllocationPreview.Assess(Catalog(), result,
             Hypothetical(8, sight, trance));
         Assert.Equal("within-allowance", within.Status);
@@ -120,7 +120,7 @@ public sealed class NativeOriginAllocationPreviewTests
         Assert.Equal("unresolved", unpriced.Status);
         Assert.Null(unpriced.CommittedLoad);
         Assert.Contains(unpriced.Issues, x =>
-            x.Contains("allocation-load-unpriced:trait:trait.elf.trance:",
+            x.Contains("allocation-load-unpriced:trait:trait.trance:",
                 StringComparison.Ordinal));
     }
 
@@ -131,10 +131,10 @@ public sealed class NativeOriginAllocationPreviewTests
         var repeated = ElfProfile(parents: 3, selectAllVisionOffers: true);
         Assert.Equal(4, repeated.Profile!.Underlying.InherentGrants.Count);
         Assert.Equal(3, Assert.Single(repeated.Profile.Underlying.InherentGrants,
-            x => x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision")
+            x => x.Identity.MechanicalDefinitionId == "trait.low-light-vision")
             .SourceCandidateIds.Count);
         var policy = Hypothetical(6, new NativeOriginAllocationPrice("vision", 3,
-            ["trait:trait.shared.low-light-vision"]));
+            ["trait:trait.low-light-vision"]));
         var one = NativeOriginAllocationPreview.Assess(Catalog(), single, policy);
         var many = NativeOriginAllocationPreview.Assess(Catalog(), repeated, policy);
         Assert.Equal(6, one.CommittedLoad);
@@ -170,7 +170,7 @@ public sealed class NativeOriginAllocationPreviewTests
         var vision = Assert.Single(offered, x =>
             x.Identity.IntrinsicSlotId == "darkvisionFeet");
         var sensitivity = Assert.Single(offered, x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.drow.sunlight-sensitivity");
+            x.Identity.MechanicalDefinitionId == "trait.sunlight-sensitivity");
         var physical = offered.Where(x => x.ContributorId == "drow" &&
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
@@ -195,7 +195,7 @@ public sealed class NativeOriginAllocationPreviewTests
         var policy = Hypothetical(7, new NativeOriginAllocationPrice("drow-adaptation", 4,
         [
             "intrinsic:darkvisionFeet",
-            "trait:trait.elf.drow.sunlight-sensitivity"
+            "trait:trait.sunlight-sensitivity"
         ]));
         var assessment = NativeOriginAllocationPreview.Assess(Catalog(), completed, policy);
         Assert.Equal("within-allowance", assessment.Status);
@@ -217,7 +217,7 @@ public sealed class NativeOriginAllocationPreviewTests
             [Parent("stone", "ancestry.goliath.stone")], [], []);
         var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
         var cavernous = Assert.Single(offered, x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.cavernous-sight");
+            x.Identity.MechanicalDefinitionId == "trait.cavernous-sight");
         var foundation = offered.Where(x => x.Identity.IntrinsicSlotId is
             "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         var completed = Evaluate(proposal with
@@ -234,12 +234,12 @@ public sealed class NativeOriginAllocationPreviewTests
         }, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Authorized, completed.Status);
         var policy = Hypothetical(8, new NativeOriginAllocationPrice("cavernous", 6,
-            ["trait:trait.goliath.stone.cavernous-sight"]));
+            ["trait:trait.cavernous-sight"]));
         var preview = NativeOriginAllocationPreview.Assess(Catalog(), completed, policy);
         Assert.Equal("over-allowance", preview.Status);
         Assert.Equal(9, preview.CommittedLoad);
         Assert.Equal(4, Assert.Single(preview.Components,
-            x => x.Key == "trait:trait.goliath.stone.cavernous-sight")
+            x => x.Key == "trait:trait.cavernous-sight")
             .UnlockLevel);
         Assert.Contains(preview.Charges, x =>
             x.PriceId == "cavernous" && x.Load == 6);
@@ -250,15 +250,15 @@ public sealed class NativeOriginAllocationPreviewTests
     {
         var result = ElfProfile(includeTrance: true);
         var vision = new NativeOriginAllocationPrice("vision", 3,
-            ["trait:trait.shared.low-light-vision"]);
+            ["trait:trait.low-light-vision"]);
         var duplicate = new NativeOriginAllocationPrice("duplicate", 1,
-            ["trait:trait.shared.low-light-vision"]);
+            ["trait:trait.low-light-vision"]);
         Assert.Equal("invalid-policy", NativeOriginAllocationPreview
             .Assess(Catalog(), result, Hypothetical(12, vision, duplicate)).Status);
         Assert.Equal("invalid-policy", NativeOriginAllocationPreview
             .Assess(Catalog(), result, Hypothetical(12,
                 new NativeOriginAllocationPrice("free", 0,
-                    ["trait:trait.elf.trance"]))).Status);
+                    ["trait:trait.trance"]))).Status);
         Assert.Equal("invalid-policy", NativeOriginAllocationPreview
             .Assess(Catalog(), result, Hypothetical(-1, vision)).Status);
         Assert.Equal("unresolved", NativeOriginAllocationPreview
@@ -271,7 +271,7 @@ public sealed class NativeOriginAllocationPreviewTests
     {
         var original = ElfProfile();
         var known = Assert.Single(original.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         var altered = original.Profile.Underlying with
         {
             InherentGrants = original.Profile.Underlying.InherentGrants.Select(x =>

@@ -84,7 +84,7 @@ class ApprovedVisionReviewTests(unittest.TestCase):
                                       if t["id"] == "low-light-vision"))
                 self.assertNotIn("creatureSubtype", species)
         self.assertIn("fey-ancestry", {t["id"] for t in base("elf")["traits"]})
-        self.assertIn("gnomish-cunning", {t["id"] for t in base("gnome")["traits"]})
+        self.assertIn("magical-cunning", {t["id"] for t in base("gnome")["traits"]})
 
     def test_approved_species_movement_and_creature_types(self):
         expected = {

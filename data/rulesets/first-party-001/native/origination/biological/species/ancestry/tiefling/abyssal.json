@@ -13,16 +13,16 @@
   ],
   "traits": [
     {
-      "traitId": "trait.tiefling.abyssal.abyssal-resistance"
+      "traitId": "trait.poison-damage-resistance"
     },
     {
-      "traitId": "trait.tiefling.abyssal.poison-spray"
+      "traitId": "trait.poison-spray"
     },
     {
-      "traitId": "trait.tiefling.abyssal.ray-of-sickness"
+      "traitId": "trait.ray-of-sickness"
     },
     {
-      "traitId": "trait.tiefling.abyssal.hold-person"
+      "traitId": "trait.hold-person"
     }
   ],
   "reviewNotes": [

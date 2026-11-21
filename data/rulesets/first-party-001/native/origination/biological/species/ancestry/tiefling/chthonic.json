@@ -13,16 +13,16 @@
   ],
   "traits": [
     {
-      "traitId": "trait.tiefling.chthonic.chthonic-resistance"
+      "traitId": "trait.necrotic-damage-resistance"
     },
     {
-      "traitId": "trait.tiefling.chthonic.chill-touch"
+      "traitId": "trait.chill-touch"
     },
     {
-      "traitId": "trait.tiefling.chthonic.false-life"
+      "traitId": "trait.false-life"
     },
     {
-      "traitId": "trait.tiefling.chthonic.ray-of-enfeeblement"
+      "traitId": "trait.ray-of-enfeeblement"
     }
   ],
   "reviewNotes": [

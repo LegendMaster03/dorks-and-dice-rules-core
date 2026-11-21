@@ -178,7 +178,7 @@ class OriginCharacteristicInventoryTests(unittest.TestCase):
                     family["intrinsicFields"]["breathWeaponArea"],
                 )
                 self.assertEqual(
-                    {"psionic-mind", "gem-flight"},
+                    {"psionic-mind", "spectral-flight"},
                     {t["localTraitId"] for t in family["traits"]},
                 )
                 self.assertEqual(
@@ -189,8 +189,8 @@ class OriginCharacteristicInventoryTests(unittest.TestCase):
                     [t["definition"] for t in leaf["traits"]],
                 )
 
-    def test_qualified_occurrences_preserve_same_named_different_traits(self):
-        # Orc and Goliath each author Powerful Build, but those effects differ.
+    def test_qualified_occurrences_preserve_shared_powerful_build_provenance(self):
+        # Orc and Goliath share one complete gene but distinct source occurrences.
         orc = source_inventory("species.orc", self.catalog)
         goliath = source_inventory("ancestry.goliath.cloud", self.catalog)
         orc_trait = next(
@@ -202,7 +202,7 @@ class OriginCharacteristicInventoryTests(unittest.TestCase):
             if x["localTraitId"] == "powerful-build"
         )
         self.assertNotEqual(orc_trait["occurrenceId"], goliath_trait["occurrenceId"])
-        self.assertNotEqual(orc_trait["definition"], goliath_trait["definition"])
+        self.assertEqual(orc_trait["definition"], goliath_trait["definition"])
 
     def test_projection_is_deterministic_and_does_not_mutate_catalog(self):
         before = copy.deepcopy(self.catalog)

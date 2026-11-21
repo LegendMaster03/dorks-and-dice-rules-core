@@ -68,10 +68,10 @@ public sealed class NativeOriginTremorsenseProjectorTests
         var engine = new NativeOriginConstructionEngine(catalog);
         var offered = engine.Evaluate(new(original)).EvaluatedProposal.Candidates;
         var stone = Assert.Single(offered, x => x.ContributorId == "dwarf" &&
-            x.Identity.MechanicalDefinitionId == "trait.dwarf.stonebound-tremorsense");
+            x.Identity.MechanicalDefinitionId == "trait.stonebound-tremorsense");
         var earth = Assert.Single(offered, x => x.ContributorId == "rock" &&
             x.Identity.MechanicalDefinitionId ==
-                "trait.gnome.rock.earthbound-tremorsense");
+                "trait.earthbound-tremorsense");
         var foundation = offered.Where(x => x.ContributorId == "dwarf" &&
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
@@ -123,7 +123,7 @@ public sealed class NativeOriginTremorsenseProjectorTests
         Assert.Equal("resolved", projected.Status);
         Assert.True(projected.PreviewOnly);
         var sense = Assert.Single(projected.Senses);
-        Assert.Equal("trait.dwarf.stonebound-tremorsense", sense.DefinitionId);
+        Assert.Equal("trait.stonebound-tremorsense", sense.DefinitionId);
         Assert.Equal("species.dwarf", sense.SourceId);
         Assert.Equal(60, sense.RangeFeet);
         Assert.Equal("bonus-action", sense.Activation);
@@ -154,9 +154,9 @@ public sealed class NativeOriginTremorsenseProjectorTests
         Assert.Equal("resolved", view.Status);
         Assert.Equal(2, view.Senses.Count);
         var stone = Assert.Single(view.Senses, x =>
-            x.DefinitionId == "trait.dwarf.stonebound-tremorsense");
+            x.DefinitionId == "trait.stonebound-tremorsense");
         var earth = Assert.Single(view.Senses, x =>
-            x.DefinitionId == "trait.gnome.rock.earthbound-tremorsense");
+            x.DefinitionId == "trait.earthbound-tremorsense");
         Assert.Equal("species.dwarf", stone.SourceId);
         Assert.Equal("ancestry.gnome.rock", earth.SourceId);
         Assert.Equal(60, stone.RangeFeet);
@@ -202,7 +202,7 @@ public sealed class NativeOriginTremorsenseProjectorTests
         var completed = Direct("species.dwarf");
         var grant = Assert.Single(completed.Profile!.Underlying.InherentGrants,
             x => x.Identity.MechanicalDefinitionId ==
-                "trait.dwarf.stonebound-tremorsense");
+                "trait.stonebound-tremorsense");
         var forgedValue = JsonSerializer.SerializeToElement(new
         {
             id = "stonebound-tremorsense",

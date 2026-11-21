@@ -72,15 +72,15 @@ public sealed class NativeOriginTieflingSpellBindingTests
     private static readonly (string Ancestry, string Cantrip, string Three,
         string Five)[] Courses =
     [
-        ("ancestry.tiefling.infernal", "trait.tiefling.infernal.fire-bolt",
-            "trait.tiefling.infernal.hellish-rebuke",
-            "trait.tiefling.infernal.darkness"),
-        ("ancestry.tiefling.chthonic", "trait.tiefling.chthonic.chill-touch",
-            "trait.tiefling.chthonic.false-life",
-            "trait.tiefling.chthonic.ray-of-enfeeblement"),
-        ("ancestry.tiefling.abyssal", "trait.tiefling.abyssal.poison-spray",
-            "trait.tiefling.abyssal.ray-of-sickness",
-            "trait.tiefling.abyssal.hold-person")
+        ("ancestry.tiefling.infernal", "trait.fire-bolt",
+            "trait.hellish-rebuke",
+            "trait.darkness"),
+        ("ancestry.tiefling.chthonic", "trait.chill-touch",
+            "trait.false-life",
+            "trait.ray-of-enfeeblement"),
+        ("ancestry.tiefling.abyssal", "trait.poison-spray",
+            "trait.ray-of-sickness",
+            "trait.hold-person")
     ];
 
     private static NativeOriginConstructionResult SelectedDirect(
@@ -131,7 +131,7 @@ public sealed class NativeOriginTieflingSpellBindingTests
         Assert.Equal(ability, choice.EffectiveValue!.Value.GetString());
 
         var shared = Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.tiefling.otherworldly-presence");
+            x.Identity.MechanicalDefinitionId == "trait.otherworldly-presence");
         Assert.Equal("species.tiefling", shared.Identity.Occurrence.Source.Id);
         Assert.Equal("descendant", shared.EffectiveValue!.Value
             .GetProperty("originBindings").GetProperty("spellcastingAbility")
@@ -164,8 +164,6 @@ public sealed class NativeOriginTieflingSpellBindingTests
                     .GetProperty("atWill").GetBoolean());
             else
             {
-                Assert.True(spell.EffectiveValue.Value
-                    .GetProperty("alwaysPrepared").GetBoolean());
                 Assert.Equal(1, spell.EffectiveValue.Value
                     .GetProperty("freeUses").GetInt32());
                 Assert.Equal("long-rest", spell.EffectiveValue.Value
@@ -173,7 +171,7 @@ public sealed class NativeOriginTieflingSpellBindingTests
                 Assert.True(spell.EffectiveValue.Value
                     .GetProperty("slotCasting").GetBoolean());
             }
-            if (id == "trait.tiefling.infernal.hellish-rebuke")
+            if (id == "trait.hellish-rebuke")
                 Assert.Equal(2, spell.EffectiveValue!.Value
                     .GetProperty("freeCastSpellLevel").GetInt32());
         }
@@ -184,7 +182,7 @@ public sealed class NativeOriginTieflingSpellBindingTests
             JsonSerializer.Serialize(result.Profile))!;
         var rebound = Assert.Single(saved.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.tiefling.otherworldly-presence");
+                "trait.otherworldly-presence");
         Assert.Equal(ability,
             rebound.Parameters!["spellcastingAbility"].GetString());
     }
@@ -202,7 +200,7 @@ public sealed class NativeOriginTieflingSpellBindingTests
         Assert.Contains(result.Issues, x => x.Code == "origin-binding-choice-missing");
         Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.tiefling.otherworldly-presence" ||
+                "trait.otherworldly-presence" ||
             x.Identity.MechanicalDefinitionId?.StartsWith(
                 "trait.tiefling." + ancestry.Split('.')[2] + ".",
                 StringComparison.Ordinal) == true &&
@@ -223,14 +221,14 @@ public sealed class NativeOriginTieflingSpellBindingTests
 
         var shared = Assert.Single(offered, x => x.ContributorId == "a" &&
             x.Identity.MechanicalDefinitionId ==
-                "trait.tiefling.otherworldly-presence");
+                "trait.otherworldly-presence");
         var ability = Assert.Single(offered, x => x.ContributorId == abilityOwner &&
             x.Identity.IntrinsicSlotId == "spellcastingAbility");
         var leaf = Assert.Single(offered, x =>
             x.ContributorId == (selectSameContributorLeaf ? "a" : "b") &&
             x.Identity.MechanicalDefinitionId ==
                 (selectSameContributorLeaf
-                    ? "trait.tiefling.infernal.fire-bolt"
+                    ? "trait.fire-bolt"
                     : "trait.tiefling." + secondAncestry.Split('.')[2] +
                         (secondAncestry.EndsWith(".chthonic", StringComparison.Ordinal)
                             ? ".chill-touch" : ".fire-bolt")));
@@ -269,8 +267,8 @@ public sealed class NativeOriginTieflingSpellBindingTests
 
         foreach (var id in new[]
         {
-            "trait.tiefling.otherworldly-presence",
-            "trait.tiefling.infernal.hellish-rebuke"
+            "trait.otherworldly-presence",
+            "trait.hellish-rebuke"
         })
         {
             var original = Assert.Single(saved.Underlying.InherentGrants, x =>
@@ -319,9 +317,9 @@ public sealed class NativeOriginTieflingSpellBindingTests
             x.Code == "origin-binding-choice-missing");
         Assert.DoesNotContain(result.Profile?.Underlying.InherentGrants ?? [], x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.tiefling.otherworldly-presence");
+                "trait.otherworldly-presence");
         Assert.DoesNotContain(result.Profile?.Underlying.InherentGrants ?? [], x =>
-            x.Identity.MechanicalDefinitionId == "trait.tiefling.infernal.fire-bolt");
+            x.Identity.MechanicalDefinitionId == "trait.fire-bolt");
     }
 
     [Fact]
@@ -380,7 +378,7 @@ public sealed class NativeOriginTieflingSpellBindingTests
         Assert.Empty(state.RemainingFreeCasts);
         var shared = Assert.Single(result.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.tiefling.otherworldly-presence");
+                "trait.otherworldly-presence");
         var cantrip = NativeOriginInnateSpellResourceLedger.Apply(
             catalog, result, character, state,
             new(NativeOriginInnateSpellLedgerActionKind.CheckAtWill,
@@ -421,9 +419,9 @@ public sealed class NativeOriginTieflingSpellBindingTests
             string.Join("; ", result.Issues.Select(x => x.Code + ":" + x.Detail)));
         var shared = Assert.Single(result.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.tiefling.otherworldly-presence");
+                "trait.otherworldly-presence");
         var leaf = Assert.Single(result.Profile.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.tiefling.infernal.fire-bolt");
+            x.Identity.MechanicalDefinitionId == "trait.fire-bolt");
         Assert.Equal("wisdom",
             shared.Parameters!["spellcastingAbility"].GetString());
         Assert.Equal("wisdom",

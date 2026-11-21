@@ -6,13 +6,13 @@
   "selectable": true,
   "traits": [
     {
-      "traitId": "trait.dwarf.dwarven-toughness"
+      "traitId": "trait.level-based-vitality"
     },
     {
-      "traitId": "trait.dwarf.dwarven-resilience"
+      "traitId": "trait.poison-resilience"
     },
     {
-      "traitId": "trait.dwarf.stonebound-tremorsense"
+      "traitId": "trait.stonebound-tremorsense"
     }
   ],
   "creatureType": "humanoid",

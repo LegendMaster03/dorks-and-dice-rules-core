@@ -6,19 +6,19 @@
   "selectable": true,
   "traits": [
     {
-      "traitId": "trait.halfling.halfling-luck"
+      "traitId": "trait.luck-reroll"
     },
     {
-      "traitId": "trait.halfling.brave"
+      "traitId": "trait.brave"
     },
     {
-      "traitId": "trait.halfling.halfling-nimbleness"
+      "traitId": "trait.larger-creature-passage"
     },
     {
-      "traitId": "trait.halfling.naturally-stealthy"
+      "traitId": "trait.naturally-stealthy"
     },
     {
-      "traitId": "trait.halfling.keen-hearing"
+      "traitId": "trait.keen-hearing"
     }
   ],
   "creatureType": "humanoid",

@@ -1,0 +1,13 @@
+{
+  "id": "trait.coldwater-swimmer",
+  "name": "Coldwater Swimmer",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "coldwater-swimmer",
+    "name": "Coldwater Swimmer",
+    "description": "You have a Swim Speed of 15 feet. This trait does not let you breathe underwater.",
+    "movementMode": "swim",
+    "speedFeet": 15,
+    "grantsWaterBreathing": false
+  }
+}

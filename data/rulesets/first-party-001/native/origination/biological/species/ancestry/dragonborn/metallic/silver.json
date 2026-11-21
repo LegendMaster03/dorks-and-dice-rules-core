@@ -8,7 +8,7 @@
   "damageType": "cold",
   "traits": [
     {
-      "traitId": "trait.dragonborn.silver.soft-landing"
+      "traitId": "trait.soft-landing"
     }
   ],
   "reviewNotes": [

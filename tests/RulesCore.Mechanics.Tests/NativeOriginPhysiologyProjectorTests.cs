@@ -69,7 +69,7 @@ public sealed class NativeOriginPhysiologyProjectorTests
     public void AmphibiousFromRealBronzeContributorGrantsBreathingButNotSwimmingSpeed()
     {
         var catalog = Catalog();
-        var result = Mixed(catalog, "trait.shared.amphibious");
+        var result = Mixed(catalog, "trait.amphibious");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var view = NativeOriginPhysiologyProjector.ProjectApprovedMixed(catalog, result);
         Assert.Equal("resolved", view.Status);
@@ -91,7 +91,7 @@ public sealed class NativeOriginPhysiologyProjectorTests
     public void AltitudeFromRealGoliathContributorPreservesScopeAndExclusions()
     {
         var catalog = Catalog();
-        var result = Mixed(catalog, "trait.goliath.altitude-acclimation");
+        var result = Mixed(catalog, "trait.altitude-acclimation");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var view = NativeOriginPhysiologyProjector.ProjectApprovedMixed(catalog, result);
         Assert.Equal("resolved", view.Status);
@@ -105,7 +105,7 @@ public sealed class NativeOriginPhysiologyProjectorTests
         Assert.Contains(result.EvaluatedProposal.Candidates, candidate =>
             candidate.ContributorId == "fire" &&
             candidate.Identity.MechanicalDefinitionId ==
-                "trait.goliath.altitude-acclimation");
+                "trait.altitude-acclimation");
         Assert.Equal(20000, altitude.IncludesElevationAboveFeet);
         Assert.Null(altitude.AltitudeLimitFeet);
         Assert.True(altitude.MaintainsAcclimationAtLowerElevations);
@@ -117,8 +117,8 @@ public sealed class NativeOriginPhysiologyProjectorTests
     public void TwoSelectedIndependentAdaptationsSurviveProfileSerialization()
     {
         var catalog = Catalog();
-        var result = Mixed(catalog, "trait.shared.amphibious",
-            "trait.goliath.altitude-acclimation");
+        var result = Mixed(catalog, "trait.amphibious",
+            "trait.altitude-acclimation");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var saved = JsonSerializer.Deserialize<NativeOriginProfile>(
             JsonSerializer.Serialize(result.Profile));
@@ -185,9 +185,9 @@ public sealed class NativeOriginPhysiologyProjectorTests
     public void AlteredAmphibiousPayloadCannotClaimAFreeSwimSpeed()
     {
         var catalog = Catalog();
-        var completed = Mixed(catalog, "trait.shared.amphibious");
+        var completed = Mixed(catalog, "trait.amphibious");
         var trait = Assert.Single(completed.Profile!.Current.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.amphibious");
+            x.Identity.MechanicalDefinitionId == "trait.amphibious");
         var modified = JsonNode.Parse(trait.EffectiveValue!.Value.GetRawText())!;
         modified["grantsSwimSpeed"] = true;
         var altered = Replace(completed, trait with
@@ -204,9 +204,9 @@ public sealed class NativeOriginPhysiologyProjectorTests
     public void ForgedCandidateEvidenceAndDuplicateGrantsFailClosed()
     {
         var catalog = Catalog();
-        var completed = Mixed(catalog, "trait.shared.amphibious");
+        var completed = Mixed(catalog, "trait.amphibious");
         var trait = Assert.Single(completed.Profile!.Current.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.amphibious");
+            x.Identity.MechanicalDefinitionId == "trait.amphibious");
         var forged = Replace(completed, trait with
         {
             SourceCandidateIds = ["invented-offer"]
@@ -248,8 +248,8 @@ public sealed class NativeOriginPhysiologyProjectorTests
     public void VerifiedMixedParentTransmitsOnlyItsManifestedPhysiology()
     {
         var catalog = Catalog();
-        var parent = Mixed(catalog, "trait.shared.amphibious",
-            "trait.goliath.altitude-acclimation");
+        var parent = Mixed(catalog, "trait.amphibious",
+            "trait.altitude-acclimation");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, parent.Status);
         var profile = parent.Profile!;
         var proposal = new NativeOriginProposal("physiology-descendant",
@@ -287,7 +287,7 @@ public sealed class NativeOriginPhysiologyProjectorTests
             physiology.AltitudeAcclimation!.SourceId);
         foreach (var grant in descendant.Profile!.Underlying.InherentGrants.Where(x =>
             x.Identity.MechanicalDefinitionId is
-                "trait.shared.amphibious" or "trait.goliath.altitude-acclimation"))
+                "trait.amphibious" or "trait.altitude-acclimation"))
         {
             var inherited = Assert.Single(grant.InheritedFrom!);
             Assert.Equal(profile.Id, inherited.ContributorProfileId);
@@ -300,7 +300,7 @@ public sealed class NativeOriginPhysiologyProjectorTests
     public void InvalidOrIncompleteMixedConstructionHasNoExecutableAdaptation()
     {
         var catalog = Catalog();
-        var completed = Mixed(catalog, "trait.shared.amphibious");
+        var completed = Mixed(catalog, "trait.amphibious");
         var incomplete = completed with
         {
             Status = NativeOriginConstructionStatus.Incomplete

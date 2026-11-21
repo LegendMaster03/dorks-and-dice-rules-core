@@ -285,10 +285,9 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                 "do not infer speed or terrain combinations.");
         }
 
-        // Two distinct canonical, passive traits can reference the SAME
-        // executable native rule (Elf and Tiefling Low-Light Vision currently do).
-        // Their different definitions do not represent two independently
-        // stackable benefits. They may be retained by a scoped explicit
+        // Two distinct canonical passive traits can reference the SAME
+        // executable native rule. A shared rule identity does not make the
+        // two definitions independently stackable. They may be retained by a scoped explicit
         // disposition, but no dominant source or automatic union is inferred.
         foreach (var group in active.Values
             .Where(x => !ignored.Contains(x.Candidate.Id))

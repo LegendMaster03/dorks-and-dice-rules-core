@@ -197,7 +197,7 @@ integration commit before any merge approval.
 `savingThrows` or `skillBonuses` properties was appended to
 `OutsideScopeTraits` after catalog/occurrence matching but **before** verifying
 its selected candidate, manifestation and authorization. Thus an Orc
-`trait.orc.adrenaline-rush` with fabricated candidate IDs or a missing
+`trait.adrenaline-rush` with fabricated candidate IDs or a missing
 manifestation could have appeared in the outside-scope collection even though
 it was not a legitimate manifested grant.
 
@@ -258,7 +258,7 @@ combined runtime behavior **has not been tested in C's isolated branch**.
 
 The C projector enumerates individual **surviving effective** grants without
 grouping by canonical definition. A's authenticated `RetainBoth` for two
-separately sourced occurrences of `trait.shared.low-light-vision` should
+separately sourced occurrences of `trait.low-light-vision` should
 therefore retain two distinct opaque items (with distinct grant/manifestation
 and source identities); it does **not** stack their perception benefits.
 A's `ConsolidateEvidence` for multiple selected candidates remains one grant

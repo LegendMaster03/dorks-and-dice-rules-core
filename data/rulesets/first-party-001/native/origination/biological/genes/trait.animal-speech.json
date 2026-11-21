@@ -1,0 +1,13 @@
+{
+  "id": "trait.animal-speech",
+  "name": "Animal Speech",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "animal-speech",
+    "description": "Gain Speak with Animals; cast it without a spell slot Proficiency Bonus times per Long Rest, or with an applicable spell slot.",
+    "spell": "speak-with-animals",
+    "freeUses": "proficiency-bonus",
+    "recharge": "long-rest",
+    "slotCasting": true
+  }
+}

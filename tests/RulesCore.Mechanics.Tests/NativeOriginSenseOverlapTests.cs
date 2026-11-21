@@ -71,11 +71,11 @@ public sealed class NativeOriginSenseOverlapTests
         var offered = Evaluate(original).EvaluatedProposal.Candidates;
         var stone = Assert.Single(offered, x =>
             x.ContributorId == "dwarf" &&
-            x.Identity.MechanicalDefinitionId == "trait.dwarf.stonebound-tremorsense");
+            x.Identity.MechanicalDefinitionId == "trait.stonebound-tremorsense");
         var earth = Assert.Single(offered, x =>
             x.ContributorId == "rock" &&
             x.Identity.MechanicalDefinitionId ==
-                "trait.gnome.rock.earthbound-tremorsense");
+                "trait.earthbound-tremorsense");
         var physical = offered.Where(x => x.ContributorId == "dwarf" &&
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
@@ -112,8 +112,8 @@ public sealed class NativeOriginSenseOverlapTests
             x.Path == "tremorsense");
         Assert.DoesNotContain(result.Profile?.Underlying.InherentGrants ?? [], x =>
             x.Identity.MechanicalDefinitionId is
-                "trait.dwarf.stonebound-tremorsense" or
-                "trait.gnome.rock.earthbound-tremorsense");
+                "trait.stonebound-tremorsense" or
+                "trait.earthbound-tremorsense");
         Assert.Contains(result.EvaluatedProposal.Candidates,
             x => x.Id == stone.Id);
         Assert.Contains(result.EvaluatedProposal.Candidates,
@@ -148,10 +148,10 @@ public sealed class NativeOriginSenseOverlapTests
         Assert.Equal(4, grants.Count);
         var selected = Assert.Single(grants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.dwarf.stonebound-tremorsense");
+                "trait.stonebound-tremorsense");
         Assert.DoesNotContain(grants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.gnome.rock.earthbound-tremorsense");
+                "trait.earthbound-tremorsense");
         var value = selected.EffectiveValue!.Value;
         Assert.Equal("tremorsense", value.GetProperty("sense").GetString());
         Assert.Equal(60, value.GetProperty("rangeFeet").GetInt32());
@@ -170,7 +170,7 @@ public sealed class NativeOriginSenseOverlapTests
             JsonSerializer.Serialize(result.Profile));
         var restored = Assert.Single(saved!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.dwarf.stonebound-tremorsense");
+                "trait.stonebound-tremorsense");
         Assert.Equal(value.GetRawText(), restored.EffectiveValue!.Value.GetRawText());
     }
 
@@ -198,7 +198,7 @@ public sealed class NativeOriginSenseOverlapTests
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var sense = Assert.Single(result.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.gnome.rock.earthbound-tremorsense");
+                "trait.earthbound-tremorsense");
         var value = sense.EffectiveValue!.Value;
         Assert.Equal(15, value.GetProperty("rangeFeet").GetInt32());
         Assert.Equal("passive", value.GetProperty("activation").GetString());
@@ -206,7 +206,7 @@ public sealed class NativeOriginSenseOverlapTests
         Assert.False(value.TryGetProperty("uses", out _));
         Assert.DoesNotContain(result.Profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.dwarf.stonebound-tremorsense");
+                "trait.stonebound-tremorsense");
     }
 
     [Fact]
@@ -232,16 +232,16 @@ public sealed class NativeOriginSenseOverlapTests
         }, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var senses = result.Profile!.Underlying.InherentGrants.Where(x =>
-            x.Identity.MechanicalDefinitionId is "trait.dwarf.stonebound-tremorsense"
-                or "trait.gnome.rock.earthbound-tremorsense").ToArray();
+            x.Identity.MechanicalDefinitionId is "trait.stonebound-tremorsense"
+                or "trait.earthbound-tremorsense").ToArray();
         Assert.Equal(2, senses.Length);
         Assert.Equal(60, senses.Single(x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.dwarf.stonebound-tremorsense")
+                "trait.stonebound-tremorsense")
             .EffectiveValue!.Value.GetProperty("rangeFeet").GetInt32());
         Assert.Equal("passive", senses.Single(x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.gnome.rock.earthbound-tremorsense")
+                "trait.earthbound-tremorsense")
             .EffectiveValue!.Value.GetProperty("activation").GetString());
         Assert.DoesNotContain(result.Issues, x =>
             x.Code == "same-sense-reconciliation-required");
@@ -253,8 +253,8 @@ public sealed class NativeOriginSenseOverlapTests
             withoutAuthority.Status);
         Assert.DoesNotContain(withoutAuthority.Profile?.Underlying.InherentGrants ?? [],
             x => x.Identity.MechanicalDefinitionId is
-                "trait.dwarf.stonebound-tremorsense" or
-                "trait.gnome.rock.earthbound-tremorsense");
+                "trait.stonebound-tremorsense" or
+                "trait.earthbound-tremorsense");
     }
 
     [Fact]
@@ -269,9 +269,9 @@ public sealed class NativeOriginSenseOverlapTests
             ], [], []);
         var candidates = Evaluate(original).EvaluatedProposal.Candidates;
         var stone = Assert.Single(candidates, x =>
-            x.Identity.MechanicalDefinitionId == "trait.dwarf.stonebound-tremorsense");
+            x.Identity.MechanicalDefinitionId == "trait.stonebound-tremorsense");
         var vision = Assert.Single(candidates, x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         var foundation = candidates.Where(x => x.ContributorId == "dwarf" &&
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();

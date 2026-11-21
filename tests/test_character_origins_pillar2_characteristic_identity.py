@@ -108,7 +108,7 @@ class CharacteristicIdentityEvidenceTests(unittest.TestCase):
             x["grantInstanceId"] is not None for x in report["candidates"]
         ))
 
-    def test_same_local_trait_name_can_mean_distinct_mechanical_definitions(self):
+    def test_unified_powerful_build_definition_keeps_distinct_source_occurrences(self):
         report = self.evidence([
             direct("orc", "species.orc"),
             direct("goliath", "ancestry.goliath.cloud"),
@@ -116,8 +116,11 @@ class CharacteristicIdentityEvidenceTests(unittest.TestCase):
         orc = self.find(report, "species.orc#trait:powerful-build")[0]
         goliath = self.find(report, "species.goliath#trait:powerful-build")[0]
         self.assertEqual(orc["traitConceptId"], goliath["traitConceptId"])
-        self.assertNotEqual(
+        self.assertEqual(
             orc["mechanicDefinitionId"], goliath["mechanicDefinitionId"]
+        )
+        self.assertEqual(
+            "study.definition.powerful-build", orc["mechanicDefinitionId"]
         )
         self.assertEqual(
             "explicit-synthetic-mapping", orc["identityStatus"]

@@ -91,8 +91,8 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         Assert.Equal("resolved", fresh.Status);
         var ledger = fresh.State!;
         Assert.Equal(0, ledger.Revision);
-        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
-        var darkness = Grant(origin, "trait.tiefling.infernal.darkness");
+        var hellish = Grant(origin, "trait.hellish-rebuke");
+        var darkness = Grant(origin, "trait.darkness");
         Assert.Single(ledger.RemainingFreeCasts);
         Assert.Equal(1, ledger.RemainingFreeCasts[hellish]);
         Assert.False(ledger.RemainingFreeCasts.ContainsKey(darkness));
@@ -134,8 +134,8 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var character = Character(catalog, 5);
         var ledger = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, character).State!;
-        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
-        var darkness = Grant(origin, "trait.tiefling.infernal.darkness");
+        var hellish = Grant(origin, "trait.hellish-rebuke");
+        var darkness = Grant(origin, "trait.darkness");
         Assert.Equal(2, ledger.RemainingFreeCasts.Count);
         Assert.Equal(1, ledger.RemainingFreeCasts[hellish]);
         Assert.Equal(1, ledger.RemainingFreeCasts[darkness]);
@@ -159,8 +159,8 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var character = Character(catalog, 5);
         var ledger = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, character).State!;
-        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
-        var atWill = Grant(origin, "trait.tiefling.otherworldly-presence");
+        var hellish = Grant(origin, "trait.hellish-rebuke");
+        var atWill = Grant(origin, "trait.otherworldly-presence");
 
         var slot = Step(catalog, origin, character, ledger,
             NativeOriginInnateSpellLedgerActionKind.RequestSlotCast, hellish);
@@ -189,7 +189,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var character = Character(catalog, 3);
         var ledger = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, character).State!;
-        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
+        var hellish = Grant(origin, "trait.hellish-rebuke");
         var used = Step(catalog, origin, character, ledger,
             NativeOriginInnateSpellLedgerActionKind.SpendFreeCast, hellish).State!;
         Assert.Equal("spell-ledger-revision-mismatch",
@@ -237,7 +237,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var levelThree = Character(catalog, 3);
         var ledger = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, levelThree).State!;
-        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
+        var hellish = Grant(origin, "trait.hellish-rebuke");
         var spent = Step(catalog, origin, levelThree, ledger,
             NativeOriginInnateSpellLedgerActionKind.SpendFreeCast, hellish).State!;
         var atFive = Step(catalog, origin, Character(catalog, 5), spent,
@@ -254,8 +254,8 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var origin = Direct(catalog, "ancestry.tiefling.infernal");
         var previous = Character(catalog, 3);
         var advanced = Character(catalog, 5);
-        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
-        var darkness = Grant(origin, "trait.tiefling.infernal.darkness");
+        var hellish = Grant(origin, "trait.hellish-rebuke");
+        var darkness = Grant(origin, "trait.darkness");
         var initialized = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, previous).State!;
         var spent = Step(catalog, origin, previous, initialized,
@@ -311,7 +311,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         Assert.Equal("resolved", migration.Status);
         Assert.Equal(1, migration.State!.Revision);
         Assert.Single(migration.State.RemainingFreeCasts);
-        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
+        var hellish = Grant(origin, "trait.hellish-rebuke");
         Assert.Equal(1, migration.State.RemainingFreeCasts[hellish]);
         var replay = NativeOriginInnateSpellResourceLedger.Advance(
             catalog, origin, first, third, migration.State, expectedRevision: 0);
@@ -371,7 +371,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
 
         var ledger = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, fourth).State!;
-        var animal = Grant(origin, "trait.gnome.forest.animal-speech");
+        var animal = Grant(origin, "trait.animal-speech");
         var spent = Step(catalog, origin, fourth, ledger,
             NativeOriginInnateSpellLedgerActionKind.SpendFreeCast, animal).State!;
         var migrated = NativeOriginInnateSpellResourceLedger.Advance(catalog,
@@ -440,7 +440,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var advancedCharacter = Character(catalog, 5);
         var before = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, previousCharacter).State!;
-        var grant = Grant(origin, "trait.gnome.forest.animal-speech");
+        var grant = Grant(origin, "trait.animal-speech");
         var oldMaximum = previousCharacter.Values["proficiency.bonus"].Value!.Value;
         var newMaximum = advancedCharacter.Values["proficiency.bonus"].Value!.Value;
         Assert.True(newMaximum > oldMaximum);
@@ -482,7 +482,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
             catalog, origin, previous).State!;
         var next = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, advanced).State!;
-        var grantId = Grant(origin, "trait.gnome.forest.animal-speech");
+        var grantId = Grant(origin, "trait.animal-speech");
         var oldMax = previous.Values["proficiency.bonus"].Value!.Value;
         var newMax = advanced.Values["proficiency.bonus"].Value!.Value;
         var decision = CapacityDecision(state, next, grantId,
@@ -556,7 +556,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var advanced = Character(catalog, 6);
         var state = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, previous).State!;
-        var grant = Grant(origin, "trait.tiefling.infernal.darkness");
+        var grant = Grant(origin, "trait.darkness");
         var newPreview = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, advanced).State!;
         var decision = CapacityDecision(state, newPreview, grant, 1, 1, 1);
@@ -576,8 +576,8 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var origin = Direct(catalog, "ancestry.tiefling.infernal");
         var fifth = Character(catalog, 5);
         var sixth = Character(catalog, 6);
-        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
-        var darkness = Grant(origin, "trait.tiefling.infernal.darkness");
+        var hellish = Grant(origin, "trait.hellish-rebuke");
+        var darkness = Grant(origin, "trait.darkness");
         var initial = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, fifth).State!;
         var spent = Step(catalog, origin, fifth, initial,
@@ -606,7 +606,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var initialized = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, character);
         Assert.Equal("resolved", initialized.Status);
-        var animal = Grant(origin, "trait.gnome.forest.animal-speech");
+        var animal = Grant(origin, "trait.animal-speech");
         var ledger = initialized.State!;
         Assert.Equal(proficiency, ledger.RemainingFreeCasts[animal]);
         var result = Step(catalog, origin, character, ledger,
@@ -633,7 +633,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var state = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, character).State!;
         Assert.Empty(state.RemainingFreeCasts);
-        var hellish = Grant(origin, "trait.tiefling.infernal.hellish-rebuke");
+        var hellish = Grant(origin, "trait.hellish-rebuke");
         var attempt = Step(catalog, origin, character, state,
             NativeOriginInnateSpellLedgerActionKind.SpendFreeCast, hellish);
         Assert.Equal("spell-ledger-spell-locked", attempt.Reason);

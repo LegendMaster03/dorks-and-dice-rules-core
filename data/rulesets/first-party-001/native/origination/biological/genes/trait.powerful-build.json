@@ -1,0 +1,20 @@
+{
+  "id": "trait.powerful-build",
+  "name": "Powerful Build",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "powerful-build",
+    "name": "Powerful Build",
+    "description": "Count as one size larger when determining carrying capacity and how much weight you can push, drag, or lift. You have Advantage on ability checks to end the Grappled condition. This does not change your actual size, occupied space, reach, weapon permissions, or grapple size modifiers.",
+    "advantageOnAbilityChecksToEndCondition": "condition.grappled",
+    "effectiveSizeCategoriesHigherForCarryingCapacity": 1,
+    "doesNotChange": [
+      "actual-size",
+      "occupied-space",
+      "attack-reach",
+      "weapon-permissions",
+      "grapple-size-modifiers"
+    ],
+    "effectiveSizeCategoriesHigherForPushingDraggingLifting": 1
+  }
+}

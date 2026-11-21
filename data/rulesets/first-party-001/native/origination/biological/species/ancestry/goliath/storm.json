@@ -7,13 +7,13 @@
   "parent": "species.goliath",
   "traits": [
     {
-      "traitId": "trait.goliath.storm.storms-thunder"
+      "traitId": "trait.storms-thunder"
     },
     {
-      "traitId": "trait.goliath.storm.storm-strike"
+      "traitId": "trait.storm-strike"
     },
     {
-      "traitId": "trait.goliath.storm.maelstrom-aura"
+      "traitId": "trait.maelstrom-aura"
     }
   ],
   "reviewNotes": [

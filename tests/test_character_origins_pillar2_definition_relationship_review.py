@@ -70,7 +70,7 @@ class DefinitionRelationshipReviewTests(unittest.TestCase):
         self.assertEqual("not-authorized", report["authority"])
         self.assertNotIn("manifestedCharacteristics", report)
 
-    def test_orc_and_goliath_powerful_build_are_not_equated_by_local_name(self):
+    def test_orc_and_goliath_shared_powerful_build_has_identical_structure(self):
         report = self.review()
         pair = self.pair(
             report,
@@ -78,7 +78,7 @@ class DefinitionRelationshipReviewTests(unittest.TestCase):
             "species.goliath#trait:powerful-build",
         )
         self.assertIn("same-local-trait-id", pair["candidateReasons"])
-        self.assertNotEqual(
+        self.assertEqual(
             "identical-structured-fields-review",
             pair["classification"]
         )

@@ -224,7 +224,7 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
 
     def test_prose_only_traits_remain_manifestable_for_review(self):
         p = self.draft("halfling", [direct("one", "species.halfling")], [
-            trait("species.halfling#trait:halfling-luck"),
+            trait("species.halfling#trait:luck-reroll"),
         ])
         self.assertEqual(
             ["prose-only-effect"],
@@ -365,11 +365,11 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
         ])
         deferred = {x["field"]: x for x in p["deferredSourceFields"]}
         self.assertIn(
-            "species.dragonborn#trait:draconic-resistance", deferred,
+            "species.dragonborn#trait:damage-type-resistance", deferred,
         )
         self.assertEqual(
             "trait-parameters-not-modeled",
-            deferred["species.dragonborn#trait:draconic-resistance"][
+            deferred["species.dragonborn#trait:damage-type-resistance"][
                 "classification"],
         )
         with self.assertRaisesRegex(
@@ -377,7 +377,7 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
         ):
             self.draft("red", [
                 direct("red", "ancestry.dragonborn.red")
-            ], [trait("species.dragonborn#trait:draconic-resistance")])
+            ], [trait("species.dragonborn#trait:damage-type-resistance")])
 
     def test_no_trait_auto_manifests_and_duplicate_identity_is_rejected(self):
         p = self.draft("empty", [

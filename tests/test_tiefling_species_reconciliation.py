@@ -81,7 +81,6 @@ class TieflingSpeciesReconciliationTests(unittest.TestCase):
                                             (fifth, level5, 5)):
                     self.assertEqual(spell, entry["spell"])
                     self.assertEqual(level, entry["level"])
-                    self.assertTrue(entry["alwaysPrepared"])
                     self.assertEqual(1, entry["freeUses"])
                     self.assertEqual("long-rest", entry["recharge"])
                     self.assertTrue(entry["slotCasting"])

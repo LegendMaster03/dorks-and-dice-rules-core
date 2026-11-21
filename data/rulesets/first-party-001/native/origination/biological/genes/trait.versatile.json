@@ -1,0 +1,14 @@
+{
+  "id": "trait.versatile",
+  "name": "Versatile",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "versatile",
+    "name": "Versatile",
+    "description": "At character creation, choose one additional Origin feat. This choice is in addition to any feat granted by your other character-creation selections.",
+    "grantType": "feat-choice",
+    "featCategory": "origin",
+    "choiceCount": 1,
+    "when": "character-creation"
+  }
+}

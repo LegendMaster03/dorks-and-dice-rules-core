@@ -14,7 +14,7 @@ public static class NativeOriginInnateSpellProgressionProjector
     public sealed record Spell(
         string GrantId, string TraitId, string SourceId, string SpellId,
         string Availability, int UnlockCharacterLevel,
-        string? SpellcastingAbility, bool AtWill, bool AlwaysPrepared,
+        string? SpellcastingAbility, bool AtWill,
         bool SlotCasting, int? FreeUsesPerRecharge, string? FreeUsesFormula,
         string? Recharge, int? FreeCastSpellLevel);
 
@@ -131,12 +131,9 @@ public static class NativeOriginInnateSpellProgressionProjector
             }
 
             var atWill = True(authored, "atWill");
-            var prepared = True(authored, "alwaysPrepared");
             var slots = True(authored, "slotCasting");
             if (authored.TryGetProperty("atWill", out var atWillField) &&
                 atWillField.ValueKind is not (JsonValueKind.True or JsonValueKind.False) ||
-                authored.TryGetProperty("alwaysPrepared", out var prepField) &&
-                prepField.ValueKind is not (JsonValueKind.True or JsonValueKind.False) ||
                 authored.TryGetProperty("slotCasting", out var slotField) &&
                 slotField.ValueKind is not (JsonValueKind.True or JsonValueKind.False))
             {
@@ -196,7 +193,7 @@ public static class NativeOriginInnateSpellProgressionProjector
             }
             spells.Add(new(grant.Id, id, grant.Identity.Occurrence.Source.Id,
                 spellId!, characterLevel >= unlock ? "available" : "locked",
-                unlock, ability, atWill, prepared, slots,
+                unlock, ability, atWill, slots,
                 freeUses, formula, recharge, freeLevel));
         }
 

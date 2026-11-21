@@ -185,18 +185,18 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
         )
         self.assertEqual(
             {"damageType": "fire"},
-            proposed["species.dragonborn#trait:draconic-resistance"]["parameters"],
+            proposed["species.dragonborn#trait:damage-type-resistance"]["parameters"],
         )
         self.assertEqual(
             {"damageType": "fire"},
-            proposed["ancestry.dragonborn.chromatic#trait:chromatic-warding"]["parameters"],
+            proposed["ancestry.dragonborn.chromatic#trait:temporary-damage-immunity"]["parameters"],
         )
         deferred = {x["field"] for x in report["deferredSourceEvidence"]}
         self.assertNotIn(
-            "species.dragonborn#trait:draconic-resistance", deferred,
+            "species.dragonborn#trait:damage-type-resistance", deferred,
         )
         self.assertNotIn(
-            "ancestry.dragonborn.chromatic#trait:chromatic-warding", deferred,
+            "ancestry.dragonborn.chromatic#trait:temporary-damage-immunity", deferred,
         )
         # Authored leaf/family source fields are not separate Origin grants.
         self.assertIn("damageType", deferred)

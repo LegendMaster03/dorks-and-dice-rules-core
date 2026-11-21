@@ -1,0 +1,21 @@
+{
+  "id": "trait.clouds-jaunt",
+  "name": "Cloud's Jaunt",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "clouds-jaunt",
+    "name": "Cloud's Jaunt",
+    "description": "As a Bonus Action, you teleport up to 30 feet to an unoccupied space you can see. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+    "activation": {
+      "action": "bonus-action"
+    },
+    "teleport": {
+      "maximumDistanceFeet": 30,
+      "destination": "unoccupied-space-you-can-see"
+    },
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    }
+  }
+}

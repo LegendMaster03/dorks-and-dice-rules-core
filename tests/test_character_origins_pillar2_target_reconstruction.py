@@ -146,7 +146,7 @@ class Pillar2RockGnomeReconstructionTests(unittest.TestCase):
         self.assertEqual(
             {"creature.type", "creature.size", "movement.walk.speed",
              "species.gnome#trait:low-light-vision",
-             "species.gnome#trait:gnomish-cunning"},
+             "species.gnome#trait:magical-cunning"},
             {x["identity"] for x in exact},
         )
         for row in exact:
@@ -207,7 +207,7 @@ class Pillar2RockGnomeReconstructionTests(unittest.TestCase):
              "identity": "species.gnome#trait:low-light-vision",
              "parameters": {}},
             {"kind": "trait",
-             "identity": "species.gnome#trait:gnomish-cunning",
+             "identity": "species.gnome#trait:magical-cunning",
              "parameters": {}},
         ]
         sources = [

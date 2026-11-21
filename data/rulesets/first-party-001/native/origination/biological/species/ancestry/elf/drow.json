@@ -7,16 +7,16 @@
   "parent": "species.elf",
   "traits": [
     {
-      "traitId": "trait.elf.drow.dancing-lights"
+      "traitId": "trait.dancing-lights"
     },
     {
-      "traitId": "trait.elf.drow.faerie-fire"
+      "traitId": "trait.faerie-fire"
     },
     {
-      "traitId": "trait.elf.drow.darkness"
+      "traitId": "trait.darkness"
     },
     {
-      "traitId": "trait.elf.drow.sunlight-sensitivity"
+      "traitId": "trait.sunlight-sensitivity"
     }
   ],
   "darkvisionFeet": 120,
@@ -30,7 +30,7 @@
     {
       "id": "drow-darkvision-sunlight",
       "triggerIntrinsicSlot": "darkvisionFeet",
-      "requiresTraitDefinitionId": "trait.elf.drow.sunlight-sensitivity",
+      "requiresTraitDefinitionId": "trait.sunlight-sensitivity",
       "scope": "same-contributor",
       "kind": "Requires",
       "description": "Manifesting this Drow source's 120-foot Darkvision requires its native Sunlight Sensitivity unless an authorized table decision waives or replaces that link. Ordinary light protection still prevents the authored exposure trigger. The link does not automatically confer either trait."

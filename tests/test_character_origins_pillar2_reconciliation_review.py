@@ -204,7 +204,7 @@ class ReconciliationReviewTests(unittest.TestCase):
             out["pairwiseRelationships"][0]["reasonForReview"]
         )
 
-    def test_shared_concept_different_definitions_does_not_imply_upgrade(self):
+    def test_shared_powerful_build_definition_is_not_an_automatic_grant(self):
         r = self.identity([
             direct("orc", "species.orc"),
             direct("goliath", "ancestry.goliath.cloud"),
@@ -216,12 +216,13 @@ class ReconciliationReviewTests(unittest.TestCase):
         self.assertEqual(2, len(ids))
         out = self.review(r, *ids)
         self.one_relation(
-            out, "related-trait-concept-distinct-definitions"
+            out, "explicit-identity-mapping-same-configuration"
         )
         self.assertEqual(
-            "conceptual-family-does-not-establish-upgrade",
+            "mapping-evidence-not-stacking-policy",
             out["pairwiseRelationships"][0]["reasonForReview"]
         )
+        self.assertFalse(out["traitsGranted"])
 
     def test_generic_mechanical_component_overlap_without_identity_mapping(self):
         synthetic = {

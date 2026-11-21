@@ -8,7 +8,7 @@
   "damageType": "poison",
   "traits": [
     {
-      "traitId": "trait.shared.amphibious"
+      "traitId": "trait.amphibious"
     }
   ],
   "reviewNotes": [

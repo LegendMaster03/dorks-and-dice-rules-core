@@ -99,7 +99,7 @@ class ChoiceSchemaTests(unittest.TestCase):
     def test_goliath_ability_choice_is_a_persistent_selection_candidate(self):
         record = self.find(
             self.report, "species.goliath", "abilityChoice",
-            "giant-ancestry-aptitude"
+            "ancestral-aptitude"
         )
         self.assertEqual("finite-ability-choice", record["kind"])
         self.assertEqual(
@@ -164,7 +164,7 @@ class ChoiceSchemaTests(unittest.TestCase):
     def test_metallic_breath_options_are_use_time_not_birth_traits(self):
         record = self.find(
             self.report, "ancestry.dragonborn.metallic",
-            "options", "metallic-breath-weapon",
+            "options", "control-breath-weapon",
         )
         self.assertEqual("effect-option", record["kind"])
         self.assertEqual("on-use", record["timing"])

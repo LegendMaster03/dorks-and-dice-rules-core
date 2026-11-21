@@ -50,8 +50,8 @@ public static class NativeOriginPhysiologyProjector
         // Keep this interpreter limited to the two canonical traits whose
         // physiological payloads have been reviewed. Other movement modes,
         // flight, conditions, or adaptation claims need independent handling.
-        const string amphibiousId = "trait.shared.amphibious";
-        const string altitudeId = "trait.goliath.altitude-acclimation";
+        const string amphibiousId = "trait.amphibious";
+        const string altitudeId = "trait.altitude-acclimation";
         var selected = profile.Current.InherentGrants.Where(grant =>
             grant.Identity.Kind == NativeOriginCharacteristicKind.Trait &&
             grant.Identity.MechanicalDefinitionId is amphibiousId or altitudeId)

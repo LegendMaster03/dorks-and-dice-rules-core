@@ -15,13 +15,13 @@
   "walkingSpeedFeet": 30,
   "traits": [
     {
-      "traitId": "trait.human.skillful"
+      "traitId": "trait.skillful"
     },
     {
-      "traitId": "trait.human.versatile"
+      "traitId": "trait.versatile"
     },
     {
-      "traitId": "trait.human.adaptable-learning"
+      "traitId": "trait.adaptable-learning"
     }
   ],
   "reviewNotes": [
