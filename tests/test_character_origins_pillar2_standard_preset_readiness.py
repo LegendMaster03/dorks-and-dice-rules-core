@@ -207,7 +207,7 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
         report = self.propose("ancestry.gnome.rock")
         traits = {x["identity"] for x in self.entries(report, "trait")}
         self.assertIn(
-            "ancestry.gnome.rock#trait:earthbound-tremorsense", traits
+            "ancestry.gnome.rock#trait:stonebound-tremorsense", traits
         )
         self.assertNotIn(
             "species.dwarf#trait:stonebound-tremorsense", traits

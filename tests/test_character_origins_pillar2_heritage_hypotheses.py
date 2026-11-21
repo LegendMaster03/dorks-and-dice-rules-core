@@ -99,7 +99,7 @@ class Pillar2NarrativeHeritageTests(unittest.TestCase):
                 "child", inputs, [{
                     "kind": "trait",
                     "identity":
-                    "ancestry.gnome.rock#trait:earthbound-tremorsense",
+                    "ancestry.gnome.rock#trait:stonebound-tremorsense",
                     "parameters": {},
                 }], {}, self.blueprints, self.catalog, self.contracts,
             )

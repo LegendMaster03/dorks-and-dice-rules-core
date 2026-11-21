@@ -7,7 +7,7 @@
   "parent": "species.gnome",
   "traits": [
     {
-      "traitId": "trait.earthbound-tremorsense"
+      "traitId": "trait.stonebound-tremorsense"
     }
   ],
   "defaultUpbringing": "upbringing.gnome.rock"
