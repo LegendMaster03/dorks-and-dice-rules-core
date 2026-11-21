@@ -90,6 +90,7 @@ internal static class NativeOriginBiologicalCombinationProjector
                 // A derived synergy may cite one of these offers as an input,
                 // but it is not an expression of the source gene itself.
                 var expressions = effective.Where(grant =>
+                        grant.Synergy is null &&
                         grant.Identity.Kind == group.Key.Kind &&
                         (group.Key.Kind == NativeOriginCharacteristicKind.Trait
                             ? grant.Identity.MechanicalDefinitionId == group.Key.Id
