@@ -709,7 +709,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                     _nativeLinks.VerifyEffectiveLinks(proposal, resourceBound, Verified);
                 issues.AddRange(linkedIssues);
                 var (remaining, closureIssues) =
-                    _constraints.VerifyEffectiveRequirements(proposal, linked, Verified);
+                    _constraints.VerifyEffectiveConstraints(proposal, linked, Verified);
                 issues.AddRange(closureIssues);
                 closed = remaining;
                 if (closed.Count == previousCount) break;
