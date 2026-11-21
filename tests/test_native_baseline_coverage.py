@@ -213,7 +213,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
 
     def test_class_species_parent_structure(self):
         classes = {p.stem for p in (WORKING / "classes/base").glob("*.json")}
-        species = {p.stem for p in (WORKING / "species/base").glob("*.json")} | {p.stem for p in (AUTHORITATIVE / "species/base").glob("*.json")}
+        species = {p.stem for p in (WORKING / "species/base").glob("*.json")} | {p.stem for p in (AUTHORITATIVE / "origination/biological/species/base").glob("*.json")}
         self.assertEqual(12, len(classes))
         self.assertGreaterEqual(len(species), 10)
         for p in (WORKING / "classes/subclasses").glob("*/*.json"):
@@ -231,12 +231,12 @@ class NativeSrdBaselineTests(unittest.TestCase):
         native = AUTHORITATIVE
         species_defs = {
             r["id"]: r
-            for p in (native / "species/base").rglob("*.json")
+            for p in (native / "origination/biological/species/base").rglob("*.json")
             for r in [load(p)]
         }
         subspecies_defs = {
             r["id"]: r
-            for p in (native / "species/ancestry").rglob("*.json")
+            for p in (native / "origination/biological/species/ancestry").rglob("*.json")
             for r in [load(p)]
         }
         upbringings = {
@@ -322,7 +322,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
                 self.assertIn(cursor, records)
 
     def test_approved_dragonborn_shared_baseline_and_source_promotion(self):
-        path = AUTHORITATIVE / "species/base/dragonborn.json"
+        path = AUTHORITATIVE / "origination/biological/species/base/dragonborn.json"
         dragonborn = load(path)
         self.assertEqual("species.dragonborn", dragonborn["id"])
         self.assertFalse(dragonborn["selectable"])
@@ -348,11 +348,11 @@ class NativeSrdBaselineTests(unittest.TestCase):
         self.assertFalse((WORKING / "species/base/dragonborn.json").exists())
         row = next(r for r in self.entries if r["nativeId"] == "species.dragonborn")
         self.assertEqual("approved-native-reconciled", row["status"])
-        self.assertEqual("data/rulesets/first-party-001/native/species/base/dragonborn.json",
+        self.assertEqual("data/rulesets/first-party-001/native/origination/biological/species/base/dragonborn.json",
                          row["path"])
 
     def test_approved_chromatic_dragonborn_family_and_five_leaves(self):
-        base = AUTHORITATIVE / "species/ancestry/dragonborn"
+        base = AUTHORITATIVE / "origination/biological/species/ancestry/dragonborn"
         chromatic = load(base / "chromatic.json")
         self.assertEqual("ancestry.dragonborn.chromatic", chromatic["id"])
         self.assertEqual("species.dragonborn", chromatic["parent"])

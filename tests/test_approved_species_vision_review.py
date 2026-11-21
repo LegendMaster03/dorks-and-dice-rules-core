@@ -13,11 +13,11 @@ def read(path):
 
 
 def base(slug):
-    return read(NATIVE / "species/base" / (slug + ".json"))
+    return read(NATIVE / "origination/biological/species/base" / (slug + ".json"))
 
 
 def ancestry(path):
-    return read(NATIVE / "species/ancestry" / (path + ".json"))
+    return read(NATIVE / "origination/biological/species/ancestry" / (path + ".json"))
 
 
 class ApprovedVisionReviewTests(unittest.TestCase):

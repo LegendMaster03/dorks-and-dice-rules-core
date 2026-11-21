@@ -432,7 +432,7 @@ def validate_scenario(scenario: dict) -> None:
 def load_native(native: Path) -> dict:
     """Resolve canonical definitions without relying on source-local traits."""
     sources, traits = {}, {}
-    for path in sorted((native / "species").rglob("*.json")):
+    for path in sorted((native / "origination" / "biological" / "species").rglob("*.json")):
         record = json.loads(path.read_text(encoding="utf-8"))
         if record.get("kind") not in ("species", "ancestry"):
             continue
@@ -440,7 +440,7 @@ def load_native(native: Path) -> dict:
         if identifier in sources:
             raise ValueError(f"Duplicate source ID: {identifier}")
         sources[identifier] = record
-    for path in sorted((native / "traits").rglob("*.json")):
+    for path in sorted((native / "origination" / "biological" / "genes").rglob("*.json")):
         entries = json.loads(path.read_text(encoding="utf-8"))
         for definition in entries if isinstance(entries, list) else [entries]:
             identifier = definition["id"]

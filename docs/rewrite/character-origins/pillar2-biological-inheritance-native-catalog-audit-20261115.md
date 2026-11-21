@@ -1,5 +1,7 @@
 # Pillar 2 Biological Origination — Native Characteristic Eligibility Audit
 
+**2026-11-20 follow-up:** The six-trait `inheritanceMethods` allowlist described in this dated audit was a temporary test from the unified traits catalog. Biological canonical definitions now reside under `native/origination/biological/genes/`; the evaluator uses that directory for gene-offer classification instead. Prior trait-by-trait eligibility tables below document the historical subset, not the current permission model. Actual manifestations still require supported authored choices, dependencies, reconciliation, and source evidence.
+
 **Date:** 2026-11-15  
 **Repository:** `LegendMaster03/dorks-and-dice-rules-core`  
 **Working branch:** `feature/pillar2-power-evaluation-prototype-20261114`  
@@ -11,7 +13,7 @@ The Origin system translates a player's desired backstory into playable mechanic
 
 Current first-party biological eligibility requires (1) the **biological** origination method; (2) a native, selectable biological contributor, including the valid selected Ancestry chain of a nonselectable shared Species/family; (3) a core intrinsic slot expressly permitted by `rule.creature-origination.biologicalTransmission` **or** a canonical `origin-trait` with `inheritanceMethods: ["biological"]`; and (4) an explicit player-selected manifestation subject to the common validation and reconciliation pipeline. Donor traits are *offers*, not automatic grants. Custom sources, nonbiological methods, historical ancestry references, and independently acquired traits do not acquire biological permission by default. DM rulings remain a separate verified exception.
 
-**Audited content:** All **nine** base Species, **34** Ancestry records (including nonselectable family nodes), and the canonical trait files under `native/traits/`. Trait declarations are source-neutral; an Ancestry leaf is not a separate implementation of a shared canonical trait. Source-native property chains (for example, Dragonborn damage/area parameters) and cross-trait/resource dependencies were included in the review.
+**Audited content:** All **nine** base Species, **34** Ancestry records (including nonselectable family nodes), and the canonical trait files originally under `native/traits/` (relocated to `native/origination/biological/genes/` on November 20, 2026). Trait declarations are source-neutral; an Ancestry leaf is not a separate implementation of a shared canonical trait. Source-native property chains (for example, Dragonborn damage/area parameters) and cross-trait/resource dependencies were included in the review.
 
 ## Executable first-party subset
 

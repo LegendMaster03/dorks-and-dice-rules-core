@@ -6,8 +6,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = ROOT / "data/rulesets/first-party-001/native"
-BASE = NATIVE / "species/base/goliath.json"
-LEAVES = NATIVE / "species/ancestry/goliath"
+BASE = NATIVE / "origination/biological/species/base/goliath.json"
+LEAVES = NATIVE / "origination/biological/species/ancestry/goliath"
 WORKING = ROOT / "data/rulesets/first-party-001/working"
 MANIFEST = ROOT / "data/reference/srd/native-coverage-manifest.json"
 
@@ -227,7 +227,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
                    if r["nativeId"] == "species.goliath")
         self.assertEqual("race", row["kind"])
         self.assertEqual("approved-native-reconciled", row["status"])
-        self.assertEqual("data/rulesets/first-party-001/native/species/base/goliath.json",
+        self.assertEqual("data/rulesets/first-party-001/native/origination/biological/species/base/goliath.json",
                          row["path"])
         self.assertEqual(1, row["sourceRecords"])
         self.assertFalse((WORKING / "species/base/goliath.json").exists())

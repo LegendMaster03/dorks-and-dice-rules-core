@@ -168,7 +168,7 @@ public sealed class NativeOriginDrowSpellBindingTests
             x.ContributorId == spellContributor &&
             x.Identity.MechanicalDefinitionId == "trait.elf.drow.faerie-fire");
         Assert.Equal(3, foundation.Length);
-        Assert.NotEqual(NativeOriginEligibility.Eligible,
+        Assert.Equal(NativeOriginEligibility.Eligible,
             spell.SelectionBasis.Eligibility);
 
         var selected = foundation.Select((x, i) =>

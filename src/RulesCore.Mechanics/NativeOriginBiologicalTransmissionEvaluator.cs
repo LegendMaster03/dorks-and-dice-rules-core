@@ -84,7 +84,7 @@ internal sealed class NativeOriginBiologicalTransmissionEvaluator(
                         candidate.Identity.IntrinsicSlotId is { } slot &&
                         intrinsicSlots.Contains(slot),
                     NativeOriginCharacteristicKind.Trait =>
-                        IsAuthoredBiologicalTrait(candidate),
+                        IsBiologicalGene(candidate),
                     _ => false
                 };
                 return eligible ? candidate with
@@ -160,14 +160,12 @@ internal sealed class NativeOriginBiologicalTransmissionEvaluator(
                 NativeOriginMethodDefaultStatus.Available;
     }
 
-    private bool IsAuthoredBiologicalTrait(NativeOriginCandidate candidate)
+    private bool IsBiologicalGene(NativeOriginCandidate candidate)
     {
         var id = candidate.Identity.MechanicalDefinitionId;
         return id is not null && catalog.TryGetById(id, out var definition) &&
             definition is not null && definition.Category == "origin-trait" &&
-            definition.Definition.TryGetProperty("inheritanceMethods", out var methods) &&
-            methods.ValueKind == JsonValueKind.Array &&
-            methods.EnumerateArray().Any(x =>
-                x.ValueKind == JsonValueKind.String && x.GetString() == "biological");
+            definition.SourcePath.StartsWith(
+                "native/origination/biological/genes/", StringComparison.Ordinal);
     }
 }

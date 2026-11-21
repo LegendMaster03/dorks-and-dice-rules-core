@@ -1,5 +1,7 @@
 # Pillar 2 — independent review and mixed-construction completion candidate
 
+**2026-11-20 update:** The prior six-trait biological `inheritanceMethods` opt-in proof is superseded by gene classification based on the authoritative `native/origination/biological/genes/` directory. The original dated subset analysis below remains historical; a biological offer still does not automatically become a grant or waive relationship and choice constraints.
+
 **Date:** 2026-11-15  
 **Review baseline:** PR #157 at de751fb95801729aa3aeadfa04558995cbc1bfd2  
 **Status:** Research candidate, **not an adopted first-party rule or production implementation**.  

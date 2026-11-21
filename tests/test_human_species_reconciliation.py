@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-NATIVE = ROOT / "data/rulesets/first-party-001/native/species/base/human.json"
+NATIVE = ROOT / "data/rulesets/first-party-001/native/origination/biological/species/base/human.json"
 WORKING = ROOT / "data/rulesets/first-party-001/working/species/base/human.json"
 MANIFEST = ROOT / "data/reference/srd/native-coverage-manifest.json"
 
@@ -66,7 +66,7 @@ class HumanSpeciesReconciliationTests(unittest.TestCase):
         self.assertEqual(1, len(rows))
         self.assertEqual("approved-native-reconciled", rows[0]["status"])
         self.assertEqual(
-            "data/rulesets/first-party-001/native/species/base/human.json",
+            "data/rulesets/first-party-001/native/origination/biological/species/base/human.json",
             rows[0]["path"])
         self.assertEqual(2, rows[0]["sourceRecords"])
         self.assertEqual(2, len(rows[0]["candidates"]))

@@ -165,10 +165,9 @@
       "size",
       "walkingSpeedFeet"
     ],
-    "traitEligibilityField": "inheritanceMethods",
     "selection": "player-directed",
     "absentTraitEligibility": "unresolved-without-authored-or-verified-table-permission",
-    "scope": "Only the biological mixed-Origin method and selectable native biological contributors. Each offered characteristic is an option; it is never automatically manifested. A canonical origin-trait explicitly listing biological in inheritanceMethods may be selected. Other traits, nested/temporary profiles and other origination methods are not authorized by this rule.",
-    "note": "This intentionally small first-party vertical slice does not define characteristic capacity, latent transmission, generic trait equivalence, biological realism, or complete Species/Ancestry package inheritance. DM overrides and future method-specific policies remain separate."
+    "scope": "Only mixed biological Origination with valid selectable native or authenticated manifested biological contributors. Canonical origin-trait definitions authored under native/origination/biological/genes/ are available as candidate genes, not automatic grants. Actual manifestation, source provenance, authored dependencies, choices, reconciliation, and table authority still apply; nonbiological methods do not inherit these genes by their location.",
+    "note": "Gene classification follows the biological directory rather than a per-trait inheritanceMethods whitelist. This does not establish latent inheritance, independent transmission contrary to authored relationships, final allocation costs, or complete gameplay projection for every gene."
   }
 }

@@ -35,10 +35,7 @@
       "description": "Complete a Long Rest through four hours of trancelike meditation. Elves do not need to sleep.",
       "longRestHours": 4,
       "sleepRequired": false
-    },
-    "inheritanceMethods": [
-      "biological"
-    ]
+    }
   },
   {
     "id": "trait.elf.magical-sleep",

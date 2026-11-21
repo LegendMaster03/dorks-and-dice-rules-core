@@ -1,5 +1,7 @@
 # Pillar 2 — characteristic inheritance, expression, and quantitative balance
 
+**2026-11-20 implementation clarification:** The initial six-trait `inheritanceMethods` whitelist is superseded by biological gene identification from `native/origination/biological/genes/`. This changes offer eligibility, not the approved rules for independent transmission, parameter coupling, expression, or balance; those continue to follow authored mechanics. Dated sections describing the initial whitelist are historical.
+
 **Date:** 2026-11-14  
 **Status:** **Design candidate preserved for continued investigation.** This is not an approved biological allocation rule, trait cost schedule, native ruleset change, JSON schema, or implementation authorization.  
 **Scope:** Dorks & Dice Rules Core Character Origins, especially Pillar 2 (Origination, Heritage & Traits).  
@@ -37,7 +39,7 @@ Do not infer approval of a rule from the existence of an illustrative character 
 
 ### Repository-specific representation at this date
 
-The 2026-11-14 normalization work records canonical `origin-trait` definitions in `data/rulesets/first-party-001/native/traits/`, referenced by `traitId` from Species/Ancestry records. The loader expands them for existing consumers. This recent storage change **does not** introduce new inheritance grants or trait equivalences. Intrinsic properties (creature type, size, movement, senses, ancestry choices, etc.) still require general-purpose composition logic.
+The 2026-11-14 normalization work records canonical `origin-trait` definitions originally in `data/rulesets/first-party-001/native/traits/` (now under `native/origination/biological/genes/`), referenced by `traitId` from Species/Ancestry records. The loader expands them for existing consumers. This recent storage change **does not** introduce new inheritance grants or trait equivalences. Intrinsic properties (creature type, size, movement, senses, ancestry choices, etc.) still require general-purpose composition logic.
 
 Relevant source documents:
 

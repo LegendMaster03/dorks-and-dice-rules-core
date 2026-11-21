@@ -111,7 +111,7 @@ public sealed class NativeOriginSkillProficiencyProjectorTests
             x.Identity.MechanicalDefinitionId == "trait.human.skillful").ToArray();
         Assert.Equal(3, foundation.Length);
         Assert.Equal(humanDonors, skills.Length);
-        Assert.All(skills, x => Assert.NotEqual(
+        Assert.All(skills, x => Assert.Equal(
             NativeOriginEligibility.Eligible, x.SelectionBasis.Eligibility));
         var decisions = skills.Select(x =>
             Permit("allow-" + x.Id, x.Id)).ToArray();

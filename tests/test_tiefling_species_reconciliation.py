@@ -6,8 +6,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = ROOT / "data/rulesets/first-party-001/native"
-SPECIES = NATIVE / "species/base/tiefling.json"
-ANCESTRY = NATIVE / "species/ancestry/tiefling"
+SPECIES = NATIVE / "origination/biological/species/base/tiefling.json"
+ANCESTRY = NATIVE / "origination/biological/species/ancestry/tiefling"
 SOURCE = ROOT / "data/rulesets/first-party-001/working/species/base/tiefling.json"
 HISTORICAL_SECTION = ROOT / "data/rulesets/first-party-001/working/species/subspecies/tiefling/unnamed-77c4d3f18398af4b.json"
 COVERAGE = ROOT / "data/reference/srd/native-coverage-manifest.json"
@@ -103,7 +103,7 @@ class TieflingSpeciesReconciliationTests(unittest.TestCase):
                 if r["nativeId"] == "species.tiefling"]
         self.assertEqual(1, len(rows))
         self.assertEqual("approved-native-reconciled", rows[0]["status"])
-        self.assertEqual("data/rulesets/first-party-001/native/species/base/tiefling.json",
+        self.assertEqual("data/rulesets/first-party-001/native/origination/biological/species/base/tiefling.json",
                          rows[0]["path"])
         self.assertEqual(2, rows[0]["sourceRecords"])
         self.assertEqual(2, len(rows[0]["candidates"]))

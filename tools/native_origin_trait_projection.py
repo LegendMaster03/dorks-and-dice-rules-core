@@ -13,7 +13,7 @@ def _definitions(native_root):
     # This is a design-time reader, and callers can revise native files in the
     # same process. Caching by directory path would project stale trait payloads.
     entries = {}
-    for path in sorted((native_root / "traits").rglob("*.json")):
+    for path in sorted((native_root / "origination" / "biological" / "genes").rglob("*.json")):
         records = json.loads(path.read_text(encoding="utf-8"))
         for record in records if isinstance(records, list) else [records]:
             identity = record.get("id")
@@ -38,8 +38,8 @@ def expand_species_traits(value, path):
         return value
 
     native_root = next((parent for parent in Path(path).resolve().parents
-                        if (parent / "species").is_dir() and
-                        (parent / "traits").is_dir()), None)
+                        if (parent / "origination" / "biological" / "species").is_dir() and
+                        (parent / "origination" / "biological" / "genes").is_dir()), None)
     if native_root is None:
         raise ValueError(f"Missing native root for {path}")
     definitions = _definitions(native_root)
