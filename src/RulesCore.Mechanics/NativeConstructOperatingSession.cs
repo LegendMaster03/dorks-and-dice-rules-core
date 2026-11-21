@@ -599,7 +599,8 @@ public sealed class NativeConstructOperatingSession
             issues.Add(new("construct-soul-custody-core-missing",
                 "soulCustody", NativeOriginIssueSeverity.Incomplete,
                 "An installed soul-powered core is required."));
-        var soulIds = new HashSet<string>(StringComparer.Ordinal);
+        var currentlyImprisonedSoulIds =
+            new HashSet<string>(StringComparer.Ordinal);
         var deathIds = new HashSet<string>(StringComparer.Ordinal);
         foreach (var record in authenticatedRecords)
         {
@@ -609,7 +610,8 @@ public sealed class NativeConstructOperatingSession
                 record.DeathEventId.Length > 256 ||
                 !sources.Contains(record.CoreInstanceId) ||
                 !Enum.IsDefined(record.Disposition) ||
-                !soulIds.Add(record.SoulId) ||
+                (record.Disposition == NativeConstructSoulDisposition.Imprisoned &&
+                    !currentlyImprisonedSoulIds.Add(record.SoulId)) ||
                 !deathIds.Add(record.DeathEventId))
                 issues.Add(new("construct-soul-custody-record-invalid",
                     "soulCustody.records", NativeOriginIssueSeverity.Invalid,
