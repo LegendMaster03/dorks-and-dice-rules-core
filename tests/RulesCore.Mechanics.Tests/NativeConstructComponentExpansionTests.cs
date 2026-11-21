@@ -99,8 +99,9 @@ public sealed class NativeConstructComponentExpansionTests
         Assert.Contains(result.Issues, issue =>
             issue.Code == "construct-power-demand-unresolved");
     }
+
     [Fact]
-    public void NewDesignsAndEnhancementsCanBeAppliedToExistingComponentRoles()
+    public void NewDesignsAndEnhancementsMatchExistingComponentCapabilities()
     {
         var catalog = Catalog();
         var componentCapabilities = catalog.Search(category: "construct-component", limit: 100)
