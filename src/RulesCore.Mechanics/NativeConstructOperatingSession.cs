@@ -448,6 +448,138 @@ public sealed class NativeConstructOperatingSession
     }
 
     /// <summary>
+    /// Evaluate a hypothetical soul-fueled operating configuration.
+    /// Soul-energy availability is a DM decision: no invented fuel quantity,
+    /// timed depletion, queue, or implicit replenishment is computed here.
+    /// The host must authenticate this state before committing gameplay.
+    /// </summary>
+    public NativeConstructSoulCoreOperationPreview PreviewSoulCoreOperation(
+        IReadOnlyDictionary<string, bool> dmAdjudicatedEnergyAvailable,
+        IReadOnlyDictionary<string, bool>? overdriveRequested = null,
+        IReadOnlyDictionary<string, bool>? requestedEnabled = null,
+        IReadOnlyDictionary<string, string>? requestedModes = null)
+    {
+        ArgumentNullException.ThrowIfNull(dmAdjudicatedEnergyAvailable);
+        overdriveRequested ??= new Dictionary<string, bool>(StringComparer.Ordinal);
+        var issues = new List<NativeOriginContractIssue>();
+        var installed = _baseline.Components.Where(x =>
+                x.PowerSourceId == "construct-power-source.soul-gem")
+            .OrderBy(x => x.InstanceId, StringComparer.Ordinal).ToArray();
+        var ids = installed.Select(x => x.InstanceId)
+            .ToHashSet(StringComparer.Ordinal);
+        if (ids.Count == 0)
+            issues.Add(new("construct-soul-core-absent", "soul",
+                NativeOriginIssueSeverity.Incomplete,
+                "Soul-core operation requires an installed native soul source."));
+        if (dmAdjudicatedEnergyAvailable.Keys.Concat(overdriveRequested.Keys)
+            .Any(id => !ids.Contains(id)))
+            issues.Add(new("construct-soul-core-instance-invalid", "soul",
+                NativeOriginIssueSeverity.Invalid,
+                "Soul-core decisions must reference installed native source instances."));
+
+        var output = new Dictionary<string, int>(StringComparer.Ordinal);
+        var states = new List<NativeConstructSoulCoreSourceState>();
+        foreach (var part in installed)
+        {
+            var path = "soul." + part.InstanceId;
+            if (!dmAdjudicatedEnergyAvailable.TryGetValue(
+                part.InstanceId, out var energyAvailable))
+            {
+                issues.Add(new("construct-soul-energy-undetermined", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The DM must determine whether usable soul energy remains."));
+                continue;
+            }
+            if (!_catalog.TryGetById(part.PowerSourceId!, out var native) ||
+                native?.Category != "construct-power-source")
+            {
+                issues.Add(new("construct-soul-core-definition-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Soul-core operating values must resolve to native content."));
+                continue;
+            }
+            var raw = native.Definition;
+            var hasNormal = raw.TryGetProperty("powerOutput", out var basePower) &&
+                basePower.ValueKind == JsonValueKind.Number &&
+                basePower.TryGetInt32(out var normal);
+            var hasOverdrive = raw.TryGetProperty("overdrivePowerOutput",
+                out var enhanced) && enhanced.ValueKind == JsonValueKind.Number &&
+                enhanced.TryGetInt32(out var maximum);
+            if (!hasNormal || !hasOverdrive || normal <= 0 ||
+                maximum != normal + (long)normal / 2)
+            {
+                issues.Add(new("construct-soul-output-unresolved", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "Native normal power and 50% Overdrive output are required."));
+                continue;
+            }
+            var boosted = overdriveRequested.TryGetValue(part.InstanceId,
+                out var requested) && requested && energyAvailable;
+            var assigned = energyAvailable ? (boosted ? maximum : normal) : 0;
+            output[part.InstanceId] = assigned;
+            states.Add(new(part.InstanceId, energyAvailable, boosted, assigned));
+        }
+        if (issues.Count > 0)
+            return new(null, [], issues);
+
+        var evaluated = EvaluateConfigurationCore(
+            requestedEnabled, requestedModes, null, output);
+        return new(evaluated, states, []);
+    }
+
+    /// <summary>
+    /// Identify every installed soul core within range of a DM-authenticated
+    /// eligible death. This is passive and independent of the housing's
+    /// enabled flag. It does not select among overlapping cores, mutate
+    /// captured-soul history, or decide whether a soul is eligible.
+    /// </summary>
+    public NativeConstructSoulCapturePreview PreviewAutomaticSoulCapture(
+        bool eligibleSoul,
+        IReadOnlyDictionary<string, int> distancesFeetBySource)
+    {
+        ArgumentNullException.ThrowIfNull(distancesFeetBySource);
+        var issues = new List<NativeOriginContractIssue>();
+        var installed = _baseline.Components.Where(x =>
+                x.PowerSourceId == "construct-power-source.soul-gem")
+            .OrderBy(x => x.InstanceId, StringComparer.Ordinal).ToArray();
+        var ids = installed.Select(x => x.InstanceId)
+            .ToHashSet(StringComparer.Ordinal);
+        if (distancesFeetBySource.Keys.Any(id => !ids.Contains(id)))
+            issues.Add(new("construct-soul-capture-instance-invalid", "soulCapture",
+                NativeOriginIssueSeverity.Invalid,
+                "Death proximity must reference only installed soul cores."));
+        var matches = new List<NativeConstructSoulCaptureCandidate>();
+        foreach (var part in installed)
+        {
+            var path = "soulCapture." + part.InstanceId;
+            if (!distancesFeetBySource.TryGetValue(part.InstanceId, out var distance) ||
+                distance < 0)
+            {
+                issues.Add(new("construct-soul-capture-distance-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "An authenticated nonnegative distance is required for each installed core."));
+                continue;
+            }
+            if (!_catalog.TryGetById(part.PowerSourceId!, out var native) ||
+                native?.Category != "construct-power-source" ||
+                !native.Definition.TryGetProperty("captureRangeFeet",
+                    out var captureRange) ||
+                captureRange.ValueKind != JsonValueKind.Number ||
+                !captureRange.TryGetInt32(out var radius) || radius <= 0)
+            {
+                issues.Add(new("construct-soul-capture-range-unresolved", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The native soul source must specify its approved candidate capture radius."));
+                continue;
+            }
+            if (eligibleSoul && distance <= radius)
+                matches.Add(new(part.InstanceId, distance, radius));
+        }
+        return new(eligibleSoul, issues.Count == 0 ? matches : [],
+            issues.ToArray());
+    }
+
+    /// <summary>
     /// Capture an operating preset as ordinary data, not as authorization.
     /// Only configurations fully accepted by the current trusted evaluator
     /// may be captured. A saved preset must be revalidated before reuse.
