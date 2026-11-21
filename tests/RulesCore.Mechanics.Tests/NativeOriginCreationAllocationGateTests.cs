@@ -328,4 +328,82 @@ public sealed class NativeOriginCreationAllocationGateTests
         Assert.Equal(NativeOriginConstructionStatus.Conflicting,
             Evaluate(Direct(), policy).Status);
     }
+
+    [Fact]
+    public void DirectAndMixedCreationsResolveTheSameConfiguredSpeciesPrice()
+    {
+        var direct = Evaluate(Direct());
+        var mixed = Evaluate(Mixed());
+        var policy = Policy(100, direct, mixed);
+        var directSize = Assert.Single(direct.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "size").EffectiveValue!.Value;
+        var mixedSize = Assert.Single(mixed.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "size").EffectiveValue!.Value;
+        Assert.True(JsonElement.DeepEquals(directSize, mixedSize));
+
+        policy = policy with
+        {
+            Prices = policy.Prices.Select(x => x.MemberKeys.Contains(
+                "intrinsic:size", StringComparer.Ordinal)
+                ? x with
+                {
+                    Configurations =
+                    [
+                        new NativeOriginAllocationPriceConfiguration(
+                            "same-elf-size", 5, 1,
+                            [
+                                new NativeOriginAllocationPriceCondition(
+                                    "intrinsic:size", "value",
+                                    NativeOriginAllocationComparison.Equals, directSize)
+                            ])
+                    ]
+                } : x).ToArray()
+        };
+        var withDirect = Evaluate(Direct(), policy);
+        var withMixed = Evaluate(Mixed(), policy);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, withDirect.Status);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, withMixed.Status);
+        Assert.Equal(direct.Profile.Underlying.InherentGrants.Count + 4,
+            withDirect.CreationAllocation!.CommittedLoad);
+        Assert.Equal(mixed.Profile.Underlying.InherentGrants.Count + 4,
+            withMixed.CreationAllocation!.CommittedLoad);
+        Assert.Equal("same-elf-size", Assert.Single(
+            withDirect.CreationAllocation.Charges,
+            x => x.CharacteristicKeys.Contains("intrinsic:size")).ConfigurationId);
+        Assert.Equal("same-elf-size", Assert.Single(
+            withMixed.CreationAllocation.Charges,
+            x => x.CharacteristicKeys.Contains("intrinsic:size")).ConfigurationId);
+    }
+
+    [Fact]
+    public void RequiredGateRejectsMissingConfigurationWithoutCheapBaseFallback()
+    {
+        var mixed = Evaluate(Mixed());
+        var policy = Policy(100, mixed);
+        policy = policy with
+        {
+            Prices = policy.Prices.Select(x =>
+                x.MemberKeys.Contains("intrinsic:size", StringComparer.Ordinal)
+                ? x with
+                {
+                    Configurations =
+                    [
+                        new NativeOriginAllocationPriceConfiguration("only-small",
+                            2, 0,
+                            [
+                                new NativeOriginAllocationPriceCondition(
+                                    "intrinsic:size", "value",
+                                    NativeOriginAllocationComparison.Equals,
+                                    JsonSerializer.SerializeToElement("Small"))
+                            ])
+                    ]
+                } : x).ToArray()
+        };
+        var checkedResult = Evaluate(Mixed(), policy);
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, checkedResult.Status);
+        Assert.Equal("unresolved", checkedResult.CreationAllocation!.Status);
+        Assert.Null(checkedResult.CreationAllocation.CommittedLoad);
+        Assert.Contains(checkedResult.Issues, x =>
+            x.Code == "creation-allocation-unresolved");
+    }
 }
