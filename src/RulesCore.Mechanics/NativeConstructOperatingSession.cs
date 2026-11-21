@@ -132,13 +132,16 @@ public sealed class NativeConstructOperatingSession
                     "Operating changes may only address instances in the authorized assembly.")]);
         }
 
-        // Rated output alone is insufficient to authorize a solar or
-        // soul-driven generator in play. A source without trusted operating
-        // context contributes zero, and its powered traits remain inactive.
+        // Rated output alone is insufficient to authorize sources with
+        // contextual operating rules. A source with no authenticated
+        // environmental, soul-energy, or infernal-fuel context contributes
+        // zero pending source-specific adjudication. This is not a
+        // determination that a fuel-short generator loses normal output.
         var contextualSources = _baseline.Components
             .Where(x => x.PowerSourceId is
                 "construct-power-source.solar-crystal" or
-                "construct-power-source.soul-gem")
+                "construct-power-source.soul-gem" or
+                "construct-power-source.infernal-engine")
             .ToArray();
         var missingContext = contextualSources.Where(x =>
             trustedSourceOutputs is null ||
@@ -180,14 +183,24 @@ public sealed class NativeConstructOperatingSession
             return new(state, [], _originGrantIds,
                 state.Issues.Concat(missingContext.Select(x =>
                     new NativeOriginContractIssue(
-                        x.PowerSourceId == "construct-power-source.solar-crystal"
-                            ? "construct-solar-operating-context-required"
-                            : "construct-soul-operating-context-required",
+                        x.PowerSourceId switch
+                        {
+                            "construct-power-source.solar-crystal" =>
+                                "construct-solar-operating-context-required",
+                            "construct-power-source.infernal-engine" =>
+                                "construct-infernal-operating-context-required",
+                            _ => "construct-soul-operating-context-required"
+                        },
                         "operatingConfiguration",
                         NativeOriginIssueSeverity.Unresolved,
-                        x.PowerSourceId == "construct-power-source.solar-crystal"
-                            ? "Solar power requires validated light and battery state."
-                            : "Soul-core power requires DM-adjudicated fuel availability.")))
+                        x.PowerSourceId switch
+                        {
+                            "construct-power-source.solar-crystal" =>
+                                "Solar power requires validated light, battery and exhaustion state.",
+                            "construct-power-source.infernal-engine" =>
+                                "Infernal power requires verified long-rest fuel and instability status.",
+                            _ => "Soul-core power requires DM-adjudicated fuel availability."
+                        })))
                     .ToArray());
         var componentStates = state.Components.ToDictionary(x => x.InstanceId,
             StringComparer.Ordinal);
@@ -538,6 +551,89 @@ public sealed class NativeConstructOperatingSession
         var evaluated = EvaluateConfigurationCore(
             requestedEnabled, requestedModes, null, output);
         return new(evaluated, states, []);
+    }
+
+    /// <summary>
+    /// Preview infernal generation using authenticated long-rest sustenance
+    /// and any separately expended Overdrive fuel. Without long-rest fuel,
+    /// the engine still generates normal power; the host must adjudicate its
+    /// instability or overheating penalty before advancing gameplay.
+    /// This preview cannot spend either kind of fuel or specify Overdrive time.
+    /// </summary>
+    public NativeConstructInfernalOperationPreview PreviewInfernalOperation(
+        IReadOnlyDictionary<string, bool> longRestFuelProvided,
+        IReadOnlyDictionary<string, bool>? additionalOverdriveFuelProvided = null,
+        IReadOnlyDictionary<string, bool>? requestedEnabled = null,
+        IReadOnlyDictionary<string, string>? requestedModes = null)
+    {
+        ArgumentNullException.ThrowIfNull(longRestFuelProvided);
+        additionalOverdriveFuelProvided ??=
+            new Dictionary<string, bool>(StringComparer.Ordinal);
+        var issues = new List<NativeOriginContractIssue>();
+        var installed = _baseline.Components.Where(x =>
+                x.PowerSourceId == "construct-power-source.infernal-engine")
+            .OrderBy(x => x.InstanceId, StringComparer.Ordinal).ToArray();
+        var ids = installed.Select(x => x.InstanceId)
+            .ToHashSet(StringComparer.Ordinal);
+        if (ids.Count == 0)
+            issues.Add(new("construct-infernal-source-absent", "infernal",
+                NativeOriginIssueSeverity.Incomplete,
+                "Infernal operation requires an installed native Infernal Engine."));
+        if (longRestFuelProvided.Keys.Concat(additionalOverdriveFuelProvided.Keys)
+            .Any(id => !ids.Contains(id)))
+            issues.Add(new("construct-infernal-instance-invalid", "infernal",
+                NativeOriginIssueSeverity.Invalid,
+                "Fuel decisions must reference installed Infernal Engines."));
+
+        var outputs = new Dictionary<string, int>(StringComparer.Ordinal);
+        var sourceStates = new List<NativeConstructInfernalSourceState>();
+        foreach (var part in installed)
+        {
+            var path = "infernal." + part.InstanceId;
+            if (!longRestFuelProvided.TryGetValue(part.InstanceId, out var fed))
+            {
+                issues.Add(new("construct-infernal-fuel-state-required", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The host must confirm whether long-rest fuel was provided."));
+                continue;
+            }
+            if (!_catalog.TryGetById(part.PowerSourceId!, out var native) ||
+                native?.Category != "construct-power-source")
+            {
+                issues.Add(new("construct-infernal-source-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Infernal source must resolve to approved native content."));
+                continue;
+            }
+            var raw = native.Definition;
+            var normal = 0;
+            var maximum = 0;
+            if (!raw.TryGetProperty("powerOutput", out var outputValue) ||
+                outputValue.ValueKind != JsonValueKind.Number ||
+                !outputValue.TryGetInt32(out normal) ||
+                !raw.TryGetProperty("overdrivePowerOutput", out var boostedValue) ||
+                boostedValue.ValueKind != JsonValueKind.Number ||
+                !boostedValue.TryGetInt32(out maximum) ||
+                normal <= 0 || maximum != normal + (long)normal / 2)
+            {
+                issues.Add(new("construct-infernal-output-unresolved", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "Infernal native output must support the shared 50% Overdrive."));
+                continue;
+            }
+            var fuelForOverdrive = additionalOverdriveFuelProvided
+                .TryGetValue(part.InstanceId, out var spent) && spent;
+            var output = fuelForOverdrive ? maximum : normal;
+            outputs[part.InstanceId] = output;
+            sourceStates.Add(new(part.InstanceId, fed, fuelForOverdrive,
+                !fed, output));
+        }
+        if (issues.Count > 0)
+            return new(null, [], issues);
+
+        var evaluated = EvaluateConfigurationCore(
+            requestedEnabled, requestedModes, null, outputs);
+        return new(evaluated, sourceStates, []);
     }
 
     /// <summary>
