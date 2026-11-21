@@ -145,7 +145,7 @@ public sealed class NativeFirstPartyConstructCraftingTests
     }
 
     [Fact]
-    public void NoFirstPartyStartingAllowanceMeansNoAuthorizedCharacter()
+    public void FirstPartyStartingAllowanceRejectsClientInflation()
     {
         var catalog = Catalog();
         var assembly = new NativeConstructAssemblyRequest(
@@ -159,9 +159,9 @@ public sealed class NativeFirstPartyConstructCraftingTests
             .Evaluate(new(new(proposal), assembly));
 
         Assert.False(result.IsMechanicallyAuthorized);
-        Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Origin.Status);
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, result.Origin.Status);
         Assert.Contains(result.Origin.Issues,
-            issue => issue.Code == "construct-starting-allowance-unresolved");
+            issue => issue.Code == "construct-starting-allowance-unverified");
     }
 
     [Theory]
