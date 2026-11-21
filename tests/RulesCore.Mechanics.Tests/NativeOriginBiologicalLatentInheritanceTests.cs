@@ -237,6 +237,49 @@ public sealed class NativeOriginBiologicalLatentInheritanceTests
     }
 
     [Fact]
+    public void NewlyLatentGeneWithPersistentChoiceRequiresValidatedConfiguration()
+    {
+        var proposal = new NativeOriginProposal("goliath-choice-latent",
+            NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [new("goliath", new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.Native, "ancestry.goliath.stone"))],
+            [], []);
+        var candidates = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var foundation = Foundation(candidates, "goliath");
+        Assert.Equal(3, foundation.Length);
+        var aptitude = Assert.Single(candidates, x =>
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
+        var chosen = foundation.Select(Express).ToArray();
+        var list = foundation.Select(x => x.Id).Append(aptitude.Id).ToArray();
+        var withoutChoice = Evaluate(proposal with
+        {
+            Manifestations = chosen,
+            BiologicalTransmission = new(list)
+        });
+        Assert.Contains(withoutChoice.Issues, x =>
+            x.Code == "biological-latent-choice-incomplete" &&
+            x.Path == aptitude.Id);
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, withoutChoice.Status);
+
+        var withChoice = Evaluate(proposal with
+        {
+            Manifestations = chosen,
+            BiologicalTransmission = new(list, [
+                new(aptitude.Id, [new("abilityChoice", ["constitution"])])
+            ])
+        });
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, withChoice.Status);
+        Assert.Empty(withChoice.Issues);
+        var stored = Assert.Single(withChoice.Profile!.Underlying.BiologicalGenes!, x =>
+            x.SourceCandidateId == aptitude.Id);
+        Assert.Equal("constitution",
+            Assert.Single(stored.ResolvedChoices!).SelectedOptionIds.Single());
+        Assert.DoesNotContain(withChoice.Profile.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
+    }
+
+    [Fact]
     public void RuleDataControlsCapacityWithoutGeneSpecificDominanceFlags()
     {
         var catalog = Catalog();
