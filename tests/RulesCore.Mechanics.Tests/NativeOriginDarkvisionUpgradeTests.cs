@@ -90,6 +90,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
                 {
                     ["id"] = "rule.creature-origination",
                     ["kind"] = "rule",
+                    ["name"] = "Creature Type Origination Methods and Compatibility",
                     ["darkvisionSensitivity"] = new JsonObject
                     {
                         ["innateRangeThresholdFeet"] = threshold,
