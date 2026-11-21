@@ -1,0 +1,12 @@
+{
+  "name": "Substance projector",
+  "description": "A delivery mechanism for stored liquid, gas, powder, or another authored substance. Does not itself supply a substance, damage, conditions, pressure, or an attack action.",
+  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "provides": [
+    "substance-projection-interface"
+  ],
+  "materialSlots": [
+    "reservoir",
+    "nozzle"
+  ]
+}

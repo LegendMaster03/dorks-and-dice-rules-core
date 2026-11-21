@@ -33,6 +33,8 @@ power, establish prerequisites, or prescribe anatomy.
 | `integrated-weapon-mounts` | Specialized melee, projectile, and energy weapon mounts |
 | `storage-and-transport` | Storage compartments and passenger accommodation |
 | `utility` | Maintenance ports and auxiliary utility mechanisms |
+| `weapon-systems` | Operational projectile and energy-delivery hardware, distinct from mounts |
+| `defense` | Active defensive field mechanisms |
 
 This classification follows the component's primary role. Components may
 expose capabilities spanning multiple roles: `provides`, `requiresAnyOf`,
@@ -51,3 +53,20 @@ crafting reference, and provisional review status. Other native Construct
 catalogs (materials, designs, enhancements, recipes, and power sources) remain
 independent. Legacy component arrays outside this dedicated directory continue
 to load for isolated fixtures and other compatible rule packages.
+
+## Candidate extensions (November 2026)
+
+Thirteen additional component definitions cover climbing, flight, excavation,
+aquatic propulsion, projectile launchers, substance delivery, energy discharge,
+energy accumulation, protective fields, spell storage, repair, restraints,
+and external control. The four movement components refer to canonical
+`origin-trait` movement-mode candidates. No positive numerical movement speeds
+have yet been authored, so these traits cannot currently authorize movement.
+
+These new components intentionally have **no manufacturing recipes or power
+demands yet**. The assembly evaluator reports those missing values as
+unresolved rather than pricing the parts at zero or treating unknown power
+use as zero demand. Capability identifiers are operational interfaces,
+**not automatic attacks, conditions, defenses, healing, resource creation,
+or new character actions**. See
+`docs/rewrite/character-origins/pillar2-construct-component-expansion-20261121.md`.

@@ -1,0 +1,14 @@
+{
+  "name": "Flight propulsion unit",
+  "description": "A source of lift or aerial thrust configurable as rotors, thrust, or other supported propulsion. Wings are optional structural attachments; hovering and flight speed require separately authored rules.",
+  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "provides": [
+    "flight-propulsion"
+  ],
+  "materialSlots": [
+    "propulsor"
+  ],
+  "operationalOriginTraitIds": [
+    "trait.construct.flying-movement"
+  ]
+}

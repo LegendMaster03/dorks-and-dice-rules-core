@@ -1,0 +1,11 @@
+{
+  "name": "Spell storage module",
+  "description": "Interface for retaining a spell or other externally supplied magical effect. Capacity, eligibility, charge expenditure, triggering, and casting authority are not established by this component.",
+  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "provides": [
+    "spell-storage-interface"
+  ],
+  "materialSlots": [
+    "focus"
+  ]
+}

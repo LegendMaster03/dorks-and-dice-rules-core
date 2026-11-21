@@ -1,0 +1,11 @@
+{
+  "name": "Protective field projector",
+  "description": "Projects an active protective effect once a suitable field source and operating rules are authored. No Armor Class, resistance, damage reduction, or protective radius is granted by the component alone.",
+  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "provides": [
+    "protective-field-interface"
+  ],
+  "materialSlots": [
+    "projector"
+  ]
+}

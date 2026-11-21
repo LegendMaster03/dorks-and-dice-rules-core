@@ -292,6 +292,18 @@ internal static class NativeConstructOriginOfferCompiler
                                     parameters[binding.Name] = bound.Clone();
                             }
                     }
+                    // A physical movement mechanism can be cataloged before speed
+                    // calibration. Never authorize its Origin movement entitlement
+                    // merely because the part carries a movement-mode label.
+                    if (canonical.TryGetProperty("movementMode", out var movementMode))
+                    {
+                        if (movementMode.ValueKind != JsonValueKind.String ||
+                            string.IsNullOrWhiteSpace(movementMode.GetString()) ||
+                            !canonical.TryGetProperty("speedFeet", out var speed) ||
+                            speed.ValueKind != JsonValueKind.Number ||
+                            !speed.TryGetInt32(out var feet) || feet is <= 0 or > 1_000_000)
+                            unresolved.Add("Construct movement mode requires an authored positive speed in feet before it can grant movement.");
+                    }
                     if (!canonical.EnumerateObject().Any(property =>
                         property.Name is not ("id" or "name" or "description" or "reviewNotes")))
                         unresolved.Add("Source trait has no normalized mechanical properties.");

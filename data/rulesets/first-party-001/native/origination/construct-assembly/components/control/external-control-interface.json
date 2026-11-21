@@ -1,0 +1,11 @@
+{
+  "name": "External control interface",
+  "description": "Accepts commands or direct operation from an external controller or operator. Interface presence does not create consciousness, control privileges, remote range, or extra turns.",
+  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "provides": [
+    "external-control-interface"
+  ],
+  "materialSlots": [
+    "interface"
+  ]
+}

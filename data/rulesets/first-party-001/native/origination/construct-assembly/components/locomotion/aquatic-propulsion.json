@@ -1,0 +1,14 @@
+{
+  "name": "Aquatic propulsion unit",
+  "description": "Propulsion suitable for water or another authored fluid. Swimming does not supply breathing, pressure tolerance, or waterproofing.",
+  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "provides": [
+    "aquatic-propulsion"
+  ],
+  "materialSlots": [
+    "propulsor"
+  ],
+  "operationalOriginTraitIds": [
+    "trait.construct.swimming-movement"
+  ]
+}

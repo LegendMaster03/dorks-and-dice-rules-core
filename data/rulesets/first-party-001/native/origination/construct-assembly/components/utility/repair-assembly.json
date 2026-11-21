@@ -1,0 +1,11 @@
+{
+  "name": "Repair assembly",
+  "description": "Equipment for servicing or repairing a Construct, possibly including its own parts. Repair resources, timing, target restrictions, and restored hit points require authored rules.",
+  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "provides": [
+    "repair-interface"
+  ],
+  "materialSlots": [
+    "repair-tool"
+  ]
+}

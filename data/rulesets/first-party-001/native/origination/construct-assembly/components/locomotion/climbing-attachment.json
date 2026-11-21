@@ -1,0 +1,14 @@
+{
+  "name": "Climbing attachment",
+  "description": "A configurable gripping or adhesion mechanism supporting ascent on compatible surfaces. Does not grant a speed without an authored movement value, negate falls, or assume limbs.",
+  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "provides": [
+    "climbing-interface"
+  ],
+  "materialSlots": [
+    "contact"
+  ],
+  "operationalOriginTraitIds": [
+    "trait.construct.climbing-movement"
+  ]
+}

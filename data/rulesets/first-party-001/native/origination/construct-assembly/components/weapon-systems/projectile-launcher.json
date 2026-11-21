@@ -1,0 +1,11 @@
+{
+  "name": "Projectile launcher",
+  "description": "A physical mechanism that accelerates projectiles. Distinct from an equipment mount; ammunition, range, attacks, reloads, and proficiency require separately authored equipment and combat rules.",
+  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "provides": [
+    "projectile-launcher"
+  ],
+  "materialSlots": [
+    "launcher"
+  ]
+}
