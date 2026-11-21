@@ -659,21 +659,78 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             }
             verifiedTableSynergies.Add(decision);
         }
-        var (derived, synergyIssues) = _synergies.Evaluate(proposal, resolved,
-            verifiedTableSynergies);
+        // Finalize the genotype before issuing any derived phenotype. A latent
+        // inherited gene is not an effective input to ordinary synergies.
+        var (inheritedGenes, geneIssues, _, maxExpressed) = _inheritance.Evaluate(
+            proposal, transmission, resolved, verifiedManifested,
+            request.TrustedScope is null ? null : authority, Verified);
+        issues.AddRange(geneIssues);
+        IReadOnlyList<NativeOriginEffectiveGrant> combined = [];
+        IReadOnlySet<string> consumedGenes = new HashSet<string>(StringComparer.Ordinal);
+        if (proposal.BiologicalTransmission?.Combinations is { Count: > 0 })
+        {
+            if (transmission.Issues.Count > 0 || geneIssues.Count > 0 ||
+                maxExpressed is null)
+                Add("inherited-combination-inputs-unresolved",
+                    "biologicalTransmission.combinations", NativeOriginIssueSeverity.Unresolved,
+                    "Inherited expressions require a fully authenticated, valid genotype.");
+            else
+            {
+                var (expressions, consumed, combinationIssues) =
+                    _synergies.EvaluateInherited(proposal, inheritedGenes, resolved,
+                        maxExpressed.Value, verifiedTableSynergies);
+                combined = expressions;
+                consumedGenes = consumed;
+                issues.AddRange(combinationIssues);
+            }
+        }
+
+        if (consumedGenes.Count > 0)
+        {
+            // Replace ordinary expressions of the consumed gene instances, not
+            // the genotype itself. Re-close downstream dependencies and resource
+            // links against the remaining effective grants before any synergy pass.
+            resolved = resolved.Where(grant => grant.Synergy is not null ||
+                !grant.SourceCandidateIds.Any(consumedGenes.Contains)).ToArray();
+            IReadOnlyList<NativeOriginEffectiveGrant> closed = resolved;
+            while (true)
+            {
+                var ids = closed.Select(grant => grant.Id)
+                    .ToHashSet(StringComparer.Ordinal);
+                var inputs = resolved.Where(grant => ids.Contains(grant.Id)).ToArray();
+                var previousCount = inputs.Length;
+                var (bound, bindingIssues) =
+                    NativeOriginDependentBinder.Bind(catalog, proposal, inputs);
+                issues.AddRange(bindingIssues);
+                var (resourceBound, resourceIssues) =
+                    NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
+                issues.AddRange(resourceIssues);
+                var (linked, linkedIssues) =
+                    _nativeLinks.VerifyEffectiveLinks(proposal, resourceBound, Verified);
+                issues.AddRange(linkedIssues);
+                var (remaining, closureIssues) =
+                    _constraints.VerifyEffectiveRequirements(proposal, linked, Verified);
+                issues.AddRange(closureIssues);
+                closed = remaining;
+                if (closed.Count == previousCount) break;
+            }
+            resolved = closed;
+        }
+
+        // Inherited expressions are selected replacements; ordinary synergies
+        // remain automatic consequences of the final effective grant closure.
+        // They may depend on the one combined grant, never on a latent source.
+        var (derived, synergyIssues) = _synergies.Evaluate(proposal,
+            resolved.Concat(combined).ToArray(), verifiedTableSynergies);
         issues.AddRange(synergyIssues);
-        foreach (var grant in derived.Where(x =>
+        foreach (var grant in combined.Concat(derived).Where(x =>
             x.Authorization?.Adjudication == NativeOriginAdjudication.DmAuthorized &&
             x.Authorization.TableDecisionId is not null))
         {
             usedDm = true;
             verifiedDmDecisionIds.Add(grant.Authorization!.TableDecisionId!);
         }
-        resolved = resolved.Concat(derived).ToArray();
-        var (inheritedGenes, geneIssues, _, _) = _inheritance.Evaluate(
-            proposal, transmission, resolved, verifiedManifested,
-            request.TrustedScope is null ? null : authority, Verified);
-        issues.AddRange(geneIssues);
+        resolved = resolved.Concat(combined).Concat(derived).ToArray();
         if (Verified("biological-inheritance", proposal.Id) is { } capacityDecision)
         {
             usedDm = true;
@@ -780,7 +837,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         // Do not demand that their original manifestations appear in this proposal.
         var profileReview = _validator.ReviewProfileVerified(profile,
             proposal.ExistingConfiguration is null ? proposal : null,
-            verifiedTableSynergies);
+            verifiedTableSynergies, maxExpressed);
         issues.AddRange(profileReview.Issues.Where(x =>
             x.Code is not ("profile-outcome-unresolved" or "profile-outcome-conflict")));
 

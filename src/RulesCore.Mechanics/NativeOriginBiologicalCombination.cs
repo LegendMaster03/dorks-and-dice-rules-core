@@ -100,22 +100,29 @@ internal static class NativeOriginBiologicalCombinationProjector
                 var candidates = group.OrderBy(x => x.ContributorId, StringComparer.Ordinal)
                     .ThenBy(x => x.Id, StringComparer.Ordinal).ToArray();
                 var ids = candidates.Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
-                // A derived synergy may cite one of these offers as an input,
-                // but it is not an expression of the source gene itself.
+                // Ordinary synergies are not gene expressions. Explicitly
+                // selected inherited combinations express all their inputs
+                // through one replacement phenotype, even if both were latent.
                 var expressions = effective.Where(grant =>
                         grant.Synergy is null &&
                         grant.Identity.Kind == group.Key.Kind &&
                         (group.Key.Kind == NativeOriginCharacteristicKind.Trait
                             ? grant.Identity.MechanicalDefinitionId == group.Key.Id
                             : grant.Identity.IntrinsicSlotId == group.Key.Id) &&
-                        grant.SourceCandidateIds.Any(ids.Contains))
+                        grant.SourceCandidateIds.Any(ids.Contains) ||
+                        grant.Synergy?.InheritedInputs?.Any(input =>
+                            ids.Contains(input.Gene.SourceCandidateId)) == true)
                     .OrderBy(grant => grant.Id, StringComparer.Ordinal).ToArray();
                 var candidateOffers = candidates.Select(candidate =>
                     new NativeOriginBiologicalOffer(
                         candidate,
                         attempts.GetValueOrDefault(candidate.Id) ?? [],
                         expressions.Where(grant =>
-                            grant.SourceCandidateIds.Contains(candidate.Id, StringComparer.Ordinal))
+                            grant.Synergy?.InheritedInputs?.Any(input =>
+                                input.Gene.SourceCandidateId == candidate.Id) == true ||
+                            grant.Synergy is null &&
+                                grant.SourceCandidateIds.Contains(candidate.Id,
+                                    StringComparer.Ordinal))
                             .Select(grant => grant.Id).ToArray(),
                         proposed.Contains(candidate.Id)))
                     .ToArray();
@@ -127,6 +134,8 @@ internal static class NativeOriginBiologicalCombinationProjector
             .Select(gene => new NativeOriginBiologicalInheritedInstance(
                 gene,
                 effective.Where(grant =>
+                    grant.Synergy?.InheritedInputs?.Any(input =>
+                        input.Gene.Id == gene.Id) == true ||
                     grant.Synergy is null &&
                     grant.SourceCandidateIds.Contains(gene.SourceCandidateId,
                         StringComparer.Ordinal) &&
