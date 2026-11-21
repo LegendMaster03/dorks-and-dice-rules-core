@@ -75,6 +75,6 @@
     ],
     "operatingPrinciple": "mechanical",
     "craftingRecipeId": "crafting-recipe.construct-power-source.mechanical-engine",
-    "powerOutput": 4
+    "powerOutput": 8
   }
 ]
