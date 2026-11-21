@@ -327,9 +327,6 @@ public sealed class NativeConstructOperatingSession
 
         var operating = EvaluateConfigurationCore(requestedEnabled, requestedModes,
             null, proposedOutputs);
-        var networkByInstance = (operating.Assembly.PowerNetworks ?? [])
-            .SelectMany(n => n.ComponentInstanceIds.Select(id => (id, network: n)))
-            .ToDictionary(x => x.id, x => x.network, StringComparer.Ordinal);
         var componentById = operating.Assembly.Components
             .ToDictionary(x => x.InstanceId, StringComparer.Ordinal);
         var supplied = new Dictionary<string, long>(StringComparer.Ordinal);
@@ -373,6 +370,26 @@ public sealed class NativeConstructOperatingSession
                 source.EffectiveOutput, delivered, source.OverdriveActive);
         }).ToArray();
         return new(operating, states, []);
+    }
+
+    /// <summary>
+    /// Create a revision-checked, in-process solar balance ledger after the
+    /// trusted host has authenticated its initial balances. An invalid
+    /// operating allocation does not invalidate otherwise genuine reserves.
+    /// </summary>
+    internal NativeConstructSolarLedgerOpenResult OpenTrustedSolarLedger(
+        IReadOnlyDictionary<string, long> authenticatedBalances)
+    {
+        ArgumentNullException.ThrowIfNull(authenticatedBalances);
+        var exposures = _baseline.Components
+            .Where(x => x.PowerSourceId == "construct-power-source.solar-crystal")
+            .ToDictionary(x => x.InstanceId, _ => NativeConstructSolarExposure.None,
+                StringComparer.Ordinal);
+        var inspected = PreviewSolarOperation(authenticatedBalances, exposures, 1);
+        return inspected.Issues.Count > 0
+            ? new(null, inspected.Issues)
+            : new(new NativeConstructSolarEnergyLedger(this,
+                authenticatedBalances), []);
     }
 
     /// <summary>
