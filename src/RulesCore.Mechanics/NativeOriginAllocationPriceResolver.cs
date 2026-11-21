@@ -77,8 +77,17 @@ internal static class NativeOriginAllocationPriceResolver
                 grants.TryGetValue(condition.MemberKey, out var grant) &&
                 Matches(catalog, grant, condition))).ToArray();
         if (matches.Length == 0)
+        {
+            // A different, well-formed configuration may use the generic
+            // fallback. An unreadable nested selector is not evidence of a
+            // legitimate unmatched configuration.
+            if (entry.Configurations.SelectMany(x => x.Conditions).Any(condition =>
+                grants.TryGetValue(condition.MemberKey, out var grant) &&
+                Read(catalog, grant, condition.Path, out _) == ReadStatus.Unresolved))
+                return new(null);
             return entry.AllowUnmatchedConfigurationFallback
                 ? new(entry.Load) : new(null);
+        }
         var highest = matches.Max(x => x.Priority);
         var winners = matches.Where(x => x.Priority == highest).ToArray();
         return winners.Length == 1

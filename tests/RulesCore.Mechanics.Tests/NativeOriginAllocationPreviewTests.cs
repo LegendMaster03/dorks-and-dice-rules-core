@@ -666,5 +666,20 @@ public sealed class NativeOriginAllocationPreviewTests
             Catalog(), unknown, permittingFallback);
         Assert.Equal("unresolved", stillUnresolved.Status);
         Assert.Null(stillUnresolved.CommittedLoad);
+
+        var malformed = ChangeGrant(chosenTrait, "trait:trait.low-light-vision",
+            grant => grant with
+            {
+                EffectiveValue = JsonSerializer.SerializeToElement(new
+                {
+                    movementMode = "fly",
+                    uses = "unexpected-scalar",
+                    duration = new { minutes = 1 }
+                })
+            });
+        var malformedFallback = NativeOriginAllocationPreview.Assess(
+            Catalog(), malformed, permittingFallback);
+        Assert.Equal("unresolved", malformedFallback.Status);
+        Assert.Null(malformedFallback.CommittedLoad);
     }
 }
