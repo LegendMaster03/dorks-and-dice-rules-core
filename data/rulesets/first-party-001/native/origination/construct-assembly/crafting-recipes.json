@@ -1395,5 +1395,1220 @@
       "fullyAccounted": true,
       "additionalProductMassPounds": 0
     }
+  },
+  {
+    "id": "crafting-recipe.construct-component.climbing-attachment",
+    "kind": "crafting-recipe",
+    "name": "climbing attachment — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.climbing-attachment",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "contact",
+            "amount": 2,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.flight-propulsion",
+    "kind": "crafting-recipe",
+    "name": "flight propulsion — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.flight-propulsion",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "propulsor",
+            "amount": 4,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.excavation-drive",
+    "kind": "crafting-recipe",
+    "name": "excavation drive — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.excavation-drive",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "cutting-head",
+            "amount": 4,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.aquatic-propulsion",
+    "kind": "crafting-recipe",
+    "name": "aquatic propulsion — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.aquatic-propulsion",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "propulsor",
+            "amount": 3,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.projectile-launcher",
+    "kind": "crafting-recipe",
+    "name": "projectile launcher — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.projectile-launcher",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "launcher",
+            "amount": 3,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.substance-projector",
+    "kind": "crafting-recipe",
+    "name": "substance projector — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.substance-projector",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.alchemy",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "reservoir",
+            "amount": 2,
+            "retainedInProduct": true
+          },
+          {
+            "materialSlot": "nozzle",
+            "amount": 1,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.sealing-compound",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.energy-discharge-unit",
+    "kind": "crafting-recipe",
+    "name": "energy discharge unit — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.energy-discharge-unit",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "emitter",
+            "amount": 3,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 2,
+            "retainedInProduct": false
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.energy-accumulator",
+    "kind": "crafting-recipe",
+    "name": "energy accumulator — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.energy-accumulator",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "storage",
+            "amount": 3,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "construct-material.crystal",
+            "amount": 1,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.protective-field-projector",
+    "kind": "crafting-recipe",
+    "name": "protective field projector — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.protective-field-projector",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.gemcutting",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "projector",
+            "amount": 3,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 2,
+            "retainedInProduct": false
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.spell-storage-module",
+    "kind": "crafting-recipe",
+    "name": "spell storage module — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.spell-storage-module",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.alchemy",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "focus",
+            "amount": 2,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 2,
+            "retainedInProduct": false
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.repair-assembly",
+    "kind": "crafting-recipe",
+    "name": "repair assembly — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.repair-assembly",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "repair-tool",
+            "amount": 3,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.restraint-mechanism",
+    "kind": "crafting-recipe",
+    "name": "restraint mechanism — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.restraint-mechanism",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "restraint",
+            "amount": 3,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.external-control-interface",
+    "kind": "crafting-recipe",
+    "name": "external control interface — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.external-control-interface",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "interface",
+            "amount": 2,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.operator-station",
+    "kind": "crafting-recipe",
+    "name": "operator station — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.operator-station",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "console",
+            "amount": 3,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-component.deployable-unit-bay",
+    "kind": "crafting-recipe",
+    "name": "deployable unit bay — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-component.deployable-unit-bay",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "bay",
+            "amount": 8,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-design.wheeled-drive",
+    "kind": "crafting-recipe",
+    "name": "Wheeled drive arrangement — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-design.wheeled-drive",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.steel",
+            "amount": 1,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-design.tracked-drive",
+    "kind": "crafting-recipe",
+    "name": "Tracked drive arrangement — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-design.tracked-drive",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.steel",
+            "amount": 2,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-design.multi-legged-drive",
+    "kind": "crafting-recipe",
+    "name": "Multi-legged drive arrangement — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-design.multi-legged-drive",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-design.rolling-body",
+    "kind": "crafting-recipe",
+    "name": "Rolling body arrangement — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-design.rolling-body",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.steel",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-design.compliant-manipulator",
+    "kind": "crafting-recipe",
+    "name": "Compliant manipulator arrangement — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-design.compliant-manipulator",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.weaving",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.alchemical-fiber",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-design.layered-plating",
+    "kind": "crafting-recipe",
+    "name": "Layered protective covering — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-design.layered-plating",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.steel",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-design.distributed-control",
+    "kind": "crafting-recipe",
+    "name": "Distributed control arrangement — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-design.distributed-control",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-design.multi-operator-control",
+    "kind": "crafting-recipe",
+    "name": "Multiple-operator control arrangement — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-design.multi-operator-control",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.vibration-sensing",
+    "kind": "crafting-recipe",
+    "name": "Vibration-sensing interface — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.vibration-sensing",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.optical-elements",
+            "amount": 1,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.active-ranging",
+    "kind": "crafting-recipe",
+    "name": "Active ranging interface — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.active-ranging",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.optical-elements",
+            "amount": 2,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.magical-sensing",
+    "kind": "crafting-recipe",
+    "name": "Magical sensing interface — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.magical-sensing",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.alchemy",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.crystal",
+            "amount": 1,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 1,
+            "retainedInProduct": false
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.target-acquisition",
+    "kind": "crafting-recipe",
+    "name": "Target-acquisition interface — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.target-acquisition",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.clawed-grip",
+    "kind": "crafting-recipe",
+    "name": "Clawed gripping surface — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.clawed-grip",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.steel",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.precision-control",
+    "kind": "crafting-recipe",
+    "name": "Precision control linkage — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.precision-control",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.interchangeable-tool-coupling",
+    "kind": "crafting-recipe",
+    "name": "Interchangeable tool coupling — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.interchangeable-tool-coupling",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.steel",
+            "amount": 1,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.hazard-adapted-lining",
+    "kind": "crafting-recipe",
+    "name": "Hazard-adapted lining — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.hazard-adapted-lining",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.alchemy",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.sealing-compound",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.energy-absorption-interface",
+    "kind": "crafting-recipe",
+    "name": "Energy absorption interface — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.energy-absorption-interface",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.gemcutting",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.crystal",
+            "amount": 2,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.arcane-catalyst",
+            "amount": 1,
+            "retainedInProduct": false
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.coverage-adaptation",
+    "kind": "crafting-recipe",
+    "name": "Protective coverage adaptation — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.coverage-adaptation",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.steel",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.programmed-instructions",
+    "kind": "crafting-recipe",
+    "name": "Programmed instructions — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.programmed-instructions",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.supervisory-link",
+    "kind": "crafting-recipe",
+    "name": "Supervisory control link — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.supervisory-link",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.remote-command-receiver",
+    "kind": "crafting-recipe",
+    "name": "Remote command receiver — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.remote-command-receiver",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.occupant-protection",
+    "kind": "crafting-recipe",
+    "name": "Occupant protection interface — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.occupant-protection",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.wood",
+            "amount": 2,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.compartment-access",
+    "kind": "crafting-recipe",
+    "name": "Compartment access mechanism — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.compartment-access",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "construct-material.wood",
+            "amount": 1,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.environmental-support",
+    "kind": "crafting-recipe",
+    "name": "Environmental support interface — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.environmental-support",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.alchemy",
+        "minimumRanks": 3,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.sealing-compound",
+            "amount": 2,
+            "retainedInProduct": true
+          },
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 2,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
+  },
+  {
+    "id": "crafting-recipe.construct-enhancement.operator-controls",
+    "kind": "crafting-recipe",
+    "name": "Operator control station fittings — manufacture",
+    "rulesStatus": "provisional first-party playtest recipe; ingredient quantities and competency requirements subject to balance review",
+    "producesDefinitionId": "construct-enhancement.operator-controls",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.tinkering",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialId": "crafting-material.fine-mechanisms",
+            "amount": 1,
+            "retainedInProduct": true
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   }
 ]

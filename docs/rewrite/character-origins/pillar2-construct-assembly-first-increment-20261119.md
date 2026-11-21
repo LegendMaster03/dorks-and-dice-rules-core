@@ -212,6 +212,13 @@ the separation of component, material, design, enhancement and source.
   authored component effects and stable IDs are unchanged.
   Names are design candidates; neither descriptions nor functional tags alone
   grant mechanical attacks, senses, armor, movement speeds, or other traits.
+This section records the **original 31-component first increment**.
+The subsequent November 21 expansion brings the current branch to
+46 component definitions, 12 designs, 22 enhancements and 18 materials,
+including the stat-block-inspired options. See
+`pillar2-construct-component-expansion-20261121.md` for those later
+candidates; their mechanics and resource costs remain provisional.
+
 - `designs.json`: 4 reusable construction arrangements. A component instance
   can choose one optional design through `DesignId`.
 - `enhancements.json`: 5 optional improvements. A component may select

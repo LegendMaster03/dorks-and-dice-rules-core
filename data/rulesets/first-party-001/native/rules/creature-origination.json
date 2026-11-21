@@ -39,7 +39,17 @@
         "crafting-material.arcane-catalyst": 12,
         "crafting-material.sealing-compound": 5,
         "crafting-material.soul-essence": 20,
-        "crafting-material.infernal-reagent": 18
+        "crafting-material.infernal-reagent": 18,
+        "construct-material.clay": 2,
+        "construct-material.terracotta": 3,
+        "construct-material.ceramic": 4,
+        "construct-material.glass": 4,
+        "construct-material.bone": 3,
+        "construct-material.preserved-tissue": 3,
+        "construct-material.amber": 5,
+        "construct-material.wax": 2,
+        "construct-material.paper": 1,
+        "construct-material.wicker": 2
       },
       "initialConstructionAllowance": 200
     },
