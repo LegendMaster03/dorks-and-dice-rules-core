@@ -355,9 +355,11 @@ public sealed class NativeConstructOperatingSession
                 exposure == NativeConstructSolarExposure.Concentrated;
             var generated = available ? collectionPower : 0;
             var limit = overdriveActive ? overdriveOutput : normalOutput;
-            var output = available && elapsedMinutes > 0
-                ? (int)Math.Min((long)limit, generated +
-                    before / elapsedMinutes) : 0;
+            // Insufficient sunlight and depleted storage no longer disable
+            // ordinary output. Instead, operating beyond the collected and
+            // stored supply incurs Construct exhaustion. The host applies
+            // the recorded exhaustion consequence to character state.
+            var output = available && elapsedMinutes > 0 ? limit : 0;
             proposedOutputs[part.InstanceId] = output;
             sourceStates.Add(new(part, before, capacity, generated,
                 output, overdriveActive));
@@ -415,14 +417,23 @@ public sealed class NativeConstructOperatingSession
             var delivered = operational ? supplied.GetValueOrDefault(
                 source.Part.InstanceId) : 0;
             var collection = operational ? source.CollectedPower : 0;
+            var netDraw = Math.Max(0L, delivered - collection);
+            var unfunded = operational
+                ? Math.Max(0L, netDraw * elapsedMinutes - source.Before)
+                : 0L;
+            var shortageMinutes = unfunded == 0 || netDraw == 0 ? 0 :
+                (int)Math.Min(elapsedMinutes,
+                    (unfunded + netDraw - 1) / netDraw);
             var after = operational
                 ? Math.Clamp(source.Before +
-                    (collection - delivered) * elapsedMinutes, 0, source.Capacity)
+                    ((long)collection - delivered) * elapsedMinutes,
+                    0, source.Capacity)
                 : source.Before;
             return new NativeConstructSolarSourceState(
                 source.Part.InstanceId, source.Part.PowerSourceId!,
                 source.Capacity, source.Before, after, collection,
-                source.EffectiveOutput, delivered, source.OverdriveActive);
+                source.EffectiveOutput, delivered, source.OverdriveActive,
+                unfunded, shortageMinutes);
         }).ToArray();
         return new(operating, states, []);
     }
@@ -1226,7 +1237,8 @@ public sealed record NativeConstructSolarSourceState(
     string InstanceId, string PowerSourceId,
     long CapacityPowerUnitMinutes, long BeforePowerUnitMinutes,
     long AfterPowerUnitMinutes, int CollectionPower, int AvailableOutput,
-    long DeliveredPower, bool OverdriveActive);
+    long DeliveredPower, bool OverdriveActive,
+    long UnfundedPowerUnitMinutes = 0, int InsufficientEnergyMinutes = 0);
 
 /// <summary>
 /// A hypothetical, nonpersistent solar operating interval. A valid
