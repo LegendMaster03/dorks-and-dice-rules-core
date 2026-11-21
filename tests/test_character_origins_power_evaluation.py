@@ -19,42 +19,42 @@ class PowerEvaluationTests(unittest.TestCase):
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_text(json.dumps(data), encoding="utf-8")
 
-        write("species/base/dwarf.json", {
+        write("origination/biological/species/base/dwarf.json", {
             "id": "species.dwarf", "kind": "species", "name": "Dwarf", "selectable": True,
             "walkingSpeedFeet": 25, "darkvisionFeet": 60,
             "traits": [{"traitId": "trait.dwarf.toughness"},
                        {"traitId": "trait.dwarf.stonebound"}]})
-        write("species/base/gnome.json", {
+        write("origination/biological/species/base/gnome.json", {
             "id": "species.gnome", "kind": "species", "name": "Gnome", "selectable": True,
             "walkingSpeedFeet": 25, "traits": []})
-        write("species/ancestry/gnome/rock.json", {
+        write("origination/biological/species/ancestry/gnome/rock.json", {
             "id": "ancestry.gnome.rock", "kind": "ancestry",
             "parent": "species.gnome", "selectable": True,
             "traits": [{"traitId": "trait.gnome.earthbound"}]})
-        write("species/base/dragonborn.json", {
+        write("origination/biological/species/base/dragonborn.json", {
             "id": "species.dragonborn", "kind": "species", "name": "Dragonborn",
             "walkingSpeedFeet": 30, "traits": [{"traitId": "trait.dragonborn.breath"}]})
-        write("species/ancestry/dragonborn/chromatic.json", {
+        write("origination/biological/species/ancestry/dragonborn/chromatic.json", {
             "id": "ancestry.dragonborn.chromatic", "kind": "ancestry",
             "parent": "species.dragonborn", "selectable": False,
             "breathWeaponArea": {"shape": "line", "lengthFeet": 30, "widthFeet": 5},
             "traits": []})
-        write("species/ancestry/dragonborn/chromatic/red.json", {
+        write("origination/biological/species/ancestry/dragonborn/chromatic/red.json", {
             "id": "ancestry.dragonborn.red", "kind": "ancestry",
             "parent": "ancestry.dragonborn.chromatic", "selectable": True,
             "damageType": "fire", "traits": []})
-        write("species/base/elf.json", {
+        write("origination/biological/species/base/elf.json", {
             "id": "species.elf", "kind": "species", "name": "Elf",
             "walkingSpeedFeet": 30, "traits": []})
-        write("species/ancestry/elf/wood.json", {
+        write("origination/biological/species/ancestry/elf/wood.json", {
             "id": "ancestry.elf.wood", "kind": "ancestry",
             "parent": "species.elf", "walkingSpeedFeet": 35,
             "selectable": True, "traits": []})
-        write("species/ancestry/elf/drow.json", {
+        write("origination/biological/species/ancestry/elf/drow.json", {
             "id": "ancestry.elf.drow", "kind": "ancestry",
             "parent": "species.elf", "darkvisionFeet": 120,
             "selectable": True, "traits": [{"traitId": "trait.elf.sunlight"}]})
-        write("origination/biological/traits/dwarf/species.dwarf.json", [
+        write("origination/biological/genes/dwarf/species.dwarf.json", [
             {"id": "trait.dwarf.toughness", "kind": "origin-trait",
              "trait": {"id": "dwarven-toughness", "hitPointsPerCharacterLevel": 1}},
             {"id": "trait.dwarf.stonebound", "kind": "origin-trait",
@@ -62,12 +62,12 @@ class PowerEvaluationTests(unittest.TestCase):
                        "rangeFeet": 60, "requiresContact": "stone",
                        "activation": "bonus-action", "durationMinutes": 10,
                        "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}}}])
-        write("origination/biological/traits/gnome/rock.json", [
+        write("origination/biological/genes/gnome/rock.json", [
             {"id": "trait.gnome.earthbound", "kind": "origin-trait",
              "trait": {"id": "earthbound-tremorsense", "sense": "tremorsense",
                        "rangeFeet": 15, "activation": "passive",
                        "requiresSharedContact": ["earth", "stone"]}}])
-        write("origination/biological/traits/dragonborn/base.json", [
+        write("origination/biological/genes/dragonborn/base.json", [
             {"id": "trait.dragonborn.breath", "kind": "origin-trait",
              "trait": {"id": "breath-weapon", "damage": {"progression": [
                  {"characterLevel": 1, "dice": "1d10"},
@@ -76,7 +76,7 @@ class PowerEvaluationTests(unittest.TestCase):
                  "activation": {"action": "attack", "replaces": "one-attack"},
                  "uses": {"value": "proficiency-bonus"},
                  "savingThrow": {"ability": "dexterity", "onSuccess": "half-damage"}}}])
-        write("origination/biological/traits/elf/drow.json", [
+        write("origination/biological/genes/elf/drow.json", [
             {"id": "trait.elf.sunlight", "kind": "origin-trait",
              "trait": {"id": "sunlight-sensitivity", "condition": "condition.dazzled",
                        "trigger": "direct-unprotected-sunlight"}}])
@@ -1150,7 +1150,7 @@ class PowerEvaluationTests(unittest.TestCase):
             with self.subTest(bad=bad), self.assertRaises(ValueError):
                 power.validate_scenario({"tacticalOpportunities": [row]})
 
-@unittest.skipUnless((power.DEFAULT_NATIVE / "species").is_dir(),
+@unittest.skipUnless((power.DEFAULT_NATIVE / "origination" / "biological" / "species").is_dir(),
                      "Full native catalog is not available in isolated fixture tests")
 class NativeCatalogIntegrationTests(unittest.TestCase):
     """Exercise actual canonical content when running inside the repository."""

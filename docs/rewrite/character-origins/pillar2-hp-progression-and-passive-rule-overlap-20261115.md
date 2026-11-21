@@ -9,7 +9,7 @@
 
 The universal Origin construction and authenticated mixed-descendant increment are already implemented. This increment covers two concrete residual characteristic relationships without approving new gameplay capacity limits or the first-party inheritance eligibility of additional Species packages.
 
-Dwarven Toughness is defined at `data/rulesets/first-party-001/native/origination/biological/traits/dwarf/species.dwarf.json` as `hitPointsPerCharacterLevel: 1`. It is a complete, native level-based mechanic, but lacked an Origin-specific downstream projection. Elf and Tiefling Low-Light Vision have separate canonical trait IDs but each references `rule.low-light-vision`; the existing passive projector rejected duplicate effective grants even though the reconciler did not necessarily require a pregrant disposition.
+Dwarven Toughness is defined at `data/rulesets/first-party-001/native/origination/biological/genes/dwarf/species.dwarf.json` as `hitPointsPerCharacterLevel: 1`. It is a complete, native level-based mechanic, but lacked an Origin-specific downstream projection. Elf and Tiefling Low-Light Vision have separate canonical trait IDs but each references `rule.low-light-vision`; the existing passive projector rejected duplicate effective grants even though the reconciler did not necessarily require a pregrant disposition.
 
 ## Changes
 

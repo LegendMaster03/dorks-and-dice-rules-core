@@ -119,7 +119,7 @@ class CreatureOriginationMethodTests(unittest.TestCase):
     def test_rite_does_not_restrict_ordinary_dragonborn_ancestries(self):
         self.assertIn("Ancestries without an acquisitionMethods restriction",
                       self.contract["riteOfRebirth"]["targetAcquisition"]["unspecifiedField"])
-        dragonborn = NATIVE / "species/ancestry/dragonborn"
+        dragonborn = NATIVE / "origination/biological/species/ancestry/dragonborn"
         for path in dragonborn.rglob("*.json"):
             data = read(path)
             with self.subTest(path=str(path)):

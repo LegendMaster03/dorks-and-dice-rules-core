@@ -6,9 +6,9 @@ using Xunit;
 namespace RulesCore.Mechanics.Tests;
 
 /// <summary>
-/// Real-catalog biological transmission checks. Opt-in annotations only admit
-/// an authored offer: the player still chooses all effective characteristics,
-/// and unsupported traits remain unavailable without trusted table decisions.
+/// Real-catalog biological gene transmission checks. Gene eligibility comes from
+/// native catalog location; actual grants still require player manifestations,
+/// complete authored choices, and the universal construction validations.
 /// </summary>
 public sealed class NativeOriginBiologicalTransmissionCatalogTests
 {
@@ -105,68 +105,36 @@ public sealed class NativeOriginBiologicalTransmissionCatalogTests
     [InlineData("species.human", "trait.human.adaptable-learning")]
     [InlineData("species.orc", "trait.orc.savage-attacks")]
     [InlineData("ancestry.tiefling.infernal", "trait.tiefling.infernal.infernal-resistance")]
-    public void UnreviewedTraitsFromEveryBaseSpeciesCannotSelfAuthorize(
-        string nativeDonor, string traitId)
+    public void BiologicalGeneFromEachSpeciesIsAnEligibleOffer(
+        string nativeDonor, string geneId)
     {
-        var catalog = Catalog();
         var proposal = Proposal(nativeDonor);
-        var offered = Assert.Single(Evaluate(catalog, proposal)
-            .EvaluatedProposal.Candidates, x =>
-                x.Identity.MechanicalDefinitionId == traitId);
-        Assert.NotEqual(NativeOriginEligibility.Eligible,
+        var result = Evaluate(Catalog(), proposal);
+        var offered = Assert.Single(result.EvaluatedProposal.Candidates, x =>
+            x.Identity.MechanicalDefinitionId == geneId);
+        Assert.Equal(NativeOriginEligibility.Eligible,
             offered.SelectionBasis.Eligibility);
-
-        var forged = proposal with
-        {
-            Candidates =
-            [
-                offered with
-                {
-                    SelectionBasis = new(NativeOriginEligibility.Eligible,
-                        RuleReference: "rule.creature-origination")
-                }
-            ],
-            Manifestations = [new("injected", offered.Id)]
-        };
-        var denied = Evaluate(catalog, forged);
-        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, denied.Status);
-        Assert.DoesNotContain(denied.Profile?.Underlying.InherentGrants ?? [], x =>
-            x.Identity.MechanicalDefinitionId == traitId);
+        Assert.Equal("rule.creature-origination",
+            offered.SelectionBasis.RuleReference);
+        // Eligibility is not automatic manifestation.
+        Assert.DoesNotContain(result.Profile?.Underlying.InherentGrants ?? [], x =>
+            x.Identity.MechanicalDefinitionId == geneId);
     }
 
     [Fact]
-    public void BiologicalTraitAuthoringMustRemainExplicitAndSourceNeutral()
+    public void BiologicalGeneDefinitionsAreIdentifiedByCatalogLocation()
     {
         var catalog = Catalog();
-        Assert.Equal(9, catalog.CountByCategory("species"));
-
-        var approved = new[]
+        foreach (var id in new[]
         {
-            "trait.dragonborn.breath-weapon",
-            "trait.elf.trance",
-            "trait.goliath.altitude-acclimation",
-            "trait.orc.relentless-endurance",
-            "trait.shared.amphibious",
-            "trait.shared.low-light-vision"
-        };
-        var page = catalog.Search(category: "origin-trait", limit: 100);
-        Assert.Equal(catalog.CountByCategory("origin-trait"), page.Total);
-        // A newly annotated trait deliberately changes executable biological
-        // inheritance. Require an explicit eligibility review and test update;
-        // no unreviewed canonical trait silently joins the first-party set.
-        var inherited = page.Items.Where(definition =>
-                definition.Definition.TryGetProperty("inheritanceMethods",
-                    out var methods) &&
-                methods.ValueKind == JsonValueKind.Array &&
-                methods.EnumerateArray().Any(x =>
-                    x.ValueKind == JsonValueKind.String &&
-                    x.GetString() == "biological"))
-            .Select(x => x.Id).OrderBy(x => x, StringComparer.Ordinal).ToArray();
-        Assert.Equal(approved, inherited);
-        foreach (var id in approved)
+            "trait.dragonborn.draconic-resistance",
+            "trait.elf.fey-ancestry",
+            "trait.shared.amphibious"
+        })
         {
-            Assert.True(catalog.TryGetById(id, out var definition), id);
-            Assert.Equal("origin-trait", definition!.Category);
+            Assert.True(catalog.TryGetById(id, out var gene), id);
+            Assert.Equal("origin-trait", gene!.Category);
+            Assert.StartsWith("native/origination/biological/genes/", gene.SourcePath);
         }
     }
 }

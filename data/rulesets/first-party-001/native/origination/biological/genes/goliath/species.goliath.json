@@ -96,10 +96,7 @@
         "suffocation-immunity",
         "protection-from-other-hazards"
       ]
-    },
-    "inheritanceMethods": [
-      "biological"
-    ]
+    }
   },
   {
     "id": "trait.goliath.giant-ancestry-aptitude",

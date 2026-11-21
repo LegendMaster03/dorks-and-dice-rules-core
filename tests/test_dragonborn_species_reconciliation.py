@@ -8,7 +8,7 @@ from pathlib import Path
 import unittest
 
 NATIVE = Path(__file__).resolve().parents[1] / "data/rulesets/first-party-001/native"
-DRAGONBORN = NATIVE / "species"
+DRAGONBORN = NATIVE / "origination" / "biological" / "species"
 
 
 def read(path):

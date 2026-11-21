@@ -66,8 +66,8 @@ def parent_chain(record_id, definitions):
 class CharacterOriginsCrossPillarConsistencyTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.species = records("species/base")
-        cls.ancestries = records("species/ancestry")
+        cls.species = records("origination/biological/species/base")
+        cls.ancestries = records("origination/biological/species/ancestry")
         cls.traits = records("traits")
         cls.upbringings = records("upbringings")
         cls.backgrounds = records("backgrounds")

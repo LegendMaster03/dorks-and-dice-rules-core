@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = ROOT / "data/rulesets/first-party-001/native"
-SOURCE_FOLDERS = ("species/base", "species/ancestry")
+SOURCE_FOLDERS = ("origination/biological/species/base", "origination/biological/species/ancestry")
 
 # These fields describe source records, selection, or cultural suggestions.
 # They are not intrinsic characteristic grants. Unknown native fields remain
@@ -44,7 +44,7 @@ def read_catalog(native_root=NATIVE):
     the separately stored trait definitions remain authoritative.
     """
     definitions = {}
-    for path in sorted((Path(native_root) / "origination" / "biological" / "traits").rglob("*.json")):
+    for path in sorted((Path(native_root) / "origination" / "biological" / "genes").rglob("*.json")):
         records = json.loads(path.read_text(encoding="utf-8"))
         for record in records if isinstance(records, list) else [records]:
             if record.get("kind") != "origin-trait":

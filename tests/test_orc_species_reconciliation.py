@@ -6,7 +6,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = ROOT / "data/rulesets/first-party-001/native"
-ORC = NATIVE / "species/base/orc.json"
+ORC = NATIVE / "origination/biological/species/base/orc.json"
 WORKING_ORC = ROOT / "data/rulesets/first-party-001/working/species/base/orc.json"
 MANIFEST = ROOT / "data/reference/srd/native-coverage-manifest.json"
 
@@ -72,7 +72,7 @@ class OrcSpeciesReconciliationTests(unittest.TestCase):
                    if e["nativeId"] == "species.orc"]
         self.assertEqual(1, len(matches))
         self.assertEqual("approved-native-reconciled", matches[0]["status"])
-        self.assertEqual("data/rulesets/first-party-001/native/species/base/orc.json",
+        self.assertEqual("data/rulesets/first-party-001/native/origination/biological/species/base/orc.json",
                          matches[0]["path"])
         self.assertEqual(1, matches[0]["sourceRecords"])
 

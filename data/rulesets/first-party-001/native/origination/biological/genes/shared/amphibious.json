@@ -11,8 +11,5 @@
       "water"
     ],
     "grantsSwimSpeed": false
-  },
-  "inheritanceMethods": [
-    "biological"
-  ]
+  }
 }

@@ -43,10 +43,10 @@ class GoliathUpbringingTests(unittest.TestCase):
                 self.assertNotIn(forbidden, record)
 
     def test_goliath_default_is_a_suggestion_not_inherited_culture(self):
-        base = read(NATIVE / "species/base/goliath.json")
+        base = read(NATIVE / "origination/biological/species/base/goliath.json")
         self.assertEqual(self.clan["id"], base["defaultUpbringing"])
         for type_name in ANCESTRIES:
-            sub = read(NATIVE / "species/ancestry/goliath" / (type_name + ".json"))
+            sub = read(NATIVE / "origination/biological/species/ancestry/goliath" / (type_name + ".json"))
             self.assertEqual("species.goliath", sub["parent"])
             self.assertNotIn("defaultUpbringing", sub)
         policy = read(NATIVE / "rules/species-subspecies-upbringing.json")["upbringings"]

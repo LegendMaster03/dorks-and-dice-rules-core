@@ -29226,7 +29226,7 @@
       "kind": "race",
       "status": "approved-native-reconciled",
       "sourceRecords": 2,
-      "path": "data/rulesets/first-party-001/native/species/base/dragonborn.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/base/dragonborn.json",
       "candidates": [
         {
           "key": "candidate-a",
@@ -29243,7 +29243,7 @@
       "kind": "race",
       "status": "approved-native-reconciled",
       "sourceRecords": 2,
-      "path": "data/rulesets/first-party-001/native/species/base/dwarf.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/base/dwarf.json",
       "candidates": [
         {
           "key": "candidate-a",
@@ -29260,7 +29260,7 @@
       "kind": "race",
       "status": "approved-native-reconciled",
       "sourceRecords": 2,
-      "path": "data/rulesets/first-party-001/native/species/base/elf.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/base/elf.json",
       "candidates": [
         {
           "key": "candidate-a",
@@ -29277,7 +29277,7 @@
       "kind": "race",
       "status": "approved-native-reconciled",
       "sourceRecords": 2,
-      "path": "data/rulesets/first-party-001/native/species/base/gnome.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/base/gnome.json",
       "candidates": [
         {
           "key": "candidate-a",
@@ -29294,7 +29294,7 @@
       "kind": "race",
       "status": "approved-native-reconciled",
       "sourceRecords": 1,
-      "path": "data/rulesets/first-party-001/native/species/base/goliath.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/base/goliath.json",
       "candidates": [
         {
           "key": "candidate-b",
@@ -29333,7 +29333,7 @@
       "kind": "race",
       "status": "approved-native-reconciled",
       "sourceRecords": 2,
-      "path": "data/rulesets/first-party-001/native/species/base/halfling.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/base/halfling.json",
       "candidates": [
         {
           "key": "candidate-a",
@@ -29350,7 +29350,7 @@
       "kind": "race",
       "status": "approved-native-reconciled",
       "sourceRecords": 2,
-      "path": "data/rulesets/first-party-001/native/species/base/human.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/base/human.json",
       "candidates": [
         {
           "key": "candidate-a",
@@ -29367,7 +29367,7 @@
       "kind": "race",
       "status": "approved-native-reconciled",
       "sourceRecords": 1,
-      "path": "data/rulesets/first-party-001/native/species/base/orc.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/base/orc.json",
       "candidates": [
         {
           "key": "candidate-b",
@@ -29380,7 +29380,7 @@
       "kind": "race",
       "status": "approved-native-reconciled",
       "sourceRecords": 2,
-      "path": "data/rulesets/first-party-001/native/species/base/tiefling.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/base/tiefling.json",
       "candidates": [
         {
           "key": "candidate-a",
@@ -37940,7 +37940,7 @@
       "kind": "subrace",
       "status": "approved-native-reconciled",
       "sourceRecords": 1,
-      "path": "data/rulesets/first-party-001/native/species/ancestry/dwarf/hill.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/ancestry/dwarf/hill.json",
       "reconciledAsNativeId": "ancestry.dwarf.hill",
       "candidates": [
         {
@@ -37954,7 +37954,7 @@
       "kind": "subrace",
       "status": "approved-native-reconciled",
       "sourceRecords": 1,
-      "path": "data/rulesets/first-party-001/native/species/ancestry/elf/high.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/ancestry/elf/high.json",
       "reconciledAsNativeId": "ancestry.elf.high",
       "candidates": [
         {
@@ -37968,7 +37968,7 @@
       "kind": "subrace",
       "status": "approved-native-reconciled",
       "sourceRecords": 1,
-      "path": "data/rulesets/first-party-001/native/species/ancestry/gnome/rock.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/ancestry/gnome/rock.json",
       "reconciledAsNativeId": "ancestry.gnome.rock",
       "candidates": [
         {
@@ -38008,7 +38008,7 @@
       "kind": "subrace",
       "status": "approved-native-reconciled",
       "sourceRecords": 1,
-      "path": "data/rulesets/first-party-001/native/species/ancestry/halfling/lightfoot.json",
+      "path": "data/rulesets/first-party-001/native/origination/biological/species/ancestry/halfling/lightfoot.json",
       "reconciledAsNativeId": "ancestry.halfling.lightfoot",
       "candidates": [
         {

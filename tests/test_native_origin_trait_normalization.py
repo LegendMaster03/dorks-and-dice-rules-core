@@ -20,11 +20,11 @@ class NativeOriginTraitNormalizationTests(unittest.TestCase):
     def setUpClass(cls):
         cls.sources = {
             row["id"]: row
-            for path in (NATIVE / "species").rglob("*.json")
+            for path in (NATIVE / "origination" / "biological" / "species").rglob("*.json")
             for row in records(path)
         }
         cls.definitions = {}
-        for path in (NATIVE / "origination" / "biological" / "traits").rglob("*.json"):
+        for path in (NATIVE / "origination" / "biological" / "genes").rglob("*.json"):
             for record in records(path):
                 identity = record["id"]
                 if identity in cls.definitions:
@@ -84,9 +84,9 @@ class NativeOriginTraitNormalizationTests(unittest.TestCase):
     def test_research_projection_reads_changed_trait_content_without_stale_cache(self):
         with tempfile.TemporaryDirectory() as temporary:
             native = Path(temporary) / "native"
-            source_path = native / "species" / "base" / "example.json"
+            source_path = native / "origination" / "biological" / "species" / "base" / "example.json"
             source_path.parent.mkdir(parents=True)
-            trait_path = native / "origination" / "biological" / "traits" / "example.json"
+            trait_path = native / "origination" / "biological" / "genes" / "example.json"
             trait_path.parent.mkdir(parents=True)
             source = {
                 "id": "species.example", "kind": "species", "name": "Example",

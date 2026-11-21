@@ -131,7 +131,7 @@ def check_srd_coverage():
                 and ident.startswith("subspecies.")
                 and native_id == "ancestry." + ident.removeprefix("subspecies.")
                 and path_text.startswith(
-                    "data/rulesets/first-party-001/native/species/ancestry/")):
+                    "data/rulesets/first-party-001/native/origination/biological/species/ancestry/")):
             errors.append(f"invalid SRD-to-native ancestry mapping: {ident} -> {native_id}")
         if sum(rec.get("id") == native_id for rec in cache[path]) != 1:
             errors.append(f"coverage record {ident} ({native_id}) is missing or duplicated in {path_text}")
