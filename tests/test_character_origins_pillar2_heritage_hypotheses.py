@@ -120,7 +120,7 @@ class Pillar2NarrativeHeritageTests(unittest.TestCase):
         changed = copy.deepcopy(self.catalog)
         changed["species.dwarf"]["traits"][2]["sense"] = "darkvision"
         with self.assertRaisesRegex(
-            ParameterInheritanceError, "shared trait field"
+            ParameterInheritanceError, "requires identical source definitions"
         ):
             self.annotate(
                 self.compare("species.gnome", "species.dwarf",
