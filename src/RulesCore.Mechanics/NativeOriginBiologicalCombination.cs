@@ -29,10 +29,22 @@ public sealed record NativeOriginBiologicalCharacteristicGroup(
 /// unexpressed gene can persist, or how many genes a descendant may inherit.
 /// Those are separate procedure policies, not inferred from candidate offers.
 /// </summary>
+/// <summary>
+/// Expression is evaluated against effective grants; absence is the derived
+/// latent state. Neither state is persisted as an independent gene property.
+/// </summary>
+public sealed record NativeOriginBiologicalInheritedInstance(
+    NativeOriginBiologicalGeneInstance Gene,
+    IReadOnlyList<string> ExpressionGrantIds)
+{
+    public bool IsLatent => ExpressionGrantIds.Count == 0;
+}
+
 public sealed record NativeOriginBiologicalCombination(
     string ProposalId,
     IReadOnlyList<NativeOriginBiologicalCharacteristicGroup> Characteristics,
-    bool ExplicitTransmissionPlan = false);
+    bool ExplicitTransmissionPlan = false,
+    IReadOnlyList<NativeOriginBiologicalInheritedInstance>? InheritedInstances = null);
 
 internal static class NativeOriginBiologicalCombinationProjector
 {
@@ -110,7 +122,25 @@ internal static class NativeOriginBiologicalCombinationProjector
                     group.Key.Kind, group.Key.Id, candidateOffers, expressions);
             })
             .ToArray();
+        var inheritedInstances = (result.Profile?.Underlying.BiologicalGenes ?? [])
+            .Select(gene => new NativeOriginBiologicalInheritedInstance(
+                gene,
+                effective.Where(grant =>
+                    grant.Synergy is null &&
+                    grant.SourceCandidateIds.Contains(gene.SourceCandidateId,
+                        StringComparer.Ordinal) &&
+                    grant.Identity.Kind == gene.Identity.Kind &&
+                    (gene.Identity.Kind == NativeOriginCharacteristicKind.Trait
+                        ? grant.Identity.MechanicalDefinitionId ==
+                            gene.Identity.MechanicalDefinitionId
+                        : grant.Identity.IntrinsicSlotId ==
+                            gene.Identity.IntrinsicSlotId))
+                    .Select(grant => grant.Id)
+                    .OrderBy(id => id, StringComparer.Ordinal)
+                    .ToArray()))
+            .OrderBy(instance => instance.Gene.Id, StringComparer.Ordinal)
+            .ToArray();
         return new NativeOriginBiologicalCombination(proposal.Id, groups,
-            proposal.BiologicalTransmission is not null);
+            proposal.BiologicalTransmission is not null, inheritedInstances);
     }
 }
