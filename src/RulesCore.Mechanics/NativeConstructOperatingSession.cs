@@ -145,9 +145,9 @@ public sealed class NativeConstructOperatingSession
             !trustedSourceOutputs.ContainsKey(x.InstanceId)).ToArray();
         Dictionary<string, int>? evaluatedOutputs = trustedSourceOutputs is null &&
             missingContext.Length == 0 ? null
-            : new Dictionary<string, int>(trustedSourceOutputs ??
-                new Dictionary<string, int>(StringComparer.Ordinal),
-                StringComparer.Ordinal);
+            : (trustedSourceOutputs ?? new Dictionary<string, int>(
+                StringComparer.Ordinal)).ToDictionary(
+                    pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
         if (evaluatedOutputs is not null)
             foreach (var source in missingContext)
                 evaluatedOutputs[source.InstanceId] = 0;
@@ -577,7 +577,8 @@ public sealed class NativeConstructOperatingSession
             if (eligibleSoul && distance <= radius)
                 matches.Add(new(part.InstanceId, distance, radius));
         }
-        return new(eligibleSoul, issues.Count == 0 ? matches : [],
+        return new(eligibleSoul,
+            issues.Count == 0 ? matches : [],
             issues.ToArray());
     }
 
