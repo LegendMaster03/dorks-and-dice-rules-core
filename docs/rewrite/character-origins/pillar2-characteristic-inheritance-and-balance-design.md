@@ -13,6 +13,8 @@
 
 **Owner direction — 2026-11-15 (player agency):** The central purpose is to translate a player's intended **character backstory into functional mechanics**. A player may also construct mechanics first and invent the backstory afterward; both use the same engine. Biological origination must present eligible contributor offers, let the player deliberately select and configure the expressed result, and reconcile that result without generating an involuntary random character. Randomization is **not** a requirement or the default design objective. Backstory establishes intent and options; it is not evidence that unsupported mechanics can bypass authored rules, coherent results or table authority. This clarification supersedes suggestions of an inherited random/weighted default in this document.
 
+**Configured allocation implementation (2026-11-21):** [Configured characteristic pricing and policy authoring contract](pillar2-configured-characteristic-pricing.md) extends the existing initial-creation allocation gate with prioritized selectors over the effective grant. Mechanism only; numerical calibration remains separate and no allowance or characteristic price is approved.
+
 ## 1. Purpose and design status
 
 The goal is not merely to permit mixed-species character creation. The system should **quantify the mechanical power of each Species/Ancestry and its constituent characteristics, use that information to rebalance existing Species, and evaluate conventional, mixed, custom, and homebrew configurations consistently**.

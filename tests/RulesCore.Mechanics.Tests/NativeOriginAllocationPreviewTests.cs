@@ -207,6 +207,45 @@ public sealed class NativeOriginAllocationPreviewTests
         Assert.Equal(5, assessment.Components.Count);
         Assert.All(assessment.Components, x => Assert.NotNull(x.AssignedPriceId));
         Assert.Empty(assessment.Issues);
+
+        // A configured bundle replaces its whole charge; an independently
+        // authored interaction is additive once, not once per bundle member.
+        var darkvision = Assert.Single(completed.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "darkvisionFeet");
+        var configuredBundle = new NativeOriginAllocationPrice("drow-adaptation", 4,
+        [
+            "intrinsic:darkvisionFeet",
+            "trait:trait.sunlight-sensitivity"
+        ],
+            Configurations:
+            [
+                new("configured-vision-and-sensitivity", 5, 10,
+                [
+                    new("intrinsic:darkvisionFeet", "value",
+                        NativeOriginAllocationComparison.Equals,
+                        darkvision.EffectiveValue),
+                    new("trait:trait.sunlight-sensitivity", "value",
+                        NativeOriginAllocationComparison.Present)
+                ])
+            ]);
+        var combinedPolicy = Hypothetical(12, configuredBundle) with
+        {
+            InteractionPrices =
+            [
+                new NativeOriginAllocationInteractionPrice("adaptation-and-size", 2,
+                    ["intrinsic:darkvisionFeet", "intrinsic:size"])
+            ]
+        };
+        var combined = NativeOriginAllocationPreview.Assess(
+            Catalog(), completed, combinedPolicy);
+        Assert.Equal("within-allowance", combined.Status);
+        Assert.Equal(10, combined.CommittedLoad);
+        Assert.Equal(5, combined.Charges.Count);
+        Assert.Equal("configured-vision-and-sensitivity",
+            Assert.Single(combined.Charges, x => x.PriceId == "drow-adaptation")
+                .ConfigurationId);
+        Assert.Equal(2, Assert.Single(combined.Charges,
+            x => x.PriceId == "adaptation-and-size").Load);
     }
 
     [Fact]
@@ -330,5 +369,317 @@ public sealed class NativeOriginAllocationPreviewTests
         Assert.Equal("not-applicable", preview.Status);
         Assert.Null(preview.CommittedLoad);
         Assert.True(preview.PreviewOnly);
+    }
+
+    private static NativeOriginAllocationPriceCondition EqualsValue(
+        string member, string path, object value) =>
+        new(member, path, NativeOriginAllocationComparison.Equals,
+            JsonSerializer.SerializeToElement(value));
+
+    // Synthetic grant configurations below exercise policy selection only.
+    // They are not new authorized species traits or construction-engine offers.
+    private static NativeOriginConstructionResult ChangeGrant(
+        NativeOriginConstructionResult result, string key,
+        Func<NativeOriginEffectiveGrant, NativeOriginEffectiveGrant> modify)
+    {
+        var underlying = result.Profile!.Underlying;
+        var grants = underlying.InherentGrants.Select(grant =>
+        {
+            var grantKey = grant.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic
+                ? "intrinsic:" + grant.Identity.IntrinsicSlotId
+                : "trait:" + grant.Identity.MechanicalDefinitionId;
+            return grantKey == key ? modify(grant) : grant;
+        }).ToArray();
+        var changed = underlying with { InherentGrants = grants };
+        return result with
+        {
+            Profile = result.Profile with { Underlying = changed, Current = changed }
+        };
+    }
+
+    [Fact]
+    public void ConfiguredIntrinsicValuesUseEffectiveSizeAndSpeedNotOneGenericPrice()
+    {
+        var original = ElfProfile();
+        var size = Assert.Single(original.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "size").EffectiveValue!.Value;
+        var walk = Assert.Single(original.Profile.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet").EffectiveValue!.Value;
+        var policy = Hypothetical(30, new("vision", 3,
+            ["trait:trait.low-light-vision"]));
+        policy = policy with
+        {
+            Prices = policy.Prices.Select(x => x.Id switch
+            {
+                "size" => x with
+                {
+                    Configurations =
+                    [
+                        new("source-size", 4, 10,
+                            [EqualsValue("intrinsic:size", "value", size)]),
+                        new("alternative-size", 5, 10,
+                            [EqualsValue("intrinsic:size", "value", "Small")])
+                    ]
+                },
+                "walk" => x with
+                {
+                    Configurations =
+                    [
+                        new("source-walk", 6, 10,
+                            [EqualsValue("intrinsic:walkingSpeedFeet", "value", walk)]),
+                        new("alternative-walk", 7, 10,
+                            [EqualsValue("intrinsic:walkingSpeedFeet", "value", 35)])
+                    ]
+                },
+                _ => x
+            }).ToArray()
+        };
+
+        var normal = NativeOriginAllocationPreview.Assess(Catalog(), original, policy);
+        Assert.Equal("within-allowance", normal.Status);
+        Assert.Equal(14, normal.CommittedLoad);
+        Assert.Contains(normal.Charges, x =>
+            x.PriceId == "size" && x.ConfigurationId == "source-size" && x.Load == 4);
+        Assert.Contains(normal.Components, x =>
+            x.Key == "intrinsic:walkingSpeedFeet" &&
+            x.AssignedConfigurationId == "source-walk");
+
+        var changed = ChangeGrant(original, "intrinsic:size", x => x with
+        {
+            EffectiveValue = JsonSerializer.SerializeToElement("Small")
+        });
+        changed = ChangeGrant(changed, "intrinsic:walkingSpeedFeet", x => x with
+        {
+            EffectiveValue = JsonSerializer.SerializeToElement(35)
+        });
+        var alternative = NativeOriginAllocationPreview.Assess(Catalog(), changed, policy);
+        Assert.Equal("within-allowance", alternative.Status);
+        Assert.Equal(16, alternative.CommittedLoad);
+        Assert.Contains(alternative.Charges, x =>
+            x.PriceId == "size" && x.ConfigurationId == "alternative-size");
+        Assert.Contains(alternative.Charges, x =>
+            x.PriceId == "walk" && x.ConfigurationId == "alternative-walk");
+    }
+
+    [Fact]
+    public void MissingConfiguredPriceFailsClosedUnlessFallbackIsExplicit()
+    {
+        var original = ElfProfile();
+        var policy = Hypothetical(100, new("vision", 3,
+            ["trait:trait.low-light-vision"]));
+        var size = Assert.Single(policy.Prices, x => x.Id == "size") with
+        {
+            Configurations =
+            [
+                new("only-small", 2, 0,
+                    [EqualsValue("intrinsic:size", "value", "Small")])
+            ]
+        };
+        policy = policy with
+        {
+            Prices = policy.Prices.Select(x => x.Id == "size" ? size : x).ToArray()
+        };
+        var missing = NativeOriginAllocationPreview.Assess(Catalog(), original, policy);
+        Assert.Equal("unresolved", missing.Status);
+        Assert.Null(missing.CommittedLoad);
+        Assert.Contains(missing.Issues, x =>
+            x.StartsWith("allocation-configuration-unpriced:size:", StringComparison.Ordinal));
+
+        var fallback = policy with
+        {
+            Prices = policy.Prices.Select(x => x.Id == "size"
+                ? x with { AllowUnmatchedConfigurationFallback = true } : x).ToArray()
+        };
+        var explicitFallback = NativeOriginAllocationPreview.Assess(
+            Catalog(), original, fallback);
+        Assert.Equal("within-allowance", explicitFallback.Status);
+        Assert.Equal(6, explicitFallback.CommittedLoad);
+        Assert.Null(Assert.Single(explicitFallback.Charges,
+            x => x.PriceId == "size").ConfigurationId);
+    }
+
+    [Fact]
+    public void HighestExplicitPriorityWinsButTiedMatchesAreInvalid()
+    {
+        var original = ElfProfile();
+        var sizeValue = Assert.Single(original.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "size").EffectiveValue!.Value;
+        var entry = new NativeOriginAllocationPrice("size", 1, ["intrinsic:size"],
+            Configurations:
+            [
+                new("generic-present", 2, 0,
+                    [new("intrinsic:size", "value", NativeOriginAllocationComparison.Present)]),
+                new("specific", 4, 3,
+                    [EqualsValue("intrinsic:size", "value", sizeValue)])
+            ]);
+        var source = Hypothetical(20, new("vision", 3,
+            ["trait:trait.low-light-vision"]));
+        NativeOriginAllocationPolicy Use(NativeOriginAllocationPrice chosen) =>
+            source with
+            {
+                Prices = source.Prices.Select(x => x.Id == "size" ? chosen : x).ToArray()
+            };
+
+        var selected = NativeOriginAllocationPreview.Assess(Catalog(), original, Use(entry));
+        Assert.Equal("within-allowance", selected.Status);
+        Assert.Equal(9, selected.CommittedLoad);
+        Assert.Equal("specific", Assert.Single(selected.Charges,
+            x => x.PriceId == "size").ConfigurationId);
+
+        var tied = entry with
+        {
+            Configurations = entry.Configurations!.Append(
+                new NativeOriginAllocationPriceConfiguration("also-highest", 8, 3,
+                [
+                    new("intrinsic:size", "value",
+                        NativeOriginAllocationComparison.Present)
+                ])).ToArray()
+        };
+        var ambiguous = NativeOriginAllocationPreview.Assess(
+            Catalog(), original, Use(tied));
+        Assert.Equal("invalid-policy", ambiguous.Status);
+        Assert.Null(ambiguous.CommittedLoad);
+        Assert.Contains("allocation-configuration-ambiguous:size", ambiguous.Issues);
+
+        var contradictory = entry with
+        {
+            Configurations =
+            [
+                new("contradictory", 1, 0,
+                [
+                    new("intrinsic:size", "value", NativeOriginAllocationComparison.Present),
+                    new("intrinsic:size", "value", NativeOriginAllocationComparison.Absent)
+                ])
+            ]
+        };
+        Assert.Equal("invalid-policy", NativeOriginAllocationPreview.Assess(
+            Catalog(), original, Use(contradictory)).Status);
+    }
+
+    [Fact]
+    public void WholeTraitConfigurationCanMatchNestedMechanicsChoicesAndBoundResources()
+    {
+        var original = ElfProfile();
+        var chosenTrait = ChangeGrant(original, "trait:trait.low-light-vision",
+            grant => grant with
+            {
+                EffectiveValue = JsonSerializer.SerializeToElement(new
+                {
+                    movementMode = "fly",
+                    speedFeet = 40,
+                    duration = new { minutes = 1 },
+                    uses = new { count = 2, recharge = "long-rest" },
+                    naturalArmor = new { formula = "13 + Dexterity modifier" }
+                }),
+                Parameters = new Dictionary<string, JsonElement>
+                {
+                    ["spellPackage"] = JsonSerializer.SerializeToElement(new
+                    {
+                        progression = new[] { new { spell = "detect-magic", level = 3 } }
+                    })
+                },
+                ResolvedChoices =
+                [
+                    new NativeOriginChoiceSelection("selection", ["spell.detect-magic"])
+                ],
+                ResourceOwners = new Dictionary<string, string>
+                {
+                    ["uses"] = "grant:shared-resource-owner"
+                }
+            });
+        var actualDefinition = Catalog();
+        Assert.True(actualDefinition.TryGetById("trait.low-light-vision",
+            out var canonical));
+        var canonicalId = canonical!.Definition.GetProperty("trait")
+            .GetProperty("id").Clone();
+        var price = new NativeOriginAllocationPrice("vision", 1,
+            ["trait:trait.low-light-vision"],
+            Configurations:
+            [
+                new("limited-flight-and-spell-package", 8, 10,
+                [
+                    EqualsValue("trait:trait.low-light-vision",
+                        "value/movementMode", "fly"),
+                    EqualsValue("trait:trait.low-light-vision",
+                        "value/uses/recharge", "long-rest"),
+                    EqualsValue("trait:trait.low-light-vision",
+                        "value/naturalArmor/formula", "13 + Dexterity modifier"),
+                    EqualsValue("trait:trait.low-light-vision",
+                        "parameters/spellPackage/progression/0/spell", "detect-magic"),
+                    EqualsValue("trait:trait.low-light-vision",
+                        "choices/selection", new[] { "spell.detect-magic" }),
+                    EqualsValue("trait:trait.low-light-vision",
+                        "definition/id", canonicalId),
+                    new("trait:trait.low-light-vision", "value/duration",
+                        NativeOriginAllocationComparison.Present),
+                    new("trait:trait.low-light-vision", "resourceOwners/uses",
+                        NativeOriginAllocationComparison.Present)
+                ]),
+                new("unlimited-no-activation", 11, 10,
+                [
+                    new("trait:trait.low-light-vision", "value/duration",
+                        NativeOriginAllocationComparison.Absent),
+                    new("trait:trait.low-light-vision", "value/uses",
+                        NativeOriginAllocationComparison.Absent)
+                ])
+            ]);
+        var policy = Hypothetical(30, price);
+        var limited = NativeOriginAllocationPreview.Assess(Catalog(), chosenTrait, policy);
+        Assert.Equal("within-allowance", limited.Status);
+        Assert.Equal(11, limited.CommittedLoad);
+        Assert.Equal("limited-flight-and-spell-package",
+            Assert.Single(limited.Charges, x => x.PriceId == "vision").ConfigurationId);
+
+        var unlimited = ChangeGrant(chosenTrait, "trait:trait.low-light-vision",
+            grant => grant with
+            {
+                EffectiveValue = JsonSerializer.SerializeToElement(new
+                {
+                    movementMode = "fly",
+                    speedFeet = 40
+                }),
+                ResourceOwners = null
+            });
+        var always = NativeOriginAllocationPreview.Assess(Catalog(), unlimited, policy);
+        Assert.Equal("within-allowance", always.Status);
+        Assert.Equal(14, always.CommittedLoad);
+        Assert.Equal("unlimited-no-activation",
+            Assert.Single(always.Charges, x => x.PriceId == "vision").ConfigurationId);
+
+        // An absent property on a real object can be a permanent ability.
+        // An entirely missing effective payload is not proof of permanence.
+        var unknown = ChangeGrant(chosenTrait, "trait:trait.low-light-vision",
+            grant => grant with { EffectiveValue = null });
+        var unresolved = NativeOriginAllocationPreview.Assess(Catalog(), unknown, policy);
+        Assert.Equal("unresolved", unresolved.Status);
+        Assert.Null(unresolved.CommittedLoad);
+        Assert.Contains(unresolved.Issues, x =>
+            x.StartsWith("allocation-configuration-unpriced:vision:",
+                StringComparison.Ordinal));
+
+        var permittingFallback = policy with
+        {
+            Prices = policy.Prices.Select(x => x.Id == "vision"
+                ? x with { AllowUnmatchedConfigurationFallback = true } : x).ToArray()
+        };
+        var stillUnresolved = NativeOriginAllocationPreview.Assess(
+            Catalog(), unknown, permittingFallback);
+        Assert.Equal("unresolved", stillUnresolved.Status);
+        Assert.Null(stillUnresolved.CommittedLoad);
+
+        var malformed = ChangeGrant(chosenTrait, "trait:trait.low-light-vision",
+            grant => grant with
+            {
+                EffectiveValue = JsonSerializer.SerializeToElement(new
+                {
+                    movementMode = "fly",
+                    uses = "unexpected-scalar",
+                    duration = new { minutes = 1 }
+                })
+            });
+        var malformedFallback = NativeOriginAllocationPreview.Assess(
+            Catalog(), malformed, permittingFallback);
+        Assert.Equal("unresolved", malformedFallback.Status);
+        Assert.Null(malformedFallback.CommittedLoad);
     }
 }
