@@ -26,7 +26,7 @@ advanced combat or spellcasting abilities implemented. Unsupported
 components may remain in the full catalog but should not be represented
 as fully playable within this initial tester walkthrough.
 
-## Three concrete construction examples
+## Four concrete construction examples
 
 The test manifest is
 `data/reference/construct-origination-mvp-20261121.json`.
@@ -34,6 +34,7 @@ The test manifest is
 | Reference | Provisional points | Functional contrast |
 | --- | ---: | --- |
 | `construct-basic-starting-build-20261120.json` | 163 / 200 | Medium mechanical Construct, 7 power demand / 8 supply; source-granted ordinary communication, optical sight, manipulation and nominal 30-foot walking |
+| `construct-small-starting-build-20261121.json` | 147 / 200 | Small frame recipe variant instead of Medium; 16 fewer candidate points and 28 lb less known retained mass; changes source-verified `size` intrinsic |
 | `construct-lightweight-starting-build-20261121.json` | 187 / 200 | Replace eight steel frame-material units with darkwood; recipe cost increases by 24 points, retained-material mass **lower bound** decreases by 40 lb |
 | `construct-armored-starting-build-20261121.json` | 187 / 200 | Add one passive steel protective-plating component assigned to `front-hull`; recipe cost increases by 24 points and known retained mass increases by 42 lb |
 
@@ -86,7 +87,7 @@ and validates recipe-bound variants, materials, designs, enhancements,
 and power-source choices. The 200-point allowance is a **creation**
 constraint on ingredient purchases, not a lifetime spending cap.
 
-The three references may be re-evaluated as alternate initial
+The four references may be re-evaluated as alternate initial
 assemblies to demonstrate different quotations and Origin effects.
 For a DM-guided gameplay modification, evaluate the proposed
 post-creation assembly using the existing non-initial construction
@@ -122,10 +123,10 @@ repair economics belong in a later general crafting pass.
 
 ## Focused acceptance checklist
 
-1. Load the three first-party example manifests and confirm the
+1. Load the four first-party example manifests and confirm the
    construction allowance, source-bound material quotations, and
    valid canonical Origin reconstruction.
-2. Confirm that standard walking (30-foot candidate) is visible while
+2. Confirm the Small frame variant reconstructs the sourced `size` intrinsic as `small`, then verify that standard walking (30-foot candidate) is visible while
    its powered locomotion source is active, and absent when disabled.
    Existing climb, fly, swim and burrow traits must continue using
    the same verified movement-mode projector.
