@@ -203,7 +203,7 @@ All mode behavior is demonstrated through isolated synthetic test fixtures.
 This increment expands the procedure's *reference catalog* while maintaining
 the separation of component, material, design, enhancement and source.
 
-- `components.json`: 31 component candidates covering structural support,
+- `components/<functional-type>/<component>.json`: 31 component candidates (previously one `components.json` catalog). The canonical ID and kind are now path-derived without changing their mechanical meaning. covering structural support,
   articulation, actuation, manipulators, controls, sensory interfaces,
   equipment mounts, integrated weapon mounting, storage and transport.
   Names are design candidates; neither descriptions nor functional tags alone

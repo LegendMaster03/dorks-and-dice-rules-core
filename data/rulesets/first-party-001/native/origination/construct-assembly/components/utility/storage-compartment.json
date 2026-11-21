@@ -1,0 +1,13 @@
+{
+  "name": "Storage compartment",
+  "description": "Internal compartment for non-powered storage; quantities and capacities remain to be defined.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "storage"
+  ],
+  "materialSlots": [
+    "housing"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.storage-compartment",
+  "powerDemand": 0
+}

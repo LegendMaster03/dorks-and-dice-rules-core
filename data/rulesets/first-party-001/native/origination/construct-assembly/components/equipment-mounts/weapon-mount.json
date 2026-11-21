@@ -1,0 +1,13 @@
+{
+  "name": "Integrated equipment mount",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "description": "A mounting interface for integrated equipment. No attacks or equipment proficiency are granted by this definition.",
+  "provides": [
+    "equipment-mount"
+  ],
+  "materialSlots": [
+    "mount"
+  ],
+  "powerDemand": 0,
+  "craftingRecipeId": "crafting-recipe.construct-component.weapon-mount"
+}

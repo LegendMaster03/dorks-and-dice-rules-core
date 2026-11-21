@@ -1,0 +1,13 @@
+{
+  "name": "Docent interface",
+  "description": "Interface for a docent-like control or coordination network; independent of the control source.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "control-interface"
+  ],
+  "materialSlots": [
+    "interface"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.docent-interface",
+  "powerDemand": 1
+}

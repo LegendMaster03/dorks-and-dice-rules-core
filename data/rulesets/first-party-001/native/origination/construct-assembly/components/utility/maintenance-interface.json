@@ -1,0 +1,13 @@
+{
+  "name": "Maintenance interface",
+  "description": "A service port for repair or replacement of systems.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "maintenance-interface"
+  ],
+  "materialSlots": [
+    "interface"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.maintenance-interface",
+  "powerDemand": 0
+}
