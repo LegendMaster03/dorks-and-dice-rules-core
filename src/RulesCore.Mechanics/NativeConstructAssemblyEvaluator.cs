@@ -840,6 +840,9 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             IsBodyMassComplete = massComplete,
             ProductsWithUncertifiedMass = uncertifiedMassProducts,
             PhysicalLoad = physicalLoad,
+            // The caller can evaluate a trusted inventory snapshot separately.
+            // Merely supplying a hypothetical payload cannot authorize Origin.
+            PhysicalLoadSupports = loadSupports.ToArray(),
             PhysicalMovement = physicalMovement,
             PhysicalSurfaces = surfaces.ToArray()
         };
@@ -1052,6 +1055,7 @@ public sealed record NativeConstructAssemblyResult(
     // AC, resistance or damage reduction. They retain source-aware evidence
     // needed to apply those universal rules after balance authoring.
     public NativePhysicalLoadAssessment? PhysicalLoad { get; init; }
+    public IReadOnlyList<NativePhysicalLoadSupport> PhysicalLoadSupports { get; init; } = [];
     // Candidate source-bound movement only; not a persisted Origin speed grant.
     public NativePhysicalMovementLoadResult? PhysicalMovement { get; init; }
     public IReadOnlyList<NativePhysicalSurface> PhysicalSurfaces { get; init; } = [];

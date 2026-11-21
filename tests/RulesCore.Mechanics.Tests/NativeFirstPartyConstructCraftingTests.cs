@@ -434,4 +434,75 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.Equal("candidate", hypothetical.Status);
         Assert.Equal(12, hypothetical.KnownCandidateFlatDamageReduction);
     }
+
+    [Fact]
+    public void CertifiedSingleFrameHasCompleteProductMassButNoMovementWithoutDrive()
+    {
+        var catalog = Catalog();
+        var build = Quote(catalog,
+            Part("frame", "structural-frame", "frame", "steel"));
+        Assert.True(build.IsAuthorized);
+        Assert.Equal(56, build.KnownRetainedMaterialMassPounds);
+        Assert.True(build.IsBodyMassComplete);
+        Assert.Empty(build.ProductsWithUncertifiedMass!);
+        Assert.Null(build.PhysicalMovement);
+    }
+
+    [Fact]
+    public void UncertifiedAlchemicalActuatorKeepsWholeBodyMassUnresolved()
+    {
+        var catalog = Catalog();
+        var build = Quote(catalog,
+            Part("actuator", "alchemical-actuator", "actuator", "steel",
+                enabled: false));
+        Assert.True(build.IsAuthorized);
+        Assert.Equal(21, build.KnownRetainedMaterialMassPounds);
+        Assert.False(build.IsBodyMassComplete);
+        Assert.Contains("construct-component.alchemical-actuator",
+            build.ProductsWithUncertifiedMass!);
+    }
+
+    [Fact]
+    public void CertifiedBodyAndDriveCanBeReevaluatedUsingTrustedPayloadScenario()
+    {
+        var catalog = Catalog();
+        var build = Quote(catalog,
+            Part("housing", "power-source-housing", "housing", "wood",
+                powerSource: "construct-power-source.mechanical-engine",
+                links: ["drive"]),
+            Part("drive", "locomotion-unit", "contact", "wood"));
+
+        Assert.True(build.IsAuthorized);
+        Assert.True(build.IsBodyMassComplete);
+        Assert.Empty(build.ProductsWithUncertifiedMass!);
+        Assert.Equal(43, build.KnownRetainedMaterialMassPounds);
+        // Character inventory has not provided its authoritative load yet:
+        // construction preview must not turn absent payload into zero.
+        Assert.Equal("unresolved", build.PhysicalLoad?.Status);
+        Assert.Null(build.PhysicalMovement?.SpeedFeet);
+        var support = Assert.Single(build.PhysicalLoadSupports);
+        Assert.Equal("drive", support.SourceId);
+        Assert.True(support.Operating);
+        Assert.Equal(300, support.MaximumGrossLoadPounds);
+
+        // An independent trusted inventory caller can supply its measured
+        // payload to the general evaluator without editing the Origin state.
+        var unloaded = NativePhysicalLoadEvaluator.Evaluate(
+            43, true, 0, build.PhysicalLoadSupports);
+        var loaded = NativePhysicalLoadEvaluator.Evaluate(
+            43, true, 250, build.PhysicalLoadSupports);
+        var overloaded = NativePhysicalLoadEvaluator.Evaluate(
+            43, true, 300, build.PhysicalLoadSupports);
+        NativePhysicalMovementSource[] sources =
+        [
+            new("drive", true, new("walk", 30, 15, 75, 0))
+        ];
+        Assert.Equal(30, NativePhysicalMovementEvaluator.Evaluate(
+            unloaded, sources).SpeedFeet);
+        Assert.Equal(15, NativePhysicalMovementEvaluator.Evaluate(
+            loaded, sources).SpeedFeet);
+        Assert.Equal("stalled", NativePhysicalMovementEvaluator.Evaluate(
+            overloaded, sources).Status);
+        Assert.All(build.Components, part => Assert.True(part.Installed));
+    }
 }

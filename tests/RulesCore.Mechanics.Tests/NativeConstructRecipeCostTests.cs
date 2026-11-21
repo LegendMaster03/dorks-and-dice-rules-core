@@ -125,6 +125,14 @@ public sealed class NativeConstructRecipeCostTests
                 recipes = recipes.Replace(
                     "\"producesDefinitionId\":\"construct-component.frame\"",
                     "\"producesDefinitionId\":\"construct-component.housing\"");
+            if (variant == "mass-certificate-unmarked-input")
+                recipes = recipes.Replace(
+                    "\"inputs\":[{\"materialSlot\":\"frame\",\"amount\":3}]}",
+                    "\"inputs\":[{\"materialSlot\":\"frame\",\"amount\":3}],\"physicalMassAccounting\":{\"fullyAccounted\":true,\"additionalProductMassPounds\":0}}");
+            if (variant == "mass-certificate-intermediate")
+                recipes = recipes.Replace(
+                    "\"producesDefinitionId\":\"construct-component.actuator\",",
+                    "\"producesDefinitionId\":\"construct-component.actuator\",\"physicalMassAccounting\":{\"fullyAccounted\":true,\"additionalProductMassPounds\":0},");
             if (variant == "cyclic-stages")
                 recipes = recipes.Replace(
                     "\"minimumRanks\":1,\"dependencies\":[]",
@@ -240,5 +248,18 @@ public sealed class NativeConstructRecipeCostTests
         Assert.True(result.IsAuthorized);
         Assert.Equal(23, result.KnownConstructionCost);
         Assert.NotNull(result.RequiredConstructionResources);
+    }
+
+    [Theory]
+    [InlineData("mass-certificate-unmarked-input")]
+    [InlineData("mass-certificate-intermediate")]
+    public void MassCertificateCannotConcealUnaccountedRecipeIngredients(string variant)
+    {
+        using var fixture = new Fixture(variant);
+        var result = Evaluate(fixture);
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, result.Status);
+        Assert.False(result.IsBodyMassComplete);
+        Assert.Contains(result.Issues,
+            issue => issue.Code == "crafting-quote-mass-certificate-incomplete");
     }
 }
