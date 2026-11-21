@@ -36,6 +36,9 @@ The `inheritanceMethods: ["biological"]` six-gene proof of concept was
 retired earlier. The loader still uses the universal `origin-trait` kind;
 there is no second gene definition engine. The identity normalization replaces old gene IDs with 87 active,
 source-neutral canonical IDs, including two consolidated equivalent genes.
+Resistance genes formerly named for Abyssal, Chthonic and Infernal Ancestry
+are named by their actual resisted damage type; they remain separate from the
+broader Poison Resilience gene and the parametrized Damage Type Resistance.
 Preset references and internal dependency pointers now use those IDs. It
 preserves source occurrence positions, Ancestry links and mechanical effects.
 

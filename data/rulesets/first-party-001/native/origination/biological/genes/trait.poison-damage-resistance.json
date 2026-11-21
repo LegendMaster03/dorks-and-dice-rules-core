@@ -1,10 +1,10 @@
 {
-  "id": "trait.abyssal-resistance",
-  "name": "Abyssal Resistance",
+  "id": "trait.poison-damage-resistance",
+  "name": "Poison Damage Resistance",
   "kind": "origin-trait",
   "trait": {
-    "id": "abyssal-resistance",
-    "name": "Abyssal Resistance",
+    "id": "poison-damage-resistance",
+    "name": "Poison Damage Resistance",
     "description": "You have 50 percent resistance to poison damage.",
     "damageResistance": {
       "percent": 50,

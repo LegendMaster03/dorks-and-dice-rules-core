@@ -13,7 +13,7 @@
   ],
   "traits": [
     {
-      "traitId": "trait.abyssal-resistance"
+      "traitId": "trait.poison-damage-resistance"
     },
     {
       "traitId": "trait.poison-spray"

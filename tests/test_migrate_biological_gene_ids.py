@@ -73,6 +73,18 @@ class BiologicalGeneIdentityMigrationTests(unittest.TestCase):
                          mapping["trait.dragonborn.copper.natural-climber"])
         self.assertEqual(mapping["trait.shared.low-light-vision"],
                          mapping["trait.tiefling.low-light-vision"])
+        # Damage resistance alone is not identical to the Dwarf's complete
+        # Poison Resilience, which includes a separate saving-throw mechanic.
+        self.assertNotEqual(
+            mapping["trait.dwarf.dwarven-resilience"],
+            mapping["trait.tiefling.abyssal.abyssal-resistance"],
+        )
+        self.assertEqual("trait.poison-damage-resistance",
+                         mapping["trait.tiefling.abyssal.abyssal-resistance"])
+        self.assertEqual("trait.necrotic-damage-resistance",
+                         mapping["trait.tiefling.chthonic.chthonic-resistance"])
+        self.assertEqual("trait.fire-damage-resistance",
+                         mapping["trait.tiefling.infernal.infernal-resistance"])
 
     def test_dry_run_preserves_input_and_explicit_output_does_not_overwrite(self):
         with tempfile.TemporaryDirectory() as temporary:

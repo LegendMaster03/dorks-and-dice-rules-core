@@ -13,7 +13,7 @@
   ],
   "traits": [
     {
-      "traitId": "trait.chthonic-resistance"
+      "traitId": "trait.necrotic-damage-resistance"
     },
     {
       "traitId": "trait.chill-touch"

@@ -104,7 +104,7 @@ public sealed class NativeOriginBiologicalTransmissionCatalogTests
     [InlineData("species.halfling", "trait.luck-reroll")]
     [InlineData("species.human", "trait.adaptable-learning")]
     [InlineData("species.orc", "trait.savage-attacks")]
-    [InlineData("ancestry.tiefling.infernal", "trait.infernal-resistance")]
+    [InlineData("ancestry.tiefling.infernal", "trait.fire-damage-resistance")]
     public void BiologicalGeneFromEachSpeciesIsAnEligibleOffer(
         string nativeDonor, string geneId)
     {

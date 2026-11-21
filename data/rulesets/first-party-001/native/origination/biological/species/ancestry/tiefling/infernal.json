@@ -13,7 +13,7 @@
   ],
   "traits": [
     {
-      "traitId": "trait.infernal-resistance"
+      "traitId": "trait.fire-damage-resistance"
     },
     {
       "traitId": "trait.fire-bolt"

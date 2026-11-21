@@ -1,10 +1,10 @@
 {
-  "id": "trait.chthonic-resistance",
-  "name": "Chthonic Resistance",
+  "id": "trait.necrotic-damage-resistance",
+  "name": "Necrotic Damage Resistance",
   "kind": "origin-trait",
   "trait": {
-    "id": "chthonic-resistance",
-    "name": "Chthonic Resistance",
+    "id": "necrotic-damage-resistance",
+    "name": "Necrotic Damage Resistance",
     "description": "You have 50 percent resistance to necrotic damage.",
     "damageResistance": {
       "percent": 50,
