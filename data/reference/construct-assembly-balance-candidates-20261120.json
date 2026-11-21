@@ -3,8 +3,9 @@
     "status": "candidate values for quantitative assembly comparisons; first-party origin remains unplayable without approved allowance, verified size, and remaining canonical traits",
     "scope": "Construct Assembly recipe-input resource prices, not mechanical power or economic market prices",
     "unchangedRules": "No per-component purchase cost and no post-creation allowance ceiling",
-    "massStatus": "Known retained material mass is only a lower-bound subtotal, not an authorized complete body weight or encumbrance calculation",
-    "sampleMethod": "Preliminary arithmetic from recipe-input material quantities, selected materials and selected power-source recipes, with all cost values provisional; sample assembly links, functional dependencies and physical envelopes require authoring."
+    "massStatus": "The three illustrative builds currently have partial, lower-bound retained mass even though selected first-party component recipes have provisional complete-mass certificates.",
+    "sampleMethod": "Preliminary arithmetic from recipe-input material quantities, selected materials and selected power-source recipes, with all cost values provisional; sample assembly links, functional dependencies and physical envelopes require authoring.",
+    "balancingStatus": "Nine native recipe-based sensitivity comparisons recorded in docs/rewrite/character-origins/pillar2-construct-quantitative-sensitivity-20261120.md. No approval of 220-point allowance, movement, DR stacking, fuel availability or first-party character authorization."
   },
   "candidateStartingAllowance": 220,
   "candidateResourceUnitCosts": {
@@ -78,7 +79,7 @@
           null
         ]
       ],
-      "notes": "At provisional power output 4, the assembly can install all selected mechanisms but cannot operate every active demand (7) simultaneously without another source or power management. Complete quoted source costs include the mechanical engine. The known retained mass is not a complete body-weight or mobility projection.",
+      "notes": "The mechanical engine has nominal output 4 while all installed active systems request 7. Installed parts can remain physically present, but this configuration cannot run all powered capabilities simultaneously even before fuel, dependency or power-network constraints are applied. Selected body size derives from the Medium frame.",
       "bodyConstructionVariants": {
         "frame": "medium"
       },
@@ -162,7 +163,7 @@
           null
         ]
       ],
-      "notes": "The initial allowance will limit what is affordable during creation, but gameplay additions are unrestricted by that allowance. Encumbrance and protection are not yet numerically projected, so this is a required later balance case. These candidate values include the engine: initial 220-point sample allowance would be exceeded, but gameplay construction has no such ceiling.",
+      "notes": "This deliberately excessive steel build exceeds the candidate 220-point initial allowance, but gameplay modification has no such ceiling. Three drives could jointly support up to 900 lb at nominal operating capacity, subject to connectivity and power allocation. Region coverage and the candidate DR sum are not an authorized defense.",
       "bodyConstructionVariants": {
         "frame": "medium"
       },
@@ -204,7 +205,7 @@
           null
         ]
       ],
-      "notes": "Demonstrates that physical form should not require a structural-frame instance. Creature size remains unresolved. A small external casing defines the body size without requiring a structural frame; the solar crystal source is included in provisional costs.",
+      "notes": "A Small external casing defines body size without requiring a structural frame. The solar source is included in the ingredient quote. Senses and actual movement depend on separately verified operating constraints; nominal output alone does not prove a playable character.",
       "bodyConstructionVariants": {
         "body": "small"
       },
