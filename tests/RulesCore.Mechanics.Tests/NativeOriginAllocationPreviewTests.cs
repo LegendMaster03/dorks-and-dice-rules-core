@@ -207,6 +207,45 @@ public sealed class NativeOriginAllocationPreviewTests
         Assert.Equal(5, assessment.Components.Count);
         Assert.All(assessment.Components, x => Assert.NotNull(x.AssignedPriceId));
         Assert.Empty(assessment.Issues);
+
+        // A configured bundle replaces its whole charge; an independently
+        // authored interaction is additive once, not once per bundle member.
+        var darkvision = Assert.Single(completed.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "darkvisionFeet");
+        var configuredBundle = new NativeOriginAllocationPrice("drow-adaptation", 4,
+        [
+            "intrinsic:darkvisionFeet",
+            "trait:trait.sunlight-sensitivity"
+        ],
+            Configurations:
+            [
+                new("configured-vision-and-sensitivity", 5, 10,
+                [
+                    new("intrinsic:darkvisionFeet", "value",
+                        NativeOriginAllocationComparison.Equals,
+                        darkvision.EffectiveValue),
+                    new("trait:trait.sunlight-sensitivity", "value",
+                        NativeOriginAllocationComparison.Present)
+                ])
+            ]);
+        var combinedPolicy = Hypothetical(12, configuredBundle) with
+        {
+            InteractionPrices =
+            [
+                new NativeOriginAllocationInteractionPrice("adaptation-and-size", 2,
+                    ["intrinsic:darkvisionFeet", "intrinsic:size"])
+            ]
+        };
+        var combined = NativeOriginAllocationPreview.Assess(
+            Catalog(), completed, combinedPolicy);
+        Assert.Equal("within-allowance", combined.Status);
+        Assert.Equal(10, combined.CommittedLoad);
+        Assert.Equal(5, combined.Charges.Count);
+        Assert.Equal("configured-vision-and-sensitivity",
+            Assert.Single(combined.Charges, x => x.PriceId == "drow-adaptation")
+                .ConfigurationId);
+        Assert.Equal(2, Assert.Single(combined.Charges,
+            x => x.PriceId == "adaptation-and-size").Load);
     }
 
     [Fact]
