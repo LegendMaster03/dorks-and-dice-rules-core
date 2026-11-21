@@ -437,7 +437,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
     }
 
     [Fact]
-    public void MixedStoneCavernousWithoutBaseDarkvisionIsNotProjectable()
+    public void MixedStoneCavernousProvidesStandaloneDarkvisionAtLevelFour()
     {
         var proposal = new NativeOriginProposal("no-implicit-upgrade",
             NativeOriginIntent.Mixed, new("rule.creature-origination", "biological"),
@@ -455,9 +455,20 @@ public sealed class NativeOriginDarkvisionUpgradeTests
             .Select((x, i) => new NativeOriginManifestation("foundation-" + i,
                 x.Id, SelectedValue: x.OfferedValue))
             .Append(new("selected-upgrade", upgrade.Id)).ToArray();
-        var rejected = Evaluate(proposal with { Manifestations = attempts });
-        // An eligible modifier alone is not an authored Darkvision baseline.
-        Assert.Equal("unresolved",
-            NativeOriginDarkvisionProjector.ProjectApprovedMixed(Catalog(), rejected, 4).Status);
+        var completed = Evaluate(proposal with { Manifestations = attempts });
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, completed.Status);
+        var beforeUnlock = NativeOriginDarkvisionProjector.ProjectApprovedMixed(
+            Catalog(), completed, 3);
+        Assert.Equal("none", beforeUnlock.Status);
+        Assert.Null(beforeUnlock.Darkvision);
+        Assert.Single(beforeUnlock.PendingExtensions);
+        // Cavernous Sight has its own authored 60-foot standalone range; it
+        // does not require an independently inherited Darkvision baseline.
+        var atUnlock = NativeOriginDarkvisionProjector.ProjectApprovedMixed(
+            Catalog(), completed, 4);
+        Assert.Equal("resolved", atUnlock.Status);
+        Assert.Equal(60, atUnlock.Darkvision!.RangeFeet);
+        Assert.Equal(0, atUnlock.Darkvision.BaseRangeFeet);
+        Assert.Equal(60, Assert.Single(atUnlock.Darkvision.Extensions!).AddedRangeFeet);
     }
 }
