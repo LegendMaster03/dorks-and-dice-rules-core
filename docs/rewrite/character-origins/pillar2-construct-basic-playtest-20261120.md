@@ -50,3 +50,21 @@ The control module is the canonical source of an ordinary auditory-communication
 5. The values of material ingredients, power-consuming components, and the starting allowance need integrated playtesting before promotion.
 
 No extra mandatory component families, independent fuel inventory, short-rest charges, or movement penalties are introduced. The actual inventory identifier, acquisition, and cost of a standard mechanical fuel charge still need normal equipment authoring. No engine-specific recovery exception is authorized.
+
+## Follow-up: expanded component playability (2026-11-21)
+
+The later Construct catalog expansion now gives all fifteen added physical
+mechanisms candidate recipes and operating power demand, and gives the four
+new locomotion modes candidate positive speeds. These changes do not revise
+the original 163-point example or its 7-of-8-power baseline.
+
+The candidate movement-mode projector accepts authorized custom Construct
+operating sessions, separate from Biological Species/Ancestry projection.
+Integration with Character Sheet walking and special movement speeds,
+physical support, and resource transaction persistence remains necessary.
+
+The selected stopping condition for Construct Assembly now requires **all
+46 components to have gameplay-usable intended behavior**, not merely
+installable catalogs and valid power totals. The operating parameters and
+advanced combat/sensing/energy/repair/control effects are still candidates
+until that integration is completed and tested.

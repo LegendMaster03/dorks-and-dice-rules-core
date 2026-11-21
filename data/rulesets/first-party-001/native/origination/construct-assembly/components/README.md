@@ -59,16 +59,17 @@ to load for isolated fixtures and other compatible rule packages.
 Fifteen additional component definitions cover climbing, flight, excavation,
 aquatic propulsion, projectile launchers, substance delivery, energy discharge,
 energy accumulation, protective fields, spell storage, repair, restraints,
-external control, operator stations, and deployable-unit bays. The four movement components refer to canonical
-`origin-trait` movement-mode candidates. No positive numerical movement speeds
-have yet been authored, so these traits cannot currently authorize movement.
+external control, operator stations, and deployable-unit bays. The four movement
+components now supply candidate 20-foot climbing, 30-foot flying, 15-foot
+burrowing and 20-foot swimming modes through canonical operational traits.
 
-These new components intentionally have **no manufacturing recipes or power
-demands yet**. The assembly evaluator reports those missing values as
-unresolved rather than pricing the parts at zero or treating unknown power
-use as zero demand. Capability identifiers are operational interfaces,
-**not automatic attacks, conditions, defenses, healing, resource creation,
-or new character actions**. See
+All 15 new components now have **provisional crafting recipes and power
+demands** under the existing ingredient-budget model. Mechanical movement
+grants can be projected from an authorized Construct's operating session,
+including suspension when their provider is disabled. Character Sheet
+movement and physical load integration still require a separate pass.
+Other advanced capability identifiers are not automatic attacks,
+conditions, defenses, healing, resource creation, or new character actions. See
 `docs/rewrite/character-origins/pillar2-construct-component-expansion-20261121.md`.
 
 ## Related authored options and materials
@@ -87,12 +88,23 @@ instructions, supervisory and remote commands, and occupant facilities.
 **Ten candidate construction materials** extend the material catalog to
 clay, terracotta, ceramic, glass, bone, preserved tissue, amber, wax,
 paper, and wicker. Existing cloth and alchemical fibers already support
-the previously identified textile/fiber family. New materials do not
-specify recipe unit mass or initial construction prices, so their
-physical load and ingredient cost remain unresolved rather than free.
+the previously identified textile/fiber family. The ten new materials now have provisional per-unit mass and initial
+construction prices. They are candidate playtest values, not confirmed
+physical or economic balancing.
 
 These designs and enhancements are catalog-authored selections of
 existing components; capability tags are not mechanical entitlements.
 The `componentCategory` directory grouping does not classify materials
 or equipment options. Nothing in these additions forces a body shape,
 prescribed ancestry, control hierarchy, or magical animation method.
+
+## Complete-playability closure condition
+
+Construct Assembly remains open until every component can both be
+constructed through an authorized recipe and exercise its intended
+functional effect through shared gameplay mechanics. Numeric recipe and
+power values are not proof of a working effect. Specializations for
+sensing, weapons, defense, energy storage, spell storage, repair,
+restraints, and operator control still require mechanical integration.
+Full Character Sheet and survival bindings, revision-safe gameplay
+modification, and integrated testing are separate tracked dependencies.

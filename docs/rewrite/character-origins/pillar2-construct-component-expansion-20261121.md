@@ -75,11 +75,12 @@ and flexible-fiber family, so duplicate aliases were not introduced.
 
 Climbing, flying, burrowing, and swimming components each link one distinct
 canonical `origin-trait` with `movementMode` set to `climb`, `fly`,
-`burrow`, or `swim`. Their speed in feet is intentionally **not yet
-authored**. A new Construct Origin compiler check flags missing or malformed
-`speedFeet` as unresolved evidence; these cannot currently grant a usable
-movement speed. Movement projection into Character Sheet mechanics and
-physical load calibration also remain outstanding.
+`burrow`, or `swim`. The current candidate speeds are **20 feet climb, 30 feet fly, 15 feet
+burrow, and 20 feet swim**. The Construct Origin compiler rejects missing
+or invalid speed authoring. The shared movement-mode projector now also
+accepts a trusted Construct operating session and returns only modes
+whose underlying grants remain applicable. The general Character Sheet
+speed adapter and physical load calibration are still outstanding.
 
 Operating one such part never grants walking speed, hover, breathable water,
 permanent tunnels, or universal terrain traversal. Multiple installed
@@ -88,13 +89,20 @@ by general component power, connectivity, and authorization rules.
 
 ## Limits of this implementation
 
-- No new numerical component cost, manufacturing recipe quantity, power
-  demand, movement speed, range, damage, Armor Class, healing, charge
-  capacity, recharge rate, or saving throw DC is invented.
-- None of the new components specifies `craftingRecipeId` or `powerDemand`.
-  With the first-party recipe-input cost model, attempting to include one
-  in an initial Construct build produces the existing unresolved
-  manufacturing and power diagnostics; no zero-cost or zero-demand fallback.
+- All 15 new component definitions now carry **candidate manufacturing
+  recipes and power demands**. All 25 new designs/enhancements also have
+  candidate recipes and demands; the ten new materials have provisional
+  input prices and retained-unit masses. These values are for playtesting,
+  **not approved production balance**.
+- Candidate climbing (20 ft.), flying (30 ft.), burrowing (15 ft.), and
+  swimming (20 ft.) speeds are mapped into canonical movement traits.
+  An authorized Construct operating session projects applicable modes
+  through the shared Origin movement-mode view. The Character Sheet
+  movement adapter and physical-load limits remain unintegrated.
+- Gameplay effects for weapon damage, range, Armor Class, active defense,
+  repair, energy reserves, spell casting/storage, command actions, and
+  environmental survival remain **unimplemented**; installing their
+  interface components does not mint those effects.
 - The advanced physical components expose distinct `provides` tags for
   future designs and dependency rules, but do not issue unsupported combat,
   spellcasting, damage, defense, healing, or control grants.
@@ -107,12 +115,14 @@ by general component power, connectivity, and authorization rules.
 
 ## Follow-up authoring
 
-Complete manufacturing recipes and power requirements with sourced material
-and competency choices, then evaluate candidate movement speeds against body
-mass and movement support. Only after mechanics are approved should the
-movement modes become effective Character Sheet grants. Advanced effect
-integration into shared combat, equipment, spell, repair, and control
-procedures remains separate work.
+Test and adjust the newly authored manufacturing recipes, component demand,
+ingredient values, and four movement speeds. Connect movement traits
+to general Character Sheet speed and load handling. Integrate the intended
+active effects of the advanced components with the shared combat, equipment,
+spellcasting, defense, repair, and control procedures. Post-creation
+modifications still require authorized crafting/inventory/state updates.
+This content pass alone is not the closure of a fully playable component
+inventory.
 
 This catalog pass adds reusable physical design primitives and compatible
 configuration options; it does not claim that all fifteen new components
