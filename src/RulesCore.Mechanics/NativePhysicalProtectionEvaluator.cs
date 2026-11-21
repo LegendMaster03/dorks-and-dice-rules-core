@@ -1,17 +1,16 @@
 namespace RulesCore.Mechanics;
 
 /// <summary>
-/// Read-only protection potential for one explicitly identified physical region.
-/// It never creates an AC, flat DR, damage resistance or damage-type grant.
+/// Read-only evidence of source-identified physical surfaces covering a region.
+/// No numeric protection, layer stacking, AC or DR is inferred from materials.
 /// </summary>
 public sealed record NativePhysicalProtectionPreview(
-    string Status, string RegionId, long KnownCandidateFlatDamageReduction,
+    string Status, string RegionId,
     IReadOnlyList<NativePhysicalSurface> ContributingSurfaces, string Explanation);
 
 /// <summary>
-/// Compares only source-identified protective layers known to cover the queried
-/// region. The generic combat DR resolver still owns actual damage handling,
-/// applicability, bypass and stacking after the protection rules are approved.
+/// Identifies installed protective surfaces for a declared physical region.
+/// Actual protective effects require separately approved combat/material rules.
 /// </summary>
 public static class NativePhysicalProtectionEvaluator
 {
@@ -33,31 +32,17 @@ public static class NativePhysicalProtectionEvaluator
             .OrderBy(x => x.InstanceId, StringComparer.Ordinal)
             .ThenBy(x => x.MaterialSlotId, StringComparer.Ordinal).ToArray();
         if (relevant.Length == 0)
-            return new("none", regionId, 0, [],
+            return new("none", regionId, [],
                 "No explicitly declared protective surface covers this queried region.");
 
-        // One composite surface containing multiple materials is not
-        // automatically several independently stackable protective layers.
+        // Composite construction remains unresolved until a real coverage rule
+        // defines how materials in one installed component interact.
         if (relevant.GroupBy(x => x.InstanceId, StringComparer.Ordinal)
             .Any(group => group.Count() != 1))
-            return new("unresolved", regionId, 0, relevant,
-                "A composite protective surface needs its own coverage and material interaction rule.");
+            return new("unresolved", regionId, relevant,
+                "A composite protective surface needs an authored coverage rule.");
 
-        if (relevant.Any(x => x.CandidateFlatDamageReduction is null or < 0))
-            return new("unresolved", regionId, 0, relevant,
-                "At least one covering surface lacks a valid material protection value.");
-
-        try
-        {
-            var potential = checked(relevant.Sum(x =>
-                (long)x.CandidateFlatDamageReduction!.Value));
-            return new("candidate", regionId, potential, relevant,
-                "Provisional covering-layer total only; damage mitigation, bypass and effective coverage are not authorized.");
-        }
-        catch (OverflowException)
-        {
-            return new("unresolved", regionId, 0, relevant,
-                "Potential protection total exceeds supported quantities.");
-        }
+        return new("present", regionId, relevant,
+            "Installed regional surfaces are identified; no defensive benefit is inferred.");
     }
 }
