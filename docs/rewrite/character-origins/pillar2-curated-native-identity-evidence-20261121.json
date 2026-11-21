@@ -29,17 +29,23 @@
         "ancestry.dragonborn.copper#trait:natural-climber"
       ],
       "evidence": "same-complete-authored-definition"
-    }
-  ],
-  "semanticReviewGroups": [
+    },
     {
-      "reviewId": "study.review.powerful-build",
+      "candidateDefinitionId": "study.definition.powerful-build",
       "sourceOccurrenceIds": [
         "species.orc#trait:powerful-build",
         "species.goliath#trait:powerful-build"
       ],
-      "expectedEvidence": "same-local-id-different-structure",
-      "notes": "Orc includes pushing, dragging and lifting equivalence; Goliath grants grapple-escape advantage. Similar names do not make these grants equivalent."
+      "evidence": "same-complete-authored-definition"
+    },
+    {
+      "candidateDefinitionId": "study.definition.darkness",
+      "sourceOccurrenceIds": [
+        "ancestry.elf.drow#trait:darkness",
+        "ancestry.tiefling.infernal#trait:darkness"
+      ],
+      "evidence": "same-complete-authored-definition"
     }
-  ]
+  ],
+  "semanticReviewGroups": []
 }

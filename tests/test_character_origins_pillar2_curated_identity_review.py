@@ -54,7 +54,7 @@ class CuratedIdentityReviewTests(unittest.TestCase):
             set(lowlight["sourceOccurrenceIds"]),
         )
         self.assertEqual(
-            11, report["literalOccurrenceCoverageCount"]
+            15, report["literalOccurrenceCoverageCount"]
         )
         self.assertEqual(
             {"identical-complete-authored-content"},
@@ -78,19 +78,22 @@ class CuratedIdentityReviewTests(unittest.TestCase):
             "ancestry.dragonborn.red#trait:natural-climber",
             "ancestry.dragonborn.copper#trait:natural-climber",
         }, identities["study.definition.natural-climber"])
-        self.assertEqual(["study.review.powerful-build"],
-                         [x["reviewId"] for x in report["semanticReviewQueue"]])
+        self.assertEqual([], report["semanticReviewQueue"])
 
-    def test_orc_goliath_powerful_build_remains_a_different_mechanic(self):
+    def test_powerful_build_and_darkness_are_shared_complete_definitions(self):
         report = self.audit()
-        finding = next(
-            x for x in report["semanticReviewQueue"]
-            if x["reviewId"] == "study.review.powerful-build"
-        )
-        self.assertEqual(
-            "same-local-id-different-structure", finding["observedEvidence"]
-        )
-        self.assertEqual("unresolved", finding["semanticEquivalence"])
+        identities = {
+            x["candidateDefinitionId"]: set(x["sourceOccurrenceIds"])
+            for x in report["identicalAuthoredGroups"]
+        }
+        self.assertEqual({
+            "species.orc#trait:powerful-build",
+            "species.goliath#trait:powerful-build",
+        }, identities["study.definition.powerful-build"])
+        self.assertEqual({
+            "ancestry.elf.drow#trait:darkness",
+            "ancestry.tiefling.infernal#trait:darkness",
+        }, identities["study.definition.darkness"])
 
     def test_a_literal_group_fails_on_prose_drift_even_if_mechanics_equal(self):
         mutated = copy.deepcopy(self.catalog)
@@ -130,17 +133,13 @@ class CuratedIdentityReviewTests(unittest.TestCase):
         ):
             self.audit(catalog=mutated)
 
-    def test_distinct_powerful_build_mechanics_remain_under_review(self):
+    def test_unified_powerful_build_rejects_structural_drift(self):
         mutated = copy.deepcopy(self.catalog)
-        goliath = mutated["species.goliath"]["traits"]
         orc = mutated["species.orc"]["traits"]
-        goliath_build = next(x for x in goliath if x["id"] == "powerful-build")
         orc_build = next(x for x in orc if x["id"] == "powerful-build")
-        # Eliminating the mechanical difference invalidates the open review.
-        orc_build.clear()
-        orc_build.update(copy.deepcopy(goliath_build))
+        orc_build["effectiveSizeCategoriesHigherForPushingDraggingLifting"] = 2
         with self.assertRaisesRegex(
-            CuratedIdentityReviewError, "Near-match evidence changed"
+            CuratedIdentityReviewError, "Complete authored definition drift"
         ):
             self.audit(catalog=mutated)
 
@@ -152,9 +151,15 @@ class CuratedIdentityReviewTests(unittest.TestCase):
             elif invalid == "extra-field":
                 mutated["identicalAuthoredGroups"][0]["stacking"] = "stack"
             else:
-                mutated["semanticReviewGroups"][0]["expectedEvidence"] = (
-                    "equivalent"
-                )
+                mutated["semanticReviewGroups"].append({
+                    "reviewId": "study.review.invalid",
+                    "sourceOccurrenceIds": [
+                        "species.orc#trait:powerful-build",
+                        "species.goliath#trait:powerful-build",
+                    ],
+                    "expectedEvidence": "equivalent",
+                    "notes": "Intentionally invalid evidence category.",
+                })
             with self.subTest(invalid=invalid):
                 with self.assertRaises(CuratedIdentityReviewError):
                     self.audit(evidence=mutated)
@@ -169,18 +174,20 @@ class CuratedIdentityReviewTests(unittest.TestCase):
         ):
             self.audit(evidence=mutated)
 
-    def test_duplicate_review_ids_and_unknown_references_fail(self):
+    def test_duplicate_identity_and_unknown_references_fail(self):
         mutated = copy.deepcopy(self.evidence)
-        mutated["semanticReviewGroups"].append(
-            copy.deepcopy(mutated["semanticReviewGroups"][0])
+        duplicated = copy.deepcopy(mutated["identicalAuthoredGroups"][-1])
+        duplicated["candidateDefinitionId"] = (
+            mutated["identicalAuthoredGroups"][0]["candidateDefinitionId"]
         )
+        mutated["identicalAuthoredGroups"].append(duplicated)
         with self.assertRaisesRegex(
-            CuratedIdentityReviewError, "Malformed or duplicate"
+            CuratedIdentityReviewError, "Duplicate or empty candidate identity"
         ):
             self.audit(evidence=mutated)
         mutated = copy.deepcopy(self.evidence)
-        mutated["semanticReviewGroups"][0]["sourceOccurrenceIds"][1] = (
-            "species.unknown#trait:vision"
+        mutated["identicalAuthoredGroups"][-1]["sourceOccurrenceIds"][1] = (
+            "species.unknown#trait:darkness"
         )
         with self.assertRaisesRegex(
             CuratedIdentityReviewError, "Unknown or retired"
@@ -216,10 +223,11 @@ class CuratedIdentityReviewTests(unittest.TestCase):
         self.assertEqual("not-evaluated", report["balance"])
         self.assertNotIn("manifestedCharacteristics", report)
         self.assertNotIn("approvedDefinitions", report)
+        self.assertEqual([], report["semanticReviewQueue"])
         self.assertEqual(
             {"not-evaluated"},
             {x["grantOrDuplicatePolicy"]
-             for x in report["semanticReviewQueue"]}
+             for x in report["identicalAuthoredGroups"]}
         )
 
     def test_deterministic_and_does_not_mutate_corpus_or_review_inputs(self):

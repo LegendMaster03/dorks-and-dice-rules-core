@@ -148,7 +148,7 @@ class Pillar2IdentityCompatibilityTests(unittest.TestCase):
         )
         self.assertFalse(result["duplicatesMerged"])
 
-    def test_orc_goliath_powerful_build_shares_component_not_whole_trait(self):
+    def test_orc_goliath_powerful_build_has_same_definition_at_distinct_occurrences(self):
         result = self.audit(
             direct("orc", "species.orc"),
             direct("goliath", "ancestry.goliath.cloud"),
@@ -157,7 +157,7 @@ class Pillar2IdentityCompatibilityTests(unittest.TestCase):
                       find(result, "same-local-trait-id-distinct-source-occurrences")
                       if x["localTraitId"] == "powerful-build"]
         self.assertEqual(1, len(duplicates))
-        self.assertEqual("different-authored-definitions",
+        self.assertEqual("identical-authored-definition",
                          duplicates[0]["definitionRelationship"])
         shared = [x for x in find(result, "shared-mechanical-components")
                   if "effectiveSizeCategoriesHigherForCarryingCapacity"
@@ -169,7 +169,7 @@ class Pillar2IdentityCompatibilityTests(unittest.TestCase):
             for item in shared
         ))
 
-    def test_same_spell_is_not_same_entitlement(self):
+    def test_same_darkness_definition_retains_distinct_source_entitlements(self):
         result = self.audit(
             direct("drow", "ancestry.elf.drow"),
             direct("infernal", "ancestry.tiefling.infernal"),
@@ -179,7 +179,7 @@ class Pillar2IdentityCompatibilityTests(unittest.TestCase):
                     if x["spellRef"] == "darkness"]
         self.assertEqual(1, len(darkness))
         self.assertEqual(
-            "different-authored-definitions",
+            "identical-authored-definition",
             darkness[0]["definitionRelationship"],
         )
         self.assertEqual(
