@@ -145,6 +145,16 @@ public sealed class NativeConstructOriginProjectionTests
                   "storagePolicy":"no-fixed-soul-cap",
                   "energyAvailabilityPolicy":"dm-adjudicated",
                   "consumptionRatePolicy":"intentionally-unspecified"},
+                 {"id":"construct-power-source.infernal-engine",
+                  "kind":"construct-power-source","name":"Infernal Engine",
+                  "constructionCost":1,"powerOutput":8,
+                  "overdrivePowerOutput":12,"overdriveIncreasePercent":50,
+                  "compatibleComponentCapabilities":["power-housing"],
+                  "operatingPrinciple":"infernal",
+                  "longRestSustenance":{"resourceKind":"infernal-engine-fuel-charge",
+                    "unitsPerLongRest":1},
+                  "fuelShortagePolicy":"continues-at-normal-output-with-infernal-instability-or-overheating",
+                  "overdriveFuelPolicy":"additional-infernal-fuel-per-use"},
                  {"id":"construct-power-source.solar-crystal",
                   "kind":"construct-power-source","name":"Solar collector",
                   "constructionCost":1,"powerOutput":8,
@@ -1265,7 +1275,7 @@ public sealed class NativeConstructOriginProjectionTests
     }
 
     [Fact]
-    public void SolarBatteryCannotRunLongerThanItsStoredEnergyAllows()
+    public void SolarBatteryShortageTriggersExhaustionWithoutInterruptingNormalPower()
     {
         using var fixture = new Fixture();
         var built = Evaluate(fixture, assembly: FuelAssembly(
@@ -1279,13 +1289,19 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.True(shortInterval.CanAdvance);
         Assert.Equal(0, Assert.Single(shortInterval.Sources).AfterPowerUnitMinutes);
         var longer = session.PreviewSolarOperation(stored, noLight, 61);
-        Assert.False(longer.CanAdvance);
+        Assert.True(longer.CanAdvance);
+        Assert.Equal(3, Assert.Single(longer.Sources).UnfundedPowerUnitMinutes);
+        Assert.Equal(1, Assert.Single(longer.Sources).InsufficientEnergyMinutes);
         var empty = session.PreviewSolarOperation(
             new Dictionary<string, long> { ["generator"] = 0 }, noLight, 60);
-        Assert.False(empty.CanAdvance);
-        Assert.False(empty.Evaluation!.Assembly.Components
+        Assert.True(empty.CanAdvance);
+        var fallback = Assert.Single(empty.Sources);
+        Assert.Equal(8, fallback.AvailableOutput);
+        Assert.Equal(180, fallback.UnfundedPowerUnitMinutes);
+        Assert.Equal(60, fallback.InsufficientEnergyMinutes);
+        Assert.True(empty.Evaluation!.Assembly.Components
             .Single(x => x.InstanceId == "generator").SourceSupplyingPower);
-        Assert.Equal(0, empty.Evaluation.Assembly.PowerNetworks!.Single().AvailableOutput);
+        Assert.Equal(8, empty.Evaluation.Assembly.PowerNetworks!.Single().AvailableOutput);
         Assert.All(empty.Evaluation.Assembly.Components,
             state => Assert.True(state.Installed));
     }
@@ -1354,6 +1370,90 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.False(fake.CanAdvance);
         Assert.Contains(fake.Issues,
             issue => issue.Code == "construct-solar-instance-invalid");
+    }
+
+    [Fact]
+    public void SolarDeprivationIsAccruedOncePerEpisodeAndEveryFollowingDay()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.solar-crystal"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var ledger = Assert.IsType<NativeConstructSolarEnergyLedger>(
+            session.OpenTrustedSolarLedger(
+                new Dictionary<string, long> { ["generator"] = 0 }).Ledger);
+        var dark = new Dictionary<string, NativeConstructSolarExposure>
+            { ["generator"] = NativeConstructSolarExposure.None };
+        var authority = new TestSolarAuthority();
+
+        var first = ledger.TryCommitInterval(0, dark, 60, authority);
+        Assert.True(first.Committed);
+        Assert.Equal(1, Assert.Single(first.ExhaustionChanges!).NewExhaustionLevels);
+        Assert.Equal(1, first.Snapshot.ExhaustionEventsIssued["generator"]);
+        Assert.Equal(60, first.Snapshot.ConsecutiveDeficitMinutes["generator"]);
+        var second = ledger.TryCommitInterval(1, dark, 60, authority);
+        Assert.True(second.Committed);
+        Assert.Equal(0, Assert.Single(second.ExhaustionChanges!).NewExhaustionLevels);
+        var day = ledger.TryCommitInterval(2, dark, 1320, authority);
+        Assert.True(day.Committed);
+        Assert.Equal(1, Assert.Single(day.ExhaustionChanges!).NewExhaustionLevels);
+        Assert.Equal(2, day.Snapshot.ExhaustionEventsIssued["generator"]);
+        Assert.Equal(1440, day.Snapshot.ConsecutiveDeficitMinutes["generator"]);
+
+        var stale = ledger.TryCommitInterval(2, dark, 60, authority);
+        Assert.False(stale.Committed);
+        Assert.Equal(2, ledger.Snapshot().ExhaustionEventsIssued["generator"]);
+
+        var direct = new Dictionary<string, NativeConstructSolarExposure>
+            { ["generator"] = NativeConstructSolarExposure.Direct };
+        var restored = ledger.TryCommitInterval(3, direct, 60, authority);
+        Assert.True(restored.Committed);
+        Assert.Equal(0, restored.Snapshot.ConsecutiveDeficitMinutes["generator"]);
+        Assert.Equal(2, restored.Snapshot.ExhaustionEventsIssued["generator"]);
+
+        var resumed = ledger.TryCommitInterval(4, dark, 4000, authority);
+        Assert.True(resumed.Committed);
+        Assert.Equal(3, Assert.Single(resumed.ExhaustionChanges!).NewExhaustionLevels);
+        Assert.Equal(5, resumed.Snapshot.ExhaustionEventsIssued["generator"]);
+    }
+
+    [Fact]
+    public void InfernalEngineMaintainsNormalOutputWithoutLongRestFuel()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.infernal-engine"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var generic = session.EvaluateConfiguration();
+        Assert.False(generic.IsOperatingConfigurationValid);
+        Assert.Contains(generic.Issues, issue =>
+            issue.Code == "construct-infernal-operating-context-required");
+
+        var fuelPaid = new Dictionary<string, bool> { ["generator"] = true };
+        var normal = session.PreviewInfernalOperation(fuelPaid);
+        Assert.True(normal.CanOperate);
+        var standard = Assert.Single(normal.Sources);
+        Assert.Equal(8, standard.AvailablePowerOutput);
+        Assert.False(standard.RequiresInstabilityAdjudication);
+
+        var shorted = session.PreviewInfernalOperation(
+            new Dictionary<string, bool> { ["generator"] = false });
+        Assert.True(shorted.CanOperate);
+        Assert.True(shorted.RequiresInstabilityAdjudication);
+        Assert.Equal(8, Assert.Single(shorted.Sources).AvailablePowerOutput);
+        Assert.Equal(8, shorted.Evaluation!.Assembly.PowerNetworks!.Single().AvailableOutput);
+
+        var boosted = session.PreviewInfernalOperation(
+            fuelPaid, new Dictionary<string, bool> { ["generator"] = true });
+        Assert.True(boosted.CanOperate);
+        Assert.Equal(12, Assert.Single(boosted.Sources).AvailablePowerOutput);
+
+        Assert.False(session.PreviewInfernalOperation(
+            new Dictionary<string, bool>()).CanOperate);
+        Assert.False(session.PreviewInfernalOperation(
+            new Dictionary<string, bool> { ["forged"] = true }).CanOperate);
     }
 
     [Fact]
