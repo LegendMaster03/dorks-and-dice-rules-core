@@ -656,5 +656,15 @@ public sealed class NativeOriginAllocationPreviewTests
         Assert.Contains(unresolved.Issues, x =>
             x.StartsWith("allocation-configuration-unpriced:vision:",
                 StringComparison.Ordinal));
+
+        var permittingFallback = policy with
+        {
+            Prices = policy.Prices.Select(x => x.Id == "vision"
+                ? x with { AllowUnmatchedConfigurationFallback = true } : x).ToArray()
+        };
+        var stillUnresolved = NativeOriginAllocationPreview.Assess(
+            Catalog(), unknown, permittingFallback);
+        Assert.Equal("unresolved", stillUnresolved.Status);
+        Assert.Null(stillUnresolved.CommittedLoad);
     }
 }

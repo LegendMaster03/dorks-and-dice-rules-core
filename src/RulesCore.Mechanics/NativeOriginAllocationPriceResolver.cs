@@ -53,6 +53,25 @@ internal static class NativeOriginAllocationPriceResolver
     {
         if (entry.Configurations is null)
             return new(entry.Load);
+
+        // An explicitly allowed fallback covers a known but unlisted variant,
+        // not a missing effective payload or malformed persistent choices.
+        // Otherwise an unknown ability could be mistaken for a cheap tier.
+        if (entry.Configurations.SelectMany(x => x.Conditions).Any(condition =>
+            grants.TryGetValue(condition.MemberKey, out var grant) &&
+            ((condition.Path is "value" ||
+                condition.Path.StartsWith("value/", StringComparison.Ordinal)) &&
+                (grant.EffectiveValue is null ||
+                 grant.EffectiveValue.Value.ValueKind == JsonValueKind.Undefined) ||
+             (condition.Path is "definition" ||
+                condition.Path.StartsWith("definition/", StringComparison.Ordinal)) &&
+                Definition(catalog, grant) is null ||
+             condition.Path.StartsWith("choices", StringComparison.Ordinal) &&
+                grant.ResolvedChoices is { } choices &&
+                choices.GroupBy(x => x.RequirementId, StringComparer.Ordinal)
+                    .Any(x => x.Count() != 1))))
+            return new(null);
+
         var matches = entry.Configurations.Where(configuration =>
             configuration.Conditions.All(condition =>
                 grants.TryGetValue(condition.MemberKey, out var grant) &&
