@@ -457,7 +457,9 @@ public sealed class NativeConstructOperatingSession
     /// operating allocation does not invalidate otherwise genuine reserves.
     /// </summary>
     internal NativeConstructSolarLedgerOpenResult OpenTrustedSolarLedger(
-        IReadOnlyDictionary<string, long> authenticatedBalances)
+        IReadOnlyDictionary<string, long> authenticatedBalances,
+        IReadOnlyDictionary<string, long>? authenticatedDeficitMinutes = null,
+        IReadOnlyDictionary<string, int>? authenticatedExhaustionEvents = null)
     {
         ArgumentNullException.ThrowIfNull(authenticatedBalances);
         var exposures = _baseline.Components
@@ -465,10 +467,31 @@ public sealed class NativeConstructOperatingSession
             .ToDictionary(x => x.InstanceId, _ => NativeConstructSolarExposure.None,
                 StringComparer.Ordinal);
         var inspected = PreviewSolarOperation(authenticatedBalances, exposures, 1);
-        return inspected.Issues.Count > 0
-            ? new(null, inspected.Issues)
+        var issues = new List<NativeOriginContractIssue>(inspected.Issues);
+        if ((authenticatedDeficitMinutes is null) !=
+            (authenticatedExhaustionEvents is null))
+            issues.Add(new("construct-solar-exhaustion-state-incomplete",
+                "solarLedger", NativeOriginIssueSeverity.Invalid,
+                "Restored exhaustion state requires both deficit and event counters."));
+        if (authenticatedDeficitMinutes is not null &&
+            (authenticatedDeficitMinutes.Count != exposures.Count ||
+             authenticatedDeficitMinutes.Any(x =>
+                 !exposures.ContainsKey(x.Key) || x.Value < 0)))
+            issues.Add(new("construct-solar-deficit-state-invalid",
+                "solarLedger", NativeOriginIssueSeverity.Invalid,
+                "Every installed solar source needs a nonnegative deficit counter."));
+        if (authenticatedExhaustionEvents is not null &&
+            (authenticatedExhaustionEvents.Count != exposures.Count ||
+             authenticatedExhaustionEvents.Any(x =>
+                 !exposures.ContainsKey(x.Key) || x.Value < 0)))
+            issues.Add(new("construct-solar-exhaustion-state-invalid",
+                "solarLedger", NativeOriginIssueSeverity.Invalid,
+                "Every installed solar source needs a nonnegative exhaustion-event counter."));
+        return issues.Count > 0
+            ? new(null, issues)
             : new(new NativeConstructSolarEnergyLedger(this,
-                authenticatedBalances), []);
+                authenticatedBalances, authenticatedDeficitMinutes,
+                authenticatedExhaustionEvents), []);
     }
 
     /// <summary>
