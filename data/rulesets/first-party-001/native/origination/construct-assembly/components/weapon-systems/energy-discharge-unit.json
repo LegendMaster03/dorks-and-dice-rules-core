@@ -1,11 +1,13 @@
 {
   "name": "Energy discharge unit",
   "description": "A mechanism that directs stored or supplied energy into a pulse, beam, or burst. Damage, targeting, discharge quantities, and area effects need authored combat rules.",
-  "rulesStatus": "candidate physical mechanism; manufacturing recipe, power demand, and effective gameplay mechanics remain unapproved",
+  "rulesStatus": "provisional first-party playable construction candidate; advanced effect binding and balance still required",
   "provides": [
     "energy-discharge-interface"
   ],
   "materialSlots": [
     "emitter"
-  ]
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.energy-discharge-unit",
+  "powerDemand": 2
 }
