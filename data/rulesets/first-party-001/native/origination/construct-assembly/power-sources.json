@@ -1,18 +1,5 @@
 [
   {
-    "id": "construct-power-source.artificial-life-core",
-    "kind": "construct-power-source",
-    "name": "Artificial-life core",
-    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "A proposed source for self-sustaining artificial life. Its ability to bypass other construction limitations is not approved.",
-    "compatibleComponentCapabilities": [
-      "power-housing"
-    ],
-    "operatingPrinciple": "artificial-life",
-    "craftingRecipeId": "crafting-recipe.construct-power-source.artificial-life-core",
-    "powerOutput": 6
-  },
-  {
     "id": "construct-power-source.solar-crystal",
     "kind": "construct-power-source",
     "name": "Solar/rechargeable crystal",
