@@ -1146,5 +1146,137 @@
         "outputs": []
       }
     ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.structural-frame.small",
+    "kind": "crafting-recipe",
+    "name": "Structural frame (small) — manufacture",
+    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "producesDefinitionId": "construct-component.structural-frame",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "frame",
+            "amount": 4
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.structural-frame.medium",
+    "kind": "crafting-recipe",
+    "name": "Structural frame (medium) — manufacture",
+    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "producesDefinitionId": "construct-component.structural-frame",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "frame",
+            "amount": 8
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.structural-frame.large",
+    "kind": "crafting-recipe",
+    "name": "Structural frame (large) — manufacture",
+    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "producesDefinitionId": "construct-component.structural-frame",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.smithing",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "frame",
+            "amount": 16
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.external-casing.small",
+    "kind": "crafting-recipe",
+    "name": "External casing (small) — manufacture",
+    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "producesDefinitionId": "construct-component.external-casing",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "casing",
+            "amount": 2
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.external-casing.medium",
+    "kind": "crafting-recipe",
+    "name": "External casing (medium) — manufacture",
+    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "producesDefinitionId": "construct-component.external-casing",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 1,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "casing",
+            "amount": 4
+          }
+        ],
+        "outputs": []
+      }
+    ]
+  },
+  {
+    "id": "crafting-recipe.construct-component.external-casing.large",
+    "kind": "crafting-recipe",
+    "name": "External casing (large) — manufacture",
+    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "producesDefinitionId": "construct-component.external-casing",
+    "stages": [
+      {
+        "stepId": "manufacture",
+        "competencyId": "competency.carpentry",
+        "minimumRanks": 2,
+        "dependencies": [],
+        "inputs": [
+          {
+            "materialSlot": "casing",
+            "amount": 8
+          }
+        ],
+        "outputs": []
+      }
+    ]
   }
 ]

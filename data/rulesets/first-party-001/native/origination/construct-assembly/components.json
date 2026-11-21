@@ -12,7 +12,25 @@
       "frame"
     ],
     "powerDemand": 0,
-    "craftingRecipeId": "crafting-recipe.construct-component.structural-frame"
+    "craftingRecipeId": "crafting-recipe.construct-component.structural-frame",
+    "definesBodySize": true,
+    "constructionVariants": [
+      {
+        "id": "small",
+        "craftingRecipeId": "crafting-recipe.construct-component.structural-frame.small",
+        "bodySize": "small"
+      },
+      {
+        "id": "medium",
+        "craftingRecipeId": "crafting-recipe.construct-component.structural-frame.medium",
+        "bodySize": "medium"
+      },
+      {
+        "id": "large",
+        "craftingRecipeId": "crafting-recipe.construct-component.structural-frame.large",
+        "bodySize": "large"
+      }
+    ]
   },
   {
     "id": "construct-component.articulated-joint",
@@ -77,7 +95,25 @@
       "casing"
     ],
     "powerDemand": 0,
-    "craftingRecipeId": "crafting-recipe.construct-component.external-casing"
+    "craftingRecipeId": "crafting-recipe.construct-component.external-casing",
+    "definesBodySize": true,
+    "constructionVariants": [
+      {
+        "id": "small",
+        "craftingRecipeId": "crafting-recipe.construct-component.external-casing.small",
+        "bodySize": "small"
+      },
+      {
+        "id": "medium",
+        "craftingRecipeId": "crafting-recipe.construct-component.external-casing.medium",
+        "bodySize": "medium"
+      },
+      {
+        "id": "large",
+        "craftingRecipeId": "crafting-recipe.construct-component.external-casing.large",
+        "bodySize": "large"
+      }
+    ]
   },
   {
     "id": "construct-component.manipulator",
