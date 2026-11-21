@@ -84,19 +84,6 @@
     }
   },
   {
-    "id": "construct-power-source.arcane-consuming-core",
-    "kind": "construct-power-source",
-    "name": "Arcane-consuming core",
-    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "Consumes an available arcane energy resource under separately authored operating rules.",
-    "compatibleComponentCapabilities": [
-      "power-housing"
-    ],
-    "operatingPrinciple": "arcane-consumption",
-    "craftingRecipeId": "crafting-recipe.construct-power-source.arcane-consuming-core",
-    "powerOutput": 6
-  },
-  {
     "id": "construct-power-source.mechanical-engine",
     "kind": "construct-power-source",
     "name": "Mechanical engine",
