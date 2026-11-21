@@ -24,5 +24,31 @@
       "physicalManipulation": true,
       "requiresOperationalComponent": true
     }
+  },
+  {
+    "id": "trait.construct.ordinary-communication",
+    "name": "Construct Ordinary Communication",
+    "kind": "origin-trait",
+    "rulesStatus": "starting-playtest functional trait; no additional language entitlement",
+    "trait": {
+      "id": "ordinary-communication",
+      "name": "Ordinary Communication",
+      "description": "While its control interface is operational, the Construct can communicate audibly in languages it already knows. This does not grant language proficiencies, telepathy, or unusual communication ranges.",
+      "ordinaryAudibleCommunication": true,
+      "requiresOperationalComponent": true
+    }
+  },
+  {
+    "id": "trait.construct.ordinary-ground-movement",
+    "name": "Construct Ordinary Ground Movement",
+    "kind": "origin-trait",
+    "rulesStatus": "starting-playtest functional trait; movement and structural support integration remain provisional",
+    "trait": {
+      "id": "ordinary-ground-movement",
+      "name": "Ordinary Ground Movement",
+      "description": "While this locomotion component is operational, it supports ordinary ground movement with a nominal 30-foot walking speed, subject to other applicable movement and physical-support rules. This does not waive body-mass limitations or grant movement while disabled.",
+      "walkingSpeedFeet": 30,
+      "requiresOperationalComponent": true
+    }
   }
 ]
