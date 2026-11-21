@@ -54,7 +54,7 @@ class PowerEvaluationTests(unittest.TestCase):
             "id": "ancestry.elf.drow", "kind": "ancestry",
             "parent": "species.elf", "darkvisionFeet": 120,
             "selectable": True, "traits": [{"traitId": "trait.elf.sunlight"}]})
-        write("traits/dwarf/species.dwarf.json", [
+        write("origination/biological/traits/dwarf/species.dwarf.json", [
             {"id": "trait.dwarf.toughness", "kind": "origin-trait",
              "trait": {"id": "dwarven-toughness", "hitPointsPerCharacterLevel": 1}},
             {"id": "trait.dwarf.stonebound", "kind": "origin-trait",
@@ -62,12 +62,12 @@ class PowerEvaluationTests(unittest.TestCase):
                        "rangeFeet": 60, "requiresContact": "stone",
                        "activation": "bonus-action", "durationMinutes": 10,
                        "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}}}])
-        write("traits/gnome/rock.json", [
+        write("origination/biological/traits/gnome/rock.json", [
             {"id": "trait.gnome.earthbound", "kind": "origin-trait",
              "trait": {"id": "earthbound-tremorsense", "sense": "tremorsense",
                        "rangeFeet": 15, "activation": "passive",
                        "requiresSharedContact": ["earth", "stone"]}}])
-        write("traits/dragonborn/base.json", [
+        write("origination/biological/traits/dragonborn/base.json", [
             {"id": "trait.dragonborn.breath", "kind": "origin-trait",
              "trait": {"id": "breath-weapon", "damage": {"progression": [
                  {"characterLevel": 1, "dice": "1d10"},
@@ -76,7 +76,7 @@ class PowerEvaluationTests(unittest.TestCase):
                  "activation": {"action": "attack", "replaces": "one-attack"},
                  "uses": {"value": "proficiency-bonus"},
                  "savingThrow": {"ability": "dexterity", "onSuccess": "half-damage"}}}])
-        write("traits/elf/drow.json", [
+        write("origination/biological/traits/elf/drow.json", [
             {"id": "trait.elf.sunlight", "kind": "origin-trait",
              "trait": {"id": "sunlight-sensitivity", "condition": "condition.dazzled",
                        "trigger": "direct-unprotected-sunlight"}}])
