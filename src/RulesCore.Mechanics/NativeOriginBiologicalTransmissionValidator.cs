@@ -67,7 +67,9 @@ internal static class NativeOriginBiologicalTransmissionValidator
             }
             if (!candidates.TryGetValue(id, out var candidate) ||
                 candidate.ContributorId is null ||
-                candidate.Identity is null ||
+                !(proposal.Contributors ?? []).Any(x =>
+                    x?.Id == candidate.ContributorId) ||
+                candidate.Identity?.Occurrence?.Source is null ||
                 candidate.Identity.Kind is not
                     (NativeOriginCharacteristicKind.Intrinsic or NativeOriginCharacteristicKind.Trait))
             {
@@ -81,9 +83,10 @@ internal static class NativeOriginBiologicalTransmissionValidator
                 candidate.SelectionBasis.RuleReference == RuleId;
             var ruling = verified("candidate", id) ??
                 verified("source", candidate.Identity.Occurrence.Source.Id);
-            var dm = candidate.SelectionBasis?.Eligibility == NativeOriginEligibility.DmAuthorized &&
-                candidate.SelectionBasis.TableDecisionId == ruling?.Id &&
-                ruling?.EffectiveOutcome.ValueKind == JsonValueKind.Object &&
+            var dm = ruling is not null &&
+                candidate.SelectionBasis?.Eligibility == NativeOriginEligibility.DmAuthorized &&
+                candidate.SelectionBasis.TableDecisionId == ruling.Id &&
+                ruling.EffectiveOutcome.ValueKind == JsonValueKind.Object &&
                 ruling.EffectiveOutcome.TryGetProperty("eligibility", out var eligibility) &&
                 eligibility.ValueKind == JsonValueKind.String &&
                 eligibility.GetString() == "eligible";
