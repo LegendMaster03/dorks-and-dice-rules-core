@@ -3,8 +3,8 @@
     "id": "construct-power-source.solar-crystal",
     "kind": "construct-power-source",
     "name": "Solar energy collector",
-    "rulesStatus": "approved solar output, generation and starting storage playtest values; host-verified exposure and persistence pending",
-    "description": "A solar-driven magical generator with an integrated rechargeable battery. Sunlight generates energy, surplus collection recharges storage, and depleted storage supplies temporary shortfalls. Concentrated sunlight, as determined by the DM, enables overdrive.",
+    "rulesStatus": "owner-approved generation, storage, solar exhaustion fallback, and Overdrive; host exhaustion authority/persistence pending",
+    "description": "A solar-driven magical generator with an integrated rechargeable battery. Sunlight generates and stores energy. If supply is insufficient, the generator continues at normal output while the Construct accrues exhaustion. Concentrated sunlight enables Overdrive.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
@@ -21,7 +21,14 @@
     },
     "storageCapacityPowerUnitHours": 96,
     "storageResourceKind": "solar-energy",
-    "overdriveCondition": "dm-confirmed-concentrated-sunlight"
+    "overdriveCondition": "dm-confirmed-concentrated-sunlight",
+    "energyShortagePolicy": {
+      "fallbackPowerOutput": 8,
+      "consequence": "exhaustion",
+      "firstLevel": "on-first-operation-with-insufficient-energy",
+      "additionalLevelPeriodMinutes": 1440,
+      "recoveryBlockedWhileShortageContinues": true
+    }
   },
   {
     "id": "construct-power-source.soul-gem",
@@ -50,14 +57,25 @@
     "id": "construct-power-source.infernal-engine",
     "kind": "construct-power-source",
     "name": "Infernal Engine",
-    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
-    "description": "An infernal-energy mechanism requiring separate fuel and failure rules.",
+    "rulesStatus": "owner-approved long-rest sustenance, normal fallback and extra-fuel Overdrive; exact overheating, fuel recipe and Overdrive duration require separate design",
+    "description": "An infernal generator consuming its ordinary sustaining fuel at a long rest. It continues supplying normal power without that fuel, but incurs infernal instability or overheating. Deliberately supplied additional fuel enables Overdrive.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
     "operatingPrinciple": "infernal",
     "craftingRecipeId": "crafting-recipe.construct-power-source.infernal-engine",
-    "powerOutput": 8
+    "powerOutput": 8,
+    "overdrivePowerOutput": 12,
+    "overdriveIncreasePercent": 50,
+    "longRestSustenance": {
+      "resourceKind": "infernal-engine-fuel-charge",
+      "unitsPerLongRest": 1
+    },
+    "fuelShortagePolicy": "continues-at-normal-output-with-infernal-instability-or-overheating",
+    "overdriveFuelPolicy": "additional-infernal-fuel-per-use",
+    "overdriveFuelQuantityStatus": "not-yet-authored",
+    "overdriveDurationStatus": "not-yet-authored",
+    "overheatingConsequencesStatus": "not-yet-authored"
   },
   {
     "id": "construct-power-source.arcane-consuming-core",

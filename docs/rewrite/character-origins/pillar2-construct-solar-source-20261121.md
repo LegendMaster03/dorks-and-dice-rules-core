@@ -1,6 +1,6 @@
 # Pillar 2 — Solar-based Construct power source
 
-**Status:** Owner-approved source design and candidate first-party implementation
+**Status:** Owner-approved source design and exhaustion fallback candidate
 (November 21, 2026); integrated acceptance is still required.
 
 **Reference:** `construct-power-source.solar-crystal` is a stable native
@@ -49,12 +49,14 @@ The runtime expresses the 96-power-unit-hour integrated battery as
 - If collection exceeds the solar generator's assigned demand, surplus
   energy charges the battery up to its rated capacity.
 - If collection falls short, available stored energy supplies the deficit.
-  Source output is limited by the normal/Overdrive ceiling and by how much
-  energy is sustainable across the requested interval.
+  If available collection and storage cannot meet demand, the source
+  **continues at its rated normal output**, and the Construct incurs the
+  separately tracked exhaustion penalty. This does not grant extra battery
+  energy or exceed the 8-unit normal limit.
 - A fully charged battery can sustain the full 8-unit normal output for
-  **12 hours** without incoming sunlight.
+  **12 hours before an energy-deficit exhaustion penalty begins**, without incoming sunlight.
 - The existing 7-unit reference Construct can run for approximately
-  **13.7 hours** without incoming sunlight.
+  **13.7 hours before energy-deficit exhaustion begins** without incoming sunlight.
 - In direct sunlight at a 7-unit load, 9 units replenish storage each hour;
   a fully discharged battery needs **10 hours 40 minutes** of those
   conditions to reach full charge.
@@ -63,11 +65,41 @@ The runtime expresses the 96-power-unit-hour integrated battery as
 - A full battery wastes unused incoming energy. Time advancement without
   sunlight consumes only the actually assigned source contribution.
 
-The source-specific operating preview computes the sustainable output
-for the **requested interval**, passes that output to the ordinary
-component/dependency/power-network evaluator, then calculates the next
-battery balance. A failed or overallocated configuration does not commit
-consumption or charging.
+The source-specific operating preview provides normal output even when
+energy generation and storage cannot fund the **entire requested interval**.
+It passes the source rating to the ordinary component/dependency/power-network
+evaluator, then calculates remaining battery energy and the exact unfunded
+power-unit-minutes and insufficient-energy minutes. A failed or
+overallocated configuration does not commit consumption, charging, or
+exhaustion consequences.
+
+### Approved energy-deficit fallback
+
+- The Construct gains **one exhaustion level when it begins operating
+  without sufficient solar energy**, even if its components remain powered.
+- It gains **one additional level per 24 hours of continued operation
+  under that deficit**. Splitting one period into smaller time increments
+  must not grant repeated first levels.
+- Exhaustion caused by inadequate solar energy **cannot be recovered
+  while the energy shortage continues**.
+- Adequate incoming sunlight or restored usable energy ends the active
+  deficiency. Accrued exhaustion remains until recovered through
+  the applicable recovery rules; sunlight does not instantly cure it.
+- The generator has **no independent energy-deficit shutdown**. It
+  remains limited to 8 normal units. Solar Overdrive still requires
+  DM-confirmed concentrated sunlight.
+
+The revision-checked ledger tracks insufficient-energy operating minutes
+and reports each newly accrued exhaustion level. This is an
+**exhaustion consequence receipt**, not an authorization to mutate
+the character's condition. The host must apply the receipt to the
+Construct, enforce inability to recover exhaustion while deficiency
+continues, and persist both the exhaustion and deficit progression.
+
+**Reopening a ledger:** A host restoring a previous session must supply its
+authenticated deficit-minute and exhaustion-event counters, not silently
+reset them by opening a fresh ledger with starting zero values. Fresh
+creation can start at zero only if the character has no prior intervals.
 
 ## Authorization boundaries
 
@@ -77,18 +109,22 @@ source occurrence, battery bounds, exposure kind, interval duration, and
 active power allocation. It is an advisory preview, not authorization for a
 player to assert direct or concentrated sunlight.
 
-`OpenTrustedSolarLedger` accepts balances that a host has already
-authenticated. The in-process `NativeConstructSolarEnergyLedger` rechecks
-all capacity and time calculations under a revision lock, and requires an
+`OpenTrustedSolarLedger` accepts balances and, when restoring an existing
+session, authenticated deprivation and exhaustion-event counters. The
+in-process `NativeConstructSolarEnergyLedger` rechecks capacity, time
+calculations and exhaustion accrual under a revision lock, and requires an
 `INativeConstructSolarIntervalAuthority` confirmation before a transition
-can commit. That authority represents the DM's validated exposure and game
-time. A replay with a stale ledger revision cannot refill or spend energy.
+can commit. That authority represents DM-validated exposure and game time.
+A replay with a stale ledger revision cannot refill, spend, or double-charge
+exhaustion events.
 
 The general no-context `EvaluateConfiguration` path will not claim a
-solar-powered operating configuration valid merely from its static native
-8-unit rated output. The solar preview supplies the necessary
-time-and-battery context. Initial construction can still evaluate normal
-rated output for selecting and pricing the installed components.
+solar-powered configuration valid without authenticated operating context.
+This is an **authorization boundary**, not a rule that the solar generator
+stops working without light or stored energy. The solar preview provides
+rated output and identifies the exhaustion consequence. Initial
+construction can still evaluate normal rated output for selection and
+pricing.
 
 ## Related components and limits
 
@@ -105,9 +141,9 @@ composition nor its recipe cost was redesigned in this source mechanics
 pass.
 
 **Remaining before full production acceptance:**
-1. Connect the host's elapsed-time/environment authority and durable
-   battery balances to gameplay state; neither preview nor in-process
-   revision receipt is a persistent game transaction.
+1. Connect the host's elapsed-time/environment authority, battery and
+   deficit counters, and exhaustion/recovery enforcement to gameplay state;
+   neither preview nor in-process receipt is a persistent game transaction.
 2. Establish a source-dispatch policy when solar and non-solar
    generators simultaneously supply the same active network. That
    configuration is explicitly unresolved by the solar preview until
@@ -118,5 +154,6 @@ pass.
 4. Run the .NET suite and integrated acceptance against the stacked
    Construct branch.
 
-No changes to the soul, infernal or arcane power-source policies are
-authorized by this solar-source approval.
+The Soul-Powered Core retains its separate narrative tradeoff, with no
+mandatory exhaustion or infernal-fuel adjustment. Infernal fuel decisions
+are documented independently. No arcane source changes are authorized.

@@ -302,6 +302,9 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 // Solar output can vary with collection and battery. Soul
                 // energy has no numerical consumption formula: the DM must
                 // confirm either unavailable (0), normal, or Overdrive output.
+                // Infernal output stays at its normal baseline even when the
+                // long-rest fuel payment is missing; its separate penalty
+                // must be applied by the authenticated host.
                 var definition = default(JsonElement);
                 var sourceValid = false;
                 if (instance.PowerSourceId is not null &&
@@ -325,13 +328,13 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 var validOutput = hasMaximum && solarOutput >= 0 &&
                     solarOutput <= maxOutput &&
                     (kind == "solar-recharge" ||
-                     (kind == "soul-energy" &&
+                     ((kind == "soul-energy" || kind == "infernal") &&
                       definition.TryGetProperty("powerOutput",
                           out var normalValue) &&
                       normalValue.ValueKind == JsonValueKind.Number &&
                       normalValue.TryGetInt32(out var normalOutput) &&
-                      (solarOutput == 0 || solarOutput == normalOutput ||
-                       solarOutput == maxOutput)));
+                      (kind == "soul-energy" && solarOutput == 0 ||
+                       solarOutput == normalOutput || solarOutput == maxOutput)));
                 if (!validOutput)
                     Issue("construct-power-source-runtime-output-invalid",
                         path + ".powerSourceId", NativeOriginIssueSeverity.Invalid,
