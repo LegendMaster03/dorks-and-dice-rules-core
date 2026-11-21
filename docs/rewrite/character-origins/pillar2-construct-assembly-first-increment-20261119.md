@@ -207,7 +207,7 @@ the separation of component, material, design, enhancement and source.
   (previously one `components.json` catalog), grouped by established
   functions: structural support, articulation, actuation, manipulation,
   locomotion, control, sensing, power interfaces, enclosure, equipment mounts,
-  integrated weapons, utility, storage and transport. The path supplies
+  integrated weapon mounts, utility, storage and transport. The path supplies
   `componentCategory`, canonical `id`, and `kind` at catalog load; the
   authored component effects and stable IDs are unchanged.
   Names are design candidates; neither descriptions nor functional tags alone

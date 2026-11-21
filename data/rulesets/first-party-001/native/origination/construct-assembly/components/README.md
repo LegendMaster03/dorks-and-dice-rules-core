@@ -30,7 +30,7 @@ power, establish prerequisites, or prescribe anatomy.
 | `power` | Power-source housing and distribution interfaces |
 | `enclosure` | Casing and protective coverings |
 | `equipment-mounts` | General equipment and shield mounting interfaces |
-| `integrated-weapons` | Specialized melee, projectile, and energy weapon mounts |
+| `integrated-weapon-mounts` | Specialized melee, projectile, and energy weapon mounts |
 | `storage-and-transport` | Storage compartments and passenger accommodation |
 | `utility` | Maintenance ports and auxiliary utility mechanisms |
 
