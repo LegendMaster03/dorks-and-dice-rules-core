@@ -44,7 +44,7 @@ public sealed class NativeOriginCreationAllocationGateTests
 
     private static NativeOriginProposal Mixed(bool twoOrcs = false)
     {
-        var donors = twoOrcs
+        NativeOriginContributor[] donors = twoOrcs
             ? new[]
             {
                 new NativeOriginContributor("first",
@@ -271,6 +271,35 @@ public sealed class NativeOriginCreationAllocationGateTests
         Assert.Equal(count, trusted.CreationAllocation.CommittedLoad);
         Assert.Equal(NativeOriginAdjudication.DmAuthorized,
             trusted.Profile!.Adjudication.Adjudication);
+    }
+
+    [Fact]
+    public void ExplicitInteractionPricesAddToBaseCostsOnlyWhenBothEffectsExpress()
+    {
+        var proposal = Mixed();
+        var baseline = Evaluate(proposal);
+        var grantCount = baseline.Profile!.Underlying.InherentGrants.Count;
+        var plain = Policy(grantCount, baseline);
+        var additional = plain with
+        {
+            InteractionPrices = [
+                new NativeOriginAllocationInteractionPrice(
+                    "elf-sight-and-size-combination", 2,
+                    ["trait:trait.low-light-vision", "intrinsic:size"])
+            ]
+        };
+        var blocked = Evaluate(proposal, additional);
+        Assert.Equal(NativeOriginConstructionStatus.Conflicting, blocked.Status);
+        Assert.Equal(grantCount + 2, blocked.CreationAllocation!.CommittedLoad);
+        Assert.Contains(blocked.CreationAllocation.Charges, x =>
+            x.PriceId == "elf-sight-and-size-combination" && x.Load == 2);
+
+        var allowed = Evaluate(proposal, additional with
+        {
+            Allowance = grantCount + 2
+        });
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, allowed.Status);
+        Assert.Equal(grantCount + 2, allowed.CreationAllocation!.CommittedLoad);
     }
 
     [Fact]
