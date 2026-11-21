@@ -14,13 +14,13 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         EvaluateWithSourceOutputOverrides(request, null);
 
     /// <summary>
-    /// Internal-only runtime capacity override for already-installed solar
-    /// mechanisms. Values are bounded against native authored output limits.
-    /// Public assembly requests never carry an arbitrary power-output claim.
+    /// Internal-only runtime capacity overrides for already-installed,
+    /// source-authored mechanisms. Values are constrained by the native
+    /// mechanism; public assembly requests cannot assert runtime output.
     /// </summary>
     internal NativeConstructAssemblyResult EvaluateWithSourceOutputOverrides(
         NativeConstructAssemblyRequest request,
-        IReadOnlyDictionary<string, int>? trustedSolarOutputs)
+        IReadOnlyDictionary<string, int>? trustedSourceOutputs)
     {
         ArgumentNullException.ThrowIfNull(request);
         var issues = new List<NativeOriginContractIssue>();
@@ -293,27 +293,43 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             // A source sets the housing's baseline output. An explicitly
             // authored operating mode may override that output.
             output = selectedMode?.PowerOutput ?? baseOutput;
-            if (trustedSolarOutputs is not null &&
-                trustedSolarOutputs.TryGetValue(instance.InstanceId, out var solarOutput))
+            if (trustedSourceOutputs is not null &&
+                trustedSourceOutputs.TryGetValue(instance.InstanceId, out var solarOutput))
             {
                 overriddenSourceIds.Add(instance.InstanceId);
-                // Only an installed solar source with its own native overdrive
-                // limit can receive an internally evaluated runtime output.
-                if (instance.PowerSourceId is null ||
-                    !catalog.TryGetById(instance.PowerSourceId, out var source) ||
-                    source?.Category != "construct-power-source" ||
-                    !source.Definition.TryGetProperty("operatingPrinciple",
-                        out var principle) ||
-                    principle.ValueKind != JsonValueKind.String ||
-                    principle.GetString() != "solar-recharge" ||
-                    !source.Definition.TryGetProperty("overdrivePowerOutput",
-                        out var ceiling) ||
-                    ceiling.ValueKind != JsonValueKind.Number ||
-                    !ceiling.TryGetInt32(out var maxOutput) ||
-                    solarOutput < 0 || solarOutput > maxOutput)
-                    Issue("construct-solar-source-output-invalid",
+                // A trusted operating preview may apply only a value
+                // permitted by the installed source's native operating model.
+                // Solar output can vary with collection and battery. Soul
+                // energy has no numerical consumption formula: the DM must
+                // confirm either unavailable (0), normal, or Overdrive output.
+                var sourceValid = instance.PowerSourceId is not null &&
+                    catalog.TryGetById(instance.PowerSourceId, out var mechanism) &&
+                    mechanism?.Category == "construct-power-source";
+                var definition = sourceValid ? mechanism!.Definition : default;
+                var kind = sourceValid &&
+                    definition.TryGetProperty("operatingPrinciple",
+                        out var principle) &&
+                    principle.ValueKind == JsonValueKind.String
+                    ? principle.GetString() : null;
+                var hasMaximum = sourceValid &&
+                    definition.TryGetProperty("overdrivePowerOutput",
+                        out var ceiling) &&
+                    ceiling.ValueKind == JsonValueKind.Number &&
+                    ceiling.TryGetInt32(out var maxOutput);
+                var validOutput = hasMaximum && solarOutput >= 0 &&
+                    solarOutput <= maxOutput &&
+                    (kind == "solar-recharge" ||
+                     (kind == "soul-energy" &&
+                      definition.TryGetProperty("powerOutput",
+                          out var normalValue) &&
+                      normalValue.ValueKind == JsonValueKind.Number &&
+                      normalValue.TryGetInt32(out var normalOutput) &&
+                      (solarOutput == 0 || solarOutput == normalOutput ||
+                       solarOutput == maxOutput)));
+                if (!validOutput)
+                    Issue("construct-power-source-runtime-output-invalid",
                         path + ".powerSourceId", NativeOriginIssueSeverity.Invalid,
-                        "Runtime solar power must be bounded by the installed native source.");
+                        "Runtime output must be verified against this installed source's native capacity and operating states.");
                 else
                     output = solarOutput;
             }
@@ -572,8 +588,8 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             powerNetworks = ConnectedNetworks(powerLinks);
         }
 
-        if (trustedSolarOutputs is not null)
-            foreach (var id in trustedSolarOutputs.Keys)
+        if (trustedSourceOutputs is not null)
+            foreach (var id in trustedSourceOutputs.Keys)
                 if (!overriddenSourceIds.Contains(id))
                     Issue("construct-solar-source-instance-invalid",
                         "solarOutputOverrides", NativeOriginIssueSeverity.Invalid,
