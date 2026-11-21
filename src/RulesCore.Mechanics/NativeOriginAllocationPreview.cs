@@ -11,7 +11,16 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public sealed record NativeOriginAllocationPolicy(
     string Revision, string RuleId, string MethodId, int Allowance,
-    IReadOnlyList<NativeOriginAllocationPrice> Prices);
+    IReadOnlyList<NativeOriginAllocationPrice> Prices,
+    IReadOnlyList<NativeOriginAllocationInteractionPrice>? InteractionPrices = null);
+
+/// <summary>
+/// An additional cost for a specific coexisting set of effective mechanics.
+/// Interaction costs do not replace ordinary grant charges and can span
+/// different contributors; they apply only when every required key is active.
+/// </summary>
+public sealed record NativeOriginAllocationInteractionPrice(
+    string Id, int Load, IReadOnlyList<string> RequiredKeys);
 
 /// <summary>
 /// Prices a complete characteristic or one inseparable group. MemberKeys use
@@ -102,7 +111,20 @@ public static class NativeOriginAllocationPreview
                 policy.Prices.Count ||
             policy.Prices.SelectMany(x => x.MemberKeys)
                 .Distinct(StringComparer.Ordinal).Count() !=
-                policy.Prices.Sum(x => x.MemberKeys.Count))
+                policy.Prices.Sum(x => x.MemberKeys.Count) ||
+            (policy.InteractionPrices ?? []).Any(x => x is null ||
+                string.IsNullOrWhiteSpace(x.Id) || x.Load <= 0 ||
+                x.RequiredKeys is not { Count: >= 2 } ||
+                x.RequiredKeys.Any(string.IsNullOrWhiteSpace) ||
+                x.RequiredKeys.Distinct(StringComparer.Ordinal).Count() !=
+                    x.RequiredKeys.Count) ||
+            (policy.InteractionPrices ?? []).Select(x => x.Id)
+                .Concat(policy.Prices.Select(x => x.Id))
+                .Distinct(StringComparer.Ordinal).Count() !=
+                (policy.InteractionPrices?.Count ?? 0) + policy.Prices.Count ||
+            (policy.InteractionPrices ?? []).SelectMany(x => x.RequiredKeys)
+                .Any(key => !policy.Prices.SelectMany(x => x.MemberKeys)
+                    .Contains(key, StringComparer.Ordinal)))
             return Finish("invalid-policy", policy.Revision, policy.Allowance,
                 null, [], ["allocation-policy-malformed-or-overlapping"]);
 
@@ -171,6 +193,24 @@ public static class NativeOriginAllocationPreview
             !assigned.ContainsKey(x.GrantId)))
             issues.Add("allocation-load-unpriced:" + component.Key + ":" +
                 component.GrantId);
+
+        // Interaction premiums are additive and explicitly authored. Every
+        // required mechanic must already be present as an effective grant.
+        // The source need not be the same contributor, unlike inseparable
+        // same-lineage bundles. No latent instance triggers an interaction.
+        foreach (var interaction in (policy.InteractionPrices ?? [])
+            .OrderBy(x => x.Id, StringComparer.Ordinal))
+        {
+            var members = interaction.RequiredKeys.Select(key => components
+                .Where(component => component.Key == key).ToArray()).ToArray();
+            if (members.Any(group => group.Length == 0))
+                continue;
+            charges.Add(new(interaction.Id, interaction.Load,
+                members.SelectMany(group => group.Select(x => x.GrantId))
+                    .Distinct(StringComparer.Ordinal)
+                    .OrderBy(x => x, StringComparer.Ordinal).ToArray(),
+                interaction.RequiredKeys));
+        }
 
         var checkedComponents = components.Select(x =>
             x with
