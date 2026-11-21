@@ -530,7 +530,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
         var strike = Assert.Single(offers, x =>
             x.Identity.MechanicalDefinitionId == strikeId);
         Assert.All([ability, owner, strike], x =>
-            Assert.Equal(NativeOriginEligibility.Unreviewed,
+            Assert.Equal(NativeOriginEligibility.Eligible,
                 x.SelectionBasis.Eligibility));
 
         var selected = foundation.Append(ability).Append(owner).Append(strike)

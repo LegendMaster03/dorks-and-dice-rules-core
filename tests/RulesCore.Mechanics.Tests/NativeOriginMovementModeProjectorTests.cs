@@ -74,7 +74,7 @@ public sealed class NativeOriginMovementModeProjectorTests
         var traits = selectedTraitIds.Select(id =>
             Assert.Single(offers, x => x.Identity.MechanicalDefinitionId == id)).ToArray();
         Assert.All(traits, x =>
-            Assert.Equal(NativeOriginEligibility.Unreviewed, x.SelectionBasis.Eligibility));
+            Assert.Equal(NativeOriginEligibility.Eligible, x.SelectionBasis.Eligibility));
 
         var manifestations = foundation.Select((x, i) =>
             new NativeOriginManifestation("physical-" + i, x.Id,

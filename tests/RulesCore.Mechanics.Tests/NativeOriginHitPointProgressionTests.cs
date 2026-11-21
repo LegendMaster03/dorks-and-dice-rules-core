@@ -72,7 +72,7 @@ public sealed class NativeOriginHitPointProgressionTests
             "trait.dwarf.dwarven-toughness").ToArray();
         Assert.Equal(donorCount, toughness.Length);
         Assert.All(toughness, x =>
-            Assert.NotEqual(NativeOriginEligibility.Eligible,
+            Assert.Equal(NativeOriginEligibility.Eligible,
                 x.SelectionBasis.Eligibility));
 
         var manifests = foundation.Concat(toughness).Select((offer, index) =>

@@ -109,7 +109,7 @@ public sealed class NativeOriginSkillRankEntitlementTests
         Assert.Equal(3, foundation.Length);
         Assert.Equal(humanDonors, ranks.Length);
         Assert.All(ranks, x =>
-            Assert.NotEqual(NativeOriginEligibility.Eligible,
+            Assert.Equal(NativeOriginEligibility.Eligible,
                 x.SelectionBasis.Eligibility));
         var manifest = foundation.Concat(ranks).Select((x, i) =>
             new NativeOriginManifestation("selected-" + i, x.Id,

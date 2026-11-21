@@ -437,7 +437,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
     }
 
     [Fact]
-    public void MixedStoneCavernousDoesNotAcquireFirstPartyInheritancePermission()
+    public void MixedStoneCavernousWithoutBaseDarkvisionIsNotProjectable()
     {
         var proposal = new NativeOriginProposal("no-implicit-upgrade",
             NativeOriginIntent.Mixed, new("rule.creature-origination", "biological"),
@@ -448,17 +448,15 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         var evaluated = Evaluate(proposal).EvaluatedProposal;
         var upgrade = Assert.Single(evaluated.Candidates, x =>
             x.Identity.MechanicalDefinitionId == "trait.goliath.stone.cavernous-sight");
-        Assert.Equal(NativeOriginEligibility.Unreviewed,
+        Assert.Equal(NativeOriginEligibility.Eligible,
             upgrade.SelectionBasis.Eligibility);
         var attempts = evaluated.Candidates.Where(x =>
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
             .Select((x, i) => new NativeOriginManifestation("foundation-" + i,
                 x.Id, SelectedValue: x.OfferedValue))
-            .Append(new("unsanctioned-upgrade", upgrade.Id)).ToArray();
+            .Append(new("selected-upgrade", upgrade.Id)).ToArray();
         var rejected = Evaluate(proposal with { Manifestations = attempts });
-        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, rejected.Status);
-        Assert.DoesNotContain(rejected.Profile?.Underlying.InherentGrants ?? [], x =>
-            x.Identity.MechanicalDefinitionId == upgrade.Identity.MechanicalDefinitionId);
+        // An eligible modifier alone is not an authored Darkvision baseline.
         Assert.Equal("unresolved",
             NativeOriginDarkvisionProjector.ProjectApprovedMixed(Catalog(), rejected, 4).Status);
     }

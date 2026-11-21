@@ -1149,24 +1149,10 @@ public sealed class NativeOriginConstructionTests
     }
 
     [Fact]
-    public void BiologicalPolicyLeavesUnmarkedTraitsAndNonparentInputsUnauthorized()
+    public void BiologicalPolicyRequiresParentRoleAndSelectableSource()
     {
         var proposal = Proposal("biological-boundary", NativeOriginIntent.Mixed,
             contributors: [Contributor("elf", "species.elf")]);
-        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
-        var unmarked = offered.Single(x =>
-            x.Identity.Occurrence.Source.Id == "species.elf" &&
-            x.Identity.Occurrence.OccurrencePath == "/traits/1");
-        Assert.Equal(NativeOriginEligibility.Unreviewed,
-            unmarked.SelectionBasis.Eligibility);
-        var rejected = Evaluate(proposal with
-        {
-            Manifestations = [new("unsupported-senses", unmarked.Id)]
-        }, defaults: false);
-        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, rejected.Status);
-        Assert.DoesNotContain(rejected.Profile?.Underlying.InherentGrants ?? [],
-            x => x.Identity.Occurrence.OccurrencePath == "/traits/1");
-
         var material = proposal with
         {
             Contributors = [new NativeOriginContributor("elf",

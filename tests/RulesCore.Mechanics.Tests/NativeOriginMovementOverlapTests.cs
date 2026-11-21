@@ -73,9 +73,9 @@ public sealed class NativeOriginMovementOverlapTests
         var copper = Assert.Single(offers, x => x.ContributorId == "copper" &&
             x.Identity.MechanicalDefinitionId ==
                 "trait.dragonborn.copper.natural-climber");
-        Assert.Equal(NativeOriginEligibility.Unreviewed,
+        Assert.Equal(NativeOriginEligibility.Eligible,
             red.SelectionBasis.Eligibility);
-        Assert.Equal(NativeOriginEligibility.Unreviewed,
+        Assert.Equal(NativeOriginEligibility.Eligible,
             copper.SelectionBasis.Eligibility);
         var foundation = offers.Where(x => x.ContributorId == "red" &&
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or
@@ -241,7 +241,7 @@ public sealed class NativeOriginMovementOverlapTests
         var movement = ids.Select(id => Assert.Single(offered,
             x => x.Identity.MechanicalDefinitionId == id)).ToArray();
         Assert.All(movement, x => Assert.Equal(
-            NativeOriginEligibility.Unreviewed, x.SelectionBasis.Eligibility));
+            NativeOriginEligibility.Eligible, x.SelectionBasis.Eligibility));
         var result = Evaluate(baseProposal with
         {
             Manifestations = foundational.Select((x, i) =>

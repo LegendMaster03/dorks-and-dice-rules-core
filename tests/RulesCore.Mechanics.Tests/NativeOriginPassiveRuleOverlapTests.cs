@@ -74,10 +74,9 @@ public sealed class NativeOriginPassiveRuleOverlapTests
             x.Identity.MechanicalDefinitionId == "trait.tiefling.low-light-vision");
         Assert.Equal(NativeOriginEligibility.Eligible,
             elf.SelectionBasis.Eligibility);
-        // Tiefling's base Species is a restricted family foundation; the
-        // selectable Infernal Ancestry does not make this trait automatically
-        // transmissible. Its current native offer is Restricted.
-        Assert.Equal(NativeOriginEligibility.Restricted,
+        // The selectable Infernal Ancestry supplies its inherited Species gene
+        // as an offer. Its distinct definition still requires reconciliation.
+        Assert.Equal(NativeOriginEligibility.Eligible,
             tiefling.SelectionBasis.Eligibility);
         Assert.NotEqual(elf.Identity.MechanicalDefinitionId,
             tiefling.Identity.MechanicalDefinitionId);
