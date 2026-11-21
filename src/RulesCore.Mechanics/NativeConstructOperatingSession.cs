@@ -132,16 +132,21 @@ public sealed class NativeConstructOperatingSession
                     "Operating changes may only address instances in the authorized assembly.")]);
         }
 
+        var outOfEnergy = trustedSolarOutputs is null
+            ? Array.Empty<string>()
+            : trustedSolarOutputs.Where(x => x.Value == 0)
+                .Select(x => x.Key).ToArray();
         var configured = _baseline with
         {
             // Never let a transient operating request clear a source outage
             // already captured in the trusted installation snapshot.
+            // A solar source supplying zero usable power must also be marked
+            // unavailable, not merely have its network output reduced to zero.
             UnavailablePowerSourceInstanceIds =
-                unavailablePowerSourceInstanceIds is null
-                    ? _baseline.UnavailablePowerSourceInstanceIds
-                    : (_baseline.UnavailablePowerSourceInstanceIds ?? [])
-                        .Concat(unavailablePowerSourceInstanceIds)
-                        .Distinct(StringComparer.Ordinal).ToArray(),
+                (_baseline.UnavailablePowerSourceInstanceIds ?? [])
+                    .Concat(unavailablePowerSourceInstanceIds ?? [])
+                    .Concat(outOfEnergy)
+                    .Distinct(StringComparer.Ordinal).ToArray(),
             Components = _baseline.Components.Select(instance => instance with
             {
                 Enabled = requestedEnabled.TryGetValue(instance.InstanceId, out var enabled)
