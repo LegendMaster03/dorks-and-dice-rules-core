@@ -590,12 +590,16 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             catalog, request.Components, Issue);
         long knownCost = knownMaterialCost + knownModificationCost;
         IReadOnlyDictionary<string, long>? requiredIngredients = null;
+        long? retainedMaterialMass = null;
+        IReadOnlyList<string>? missingMassMaterials = null;
         if (recipeCostMethod is JsonElement costMethod)
         {
             var quote = NativeCraftingResourceQuoter.Evaluate(
                 catalog, costMethod, recipeSelections);
             knownCost = quote.KnownCost;
             requiredIngredients = quote.RequiredResources;
+            retainedMaterialMass = quote.KnownRetainedMaterialMassPounds;
+            missingMassMaterials = quote.UnresolvedRetainedMassMaterials;
             issues.AddRange(quote.Issues);
         }
         foreach (var part in parts.Values)
@@ -717,7 +721,9 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         return new(status, knownCost, states, failures, issues, powerStates)
         {
             RequiredConstructionResources = requiredIngredients,
-            DerivedCreatureSize = derivedSize?.Size
+            DerivedCreatureSize = derivedSize?.Size,
+            KnownRetainedMaterialMassPounds = retainedMaterialMass,
+            UnresolvedRetainedMassMaterials = missingMassMaterials
         };
     }
 
@@ -917,5 +923,9 @@ public sealed record NativeConstructAssemblyResult(
     public IReadOnlyDictionary<string, long>? RequiredConstructionResources { get; init; }
     // A verified body-defining construction variant, not independent player size.
     public string? DerivedCreatureSize { get; init; }
+    // Partial material evidence only. Retained unpriced/unquantified material
+    // and component masses must be reconciled before computing encumbrance.
+    public long? KnownRetainedMaterialMassPounds { get; init; }
+    public IReadOnlyList<string>? UnresolvedRetainedMassMaterials { get; init; }
     public bool IsAuthorized => Status == NativeOriginConstructionStatus.Authorized;
 }

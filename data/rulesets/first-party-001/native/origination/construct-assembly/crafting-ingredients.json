@@ -18,14 +18,16 @@
     "kind": "crafting-material",
     "name": "Precision mechanisms",
     "description": "Gears, bearings, controls, and similar manufactured subcomponents.",
-    "rulesStatus": "candidate input; acquisition and price not balanced"
+    "rulesStatus": "provisional retained ingredient mass per recipe unit; price and full output weight unbalanced",
+    "massPoundsPerUnit": 2
   },
   {
     "id": "crafting-material.optical-elements",
     "kind": "crafting-material",
     "name": "Optical elements",
     "description": "Prepared lenses, reflectors, and sensor elements.",
-    "rulesStatus": "candidate input; acquisition and price not balanced"
+    "rulesStatus": "provisional retained ingredient mass per recipe unit; price and full output weight unbalanced",
+    "massPoundsPerUnit": 1
   },
   {
     "id": "crafting-material.arcane-catalyst",
@@ -39,7 +41,8 @@
     "kind": "crafting-material",
     "name": "Sealing compound",
     "description": "Manufactured barrier treatment for environmental sealing.",
-    "rulesStatus": "candidate input; acquisition and price not balanced"
+    "rulesStatus": "provisional retained ingredient mass per recipe unit; price and full output weight unbalanced",
+    "massPoundsPerUnit": 1
   },
   {
     "id": "crafting-material.soul-essence",

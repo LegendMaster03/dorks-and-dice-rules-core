@@ -14,7 +14,13 @@ internal sealed record NativeCraftingQuotedSelection(
 
 internal sealed record NativeCraftingResourceQuote(
     long KnownCost, IReadOnlyDictionary<string, long> RequiredResources,
-    IReadOnlyList<NativeOriginContractIssue> Issues);
+    IReadOnlyList<NativeOriginContractIssue> Issues)
+{
+    // Read-only material evidence; not a finished-item weight or encumbrance
+    // calculation. A recipe ingredient may be consumed without being retained.
+    public long KnownRetainedMaterialMassPounds { get; init; }
+    public IReadOnlyList<string> UnresolvedRetainedMassMaterials { get; init; } = [];
+}
 
 /// <summary>
 /// Quotes external recipe inputs using a native method's authored starting-resource
@@ -30,6 +36,8 @@ internal static class NativeCraftingResourceQuoter
     {
         var issues = new List<NativeOriginContractIssue>();
         var required = new Dictionary<string, long>(StringComparer.Ordinal);
+        long knownRetainedMassPounds = 0;
+        var unresolvedMass = new SortedSet<string>(StringComparer.Ordinal);
 
         void Issue(string code, string path, NativeOriginIssueSeverity severity, string detail) =>
             issues.Add(new(code, path, severity, detail));
@@ -197,6 +205,35 @@ internal static class NativeCraftingResourceQuoter
             }
             if (issues.Count != before) continue;
 
+            // Retention authoring is independent of purchase pricing. Only
+            // ingredients explicitly retained in the finished product contribute
+            // to this known partial mass; missing mass data does not become zero.
+            foreach (var input in operations.SelectMany(step => step.Inputs)
+                .Where(material => material.RetainedInProduct))
+            {
+                catalog.TryGetById(input.MaterialId, out var material);
+                if (material is null ||
+                    !material.Definition.TryGetProperty("massPoundsPerUnit",
+                        out var massValue) ||
+                    massValue.ValueKind != JsonValueKind.Number ||
+                    !massValue.TryGetInt32(out var mass) || mass is < 0 or > 1_000_000)
+                {
+                    unresolvedMass.Add(input.MaterialId);
+                    continue;
+                }
+                try
+                {
+                    knownRetainedMassPounds = checked(
+                        knownRetainedMassPounds + checked((long)input.Amount * mass));
+                }
+                catch (OverflowException)
+                {
+                    Issue("crafting-quote-mass-overflow", path,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Known retained material mass exceeds supported quantities.");
+                }
+            }
+
             // A private ledger for each recipe invocation avoids double-pricing
             // its intermediate outputs while not offering hypothetical surplus
             // products as free resources for a different recipe.
@@ -247,7 +284,11 @@ internal static class NativeCraftingResourceQuoter
                     "The total starting-resource value exceeds supported quantities.");
             }
         }
-        return new(knownCost, required.ToFrozenDictionary(StringComparer.Ordinal), issues);
+        return new(knownCost, required.ToFrozenDictionary(StringComparer.Ordinal), issues)
+        {
+            KnownRetainedMaterialMassPounds = knownRetainedMassPounds,
+            UnresolvedRetainedMassMaterials = unresolvedMass.ToArray()
+        };
     }
 
     private static bool String(JsonElement element, string property, out string? value)
@@ -319,7 +360,21 @@ internal static class NativeCraftingResourceQuoter
                     "Recipe resource identities must exist in the native catalog.");
                 return null;
             }
-            result.Add(new(id, amount));
+            var retained = false;
+            if (input.TryGetProperty("retainedInProduct", out var retention))
+            {
+                if (key != "inputs" ||
+                    retention.ValueKind is not
+                        (JsonValueKind.True or JsonValueKind.False))
+                {
+                    issue("crafting-quote-retention-invalid", path + "." + key,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Physical retention must be a boolean on recipe inputs.");
+                    return null;
+                }
+                retained = retention.ValueKind == JsonValueKind.True;
+            }
+            result.Add(new(id, amount) { RetainedInProduct = retained });
         }
         return result;
     }
