@@ -671,7 +671,8 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         }
         resolved = resolved.Concat(derived).ToArray();
         var (inheritedGenes, geneIssues, _, _) = _inheritance.Evaluate(
-            proposal, transmission, resolved, verifiedManifested, authority, Verified);
+            proposal, transmission, resolved, verifiedManifested,
+            request.TrustedScope is null ? null : authority, Verified);
         issues.AddRange(geneIssues);
         if (Verified("biological-inheritance", proposal.Id) is { } capacityDecision)
         {
