@@ -765,6 +765,19 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 ? "protective-surface"
                 : part.Provides.Contains("enclosure", StringComparer.Ordinal)
                     ? "enclosure" : null;
+            var protectedRegion = part.Instance.ProtectedRegionId;
+            if (protectedRegion is not null &&
+                (role != "protective-surface" ||
+                 protectedRegion.Length is < 1 or > 96 ||
+                 protectedRegion.Any(c => !(char.IsAsciiLetterOrDigit(c) ||
+                     c is '-' or '_' or '.'))))
+            {
+                Issue("construct-protection-region-invalid",
+                    "components." + instanceId + ".protectedRegionId",
+                    NativeOriginIssueSeverity.Invalid,
+                    "Only an installed protective surface may specify a path-safe protected region.");
+                protectedRegion = null;
+            }
             if (role is null || part.Instance.Materials is null) continue;
             foreach (var slot in part.Instance.Materials.OrderBy(x => x.Key,
                 StringComparer.Ordinal))
@@ -779,7 +792,13 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                         ? Text(profile, "rigidity") : null,
                     profile.ValueKind == JsonValueKind.Object
                         ? Text(profile, "combustibility") : null,
-                    activeIds.Contains(instanceId)));
+                    activeIds.Contains(instanceId),
+                    protectedRegion,
+                    role == "protective-surface" &&
+                        profile.ValueKind == JsonValueKind.Object
+                        ? Number(profile, "candidateFlatDamageReductionPerProtectiveLayer",
+                            "components." + instanceId, Issue)
+                        : null));
             }
         }
         // Support capacity is a property of the active hardware; a separate
@@ -969,7 +988,8 @@ public sealed record NativeConstructComponentInstance(
     string? DesignId = null, IReadOnlyList<string>? EnhancementIds = null,
     string? PowerSourceId = null,
     string? ParentInstanceId = null, string? MountInterfaceId = null,
-    string? ConstructionVariantId = null);
+    string? ConstructionVariantId = null,
+    string? ProtectedRegionId = null);
 
 /// <summary>
 /// A passive, undirected power path between directly connected components.

@@ -8,7 +8,8 @@
     "physicalProfile": {
       "relativeMassCategory": "dense",
       "rigidity": "rigid",
-      "combustibility": "noncombustible"
+      "combustibility": "noncombustible",
+      "candidateFlatDamageReductionPerProtectiveLayer": 2
     },
     "massPoundsPerUnit": 7
   },
@@ -21,7 +22,8 @@
     "physicalProfile": {
       "relativeMassCategory": "light",
       "rigidity": "rigid",
-      "combustibility": "material-dependent"
+      "combustibility": "material-dependent",
+      "candidateFlatDamageReductionPerProtectiveLayer": 1
     },
     "massPoundsPerUnit": 2
   },
@@ -34,7 +36,8 @@
     "physicalProfile": {
       "relativeMassCategory": "heavy",
       "rigidity": "rigid",
-      "combustibility": "noncombustible"
+      "combustibility": "noncombustible",
+      "candidateFlatDamageReductionPerProtectiveLayer": 2
     },
     "massPoundsPerUnit": 9
   },
@@ -47,7 +50,8 @@
     "physicalProfile": {
       "relativeMassCategory": "heavy",
       "rigidity": "rigid",
-      "combustibility": "noncombustible"
+      "combustibility": "noncombustible",
+      "candidateFlatDamageReductionPerProtectiveLayer": 1
     },
     "massPoundsPerUnit": 5
   },
@@ -60,7 +64,8 @@
     "physicalProfile": {
       "relativeMassCategory": "light",
       "rigidity": "flexible",
-      "combustibility": "material-dependent"
+      "combustibility": "material-dependent",
+      "candidateFlatDamageReductionPerProtectiveLayer": 0
     },
     "massPoundsPerUnit": 1
   },
@@ -73,7 +78,8 @@
     "physicalProfile": {
       "relativeMassCategory": "light",
       "rigidity": "rigid",
-      "combustibility": "combustible"
+      "combustibility": "combustible",
+      "candidateFlatDamageReductionPerProtectiveLayer": 0
     },
     "massPoundsPerUnit": 2
   },
@@ -86,7 +92,8 @@
     "physicalProfile": {
       "relativeMassCategory": "very-light",
       "rigidity": "flexible",
-      "combustibility": "combustible"
+      "combustibility": "combustible",
+      "candidateFlatDamageReductionPerProtectiveLayer": 0
     },
     "massPoundsPerUnit": 1
   },
@@ -99,7 +106,8 @@
     "physicalProfile": {
       "relativeMassCategory": "dense",
       "rigidity": "rigid",
-      "combustibility": "noncombustible"
+      "combustibility": "noncombustible",
+      "candidateFlatDamageReductionPerProtectiveLayer": 1
     },
     "massPoundsPerUnit": 7
   }

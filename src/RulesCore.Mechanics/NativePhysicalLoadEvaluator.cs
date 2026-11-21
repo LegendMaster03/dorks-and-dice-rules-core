@@ -103,4 +103,7 @@ public static class NativePhysicalLoadEvaluator
 public sealed record NativePhysicalSurface(
     string InstanceId, string ComponentDefinitionId, string MaterialSlotId,
     string MaterialDefinitionId, string Role,
-    string? Rigidity, string? Combustibility, bool Operational);
+    string? Rigidity, string? Combustibility, bool Operational,
+    // Explicit installed region identity is an arbitrary physical segment,
+    // not a body-wide protection entitlement or mandatory anatomy.
+    string? ProtectedRegionId = null, int? CandidateFlatDamageReduction = null);
