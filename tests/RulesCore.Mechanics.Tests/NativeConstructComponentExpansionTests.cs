@@ -44,6 +44,8 @@ public sealed class NativeConstructComponentExpansionTests
             ("construct-component.repair-assembly", "utility"),
             ("construct-component.restraint-mechanism", "manipulation"),
             ("construct-component.external-control-interface", "control"),
+            ("construct-component.operator-station", "control"),
+            ("construct-component.deployable-unit-bay", "storage-and-transport"),
         };
         foreach (var (id, category) in cases)
         {
@@ -95,6 +97,114 @@ public sealed class NativeConstructComponentExpansionTests
         Assert.Contains(result.Issues, issue =>
             issue.Code == "crafting-quote-recipe-unresolved");
         Assert.Contains(result.Issues, issue =>
+            issue.Code == "construct-power-demand-unresolved");
+    }
+    [Fact]
+    public void NewDesignsAndEnhancementsCanBeAppliedToExistingComponentRoles()
+    {
+        var catalog = Catalog();
+        var componentCapabilities = catalog.Search(category: "construct-component", limit: 100)
+            .Items.SelectMany(x => x.Definition.GetProperty("provides").EnumerateArray()
+                .Select(v => v.GetString()!))
+            .ToHashSet(StringComparer.Ordinal);
+
+        foreach (var id in new[]
+        {
+            "construct-design.wheeled-drive",
+            "construct-design.tracked-drive",
+            "construct-design.multi-legged-drive",
+            "construct-design.rolling-body",
+            "construct-design.compliant-manipulator",
+            "construct-design.layered-plating",
+            "construct-design.distributed-control",
+            "construct-design.multi-operator-control"
+        })
+            VerifyOption(id, "construct-design");
+
+        foreach (var id in new[]
+        {
+            "construct-enhancement.vibration-sensing",
+            "construct-enhancement.active-ranging",
+            "construct-enhancement.magical-sensing",
+            "construct-enhancement.target-acquisition",
+            "construct-enhancement.clawed-grip",
+            "construct-enhancement.precision-control",
+            "construct-enhancement.interchangeable-tool-coupling",
+            "construct-enhancement.hazard-adapted-lining",
+            "construct-enhancement.energy-absorption-interface",
+            "construct-enhancement.coverage-adaptation",
+            "construct-enhancement.programmed-instructions",
+            "construct-enhancement.supervisory-link",
+            "construct-enhancement.remote-command-receiver",
+            "construct-enhancement.occupant-protection",
+            "construct-enhancement.compartment-access",
+            "construct-enhancement.environmental-support",
+            "construct-enhancement.operator-controls"
+        })
+            VerifyOption(id, "construct-enhancement");
+
+        void VerifyOption(string id, string kind)
+        {
+            Assert.True(catalog.TryGetById(id, out var option), id);
+            Assert.Equal(kind, option!.Category);
+            var capabilities = option.Definition
+                .GetProperty("compatibleComponentCapabilities")
+                .EnumerateArray().Select(x => x.GetString()!).ToArray();
+            Assert.Contains(capabilities, componentCapabilities.Contains);
+            Assert.NotEmpty(option.Definition.GetProperty("provides").EnumerateArray());
+        }
+    }
+
+    [Fact]
+    public void AdditionalMaterialsAreRealUnpricedDefinitions()
+    {
+        var catalog = Catalog();
+        foreach (var slug in new[]
+        {
+            "clay", "terracotta", "ceramic", "glass", "bone",
+            "preserved-tissue", "amber", "wax", "paper", "wicker"
+        })
+        {
+            Assert.True(catalog.TryGetById("construct-material." + slug,
+                out var material), slug);
+            Assert.Equal("construct-material", material!.Category);
+            Assert.Equal(JsonValueKind.Object,
+                material.Definition.GetProperty("physicalProfile").ValueKind);
+        }
+
+        // A genuinely selected but still unpriced material is not free.
+        var plated = new NativeConstructComponentInstance("glass-plating",
+            "construct-component.protective-plating",
+            Materials: new Dictionary<string, string>
+                { ["plating"] = "construct-material.glass" });
+        var assessment = new NativeConstructAssemblyEvaluator(catalog).Evaluate(
+            new NativeConstructAssemblyRequest([plated], InitialAllowance: 200));
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, assessment.Status);
+        Assert.Contains(assessment.Issues, issue =>
+            issue.Code == "crafting-quote-resource-price-unresolved");
+        Assert.Contains("construct-material.glass",
+            assessment.UnresolvedRetainedMassMaterials ?? []);
+    }
+
+    [Theory]
+    [InlineData("operator-station")]
+    [InlineData("deployable-unit-bay")]
+    public void AdvancedControlAndDeploymentRequireAuthoredProduction(string slug)
+    {
+        var catalog = Catalog();
+        Assert.True(catalog.TryGetById("construct-component." + slug,
+            out var component));
+        var materialSlot = Assert.Single(component!.Definition
+            .GetProperty("materialSlots").EnumerateArray()).GetString()!;
+        var installed = new NativeConstructComponentInstance(slug,
+            component.Id, Materials: new Dictionary<string, string>
+                { [materialSlot] = "construct-material.steel" });
+        var assessment = new NativeConstructAssemblyEvaluator(catalog).Evaluate(
+            new NativeConstructAssemblyRequest([installed], InitialAllowance: 200));
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, assessment.Status);
+        Assert.Contains(assessment.Issues, issue =>
+            issue.Code == "crafting-quote-recipe-unresolved");
+        Assert.Contains(assessment.Issues, issue =>
             issue.Code == "construct-power-demand-unresolved");
     }
 }
