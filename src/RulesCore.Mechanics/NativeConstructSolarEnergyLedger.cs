@@ -24,15 +24,25 @@ internal sealed class NativeConstructSolarEnergyLedger
 {
     private readonly NativeConstructOperatingSession _operating;
     private readonly Dictionary<string, long> _storedEnergy;
+    private readonly Dictionary<string, long> _consecutiveDeficitMinutes;
+    private readonly Dictionary<string, int> _exhaustionEventsIssued;
     private readonly object _gate = new();
     private long _revision;
 
     internal NativeConstructSolarEnergyLedger(
         NativeConstructOperatingSession operating,
-        IReadOnlyDictionary<string, long> authenticatedBalances)
+        IReadOnlyDictionary<string, long> authenticatedBalances,
+        IReadOnlyDictionary<string, long>? authenticatedDeficitMinutes = null,
+        IReadOnlyDictionary<string, int>? authenticatedExhaustionEvents = null)
     {
         _operating = operating;
         _storedEnergy = new(authenticatedBalances, StringComparer.Ordinal);
+        _consecutiveDeficitMinutes = authenticatedBalances.Keys.ToDictionary(
+            id => id, id => authenticatedDeficitMinutes is null
+                ? 0L : authenticatedDeficitMinutes[id], StringComparer.Ordinal);
+        _exhaustionEventsIssued = authenticatedBalances.Keys.ToDictionary(
+            id => id, id => authenticatedExhaustionEvents is null
+                ? 0 : authenticatedExhaustionEvents[id], StringComparer.Ordinal);
     }
 
     internal NativeConstructSolarLedgerSnapshot Snapshot()
@@ -77,21 +87,62 @@ internal sealed class NativeConstructSolarEnergyLedger
                     "The preview did not preserve the installed solar source set.",
                     preview);
 
+            var deficiency = new List<NativeConstructSolarExhaustionAccrual>();
+            var nextDeficit = new Dictionary<string, long>(StringComparer.Ordinal);
+            var nextEvents = new Dictionary<string, int>(StringComparer.Ordinal);
+            foreach (var source in preview.Sources)
+            {
+                var id = source.InstanceId;
+                var prior = _consecutiveDeficitMinutes[id];
+                var underpowered = source.InsufficientEnergyMinutes;
+                // If sufficient energy was available earlier in this interval,
+                // a new deficit episode began partway through it.
+                var carried = underpowered < elapsedMinutes ? 0L : prior;
+                var afterMinutes = underpowered > 0
+                    ? (long)underpowered + carried
+                    : (source.AfterPowerUnitMinutes > 0 ||
+                        source.DeliveredPower > 0 ? 0L : prior);
+                if (afterMinutes < 0 ||
+                    afterMinutes < carried ||
+                    _exhaustionEventsIssued[id] > int.MaxValue -
+                        (underpowered > 0 ? 1 + afterMinutes / 1440 : 0))
+                    return Reject("construct-solar-exhaustion-counter-overflow",
+                        "The exhaustion counters cannot be advanced safely.",
+                        preview);
+                var newLevels = underpowered > 0
+                    ? (carried == 0 ? 1L : 0) +
+                        afterMinutes / 1440 - carried / 1440
+                    : 0;
+                nextDeficit[id] = afterMinutes;
+                nextEvents[id] = checked(_exhaustionEventsIssued[id] +
+                    (int)newLevels);
+                deficiency.Add(new(id, prior, afterMinutes, (int)newLevels,
+                    underpowered > 0));
+            }
             var changes = _storedEnergy.OrderBy(x => x.Key, StringComparer.Ordinal)
                 .Select(x => new NativeConstructSolarLedgerChange(
                     x.Key, x.Value, updated[x.Key])).ToArray();
             var previous = _revision;
             foreach (var (id, after) in updated)
                 _storedEnergy[id] = after;
+            foreach (var (id, minutes) in nextDeficit)
+                _consecutiveDeficitMinutes[id] = minutes;
+            foreach (var (id, levels) in nextEvents)
+                _exhaustionEventsIssued[id] = levels;
             _revision++;
             return new(true, Current(),
-                new(previous, _revision, changes), [], preview);
+                new(previous, _revision, changes), [], preview,
+                deficiency);
         }
     }
 
     private NativeConstructSolarLedgerSnapshot Current() =>
         new(_revision, new Dictionary<string, long>(_storedEnergy,
-            StringComparer.Ordinal));
+                StringComparer.Ordinal),
+            new Dictionary<string, long>(_consecutiveDeficitMinutes,
+                StringComparer.Ordinal),
+            new Dictionary<string, int>(_exhaustionEventsIssued,
+                StringComparer.Ordinal));
 
     private NativeConstructSolarLedgerCommit Reject(string code, string message,
         NativeConstructSolarOperationPreview? preview = null) =>
@@ -105,7 +156,9 @@ internal sealed record NativeConstructSolarLedgerOpenResult(
     IReadOnlyList<NativeOriginContractIssue> Issues);
 
 internal sealed record NativeConstructSolarLedgerSnapshot(
-    long Revision, IReadOnlyDictionary<string, long> StoredPowerUnitMinutes);
+    long Revision, IReadOnlyDictionary<string, long> StoredPowerUnitMinutes,
+    IReadOnlyDictionary<string, long> ConsecutiveDeficitMinutes,
+    IReadOnlyDictionary<string, int> ExhaustionEventsIssued);
 
 internal sealed record NativeConstructSolarLedgerChange(
     string InstanceId, long Before, long After);
@@ -114,8 +167,13 @@ internal sealed record NativeConstructSolarLedgerReceipt(
     long PreviousRevision, long NewRevision,
     IReadOnlyList<NativeConstructSolarLedgerChange> Changes);
 
+internal sealed record NativeConstructSolarExhaustionAccrual(
+    string InstanceId, long MinutesBefore, long MinutesAfter,
+    int NewExhaustionLevels, bool InsufficientEnergyThisInterval);
+
 internal sealed record NativeConstructSolarLedgerCommit(
     bool Committed, NativeConstructSolarLedgerSnapshot Snapshot,
     NativeConstructSolarLedgerReceipt? Receipt,
     IReadOnlyList<NativeOriginContractIssue> Issues,
-    NativeConstructSolarOperationPreview? Preview = null);
+    NativeConstructSolarOperationPreview? Preview = null,
+    IReadOnlyList<NativeConstructSolarExhaustionAccrual>? ExhaustionChanges = null);
