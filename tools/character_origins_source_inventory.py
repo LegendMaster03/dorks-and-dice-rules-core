@@ -44,7 +44,7 @@ def read_catalog(native_root=NATIVE):
     the separately stored trait definitions remain authoritative.
     """
     definitions = {}
-    for path in sorted((Path(native_root) / "traits").rglob("*.json")):
+    for path in sorted((Path(native_root) / "origination" / "biological" / "traits").rglob("*.json")):
         records = json.loads(path.read_text(encoding="utf-8"))
         for record in records if isinstance(records, list) else [records]:
             if record.get("kind") != "origin-trait":

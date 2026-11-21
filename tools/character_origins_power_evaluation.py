@@ -440,7 +440,7 @@ def load_native(native: Path) -> dict:
         if identifier in sources:
             raise ValueError(f"Duplicate source ID: {identifier}")
         sources[identifier] = record
-    for path in sorted((native / "traits").rglob("*.json")):
+    for path in sorted((native / "origination" / "biological" / "traits").rglob("*.json")):
         entries = json.loads(path.read_text(encoding="utf-8"))
         for definition in entries if isinstance(entries, list) else [entries]:
             identifier = definition["id"]
