@@ -278,11 +278,14 @@ public sealed class NativeConstructOperatingSession
                     if (rate is int n) values[exposure] = n;
                 }
             }
-            if (normal is null || overdrive is null || hours is null ||
-                normal <= 0 || hours <= 0 ||
-                (long)hours.Value * 60 > long.MaxValue / 2 ||
-                percentage != 50 ||
-                overdrive != normal + (long)normal * percentage / 100 ||
+            if (normal is not int normalOutput ||
+                overdrive is not int overdriveOutput ||
+                hours is not int batteryHours ||
+                percentage is not int increasePercent ||
+                normalOutput <= 0 || batteryHours <= 0 ||
+                increasePercent != 50 ||
+                (long)overdriveOutput != normalOutput +
+                    (long)normalOutput * increasePercent / 100 ||
                 values.Count != 4)
             {
                 issues.Add(new("construct-solar-model-invalid", path,
@@ -290,7 +293,7 @@ public sealed class NativeConstructOperatingSession
                     "Native solar generation, 50% overdrive and storage must be completely authored."));
                 continue;
             }
-            var capacity = (long)hours.Value * 60;
+            var capacity = (long)batteryHours * 60;
             if (!storedEnergyPowerUnitMinutes.TryGetValue(part.InstanceId,
                 out var before) || before < 0 || before > capacity)
             {
@@ -314,7 +317,7 @@ public sealed class NativeConstructOperatingSession
             var overdriveActive = available &&
                 exposure == NativeConstructSolarExposure.Concentrated;
             var generated = available ? collectionPower : 0;
-            var limit = overdriveActive ? overdrive.Value : normal.Value;
+            var limit = overdriveActive ? overdriveOutput : normalOutput;
             var output = available && elapsedMinutes > 0
                 ? (int)Math.Min((long)limit, generated +
                     before / elapsedMinutes) : 0;
