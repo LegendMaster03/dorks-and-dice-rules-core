@@ -302,20 +302,26 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 // Solar output can vary with collection and battery. Soul
                 // energy has no numerical consumption formula: the DM must
                 // confirm either unavailable (0), normal, or Overdrive output.
-                var sourceValid = instance.PowerSourceId is not null &&
+                var definition = default(JsonElement);
+                var sourceValid = false;
+                if (instance.PowerSourceId is not null &&
                     catalog.TryGetById(instance.PowerSourceId, out var mechanism) &&
-                    mechanism?.Category == "construct-power-source";
-                var definition = sourceValid ? mechanism!.Definition : default;
+                    mechanism?.Category == "construct-power-source")
+                {
+                    sourceValid = true;
+                    definition = mechanism.Definition;
+                }
                 var kind = sourceValid &&
                     definition.TryGetProperty("operatingPrinciple",
                         out var principle) &&
                     principle.ValueKind == JsonValueKind.String
                     ? principle.GetString() : null;
+                var maxOutput = 0;
                 var hasMaximum = sourceValid &&
                     definition.TryGetProperty("overdrivePowerOutput",
                         out var ceiling) &&
                     ceiling.ValueKind == JsonValueKind.Number &&
-                    ceiling.TryGetInt32(out var maxOutput);
+                    ceiling.TryGetInt32(out maxOutput);
                 var validOutput = hasMaximum && solarOutput >= 0 &&
                     solarOutput <= maxOutput &&
                     (kind == "solar-recharge" ||
