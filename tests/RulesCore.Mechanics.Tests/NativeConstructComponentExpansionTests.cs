@@ -256,4 +256,104 @@ public sealed class NativeConstructComponentExpansionTests
             issue.Code is "crafting-quote-recipe-unresolved" or
                 "construct-power-demand-unresolved");
     }
+    [Fact]
+    public void SolarFirstPartySourceAuthorsApprovedOutputCollectionAndBattery()
+    {
+        var catalog = Catalog();
+        Assert.True(catalog.TryGetById("construct-power-source.solar-crystal",
+            out var source));
+        Assert.Equal("construct-power-source", source!.Category);
+        var solar = source.Definition;
+        Assert.Equal(8, solar.GetProperty("powerOutput").GetInt32());
+        Assert.Equal(12, solar.GetProperty("overdrivePowerOutput").GetInt32());
+        Assert.Equal(50, solar.GetProperty("overdriveIncreasePercent").GetInt32());
+        Assert.Equal(96, solar.GetProperty("storageCapacityPowerUnitHours").GetInt32());
+        var collection = solar.GetProperty("solarCollectionPower");
+        Assert.Equal(0, collection.GetProperty("none").GetInt32());
+        Assert.Equal(8, collection.GetProperty("indirect").GetInt32());
+        Assert.Equal(16, collection.GetProperty("direct").GetInt32());
+        Assert.Equal(24, collection.GetProperty("concentrated").GetInt32());
+        Assert.Equal("dm-confirmed-concentrated-sunlight",
+            solar.GetProperty("overdriveCondition").GetString());
+        Assert.True(catalog.TryGetById(
+            solar.GetProperty("craftingRecipeId").GetString()!, out var recipe));
+        Assert.Equal(source.Id,
+            recipe!.Definition.GetProperty("producesDefinitionId").GetString());
+        Assert.True(catalog.TryGetById("construct-power-source.mechanical-engine",
+            out var mechanical));
+        Assert.Equal(8, mechanical!.Definition.GetProperty("powerOutput").GetInt32());
+        Assert.Equal(1, mechanical.Definition
+            .GetProperty("dailySustenance").GetProperty("unitsPerDay").GetInt32());
+    }
+
+    [Fact]
+    public void SolarReferenceBuildChargesAndSupportsNormalOvernightOperation()
+    {
+        var catalog = Catalog();
+        var cwd = new DirectoryInfo(AppContext.BaseDirectory);
+        while (cwd is not null && !File.Exists(Path.Combine(cwd.FullName,
+            "data", "reference", "construct-basic-starting-build-20261120.json")))
+            cwd = cwd.Parent;
+        Assert.NotNull(cwd);
+        using var json = JsonDocument.Parse(File.ReadAllText(Path.Combine(
+            cwd!.FullName, "data", "reference",
+            "construct-basic-starting-build-20261120.json")));
+        var basic = JsonSerializer.Deserialize<NativeConstructAssemblyRequest>(
+            json.RootElement.GetProperty("assembly").GetRawText(),
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        // The solar recipe has not undergone separate starting-budget
+        // calibration. Exercise its operating mechanics without assuming
+        // it must fit the mechanical reference build's 200-point allowance.
+        var solarAssembly = basic with
+        {
+            InitialAllowance = 1000,
+            Components = basic.Components.Select(x =>
+                x.InstanceId == "generator"
+                    ? x with { PowerSourceId = "construct-power-source.solar-crystal" }
+                    : x).ToArray()
+        };
+        var initial = new NativeConstructAssemblyEvaluator(catalog).Evaluate(solarAssembly);
+        Assert.True(initial.IsAuthorized,
+            string.Join("; ", initial.Issues.Select(x => x.Code)));
+        Assert.Equal(7, Assert.Single(initial.PowerNetworks!).RequestedDemand);
+        Assert.Equal(8, Assert.Single(initial.PowerNetworks!).AvailableOutput);
+
+        var proposal = new NativeOriginProposal(
+            "solar-first-party-reference", NativeOriginIntent.Custom,
+            new("rule.creature-origination", "construct-assembly"), [], [], []);
+        var service = new NativeConstructOriginConstructionService(catalog);
+        var draft = service.Evaluate(new(new(proposal), solarAssembly));
+        var manifestations = draft.Origin.EvaluatedProposal.Candidates
+            .Select((candidate, i) => new NativeOriginManifestation(
+                "solar-reference-" + i, candidate.Id,
+                SelectedValue: candidate.Identity.Kind ==
+                    NativeOriginCharacteristicKind.Intrinsic
+                    ? candidate.OfferedValue : null)).ToArray();
+        var built = service.Evaluate(new(new(proposal with
+            { Manifestations = manifestations }), solarAssembly));
+        Assert.True(built.IsMechanicallyAuthorized,
+            string.Join("; ", built.Origin.Issues.Select(x => x.Code)));
+        var session = built.OperatingSession!;
+
+        var dark = new Dictionary<string, NativeConstructSolarExposure>
+            { ["generator"] = NativeConstructSolarExposure.None };
+        var full = new Dictionary<string, long> { ["generator"] = 96 * 60 };
+        var overnight = session.PreviewSolarOperation(full, dark, 12 * 60);
+        Assert.True(overnight.CanAdvance);
+        Assert.Equal((96 - 7 * 12) * 60,
+            Assert.Single(overnight.Sources).AfterPowerUnitMinutes);
+
+        var tooLong = session.PreviewSolarOperation(full, dark, 14 * 60);
+        Assert.False(tooLong.CanAdvance);
+
+        var sun = new Dictionary<string, NativeConstructSolarExposure>
+            { ["generator"] = NativeConstructSolarExposure.Direct };
+        var charging = session.PreviewSolarOperation(
+            new Dictionary<string, long> { ["generator"] = 0 },
+            sun, 10 * 60 + 40);
+        Assert.True(charging.CanAdvance);
+        Assert.Equal(96 * 60,
+            Assert.Single(charging.Sources).AfterPowerUnitMinutes);
+    }
+
 }

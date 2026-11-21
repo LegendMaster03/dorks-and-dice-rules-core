@@ -105,7 +105,15 @@ public sealed class NativeConstructOperatingSession
     public NativeConstructOperatingStateResult EvaluateConfiguration(
         IReadOnlyDictionary<string, bool>? requestedEnabled = null,
         IReadOnlyDictionary<string, string>? requestedModes = null,
-        IReadOnlyList<string>? unavailablePowerSourceInstanceIds = null)
+        IReadOnlyList<string>? unavailablePowerSourceInstanceIds = null) =>
+        EvaluateConfigurationCore(requestedEnabled, requestedModes,
+            unavailablePowerSourceInstanceIds, null);
+
+    private NativeConstructOperatingStateResult EvaluateConfigurationCore(
+        IReadOnlyDictionary<string, bool>? requestedEnabled,
+        IReadOnlyDictionary<string, string>? requestedModes,
+        IReadOnlyList<string>? unavailablePowerSourceInstanceIds,
+        IReadOnlyDictionary<string, int>? trustedSolarOutputs)
     {
         requestedEnabled ??= new Dictionary<string, bool>(StringComparer.Ordinal);
         requestedModes ??= new Dictionary<string, string>(StringComparer.Ordinal);
@@ -124,16 +132,32 @@ public sealed class NativeConstructOperatingSession
                     "Operating changes may only address instances in the authorized assembly.")]);
         }
 
+        // Installed source ratings are enough for creation but not for
+        // an authenticated in-play solar operating interval.
+        var needsSolarContext = trustedSolarOutputs is null &&
+            _baseline.Components.Any(x =>
+                x.PowerSourceId == "construct-power-source.solar-crystal");
+        IReadOnlyDictionary<string, int>? evaluatedOutputs = needsSolarContext
+            ? _baseline.Components.Where(x =>
+                    x.PowerSourceId == "construct-power-source.solar-crystal")
+                .ToDictionary(x => x.InstanceId, _ => 0,
+                    StringComparer.Ordinal)
+            : trustedSolarOutputs;
+        var outOfEnergy = evaluatedOutputs is null
+            ? Array.Empty<string>()
+            : evaluatedOutputs.Where(x => x.Value == 0)
+                .Select(x => x.Key).ToArray();
         var configured = _baseline with
         {
             // Never let a transient operating request clear a source outage
             // already captured in the trusted installation snapshot.
+            // A solar source supplying zero usable power must also be marked
+            // unavailable, not merely have its network output reduced to zero.
             UnavailablePowerSourceInstanceIds =
-                unavailablePowerSourceInstanceIds is null
-                    ? _baseline.UnavailablePowerSourceInstanceIds
-                    : (_baseline.UnavailablePowerSourceInstanceIds ?? [])
-                        .Concat(unavailablePowerSourceInstanceIds)
-                        .Distinct(StringComparer.Ordinal).ToArray(),
+                (_baseline.UnavailablePowerSourceInstanceIds ?? [])
+                    .Concat(unavailablePowerSourceInstanceIds ?? [])
+                    .Concat(outOfEnergy)
+                    .Distinct(StringComparer.Ordinal).ToArray(),
             Components = _baseline.Components.Select(instance => instance with
             {
                 Enabled = requestedEnabled.TryGetValue(instance.InstanceId, out var enabled)
@@ -142,7 +166,17 @@ public sealed class NativeConstructOperatingSession
                     ? modeId : instance.ModeId
             }).ToArray()
         };
-        var state = _assembly.Evaluate(configured);
+        var state = _assembly.EvaluateWithSourceOutputOverrides(
+            configured, evaluatedOutputs);
+        if (needsSolarContext)
+            return new(state, [], _originGrantIds,
+                state.Issues.Concat([
+                    new NativeOriginContractIssue(
+                        "construct-solar-operating-context-required",
+                        "operatingConfiguration",
+                        NativeOriginIssueSeverity.Unresolved,
+                        "Solar operating power requires a validated sunlight and battery interval.")
+                ]).ToArray());
         var componentStates = state.Components.ToDictionary(x => x.InstanceId,
             StringComparer.Ordinal);
         var active = _originGrantIds.ToHashSet(StringComparer.Ordinal);
@@ -185,6 +219,220 @@ public sealed class NativeConstructOperatingSession
             active.OrderBy(x => x, StringComparer.Ordinal).ToArray(),
             _originGrantIds.Where(id => !active.Contains(id)).ToArray(),
             state.Issues);
+    }
+
+    private sealed record SolarRuntimeSource(
+        NativeConstructComponentInstance Part, long Before, long Capacity,
+        int CollectedPower, int EffectiveOutput, bool OverdriveActive);
+
+    /// <summary>
+    /// Preview a verified solar condition over elapsed game minutes.
+    /// Stored energy uses integral power-unit-minutes (60 per power-unit-hour).
+    /// Sunlight supplied here is hypothetical until a trusted game host
+    /// authenticates the condition. This preview never creates a lasting
+    /// power grant, refills a persistent resource or changes Origin.
+    /// </summary>
+    public NativeConstructSolarOperationPreview PreviewSolarOperation(
+        IReadOnlyDictionary<string, long> storedEnergyPowerUnitMinutes,
+        IReadOnlyDictionary<string, NativeConstructSolarExposure> exposureByInstance,
+        int elapsedMinutes,
+        IReadOnlyDictionary<string, bool>? requestedEnabled = null,
+        IReadOnlyDictionary<string, string>? requestedModes = null)
+    {
+        ArgumentNullException.ThrowIfNull(storedEnergyPowerUnitMinutes);
+        ArgumentNullException.ThrowIfNull(exposureByInstance);
+        var issues = new List<NativeOriginContractIssue>();
+        if (elapsedMinutes <= 0)
+            issues.Add(new("construct-solar-elapsed-invalid", "solar.elapsedMinutes",
+                NativeOriginIssueSeverity.Invalid,
+                "Solar operation requires a positive number of elapsed game minutes."));
+
+        var installed = _baseline.Components.Where(x =>
+                x.PowerSourceId == "construct-power-source.solar-crystal")
+            .OrderBy(x => x.InstanceId, StringComparer.Ordinal).ToArray();
+        if (installed.Length == 0)
+            issues.Add(new("construct-solar-source-missing", "solar",
+                NativeOriginIssueSeverity.Incomplete,
+                "Solar operation requires an installed native solar source."));
+        var sourceIds = installed.Select(x => x.InstanceId)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var id in storedEnergyPowerUnitMinutes.Keys
+            .Concat(exposureByInstance.Keys))
+            if (!sourceIds.Contains(id))
+                issues.Add(new("construct-solar-instance-invalid", "solar",
+                    NativeOriginIssueSeverity.Invalid,
+                    "Solar input must reference an installed native solar source."));
+
+        var sourceStates = new List<SolarRuntimeSource>();
+        var proposedOutputs = new Dictionary<string, int>(StringComparer.Ordinal);
+        var unavailable = (_baseline.UnavailablePowerSourceInstanceIds ?? [])
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var part in installed)
+        {
+            var path = "solar." + part.InstanceId;
+            if (!_catalog.TryGetById(part.PowerSourceId!, out var native) ||
+                native?.Category != "construct-power-source")
+            {
+                issues.Add(new("construct-solar-definition-missing", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "The installed solar source must resolve to native content."));
+                continue;
+            }
+            var raw = native.Definition;
+            static int? Natural(JsonElement raw, string name) =>
+                raw.TryGetProperty(name, out var field) &&
+                field.ValueKind == JsonValueKind.Number &&
+                field.TryGetInt32(out var n) && n >= 0 ? n : null;
+            var normal = Natural(raw, "powerOutput");
+            var overdrive = Natural(raw, "overdrivePowerOutput");
+            var hours = Natural(raw, "storageCapacityPowerUnitHours");
+            var percentage = Natural(raw, "overdriveIncreasePercent");
+            var values = new Dictionary<NativeConstructSolarExposure, int>();
+            if (raw.TryGetProperty("solarCollectionPower", out var collection) &&
+                collection.ValueKind == JsonValueKind.Object)
+            {
+                foreach (var (exposure, key) in new[]
+                {
+                    (NativeConstructSolarExposure.None, "none"),
+                    (NativeConstructSolarExposure.Indirect, "indirect"),
+                    (NativeConstructSolarExposure.Direct, "direct"),
+                    (NativeConstructSolarExposure.Concentrated, "concentrated")
+                })
+                {
+                    var rate = Natural(collection, key);
+                    if (rate is int n) values[exposure] = n;
+                }
+            }
+            if (normal is not int normalOutput ||
+                overdrive is not int overdriveOutput ||
+                hours is not int batteryHours ||
+                percentage is not int increasePercent ||
+                normalOutput <= 0 || batteryHours <= 0 ||
+                increasePercent != 50 ||
+                (long)overdriveOutput != normalOutput +
+                    (long)normalOutput * increasePercent / 100 ||
+                values.Count != 4)
+            {
+                issues.Add(new("construct-solar-model-invalid", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "Native solar generation, 50% overdrive and storage must be completely authored."));
+                continue;
+            }
+            var capacity = (long)batteryHours * 60;
+            if (!storedEnergyPowerUnitMinutes.TryGetValue(part.InstanceId,
+                out var before) || before < 0 || before > capacity)
+            {
+                issues.Add(new("construct-solar-balance-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Stored solar energy must be present and within native capacity."));
+                continue;
+            }
+            if (!exposureByInstance.TryGetValue(part.InstanceId, out var exposure) ||
+                !values.TryGetValue(exposure, out var collectionPower))
+            {
+                issues.Add(new("construct-solar-exposure-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "A recognized solar-exposure condition must be supplied for each source."));
+                continue;
+            }
+            var enabled = requestedEnabled is not null &&
+                requestedEnabled.TryGetValue(part.InstanceId, out var flag)
+                ? flag : part.Enabled;
+            var available = enabled && !unavailable.Contains(part.InstanceId);
+            var overdriveActive = available &&
+                exposure == NativeConstructSolarExposure.Concentrated;
+            var generated = available ? collectionPower : 0;
+            var limit = overdriveActive ? overdriveOutput : normalOutput;
+            var output = available && elapsedMinutes > 0
+                ? (int)Math.Min((long)limit, generated +
+                    before / elapsedMinutes) : 0;
+            proposedOutputs[part.InstanceId] = output;
+            sourceStates.Add(new(part, before, capacity, generated,
+                output, overdriveActive));
+        }
+        if (issues.Count > 0)
+            return new(null, [], issues.ToArray());
+
+        var operating = EvaluateConfigurationCore(requestedEnabled, requestedModes,
+            null, proposedOutputs);
+        var componentById = operating.Assembly.Components
+            .ToDictionary(x => x.InstanceId, StringComparer.Ordinal);
+        var supplied = new Dictionary<string, long>(StringComparer.Ordinal);
+
+        foreach (var network in (operating.Assembly.PowerNetworks ?? []))
+        {
+            var inNetwork = sourceStates.Where(x =>
+                    network.ComponentInstanceIds.Contains(x.Part.InstanceId,
+                        StringComparer.Ordinal))
+                .OrderBy(x => x.Part.InstanceId, StringComparer.Ordinal).ToArray();
+            var solarCapacity = inNetwork
+                .Where(x => componentById.TryGetValue(x.Part.InstanceId,
+                    out var state) && state.SourceSupplyingPower == true)
+                .Sum(x => (long)x.EffectiveOutput);
+            var nonSolarOutput = Math.Max(0, network.AvailableOutput - solarCapacity);
+            var activeSolarCount = inNetwork.Count(x =>
+                componentById.TryGetValue(x.Part.InstanceId, out var state) &&
+                state.SourceSupplyingPower == true);
+            if (network.RequestedDemand > 0 && activeSolarCount > 1)
+                issues.Add(new("construct-solar-multiple-source-allocation-unresolved",
+                    "solar.powerNetworks", NativeOriginIssueSeverity.Unresolved,
+                    "More than one active solar source requires an approved dispatch priority."));
+            if (network.RequestedDemand > 0 && solarCapacity > 0 &&
+                nonSolarOutput > 0)
+                issues.Add(new("construct-solar-shared-network-allocation-unresolved",
+                    "solar.powerNetworks", NativeOriginIssueSeverity.Unresolved,
+                    "A shared solar and non-solar power network needs a separately approved source-dispatch policy."));
+            var remaining = Math.Max(0, network.RequestedDemand - nonSolarOutput);
+            foreach (var source in inNetwork)
+            {
+                var online = componentById[source.Part.InstanceId].SourceSupplyingPower == true;
+                var delivered = online ? Math.Min(remaining, source.EffectiveOutput) : 0;
+                supplied[source.Part.InstanceId] = delivered;
+                remaining -= delivered;
+            }
+        }
+
+        if (issues.Count > 0)
+            return new(operating, [], issues.ToArray());
+
+        var states = sourceStates.Select(source =>
+        {
+            // An invalid allocation cannot spend or produce energy.
+            var operational = operating.IsOperatingConfigurationValid &&
+                componentById[source.Part.InstanceId].SourceSupplyingPower == true;
+            var delivered = operational ? supplied.GetValueOrDefault(
+                source.Part.InstanceId) : 0;
+            var collection = operational ? source.CollectedPower : 0;
+            var after = operational
+                ? Math.Clamp(source.Before +
+                    (collection - delivered) * elapsedMinutes, 0, source.Capacity)
+                : source.Before;
+            return new NativeConstructSolarSourceState(
+                source.Part.InstanceId, source.Part.PowerSourceId!,
+                source.Capacity, source.Before, after, collection,
+                source.EffectiveOutput, delivered, source.OverdriveActive);
+        }).ToArray();
+        return new(operating, states, []);
+    }
+
+    /// <summary>
+    /// Create a revision-checked, in-process solar balance ledger after the
+    /// trusted host has authenticated its initial balances. An invalid
+    /// operating allocation does not invalidate otherwise genuine reserves.
+    /// </summary>
+    internal NativeConstructSolarLedgerOpenResult OpenTrustedSolarLedger(
+        IReadOnlyDictionary<string, long> authenticatedBalances)
+    {
+        ArgumentNullException.ThrowIfNull(authenticatedBalances);
+        var exposures = _baseline.Components
+            .Where(x => x.PowerSourceId == "construct-power-source.solar-crystal")
+            .ToDictionary(x => x.InstanceId, _ => NativeConstructSolarExposure.None,
+                StringComparer.Ordinal);
+        var inspected = PreviewSolarOperation(authenticatedBalances, exposures, 1);
+        return inspected.Issues.Count > 0
+            ? new(null, inspected.Issues)
+            : new(new NativeConstructSolarEnergyLedger(this,
+                authenticatedBalances), []);
     }
 
     /// <summary>
@@ -769,4 +1017,38 @@ public sealed record NativeConstructResourceTransferPreview(
     IReadOnlyList<NativeOriginContractIssue> Issues)
 {
     public bool CanTransfer => Issues.Count == 0 && NextStep is not null;
+}
+
+/// <summary>
+/// Environmental classification used only to determine solar collection.
+/// The DM decides whether concentrated sunlight is available; the
+/// gameplay host must authenticate that decision before committing time.
+/// </summary>
+public enum NativeConstructSolarExposure
+{
+    None, Indirect, Direct, Concentrated
+}
+
+/// <summary>
+/// Per-source solar energy, in power-unit-minutes. Dividing by 60 yields
+/// power-unit-hours. AvailableOutput is the maximum sustainable for the
+/// requested interval; DeliveredPower is its actual allocated contribution.
+/// </summary>
+public sealed record NativeConstructSolarSourceState(
+    string InstanceId, string PowerSourceId,
+    long CapacityPowerUnitMinutes, long BeforePowerUnitMinutes,
+    long AfterPowerUnitMinutes, int CollectionPower, int AvailableOutput,
+    long DeliveredPower, bool OverdriveActive);
+
+/// <summary>
+/// A hypothetical, nonpersistent solar operating interval. A valid
+/// evaluation alone is not authority to advance the clock or store energy.
+/// </summary>
+public sealed record NativeConstructSolarOperationPreview(
+    NativeConstructOperatingStateResult? Evaluation,
+    IReadOnlyList<NativeConstructSolarSourceState> Sources,
+    IReadOnlyList<NativeOriginContractIssue> Issues)
+{
+    public bool CanAdvance => Issues.Count == 0 &&
+        Evaluation?.IsOperatingConfigurationValid == true;
 }

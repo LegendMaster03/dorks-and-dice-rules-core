@@ -99,6 +99,9 @@ public sealed class NativeConstructOriginProjectionTests
                  {"id":"construct-component.fuel-housing","kind":"construct-component",
                   "name":"Fuel Housing","constructionCost":2,"powerDemand":0,
                   "powerSourceSlot":true,"provides":["power-housing"]},
+                 {"id":"construct-component.solar-load","kind":"construct-component",
+                  "name":"Solar powered load","constructionCost":1,"powerDemand":9,
+                  "requiresAnyOf":[["power-housing"]]},
                  {"id":"construct-component.fuel-load","kind":"construct-component",
                   "name":"Fuel Powered Sensor","constructionCost":1,"powerDemand":3,
                   "requiresAnyOf":[["power-housing"]],
@@ -131,6 +134,16 @@ public sealed class NativeConstructOriginProjectionTests
                 """);
             File.WriteAllText(Path.Combine(native, "power-sources.json"), """
                 [
+                 {"id":"construct-power-source.solar-crystal",
+                  "kind":"construct-power-source","name":"Solar collector",
+                  "constructionCost":1,"powerOutput":8,
+                  "overdrivePowerOutput":12,"overdriveIncreasePercent":50,
+                  "compatibleComponentCapabilities":["power-housing"],
+                  "operatingPrinciple":"solar-recharge",
+                  "solarCollectionPower":{"none":0,"indirect":8,
+                    "direct":16,"concentrated":24},
+                  "storageCapacityPowerUnitHours":96,
+                  "overdriveCondition":"dm-confirmed-concentrated-sunlight"},
                  {"id":"construct-power-source.finite","kind":"construct-power-source",
                   "name":"Finite generator","constructionCost":1,"powerOutput":4,
                   "compatibleComponentCapabilities":["power-housing"],
@@ -966,6 +979,189 @@ public sealed class NativeConstructOriginProjectionTests
                 { PowerSourceId = source },
             Part("sensor", "fuel-load")
         ], InitialAllowance: 20);
+
+    private sealed class TestSolarAuthority(bool approved = true) :
+        INativeConstructSolarIntervalAuthority
+    {
+        public bool AuthorizeInterval(
+            IReadOnlyDictionary<string, NativeConstructSolarExposure> exposures,
+            int elapsedMinutes, long expectedRevision) =>
+            approved && elapsedMinutes > 0 &&
+            exposures.ContainsKey("generator");
+    }
+
+    private static NativeConstructAssemblyRequest SolarOverdriveAssembly() =>
+        new([
+            Part("generator", "fuel-housing", links: ["load"]) with
+                { PowerSourceId = "construct-power-source.solar-crystal" },
+            Part("load", "solar-load", enabled: false)
+        ], InitialAllowance: 20);
+
+    [Fact]
+    public void SolarPowerUsesElapsedEnergyAndChargesOnlyAvailableCapacity()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.solar-crystal"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var genericAllocation = session.EvaluateConfiguration();
+        Assert.False(genericAllocation.IsOperatingConfigurationValid);
+        Assert.Empty(genericAllocation.ApplicableOriginGrantIds);
+        Assert.Contains(genericAllocation.Issues, issue =>
+            issue.Code == "construct-solar-operating-context-required");
+        Assert.False(genericAllocation.Assembly.Components.Single(x =>
+            x.InstanceId == "generator").SourceSupplyingPower);
+        Assert.Equal(0, genericAllocation.Assembly.PowerNetworks!.Single().AvailableOutput);
+        var stored = new Dictionary<string, long> { ["generator"] = 60 };
+        var direct = new Dictionary<string, NativeConstructSolarExposure>
+            { ["generator"] = NativeConstructSolarExposure.Direct };
+        var charged = session.PreviewSolarOperation(stored, direct, 60);
+        Assert.True(charged.CanAdvance);
+        var source = Assert.Single(charged.Sources);
+        Assert.Equal(8, source.AvailableOutput);
+        Assert.Equal(16, source.CollectionPower);
+        Assert.Equal(3, source.DeliveredPower);
+        Assert.Equal(60, source.BeforePowerUnitMinutes);
+        Assert.Equal(840, source.AfterPowerUnitMinutes);
+        Assert.Equal(96L * 60, source.CapacityPowerUnitMinutes);
+
+        var full = session.PreviewSolarOperation(
+            new Dictionary<string, long> { ["generator"] = 96 * 60 },
+            direct, 60);
+        Assert.True(full.CanAdvance);
+        Assert.Equal(96 * 60,
+            Assert.Single(full.Sources).AfterPowerUnitMinutes);
+
+        var night = session.PreviewSolarOperation(
+            new Dictionary<string, long> { ["generator"] = 96 * 60 },
+            new Dictionary<string, NativeConstructSolarExposure>
+                { ["generator"] = NativeConstructSolarExposure.None }, 60);
+        Assert.True(night.CanAdvance);
+        Assert.Equal(96 * 60 - 3 * 60,
+            Assert.Single(night.Sources).AfterPowerUnitMinutes);
+    }
+
+    [Fact]
+    public void SolarOverdriveRequiresConcentratedSunlightNotJustFullBattery()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: SolarOverdriveAssembly());
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var stored = new Dictionary<string, long> { ["generator"] = 96 * 60 };
+        var enabled = new Dictionary<string, bool> { ["load"] = true };
+        NativeConstructSolarOperationPreview EvaluateLight(NativeConstructSolarExposure light) =>
+            session.PreviewSolarOperation(stored,
+                new Dictionary<string, NativeConstructSolarExposure>
+                    { ["generator"] = light }, 60, enabled);
+
+        var direct = EvaluateLight(NativeConstructSolarExposure.Direct);
+        Assert.False(direct.CanAdvance);
+        Assert.Contains(direct.Evaluation!.Assembly.Issues,
+            x => x.Code == "construct-power-overallocated");
+        var night = EvaluateLight(NativeConstructSolarExposure.None);
+        Assert.False(night.CanAdvance);
+        var concentrated = EvaluateLight(NativeConstructSolarExposure.Concentrated);
+        Assert.True(concentrated.CanAdvance);
+        var source = Assert.Single(concentrated.Sources);
+        Assert.True(source.OverdriveActive);
+        Assert.Equal(12, source.AvailableOutput);
+        Assert.Equal(9, source.DeliveredPower);
+        Assert.Equal(24, source.CollectionPower);
+    }
+
+    [Fact]
+    public void SolarBatteryCannotRunLongerThanItsStoredEnergyAllows()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.solar-crystal"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var noLight = new Dictionary<string, NativeConstructSolarExposure>
+            { ["generator"] = NativeConstructSolarExposure.None };
+        var stored = new Dictionary<string, long> { ["generator"] = 180 };
+        var shortInterval = session.PreviewSolarOperation(stored, noLight, 60);
+        Assert.True(shortInterval.CanAdvance);
+        Assert.Equal(0, Assert.Single(shortInterval.Sources).AfterPowerUnitMinutes);
+        var longer = session.PreviewSolarOperation(stored, noLight, 61);
+        Assert.False(longer.CanAdvance);
+        var empty = session.PreviewSolarOperation(
+            new Dictionary<string, long> { ["generator"] = 0 }, noLight, 60);
+        Assert.False(empty.CanAdvance);
+        Assert.False(empty.Evaluation!.Assembly.Components
+            .Single(x => x.InstanceId == "generator").SourceSupplyingPower);
+        Assert.Equal(0, empty.Evaluation.Assembly.PowerNetworks!.Single().AvailableOutput);
+        Assert.All(empty.Evaluation.Assembly.Components,
+            state => Assert.True(state.Installed));
+    }
+
+    [Fact]
+    public void SolarLedgerRequiresTrustedExposureAndRejectsStaleCommits()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.solar-crystal"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var opened = session.OpenTrustedSolarLedger(
+            new Dictionary<string, long> { ["generator"] = 0 });
+        Assert.Empty(opened.Issues);
+        var ledger = Assert.IsType<NativeConstructSolarEnergyLedger>(opened.Ledger);
+        var direct = new Dictionary<string, NativeConstructSolarExposure>
+            { ["generator"] = NativeConstructSolarExposure.Direct };
+        var denied = ledger.TryCommitInterval(0, direct, 60,
+            new TestSolarAuthority(false));
+        Assert.False(denied.Committed);
+        Assert.Equal(0, ledger.Snapshot().Revision);
+        var credited = ledger.TryCommitInterval(0, direct, 60,
+            new TestSolarAuthority());
+        Assert.True(credited.Committed);
+        Assert.Equal(780, credited.Snapshot.StoredPowerUnitMinutes["generator"]);
+        var replay = ledger.TryCommitInterval(0, direct, 60,
+            new TestSolarAuthority());
+        Assert.False(replay.Committed);
+        Assert.Equal(1, ledger.Snapshot().Revision);
+        Assert.Equal(780, ledger.Snapshot().StoredPowerUnitMinutes["generator"]);
+
+        var night = new Dictionary<string, NativeConstructSolarExposure>
+            { ["generator"] = NativeConstructSolarExposure.None };
+        var spent = ledger.TryCommitInterval(1, night, 60,
+            new TestSolarAuthority());
+        Assert.True(spent.Committed);
+        Assert.Equal(600, spent.Snapshot.StoredPowerUnitMinutes["generator"]);
+    }
+
+    [Fact]
+    public void SolarPreviewsRejectUntrustedSourcesAndInventedBatteryBalances()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.solar-crystal"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var direct = new Dictionary<string, NativeConstructSolarExposure>
+            { ["generator"] = NativeConstructSolarExposure.Direct };
+        foreach (var bad in new long[] { -1, 96 * 60 + 1 })
+        {
+            var preview = session.PreviewSolarOperation(
+                new Dictionary<string, long> { ["generator"] = bad },
+                direct, 60);
+            Assert.False(preview.CanAdvance);
+            Assert.Contains(preview.Issues,
+                issue => issue.Code == "construct-solar-balance-invalid");
+        }
+        Assert.False(session.PreviewSolarOperation(
+            new Dictionary<string, long> { ["generator"] = 0 },
+            direct, 0).CanAdvance);
+        var fake = session.PreviewSolarOperation(
+            new Dictionary<string, long> { ["generator"] = 0,
+                ["fabricated"] = 100 }, direct, 60);
+        Assert.False(fake.CanAdvance);
+        Assert.Contains(fake.Issues,
+            issue => issue.Code == "construct-solar-instance-invalid");
+    }
 
     [Fact]
     public void ResourceUseIsNativeBoundedAndLastAvailableStepCanFinish()

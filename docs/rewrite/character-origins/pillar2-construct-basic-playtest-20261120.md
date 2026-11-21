@@ -12,7 +12,7 @@
 - The basic mechanical engine uses the **ordinary daily ration rules**, substituting **one mechanical-fuel charge per adventuring day** for a food ration. Routine consumption is accounted for near a Long Rest. Short Rests do not add another ration, and skipping a Long Rest does not eliminate daily consumption.
 - **All ordinary survival consequences are identical to those for food**, under the shared 2014 rules: permitted days without a ration = max(1, 3 + Constitution modifier), followed by one level of existing `condition.exhaustion` for each further missed day. A full ration of the required resource resets the missed-day counter; it does not automatically remove existing Exhaustion.
 - Missing routine fuel must **not** be modeled as instantaneous power-source depletion. Physical damage, deliberate shutdown, and separate specialized energy mechanisms can still interrupt power. The basic engine changes the **ration resource**, not the survival rules.
-- Optional Overdrive remains **deferred**: no approved output bonus, duration, or expenditure quantity.
+- The shared Overdrive output increase is now **approved at +50%, rounded down** (November 21, 2026), but the mechanical engine's additional fuel expenditure and duration are still **deferred and unimplemented**. Solar uses the same increase under DM-confirmed concentrated sunlight; see [solar source design](pillar2-construct-solar-source-20261121.md).
 - Consciousness/animation is distinct from operating power; the artificial-life core is **not** the default unlimited starter source.
 
 ## First-party reference build
