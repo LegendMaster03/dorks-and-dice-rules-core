@@ -121,6 +121,28 @@ repair economics belong in a later general crafting pass.
 5. **Balance:** The reference budget, material quantities and costs
    are provisional and intended to produce targeted tester feedback.
 
+## Candidate recipe quotation review
+
+The four manifests were independently recalculated against the current
+first-party manufacturing recipes, ingredient unit prices, and stage
+dependencies (including intermediate outputs consumed by later stages):
+
+| Build | Quoted external ingredient points | Recipe stages reviewed |
+| --- | ---: | ---: |
+| Standard Medium | 163 | 10 |
+| Small | 147 | 10 |
+| Lightweight | 187 | 10 |
+| Steel-plated | 187 | 11 |
+
+All match their expected values and fall within the provisional
+200-point creation allowance. An intermediate such as
+`crafting-material.activated-medium` is produced by an earlier
+manufacturing stage; it is not an unpriced external purchase.
+
+**This was a source-data consistency audit**, not a compiled execution
+of `NativeCraftingResourceQuoter` or the C# Origination services.
+The actual test suite and WorkChat acceptance remain pending.
+
 ## Focused acceptance checklist
 
 1. Load the four first-party example manifests and confirm the
