@@ -499,12 +499,14 @@ public sealed class NativeConstructOperatingSession
                 continue;
             }
             var raw = native.Definition;
+            var normal = 0;
+            var maximum = 0;
             var hasNormal = raw.TryGetProperty("powerOutput", out var basePower) &&
                 basePower.ValueKind == JsonValueKind.Number &&
-                basePower.TryGetInt32(out var normal);
+                basePower.TryGetInt32(out normal);
             var hasOverdrive = raw.TryGetProperty("overdrivePowerOutput",
                 out var enhanced) && enhanced.ValueKind == JsonValueKind.Number &&
-                enhanced.TryGetInt32(out var maximum);
+                enhanced.TryGetInt32(out maximum);
             if (!hasNormal || !hasOverdrive || normal <= 0 ||
                 maximum != normal + (long)normal / 2)
             {
