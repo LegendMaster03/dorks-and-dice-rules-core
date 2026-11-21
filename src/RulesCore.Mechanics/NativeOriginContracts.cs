@@ -296,8 +296,10 @@ public sealed record NativeOriginActiveTemporaryTransformation(
 /// <summary>
 /// Explicit player intent for biological transmission. Candidate IDs identify exact
 /// contributor offers rather than freely granting a canonical gene. The plan
-/// does not itself create effective grants or authorize latent inheritance.
-/// A null plan preserves the existing manifestation-only construction contract;
+/// does not itself create effective grants or authenticated gene instances.
+/// Unexpressed instances are persisted only after the construction evaluator
+/// validates the selection and authored capacity. A null plan preserves the existing
+/// manifestation-only construction contract;
 /// a nonnull plan opts into explicit transmission checks.
 /// </summary>
 /// <summary>
