@@ -352,4 +352,96 @@ public sealed class NativeOriginInheritedCombinationTests
         Assert.True(unverified.Profile is null || !unverified.Profile.Underlying.InherentGrants
             .Any(g => g.Identity.MechanicalDefinitionId == "trait.amphibious"));
     }
+
+    [Fact]
+    public void InheritedCombinationUsesConfiguredCreationPriceWithoutChargingLatentInputs()
+    {
+        var catalog = Catalog();
+        var (proposal, _) = Choose(catalog, tableRules: [Rule()]);
+        var baseline = Evaluate(catalog, proposal, new Authority());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, baseline.Status);
+        var effective = baseline.Profile!.Underlying.InherentGrants;
+        var combined = Assert.Single(effective, grant =>
+            grant.Identity.MechanicalDefinitionId == "trait.amphibious");
+        Assert.NotNull(combined.EffectiveValue);
+        Assert.DoesNotContain(effective, grant =>
+            grant.Identity.MechanicalDefinitionId == "trait.powerful-build");
+
+        // All values are synthetic accounting fixtures, not gameplay prices.
+        // Price the single *result* grant; neither inherited source instance
+        // receives a separate charge when it is latent or consumed.
+        const string combinedKey = "trait:trait.amphibious";
+        var keys = effective.Select(grant =>
+            grant.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic
+                ? "intrinsic:" + grant.Identity.IntrinsicSlotId
+                : "trait:" + grant.Identity.MechanicalDefinitionId)
+            .Distinct(StringComparer.Ordinal).OrderBy(key => key, StringComparer.Ordinal)
+            .ToArray();
+        Assert.Contains(combinedKey, keys);
+        var prices = keys.Select(key =>
+            key == combinedKey
+                ? new NativeOriginAllocationPrice("combined-expression", 1, [key],
+                    Configurations:
+                    [
+                        new("verified-combined-value", 7, 10,
+                        [
+                            new(combinedKey, "value",
+                                NativeOriginAllocationComparison.Equals,
+                                combined.EffectiveValue)
+                        ])
+                    ])
+                : new NativeOriginAllocationPrice("foundation:" + key, 1, [key]))
+            .ToArray();
+        var expectedLoad = keys.Length - 1 + 7;
+        var policy = new NativeOriginAllocationPolicy("integration-fixture",
+            "rule.creature-origination", "biological", expectedLoad, prices);
+
+        NativeOriginConstructionResult Create(NativeOriginProposal selected,
+            NativeOriginAllocationPolicy configured) =>
+            new NativeOriginConstructionEngine(catalog).Evaluate(
+                new(selected, new("campaign", ScopeId),
+                    AutoManifestDirectDefaults: false,
+                    RequireCreationAllocation: true,
+                    CreationAllocationPolicy: configured),
+                new Authority());
+
+        var accepted = Create(proposal, policy);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, accepted.Status);
+        Assert.Equal("within-allowance", accepted.CreationAllocation!.Status);
+        Assert.Equal(expectedLoad, accepted.CreationAllocation.CommittedLoad);
+        var charge = Assert.Single(accepted.CreationAllocation.Charges,
+            x => x.PriceId == "combined-expression");
+        Assert.Equal("verified-combined-value", charge.ConfigurationId);
+        Assert.Equal(7, charge.Load);
+        Assert.Single(charge.GrantIds);
+        Assert.DoesNotContain(accepted.CreationAllocation.Components,
+            x => x.Key == "trait:trait.powerful-build");
+
+        var overBudget = Create(proposal, policy with { Allowance = expectedLoad - 1 });
+        Assert.Equal(NativeOriginConstructionStatus.Conflicting, overBudget.Status);
+        Assert.Equal("over-allowance", overBudget.CreationAllocation!.Status);
+
+        var unpriced = Create(proposal, policy with
+        {
+            Prices = prices.Where(x => x.Id != "combined-expression").ToArray()
+        });
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, unpriced.Status);
+        Assert.Equal("unresolved", unpriced.CreationAllocation!.Status);
+        Assert.Contains(unpriced.CreationAllocation.Issues, x =>
+            x.StartsWith("allocation-load-unpriced:" + combinedKey, StringComparison.Ordinal));
+
+        var noSelection = proposal with
+        {
+            BiologicalTransmission = proposal.BiologicalTransmission! with
+            {
+                Combinations = null
+            }
+        };
+        var latent = Create(noSelection, policy);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, latent.Status);
+        Assert.DoesNotContain(latent.CreationAllocation!.Charges,
+            x => x.PriceId == "combined-expression");
+        Assert.DoesNotContain(latent.Profile!.Underlying.InherentGrants,
+            x => x.Identity.MechanicalDefinitionId == "trait.amphibious");
+    }
 }
