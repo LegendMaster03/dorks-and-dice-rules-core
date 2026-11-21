@@ -80,6 +80,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
         self.assertEqual("condition.grappled",
                          powerful["advantageOnAbilityChecksToEndCondition"])
         self.assertEqual(1, powerful["effectiveSizeCategoriesHigherForCarryingCapacity"])
+        self.assertEqual(1, powerful["effectiveSizeCategoriesHigherForPushingDraggingLifting"])
         self.assertIn("actual-size", powerful["doesNotChange"])
         large = traits["large-form"]
         self.assertEqual(5, large["requiredCharacterLevel"])

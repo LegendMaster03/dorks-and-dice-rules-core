@@ -58,7 +58,8 @@ class OrcSpeciesReconciliationTests(unittest.TestCase):
         powerful = self.traits["powerful-build"]
         self.assertEqual(1, powerful["effectiveSizeCategoriesHigherForCarryingCapacity"])
         self.assertEqual(1, powerful["effectiveSizeCategoriesHigherForPushingDraggingLifting"])
-        self.assertIn("advantage-on-checks-to-end-grappled", powerful["doesNotGrant"])
+        self.assertEqual("condition.grappled", powerful["advantageOnAbilityChecksToEndCondition"])
+        self.assertIn("grapple-size-modifiers", powerful["doesNotChange"])
         savage = self.traits["savage-attacks"]
         self.assertEqual("critical-hit-with-melee-weapon-attack", savage["trigger"])
         self.assertEqual(1, savage["bonusDamageDice"]["count"])
