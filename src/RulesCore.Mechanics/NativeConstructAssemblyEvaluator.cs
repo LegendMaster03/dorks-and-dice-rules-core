@@ -304,9 +304,11 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     source?.Category != "construct-power-source" ||
                     !source.Definition.TryGetProperty("operatingPrinciple",
                         out var principle) ||
+                    principle.ValueKind != JsonValueKind.String ||
                     principle.GetString() != "solar-recharge" ||
                     !source.Definition.TryGetProperty("overdrivePowerOutput",
                         out var ceiling) ||
+                    ceiling.ValueKind != JsonValueKind.Number ||
                     !ceiling.TryGetInt32(out var maxOutput) ||
                     solarOutput < 0 || solarOutput > maxOutput)
                     Issue("construct-solar-source-output-invalid",
