@@ -776,13 +776,13 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             proposal.SelectedAncestryId : null;
         if (configure is not null)
         {
-            var outcome = configure.EffectiveOutcome;
-            if (outcome.ValueKind == JsonValueKind.Object &&
-                (outcome.TryGetProperty("speciesId", out _) ||
-                 outcome.TryGetProperty("ancestryId", out _)))
+            var configuredOutcome = configure.EffectiveOutcome;
+            if (configuredOutcome.ValueKind == JsonValueKind.Object &&
+                (configuredOutcome.TryGetProperty("speciesId", out _) ||
+                 configuredOutcome.TryGetProperty("ancestryId", out _)))
             {
-                configuredSpecies = JsonString(outcome, "speciesId");
-                configuredAncestry = JsonString(outcome, "ancestryId");
+                configuredSpecies = JsonString(configuredOutcome, "speciesId");
+                configuredAncestry = JsonString(configuredOutcome, "ancestryId");
                 usedDm = true;
                 verifiedDmDecisionIds.Add(configure.Id);
             }
@@ -864,11 +864,11 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             var waived = false;
             if (allocationRuling is not null)
             {
-                var outcome = allocationRuling.EffectiveOutcome;
-                if (ReadBool(outcome, "waive") == true)
+                var allocationOutcome = allocationRuling.EffectiveOutcome;
+                if (ReadBool(allocationOutcome, "waive") == true)
                     waived = true;
-                else if (outcome.ValueKind == JsonValueKind.Object &&
-                    outcome.TryGetProperty("allowance", out var allowance) &&
+                else if (allocationOutcome.ValueKind == JsonValueKind.Object &&
+                    allocationOutcome.TryGetProperty("allowance", out var allowance) &&
                     allowance.ValueKind == JsonValueKind.Number &&
                     allowance.TryGetInt32(out var revisedAllowance) &&
                     revisedAllowance >= 0 && effectivePolicy is not null)
