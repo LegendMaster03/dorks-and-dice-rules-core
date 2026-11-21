@@ -364,7 +364,8 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
     // using decisions already authenticated against the current trusted scope.
     internal NativeOriginContractReview ReviewProfileVerified(
         NativeOriginProfile profile, NativeOriginProposal? proposal,
-        IReadOnlyList<NativeTableRuleDecision> verifiedTableSynergies)
+        IReadOnlyList<NativeTableRuleDecision> verifiedTableSynergies,
+        int? verifiedMaxExpressedInstancesPerKind = null)
     {
         ArgumentNullException.ThrowIfNull(profile);
         var issues = new List<NativeOriginContractIssue>();
@@ -600,17 +601,52 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
                 .GroupBy(m => m.Id, StringComparer.Ordinal)
                 .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
         }
-        // A derived grant is not a new player manifestation. Recompute every
-        // native interaction from the proposal's already effective direct grants;
-        // the full result, including ordered inputs and source identities, must
-        // agree with its serialized proof. This is an audit, not an authorization
-        // shortcut for a caller-supplied Origin profile.
+        // A derived grant is not a new player manifestation. Replay selected
+        // inherited expressions and ordinary effective-grant interactions from
+        // the final genotype and direct grants. Full ordered input provenance
+        // must agree with serialized proof; review does not issue entitlement.
         Dictionary<string, NativeOriginEffectiveGrant>? expectedSynergies = null;
         if (proposal is not null)
         {
-            var (recomputed, _) = new NativeOriginSynergyEvaluator(catalog).Evaluate(
-                proposal, baselineGrants.Values.Where(x => x.Synergy is null).ToArray(),
-                verifiedTableSynergies);
+            var evaluator = new NativeOriginSynergyEvaluator(catalog);
+            var direct = baselineGrants.Values.Where(x => x.Synergy is null).ToArray();
+            IReadOnlyList<NativeOriginEffectiveGrant> inheritedExpressions = [];
+            if (proposal.BiologicalTransmission?.Combinations is { Count: > 0 })
+            {
+                // Replay only against the profile genotype, never against raw
+                // contributor offers. The engine has already authenticated the
+                // source instances and the exact scoped table decisions.
+                var limit = verifiedMaxExpressedInstancesPerKind;
+                if (limit is null && catalog.TryGetById("rule.creature-origination",
+                        out var originRule) &&
+                    originRule is not null &&
+                    originRule.Definition.TryGetProperty("biologicalTransmission",
+                        out var transmissionPolicy) &&
+                    transmissionPolicy.ValueKind == JsonValueKind.Object &&
+                    transmissionPolicy.TryGetProperty("maxExpressedInstancesPerKind",
+                        out var authoredLimit) &&
+                    authoredLimit.ValueKind == JsonValueKind.Number &&
+                    authoredLimit.TryGetInt32(out var parsedLimit))
+                    limit = parsedLimit;
+                if (limit is > 0)
+                {
+                    var (combinations, consumed, _) = evaluator.EvaluateInherited(
+                        proposal, genes.Values.ToArray(), direct, limit.Value,
+                        verifiedTableSynergies);
+                    inheritedExpressions = combinations;
+                    if (direct.Any(x => x.SourceCandidateIds.Any(consumed.Contains)))
+                        Add("inherited-combination-unreplaced", "underlying.grants",
+                            NativeOriginIssueSeverity.Invalid,
+                            "Consumed gene expressions must not remain as simultaneous grants.");
+                }
+                else
+                    Add("inherited-combination-capacity-unavailable",
+                        "underlying.biologicalGenes", NativeOriginIssueSeverity.Unresolved,
+                        "A positive authored expression limit is required to review combinations.");
+            }
+            var (ordinary, _) = evaluator.Evaluate(proposal,
+                direct.Concat(inheritedExpressions).ToArray(), verifiedTableSynergies);
+            var recomputed = inheritedExpressions.Concat(ordinary).ToArray();
             expectedSynergies = recomputed.ToDictionary(x => x.Id, StringComparer.Ordinal);
             foreach (var derived in recomputed)
                 if (!baselineGrants.ContainsKey(derived.Id))
@@ -807,7 +843,11 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
             if (grant.Synergy is not null)
             {
                 if (grant.Identity.Kind != NativeOriginCharacteristicKind.Trait ||
-                    grant.Synergy.Inputs is null || grant.Synergy.Inputs.Count < 2 ||
+                    grant.Synergy.Inputs is null ||
+                    grant.Synergy.Inputs.Count +
+                        (grant.Synergy.InheritedInputs?.Count ?? 0) < 2 ||
+                    grant.Synergy.InheritedInputs is { Count: > 0 } &&
+                        grant.Synergy.Inputs.Count > 0 ||
                     expectedSynergies is not null &&
                     (!expectedSynergies.TryGetValue(grant.Id, out var expected) ||
                      JsonSerializer.Serialize(expected) != JsonSerializer.Serialize(grant)))

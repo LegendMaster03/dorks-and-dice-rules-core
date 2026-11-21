@@ -175,16 +175,25 @@ public sealed record NativeOriginInheritedGrantEvidence(
     IReadOnlyDictionary<string, string>? PriorResourceOwners = null);
 
 /// <summary>
-/// The exact effective inputs of a native or authenticated table-authored interaction, retained for
-/// deterministic replay, provenance audits and cascading invalidation.
+/// The exact effective-grant inputs of a native or authenticated interaction,
+/// retained for deterministic replay, provenance audits and cascading invalidation.
+/// Inherited-expression rules instead retain their complete gene instances below.
 /// </summary>
 public sealed record NativeOriginSynergyInputEvidence(
     string GrantId, string ManifestationId, NativeOriginCharacteristicIdentity Identity,
     IReadOnlyList<string> SourceCandidateIds);
 
+/// <summary>
+/// A verified, selected genotype input to one authored expression. The complete
+/// instance is evidence, not an additional effective grant or resource pool.
+/// </summary>
+public sealed record NativeOriginInheritedSynergyInputEvidence(
+    NativeOriginBiologicalGeneInstance Gene);
+
 public sealed record NativeOriginSynergyEvidence(
     string RuleId, string InteractionId,
-    IReadOnlyList<NativeOriginSynergyInputEvidence> Inputs);
+    IReadOnlyList<NativeOriginSynergyInputEvidence> Inputs,
+    IReadOnlyList<NativeOriginInheritedSynergyInputEvidence>? InheritedInputs = null);
 
 /// <summary>
 /// This identity is issued by the construction evaluator, not by candidate discovery.
@@ -310,9 +319,18 @@ public sealed record NativeOriginActiveTemporaryTransformation(
 public sealed record NativeOriginBiologicalGeneConfiguration(
     string CandidateId, IReadOnlyList<NativeOriginChoiceSelection>? Choices = null);
 
+/// <summary>
+/// Player selection of one explicitly authored inherited-instance expression.
+/// Candidate IDs are the exact transmitted occurrences consumed by the expression;
+/// naming an interaction alone never activates a characteristic.
+/// </summary>
+public sealed record NativeOriginBiologicalCombinationSelection(
+    string RuleOwnerId, string InteractionId, IReadOnlyList<string> CandidateIds);
+
 public sealed record NativeOriginBiologicalTransmissionPlan(
     IReadOnlyList<string> CandidateIds,
-    IReadOnlyList<NativeOriginBiologicalGeneConfiguration>? LatentConfigurations = null);
+    IReadOnlyList<NativeOriginBiologicalGeneConfiguration>? LatentConfigurations = null,
+    IReadOnlyList<NativeOriginBiologicalCombinationSelection>? Combinations = null);
 
 public sealed record NativeOriginProposal(
     string Id, NativeOriginIntent Intent, NativeOriginMethodReference Method,
