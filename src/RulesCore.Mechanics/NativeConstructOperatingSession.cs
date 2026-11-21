@@ -132,9 +132,20 @@ public sealed class NativeConstructOperatingSession
                     "Operating changes may only address instances in the authorized assembly.")]);
         }
 
-        var outOfEnergy = trustedSolarOutputs is null
+        // Installed source ratings are enough for creation but not for
+        // an authenticated in-play solar operating interval.
+        var needsSolarContext = trustedSolarOutputs is null &&
+            _baseline.Components.Any(x =>
+                x.PowerSourceId == "construct-power-source.solar-crystal");
+        IReadOnlyDictionary<string, int>? evaluatedOutputs = needsSolarContext
+            ? _baseline.Components.Where(x =>
+                    x.PowerSourceId == "construct-power-source.solar-crystal")
+                .ToDictionary(x => x.InstanceId, _ => 0,
+                    StringComparer.Ordinal)
+            : trustedSolarOutputs;
+        var outOfEnergy = evaluatedOutputs is null
             ? Array.Empty<string>()
-            : trustedSolarOutputs.Where(x => x.Value == 0)
+            : evaluatedOutputs.Where(x => x.Value == 0)
                 .Select(x => x.Key).ToArray();
         var configured = _baseline with
         {
@@ -155,19 +166,6 @@ public sealed class NativeConstructOperatingSession
                     ? modeId : instance.ModeId
             }).ToArray()
         };
-        // Installed ratings remain available to the creation evaluator.
-        // Runtime evaluation must not claim solar supply before validating
-        // the actual light and battery interval. A no-context request forces
-        // solar output to zero even in the component-state diagnostics.
-        var needsSolarContext = trustedSolarOutputs is null &&
-            _baseline.Components.Any(x =>
-                x.PowerSourceId == "construct-power-source.solar-crystal");
-        var evaluatedOutputs = needsSolarContext
-            ? _baseline.Components.Where(x =>
-                    x.PowerSourceId == "construct-power-source.solar-crystal")
-                .ToDictionary(x => x.InstanceId, _ => 0,
-                    StringComparer.Ordinal)
-            : trustedSolarOutputs;
         var state = _assembly.EvaluateWithSourceOutputOverrides(
             configured, evaluatedOutputs);
         if (needsSolarContext)
