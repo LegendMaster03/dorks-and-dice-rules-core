@@ -56,10 +56,10 @@ to load for isolated fixtures and other compatible rule packages.
 
 ## Candidate extensions (November 2026)
 
-Thirteen additional component definitions cover climbing, flight, excavation,
+Fifteen additional component definitions cover climbing, flight, excavation,
 aquatic propulsion, projectile launchers, substance delivery, energy discharge,
 energy accumulation, protective fields, spell storage, repair, restraints,
-and external control. The four movement components refer to canonical
+external control, operator stations, and deployable-unit bays. The four movement components refer to canonical
 `origin-trait` movement-mode candidates. No positive numerical movement speeds
 have yet been authored, so these traits cannot currently authorize movement.
 
@@ -70,3 +70,29 @@ use as zero demand. Capability identifiers are operational interfaces,
 **not automatic attacks, conditions, defenses, healing, resource creation,
 or new character actions**. See
 `docs/rewrite/character-origins/pillar2-construct-component-expansion-20261121.md`.
+
+## Related authored options and materials
+
+The stat-block survey also identified variation within existing component
+families. Instead of duplicating entire components for each use, the
+first-party catalog now includes **eight candidate designs** for wheel,
+track, multi-legged and rolling-body locomotion, compliant manipulation,
+layered plating, distributed control, and multiple-operator control.
+
+**Seventeen candidate enhancements** add interfaces for vibration,
+active ranging, magic detection, targeting, claw or precision grips, tool
+couplings, hazard barriers, energy absorption, coverage, programmable
+instructions, supervisory and remote commands, and occupant facilities.
+
+**Ten candidate construction materials** extend the material catalog to
+clay, terracotta, ceramic, glass, bone, preserved tissue, amber, wax,
+paper, and wicker. Existing cloth and alchemical fibers already support
+the previously identified textile/fiber family. New materials do not
+specify recipe unit mass or initial construction prices, so their
+physical load and ingredient cost remain unresolved rather than free.
+
+These designs and enhancements are catalog-authored selections of
+existing components; capability tags are not mechanical entitlements.
+The `componentCategory` directory grouping does not classify materials
+or equipment options. Nothing in these additions forces a body shape,
+prescribed ancestry, control hierarchy, or magical animation method.
