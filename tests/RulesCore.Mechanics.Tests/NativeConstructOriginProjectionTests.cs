@@ -1010,6 +1010,9 @@ public sealed class NativeConstructOriginProjectionTests
         Assert.Empty(genericAllocation.ApplicableOriginGrantIds);
         Assert.Contains(genericAllocation.Issues, issue =>
             issue.Code == "construct-solar-operating-context-required");
+        Assert.False(genericAllocation.Assembly.Components.Single(x =>
+            x.InstanceId == "generator").SourceSupplyingPower);
+        Assert.Equal(0, genericAllocation.Assembly.PowerNetworks!.Single().AvailableOutput);
         var stored = new Dictionary<string, long> { ["generator"] = 60 };
         var direct = new Dictionary<string, NativeConstructSolarExposure>
             { ["generator"] = NativeConstructSolarExposure.Direct };
