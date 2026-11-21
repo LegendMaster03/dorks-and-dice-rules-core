@@ -325,16 +325,23 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                         out var ceiling) &&
                     ceiling.ValueKind == JsonValueKind.Number &&
                     ceiling.TryGetInt32(out maxOutput);
-                var validOutput = hasMaximum && solarOutput >= 0 &&
-                    solarOutput <= maxOutput &&
-                    (kind == "solar-recharge" ||
-                     ((kind == "soul-energy" || kind == "infernal") &&
-                      definition.TryGetProperty("powerOutput",
-                          out var normalValue) &&
-                      normalValue.ValueKind == JsonValueKind.Number &&
-                      normalValue.TryGetInt32(out var normalOutput) &&
-                      (kind == "soul-energy" && solarOutput == 0 ||
-                       solarOutput == normalOutput || solarOutput == maxOutput)));
+                var normalOutput = 0;
+                var hasNormal = sourceValid &&
+                    definition.TryGetProperty("powerOutput",
+                        out var normalValue) &&
+                    normalValue.ValueKind == JsonValueKind.Number &&
+                    normalValue.TryGetInt32(out normalOutput);
+                // Infernal Empowerment changes no general power capacity.
+                // Solar and soul sources retain separate 50% Overdrive rules.
+                var validOutput = solarOutput >= 0 && (kind switch
+                {
+                    "solar-recharge" => hasMaximum && solarOutput <= maxOutput,
+                    "soul-energy" => hasNormal && hasMaximum &&
+                        (solarOutput == 0 || solarOutput == normalOutput ||
+                         solarOutput == maxOutput),
+                    "infernal" => hasNormal && solarOutput == normalOutput,
+                    _ => false
+                });
                 if (!validOutput)
                     Issue("construct-power-source-runtime-output-invalid",
                         path + ".powerSourceId", NativeOriginIssueSeverity.Invalid,
