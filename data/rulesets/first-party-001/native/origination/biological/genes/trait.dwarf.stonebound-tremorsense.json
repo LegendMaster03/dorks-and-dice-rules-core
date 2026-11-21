@@ -1,0 +1,18 @@
+{
+  "id": "trait.dwarf.stonebound-tremorsense",
+  "name": "Stonebound Tremorsense",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "stonebound-tremorsense",
+    "description": "While in contact with stone, activate 60-foot Tremorsense for 10 minutes as a Bonus Action. Uses equal Proficiency Bonus per Long Rest.",
+    "sense": "tremorsense",
+    "rangeFeet": 60,
+    "requiresContact": "stone",
+    "activation": "bonus-action",
+    "durationMinutes": 10,
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    }
+  }
+}

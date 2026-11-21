@@ -1,0 +1,9 @@
+{
+  "id": "trait.halfling.halfling-nimbleness",
+  "name": "Halfling Nimbleness",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "halfling-nimbleness",
+    "description": "Move through spaces occupied by creatures larger than you, but do not end movement there unless another ability permits it."
+  }
+}

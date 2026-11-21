@@ -19,6 +19,10 @@ class PowerEvaluationTests(unittest.TestCase):
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_text(json.dumps(data), encoding="utf-8")
 
+        def write_genes(*definitions):
+            for definition in definitions:
+                write(f"origination/biological/genes/{definition['id']}.json", definition)
+
         write("origination/biological/species/base/dwarf.json", {
             "id": "species.dwarf", "kind": "species", "name": "Dwarf", "selectable": True,
             "walkingSpeedFeet": 25, "darkvisionFeet": 60,
@@ -54,20 +58,20 @@ class PowerEvaluationTests(unittest.TestCase):
             "id": "ancestry.elf.drow", "kind": "ancestry",
             "parent": "species.elf", "darkvisionFeet": 120,
             "selectable": True, "traits": [{"traitId": "trait.elf.sunlight"}]})
-        write("origination/biological/genes/dwarf/species.dwarf.json", [
+        write_genes(
             {"id": "trait.dwarf.toughness", "kind": "origin-trait",
              "trait": {"id": "dwarven-toughness", "hitPointsPerCharacterLevel": 1}},
             {"id": "trait.dwarf.stonebound", "kind": "origin-trait",
              "trait": {"id": "stonebound-tremorsense", "sense": "tremorsense",
                        "rangeFeet": 60, "requiresContact": "stone",
                        "activation": "bonus-action", "durationMinutes": 10,
-                       "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}}}])
-        write("origination/biological/genes/gnome/rock.json", [
+                       "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}}})
+        write_genes(
             {"id": "trait.gnome.earthbound", "kind": "origin-trait",
              "trait": {"id": "earthbound-tremorsense", "sense": "tremorsense",
                        "rangeFeet": 15, "activation": "passive",
-                       "requiresSharedContact": ["earth", "stone"]}}])
-        write("origination/biological/genes/dragonborn/base.json", [
+                       "requiresSharedContact": ["earth", "stone"]}})
+        write_genes(
             {"id": "trait.dragonborn.breath", "kind": "origin-trait",
              "trait": {"id": "breath-weapon", "damage": {"progression": [
                  {"characterLevel": 1, "dice": "1d10"},
@@ -75,11 +79,11 @@ class PowerEvaluationTests(unittest.TestCase):
                  "areaFrom": "selected-dragonborn-family-or-leaf",
                  "activation": {"action": "attack", "replaces": "one-attack"},
                  "uses": {"value": "proficiency-bonus"},
-                 "savingThrow": {"ability": "dexterity", "onSuccess": "half-damage"}}}])
-        write("origination/biological/genes/elf/drow.json", [
+                 "savingThrow": {"ability": "dexterity", "onSuccess": "half-damage"}}})
+        write_genes(
             {"id": "trait.elf.sunlight", "kind": "origin-trait",
              "trait": {"id": "sunlight-sensitivity", "condition": "condition.dazzled",
-                       "trigger": "direct-unprotected-sunlight"}}])
+                       "trigger": "direct-unprotected-sunlight"}})
         write("conditions.json", {"entries": [{"id": "condition.dazzled", "effects": [
             {"type": "roll-modifier", "appliesTo": "attack-roll", "operation": "add", "value": -1},
             {"type": "roll-modifier", "appliesTo": "skill-check", "operation": "add",

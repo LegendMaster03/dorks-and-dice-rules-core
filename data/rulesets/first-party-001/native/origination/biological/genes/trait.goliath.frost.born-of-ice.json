@@ -1,0 +1,15 @@
+{
+  "id": "trait.goliath.frost.born-of-ice",
+  "name": "Born of Ice",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "born-of-ice",
+    "name": "Born of Ice",
+    "requiredCharacterLevel": 4,
+    "description": "You have 50 percent resistance to Cold damage.",
+    "damageResistance": {
+      "percent": 50,
+      "damageType": "cold"
+    }
+  }
+}

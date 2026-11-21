@@ -1,0 +1,22 @@
+{
+  "id": "trait.goliath.fire.fires-burn",
+  "name": "Fire's Burn",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "fires-burn",
+    "name": "Fire's Burn",
+    "description": "When you hit a target with an attack roll and deal damage to it, you can deal an additional 1d10 Fire damage to that target. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+    "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
+    "extraDamage": {
+      "dice": "1d10",
+      "damageType": "fire",
+      "target": "same-target"
+    },
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    },
+    "coversStrikeOfTheGiantsMode": "fire-strike",
+    "duplicateStrikeBenefitGranted": false
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "trait.goliath.large-form",
+  "name": "Large Form",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "large-form",
+    "name": "Large Form",
+    "description": "Starting at character level 5, you can become Large as a Bonus Action if there is enough space. The transformation lasts for 10 minutes or until you end it without taking an action. While transformed, you have Advantage on Strength checks and your walking Speed increases by 10 feet. You regain the use after a Long Rest. This is an actual size change, not a permanent enlargement or an automatic increase in reach.",
+    "requiredCharacterLevel": 5,
+    "activation": {
+      "action": "bonus-action",
+      "requiresSpaceFor": "large"
+    },
+    "sizeChange": {
+      "to": "large",
+      "actualSize": true
+    },
+    "duration": {
+      "minutes": 10,
+      "canEndEarly": true,
+      "endEarlyAction": "none"
+    },
+    "advantageOnChecks": {
+      "ability": "strength",
+      "checkType": "ability-check"
+    },
+    "walkingSpeedBonusFeet": 10,
+    "uses": {
+      "value": 1,
+      "recharge": "long-rest"
+    },
+    "doesNotGrant": [
+      "automatic-reach-increase",
+      "permanent-large-size"
+    ]
+  }
+}

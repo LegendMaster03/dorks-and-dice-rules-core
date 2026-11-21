@@ -1,0 +1,15 @@
+{
+  "id": "trait.goliath.fire.born-of-flame",
+  "name": "Born of Flame",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "born-of-flame",
+    "name": "Born of Flame",
+    "requiredCharacterLevel": 4,
+    "description": "You have 50 percent resistance to Fire damage. This does not independently grant immunity to effects that deal Fire damage.",
+    "damageResistance": {
+      "percent": 50,
+      "damageType": "fire"
+    }
+  }
+}

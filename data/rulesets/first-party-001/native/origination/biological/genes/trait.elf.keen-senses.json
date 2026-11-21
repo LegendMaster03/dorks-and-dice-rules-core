@@ -1,0 +1,13 @@
+{
+  "id": "trait.elf.keen-senses",
+  "name": "Keen Senses",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "keen-senses",
+    "description": "Gain +2 Listen and +2 Spot. Existing Perception composite calculation uses these bonuses.",
+    "skillBonuses": {
+      "skill.listen": 2,
+      "skill.spot": 2
+    }
+  }
+}

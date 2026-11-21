@@ -1,0 +1,42 @@
+{
+  "id": "trait.goliath.stone.stone-throw",
+  "name": "Stone Throw",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "stone-throw",
+    "name": "Stone Throw",
+    "requiredCharacterLevel": 4,
+    "description": "As a Bonus Action, you magically hurl a rock at a target within 60 feet using a ranged spell attack based on your chosen Goliath ancestry ability. On a hit, the rock deals 1d10 Force damage, and the target makes a Strength saving throw or becomes Prone. You can use this ability Proficiency Bonus times per Long Rest.",
+    "activation": {
+      "action": "bonus-action"
+    },
+    "requiresItem": "rock",
+    "attack": {
+      "type": "ranged-spell-attack",
+      "rangeFeet": 60,
+      "attackBonus": "proficiency-bonus + chosen-giant-ancestry-ability-modifier"
+    },
+    "damage": {
+      "dice": "1d10",
+      "damageType": "force"
+    },
+    "savingThrow": {
+      "ability": "strength",
+      "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+      "onSuccess": "no-prone"
+    },
+    "applyConditionOnFailedSave": "condition.prone",
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    },
+    "originBindings": {
+      "giantAncestryAbility": {
+        "lookup": "manifested-trait-choice",
+        "mechanicalDefinitionId": "trait.goliath.giant-ancestry-aptitude",
+        "choiceRequirementId": "abilityChoice",
+        "scope": "contributor"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "trait.dragonborn.white.icewalker",
+  "name": "Icewalker",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "icewalker",
+    "name": "Icewalker",
+    "description": "You can move across and climb ordinary icy surfaces without ability checks required solely because of their iciness, and ordinary ice or snow Difficult Terrain does not cost you extra movement. You do not need the Dexterity saving throw to avoid falling Prone when it is triggered solely by ordinary slippery ice. This trait does not negate unrelated hazards, other causes of falling Prone, or magical effects with additional restrictions.",
+    "terrain": [
+      "ordinary-ice",
+      "ordinary-snow"
+    ],
+    "ignoresDifficultTerrainFrom": [
+      "ice",
+      "snow"
+    ],
+    "ignoreIcySurfaceAbilityChecks": true,
+    "slipperyIceSaveExemption": {
+      "trigger": "ordinary-slippery-ice-alone",
+      "savingThrow": "dexterity",
+      "effect": "prone"
+    },
+    "doesNotNegateOtherHazards": true
+  }
+}

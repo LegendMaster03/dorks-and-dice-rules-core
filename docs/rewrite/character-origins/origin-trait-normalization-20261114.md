@@ -2,7 +2,7 @@
 
 ## Scope and authority
 
-Selected-native Species/Ancestry content now stores every named inherent trait as an independently addressable `origin-trait` entity initially under `native/traits/` (relocated without mechanical changes to `native/origination/biological/genes/` on November 20, 2026). This is a representation change, not an approval of new gameplay rules, trait equivalences, inherited benefits, allocation budgets, or homebrew import formats.
+Selected-native Species/Ancestry content now stores every named inherent trait as an independently addressable `origin-trait` entity initially under `native/traits/` (relocated without mechanical changes to `native/origination/biological/genes/` on November 20, 2026). This is a representation change, not an approval of new gameplay rules, trait equivalences, inherited benefits, allocation budgets, or homebrew import formats. The subsequent flat catalog stores all 89 canonical genes as individual `genes/trait.<id>.json` files, without source-Ancestry directories or multi-gene source files; IDs and mechanics remain unchanged.
 
 The model distinguishes (1) one canonical trait definition and its complete mechanical payload, (2) a position-specific reference in a Species or Ancestry record, (3) a contributor's offered candidate, and (4) a manifested, authorized grant. A trait may contain multiple effects without making each effect a separately inheritable component.
 

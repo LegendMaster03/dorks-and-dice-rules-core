@@ -1,0 +1,61 @@
+{
+  "id": "trait.goliath.storm.maelstrom-aura",
+  "name": "Maelstrom Aura",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "maelstrom-aura",
+    "name": "Maelstrom Aura",
+    "requiredCharacterLevel": 4,
+    "description": "As a Bonus Action, project a 10-foot aura of magical wind and lightning until the start of your next turn or until you become Incapacitated. It does not extend through total cover. While active, you have 50 percent resistance to Lightning and Thunder damage, and attacks against you have Disadvantage. When another creature begins its turn in the aura, you may require a Strength save; on failure its Speed is halved until the start of its next turn. Proficiency Bonus uses per Long Rest.",
+    "activation": {
+      "action": "bonus-action"
+    },
+    "area": {
+      "shape": "aura",
+      "radiusFeet": 10,
+      "center": "self",
+      "blockedBy": "total-cover"
+    },
+    "duration": {
+      "endsAt": "start-of-your-next-turn",
+      "alsoEndsWhen": "condition.incapacitated"
+    },
+    "whileActive": {
+      "damageResistance": [
+        {
+          "damageType": "lightning",
+          "percent": 50
+        },
+        {
+          "damageType": "thunder",
+          "percent": 50
+        }
+      ],
+      "attackRollsTargetingYou": "disadvantage"
+    },
+    "startsTurnInside": {
+      "target": "other-creature",
+      "savingThrow": {
+        "ability": "strength",
+        "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+        "onSuccess": "no-speed-change"
+      },
+      "onFailedSave": {
+        "speedMultiplier": 0.5,
+        "endsAt": "start-of-targets-next-turn"
+      }
+    },
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    },
+    "originBindings": {
+      "giantAncestryAbility": {
+        "lookup": "manifested-trait-choice",
+        "mechanicalDefinitionId": "trait.goliath.giant-ancestry-aptitude",
+        "choiceRequirementId": "abilityChoice",
+        "scope": "contributor"
+      }
+    }
+  }
+}

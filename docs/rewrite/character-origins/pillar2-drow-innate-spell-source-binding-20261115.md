@@ -9,7 +9,7 @@
 
 The playable `ancestry.elf.drow` already declares a character-creation `spellcastingAbilityChoice` of Intelligence, Wisdom or Charisma. Its historical native review and associated Origin pipeline require that one chosen ability govern granted Drow ancestry spells; the original three Drow spell traits did not yet express the binding.
 
-`data/rulesets/first-party-001/native/origination/biological/genes/elf/ancestry.elf.drow.json` now specifies the same canonical `originBindings` mechanism already used by High Elf and Wood Elf traits:
+The separately stored Drow genes `trait.elf.drow.dancing-lights`, `trait.elf.drow.faerie-fire`, and `trait.elf.drow.darkness` now specify the same canonical `originBindings` mechanism already used by High Elf and Wood Elf traits. Their current files live directly under `data/rulesets/first-party-001/native/origination/biological/genes/`, named by their stable IDs:
 
 ```json
 "originBindings": {

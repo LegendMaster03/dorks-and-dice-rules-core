@@ -1,0 +1,16 @@
+{
+  "id": "trait.orc.menacing-presence",
+  "name": "Menacing Presence",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "menacing-presence",
+    "name": "Menacing Presence",
+    "description": "Gain Advantage on Intimidation checks when you use your physical presence, appearance, or stature to intimidate a creature that can perceive it. This does not grant Intimidation proficiency or apply to unrelated social intimidation.",
+    "skillCheckAdvantage": {
+      "skill": "skill.intimidation",
+      "when": "physical-appearance-stature-or-presence-used-to-intimidate",
+      "requiresTargetCanPerceivePresence": true
+    },
+    "grantsSkillProficiency": false
+  }
+}

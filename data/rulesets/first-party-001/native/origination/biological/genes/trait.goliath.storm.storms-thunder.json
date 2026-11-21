@@ -1,0 +1,24 @@
+{
+  "id": "trait.goliath.storm.storms-thunder",
+  "name": "Storm's Thunder",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "storms-thunder",
+    "name": "Storm's Thunder",
+    "description": "When a creature within 60 feet of you deals damage to you, you can use your Reaction to deal 1d8 Thunder damage to that creature. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+    "activation": {
+      "action": "reaction",
+      "trigger": "when-a-creature-within-range-deals-damage-to-you"
+    },
+    "rangeFeet": 60,
+    "retaliation": {
+      "dice": "1d8",
+      "damageType": "thunder",
+      "target": "triggering-creature"
+    },
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    }
+  }
+}

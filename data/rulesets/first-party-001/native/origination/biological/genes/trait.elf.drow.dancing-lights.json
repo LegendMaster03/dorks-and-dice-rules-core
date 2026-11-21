@@ -1,0 +1,19 @@
+{
+  "id": "trait.elf.drow.dancing-lights",
+  "name": "Dancing Lights",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "dancing-lights",
+    "originBindings": {
+      "spellcastingAbility": {
+        "lookup": "manifested-intrinsic",
+        "intrinsicSlot": "spellcastingAbility",
+        "scope": "source"
+      }
+    },
+    "description": "Gain Dancing Lights at level 1.",
+    "spell": "dancing-lights",
+    "level": 1,
+    "atWill": true
+  }
+}

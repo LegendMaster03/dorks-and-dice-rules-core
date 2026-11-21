@@ -1,0 +1,47 @@
+{
+  "id": "trait.goliath.hill.hills-tumble",
+  "name": "Hill's Tumble",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "hills-tumble",
+    "name": "Hill's Tumble",
+    "description": "When you hit a Large or smaller creature with an attack roll and deal damage to it, you can knock that creature Prone. No additional saving throw is specified. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+    "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
+    "targetMaximumSize": "large",
+    "applyCondition": "condition.prone",
+    "additionalSavingThrow": false,
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    },
+    "alternateStrikeMode": {
+      "id": "hill-strike",
+      "name": "Hill Strike",
+      "description": "Instead of Hill's Tumble's automatic Prone effect against a Large or smaller target, on a melee or thrown-weapon hit that deals damage you can deal another 1d6 damage of the weapon's type. If the target is a creature, it makes a Strength saving throw or becomes Prone. This mode does not have Hill's Tumble's Large-size cap, but Prone is save-dependent. Spend one existing Hill's Tumble use, not an additional use.",
+      "trigger": "melee-weapon-or-thrown-weapon-attack-hit-and-deal-damage",
+      "oncePerTurn": true,
+      "replaces": "hills-tumble-automatic-prone",
+      "extraDamage": {
+        "dice": "1d6",
+        "damageTypeFrom": "triggering-weapon"
+      },
+      "savingThrow": {
+        "ability": "strength",
+        "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+        "onSuccess": "no-prone"
+      },
+      "applyConditionOnFailedSave": "condition.prone",
+      "targetMaximumSize": null,
+      "sharedUsesFromTrait": "hills-tumble",
+      "extraUsesGranted": false
+    },
+    "originBindings": {
+      "giantAncestryAbility": {
+        "lookup": "manifested-trait-choice",
+        "mechanicalDefinitionId": "trait.goliath.giant-ancestry-aptitude",
+        "choiceRequirementId": "abilityChoice",
+        "scope": "contributor"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "trait.elf.drow.sunlight-sensitivity",
+  "name": "Sunlight Sensitivity",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "sunlight-sensitivity",
+    "description": "Direct unprotected sunlight applies Dazzled. Shade, effective tinted eyewear or other effective protection can prevent or end the exposure. Ordinary magical light is not automatically sunlight.",
+    "condition": "condition.dazzled",
+    "trigger": "direct-unprotected-sunlight",
+    "end": "remove-exposure-or-use-effective-protection"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "trait.dwarf.dwarven-toughness",
+  "name": "Dwarven Toughness",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "dwarven-toughness",
+    "description": "Increase maximum hit points by 1 for each character level.",
+    "hitPointsPerCharacterLevel": 1
+  }
+}

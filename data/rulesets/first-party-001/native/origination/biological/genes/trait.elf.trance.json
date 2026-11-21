@@ -1,0 +1,11 @@
+{
+  "id": "trait.elf.trance",
+  "name": "Trance",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "trance",
+    "description": "Complete a Long Rest through four hours of trancelike meditation. Elves do not need to sleep.",
+    "longRestHours": 4,
+    "sleepRequired": false
+  }
+}

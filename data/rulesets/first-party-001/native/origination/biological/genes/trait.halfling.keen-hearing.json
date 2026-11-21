@@ -1,0 +1,12 @@
+{
+  "id": "trait.halfling.keen-hearing",
+  "name": "Keen Hearing",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "keen-hearing",
+    "description": "Gain +2 to Listen; the existing native composite-skill procedure incorporates this in Perception.",
+    "skillBonuses": {
+      "skill.listen": 2
+    }
+  }
+}
