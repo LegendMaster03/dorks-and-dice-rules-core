@@ -83,7 +83,7 @@ public static class NativeOriginMovementModeProjector
             // while special locomotion uses the shared movementMode/speedFeet
             // contract. Interpret both in the same read-only movement view,
             // without making up load support or a separate speed grant.
-            var walking = canonical.TryGetProperty("walkingSpeedFeet", out var walkingSpeed);
+            var walking = canonical.TryGetProperty("walkingSpeedFeet", out _);
             var special = canonical.TryGetProperty("movementMode", out var mode);
             var hasSpeed = canonical.TryGetProperty(
                 walking ? "walkingSpeedFeet" : "speedFeet", out var speed);
