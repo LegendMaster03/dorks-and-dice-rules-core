@@ -591,7 +591,9 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         long knownCost = knownMaterialCost + knownModificationCost;
         IReadOnlyDictionary<string, long>? requiredIngredients = null;
         long? retainedMaterialMass = null;
+        bool massComplete = false;
         IReadOnlyList<string>? missingMassMaterials = null;
+        IReadOnlyList<string>? uncertifiedMassProducts = null;
         if (recipeCostMethod is JsonElement costMethod)
         {
             var quote = NativeCraftingResourceQuoter.Evaluate(
@@ -599,7 +601,9 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             knownCost = quote.KnownCost;
             requiredIngredients = quote.RequiredResources;
             retainedMaterialMass = quote.KnownRetainedMaterialMassPounds;
+            massComplete = quote.IsPhysicalMassComplete;
             missingMassMaterials = quote.UnresolvedRetainedMassMaterials;
+            uncertifiedMassProducts = quote.ProductsWithUncertifiedMass;
             issues.AddRange(quote.Issues);
         }
         foreach (var part in parts.Values)
@@ -808,7 +812,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         if (retainedMaterialMass is long mass)
         {
             physicalLoad = networks.Count == 1
-                ? NativePhysicalLoadEvaluator.Evaluate(mass, bodyMassComplete: false,
+                ? NativePhysicalLoadEvaluator.Evaluate(mass, bodyMassComplete: massComplete,
                     carriedPayloadMassPounds: null, loadSupports)
                 : new NativePhysicalLoadAssessment("unresolved", mass, null, null,
                     null, false, "connected-body-load-sharing-unresolved");
@@ -833,6 +837,8 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             DerivedCreatureSize = derivedSize?.Size,
             KnownRetainedMaterialMassPounds = retainedMaterialMass,
             UnresolvedRetainedMassMaterials = missingMassMaterials,
+            IsBodyMassComplete = massComplete,
+            ProductsWithUncertifiedMass = uncertifiedMassProducts,
             PhysicalLoad = physicalLoad,
             PhysicalMovement = physicalMovement,
             PhysicalSurfaces = surfaces.ToArray()
@@ -1040,6 +1046,8 @@ public sealed record NativeConstructAssemblyResult(
     // and component masses must be reconciled before computing encumbrance.
     public long? KnownRetainedMaterialMassPounds { get; init; }
     public IReadOnlyList<string>? UnresolvedRetainedMassMaterials { get; init; }
+    public bool IsBodyMassComplete { get; init; }
+    public IReadOnlyList<string>? ProductsWithUncertifiedMass { get; init; }
     // Neither the load assessment nor the material surfaces grant a speed,
     // AC, resistance or damage reduction. They retain source-aware evidence
     // needed to apply those universal rules after balance authoring.

@@ -3,7 +3,7 @@
     "id": "crafting-recipe.construct-component.structural-frame",
     "kind": "crafting-recipe",
     "name": "Structural frame — manufacture",
-    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-component.structural-frame",
     "stages": [
       {
@@ -20,7 +20,11 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   },
   {
     "id": "crafting-recipe.construct-component.articulated-joint",
@@ -127,7 +131,7 @@
     "id": "crafting-recipe.construct-component.external-casing",
     "kind": "crafting-recipe",
     "name": "External casing — manufacture",
-    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-component.external-casing",
     "stages": [
       {
@@ -144,7 +148,11 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   },
   {
     "id": "crafting-recipe.construct-component.manipulator",
@@ -229,7 +237,7 @@
     "id": "crafting-recipe.construct-component.power-source-housing",
     "kind": "crafting-recipe",
     "name": "Power-source housing — manufacture",
-    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-component.power-source-housing",
     "stages": [
       {
@@ -246,7 +254,11 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   },
   {
     "id": "crafting-recipe.construct-component.limb-assembly",
@@ -405,7 +417,7 @@
     "id": "crafting-recipe.construct-component.locomotion-unit",
     "kind": "crafting-recipe",
     "name": "Locomotion unit — manufacture",
-    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-component.locomotion-unit",
     "stages": [
       {
@@ -427,13 +439,17 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   },
   {
     "id": "crafting-recipe.construct-component.protective-plating",
     "kind": "crafting-recipe",
     "name": "Protective plating — manufacture",
-    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-component.protective-plating",
     "stages": [
       {
@@ -450,7 +466,11 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   },
   {
     "id": "crafting-recipe.construct-component.crystal-eye",
@@ -1186,7 +1206,7 @@
     "id": "crafting-recipe.construct-power-source.mechanical-engine",
     "kind": "crafting-recipe",
     "name": "Mechanical engine — manufacture",
-    "rulesStatus": "candidate recipe; ingredient quantities and competency ranks require balancing",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-power-source.mechanical-engine",
     "stages": [
       {
@@ -1208,13 +1228,17 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   },
   {
     "id": "crafting-recipe.construct-component.structural-frame.small",
     "kind": "crafting-recipe",
     "name": "Structural frame (small) — manufacture",
-    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-component.structural-frame",
     "stages": [
       {
@@ -1231,13 +1255,17 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   },
   {
     "id": "crafting-recipe.construct-component.structural-frame.medium",
     "kind": "crafting-recipe",
     "name": "Structural frame (medium) — manufacture",
-    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-component.structural-frame",
     "stages": [
       {
@@ -1254,13 +1282,17 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   },
   {
     "id": "crafting-recipe.construct-component.structural-frame.large",
     "kind": "crafting-recipe",
     "name": "Structural frame (large) — manufacture",
-    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-component.structural-frame",
     "stages": [
       {
@@ -1277,13 +1309,17 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   },
   {
     "id": "crafting-recipe.construct-component.external-casing.small",
     "kind": "crafting-recipe",
     "name": "External casing (small) — manufacture",
-    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-component.external-casing",
     "stages": [
       {
@@ -1300,13 +1336,17 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   },
   {
     "id": "crafting-recipe.construct-component.external-casing.medium",
     "kind": "crafting-recipe",
     "name": "External casing (medium) — manufacture",
-    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-component.external-casing",
     "stages": [
       {
@@ -1323,13 +1363,17 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   },
   {
     "id": "crafting-recipe.construct-component.external-casing.large",
     "kind": "crafting-recipe",
     "name": "External casing (large) — manufacture",
-    "rulesStatus": "candidate sized body recipe; dimensional/material quantities unbalanced",
+    "rulesStatus": "candidate manufacturing, quantities and complete product-mass ledger for scenario testing; not approved gameplay balance",
     "producesDefinitionId": "construct-component.external-casing",
     "stages": [
       {
@@ -1346,6 +1390,10 @@
         ],
         "outputs": []
       }
-    ]
+    ],
+    "physicalMassAccounting": {
+      "fullyAccounted": true,
+      "additionalProductMassPounds": 0
+    }
   }
 ]

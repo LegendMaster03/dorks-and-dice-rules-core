@@ -20,6 +20,10 @@ internal sealed record NativeCraftingResourceQuote(
     // calculation. A recipe ingredient may be consumed without being retained.
     public long KnownRetainedMaterialMassPounds { get; init; }
     public IReadOnlyList<string> UnresolvedRetainedMassMaterials { get; init; } = [];
+    // A complete result requires every selected manufactured product to have
+    // author-verified material accounting. Ordinary quotes remain partial.
+    public bool IsPhysicalMassComplete { get; init; }
+    public IReadOnlyList<string> ProductsWithUncertifiedMass { get; init; } = [];
 }
 
 /// <summary>
@@ -38,6 +42,7 @@ internal static class NativeCraftingResourceQuoter
         var required = new Dictionary<string, long>(StringComparer.Ordinal);
         long knownRetainedMassPounds = 0;
         var unresolvedMass = new SortedSet<string>(StringComparer.Ordinal);
+        var uncertifiedProducts = new List<string>();
 
         void Issue(string code, string path, NativeOriginIssueSeverity severity, string detail) =>
             issues.Add(new(code, path, severity, detail));
@@ -78,6 +83,9 @@ internal static class NativeCraftingResourceQuoter
 
         foreach (var selection in selections)
         {
+            // Each occurrence is independent. Duplicate installed parts must
+            // never hide a missing mass declaration on one of those parts.
+            uncertifiedProducts.Add(selection.SourceDefinitionId);
             var path = "construction." + selection.SourceDefinitionId;
             if (!catalog.TryGetById(selection.SourceDefinitionId, out var source) ||
                 source is null)
@@ -208,6 +216,7 @@ internal static class NativeCraftingResourceQuoter
             // Retention authoring is independent of purchase pricing. Only
             // ingredients explicitly retained in the finished product contribute
             // to this known partial mass; missing mass data does not become zero.
+            var unknownMassBefore = unresolvedMass.Count;
             foreach (var input in operations.SelectMany(step => step.Inputs)
                 .Where(material => material.RetainedInProduct))
             {
@@ -231,6 +240,59 @@ internal static class NativeCraftingResourceQuoter
                     Issue("crafting-quote-mass-overflow", path,
                         NativeOriginIssueSeverity.Invalid,
                         "Known retained material mass exceeds supported quantities.");
+                }
+            }
+
+            // A native recipe may certify complete finished-product mass only
+            // after all inputs explicitly declare retention and no intermediate
+            // stage outputs can be inadvertently counted twice. An additional
+            // positive amount covers manufactured mass not in retained inputs.
+            // Absence of a certificate is normal and keeps the sum a lower bound.
+            if (recipe.Definition.TryGetProperty("physicalMassAccounting", out var accounting))
+            {
+                if (accounting.ValueKind != JsonValueKind.Object ||
+                    !accounting.TryGetProperty("fullyAccounted", out var fully) ||
+                    fully.ValueKind != JsonValueKind.True ||
+                    !accounting.TryGetProperty("additionalProductMassPounds", out var extraMass) ||
+                    extraMass.ValueKind != JsonValueKind.Number ||
+                    !extraMass.TryGetInt32(out var additional) ||
+                    additional is < 0 or > 1_000_000)
+                {
+                    Issue("crafting-quote-mass-certificate-invalid", path,
+                        NativeOriginIssueSeverity.Invalid,
+                        "A complete physical mass certificate needs a true flag and bounded nonnegative additional weight.");
+                }
+                else
+                {
+                    var hasUnmarkedInput = recipe.Definition.TryGetProperty(
+                            "stages", out var rawStages)
+                        ? rawStages.EnumerateArray().Any(stage =>
+                            stage.TryGetProperty("inputs", out var rawInputs) &&
+                            rawInputs.EnumerateArray().Any(input =>
+                                !input.TryGetProperty("retainedInProduct", out _)))
+                        : recipe.Definition.GetProperty("inputs").EnumerateArray()
+                            .Any(input => !input.TryGetProperty("retainedInProduct", out _));
+
+                    if (hasUnmarkedInput || operations.Any(step => step.Outputs.Count > 0))
+                        Issue("crafting-quote-mass-certificate-incomplete", path,
+                            NativeOriginIssueSeverity.Invalid,
+                            "Complete mass cannot be certified with unmarked input retention or unaccounted intermediate outputs.");
+                    else if (unresolvedMass.Count == unknownMassBefore &&
+                             issues.Count == before)
+                    {
+                        try
+                        {
+                            knownRetainedMassPounds = checked(
+                                knownRetainedMassPounds + additional);
+                            uncertifiedProducts.RemoveAt(uncertifiedProducts.Count - 1);
+                        }
+                        catch (OverflowException)
+                        {
+                            Issue("crafting-quote-mass-overflow", path,
+                                NativeOriginIssueSeverity.Invalid,
+                                "Complete certified material mass exceeds supported quantities.");
+                        }
+                    }
                 }
             }
 
@@ -287,7 +349,12 @@ internal static class NativeCraftingResourceQuoter
         return new(knownCost, required.ToFrozenDictionary(StringComparer.Ordinal), issues)
         {
             KnownRetainedMaterialMassPounds = knownRetainedMassPounds,
-            UnresolvedRetainedMassMaterials = unresolvedMass.ToArray()
+            UnresolvedRetainedMassMaterials = unresolvedMass.ToArray(),
+            IsPhysicalMassComplete = selections.Count > 0 &&
+                uncertifiedProducts.Count == 0 && unresolvedMass.Count == 0 &&
+                !issues.Any(x => x.Severity is NativeOriginIssueSeverity.Invalid
+                    or NativeOriginIssueSeverity.Unresolved),
+            ProductsWithUncertifiedMass = uncertifiedProducts.ToArray()
         };
     }
 
