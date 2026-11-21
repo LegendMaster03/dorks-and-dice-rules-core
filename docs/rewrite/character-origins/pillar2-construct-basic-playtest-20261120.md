@@ -9,9 +9,9 @@
 - A basic mechanical engine supplies **8 simultaneous power units**, not unlimited fuel.
 - The **200-point starting allowance** is the current provisional balancing target. Points purchase crafting ingredients, not finished component prices; the allowance applies only at initial construction.
 - Basic starting functionality is ordinary movement, sight, communication, and object manipulation simultaneously. No fixed humanoid anatomy or required component count is imposed.
-- An operating mechanical engine ordinarily consumes **one fuel charge per adventuring day**, accounted for near a Long Rest. Short Rests do not add a charge. Skipping a Long Rest does not eliminate daily consumption.
-- Missing an ordinary fuel charge uses **2014 food-deprivation progression**: permitted days without a ration = max(1, 3 + Constitution modifier), then one level of the existing `condition.exhaustion` for each further day. Supplying the full daily charge resets the missed-days counter. It does not by itself remove existing Exhaustion.
-- Fuel deprivation must **not** be modeled as instantaneous power-source depletion. The latter remains a distinct operating-circuit failure; the Construct should receive the same starvation consequence as a biological character missing its food.
+- The basic mechanical engine uses the **ordinary daily ration rules**, substituting **one mechanical-fuel charge per adventuring day** for a food ration. Routine consumption is accounted for near a Long Rest. Short Rests do not add another ration, and skipping a Long Rest does not eliminate daily consumption.
+- **All ordinary survival consequences are identical to those for food**, under the shared 2014 rules: permitted days without a ration = max(1, 3 + Constitution modifier), followed by one level of existing `condition.exhaustion` for each further missed day. A full ration of the required resource resets the missed-day counter; it does not automatically remove existing Exhaustion.
+- Missing routine fuel must **not** be modeled as instantaneous power-source depletion. Physical damage, deliberate shutdown, and separate specialized energy mechanisms can still interrupt power. The basic engine changes the **ration resource**, not the survival rules.
 - Optional Overdrive remains **deferred**: no approved output bonus, duration, or expenditure quantity.
 - Consciousness/animation is distinct from operating power; the artificial-life core is **not** the default unlimited starter source.
 
@@ -36,17 +36,17 @@ The control module is the canonical source of an ordinary auditory-communication
 
 ## What is implemented and what is not
 
-- `NativeDailyRationEvaluator.AssessDay` performs the **shared 2014 daily-deprivation calculation** (pure read-only outcome). It references the existing Exhaustion condition ID and does not duplicate Exhaustion tiers.
-- `NativeConstructOperatingSession.PreviewDailyFuel` verifies that a source is installed and has native daily-fuel metadata. It returns a proposed one-charge expenditure and the shared daily-deprivation outcome. It does **not** accept client fuel claims as proof, advance calendar time, mutate inventory, grant a refill, or apply a condition.
-- The fuel requirement belongs to the engine's **daily ration**, not its existing `resourceUsePerStep` finite-energy model. Current finite-resource steps suppress a depleted source's output and are **not appropriate for routine food-equivalent deprivation**.
+- `NativeDailyRationEvaluator.AssessDay` is a **shared, resource-agnostic 2014 daily-deprivation calculation**. A `NativeDailyRationRequirement` identifies the required daily resource and amount; either ordinary food or mechanical fuel produces identical survival outcomes when supplies are equivalent. The evaluator references the existing Exhaustion condition ID and does not duplicate Exhaustion tiers.
+- The basic engine declares `dailySustenance.resourceKind` and `dailySustenance.unitsPerDay` in the first-party catalog. It does **not** declare a separate deprivation rule or special recovery schedule. The former Construct-only `PreviewDailyFuel` operation has been removed; routine survival is evaluated through the same ration API for all characters.
+- The basic engine's `dailySustenance` is a **ration substitution**, not the `resourceUsePerStep` finite-energy model. Specialized source-resource depletion can immediately suppress power; ordinary hunger-equivalent deprivation does not.
 - The full reference manifest is exercised through the common Origin construction engine, rather than creating a parallel Construct Origin path.
 
 **Still required before declaring a playable production species:**
 
-1. The authenticated host must spend a real daily fuel item, store the missed-day count, and apply/remove Exhaustion through the shared character state. A Long Rest alone must not refill fuel.
+1. The authenticated host must connect the native `dailySustenance` requirement to the **same general daily-ration transaction** used for food: verify the selected resource in inventory, consume it once per elapsed adventuring day, track deprivation, and apply/recover Exhaustion through the shared character state. A Long Rest does not create fuel.
 2. The ordinary-ground-movement grant must be bound into general Character Sheet walking-speed mechanics. The existing baseline speed adapter expects an authoritative walking-speed **intrinsic**; this first-party movement **trait** does not yet provide that adapter input.
 3. The 30-foot movement candidate and actual locomotion capacity must be reconciled with body mass. No movement/load threshold has been approved, and no retired 30/15/0 tier is restored.
 4. A Construct's autonomy/sustaining identity is an origination question, not a free battery or a required artificial-life engine.
 5. The values of material ingredients, power-consuming components, and the starting allowance need integrated playtesting before promotion.
 
-No extra mandatory component families, independent fuel inventory, short-rest charges, or movement penalties are introduced.
+No extra mandatory component families, independent fuel inventory, short-rest charges, or movement penalties are introduced. The actual inventory identifier, acquisition, and cost of a standard mechanical fuel charge still need normal equipment authoring. No engine-specific recovery exception is authorized.
