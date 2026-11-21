@@ -134,6 +134,17 @@ public sealed class NativeConstructOriginProjectionTests
                 """);
             File.WriteAllText(Path.Combine(native, "power-sources.json"), """
                 [
+                 {"id":"construct-power-source.soul-gem",
+                  "kind":"construct-power-source","name":"Soul core",
+                  "constructionCost":1,"powerOutput":8,
+                  "overdrivePowerOutput":12,"overdriveIncreasePercent":50,
+                  "compatibleComponentCapabilities":["power-housing"],
+                  "operatingPrinciple":"soul-energy",
+                  "captureRangeFeet":30,
+                  "capturePolicy":"automatic-unselective",
+                  "storagePolicy":"no-fixed-soul-cap",
+                  "energyAvailabilityPolicy":"dm-adjudicated",
+                  "consumptionRatePolicy":"intentionally-unspecified"},
                  {"id":"construct-power-source.solar-crystal",
                   "kind":"construct-power-source","name":"Solar collector",
                   "constructionCost":1,"powerOutput":8,
@@ -979,6 +990,86 @@ public sealed class NativeConstructOriginProjectionTests
                 { PowerSourceId = source },
             Part("sensor", "fuel-load")
         ], InitialAllowance: 20);
+
+    [Fact]
+    public void SoulCoreRequiresDmEnergyDeterminationAndUsesSharedOverdrive()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.soul-gem"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+        var withoutContext = session.EvaluateConfiguration();
+        Assert.False(withoutContext.IsOperatingConfigurationValid);
+        Assert.Empty(withoutContext.ApplicableOriginGrantIds);
+        Assert.Contains(withoutContext.Issues, issue =>
+            issue.Code == "construct-soul-operating-context-required");
+        Assert.Equal(0, withoutContext.Assembly.PowerNetworks!.Single().AvailableOutput);
+
+        var available = new Dictionary<string, bool> { ["generator"] = true };
+        var normal = session.PreviewSoulCoreOperation(available);
+        Assert.True(normal.CanOperate);
+        var normalSource = Assert.Single(normal.Sources);
+        Assert.True(normalSource.HasUsableSoulEnergy);
+        Assert.False(normalSource.OverdriveActive);
+        Assert.Equal(8, normalSource.AvailablePowerOutput);
+        Assert.Equal(8, normal.Evaluation!.Assembly.PowerNetworks!.Single().AvailableOutput);
+
+        var overdrive = session.PreviewSoulCoreOperation(available,
+            new Dictionary<string, bool> { ["generator"] = true });
+        Assert.True(overdrive.CanOperate);
+        var enhanced = Assert.Single(overdrive.Sources);
+        Assert.True(enhanced.OverdriveActive);
+        Assert.Equal(12, enhanced.AvailablePowerOutput);
+        Assert.Equal(12, overdrive.Evaluation!.Assembly.PowerNetworks!.Single().AvailableOutput);
+
+        var depleted = session.PreviewSoulCoreOperation(
+            new Dictionary<string, bool> { ["generator"] = false },
+            new Dictionary<string, bool> { ["generator"] = true });
+        Assert.False(depleted.CanOperate);
+        Assert.False(Assert.Single(depleted.Sources).OverdriveActive);
+        Assert.Equal(0, depleted.Evaluation!.Assembly.PowerNetworks!.Single().AvailableOutput);
+        Assert.False(depleted.Evaluation.Assembly.Components.Single(x =>
+            x.InstanceId == "generator").SourceSupplyingPower);
+    }
+
+    [Fact]
+    public void SoulCorePassivelyCapturesAtNativeRangeWithoutCapacityOrPowerChecks()
+    {
+        using var fixture = new Fixture();
+        var built = Evaluate(fixture, assembly: FuelAssembly(
+            "construct-power-source.soul-gem"));
+        Assert.True(built.IsMechanicallyAuthorized);
+        var session = built.OperatingSession!;
+
+        var within = session.PreviewAutomaticSoulCapture(true,
+            new Dictionary<string, int> { ["generator"] = 30 });
+        Assert.True(within.HasAutomaticCapture);
+        Assert.False(within.NeedsCompetingCoreAdjudication);
+        Assert.Equal(30, Assert.Single(within.CandidateCores).CaptureRangeFeet);
+
+        var beyond = session.PreviewAutomaticSoulCapture(true,
+            new Dictionary<string, int> { ["generator"] = 31 });
+        Assert.False(beyond.HasAutomaticCapture);
+        var ineligible = session.PreviewAutomaticSoulCapture(false,
+            new Dictionary<string, int> { ["generator"] = 0 });
+        Assert.False(ineligible.HasAutomaticCapture);
+
+        var negative = session.PreviewAutomaticSoulCapture(true,
+            new Dictionary<string, int> { ["generator"] = -1 });
+        Assert.Contains(negative.Issues, issue =>
+            issue.Code == "construct-soul-capture-distance-invalid");
+        Assert.False(negative.HasAutomaticCapture);
+        var unknown = session.PreviewAutomaticSoulCapture(true,
+            new Dictionary<string, int> { ["fake"] = 1 });
+        Assert.Contains(unknown.Issues, issue =>
+            issue.Code == "construct-soul-capture-instance-invalid");
+
+        Assert.False(session.PreviewSoulCoreOperation(
+            new Dictionary<string, bool>()).CanOperate);
+        Assert.False(session.PreviewSoulCoreOperation(
+            new Dictionary<string, bool> { ["fake"] = true }).CanOperate);
+    }
 
     private sealed class TestSolarAuthority(bool approved = true) :
         INativeConstructSolarIntervalAuthority
