@@ -316,7 +316,7 @@ public sealed class NativeConstructOperatingSession
             if (raw.TryGetProperty("solarCollectionPower", out var collection) &&
                 collection.ValueKind == JsonValueKind.Object)
             {
-                foreach (var (exposure, key) in new[]
+                foreach (var (exposureKind, key) in new[]
                 {
                     (NativeConstructSolarExposure.None, "none"),
                     (NativeConstructSolarExposure.Indirect, "indirect"),
@@ -325,7 +325,7 @@ public sealed class NativeConstructOperatingSession
                 })
                 {
                     var rate = Natural(collection, key);
-                    if (rate is int n) values[exposure] = n;
+                    if (rate is int n) values[exposureKind] = n;
                 }
             }
             if (normal is not int normalOutput ||

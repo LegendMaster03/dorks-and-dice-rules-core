@@ -305,29 +305,29 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 // Infernal output stays at its normal baseline even when the
                 // long-rest fuel payment is missing; its separate penalty
                 // must be applied by the authenticated host.
-                var definition = default(JsonElement);
+                var sourceDefinition = default(JsonElement);
                 var sourceValid = false;
                 if (instance.PowerSourceId is not null &&
                     catalog.TryGetById(instance.PowerSourceId, out var mechanism) &&
                     mechanism?.Category == "construct-power-source")
                 {
                     sourceValid = true;
-                    definition = mechanism.Definition;
+                    sourceDefinition = mechanism.Definition;
                 }
                 var kind = sourceValid &&
-                    definition.TryGetProperty("operatingPrinciple",
+                    sourceDefinition.TryGetProperty("operatingPrinciple",
                         out var principle) &&
                     principle.ValueKind == JsonValueKind.String
                     ? principle.GetString() : null;
                 var maxOutput = 0;
                 var hasMaximum = sourceValid &&
-                    definition.TryGetProperty("overdrivePowerOutput",
+                    sourceDefinition.TryGetProperty("overdrivePowerOutput",
                         out var ceiling) &&
                     ceiling.ValueKind == JsonValueKind.Number &&
                     ceiling.TryGetInt32(out maxOutput);
                 var normalOutput = 0;
                 var hasNormal = sourceValid &&
-                    definition.TryGetProperty("powerOutput",
+                    sourceDefinition.TryGetProperty("powerOutput",
                         out var normalValue) &&
                     normalValue.ValueKind == JsonValueKind.Number &&
                     normalValue.TryGetInt32(out normalOutput);

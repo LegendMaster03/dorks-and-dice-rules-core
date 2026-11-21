@@ -19,6 +19,11 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+if __package__:
+    from .audit_native_baseline import top_level_records
+else:
+    from audit_native_baseline import top_level_records
+
 
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = ROOT / "data/rulesets/first-party-001/native"
@@ -43,23 +48,29 @@ def load_catalog(root: Path = ROOT) -> dict[str, Any]:
     )
     if method.get("initialConstructionCostModel") != "recipe-inputs":
         raise ValueError("Native Construct method does not use recipe-inputs")
-    if method["startingResourceUnitCosts"] != reference["candidateResourceUnitCosts"]:
+    prices = method["startingResourceUnitCosts"]
+    if any(prices.get(resource_id) != cost for resource_id, cost
+           in reference["candidateResourceUnitCosts"].items()):
         raise ValueError("Reference resource prices differ from the native method")
 
-    def index(name: str) -> dict[str, Any]:
-        entries = read_json(parts / name)
+    def index(name: str, paths: list[Path]) -> dict[str, Any]:
+        entries = [entry for path in paths for entry in top_level_records(
+            read_json(path), path=path, native_root=native)]
         result = {entry["id"]: entry for entry in entries}
         if len(result) != len(entries):
             raise ValueError(f"Duplicate native IDs in {name}")
         return result
 
+    def index_file(name: str) -> dict[str, Any]:
+        return index(name, [parts / name])
+
     return {
         "reference": reference,
-        "prices": method["startingResourceUnitCosts"],
-        "components": index("components.json"),
-        "recipes": index("crafting-recipes.json"),
-        "sources": index("power-sources.json"),
-        "materials": {**index("materials.json"), **index("crafting-ingredients.json")},
+        "prices": prices,
+        "components": index("components", sorted((parts / "components").rglob("*.json"))),
+        "recipes": index_file("crafting-recipes.json"),
+        "sources": index_file("power-sources.json"),
+        "materials": {**index_file("materials.json"), **index_file("crafting-ingredients.json")},
     }
 
 

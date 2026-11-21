@@ -176,6 +176,8 @@ public sealed class NativeBasicConstructStartingTests
         Assert.Equal("trait.construct.ordinary-ground-movement",
             walk.DefinitionId);
         Assert.True(movement.PreviewOnly);
+        Assert.Equal("construct-component.locomotion-unit", walk.SourceId);
+        Assert.False(string.IsNullOrWhiteSpace(walk.OccurrencePath));
 
         // A power-disabled locomotion unit remains installed and paid for,
         // but may not grant walking speed through a stale Origin trait.
@@ -186,10 +188,42 @@ public sealed class NativeBasicConstructStartingTests
             });
         Assert.Equal("none", disabled.Status);
         Assert.Empty(disabled.Modes);
+        var drive = Assert.Single(built.OperatingSession!
+            .EvaluateConfiguration(new Dictionary<string, bool> { ["drive"] = false })
+            .Assembly.Components, part => part.InstanceId == "drive");
+        Assert.True(drive.Installed);
+        Assert.False(drive.Operational);
         Assert.Equal("medium", built.Assembly.DerivedCreatureSize);
         Assert.Contains(built.Origin.Profile!.Current.InherentGrants, grant =>
             grant.Identity.MechanicalDefinitionId ==
             "trait.construct.ordinary-ground-movement");
+    }
+
+    [Theory]
+    [InlineData("trait.construct.ordinary-ground-movement")]
+    [InlineData("trait.construct.ordinary-communication")]
+    public void ForgedWalkingPayloadFailsClosed(string definitionId)
+    {
+        var (catalog, assembly) = Reference();
+        var built = Construct(catalog, assembly);
+        Assert.True(built.IsMechanicallyAuthorized);
+        var profile = built.Origin.Profile!;
+        var changed = profile.Current with
+        {
+            InherentGrants = profile.Current.InherentGrants.Select(grant =>
+                grant.Identity.MechanicalDefinitionId == definitionId
+                    ? grant with { EffectiveValue = JsonSerializer.SerializeToElement(
+                        new { walkingSpeedFeet = 90 }) }
+                    : grant).ToArray()
+        };
+        var forged = built with
+        {
+            Origin = built.Origin with { Profile = profile with { Current = changed } }
+        };
+
+        var movement = NativeOriginMovementModeProjector.ProjectConstruct(catalog, forged);
+        Assert.Equal("unresolved", movement.Status);
+        Assert.Empty(movement.Modes);
     }
 
     [Theory]
@@ -213,6 +247,9 @@ public sealed class NativeBasicConstructStartingTests
         Assert.Equal(expectedSize, result.Origin.Profile!.Underlying.InherentGrants
             .Single(x => x.Identity.IntrinsicSlotId == "size")
             .EffectiveValue!.Value.GetString());
+        Assert.Equal("construct", result.Origin.Profile.Underlying.InherentGrants
+            .Single(x => x.Identity.IntrinsicSlotId == "creatureType")
+            .EffectiveValue!.Value.GetString());
         Assert.NotNull(result.Assembly.RequiredConstructionResources);
         Assert.True(result.Assembly.KnownRetainedMaterialMassPounds.HasValue);
         Assert.True(baseline.KnownRetainedMaterialMassPounds.HasValue);
@@ -221,8 +258,8 @@ public sealed class NativeBasicConstructStartingTests
             catalog, result);
         Assert.Contains(movement.Modes, x =>
             x.Mode == "walk" && x.SpeedFeet == 30);
-        var network = Assert.Single(result.Assembly.PowerNetworks!.Where(
-            n => n.ComponentInstanceIds.Contains("generator")));
+        var network = Assert.Single(result.Assembly.PowerNetworks!,
+            n => n.ComponentInstanceIds.Contains("generator"));
         Assert.Equal(8, network.AvailableOutput);
         Assert.Equal(7, network.RequestedDemand);
 
@@ -230,8 +267,8 @@ public sealed class NativeBasicConstructStartingTests
         {
             Assert.Equal(baseline.KnownRetainedMaterialMassPounds.Value - 40,
                 result.Assembly.KnownRetainedMaterialMassPounds.Value);
-            Assert.Empty(result.Assembly.PhysicalSurfaces.Where(
-                x => x.ProtectedRegionId is not null));
+            Assert.DoesNotContain(result.Assembly.PhysicalSurfaces,
+                x => x.ProtectedRegionId is not null);
         }
         else if (fileName.Contains("armored", StringComparison.Ordinal))
         {
@@ -246,8 +283,8 @@ public sealed class NativeBasicConstructStartingTests
         {
             Assert.Equal(baseline.KnownRetainedMaterialMassPounds.Value - 28,
                 result.Assembly.KnownRetainedMaterialMassPounds.Value);
-            Assert.Empty(result.Assembly.PhysicalSurfaces.Where(
-                x => x.ProtectedRegionId is not null));
+            Assert.DoesNotContain(result.Assembly.PhysicalSurfaces,
+                x => x.ProtectedRegionId is not null);
         }
         // Physical material evidence cannot silently mint protection or
         // certify unrestricted movement before load rules are authored.

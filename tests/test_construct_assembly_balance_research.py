@@ -19,9 +19,9 @@ class ConstructAssemblyBalanceResearchTests(unittest.TestCase):
 
     def test_three_reference_totals_match_actual_native_recipes(self):
         for case_id, expected in {
-            "mechanical-medium-like": (173, 223, 4, 7, 300),
-            "all-steel-overbuilt": (297, 474, 4, 4, 900),
-            "minimal-nonhumanoid": (95, 58, 5, 3, 300),
+            "mechanical-medium-like": (173, 223, 8, 7, 300),
+            "all-steel-overbuilt": (297, 474, 8, 4, 900),
+            "minimal-nonhumanoid": (95, 58, 8, 3, 300),
         }.items():
             row = self.rows[case_id]
             self.assertEqual(expected, (
@@ -32,16 +32,17 @@ class ConstructAssemblyBalanceResearchTests(unittest.TestCase):
             self.assertEqual("not determined: payload and complete operating state absent",
                              row["movement"])
 
-    def test_medium_nominal_power_bottleneck_is_not_a_complete_build(self):
+    def test_medium_nominal_power_does_not_verify_operating_network(self):
         standard = self.rows["mechanical-medium-like"]
         infernal = self.rows["mechanical-medium-infernal"]
-        self.assertEqual(3, standard["minimumSimultaneousPowerShortfall"])
+        self.assertEqual(0, standard["minimumSimultaneousPowerShortfall"])
         self.assertEqual((173, 212), (
             standard["resourceCost"], infernal["resourceCost"]))
-        self.assertEqual((4, 8), (
+        self.assertEqual((8, 8), (
             standard["nominalPowerOutput"], infernal["nominalPowerOutput"]))
         self.assertEqual(0, infernal["minimumSimultaneousPowerShortfall"])
         self.assertEqual(8, infernal["candidateAllowanceHeadroom"])
+        self.assertIn("not verified", standard["operatingState"])
         self.assertIn("not verified", infernal["operatingState"])
 
     def test_more_drives_trade_material_cost_and_power_for_load_capacity(self):

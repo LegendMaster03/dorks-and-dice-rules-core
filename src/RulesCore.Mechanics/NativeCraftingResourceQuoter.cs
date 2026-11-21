@@ -122,6 +122,7 @@ internal static class NativeCraftingResourceQuoter
                         !String(stage, "stepId", out var stepId) ||
                         !String(stage, "competencyId", out var competencyId) ||
                         !stage.TryGetProperty("minimumRanks", out var minimumField) ||
+                        minimumField.ValueKind != JsonValueKind.Number ||
                         !minimumField.TryGetInt32(out var minimum) ||
                         minimum is < 0 or > 1_000_000 ||
                         !catalog.TryGetById(competencyId!, out var competency) ||

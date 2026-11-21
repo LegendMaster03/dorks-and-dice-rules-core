@@ -83,8 +83,14 @@ public sealed class NativeConstructComponentExpansionTests
         Assert.Equal(speedFeet, effect.GetProperty("speedFeet").GetInt32());
     }
 
-    [Fact]
-    public void FlightBuildHasManufacturingCostAndOperationalMovement()
+    [Theory]
+    [InlineData("climbing-attachment", "contact", "climb", 20, 173, 7)]
+    [InlineData("flight-propulsion", "propulsor", "fly", 30, 183, 8)]
+    [InlineData("aquatic-propulsion", "propulsor", "swim", 20, 175, 7)]
+    [InlineData("excavation-drive", "cutting-head", "burrow", 15, 177, 8)]
+    public void SpecialMovementBuildHasManufacturingCostAndOperationalMovement(
+        string component, string materialSlot, string expectedMode, int speed,
+        int cost, int demand)
     {
         var catalog = Catalog();
         var cwd = new DirectoryInfo(AppContext.BaseDirectory);
@@ -99,31 +105,31 @@ public sealed class NativeConstructComponentExpansionTests
             json.RootElement.GetProperty("assembly").GetRawText(),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
 
-        var flight = new NativeConstructComponentInstance(
-            "flight", "construct-component.flight-propulsion",
+        var specialDrive = new NativeConstructComponentInstance(
+            "special-drive", "construct-component." + component,
             Materials: new Dictionary<string, string>
-                { ["propulsor"] = "construct-material.wood" },
+                { [materialSlot] = "construct-material.wood" },
             ConnectedTo: ["generator"]);
         var assembly = basis with
         {
             Components = basis.Components.Select(x =>
                 x.InstanceId == "drive" ? x with { Enabled = false } : x)
-                .Append(flight).ToArray()
+                .Append(specialDrive).ToArray()
         };
         var assessment = new NativeConstructAssemblyEvaluator(catalog).Evaluate(assembly);
         Assert.True(assessment.IsAuthorized,
             string.Join("; ", assessment.Issues.Select(x => x.Code)));
-        Assert.Equal(183, assessment.KnownConstructionCost);
-        Assert.Equal(8, Assert.Single(assessment.PowerNetworks!).RequestedDemand);
+        Assert.Equal(cost, assessment.KnownConstructionCost);
+        Assert.Equal(demand, Assert.Single(assessment.PowerNetworks!).RequestedDemand);
 
         var proposal = new NativeOriginProposal(
-            "playtest-flying-construct", NativeOriginIntent.Custom,
+            "playtest-special-movement-construct", NativeOriginIntent.Custom,
             new("rule.creature-origination", "construct-assembly"), [], [], []);
         var service = new NativeConstructOriginConstructionService(catalog);
         var draft = service.Evaluate(new(new(proposal), assembly));
         var manifestations = draft.Origin.EvaluatedProposal.Candidates
             .Select((candidate, i) => new NativeOriginManifestation(
-                "playtest-flight-" + i, candidate.Id,
+                "playtest-special-movement-" + i, candidate.Id,
                 SelectedValue: candidate.Identity.Kind ==
                     NativeOriginCharacteristicKind.Intrinsic
                     ? candidate.OfferedValue : null)).ToArray();
@@ -132,16 +138,18 @@ public sealed class NativeConstructComponentExpansionTests
         Assert.True(built.IsMechanicallyAuthorized,
             string.Join("; ", built.Origin.Issues.Select(x => x.Code)));
 
-        var flightMode = NativeOriginMovementModeProjector
+        var movement = NativeOriginMovementModeProjector
             .ProjectConstruct(catalog, built);
-        Assert.Equal("resolved", flightMode.Status);
-        var fly = Assert.Single(flightMode.Modes, mode => mode.Mode == "fly");
-        Assert.Equal(30, fly.SpeedFeet);
-        Assert.Equal("construct-component.flight-propulsion", fly.SourceId);
+        Assert.Equal("resolved", movement.Status);
+        var granted = Assert.Single(movement.Modes);
+        Assert.Equal(expectedMode, granted.Mode);
+        Assert.Equal(speed, granted.SpeedFeet);
+        Assert.Equal(specialDrive.DefinitionId, granted.SourceId);
 
         var disabled = NativeOriginMovementModeProjector.ProjectConstruct(
-            catalog, built, new Dictionary<string, bool> { ["flight"] = false });
-        Assert.DoesNotContain(disabled.Modes, mode => mode.Mode == "fly");
+            catalog, built, new Dictionary<string, bool> { ["special-drive"] = false });
+        Assert.Equal("none", disabled.Status);
+        Assert.Empty(disabled.Modes);
     }
 
     [Fact]
@@ -384,12 +392,9 @@ public sealed class NativeConstructComponentExpansionTests
         var basic = JsonSerializer.Deserialize<NativeConstructAssemblyRequest>(
             json.RootElement.GetProperty("assembly").GetRawText(),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
-        // The solar recipe has not undergone separate starting-budget
-        // calibration. Exercise its operating mechanics without assuming
-        // it must fit the mechanical reference build's 200-point allowance.
+        // Use the same authored starting allowance as the mechanical build.
         var solarAssembly = basic with
         {
-            InitialAllowance = 1000,
             Components = basic.Components.Select(x =>
                 x.InstanceId == "generator"
                     ? x with { PowerSourceId = "construct-power-source.solar-crystal" }
@@ -398,6 +403,7 @@ public sealed class NativeConstructComponentExpansionTests
         var initial = new NativeConstructAssemblyEvaluator(catalog).Evaluate(solarAssembly);
         Assert.True(initial.IsAuthorized,
             string.Join("; ", initial.Issues.Select(x => x.Code)));
+        Assert.Equal(182, initial.KnownConstructionCost);
         Assert.Equal(7, Assert.Single(initial.PowerNetworks!).RequestedDemand);
         Assert.Equal(8, Assert.Single(initial.PowerNetworks!).AvailableOutput);
 
@@ -427,7 +433,11 @@ public sealed class NativeConstructComponentExpansionTests
             Assert.Single(overnight.Sources).AfterPowerUnitMinutes);
 
         var tooLong = session.PreviewSolarOperation(full, dark, 14 * 60);
-        Assert.False(tooLong.CanAdvance);
+        Assert.True(tooLong.CanAdvance);
+        var depleted = Assert.Single(tooLong.Sources);
+        Assert.Equal(0, depleted.AfterPowerUnitMinutes);
+        Assert.Equal(120, depleted.UnfundedPowerUnitMinutes);
+        Assert.Equal(8, Assert.Single(tooLong.Evaluation!.Assembly.PowerNetworks!).AvailableOutput);
 
         var sun = new Dictionary<string, NativeConstructSolarExposure>
             { ["generator"] = NativeConstructSolarExposure.Direct };

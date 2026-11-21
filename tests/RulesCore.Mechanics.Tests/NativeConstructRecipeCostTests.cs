@@ -133,6 +133,8 @@ public sealed class NativeConstructRecipeCostTests
                 recipes = recipes.Replace(
                     "\"producesDefinitionId\":\"construct-component.actuator\",",
                     "\"producesDefinitionId\":\"construct-component.actuator\",\"physicalMassAccounting\":{\"fullyAccounted\":true,\"additionalProductMassPounds\":0},");
+            if (variant == "nonnumeric-stage-ranks")
+                recipes = recipes.Replace("\"minimumRanks\":2", "\"minimumRanks\":\"two\"");
             if (variant == "cyclic-stages")
                 recipes = recipes.Replace(
                     "\"minimumRanks\":1,\"dependencies\":[]",
@@ -230,6 +232,8 @@ public sealed class NativeConstructRecipeCostTests
     [InlineData("wrong-product", "crafting-quote-product-mismatch",
         NativeOriginConstructionStatus.Invalid)]
     [InlineData("cyclic-stages", "crafting-quote-stage-structure-invalid",
+        NativeOriginConstructionStatus.Invalid)]
+    [InlineData("nonnumeric-stage-ranks", "crafting-quote-stage-invalid",
         NativeOriginConstructionStatus.Invalid)]
     public void MissingOrForgedRecipeEvidenceFailsClosed(
         string variant, string expectedIssue, NativeOriginConstructionStatus expected)
