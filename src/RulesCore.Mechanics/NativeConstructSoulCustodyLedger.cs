@@ -46,6 +46,10 @@ public sealed record NativeConstructSoulCustodyTransition(
     bool Committed, NativeConstructSoulCustodySnapshot Snapshot,
     IReadOnlyList<NativeOriginContractIssue> Issues);
 
+internal sealed record NativeConstructSoulCustodyOpenResult(
+    NativeConstructSoulCustodyLedger? Ledger,
+    IReadOnlyList<NativeOriginContractIssue> Issues);
+
 /// <summary>
 /// In-process, revision-checked custody. Neither capture nor release is a
 /// player-controlled operating mode. Host integration must persist successful
