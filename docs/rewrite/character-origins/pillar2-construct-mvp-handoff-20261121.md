@@ -72,8 +72,12 @@ projection, **not** the final Character Sheet movement adapter.
   once-per-turn fire-damage **amount and qualifying attacks** and the
   ordinary fuel-shortage penalty remain unfinalized and must not
   become an automatic combat bonus.
-- **Arcane-Consuming Core:** Exclude from the unguided tester slice
-  until its fuel and operating requirements are designed.
+The **Arcane-Consuming Core** has been withdrawn from the active
+first-party power-source and crafting-recipe catalogs for this playtest.
+Its earlier candidate design remains in repository history if it is
+reconsidered later. No substitute source or new power rules are needed:
+the Mechanical Engine, Solar Collector, Soul-Powered Core, and Infernal
+Engine provide four options for the coordinated Character Origins test.
 
 Source-specific runtime context must not be bypassed by treating the
 first-party `powerOutput` catalog value as proof of live fuel.
