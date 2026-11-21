@@ -115,37 +115,49 @@ public sealed class NativeBasicConstructStartingTests
     }
 
     [Fact]
-    public void FuelDeprivationUsesConstitutionAndDoesNotInstantlyRemovePower()
+    public void BasicEngineSubstitutesFuelForFoodWithoutNewSurvivalRules()
     {
         var (catalog, assembly) = Reference();
         var built = Construct(catalog, assembly);
         Assert.True(built.IsMechanicallyAuthorized,
             string.Join("; ", built.Origin.Issues.Select(x => x.Code)));
-        var session = Assert.IsType<NativeConstructOperatingSession>(
-            built.OperatingSession);
-        // Constitution +1 gives four permitted consecutive days without
-        // a daily ration, followed by one Exhaustion level per further day.
-        var fourthDay = session.PreviewDailyFuel("generator", 1, 3, false);
-        Assert.Empty(fourthDay.Issues);
-        Assert.Equal(0, fourthDay.ProposedFuelChargesUsed);
-        Assert.Equal(4, fourthDay.Deprivation!.ConsecutiveDaysWithoutFullRation);
-        Assert.Equal(0, fourthDay.Deprivation.ExhaustionLevelsGained);
+        Assert.Contains(assembly.Components, x =>
+            x.InstanceId == "generator" &&
+            x.PowerSourceId == "construct-power-source.mechanical-engine");
 
-        var fifthDay = session.PreviewDailyFuel("generator", 1, 4, false);
-        Assert.Equal("condition.exhaustion",
-            fifthDay.Deprivation!.AppliedConditionId);
-        Assert.Equal(1, fifthDay.Deprivation.ExhaustionLevelsGained);
+        Assert.True(catalog.TryGetById("construct-power-source.mechanical-engine",
+            out var engine));
+        Assert.NotNull(engine);
+        var daily = engine!.Definition.GetProperty("dailySustenance");
+        var fuel = new NativeDailyRationRequirement(
+            daily.GetProperty("resourceKind").GetString()!,
+            daily.GetProperty("unitsPerDay").GetInt32());
+        var food = new NativeDailyRationRequirement("ordinary-food-ration", 1);
+        Assert.Equal("mechanical-engine-fuel-charge", fuel.ResourceKind);
+        Assert.Equal(1, fuel.UnitsPerDay);
 
-        var supplied = session.PreviewDailyFuel("generator", 1, 5, true);
-        Assert.Empty(supplied.Issues);
-        Assert.Equal(1, supplied.ProposedFuelChargesUsed);
-        Assert.Equal(0, supplied.Deprivation!.ConsecutiveDaysWithoutFullRation);
-        Assert.Equal(0, supplied.Deprivation.ExhaustionLevelsGained);
+        // Both characters pass through the same general survival evaluator.
+        // With Constitution +1, four days can pass without nourishment.
+        var foodFourthDay = NativeDailyRationEvaluator.AssessDay(food, 0, 1, 3);
+        var fuelFourthDay = NativeDailyRationEvaluator.AssessDay(fuel, 0, 1, 3);
+        Assert.Equal(foodFourthDay, fuelFourthDay);
+        Assert.Equal(0, fuelFourthDay.ExhaustionLevelsGained);
 
-        // Deprivation reports a condition consequence; unlike finite energy
-        // exhaustion it does not suppress the source's immediate output.
-        Assert.Equal(8, Assert.Single(session.EvaluateConfiguration()
-            .Assembly.PowerNetworks!).AvailableOutput);
+        var foodFifthDay = NativeDailyRationEvaluator.AssessDay(food, 0, 1, 4);
+        var fuelFifthDay = NativeDailyRationEvaluator.AssessDay(fuel, 0, 1, 4);
+        Assert.Equal(foodFifthDay, fuelFifthDay);
+        Assert.Equal("condition.exhaustion", fuelFifthDay.AppliedConditionId);
+        Assert.Equal(1, fuelFifthDay.ExhaustionLevelsGained);
+
+        var fed = NativeDailyRationEvaluator.AssessDay(food, 1, 1, 5);
+        var refueled = NativeDailyRationEvaluator.AssessDay(fuel, 1, 1, 5);
+        Assert.Equal(fed, refueled);
+        Assert.Equal(0, refueled.ConsecutiveDaysWithoutFullRation);
+        Assert.Equal(0, refueled.ExhaustionLevelsGained);
+
+        // Missing a day's ration does not independently shut down the engine.
+        Assert.Equal(8, Assert.Single(built.OperatingSession!
+            .EvaluateConfiguration().Assembly.PowerNetworks!).AvailableOutput);
     }
 
     [Fact]
@@ -160,5 +172,11 @@ public sealed class NativeBasicConstructStartingTests
             .ExhaustionLevelsGained);
         Assert.Equal(0, NativeDailyRationEvaluator.AssessDay(0, 5, true)
             .ConsecutiveDaysWithoutFullRation);
+        Assert.Throws<ArgumentException>(() =>
+            NativeDailyRationEvaluator.AssessDay(
+                new NativeDailyRationRequirement("", 1), 1, 0, 0));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            NativeDailyRationEvaluator.AssessDay(
+                new NativeDailyRationRequirement("fuel", 1), -1, 0, 0));
     }
 }
