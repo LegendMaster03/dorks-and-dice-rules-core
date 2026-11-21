@@ -237,6 +237,24 @@ public sealed class NativeOriginBiologicalLatentInheritanceTests
     }
 
     [Fact]
+    public void SerializedGenotypeWithForgedNestedLineageFailsProfileReview()
+    {
+        var (result, _, _) = Parent();
+        var original = result.Profile!;
+        var first = original.Underlying.BiologicalGenes!.First();
+        var forged = first with { SourceCandidateId = "nested:forged:gene:nonexistent" };
+        var genes = original.Underlying.BiologicalGenes
+            .Select(x => x.Id == first.Id ? forged : x).ToArray();
+        var configuration = original.Underlying with { BiologicalGenes = genes };
+        var snapshot = original with { Underlying = configuration, Current = configuration };
+        var review = new NativeOriginContractValidator(Catalog())
+            .ReviewProfile(snapshot, result.EvaluatedProposal);
+        Assert.Contains(review.Issues, issue =>
+            issue.Code == "biological-gene-lineage-missing" &&
+            issue.Severity == NativeOriginIssueSeverity.Invalid);
+    }
+
+    [Fact]
     public void NewlyLatentGeneWithPersistentChoiceRequiresValidatedConfiguration()
     {
         var proposal = new NativeOriginProposal("goliath-choice-latent",
