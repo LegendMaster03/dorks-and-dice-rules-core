@@ -348,8 +348,18 @@ public sealed class NativeConstructComponentExpansionTests
         Assert.Equal("until-next-long-rest",
             empowerment.GetProperty("duration").GetString());
         Assert.Equal(0, empowerment.GetProperty("powerOutputBonus").GetInt32());
-        Assert.Equal("not-yet-authored",
+        Assert.Equal("approved-shape-pending-damage-and-trigger",
             empowerment.GetProperty("effectStatus").GetString());
+        Assert.Equal("fire",
+            empowerment.GetProperty("damageType").GetString());
+        Assert.Equal(1,
+            empowerment.GetProperty("maximumApplicationsPerTurn").GetInt32());
+        Assert.Equal("not-yet-authored",
+            empowerment.GetProperty("damageAmountStatus").GetString());
+        Assert.Equal("not-yet-authored",
+            empowerment.GetProperty("qualifyingAttackStatus").GetString());
+        Assert.False(empowerment.TryGetProperty("bonusDamageDice", out _));
+        Assert.False(empowerment.TryGetProperty("bonusDamageFlat", out _));
         Assert.Equal("not-yet-authored",
             empowerment.GetProperty("additionalFuelQuantityStatus").GetString());
         Assert.True(catalog.TryGetById(
