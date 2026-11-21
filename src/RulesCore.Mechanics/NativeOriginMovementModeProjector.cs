@@ -60,7 +60,8 @@ public static class NativeOriginMovementModeProjector
                 definition is null || definition.Category != "origin-trait" ||
                 !definition.Definition.TryGetProperty("trait", out var canonical) ||
                 canonical.ValueKind != JsonValueKind.Object ||
-                !canonical.TryGetProperty("movementMode", out _))
+                !canonical.TryGetProperty("movementMode", out _) &&
+                !canonical.TryGetProperty("walkingSpeedFeet", out _))
                 continue;
 
             var source = grant.Identity.Occurrence.Source;
@@ -78,12 +79,19 @@ public static class NativeOriginMovementModeProjector
                     candidate.OfferedValue is { } offered &&
                     grant.EffectiveValue is { } effective &&
                     JsonElement.DeepEquals(offered, effective));
+            // Ordinary Construct walking is authored as walkingSpeedFeet,
+            // while special locomotion uses the shared movementMode/speedFeet
+            // contract. Interpret both in the same read-only movement view,
+            // without making up load support or a separate speed grant.
+            var walking = canonical.TryGetProperty("walkingSpeedFeet", out var walkingSpeed);
+            var special = canonical.TryGetProperty("movementMode", out var mode);
+            var hasSpeed = canonical.TryGetProperty(
+                walking ? "walkingSpeedFeet" : "speedFeet", out var speed);
             if (!sourceVerified || !candidateVerified ||
-                !canonical.TryGetProperty("movementMode", out var mode) ||
-                mode.ValueKind != JsonValueKind.String ||
-                string.IsNullOrWhiteSpace(mode.GetString()) ||
-                !canonical.TryGetProperty("speedFeet", out var speed) ||
-                speed.ValueKind != JsonValueKind.Number ||
+                walking == special ||
+                (special && (mode.ValueKind != JsonValueKind.String ||
+                    string.IsNullOrWhiteSpace(mode.GetString()))) ||
+                !hasSpeed || speed.ValueKind != JsonValueKind.Number ||
                 !speed.TryGetInt32(out var feet) ||
                 feet is <= 0 or > 1_000_000 ||
                 grant.EffectiveValue is not { } value ||
@@ -93,8 +101,9 @@ public static class NativeOriginMovementModeProjector
             // Disabled or power-starved movement parts retain their
             // construction identity but grant no active movement speed.
             if (!active.Contains(grant.Id)) continue;
-            modes.Add(new(mode.GetString()!, feet, grant.Id, definitionId,
-                source.Id, grant.Identity.Occurrence.OccurrencePath, canonical.Clone()));
+            modes.Add(new(walking ? "walk" : mode.GetString()!, feet, grant.Id,
+                definitionId, source.Id,
+                grant.Identity.Occurrence.OccurrencePath, canonical.Clone()));
         }
         return new(modes.Count == 0 ? "none" : "resolved",
             modes.OrderBy(x => x.Mode, StringComparer.Ordinal)
