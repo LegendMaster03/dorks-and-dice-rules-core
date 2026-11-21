@@ -462,6 +462,55 @@ public sealed class NativeOriginContractValidator(NativeCatalogSnapshot catalog)
             }
         }
 
+        // Hereditary instance records are not effective grants. Review their
+        // immediate source linkage independently so a serialized latent gene
+        // cannot invent ancestral evidence or masquerade as a manifest grant.
+        var genes = Index(profile.Underlying.BiologicalGenes ?? [],
+            gene => gene?.Id, "underlying.biologicalGenes", Add);
+        var geneSources = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var gene in genes.Values)
+        {
+            var path = "underlying.biologicalGenes." + gene.Id;
+            if (Blank(gene.SourceCandidateId) ||
+                !geneSources.Add(gene.SourceCandidateId) ||
+                gene.Identity?.Occurrence?.Source is null ||
+                Blank(gene.Identity.Occurrence.Source.Id) ||
+                Blank(gene.Identity.Occurrence.OccurrencePath) ||
+                (gene.Identity.Kind switch
+                {
+                    NativeOriginCharacteristicKind.Trait =>
+                        Blank(gene.Identity.MechanicalDefinitionId),
+                    NativeOriginCharacteristicKind.Intrinsic =>
+                        Blank(gene.Identity.IntrinsicSlotId),
+                    _ => true
+                }))
+                Add("biological-gene-instance-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Each inherited instance requires a unique source and canonical characteristic identity.");
+
+            var parent = gene.InheritedFrom;
+            if (parent is null)
+            {
+                if (gene.SourceCandidateId?.StartsWith("nested:",
+                    StringComparison.Ordinal) == true)
+                    Add("biological-gene-lineage-missing", path,
+                        NativeOriginIssueSeverity.Invalid,
+                        "A nested inherited instance needs verified immediate parent evidence.");
+                continue;
+            }
+
+            var expectedId = "nested:" + parent.ContributorId + ":" +
+                (parent.SourceWasGrant ? "" : "gene:") + parent.SourceInstanceId;
+            if (Blank(parent.ContributorId) ||
+                Blank(parent.ContributorProfileId) ||
+                Blank(parent.ContributorRevision) ||
+                Blank(parent.SourceInstanceId) ||
+                gene.SourceCandidateId != expectedId)
+                Add("biological-gene-lineage-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Immediate parent identity, revision and instance ID must match this selected nested offer.");
+        }
+
         var persistent = Index(profile.PersistentInfluences ?? [],
             p => p?.Id, "persistentInfluences", Add);
         foreach (var (id, effect) in persistent)
