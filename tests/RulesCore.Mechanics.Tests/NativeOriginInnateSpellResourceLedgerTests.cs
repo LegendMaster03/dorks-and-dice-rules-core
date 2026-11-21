@@ -92,7 +92,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var ledger = fresh.State!;
         Assert.Equal(0, ledger.Revision);
         var hellish = Grant(origin, "trait.hellish-rebuke");
-        var darkness = Grant(origin, "trait.darkness-prepared");
+        var darkness = Grant(origin, "trait.darkness");
         Assert.Single(ledger.RemainingFreeCasts);
         Assert.Equal(1, ledger.RemainingFreeCasts[hellish]);
         Assert.False(ledger.RemainingFreeCasts.ContainsKey(darkness));
@@ -135,7 +135,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var ledger = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, character).State!;
         var hellish = Grant(origin, "trait.hellish-rebuke");
-        var darkness = Grant(origin, "trait.darkness-prepared");
+        var darkness = Grant(origin, "trait.darkness");
         Assert.Equal(2, ledger.RemainingFreeCasts.Count);
         Assert.Equal(1, ledger.RemainingFreeCasts[hellish]);
         Assert.Equal(1, ledger.RemainingFreeCasts[darkness]);
@@ -255,7 +255,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var previous = Character(catalog, 3);
         var advanced = Character(catalog, 5);
         var hellish = Grant(origin, "trait.hellish-rebuke");
-        var darkness = Grant(origin, "trait.darkness-prepared");
+        var darkness = Grant(origin, "trait.darkness");
         var initialized = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, previous).State!;
         var spent = Step(catalog, origin, previous, initialized,
@@ -556,7 +556,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var advanced = Character(catalog, 6);
         var state = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, previous).State!;
-        var grant = Grant(origin, "trait.darkness-prepared");
+        var grant = Grant(origin, "trait.darkness");
         var newPreview = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, advanced).State!;
         var decision = CapacityDecision(state, newPreview, grant, 1, 1, 1);
@@ -577,7 +577,7 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         var fifth = Character(catalog, 5);
         var sixth = Character(catalog, 6);
         var hellish = Grant(origin, "trait.hellish-rebuke");
-        var darkness = Grant(origin, "trait.darkness-prepared");
+        var darkness = Grant(origin, "trait.darkness");
         var initial = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, origin, fifth).State!;
         var spent = Step(catalog, origin, fifth, initial,

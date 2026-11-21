@@ -72,7 +72,7 @@ public sealed class NativeOriginDrowSpellBindingTests
     [
         ("trait.dancing-lights", "dancing-lights", 1),
         ("trait.faerie-fire", "faerie-fire", 3),
-        ("trait.darkness-known", "darkness", 5)
+        ("trait.darkness", "darkness", 5)
     ];
 
     [Theory]

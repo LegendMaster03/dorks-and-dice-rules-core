@@ -167,7 +167,6 @@ public sealed class NativeOriginInnateSpellProgressionTests
             x.SpellId == "speak-with-animals");
         Assert.Equal("proficiency-bonus", animal.FreeUsesFormula);
         Assert.Null(animal.FreeUsesPerRecharge);
-        Assert.True(animal.AlwaysPrepared);
         Assert.Equal("long-rest", animal.Recharge);
         Assert.True(animal.SlotCasting);
         Assert.Equal(1, animal.UnlockCharacterLevel);

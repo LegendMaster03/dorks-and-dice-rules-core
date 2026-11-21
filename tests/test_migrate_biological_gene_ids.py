@@ -63,12 +63,12 @@ class BiologicalGeneIdentityMigrationTests(unittest.TestCase):
         self.assertEqual("trait.dragonborn.breath-weapon", example["underlying"]
                          ["inherentGrants"][0]["identity"]["mechanicalDefinitionId"])
 
-    def test_different_mechanics_keep_different_canonical_gene_ids(self):
+    def test_shared_mechanics_converge_to_shared_canonical_ids(self):
         mapping = load_map()
-        self.assertNotEqual(mapping["trait.goliath.powerful-build"],
-                            mapping["trait.orc.powerful-build"])
-        self.assertNotEqual(mapping["trait.elf.drow.darkness"],
-                            mapping["trait.tiefling.infernal.darkness"])
+        self.assertEqual(mapping["trait.goliath.powerful-build"],
+                         mapping["trait.orc.powerful-build"])
+        self.assertEqual(mapping["trait.elf.drow.darkness"],
+                         mapping["trait.tiefling.infernal.darkness"])
         self.assertEqual(mapping["trait.dragonborn.red.natural-climber"],
                          mapping["trait.dragonborn.copper.natural-climber"])
         self.assertEqual(mapping["trait.shared.low-light-vision"],
@@ -97,7 +97,7 @@ class BiologicalGeneIdentityMigrationTests(unittest.TestCase):
             self.assertFalse(destination.exists())
             self.assertEqual(0, main(["--input", str(original),
                                      "--output", str(destination)]))
-            self.assertEqual("trait.powerful-build-heavy-lifting",
+            self.assertEqual("trait.powerful-build",
                              json.loads(destination.read_text(encoding="utf-8"))
                              ["identity"]["mechanicalDefinitionId"])
             self.assertEqual(source, json.loads(original.read_text(encoding="utf-8")))

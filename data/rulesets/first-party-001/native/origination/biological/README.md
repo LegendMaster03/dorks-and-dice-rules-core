@@ -34,13 +34,18 @@ historical ancestors.
 
 The `inheritanceMethods: ["biological"]` six-gene proof of concept was
 retired earlier. The loader still uses the universal `origin-trait` kind;
-there is no second gene definition engine. The identity normalization replaces old gene IDs with 87 active,
-source-neutral canonical IDs, including two consolidated equivalent genes.
+there is no second gene definition engine. The identity normalization replaces old gene IDs with 85 active,
+source-neutral canonical IDs, including four consolidated pairs.
 Resistance genes formerly named for Abyssal, Chthonic and Infernal Ancestry
 are named by their actual resisted damage type; they remain separate from the
 broader Poison Resilience gene and the parametrized Damage Type Resistance.
 Preset references and internal dependency pointers now use those IDs. It
-preserves source occurrence positions, Ancestry links and mechanical effects.
+preserves source occurrence positions and Ancestry links. The unified Powerful
+Build combines carrying/pushing/dragging/lifting size equivalence with
+advantage on ability checks to end Grappled for both source presets.
+Drow and Infernal Darkness now share a spell grant without any prepared-spell
+mode; both retain their source-scoped casting abilities, level-5 unlock,
+one free casting per Long Rest and spell-slot casting.
 
 Construct Assembly and other origination methods have separate catalogs and
 are unaffected by the biological layout.
@@ -49,3 +54,6 @@ Saved Origin profiles carrying previous mechanical definition IDs require an
 explicit migration using `tools/migrate_biological_gene_ids.py` and the
 `data/migrations/biological-gene-ids-20261121.json` map; migration never
 changes contributor provenance or source occurrence paths automatically.
+Saved grants with earlier Powerful Build effects or prepared-spell payloads
+must be re-evaluated against the updated catalog before use; replacing only
+the identity string does not recompute mechanical effects.

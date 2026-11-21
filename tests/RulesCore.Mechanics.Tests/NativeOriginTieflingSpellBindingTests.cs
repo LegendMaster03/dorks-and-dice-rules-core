@@ -74,7 +74,7 @@ public sealed class NativeOriginTieflingSpellBindingTests
     [
         ("ancestry.tiefling.infernal", "trait.fire-bolt",
             "trait.hellish-rebuke",
-            "trait.darkness-prepared"),
+            "trait.darkness"),
         ("ancestry.tiefling.chthonic", "trait.chill-touch",
             "trait.false-life",
             "trait.ray-of-enfeeblement"),
@@ -164,8 +164,6 @@ public sealed class NativeOriginTieflingSpellBindingTests
                     .GetProperty("atWill").GetBoolean());
             else
             {
-                Assert.True(spell.EffectiveValue.Value
-                    .GetProperty("alwaysPrepared").GetBoolean());
                 Assert.Equal(1, spell.EffectiveValue.Value
                     .GetProperty("freeUses").GetInt32());
                 Assert.Equal("long-rest", spell.EffectiveValue.Value

@@ -12,10 +12,9 @@
       }
     },
     "name": "Ray Of Sickness",
-    "description": "At character level 3, always have Ray Of Sickness available. Cast it once without using a spell slot per Long Rest, and also with appropriate spell slots.",
+    "description": "At character level 3, gain Ray Of Sickness. Cast it once without using a spell slot per Long Rest, and also with appropriate spell slots.",
     "spell": "ray-of-sickness",
     "level": 3,
-    "alwaysPrepared": true,
     "freeUses": 1,
     "recharge": "long-rest",
     "slotCasting": true

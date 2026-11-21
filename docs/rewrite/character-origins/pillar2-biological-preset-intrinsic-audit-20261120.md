@@ -6,10 +6,10 @@
 
 ## Implemented storage model
 
-The authoritative biological catalog contains 87 distinct canonical `origin-trait`
+The authoritative biological catalog contains 85 distinct canonical `origin-trait`
 genes, representing 95 original trait occurrences in nine Species and 34
 Ancestry records. The earlier 36 files grouped 89 definitions by the original Species or
-Ancestry source; this pass consolidated two mechanically equivalent pairs.
+Ancestry source; the catalog later consolidated four pairs: two already mechanically equivalent and two unified by approved rules changes.
 
 Each canonical gene now lives in its own file directly under
 `native/origination/biological/genes/`, named by its source-neutral mechanical ID:
@@ -45,7 +45,7 @@ specific field shapes. Their removal is not a pure content refactor.
 
 ## Gene parameter bindings that still use preset evidence
 
-The 87-gene catalog contains 31 definitions with canonical `originBindings`:
+The 85-gene catalog contains 30 distinct definitions with canonical `originBindings` (the unified Darkness definition is referenced by both Elf and Tiefling presets):
 
 - **Dragonborn (3):** damage type uses `leaf` binding, and ordinary Breath
   Weapon's complete area uses `nearest` family/leaf binding. Existing
@@ -97,6 +97,8 @@ Construct Assembly and other origination methods are outside this pass.
 
 Old canonical IDs are not runtime aliases. The migration manifest under
 `data/migrations/biological-gene-ids-20261121.json` maps 89 former IDs to
-87 current definitions. Apply `tools/migrate_biological_gene_ids.py` explicitly
+85 current definitions. Apply `tools/migrate_biological_gene_ids.py` explicitly
 to saved Origin JSON; do not silently rewrite historical contributor IDs,
-source occurrence paths, or table authorization evidence.
+source occurrence paths, or table authorization evidence. For previously
+saved Powerful Build or spell grants, an identity-only rewrite is not a valid
+mechanical update: reconstruct and revalidate against current native rules.

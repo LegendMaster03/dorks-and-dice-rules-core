@@ -1709,7 +1709,7 @@ def evaluate(profile: dict, catalog: dict, level: int,
         if identifier in modeled_spells:
             recognized = True
             interpreted.update(("spell", "atWill", "freeUses", "recharge",
-                                "slotCasting", "alwaysPrepared", "freeCastSpellLevel"))
+                                "slotCasting", "freeCastSpellLevel"))
         if "spellList" in trait:
             unmodeled.append({"traitId": identifier,
                               "reason": "unresolved-spell-list-selection"})

@@ -100,10 +100,13 @@ public sealed class NativeOriginBiologicalTransmissionCatalogTests
     [InlineData("species.dwarf", "trait.poison-resilience")]
     [InlineData("species.elf", "trait.fey-ancestry")]
     [InlineData("species.gnome", "trait.magical-cunning")]
-    [InlineData("ancestry.goliath.fire", "trait.powerful-build-grapple-resilience")]
+    [InlineData("ancestry.goliath.fire", "trait.powerful-build")]
     [InlineData("species.halfling", "trait.luck-reroll")]
     [InlineData("species.human", "trait.adaptable-learning")]
     [InlineData("species.orc", "trait.savage-attacks")]
+    [InlineData("species.orc", "trait.powerful-build")]
+    [InlineData("ancestry.elf.drow", "trait.darkness")]
+    [InlineData("ancestry.tiefling.infernal", "trait.darkness")]
     [InlineData("ancestry.tiefling.infernal", "trait.fire-damage-resistance")]
     public void BiologicalGeneFromEachSpeciesIsAnEligibleOffer(
         string nativeDonor, string geneId)

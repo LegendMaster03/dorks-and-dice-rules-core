@@ -78,9 +78,31 @@ class NativeOriginTraitNormalizationTests(unittest.TestCase):
         self.assertEqual(5, len(owners["trait.low-light-vision"]))
         self.assertEqual(2, len(owners["trait.natural-climber"]))
         self.assertEqual(4, len(owners["trait.amphibious"]))
-        self.assertEqual(1, len(owners["trait.powerful-build-grapple-resilience"]))
-        self.assertEqual(1, len(owners["trait.powerful-build-heavy-lifting"]))
-        self.assertNotIn("trait.powerful-build", owners)
+        self.assertEqual(2, len(owners["trait.powerful-build"]))
+        self.assertEqual(2, len(owners["trait.darkness"]))
+
+    def test_unified_powerful_build_has_both_mechanical_benefits(self):
+        trait = self.definitions["trait.powerful-build"]["trait"]
+        self.assertEqual("condition.grappled",
+                         trait["advantageOnAbilityChecksToEndCondition"])
+        self.assertEqual(1, trait["effectiveSizeCategoriesHigherForCarryingCapacity"])
+        self.assertEqual(1, trait["effectiveSizeCategoriesHigherForPushingDraggingLifting"])
+        for species in ("goliath", "orc"):
+            self.assertIn({"traitId": "trait.powerful-build"},
+                          self.sources[f"species.{species}"]["traits"])
+
+    def test_darkness_retains_its_casting_resource_and_source_bindings(self):
+        trait = self.definitions["trait.darkness"]["trait"]
+        self.assertEqual("darkness", trait["spell"])
+        self.assertEqual(5, trait["level"])
+        self.assertEqual(1, trait["freeUses"])
+        self.assertEqual("long-rest", trait["recharge"])
+        self.assertTrue(trait["slotCasting"])
+        self.assertEqual("manifested-intrinsic",
+                         trait["originBindings"]["spellcastingAbility"]["lookup"])
+        for ancestry in ("ancestry.elf.drow", "ancestry.tiefling.infernal"):
+            self.assertIn({"traitId": "trait.darkness"},
+                          self.sources[ancestry]["traits"])
 
     def test_research_projection_reads_changed_trait_content_without_stale_cache(self):
         with tempfile.TemporaryDirectory() as temporary:

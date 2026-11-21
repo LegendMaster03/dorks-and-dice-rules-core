@@ -2,7 +2,7 @@
 
 ## Scope and authority
 
-Selected-native Species/Ancestry content now stores every named inherent trait as an independently addressable `origin-trait` entity initially under `native/traits/` (relocated without mechanical changes to `native/origination/biological/genes/` on November 20, 2026). This is a representation change, not an approval of new gameplay rules, trait equivalences, inherited benefits, allocation budgets, or homebrew import formats. The later source-neutral catalog stores 87 canonical genes as individual `genes/trait.<mechanical-id>.json` files. Two mechanically equivalent pairs were consolidated; canonical IDs and references were updated together without changing the authored mechanical effects.
+Selected-native Species/Ancestry content now stores every named inherent trait as an independently addressable `origin-trait` entity initially under `native/traits/` (relocated without mechanical changes to `native/origination/biological/genes/` on November 20, 2026). This is a representation change, not an approval of new gameplay rules, trait equivalences, inherited benefits, allocation budgets, or homebrew import formats. The later source-neutral catalog stores 85 canonical genes as individual `genes/trait.<mechanical-id>.json` files. Four pairs were consolidated: Natural Climber and Low-Light Vision had equivalent mechanics, while Darkness and Powerful Build were unified by a subsequent explicit rules decision. Powerful Build now grants both prior benefits, and prepared-spell authoring was removed from biological spells.
 
 The model distinguishes (1) one canonical trait definition and its complete mechanical payload, (2) a position-specific reference in a Species or Ancestry record, (3) a contributor's offered candidate, and (4) a manifested, authorized grant. A trait may contain multiple effects without making each effect a separately inheritable component.
 
@@ -30,15 +30,19 @@ Review the added C# loader tests for shared definition identity, runtime project
 ## Source-neutral ID migration — 2026-11-21
 
 The 89-definition normalization above is preserved as a historical step. The
-active biological catalog now has 87 genes and uses mechanical IDs rather than
+active biological catalog now has 85 genes and uses mechanical IDs rather than
 Species/Ancestry-qualified IDs. Natural Climber and Low-Light Vision are
 consolidated because their mechanical payloads agree after disregarding
-non-mechanical wording; Darkness and Powerful Build variants remain separate
-because their mechanics differ. Every Species/Ancestry `traitId` and active
+non-mechanical wording. Darkness was unified after retiring prepared spells,
+and Powerful Build now combines its former Grappled escape and carrying/lifting
+benefits for both original Species presets. Every Species/Ancestry `traitId` and active
 source-bound `mechanicalDefinitionId` reference is updated.
 
 Persisted Origin data must be migrated explicitly using
 `data/migrations/biological-gene-ids-20261121.json`. The separate
 `tools/migrate_biological_gene_ids.py` tool changes recognized gene-ID
 references only, preserving source provenance and history IDs. Existing
-serialized profiles are not silently normalized by catalog lookup.
+serialized profiles are not silently normalized by catalog lookup. Because
+Powerful Build and spell grant payloads changed, an ID-only migration does
+not validate or rebuild saved effects; affected grants require reconstruction
+against the revised native catalog before gameplay.

@@ -18,7 +18,7 @@
       "traitId": "trait.relentless-endurance"
     },
     {
-      "traitId": "trait.powerful-build-heavy-lifting"
+      "traitId": "trait.powerful-build"
     },
     {
       "traitId": "trait.savage-attacks"
@@ -30,7 +30,7 @@
   "reviewNotes": [
     "Low-Light Vision, as defined by rule.low-light-vision, replaces the SRD 5.2.1 Orc's 120-foot Darkvision. Base Orc has no Sunlight Sensitivity or other daylight penalty. Future darkness-adapted Orc Ancestry can be reconciled separately.",
     "Adrenaline Rush retains the SRD 5.2.1 Bonus Action Dash, Proficiency Bonus Temporary Hit Points, Proficiency Bonus uses, and Short or Long Rest recharge. Older Aggressive is not granted separately.",
-    "Powerful Build restores carrying/pushing/dragging/lifting size equivalence without Goliath's additional grapple-escape advantage or automatic 3.x size modifiers.",
+    "Powerful Build restores carrying/pushing/dragging/lifting size equivalence and grants advantage on checks to end Grappled, without changing actual size or applying automatic 3.x grapple-size modifiers.",
     "Savage Attacks is adapted from SRD 5.1 Half-Orc source evidence, without introducing Half-Orc as a distinct Species. Its interaction with optional critical-escalation tiers and maximization remains under review.",
     "Menacing Presence represents a contextual physical trait instead of an unconditional learned Intimidation proficiency.",
     "Orc is directly selectable with no mandatory Ancestry or default Upbringing. Languages, traditions and training remain independently selectable cultural benefits.",
