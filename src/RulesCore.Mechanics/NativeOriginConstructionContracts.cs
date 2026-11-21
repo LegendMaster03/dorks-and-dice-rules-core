@@ -44,4 +44,7 @@ public sealed record NativeOriginConstructionResult(
     IReadOnlyList<NativeOriginContractIssue> Issues)
 {
     public bool IsMechanicallyAuthorized => Status == NativeOriginConstructionStatus.Authorized;
+
+    // Read-only biological Combine evidence; never grants or authorizes traits.
+    public NativeOriginBiologicalCombination? BiologicalCombination { get; init; }
 }
