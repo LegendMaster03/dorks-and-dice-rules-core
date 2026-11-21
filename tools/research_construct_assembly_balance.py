@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Independent, read-only Construct Assembly balance diagnostics.
 
-Evaluates native resource inputs and provisional physical bounds for the
-reference scenarios. This is not a creature simulator, a crafting transaction,
+Evaluates native recipe ingredients and *reference-only* hypothetical physical
+bounds for the historical sensitivity scenarios. The reference file, not native
+component or material rules, owns invented gross-support and DR comparison values. This is not a creature simulator, a crafting transaction,
 a power-network evaluator or an authorization path. No output is a rule grant.
 
 Use from repository root:
@@ -203,14 +204,15 @@ def evaluate(config: dict[str, Any], catalog: dict[str, Any]) -> dict[str, Any]:
         power_demand += definition.get("powerDemand", 0)
         if "locomotion-interface" in definition.get("provides", []):
             drive_count += 1
-            max_support += definition.get("maximumGrossLoadPounds", 0)
+            max_support += catalog["reference"]["candidateResearchOnlyPhysicalAssumptions"][
+                "hypotheticalGrossLoadSupportPerDrivePounds"
+            ]
         if "protective-surface" in definition.get("provides", []):
             # Upper bound only: sample rows do not author installed regions,
             # valid stacking, attacks, coverage, or armor class.
-            protection = catalog["materials"][material_id]["physicalProfile"]
-            candidate_same_region_dr += protection[
-                "candidateFlatDamageReductionPerProtectiveLayer"
-            ]
+            candidate_same_region_dr += catalog["reference"][
+                "candidateResearchOnlyPhysicalAssumptions"
+            ]["hypotheticalFlatDamageReductionPerProtectiveLayer"][material_id]
     if len(sized) > 1:
         raise ValueError("Conflicting declared body sizes")
     unknown_prices = sorted(r for r, n in resources.items()
