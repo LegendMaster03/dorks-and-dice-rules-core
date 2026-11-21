@@ -7,13 +7,13 @@
   "parent": "species.goliath",
   "traits": [
     {
-      "traitId": "trait.goliath.cloud.clouds-jaunt"
+      "traitId": "trait.clouds-jaunt"
     },
     {
-      "traitId": "trait.goliath.cloud.cloud-strike"
+      "traitId": "trait.cloud-strike"
     },
     {
-      "traitId": "trait.goliath.cloud.cloudy-escape"
+      "traitId": "trait.cloudy-escape"
     }
   ],
   "reviewNotes": [

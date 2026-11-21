@@ -126,7 +126,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         Assert.True(view.PreviewOnly);
         Assert.Empty(view.UnresolvedReasons);
         var keen = Assert.Single(view.Traits, x =>
-            x.DefinitionId == "trait.elf.keen-senses");
+            x.DefinitionId == "trait.keen-senses");
         Assert.Equal("species.elf", keen.SourceId);
         Assert.StartsWith("grant:", keen.GrantId);
         Assert.StartsWith("/traits/", keen.OccurrencePath);
@@ -137,7 +137,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         Assert.All(keen.SkillBonuses, x => Assert.Equal(2, x.Amount));
 
         var fey = Assert.Single(view.Traits, x =>
-            x.DefinitionId == "trait.elf.fey-ancestry");
+            x.DefinitionId == "trait.fey-ancestry");
         Assert.Empty(fey.SkillBonuses);
         Assert.Equal(new[] { "condition.charmed" }, fey.SavingThrows!.Against);
         Assert.Empty(fey.SavingThrows.Abilities);
@@ -157,7 +157,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         Assert.Equal(NativeOriginConstructionStatus.Authorized, completed.Status);
         var view = NativeOriginPassiveEntitlementProjector.Project(catalog, completed);
         var resilience = Assert.Single(view.Traits);
-        Assert.Equal("trait.dwarf.dwarven-resilience", resilience.DefinitionId);
+        Assert.Equal("trait.poison-resilience", resilience.DefinitionId);
         Assert.Equal(new[] { "poison-effects" }, resilience.SavingThrows!.Against);
         Assert.Equal(50, resilience.CompleteEffect.GetProperty("damageResistance")
             .GetProperty("poison").GetInt32());
@@ -170,7 +170,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         var catalog = Catalog();
         var gnome = Direct(catalog, "species.gnome");
         var halfling = MixedWithSources(catalog, "species.elf",
-            "species.halfling", "trait.halfling.keen-hearing");
+            "species.halfling", "trait.keen-hearing");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, gnome.Status);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, halfling.Status);
 
@@ -183,7 +183,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
 
         var hearing = Assert.Single(NativeOriginPassiveEntitlementProjector
             .ProjectApprovedMixed(catalog, halfling).Traits);
-        Assert.Equal("trait.halfling.keen-hearing", hearing.DefinitionId);
+        Assert.Equal("trait.keen-hearing", hearing.DefinitionId);
         var bonus = Assert.Single(hearing.SkillBonuses);
         Assert.Equal("skill.listen", bonus.SkillId);
         Assert.Equal(2, bonus.Amount);
@@ -207,8 +207,8 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
     public void SelectedMixedSourcesStaySeparateAcrossSerialization()
     {
         var catalog = Catalog();
-        var mixed = Mixed(catalog, "trait.elf.keen-senses",
-            "trait.dwarf.dwarven-resilience");
+        var mixed = Mixed(catalog, "trait.keen-senses",
+            "trait.poison-resilience");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, mixed.Status);
         var direct = NativeOriginPassiveEntitlementProjector.Project(catalog, mixed);
         Assert.Equal("unresolved", direct.Status);
@@ -223,10 +223,10 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         Assert.Equal(2, projection.Traits.Count);
         Assert.Contains(projection.Traits, x =>
             x.SourceId == "species.elf" &&
-            x.DefinitionId == "trait.elf.keen-senses");
+            x.DefinitionId == "trait.keen-senses");
         Assert.Contains(projection.Traits, x =>
             x.SourceId == "species.dwarf" &&
-            x.DefinitionId == "trait.dwarf.dwarven-resilience");
+            x.DefinitionId == "trait.poison-resilience");
         Assert.All(projection.Traits, x => Assert.Single(x.SourceCandidateIds));
         Assert.Empty(projection.UnresolvedReasons);
     }
@@ -235,14 +235,14 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
     public void UnselectedMixedTraitsDoNotBecomeInheritedPassives()
     {
         var catalog = Catalog();
-        var mixed = Mixed(catalog, "trait.elf.keen-senses");
+        var mixed = Mixed(catalog, "trait.keen-senses");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, mixed.Status);
         var view = NativeOriginPassiveEntitlementProjector.ProjectApprovedMixed(
             catalog, mixed);
         Assert.Equal("resolved", view.Status);
         Assert.Single(view.Traits);
         Assert.DoesNotContain(view.Traits, x =>
-            x.DefinitionId == "trait.dwarf.dwarven-resilience");
+            x.DefinitionId == "trait.poison-resilience");
     }
 
     [Fact]
@@ -251,7 +251,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         var catalog = Catalog();
         var completed = Direct(catalog, "species.elf");
         var keen = Assert.Single(completed.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.keen-senses");
+            x.Identity.MechanicalDefinitionId == "trait.keen-senses");
         var changed = JsonNode.Parse(keen.EffectiveValue!.Value.GetRawText())!;
         changed["skillBonuses"]!["skill.listen"] = 100;
         var altered = WithGrant(completed, keen with
@@ -291,7 +291,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
             NativeOriginPassiveEntitlementProjector.Project(catalog, missingSelection).Status);
 
         var fey = Assert.Single(completed.Profile.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.fey-ancestry");
+            x.Identity.MechanicalDefinitionId == "trait.fey-ancestry");
         var forgedScope = JsonNode.Parse(fey.EffectiveValue!.Value.GetRawText())!;
         forgedScope["savingThrows"]!["scope"] = "all-threats";
         Assert.Equal("unresolved", NativeOriginPassiveEntitlementProjector.Project(
@@ -307,7 +307,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         var catalog = Catalog();
         var completed = Direct(catalog, "species.elf");
         var keen = Assert.Single(completed.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.keen-senses");
+            x.Identity.MechanicalDefinitionId == "trait.keen-senses");
 
         var parameter = WithGrant(completed, keen with
         {
@@ -354,7 +354,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         var completed = Direct(catalog, "species.elf");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, completed.Status);
         var keen = Assert.Single(completed.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.keen-senses");
+            x.Identity.MechanicalDefinitionId == "trait.keen-senses");
 
         // A payload without savingThrows/skillBonuses is still a native trait,
         // not evidence that there are no projected entitlements.
@@ -411,11 +411,11 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         var baseline = NativeOriginPassiveEntitlementProjector.Project(catalog, orc);
         Assert.Equal("none", baseline.Status);
         Assert.Contains(baseline.OutsideScopeTraits, x =>
-            x.DefinitionId == "trait.orc.adrenaline-rush");
+            x.DefinitionId == "trait.adrenaline-rush");
         Assert.Empty(baseline.Traits);
 
         var rush = Assert.Single(orc.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.orc.adrenaline-rush");
+            x.Identity.MechanicalDefinitionId == "trait.adrenaline-rush");
         var edited = WithGrant(orc, rush with
         {
             Identity = rush.Identity with
@@ -445,7 +445,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         var engine = new NativeOriginConstructionEngine(catalog);
         var offers = engine.Evaluate(new(proposal)).EvaluatedProposal.Candidates;
         var keen = offers.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.keen-senses")
+            x.Identity.MechanicalDefinitionId == "trait.keen-senses")
             .ToArray();
         Assert.Equal(2, keen.Length);
         var foundation = offers.Where(x => x.ContributorId == "first" &&
@@ -474,7 +474,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
             catalog, result);
         Assert.Equal("resolved", projected.Status);
         var trait = Assert.Single(projected.Traits);
-        Assert.Equal("trait.elf.keen-senses", trait.DefinitionId);
+        Assert.Equal("trait.keen-senses", trait.DefinitionId);
         Assert.Equal(2, trait.SourceCandidateIds.Count);
         Assert.Equal(keen.Select(x => x.Id).OrderBy(x => x, StringComparer.Ordinal),
             trait.SourceCandidateIds);
@@ -497,12 +497,12 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         var orc = Direct(catalog, "species.orc");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, orc.Status);
         var rush = Assert.Single(orc.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.orc.adrenaline-rush");
+            x.Identity.MechanicalDefinitionId == "trait.adrenaline-rush");
         var baseline = NativeOriginPassiveEntitlementProjector.Project(catalog, orc);
         Assert.Equal("none", baseline.Status);
         Assert.Empty(baseline.Traits);
         var opaque = Assert.Single(baseline.OutsideScopeTraits, x =>
-            x.DefinitionId == "trait.orc.adrenaline-rush");
+            x.DefinitionId == "trait.adrenaline-rush");
         Assert.Equal(rush.Id, opaque.GrantId);
         Assert.Equal(rush.ManifestationId, opaque.ManifestationId);
         Assert.Equal(rush.SourceCandidateIds, opaque.SourceCandidateIds);
@@ -511,7 +511,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
             opaque.CompleteEffect));
 
         var other = Assert.Single(orc.Profile.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.orc.savage-attacks");
+            x.Identity.MechanicalDefinitionId == "trait.savage-attacks");
         var forged = new[]
         {
             rush with { SourceCandidateIds = ["fabricated-candidate"] },
@@ -579,21 +579,21 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
     {
         var catalog = Catalog();
         var mixed = MixedWithSources(catalog, "species.elf", "species.orc",
-            "trait.orc.adrenaline-rush", "trait.elf.keen-senses");
+            "trait.adrenaline-rush", "trait.keen-senses");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, mixed.Status);
         var baseline = NativeOriginPassiveEntitlementProjector.ProjectApprovedMixed(
             catalog, mixed);
         Assert.Equal("resolved", baseline.Status);
         Assert.Single(baseline.Traits);
         var rush = Assert.Single(mixed.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.orc.adrenaline-rush");
+            x.Identity.MechanicalDefinitionId == "trait.adrenaline-rush");
         var opaque = Assert.Single(baseline.OutsideScopeTraits, x =>
-            x.DefinitionId == "trait.orc.adrenaline-rush");
+            x.DefinitionId == "trait.adrenaline-rush");
         Assert.Equal(rush.ManifestationId, opaque.ManifestationId);
         Assert.Equal(rush.SourceCandidateIds, opaque.SourceCandidateIds);
 
         var elf = Assert.Single(mixed.Profile.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.keen-senses");
+            x.Identity.MechanicalDefinitionId == "trait.keen-senses");
         foreach (var forged in new[]
         {
             rush with { SourceCandidateIds = ["invented-parent"] },
@@ -656,7 +656,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         var orc = Direct(catalog, "species.orc");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, orc.Status);
         var rush = Assert.Single(orc.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.orc.adrenaline-rush");
+            x.Identity.MechanicalDefinitionId == "trait.adrenaline-rush");
         var duplicateOpaque = rush with { Id = "grant:replayed-orc-rush" };
         var appendedOrc = orc.Profile.Underlying with
         {
@@ -680,7 +680,7 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
         var elf = Direct(catalog, "species.elf");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, elf.Status);
         var keen = Assert.Single(elf.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.keen-senses");
+            x.Identity.MechanicalDefinitionId == "trait.keen-senses");
         var duplicateTyped = keen with { Id = "grant:replayed-elf-keen-senses" };
         var appendedElf = elf.Profile.Underlying with
         {
@@ -733,11 +733,11 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         Assert.Equal(3, foundation.Length);
         var visions = offers.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision" &&
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision" &&
             x.ContributorId is "elf" or "orc").ToArray();
         Assert.Equal(2, visions.Length);
         var keen = Assert.Single(offers, x => x.ContributorId == "elf" &&
-            x.Identity.MechanicalDefinitionId == "trait.elf.keen-senses");
+            x.Identity.MechanicalDefinitionId == "trait.keen-senses");
         var chosen = visions.Append(keen).ToArray();
         var permissions = chosen.Where(x =>
             x.SelectionBasis.Eligibility != NativeOriginEligibility.Eligible)
@@ -781,9 +781,9 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
             .ProjectApprovedMixed(catalog, result);
         Assert.Equal("resolved", projection.Status);
         Assert.Single(projection.Traits, x =>
-            x.DefinitionId == "trait.elf.keen-senses");
+            x.DefinitionId == "trait.keen-senses");
         var separatelyRetained = projection.OutsideScopeTraits.Where(x =>
-            x.DefinitionId == "trait.shared.low-light-vision").ToArray();
+            x.DefinitionId == "trait.low-light-vision").ToArray();
         Assert.Equal(2, separatelyRetained.Length);
         Assert.Equal(2, separatelyRetained.Select(x => x.SourceId)
             .Distinct(StringComparer.Ordinal).Count());

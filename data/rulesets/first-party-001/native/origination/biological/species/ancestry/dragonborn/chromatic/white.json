@@ -9,10 +9,10 @@
   "swimmingSpeedFeet": 15,
   "traits": [
     {
-      "traitId": "trait.dragonborn.white.icewalker"
+      "traitId": "trait.icewalker"
     },
     {
-      "traitId": "trait.dragonborn.white.coldwater-swimmer"
+      "traitId": "trait.coldwater-swimmer"
     }
   ],
   "reviewNotes": [

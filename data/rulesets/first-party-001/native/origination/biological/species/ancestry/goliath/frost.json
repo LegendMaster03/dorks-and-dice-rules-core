@@ -7,13 +7,13 @@
   "parent": "species.goliath",
   "traits": [
     {
-      "traitId": "trait.goliath.frost.frosts-chill"
+      "traitId": "trait.frosts-chill"
     },
     {
-      "traitId": "trait.goliath.frost.born-of-ice"
+      "traitId": "trait.born-of-ice"
     },
     {
-      "traitId": "trait.goliath.frost.frigid-retaliation"
+      "traitId": "trait.frigid-retaliation"
     }
   ],
   "reviewNotes": [

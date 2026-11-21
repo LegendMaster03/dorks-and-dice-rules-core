@@ -52,7 +52,7 @@ class DragonbornReconciliationTests(unittest.TestCase):
         self.assertNotIn("defaultUpbringing", gem)
         self.assertNotIn("damageType", gem)
         t = {x["id"]: x for x in gem["traits"]}
-        self.assertEqual({"psionic-mind", "gem-flight"}, set(t))
+        self.assertEqual({"psionic-mind", "spectral-flight"}, set(t))
         mind = t["psionic-mind"]
         self.assertTrue(mind["atWill"])
         self.assertEqual("telepathic-message", mind["communicationMode"])
@@ -63,7 +63,7 @@ class DragonbornReconciliationTests(unittest.TestCase):
         self.assertFalse(mind["requiresSharedLanguage"])
         self.assertTrue(mind["oneWay"])
         self.assertFalse(mind["grantsThoughtReading"])
-        flight = t["gem-flight"]
+        flight = t["spectral-flight"]
         self.assertEqual(5, flight["requiredCharacterLevel"])
         self.assertEqual("bonus-action", flight["activation"]["action"])
         self.assertEqual({"minutes": 1}, flight["duration"])
@@ -116,7 +116,7 @@ class DragonbornReconciliationTests(unittest.TestCase):
         metallic = read(DRAGONBORN / "ancestry/dragonborn/metallic.json")
         self.assertEqual({"shape": "line", "lengthFeet": 30, "widthFeet": 5}, chromatic["breathWeaponArea"])
         self.assertEqual({"shape": "cone", "lengthFeet": 15}, metallic["breathWeaponArea"])
-        breath = next(t for t in metallic["traits"] if t["id"] == "metallic-breath-weapon")
+        breath = next(t for t in metallic["traits"] if t["id"] == "control-breath-weapon")
         self.assertEqual(5, breath["requiredCharacterLevel"])
         self.assertEqual({"action": "attack", "replaces": "one-attack", "timing": "on-your-turn"}, breath["activation"])
         self.assertEqual(1, breath["uses"]["value"])

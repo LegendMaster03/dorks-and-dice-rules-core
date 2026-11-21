@@ -60,7 +60,7 @@ class PowerEvaluationTests(unittest.TestCase):
             "selectable": True, "traits": [{"traitId": "trait.elf.sunlight"}]})
         write_genes(
             {"id": "trait.dwarf.toughness", "kind": "origin-trait",
-             "trait": {"id": "dwarven-toughness", "hitPointsPerCharacterLevel": 1}},
+             "trait": {"id": "level-based-vitality", "hitPointsPerCharacterLevel": 1}},
             {"id": "trait.dwarf.stonebound", "kind": "origin-trait",
              "trait": {"id": "stonebound-tremorsense", "sense": "tremorsense",
                        "rangeFeet": 60, "requiresContact": "stone",
@@ -164,8 +164,8 @@ class PowerEvaluationTests(unittest.TestCase):
 
     def test_flight_resource_replay_is_not_permanent_flight(self):
         gem = self.profile("ancestry.dragonborn.red")
-        gem["traits"] = {"trait.test.gem-flight": {
-            "id": "gem-flight", "requiredCharacterLevel": 5,
+        gem["traits"] = {"trait.test.spectral-flight": {
+            "id": "spectral-flight", "requiredCharacterLevel": 5,
             "activation": {"action": "bonus-action"},
             "flyingSpeed": {"equalTo": "current-walking-speed"},
             "canHover": True, "duration": {"minutes": 1},
@@ -679,7 +679,7 @@ class PowerEvaluationTests(unittest.TestCase):
         profile["traits"]["metallic"] = {
             "requiredCharacterLevel": 5,
             "activation": {"action": "attack", "replaces": "one-attack"},
-            "uses": {"value": 1, "recharge": "long-rest", "resource": "metallic-breath-weapon"},
+            "uses": {"value": 1, "recharge": "long-rest", "resource": "control-breath-weapon"},
             "area": {"shape": "cone", "lengthFeet": 15, "affectsAllies": True},
             "choiceTiming": "on-use",
             "options": [

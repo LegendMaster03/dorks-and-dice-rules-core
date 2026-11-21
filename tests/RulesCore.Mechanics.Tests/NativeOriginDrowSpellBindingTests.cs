@@ -70,9 +70,9 @@ public sealed class NativeOriginDrowSpellBindingTests
 
     private static readonly (string Id, string Spell, int UnlockLevel)[] Spells =
     [
-        ("trait.elf.drow.dancing-lights", "dancing-lights", 1),
-        ("trait.elf.drow.faerie-fire", "faerie-fire", 3),
-        ("trait.elf.drow.darkness", "darkness", 5)
+        ("trait.dancing-lights", "dancing-lights", 1),
+        ("trait.faerie-fire", "faerie-fire", 3),
+        ("trait.darkness-known", "darkness", 5)
     ];
 
     [Theory]
@@ -166,7 +166,7 @@ public sealed class NativeOriginDrowSpellBindingTests
             x.Identity.IntrinsicSlotId == "spellcastingAbility");
         var spell = Assert.Single(offers, x =>
             x.ContributorId == spellContributor &&
-            x.Identity.MechanicalDefinitionId == "trait.elf.drow.faerie-fire");
+            x.Identity.MechanicalDefinitionId == "trait.faerie-fire");
         Assert.Equal(3, foundation.Length);
         Assert.Equal(NativeOriginEligibility.Eligible,
             spell.SelectionBasis.Eligibility);
@@ -198,7 +198,7 @@ public sealed class NativeOriginDrowSpellBindingTests
             string.Join("; ", completed.Issues.Select(x =>
                 x.Code + ":" + x.Detail)));
         var spell = Assert.Single(completed.Profile!.Underlying.InherentGrants,
-            x => x.Identity.MechanicalDefinitionId == "trait.elf.drow.faerie-fire");
+            x => x.Identity.MechanicalDefinitionId == "trait.faerie-fire");
         Assert.Equal("wisdom", spell.Parameters!["spellcastingAbility"].GetString());
         Assert.Equal(3, spell.EffectiveValue!.Value.GetProperty("level").GetInt32());
         Assert.Equal(1, spell.EffectiveValue.Value.GetProperty("freeUses").GetInt32());
@@ -212,6 +212,6 @@ public sealed class NativeOriginDrowSpellBindingTests
         Assert.Contains(blocked.Issues, issue =>
             issue.Code == "origin-binding-choice-missing");
         Assert.DoesNotContain(blocked.Profile?.Underlying.InherentGrants ?? [],
-            x => x.Identity.MechanicalDefinitionId == "trait.elf.drow.faerie-fire");
+            x => x.Identity.MechanicalDefinitionId == "trait.faerie-fire");
     }
 }

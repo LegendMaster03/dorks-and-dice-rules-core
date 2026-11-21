@@ -68,10 +68,10 @@ public sealed class NativeOriginPassiveRuleOverlapTests
         var available = Evaluate(initial).EvaluatedProposal.Candidates;
         var elf = Assert.Single(available, x =>
             x.ContributorId == "elf" &&
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         var tiefling = Assert.Single(available, x =>
             x.ContributorId == "tiefling" &&
-            x.Identity.MechanicalDefinitionId == "trait.tiefling.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         Assert.Equal(NativeOriginEligibility.Eligible,
             elf.SelectionBasis.Eligibility);
         // The selectable Infernal Ancestry supplies its inherited Species gene
@@ -115,8 +115,8 @@ public sealed class NativeOriginPassiveRuleOverlapTests
             x.Path == "rule.low-light-vision");
         Assert.DoesNotContain(result.Profile?.Underlying.InherentGrants ?? [],
             x => x.Identity.MechanicalDefinitionId is
-                "trait.shared.low-light-vision" or
-                "trait.tiefling.low-light-vision");
+                "trait.low-light-vision" or
+                "trait.low-light-vision");
     }
 
     [Theory]
@@ -213,7 +213,7 @@ public sealed class NativeOriginPassiveRuleOverlapTests
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         Assert.Equal(2, result.Profile!.Underlying.InherentGrants.Count(x =>
             x.Identity.MechanicalDefinitionId is
-                "trait.shared.low-light-vision" or "trait.tiefling.low-light-vision"));
+                "trait.low-light-vision" or "trait.low-light-vision"));
         var view = NativeOriginVisionProjector.ProjectApprovedMixed(Catalog(), result);
         Assert.Equal("unresolved", view.Status);
         Assert.Contains("duplicate-low-light-vision", view.UnresolvedReasons);

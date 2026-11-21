@@ -34,7 +34,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
         self.assertEqual(35, self.base["walkingSpeedFeet"])
         self.assertEqual("upbringing.goliath.general", self.base["defaultUpbringing"])
         self.assertEqual(
-            {"powerful-build", "large-form", "mountain-leap", "altitude-acclimation", "giant-ancestry-aptitude"},
+            {"powerful-build", "large-form", "mountain-leap", "altitude-acclimation", "ancestral-aptitude"},
             {t["id"] for t in self.base["traits"]})
         self.assertEqual(set(self.slugs),
                          {p.stem for p in LEAVES.glob("*.json")})
@@ -130,7 +130,7 @@ class GoliathSpeciesReconciliationTests(unittest.TestCase):
 
     def test_bigbys_first_pass_level_1_strike_modes_do_not_duplicate_original_charges(self):
         base_traits = {t["id"]: t for t in self.base["traits"]}
-        aptitude = base_traits["giant-ancestry-aptitude"]
+        aptitude = base_traits["ancestral-aptitude"]
         self.assertEqual(["strength", "constitution"], aptitude["abilityChoice"]["from"])
         self.assertEqual("goliath-ancestry-selection", aptitude["abilityChoice"]["when"])
         self.assertEqual("8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",

@@ -213,7 +213,7 @@ public sealed class NativeOriginInnateSpellProgressionTests
                 catalog, origin, 1001).Status);
         var original = Assert.Single(origin.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.tiefling.infernal.hellish-rebuke");
+                "trait.hellish-rebuke");
         foreach (var altered in new[]
         {
             JsonSerializer.SerializeToElement(new
@@ -251,7 +251,7 @@ public sealed class NativeOriginInnateSpellProgressionTests
         var origin = Direct(catalog, "ancestry.tiefling.infernal");
         var original = Assert.Single(origin.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.tiefling.otherworldly-presence");
+                "trait.otherworldly-presence");
         var changed = original.Parameters!.ToDictionary(x => x.Key, x => x.Value,
             StringComparer.Ordinal);
         changed["spellcastingAbility"] =

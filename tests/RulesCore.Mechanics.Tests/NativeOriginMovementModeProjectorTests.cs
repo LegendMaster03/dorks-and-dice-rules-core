@@ -112,11 +112,11 @@ public sealed class NativeOriginMovementModeProjectorTests
 
     [Theory]
     [InlineData("ancestry.dragonborn.copper",
-        "trait.dragonborn.copper.natural-climber", "climb")]
+        "trait.natural-climber", "climb")]
     [InlineData("ancestry.dragonborn.white",
-        "trait.dragonborn.white.coldwater-swimmer", "swim")]
+        "trait.coldwater-swimmer", "swim")]
     [InlineData("ancestry.dragonborn.brass",
-        "trait.dragonborn.brass.sand-burrower", "burrow")]
+        "trait.sand-burrower", "burrow")]
     public void ConventionalAncestryProjectsOnlyItsActualNativeMovementMode(
         string ancestry, string traitId, string expectedMode)
     {
@@ -171,9 +171,9 @@ public sealed class NativeOriginMovementModeProjectorTests
                 "ancestry.dragonborn.brass"
             ],
             [
-                "trait.dragonborn.red.natural-climber",
-                "trait.dragonborn.white.coldwater-swimmer",
-                "trait.dragonborn.brass.sand-burrower"
+                "trait.natural-climber",
+                "trait.coldwater-swimmer",
+                "trait.sand-burrower"
             ]);
         Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
             string.Join("; ", result.Issues.Select(x => x.Code)));
@@ -203,8 +203,8 @@ public sealed class NativeOriginMovementModeProjectorTests
         var result = Mixed(
             ["ancestry.dragonborn.red", "ancestry.dragonborn.copper"],
             [
-                "trait.dragonborn.red.natural-climber",
-                "trait.dragonborn.copper.natural-climber"
+                "trait.natural-climber",
+                "trait.natural-climber"
             ], retainBothClimbs: true);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var view = NativeOriginMovementModeProjector.ProjectApprovedMixed(
@@ -229,7 +229,7 @@ public sealed class NativeOriginMovementModeProjectorTests
         var profile = original.Profile!;
         var grant = Assert.Single(profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.dragonborn.copper.natural-climber");
+                "trait.natural-climber");
         var modified = JsonNode.Parse(grant.EffectiveValue!.Value.GetRawText())!;
         modified["speedFeet"] = 10000;
         var altered = grant with

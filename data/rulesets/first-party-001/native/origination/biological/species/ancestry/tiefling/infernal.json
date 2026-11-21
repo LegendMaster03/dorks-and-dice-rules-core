@@ -13,16 +13,16 @@
   ],
   "traits": [
     {
-      "traitId": "trait.tiefling.infernal.infernal-resistance"
+      "traitId": "trait.infernal-resistance"
     },
     {
-      "traitId": "trait.tiefling.infernal.fire-bolt"
+      "traitId": "trait.fire-bolt"
     },
     {
-      "traitId": "trait.tiefling.infernal.hellish-rebuke"
+      "traitId": "trait.hellish-rebuke"
     },
     {
-      "traitId": "trait.tiefling.infernal.darkness"
+      "traitId": "trait.darkness-prepared"
     }
   ],
   "reviewNotes": [

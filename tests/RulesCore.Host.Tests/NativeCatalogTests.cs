@@ -37,20 +37,20 @@ public sealed class NativeCatalogTests
     {
         var catalog = NativeCatalogLoader.Load(RepositoryLocation());
         Assert.True(catalog.CountByCategory("origin-trait") > 0);
-        Assert.True(catalog.TryGetById("trait.shared.low-light-vision", out var shared));
+        Assert.True(catalog.TryGetById("trait.low-light-vision", out var shared));
         Assert.Equal("origin-trait", shared!.Category);
         foreach (var sourceId in new[] { "species.dragonborn", "species.elf",
             "species.gnome", "species.orc" })
         {
             Assert.True(catalog.TryGetById(sourceId, out var source));
-            Assert.Equal("trait.shared.low-light-vision",
+            Assert.Equal("trait.low-light-vision",
                 catalog.OriginTraitDefinitionId(sourceId, 0));
             Assert.True(JsonElement.DeepEquals(shared.Definition.GetProperty("trait"),
                 source!.Definition.GetProperty("traits")[0]));
         }
-        Assert.Equal("trait.human.skillful",
+        Assert.Equal("trait.skillful",
             catalog.OriginTraitDefinitionId("species.human", 0));
-        Assert.Equal("trait.elf.high.arcane-cantrip",
+        Assert.Equal("trait.arcane-cantrip",
             catalog.OriginTraitDefinitionId("ancestry.elf.high", 0));
         Assert.True(catalog.TryGetById("ancestry.elf.high", out var highElf));
         Assert.Equal("manifested-intrinsic",

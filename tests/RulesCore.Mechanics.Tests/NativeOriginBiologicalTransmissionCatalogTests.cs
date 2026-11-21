@@ -39,10 +39,10 @@ public sealed class NativeOriginBiologicalTransmissionCatalogTests
             new(proposal, AutoManifestDirectDefaults: false));
 
     [Theory]
-    [InlineData("ancestry.dragonborn.bronze", "trait.shared.amphibious")]
-    [InlineData("species.elf", "trait.elf.trance")]
-    [InlineData("ancestry.goliath.fire", "trait.goliath.altitude-acclimation")]
-    [InlineData("species.orc", "trait.orc.relentless-endurance")]
+    [InlineData("ancestry.dragonborn.bronze", "trait.amphibious")]
+    [InlineData("species.elf", "trait.trance")]
+    [InlineData("ancestry.goliath.fire", "trait.altitude-acclimation")]
+    [InlineData("species.orc", "trait.relentless-endurance")]
     public void PlayerCanSelectIndependentHeritableTraitWithCompletePhysicalOrigin(
         string nativeDonor, string traitId)
     {
@@ -96,15 +96,15 @@ public sealed class NativeOriginBiologicalTransmissionCatalogTests
     }
 
     [Theory]
-    [InlineData("ancestry.dragonborn.red", "trait.dragonborn.draconic-resistance")]
-    [InlineData("species.dwarf", "trait.dwarf.dwarven-resilience")]
-    [InlineData("species.elf", "trait.elf.fey-ancestry")]
-    [InlineData("species.gnome", "trait.gnome.gnomish-cunning")]
-    [InlineData("ancestry.goliath.fire", "trait.goliath.powerful-build")]
-    [InlineData("species.halfling", "trait.halfling.halfling-luck")]
-    [InlineData("species.human", "trait.human.adaptable-learning")]
-    [InlineData("species.orc", "trait.orc.savage-attacks")]
-    [InlineData("ancestry.tiefling.infernal", "trait.tiefling.infernal.infernal-resistance")]
+    [InlineData("ancestry.dragonborn.red", "trait.damage-type-resistance")]
+    [InlineData("species.dwarf", "trait.poison-resilience")]
+    [InlineData("species.elf", "trait.fey-ancestry")]
+    [InlineData("species.gnome", "trait.magical-cunning")]
+    [InlineData("ancestry.goliath.fire", "trait.powerful-build-grapple-resilience")]
+    [InlineData("species.halfling", "trait.luck-reroll")]
+    [InlineData("species.human", "trait.adaptable-learning")]
+    [InlineData("species.orc", "trait.savage-attacks")]
+    [InlineData("ancestry.tiefling.infernal", "trait.infernal-resistance")]
     public void BiologicalGeneFromEachSpeciesIsAnEligibleOffer(
         string nativeDonor, string geneId)
     {
@@ -127,9 +127,9 @@ public sealed class NativeOriginBiologicalTransmissionCatalogTests
         var catalog = Catalog();
         foreach (var id in new[]
         {
-            "trait.dragonborn.draconic-resistance",
-            "trait.elf.fey-ancestry",
-            "trait.shared.amphibious"
+            "trait.damage-type-resistance",
+            "trait.fey-ancestry",
+            "trait.amphibious"
         })
         {
             Assert.True(catalog.TryGetById(id, out var gene), id);

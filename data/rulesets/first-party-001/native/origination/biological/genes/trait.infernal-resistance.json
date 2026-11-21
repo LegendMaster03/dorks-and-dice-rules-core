@@ -1,0 +1,14 @@
+{
+  "id": "trait.infernal-resistance",
+  "name": "Infernal Resistance",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "infernal-resistance",
+    "name": "Infernal Resistance",
+    "description": "You have 50 percent resistance to fire damage.",
+    "damageResistance": {
+      "percent": 50,
+      "damageType": "fire"
+    }
+  }
+}

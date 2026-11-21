@@ -1,0 +1,14 @@
+{
+  "id": "trait.animal-speech",
+  "name": "Animal Speech",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "animal-speech",
+    "description": "Speak with Animals is always prepared; cast without a spell slot Proficiency Bonus times per Long Rest, or with an applicable spell slot.",
+    "spell": "speak-with-animals",
+    "alwaysPrepared": true,
+    "freeUses": "proficiency-bonus",
+    "recharge": "long-rest",
+    "slotCasting": true
+  }
+}

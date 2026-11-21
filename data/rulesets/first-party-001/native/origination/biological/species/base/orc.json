@@ -9,22 +9,22 @@
   "walkingSpeedFeet": 30,
   "traits": [
     {
-      "traitId": "trait.shared.low-light-vision"
+      "traitId": "trait.low-light-vision"
     },
     {
-      "traitId": "trait.orc.adrenaline-rush"
+      "traitId": "trait.adrenaline-rush"
     },
     {
-      "traitId": "trait.orc.relentless-endurance"
+      "traitId": "trait.relentless-endurance"
     },
     {
-      "traitId": "trait.orc.powerful-build"
+      "traitId": "trait.powerful-build-heavy-lifting"
     },
     {
-      "traitId": "trait.orc.savage-attacks"
+      "traitId": "trait.savage-attacks"
     },
     {
-      "traitId": "trait.orc.menacing-presence"
+      "traitId": "trait.menacing-presence"
     }
   ],
   "reviewNotes": [

@@ -9,7 +9,7 @@
   "climbingSpeedFeet": 15,
   "traits": [
     {
-      "traitId": "trait.dragonborn.copper.natural-climber"
+      "traitId": "trait.natural-climber"
     }
   ],
   "reviewNotes": [

@@ -6,19 +6,19 @@
   "selectable": true,
   "traits": [
     {
-      "traitId": "trait.shared.low-light-vision"
+      "traitId": "trait.low-light-vision"
     },
     {
-      "traitId": "trait.elf.keen-senses"
+      "traitId": "trait.keen-senses"
     },
     {
-      "traitId": "trait.elf.fey-ancestry"
+      "traitId": "trait.fey-ancestry"
     },
     {
-      "traitId": "trait.elf.trance"
+      "traitId": "trait.trance"
     },
     {
-      "traitId": "trait.elf.magical-sleep"
+      "traitId": "trait.magical-sleep"
     }
   ],
   "creatureType": "fey",

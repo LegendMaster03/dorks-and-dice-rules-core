@@ -12,7 +12,7 @@
   },
   "traits": [
     {
-      "traitId": "trait.dragonborn.chromatic.chromatic-warding"
+      "traitId": "trait.temporary-damage-immunity"
     }
   ],
   "reviewNotes": [

@@ -1,0 +1,30 @@
+{
+  "id": "trait.spectral-flight",
+  "name": "Spectral Flight",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "spectral-flight",
+    "name": "Spectral Flight",
+    "description": "Starting at character level 5, you can use a Bonus Action on your turn to manifest spectral wings for 1 minute. While they last, you gain a flying speed equal to your current walking speed and can hover. You can use this trait once per Long Rest; it is independent of your Breath Weapon.",
+    "requiredCharacterLevel": 5,
+    "activation": {
+      "action": "bonus-action",
+      "timing": "on-your-turn"
+    },
+    "duration": {
+      "minutes": 1
+    },
+    "uses": {
+      "value": 1,
+      "recharge": "long-rest",
+      "resource": "spectral-flight",
+      "independentOf": "breath-weapon"
+    },
+    "manifestation": "spectral-wings",
+    "flyingSpeed": {
+      "equalTo": "current-walking-speed"
+    },
+    "canHover": true,
+    "grantsPermanentFlight": false
+  }
+}

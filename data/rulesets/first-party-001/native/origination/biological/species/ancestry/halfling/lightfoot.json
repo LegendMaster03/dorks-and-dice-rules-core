@@ -7,7 +7,7 @@
   "parent": "species.halfling",
   "traits": [
     {
-      "traitId": "trait.halfling.lightfoot.natural-agility"
+      "traitId": "trait.natural-agility"
     }
   ],
   "reviewNotes": [

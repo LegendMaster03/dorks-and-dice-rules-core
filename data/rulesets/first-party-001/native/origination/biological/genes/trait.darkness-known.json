@@ -1,0 +1,22 @@
+{
+  "id": "trait.darkness-known",
+  "name": "Darkness (Known)",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "darkness-known",
+    "originBindings": {
+      "spellcastingAbility": {
+        "lookup": "manifested-intrinsic",
+        "intrinsicSlot": "spellcastingAbility",
+        "scope": "source"
+      }
+    },
+    "description": "At level 5, know Darkness; once per Long Rest free, and also with spell slots. Does not automatically grant vision through magical Darkness.",
+    "spell": "darkness",
+    "level": 5,
+    "freeUses": 1,
+    "recharge": "long-rest",
+    "slotCasting": true,
+    "name": "Darkness (Known)"
+  }
+}

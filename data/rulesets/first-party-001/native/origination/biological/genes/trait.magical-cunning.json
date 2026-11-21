@@ -1,0 +1,18 @@
+{
+  "id": "trait.magical-cunning",
+  "name": "Magical Cunning",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "magical-cunning",
+    "description": "Advantage on Intelligence, Wisdom and Charisma saving throws against magic only.",
+    "savingThrows": {
+      "advantageAbilities": [
+        "intelligence",
+        "wisdom",
+        "charisma"
+      ],
+      "scope": "magic-only"
+    },
+    "name": "Magical Cunning"
+  }
+}

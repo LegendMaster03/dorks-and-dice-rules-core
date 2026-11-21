@@ -116,7 +116,7 @@ class ApplicableChoiceTests(unittest.TestCase):
         preview, whole = self.pipeline(
             [direct("silver", "ancestry.dragonborn.silver")],
             lambda x: x["sourceTraitOrFieldId"] ==
-            "ancestry.dragonborn.metallic#trait:metallic-breath-weapon",
+            "ancestry.dragonborn.metallic#trait:control-breath-weapon",
         )
         report = self.apply(preview, whole)
         self.assertEqual(1, len(report["applicableNativeChoiceEvidence"]))

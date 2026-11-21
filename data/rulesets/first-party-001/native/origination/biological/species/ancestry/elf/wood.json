@@ -7,13 +7,13 @@
   "parent": "species.elf",
   "traits": [
     {
-      "traitId": "trait.elf.wood.druidcraft"
+      "traitId": "trait.druidcraft"
     },
     {
-      "traitId": "trait.elf.wood.longstrider"
+      "traitId": "trait.longstrider"
     },
     {
-      "traitId": "trait.elf.wood.pass-without-trace"
+      "traitId": "trait.pass-without-trace"
     }
   ],
   "walkingSpeedFeet": 35,

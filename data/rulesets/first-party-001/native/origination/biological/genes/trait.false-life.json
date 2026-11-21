@@ -1,0 +1,23 @@
+{
+  "id": "trait.false-life",
+  "name": "False Life",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "false-life",
+    "originBindings": {
+      "spellcastingAbility": {
+        "lookup": "manifested-intrinsic",
+        "intrinsicSlot": "spellcastingAbility",
+        "scope": "source"
+      }
+    },
+    "name": "False Life",
+    "description": "At character level 3, always have False Life available. Cast it once without using a spell slot per Long Rest, and also with appropriate spell slots.",
+    "spell": "false-life",
+    "level": 3,
+    "alwaysPrepared": true,
+    "freeUses": 1,
+    "recharge": "long-rest",
+    "slotCasting": true
+  }
+}

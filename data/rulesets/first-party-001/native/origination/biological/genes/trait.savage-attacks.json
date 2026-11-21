@@ -1,0 +1,16 @@
+{
+  "id": "trait.savage-attacks",
+  "name": "Savage Attacks",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "savage-attacks",
+    "name": "Savage Attacks",
+    "description": "When you score a critical hit with a melee weapon attack, roll one additional die of the weapon's damage and add it to the critical hit's damage. The interaction with optional critical escalation and damage maximization is subject to the shared critical-rules review.",
+    "trigger": "critical-hit-with-melee-weapon-attack",
+    "bonusDamageDice": {
+      "count": 1,
+      "dieFrom": "weapon-damage-die"
+    },
+    "requiresCriticalHit": true
+  }
+}

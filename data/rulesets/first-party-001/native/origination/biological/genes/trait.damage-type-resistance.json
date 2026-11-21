@@ -1,0 +1,19 @@
+{
+  "id": "trait.damage-type-resistance",
+  "name": "Damage Type Resistance",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "damage-type-resistance",
+    "description": "You have 50 percent resistance to the damage type configured for this resistance. The damage type is supplied by the selected source.",
+    "damageResistance": {
+      "percent": 50,
+      "damageTypeFrom": "selected-dragonborn-leaf"
+    },
+    "originBindings": {
+      "damageType": {
+        "lookup": "leaf",
+        "sourceField": "damageType"
+      }
+    }
+  }
+}

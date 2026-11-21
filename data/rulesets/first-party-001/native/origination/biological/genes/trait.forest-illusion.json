@@ -1,0 +1,11 @@
+{
+  "id": "trait.forest-illusion",
+  "name": "Forest Illusion",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "forest-illusion",
+    "description": "Cast Minor Illusion at will.",
+    "spell": "minor-illusion",
+    "atWill": true
+  }
+}

@@ -520,10 +520,10 @@ public sealed class NativeMechanicsApiTests
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         Assert.Equal(3, physical.Length);
         var trance = Assert.Single(offers,
-            x => x.Identity.MechanicalDefinitionId == "trait.elf.trance");
+            x => x.Identity.MechanicalDefinitionId == "trait.trance");
         var endurance = Assert.Single(offers,
             x => x.Identity.MechanicalDefinitionId ==
-                "trait.orc.relentless-endurance");
+                "trait.relentless-endurance");
         Assert.Equal(NativeOriginEligibility.Eligible,
             trance.SelectionBasis.Eligibility);
         Assert.Equal(NativeOriginEligibility.Eligible,

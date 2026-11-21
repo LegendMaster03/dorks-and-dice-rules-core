@@ -1,0 +1,14 @@
+{
+  "id": "trait.abyssal-resistance",
+  "name": "Abyssal Resistance",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "abyssal-resistance",
+    "name": "Abyssal Resistance",
+    "description": "You have 50 percent resistance to poison damage.",
+    "damageResistance": {
+      "percent": 50,
+      "damageType": "poison"
+    }
+  }
+}

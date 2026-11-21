@@ -178,7 +178,7 @@ class OriginCharacteristicInventoryTests(unittest.TestCase):
                     family["intrinsicFields"]["breathWeaponArea"],
                 )
                 self.assertEqual(
-                    {"psionic-mind", "gem-flight"},
+                    {"psionic-mind", "spectral-flight"},
                     {t["localTraitId"] for t in family["traits"]},
                 )
                 self.assertEqual(

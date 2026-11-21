@@ -939,7 +939,7 @@ public sealed class NativeOriginConstructionTests
         // Candidate inheritance eligibility still needs its own authority;
         // the authored relationship only removes the redundant DM ruling
         // about how the *already permitted* characteristic is composed.
-        const string canonical = "trait.dragonborn.breath-weapon";
+        const string canonical = "trait.breath-weapon";
         var authored = selected with
         {
             TableDecisions = selected.TableDecisions!.Where(x =>
@@ -980,11 +980,11 @@ public sealed class NativeOriginConstructionTests
         {
             Relationships = [new("breath-compose",
                 NativeOriginRelationshipKind.Substitution, [red.Id, bronze.Id],
-                AuthoredRuleReference: "trait.shared.low-light-vision")],
+                AuthoredRuleReference: "trait.low-light-vision")],
             Resolutions = [resolution with
             {
                 Basis = new(NativeOriginAdjudication.Supported,
-                    NativeRuleReference: "trait.shared.low-light-vision")
+                    NativeRuleReference: "trait.low-light-vision")
             }]
         }, new TestAuthority(), false);
         Assert.NotEqual(NativeOriginConstructionStatus.Authorized, unrelatedRule.Status);
@@ -1068,7 +1068,7 @@ public sealed class NativeOriginConstructionTests
         var humanSize = offers.Single(x => x.ContributorId == "human" &&
             x.Identity.Occurrence.OccurrencePath == "/sizeChoice");
         var sight = offers.Single(x => x.ContributorId == "elf" &&
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         Assert.All([type, speed, humanSize, sight], x =>
         {
             Assert.Equal(NativeOriginEligibility.Eligible, x.SelectionBasis.Eligibility);
@@ -1130,7 +1130,7 @@ public sealed class NativeOriginConstructionTests
             contributors: [Contributor("elf", "species.elf")]);
         var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
         var sight = offered.Single(x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         Assert.Equal(NativeOriginEligibility.Eligible, sight.SelectionBasis.Eligibility);
         var blank = Evaluate(proposal);
         Assert.Equal(NativeOriginConstructionStatus.Incomplete, blank.Status);
@@ -1192,7 +1192,7 @@ public sealed class NativeOriginConstructionTests
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
             .ToArray();
         var vision = offers.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision")
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision")
             .ToArray();
         Assert.Equal(3, foundations.Length);
         Assert.Equal(3, vision.Length);
@@ -1209,7 +1209,7 @@ public sealed class NativeOriginConstructionTests
                 result.Issues.Select(x => x.Code + ":" + x.Path + ":" + x.Detail)));
         Assert.Equal(4, result.Profile!.Current.InherentGrants.Count);
         var sight = Assert.Single(result.Profile.Current.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         Assert.Equal(3, sight.SourceCandidateIds.Count);
         Assert.Equal(NativeOriginAdjudication.Supported, sight.Authorization!.Adjudication);
         Assert.Equal("resolved",
@@ -1232,7 +1232,7 @@ public sealed class NativeOriginConstructionTests
             .ToArray();
         Assert.Equal(3, foundation.Length);
         var breaths = offers.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.dragonborn.breath-weapon")
+            x.Identity.MechanicalDefinitionId == "trait.breath-weapon")
             .ToArray();
         Assert.Equal(2, breaths.Length);
         var red = breaths.Single(x => x.ContributorId == "red");
@@ -1266,17 +1266,17 @@ public sealed class NativeOriginConstructionTests
                 Relationships = [new("one-breath",
                     NativeOriginRelationshipKind.Substitution,
                     [red.Id, bronze.Id],
-                    AuthoredRuleReference: "trait.dragonborn.breath-weapon")],
+                    AuthoredRuleReference: "trait.breath-weapon")],
                 Resolutions = [new("one-breath", NativeOriginResolutionAction.Replace,
                     new(NativeOriginAdjudication.Supported,
-                        NativeRuleReference: "trait.dragonborn.breath-weapon"),
+                        NativeRuleReference: "trait.breath-weapon"),
                     red.Id, paramsSelected, fieldSources)]
             }, defaults: false);
             Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
                 "Issues: " + string.Join("; ", result.Issues.Select(x => x.Code)));
             Assert.Equal(4, result.Profile!.Current.InherentGrants.Count);
             var breath = Assert.Single(result.Profile.Current.InherentGrants, x =>
-                x.Identity.MechanicalDefinitionId == "trait.dragonborn.breath-weapon");
+                x.Identity.MechanicalDefinitionId == "trait.breath-weapon");
             Assert.Equal(paramsSelected["damageType"].GetString(),
                 breath.Parameters!["damageType"].GetString());
             Assert.Equal(paramsSelected["area"].GetRawText(),
@@ -1287,19 +1287,19 @@ public sealed class NativeOriginConstructionTests
             Assert.Equal("proficiency-bonus",
                 breath.EffectiveValue!.Value.GetProperty("uses").GetProperty("value").GetString());
             Assert.DoesNotContain(result.Profile.Current.InherentGrants, x =>
-                x.Identity.MechanicalDefinitionId == "trait.dragonborn.draconic-resistance");
+                x.Identity.MechanicalDefinitionId == "trait.damage-type-resistance");
             Assert.Equal("resolved",
                 NativeOriginApprovedMixedIntrinsicProjector.Project(result).Status);
         }
     }
 
     [Theory]
-    [InlineData("ancestry.goliath.cloud", "trait.goliath.cloud.clouds-jaunt",
-        "trait.goliath.cloud.cloud-strike")]
-    [InlineData("ancestry.goliath.stone", "trait.goliath.stone.stones-endurance",
-        "trait.goliath.stone.stone-strike")]
-    [InlineData("ancestry.goliath.storm", "trait.goliath.storm.storms-thunder",
-        "trait.goliath.storm.storm-strike")]
+    [InlineData("ancestry.goliath.cloud", "trait.clouds-jaunt",
+        "trait.cloud-strike")]
+    [InlineData("ancestry.goliath.stone", "trait.stones-endurance",
+        "trait.stone-strike")]
+    [InlineData("ancestry.goliath.storm", "trait.storms-thunder",
+        "trait.storm-strike")]
     public void AuthoredSharedUseStrikeRequiresSelectedOwnerAndNeverGetsIndependentPool(
         string ancestry, string ownerId, string strikeId)
     {
@@ -1314,7 +1314,7 @@ public sealed class NativeOriginConstructionTests
             x.Identity.MechanicalDefinitionId == strikeId);
         var aptitude = Assert.Single(offers, x =>
             x.ContributorId == "source" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
         var foundations = offers.Where(x => x.ContributorId == "source" &&
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
             .ToArray();
@@ -1356,7 +1356,7 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal(6, granted.Count);
         var parent = Assert.Single(granted, x => x.Identity.MechanicalDefinitionId == ownerId);
         Assert.Equal("constitution", Assert.Single(granted, x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude")
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude")
             .ResolvedChoices!.Single().SelectedOptionIds.Single());
         var dependent = Assert.Single(granted, x => x.Identity.MechanicalDefinitionId == strikeId);
         Assert.Equal(parent.Id, dependent.ResourceOwners!["uses"]);
@@ -1428,13 +1428,13 @@ public sealed class NativeOriginConstructionTests
         var offers = Evaluate(baseProposal).EvaluatedProposal.Candidates;
         var owner = Assert.Single(offers, x =>
             x.ContributorId == "owner-source" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.clouds-jaunt");
+            x.Identity.MechanicalDefinitionId == "trait.clouds-jaunt");
         var strike = Assert.Single(offers, x =>
             x.ContributorId == "strike-source" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.cloud-strike");
+            x.Identity.MechanicalDefinitionId == "trait.cloud-strike");
         var aptitude = Assert.Single(offers, x =>
             x.ContributorId == "strike-source" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
         var foundations = offers.Where(x => x.ContributorId == "owner-source" &&
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
             .ToArray();
@@ -1473,7 +1473,7 @@ public sealed class NativeOriginConstructionTests
             contributors: [Contributor("source", "ancestry.goliath.cloud")]);
         var offered = Evaluate(baseProposal).EvaluatedProposal.Candidates;
         var independent = Assert.Single(offered, x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.cloudy-escape");
+            x.Identity.MechanicalDefinitionId == "trait.cloudy-escape");
         var foundations = offered.Where(x =>
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
             .ToArray();
@@ -1492,7 +1492,7 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var grant = Assert.Single(result.Profile!.Underlying.InherentGrants,
             x => x.Identity.MechanicalDefinitionId ==
-                "trait.goliath.cloud.cloudy-escape");
+                "trait.cloudy-escape");
         Assert.True(grant.ResourceOwners is null || grant.ResourceOwners.Count == 0);
         Assert.Equal("clouds-jaunt",
             grant.EffectiveValue!.Value.GetProperty("independentUsesFrom").GetString());
@@ -1502,18 +1502,18 @@ public sealed class NativeOriginConstructionTests
     }
 
     [Theory]
-    [InlineData("ancestry.goliath.cloud", "trait.goliath.cloud.cloud-strike",
-        "trait.goliath.cloud.clouds-jaunt")]
-    [InlineData("ancestry.goliath.fire", "trait.goliath.fire.searing-ignition", null)]
-    [InlineData("ancestry.goliath.frost", "trait.goliath.frost.frosts-chill", null)]
-    [InlineData("ancestry.goliath.frost", "trait.goliath.frost.frigid-retaliation", null)]
-    [InlineData("ancestry.goliath.hill", "trait.goliath.hill.hills-tumble", null)]
-    [InlineData("ancestry.goliath.stone", "trait.goliath.stone.stone-strike",
-        "trait.goliath.stone.stones-endurance")]
-    [InlineData("ancestry.goliath.stone", "trait.goliath.stone.stone-throw", null)]
-    [InlineData("ancestry.goliath.storm", "trait.goliath.storm.storm-strike",
-        "trait.goliath.storm.storms-thunder")]
-    [InlineData("ancestry.goliath.storm", "trait.goliath.storm.maelstrom-aura", null)]
+    [InlineData("ancestry.goliath.cloud", "trait.cloud-strike",
+        "trait.clouds-jaunt")]
+    [InlineData("ancestry.goliath.fire", "trait.searing-ignition", null)]
+    [InlineData("ancestry.goliath.frost", "trait.frosts-chill", null)]
+    [InlineData("ancestry.goliath.frost", "trait.frigid-retaliation", null)]
+    [InlineData("ancestry.goliath.hill", "trait.hills-tumble", null)]
+    [InlineData("ancestry.goliath.stone", "trait.stone-strike",
+        "trait.stones-endurance")]
+    [InlineData("ancestry.goliath.stone", "trait.stone-throw", null)]
+    [InlineData("ancestry.goliath.storm", "trait.storm-strike",
+        "trait.storms-thunder")]
+    [InlineData("ancestry.goliath.storm", "trait.maelstrom-aura", null)]
     public void GiantAbilityChoiceBindsIntoEveryAuthoredDependentFeature(
         string ancestry, string featureId, string? usesOwnerId)
     {
@@ -1521,7 +1521,7 @@ public sealed class NativeOriginConstructionTests
             contributors: [Contributor("parent", ancestry)]);
         var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
         var aptitude = Assert.Single(offered, x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
         var requirement = Assert.Single(aptitude.RequiredChoices!);
         Assert.Equal("abilityChoice", requirement.Id);
         Assert.Equal(NativeOriginChoiceTiming.Creation, requirement.Timing);
@@ -1636,13 +1636,13 @@ public sealed class NativeOriginConstructionTests
         var offers = Evaluate(original).EvaluatedProposal.Candidates;
         var fireApt = Assert.Single(offers, x =>
             x.ContributorId == "a-fire" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
         var stoneApt = Assert.Single(offers, x =>
             x.ContributorId == "b-stone" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
         var stoneThrow = Assert.Single(offers, x =>
             x.ContributorId == "b-stone" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.stone-throw");
+            x.Identity.MechanicalDefinitionId == "trait.stone-throw");
         var foundations = offers.Where(x => x.ContributorId == "a-fire" &&
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
             .Select((x, i) => new NativeOriginManifestation("foundation-" + i,
@@ -1672,12 +1672,12 @@ public sealed class NativeOriginConstructionTests
         Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
             string.Join("; ", result.Issues.Select(x => x.Code + ":" + x.Detail)));
         var aptitude = Assert.Single(result.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
         Assert.Equal(2, aptitude.SourceCandidateIds.Count);
         Assert.Contains(fireApt.Id, aptitude.SourceCandidateIds);
         Assert.Contains(stoneApt.Id, aptitude.SourceCandidateIds);
         var thrown = Assert.Single(result.Profile.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.stone-throw");
+            x.Identity.MechanicalDefinitionId == "trait.stone-throw");
         Assert.Equal("strength", thrown.Parameters!["giantAncestryAbility"].GetString());
         Assert.Equal(stoneApt.Id, thrown.ParameterSources!["giantAncestryAbility"]);
         Assert.DoesNotContain(new NativeOriginContractValidator(Catalog())
@@ -1702,7 +1702,7 @@ public sealed class NativeOriginConstructionTests
         Assert.Contains(conflict.Issues, x =>
             x.Code == "same-definition-different-manifestations");
         Assert.DoesNotContain(conflict.Profile?.Underlying.InherentGrants ?? [], x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.stone-throw");
+            x.Identity.MechanicalDefinitionId == "trait.stone-throw");
     }
 
     [Fact]
@@ -1717,10 +1717,10 @@ public sealed class NativeOriginConstructionTests
         var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
         var aptitude = Assert.Single(offered, x =>
             x.ContributorId == "aptitude-source" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
         var feature = Assert.Single(offered, x =>
             x.ContributorId == "feature-source" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.fire.searing-ignition");
+            x.Identity.MechanicalDefinitionId == "trait.searing-ignition");
         var physical = offered.Where(x =>
             x.ContributorId == "feature-source" &&
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
@@ -1778,7 +1778,7 @@ public sealed class NativeOriginConstructionTests
             ancestry: "ancestry.goliath.stone");
         var preview = Evaluate(proposal).EvaluatedProposal;
         var aptitude = Assert.Single(preview.Candidates, x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
         Assert.Equal("species.goliath", aptitude.Identity.Occurrence.Source.Id);
         Assert.Equal(NativeOriginEligibility.Eligible, aptitude.SelectionBasis.Eligibility);
 
@@ -1803,7 +1803,7 @@ public sealed class NativeOriginConstructionTests
             Assert.Equal(aptitude.Id, feature.ParameterSources!["giantAncestryAbility"]);
         }
         var strike = Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.stone-strike");
+            x.Identity.MechanicalDefinitionId == "trait.stone-strike");
         Assert.Equal("grant:auto:direct:ancestry.goliath.stone:/traits/0",
             strike.ResourceOwners!["uses"]);
         Assert.DoesNotContain(new NativeOriginContractValidator(Catalog())
@@ -1996,13 +1996,13 @@ public sealed class NativeOriginConstructionTests
         var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
         var owner = Assert.Single(offers, x =>
             x.ContributorId == "source" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.clouds-jaunt");
+            x.Identity.MechanicalDefinitionId == "trait.clouds-jaunt");
         var strike = Assert.Single(offers, x =>
             x.ContributorId == "source" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.cloud.cloud-strike");
+            x.Identity.MechanicalDefinitionId == "trait.cloud-strike");
         var aptitude = Assert.Single(offers, x =>
             x.ContributorId == "source" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
         var foundations = offers.Where(x => x.ContributorId == "source" &&
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
             .ToArray();
@@ -2047,7 +2047,7 @@ public sealed class NativeOriginConstructionTests
         Assert.Contains(result.Issues, issue => issue.Code == "origin-shared-resource-owner-missing");
         Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants,
             x => x.Identity.MechanicalDefinitionId is
-                "trait.goliath.cloud.clouds-jaunt" or "trait.goliath.cloud.cloud-strike");
+                "trait.clouds-jaunt" or "trait.cloud-strike");
         Assert.DoesNotContain(result.Issues,
             issue => issue.Code == "profile-resource-owner-invalid");
     }
@@ -2253,7 +2253,7 @@ public sealed class NativeOriginConstructionTests
                 Contributor("orc", "species.orc")]);
         var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
         var selected = offered.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision" &&
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision" &&
             x.ContributorId is "elf" or "orc").ToArray();
         Assert.Equal(2, selected.Length);
         Assert.Equal(2, selected.Select(x => x.Identity.Occurrence.Source.Id)
@@ -2271,7 +2271,7 @@ public sealed class NativeOriginConstructionTests
         Assert.Contains(unresolved.Issues, x =>
             x.Code == "shared-definition-reconciliation-required");
         Assert.DoesNotContain(unresolved.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
 
         var relation = new NativeOriginRelationship("keep-separate-visions",
             NativeOriginRelationshipKind.Equivalent,
@@ -2289,7 +2289,7 @@ public sealed class NativeOriginConstructionTests
         Assert.DoesNotContain(approved.Issues, x =>
             x.Code == "shared-definition-reconciliation-required");
         var actual = approved.Profile!.Underlying.InherentGrants.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision").ToArray();
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision").ToArray();
         Assert.Equal(2, actual.Length);
         Assert.All(actual, x => Assert.Single(x.SourceCandidateIds));
         Assert.Equal(2, actual.Select(x => x.Identity.Occurrence.Source.Id)
@@ -2306,7 +2306,7 @@ public sealed class NativeOriginConstructionTests
                 Contributor("orc", "species.orc")]);
         var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
         var visions = offers.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision")
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision")
             .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
         Assert.Equal(2, visions.Length);
 
@@ -2338,7 +2338,7 @@ public sealed class NativeOriginConstructionTests
             x.Code == "relationship-disposition-unauthorized" &&
             x.Path == relation.Id);
         Assert.DoesNotContain(rejected.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
 
         var accepted = Evaluate(chosen with
         {
@@ -2352,7 +2352,7 @@ public sealed class NativeOriginConstructionTests
         Assert.DoesNotContain(accepted.Issues, x =>
             x.Code == "relationship-disposition-unauthorized");
         Assert.Equal(2, accepted.Profile!.Underlying.InherentGrants.Count(x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision"));
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision"));
     }
 
     [Fact]
@@ -2368,7 +2368,7 @@ public sealed class NativeOriginConstructionTests
             contributors: contributors);
         var offers = Evaluate(proposal).EvaluatedProposal.Candidates;
         var visions = offers.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision")
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision")
             .OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
         Assert.Equal(3, visions.Length);
         Assert.Equal(3, visions.Select(x => x.Identity.Occurrence.Source.Id)
@@ -2408,9 +2408,9 @@ public sealed class NativeOriginConstructionTests
         {
             Assert.Contains(result.Issues, x =>
                 x.Code == "shared-definition-reconciliation-required" &&
-                x.Path == "trait.shared.low-light-vision");
+                x.Path == "trait.low-light-vision");
             Assert.DoesNotContain(result.Profile!.Underlying.InherentGrants, x =>
-                x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+                x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         }
         Assert.Equal(
             original.Issues.Where(x => x.Code == "shared-definition-reconciliation-required")
@@ -2440,7 +2440,7 @@ public sealed class NativeOriginConstructionTests
         Assert.Contains(forgedExpansion.Issues, x =>
             x.Code == "relationship-disposition-unauthorized" && x.Path == relation.Id);
         Assert.DoesNotContain(forgedExpansion.Profile!.Underlying.InherentGrants,
-            x => x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x => x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
     }
 
 }

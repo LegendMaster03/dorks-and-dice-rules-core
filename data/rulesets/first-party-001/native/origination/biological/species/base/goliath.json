@@ -9,19 +9,19 @@
   "walkingSpeedFeet": 35,
   "traits": [
     {
-      "traitId": "trait.goliath.powerful-build"
+      "traitId": "trait.powerful-build-grapple-resilience"
     },
     {
-      "traitId": "trait.goliath.large-form"
+      "traitId": "trait.large-form"
     },
     {
-      "traitId": "trait.goliath.mountain-leap"
+      "traitId": "trait.mountain-leap"
     },
     {
-      "traitId": "trait.goliath.altitude-acclimation"
+      "traitId": "trait.altitude-acclimation"
     },
     {
-      "traitId": "trait.goliath.giant-ancestry-aptitude"
+      "traitId": "trait.ancestral-aptitude"
     }
   ],
   "reviewNotes": [

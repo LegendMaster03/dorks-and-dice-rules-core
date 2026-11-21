@@ -57,11 +57,11 @@ public sealed class NativeOriginSkillRankEntitlementTests
         var size = Assert.Single(choices, x =>
             x.Identity.IntrinsicSlotId == "size");
         var skill = Assert.Single(choices, x =>
-            x.Identity.MechanicalDefinitionId == "trait.human.skillful");
+            x.Identity.MechanicalDefinitionId == "trait.skillful");
         var feat = Assert.Single(choices, x =>
-            x.Identity.MechanicalDefinitionId == "trait.human.versatile");
+            x.Identity.MechanicalDefinitionId == "trait.versatile");
         var adaptable = Assert.Single(choices, x =>
-            x.Identity.MechanicalDefinitionId == "trait.human.adaptable-learning");
+            x.Identity.MechanicalDefinitionId == "trait.adaptable-learning");
         Assert.Equal(NativeOriginEligibility.Eligible, adaptable.SelectionBasis.Eligibility);
 
         var manifestations = new NativeOriginManifestation[]
@@ -105,7 +105,7 @@ public sealed class NativeOriginSkillRankEntitlementTests
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         var ranks = offers.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.human.adaptable-learning").ToArray();
+            x.Identity.MechanicalDefinitionId == "trait.adaptable-learning").ToArray();
         Assert.Equal(3, foundation.Length);
         Assert.Equal(humanDonors, ranks.Length);
         Assert.All(ranks, x =>
@@ -212,7 +212,7 @@ public sealed class NativeOriginSkillRankEntitlementTests
         var selected = SelectedMixedHuman(catalog, 2);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, selected.Status);
         var grant = Assert.Single(selected.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.human.adaptable-learning");
+            x.Identity.MechanicalDefinitionId == "trait.adaptable-learning");
         Assert.Equal(2, grant.SourceCandidateIds.Count);
         var projection = NativeOriginSkillRankEntitlementProjector.Project(
             catalog, selected, 5);
@@ -227,7 +227,7 @@ public sealed class NativeOriginSkillRankEntitlementTests
         var catalog = Catalog();
         var selected = SelectedDirectHuman(catalog);
         var grant = Assert.Single(selected.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.human.adaptable-learning");
+            x.Identity.MechanicalDefinitionId == "trait.adaptable-learning");
         var changed = selected.Profile.Underlying with
         {
             InherentGrants = selected.Profile.Underlying.InherentGrants

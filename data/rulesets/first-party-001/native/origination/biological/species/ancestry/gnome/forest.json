@@ -7,10 +7,10 @@
   "parent": "species.gnome",
   "traits": [
     {
-      "traitId": "trait.gnome.forest.forest-illusion"
+      "traitId": "trait.forest-illusion"
     },
     {
-      "traitId": "trait.gnome.forest.animal-speech"
+      "traitId": "trait.animal-speech"
     }
   ],
   "spellcastingAbilityChoice": [

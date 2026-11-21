@@ -7,16 +7,16 @@
   "parent": "species.goliath",
   "traits": [
     {
-      "traitId": "trait.goliath.stone.stones-endurance"
+      "traitId": "trait.stones-endurance"
     },
     {
-      "traitId": "trait.goliath.stone.stone-strike"
+      "traitId": "trait.stone-strike"
     },
     {
-      "traitId": "trait.goliath.stone.cavernous-sight"
+      "traitId": "trait.cavernous-sight"
     },
     {
-      "traitId": "trait.goliath.stone.stone-throw"
+      "traitId": "trait.stone-throw"
     }
   ],
   "reviewNotes": [

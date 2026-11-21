@@ -1,9 +1,0 @@
-{
-  "id": "trait.halfling.brave",
-  "name": "Brave",
-  "kind": "origin-trait",
-  "trait": {
-    "id": "brave",
-    "description": "Advantage on saves to resist or end Shaken, Frightened, Panicked, and fear-induced Cowering; this does not create new saving throw opportunities."
-  }
-}

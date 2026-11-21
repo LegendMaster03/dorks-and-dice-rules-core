@@ -1,0 +1,53 @@
+{
+  "id": "trait.frosts-chill",
+  "name": "Frost's Chill",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "frosts-chill",
+    "name": "Frost's Chill",
+    "description": "When you hit a target with an attack roll and deal damage to it, you can deal an additional 1d6 Cold damage to that target and reduce its Speed by 10 feet until the start of your next turn. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+    "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
+    "extraDamage": {
+      "dice": "1d6",
+      "damageType": "cold",
+      "target": "same-target"
+    },
+    "speedReduction": {
+      "feet": 10,
+      "target": "same-target",
+      "endsAt": "start-of-your-next-turn"
+    },
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    },
+    "alternateStrikeMode": {
+      "id": "frost-strike",
+      "name": "Frost Strike",
+      "description": "Instead of the usual unconditional 10-foot Speed reduction from Frost's Chill, on a qualifying melee or thrown-weapon hit that deals damage you can use the same single 1d6 Cold damage rider and require a Constitution saving throw. On failure the creature's Speed becomes 0 until the start of your next turn. On success no Speed reduction occurs. Spend one existing Frost's Chill use, not an additional use.",
+      "trigger": "melee-weapon-or-thrown-weapon-attack-hit-and-deal-damage",
+      "oncePerTurn": true,
+      "replaces": "frosts-chill-speed-reduction",
+      "extraDamageAlreadyProvidedByParent": true,
+      "savingThrow": {
+        "ability": "constitution",
+        "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+        "onSuccess": "no-speed-reduction"
+      },
+      "onFailedSave": {
+        "speedSetFeet": 0,
+        "endsAt": "start-of-your-next-turn"
+      },
+      "sharedUsesFromTrait": "frosts-chill",
+      "extraUsesGranted": false
+    },
+    "originBindings": {
+      "giantAncestryAbility": {
+        "lookup": "manifested-trait-choice",
+        "mechanicalDefinitionId": "trait.ancestral-aptitude",
+        "choiceRequirementId": "abilityChoice",
+        "scope": "contributor"
+      }
+    }
+  }
+}

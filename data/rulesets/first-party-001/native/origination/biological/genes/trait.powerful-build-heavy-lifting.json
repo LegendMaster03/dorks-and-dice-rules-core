@@ -1,0 +1,22 @@
+{
+  "id": "trait.powerful-build-heavy-lifting",
+  "name": "Powerful Build (Heavy Lifting)",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "powerful-build",
+    "name": "Powerful Build (Heavy Lifting)",
+    "description": "Count as one size larger when determining carrying capacity and how much weight you can push, drag, or lift. This does not change your actual size, occupied space, reach, weapon permissions, or grapple modifiers, and does not grant advantage on checks to end Grappled.",
+    "effectiveSizeCategoriesHigherForCarryingCapacity": 1,
+    "effectiveSizeCategoriesHigherForPushingDraggingLifting": 1,
+    "doesNotChange": [
+      "actual-size",
+      "occupied-space",
+      "attack-reach",
+      "weapon-permissions",
+      "grapple-size-modifiers"
+    ],
+    "doesNotGrant": [
+      "advantage-on-checks-to-end-grappled"
+    ]
+  }
+}

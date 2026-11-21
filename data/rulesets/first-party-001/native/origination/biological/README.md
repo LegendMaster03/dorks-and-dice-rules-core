@@ -3,11 +3,12 @@
 This method owns one canonical gene catalog and the Species/Ancestry presets
 that refer to it:
 
-- `genes/trait.<stable-id>.json`: one canonical `origin-trait` definition
+- `genes/trait.<mechanical-gene-id>.json`: one canonical `origin-trait` definition
   per JSON file, directly under `genes/`. The filename is the definition's
   stable ID plus `.json`, not an Ancestry-based category or an eligibility gate.
-  Some historical IDs include Species/Ancestry names; preserving those IDs
-  prevents needless changes to references and saved origins.
+  Active IDs name the mechanic, not its original Species or Ancestry. The
+  conversion from the prior canonical IDs is recorded only in the explicit
+  profile migration manifest outside the native catalog.
 - `species/base/`: shared Species presets and foundations.
 - `species/ancestry/`: Ancestry presets, including intermediate family
   presets. Explicit `parent` IDs establish their grouping and inheritance,
@@ -33,9 +34,15 @@ historical ancestors.
 
 The `inheritanceMethods: ["biological"]` six-gene proof of concept was
 retired earlier. The loader still uses the universal `origin-trait` kind;
-there is no second gene definition engine. This storage normalization changes
-no gene IDs, mechanical payloads, Species/Ancestry `traitId` references,
-ancestry parent links, or ordered `/traits/N` occurrence indexes.
+there is no second gene definition engine. The identity normalization replaces old gene IDs with 87 active,
+source-neutral canonical IDs, including two consolidated equivalent genes.
+Preset references and internal dependency pointers now use those IDs. It
+preserves source occurrence positions, Ancestry links and mechanical effects.
 
 Construct Assembly and other origination methods have separate catalogs and
 are unaffected by the biological layout.
+
+Saved Origin profiles carrying previous mechanical definition IDs require an
+explicit migration using `tools/migrate_biological_gene_ids.py` and the
+`data/migrations/biological-gene-ids-20261121.json` map; migration never
+changes contributor provenance or source occurrence paths automatically.

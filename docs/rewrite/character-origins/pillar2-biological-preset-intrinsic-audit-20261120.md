@@ -6,25 +6,22 @@
 
 ## Implemented storage model
 
-The authoritative biological catalog contains 89 distinct canonical `origin-trait`
+The authoritative biological catalog contains 87 distinct canonical `origin-trait`
 genes, representing 95 original trait occurrences in nine Species and 34
-Ancestry records. The old 36 files were grouped by the original Species or
-Ancestry source, sometimes containing several canonical definitions.
+Ancestry records. The earlier 36 files grouped 89 definitions by the original Species or
+Ancestry source; this pass consolidated two mechanically equivalent pairs.
 
 Each canonical gene now lives in its own file directly under
-`native/origination/biological/genes/`, named by its unchanged stable ID:
-`genes/trait.dragonborn.breath-weapon.json`,
-`genes/trait.goliath.stone.stone-strike.json`, and
-`genes/trait.shared.low-light-vision.json` are examples. A source name inside
-an existing stable ID is historical identity/provenance, **not** a folder,
-automatic affinity rule, or permission to inherit exclusively from that
-Species or Ancestry.
+`native/origination/biological/genes/`, named by its source-neutral mechanical ID:
+`genes/trait.breath-weapon.json`,
+`genes/trait.stone-strike.json`, and
+`genes/trait.low-light-vision.json` are examples. Prior source-prefixed IDs are retained only in the offline migration map,
+not as active gene aliases or inheritance constraints.
 
 Species and Ancestry records already reference canonical genes using ordered
 `{"traitId":"trait.…"}` presets; the inherited `parent` graph supplies shared
-foundation records. Nothing in this storage pass changes canonical gene IDs,
-trait payloads, source `traitId` arrays, source occurrence indices, or parent
-relationships. Existing projectors and the universal Origin construction
+foundation records. Gene identities and preset `traitId` references are now converted together;
+source occurrence indices and parent relationships are unchanged. Existing projectors and the universal Origin construction
 pipeline still consume the same mechanical definitions.
 
 ## What is not yet represented by a gene
@@ -48,7 +45,7 @@ specific field shapes. Their removal is not a pure content refactor.
 
 ## Gene parameter bindings that still use preset evidence
 
-The 89-gene audit identified 31 definitions with canonical `originBindings`:
+The 87-gene catalog contains 31 definitions with canonical `originBindings`:
 
 - **Dragonborn (3):** damage type uses `leaf` binding, and ordinary Breath
   Weapon's complete area uses `nearest` family/leaf binding. Existing
@@ -58,7 +55,7 @@ The 89-gene audit identified 31 definitions with canonical `originBindings`:
 - **Elf (9):** Drow, High and Wood Elf innate spells use the selected
   `spellcastingAbility` intrinsic from the correct source.
 - **Goliath (9):** Ancestry attacks and abilities use the manifested,
-  contributor-scoped Giant Ancestry Aptitude choice. They do not acquire
+  contributor-scoped Ancestral Aptitude choice. They do not acquire
   another contributor's choice merely because the IDs match.
 - **Tiefling (10):** Innate spells use source-scoped
   `spellcastingAbility`, and shared Otherworldly Presence uses the verified
@@ -95,3 +92,11 @@ transmissible. Those need explicit design treatment rather than silently
 changing gameplay during the catalog relocation.
 
 Construct Assembly and other origination methods are outside this pass.
+
+## Persisted profile compatibility
+
+Old canonical IDs are not runtime aliases. The migration manifest under
+`data/migrations/biological-gene-ids-20261121.json` maps 89 former IDs to
+87 current definitions. Apply `tools/migrate_biological_gene_ids.py` explicitly
+to saved Origin JSON; do not silently rewrite historical contributor IDs,
+source occurrence paths, or table authorization evidence.

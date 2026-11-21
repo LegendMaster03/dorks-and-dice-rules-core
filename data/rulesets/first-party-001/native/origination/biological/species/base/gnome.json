@@ -6,10 +6,10 @@
   "selectable": true,
   "traits": [
     {
-      "traitId": "trait.shared.low-light-vision"
+      "traitId": "trait.low-light-vision"
     },
     {
-      "traitId": "trait.gnome.gnomish-cunning"
+      "traitId": "trait.magical-cunning"
     }
   ],
   "creatureType": "fey",

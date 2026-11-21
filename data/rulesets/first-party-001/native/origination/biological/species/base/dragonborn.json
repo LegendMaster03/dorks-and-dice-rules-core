@@ -9,13 +9,13 @@
   "walkingSpeedFeet": 30,
   "traits": [
     {
-      "traitId": "trait.shared.low-light-vision"
+      "traitId": "trait.low-light-vision"
     },
     {
-      "traitId": "trait.dragonborn.draconic-resistance"
+      "traitId": "trait.damage-type-resistance"
     },
     {
-      "traitId": "trait.dragonborn.breath-weapon"
+      "traitId": "trait.breath-weapon"
     }
   ],
   "reviewNotes": [

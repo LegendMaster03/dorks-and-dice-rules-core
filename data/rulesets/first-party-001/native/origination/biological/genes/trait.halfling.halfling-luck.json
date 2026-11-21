@@ -1,9 +1,0 @@
-{
-  "id": "trait.halfling.halfling-luck",
-  "name": "Halfling Luck",
-  "kind": "origin-trait",
-  "trait": {
-    "id": "halfling-luck",
-    "description": "On a natural 1 for a d20 test, reroll and use the new result."
-  }
-}
