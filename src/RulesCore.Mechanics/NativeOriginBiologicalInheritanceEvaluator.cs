@@ -169,16 +169,26 @@ internal sealed class NativeOriginBiologicalInheritanceEvaluator(
                         inheritedGene is null);
             }
 
-            // The donor's completed choices travel with its configured
-            // instance. A latent native gene requiring a creation-time choice
-            // needs an explicit, validated latent configuration.
+            // A verified donor's completed choices travel with its instance.
+            // They cannot be silently reconfigured in a later generation.
+            if (!expressed && (inheritedGene is not null || inheritedGrant is not null) &&
+                configurations.ContainsKey(candidate.Id))
+            {
+                Issue("biological-inherited-gene-reconfiguration-unsupported",
+                    candidate.Id, NativeOriginIssueSeverity.Invalid,
+                    "A previous generation's genetic configuration cannot be changed by a latent choice claim.");
+                continue;
+            }
+            // A newly selected native latent gene with an authored creation
+            // choice needs an explicit, complete configuration.
             var choices = expressed ? grants[0].ResolvedChoices :
                 inheritedGene?.ResolvedChoices ?? inheritedGrant?.ResolvedChoices ??
                 configurations.GetValueOrDefault(candidate.Id)?.Choices ?? [];
             if (!expressed)
             {
                 var requirements = candidate.RequiredChoices ?? [];
-                if (!ValidateChoices(candidate, requirements, choices, authority, Issue))
+                if (inheritedGene is null && inheritedGrant is null &&
+                    !ValidateChoices(candidate, requirements, choices, authority, Issue))
                     continue;
                 // Authenticated parent configurations have already committed
                 // their finite choices, which the deconstructor does not reopen.
@@ -228,7 +238,8 @@ internal sealed class NativeOriginBiologicalInheritanceEvaluator(
             if (choice is null || !requirements.Any(req =>
                     req.Id == choice.RequirementId &&
                     req.Timing != NativeOriginChoiceTiming.OnUse) ||
-                choices.Count(x => x.RequirementId == choice.RequirementId) != 1)
+                choices.Count(x => x is not null &&
+                    x.RequirementId == choice.RequirementId) != 1)
             {
                 issue("biological-latent-choice-invalid", candidate.Id,
                     NativeOriginIssueSeverity.Invalid,
@@ -262,7 +273,8 @@ internal sealed class NativeOriginBiologicalInheritanceEvaluator(
         foreach (var requirement in requirements)
             if (requirement.Timing != NativeOriginChoiceTiming.OnUse &&
                 requirement.Minimum > 0 &&
-                !choices.Any(choice => choice.RequirementId == requirement.Id))
+                !choices.Any(choice => choice is not null &&
+                    choice.RequirementId == requirement.Id))
             {
                 issue("biological-latent-choice-incomplete", candidate.Id,
                     NativeOriginIssueSeverity.Incomplete,
