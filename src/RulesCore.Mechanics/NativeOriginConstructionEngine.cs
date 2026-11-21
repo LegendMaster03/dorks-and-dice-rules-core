@@ -733,9 +733,14 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             profile = profile with { History = history.Select(x =>
                 x.Id == "construction:" + proposal.Id
                     ? x with { Stage = NativeOriginEventStage.Completed } : x).ToArray() };
-        return new(status, proposal, status == NativeOriginConstructionStatus.Invalid ? null : profile,
+        var outcome = new NativeOriginConstructionResult(status, proposal,
+            status == NativeOriginConstructionStatus.Invalid ? null : profile,
             issues.OrderBy(x => x.Path, StringComparer.Ordinal)
                 .ThenBy(x => x.Code, StringComparer.Ordinal).Distinct().ToArray());
+        return outcome with
+        {
+            BiologicalCombination = NativeOriginBiologicalCombinationProjector.Build(outcome)
+        };
 
         void Add(string code, string path, NativeOriginIssueSeverity severity, string detail) =>
             issues.Add(new(code, path, severity, detail));
