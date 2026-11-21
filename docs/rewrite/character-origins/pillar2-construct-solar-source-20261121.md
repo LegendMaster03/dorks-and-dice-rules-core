@@ -108,10 +108,11 @@ pass.
 1. Connect the host's elapsed-time/environment authority and durable
    battery balances to gameplay state; neither preview nor in-process
    revision receipt is a persistent game transaction.
-2. Confirm deterministic allocation priority where multiple powered sources
-   share a network. The current source preview conservatively credits
-   other active generators first when estimating solar storage use; this is
-   an implementation detail, **not an owner-approved fuel-priority rule**.
+2. Establish a source-dispatch policy when solar and non-solar
+   generators simultaneously supply the same active network. That
+   configuration is explicitly unresolved by the solar preview until
+   a priority or allocation rule is approved, rather than introducing
+   an unapproved implicit fuel-priority rule.
 3. Integrate optional external battery components after their capacities
    and transfer behavior have been separately approved.
 4. Run the .NET suite and integrated acceptance against the stacked
