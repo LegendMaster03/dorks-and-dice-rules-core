@@ -359,6 +359,11 @@ public sealed class NativeConstructOperatingSession
                     out var state) && state.SourceSupplyingPower == true)
                 .Sum(x => (long)x.EffectiveOutput);
             var nonSolarOutput = Math.Max(0, network.AvailableOutput - solarCapacity);
+            if (network.RequestedDemand > 0 && solarCapacity > 0 &&
+                nonSolarOutput > 0)
+                issues.Add(new("construct-solar-shared-network-allocation-unresolved",
+                    "solar.powerNetworks", NativeOriginIssueSeverity.Unresolved,
+                    "A shared solar and non-solar power network needs a separately approved source-dispatch policy."));
             var remaining = Math.Max(0, network.RequestedDemand - nonSolarOutput);
             foreach (var source in inNetwork)
             {
@@ -368,6 +373,9 @@ public sealed class NativeConstructOperatingSession
                 remaining -= delivered;
             }
         }
+
+        if (issues.Count > 0)
+            return new(operating, [], issues.ToArray());
 
         var states = sourceStates.Select(source =>
         {
