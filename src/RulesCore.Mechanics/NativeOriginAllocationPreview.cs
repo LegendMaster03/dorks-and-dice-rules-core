@@ -30,16 +30,43 @@ public sealed record NativeOriginAllocationInteractionPrice(
 /// capabilities available at the current character level. A bundle requires
 /// all members to be selected from a shared contributing lineage.
 /// </summary>
+/// <summary>
+/// A configuration selector reads a complete effective grant, not a contributor
+/// offer. Paths are slash-separated JSON properties rooted at value, parameters,
+/// choices, definition, or resourceOwners. Missing is distinct from JSON null.
+/// </summary>
+public enum NativeOriginAllocationComparison { Equals, Present, Absent }
+
+public sealed record NativeOriginAllocationPriceCondition(
+    string MemberKey, string Path, NativeOriginAllocationComparison Comparison,
+    JsonElement? ExpectedValue = null);
+
+/// <summary>
+/// A configuration replaces the containing price's load; it is not an extra
+/// charge. Highest explicit priority wins, and tied matches fail closed.
+/// </summary>
+public sealed record NativeOriginAllocationPriceConfiguration(
+    string Id, int Load, int Priority,
+    IReadOnlyList<NativeOriginAllocationPriceCondition> Conditions);
+
+/// <summary>
+/// When Configurations is supplied, a nonmatching effective configuration is
+/// unpriced unless the author explicitly opts into the base-load fallback.
+/// A null Configurations list retains the existing fixed-price contract.
+/// </summary>
 public sealed record NativeOriginAllocationPrice(
-    string Id, int Load, IReadOnlyList<string> MemberKeys);
+    string Id, int Load, IReadOnlyList<string> MemberKeys,
+    IReadOnlyList<NativeOriginAllocationPriceConfiguration>? Configurations = null,
+    bool AllowUnmatchedConfigurationFallback = false);
 
 public sealed record NativeOriginAllocationComponent(
     string Key, string GrantId, IReadOnlyList<string> SourceCandidateIds,
-    int? UnlockLevel, string? AssignedPriceId = null);
+    int? UnlockLevel, string? AssignedPriceId = null,
+    string? AssignedConfigurationId = null);
 
 public sealed record NativeOriginAllocationCharge(
     string PriceId, int Load, IReadOnlyList<string> GrantIds,
-    IReadOnlyList<string> CharacteristicKeys);
+    IReadOnlyList<string> CharacteristicKeys, string? ConfigurationId = null);
 
 /// <summary>
 /// A public preview never changes Origin authorization. The creation gate
@@ -110,7 +137,8 @@ public static class NativeOriginAllocationPreview
                 string.IsNullOrWhiteSpace(x.Id) || x.Load <= 0 ||
                 x.MemberKeys is not { Count: > 0 } ||
                 x.MemberKeys.Any(string.IsNullOrWhiteSpace) ||
-                x.MemberKeys.Distinct(StringComparer.Ordinal).Count() != x.MemberKeys.Count) ||
+                x.MemberKeys.Distinct(StringComparer.Ordinal).Count() != x.MemberKeys.Count ||
+                !NativeOriginAllocationPriceResolver.Valid(x)) ||
             policy.Prices.Select(x => x.Id).Distinct(StringComparer.Ordinal).Count() !=
                 policy.Prices.Count ||
             policy.Prices.SelectMany(x => x.MemberKeys)
@@ -148,7 +176,11 @@ public static class NativeOriginAllocationPreview
             .GroupBy(x => x.Id, StringComparer.Ordinal)
             .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
         var assigned = new Dictionary<string, string>(StringComparer.Ordinal);
+        var selectedConfigurations = new Dictionary<string, string>(
+            StringComparer.Ordinal);
+        var grantsById = grants.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var charges = new List<NativeOriginAllocationCharge>();
+        var ambiguousConfiguration = false;
 
         foreach (var entry in policy.Prices.OrderBy(x => x.Id,
             StringComparer.Ordinal))
@@ -174,10 +206,7 @@ public static class NativeOriginAllocationPreview
                     issues.Add("allocation-bundle-source-mismatch:" + entry.Id);
                     continue;
                 }
-                foreach (var component in members)
-                    assigned.Add(component.GrantId, entry.Id);
-                charges.Add(new(entry.Id, entry.Load,
-                    members.Select(x => x.GrantId).ToArray(), entry.MemberKeys));
+                Price(entry, members);
                 continue;
             }
 
@@ -185,11 +214,36 @@ public static class NativeOriginAllocationPreview
             // trait remain two possible benefits; don't count donor evidence
             // twice, but also don't treat independently kept benefits as free.
             foreach (var component in groups[0])
+                Price(entry, [component]);
+        }
+
+        void Price(NativeOriginAllocationPrice entry,
+            IReadOnlyList<NativeOriginAllocationComponent> members)
+        {
+            var actual = members.ToDictionary(x => x.Key,
+                x => grantsById[x.GrantId], StringComparer.Ordinal);
+            var chosen = NativeOriginAllocationPriceResolver.Select(
+                catalog, entry, actual);
+            if (chosen.Ambiguous)
             {
-                assigned.Add(component.GrantId, entry.Id);
-                charges.Add(new(entry.Id, entry.Load, [component.GrantId],
-                    [component.Key]));
+                ambiguousConfiguration = true;
+                issues.Add("allocation-configuration-ambiguous:" + entry.Id);
+                return;
             }
+            if (chosen.Load is not int load)
+            {
+                issues.Add("allocation-configuration-unpriced:" + entry.Id + ":" +
+                    string.Join(",", members.Select(x => x.GrantId)));
+                return;
+            }
+            foreach (var member in members)
+            {
+                assigned.Add(member.GrantId, entry.Id);
+                if (chosen.ConfigurationId is not null)
+                    selectedConfigurations.Add(member.GrantId, chosen.ConfigurationId);
+            }
+            charges.Add(new(entry.Id, load, members.Select(x => x.GrantId).ToArray(),
+                members.Select(x => x.Key).ToArray(), chosen.ConfigurationId));
         }
 
         foreach (var component in components.Where(x =>
@@ -218,9 +272,13 @@ public static class NativeOriginAllocationPreview
         var checkedComponents = components.Select(x =>
             x with
             {
-                AssignedPriceId = assigned.GetValueOrDefault(x.GrantId)
+                AssignedPriceId = assigned.GetValueOrDefault(x.GrantId),
+                AssignedConfigurationId = selectedConfigurations.GetValueOrDefault(x.GrantId)
             }).ToArray();
 
+        if (ambiguousConfiguration)
+            return Finish("invalid-policy", policy.Revision, policy.Allowance,
+                null, charges, issues, checkedComponents);
         if (issues.Count > 0)
             return Finish("unresolved", policy.Revision, policy.Allowance,
                 null, charges, issues, checkedComponents);
