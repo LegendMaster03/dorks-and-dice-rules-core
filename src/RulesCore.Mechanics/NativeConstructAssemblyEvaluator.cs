@@ -749,10 +749,10 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                         Number(profile, "loadedAtPercent", "components." + instanceId, Issue)
                             is int threshold &&
                         Number(profile, "overloadedSpeedFeet",
-                            "components." + instanceId, Issue) is int overloaded &&
+                            "components." + instanceId, Issue) is int overloadSpeed &&
                         normal is > 0 and <= 100_000 && loaded <= normal &&
-                        overloaded <= loaded && threshold is >= 1 and <= 100)
-                        policy = new(mode, normal, loaded, threshold, overloaded);
+                        overloadSpeed <= loaded && threshold is >= 1 and <= 100)
+                        policy = new(mode, normal, loaded, threshold, overloadSpeed);
                     else
                         Issue("construct-movement-profile-invalid",
                             "components." + instanceId + ".movementLoadProfile",
