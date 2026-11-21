@@ -1,0 +1,13 @@
+{
+  "name": "Alchemical circulation assembly",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "description": "Distributes the working medium needed by compatible alchemical actuators.",
+  "provides": [
+    "circulation"
+  ],
+  "materialSlots": [
+    "conduit"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.alchemical-circulation",
+  "powerDemand": 1
+}

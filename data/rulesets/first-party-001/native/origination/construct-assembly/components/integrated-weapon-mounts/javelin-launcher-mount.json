@@ -1,0 +1,14 @@
+{
+  "name": "Javelin launcher mount",
+  "description": "Mount for an authored javelin launching mechanism.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "equipment-mount",
+    "projectile-interface"
+  ],
+  "materialSlots": [
+    "mount"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.javelin-launcher-mount",
+  "powerDemand": 0
+}

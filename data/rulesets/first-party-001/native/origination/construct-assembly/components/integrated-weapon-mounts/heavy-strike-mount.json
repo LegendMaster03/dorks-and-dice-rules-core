@@ -1,0 +1,14 @@
+{
+  "name": "Heavy strike mount",
+  "description": "Mount for a heavy integrated striking component, such as an axe or hammer configuration.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "equipment-mount",
+    "integrated-melee-interface"
+  ],
+  "materialSlots": [
+    "mount"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.heavy-strike-mount",
+  "powerDemand": 0
+}

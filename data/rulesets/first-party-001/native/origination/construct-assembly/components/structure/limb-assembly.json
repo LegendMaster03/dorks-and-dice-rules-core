@@ -1,0 +1,14 @@
+{
+  "name": "Limb assembly",
+  "description": "Supports a configurable manipulator, locomotor or other appendage; no anatomical count or shape is required.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "structural-support",
+    "limb-support"
+  ],
+  "materialSlots": [
+    "limb"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.limb-assembly",
+  "powerDemand": 0
+}

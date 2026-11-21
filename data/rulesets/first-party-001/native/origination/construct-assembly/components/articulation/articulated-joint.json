@@ -1,0 +1,13 @@
+{
+  "name": "Articulated joint",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "description": "Connects structural elements with permitted articulation.",
+  "provides": [
+    "articulation"
+  ],
+  "materialSlots": [
+    "joint"
+  ],
+  "powerDemand": 0,
+  "craftingRecipeId": "crafting-recipe.construct-component.articulated-joint"
+}
