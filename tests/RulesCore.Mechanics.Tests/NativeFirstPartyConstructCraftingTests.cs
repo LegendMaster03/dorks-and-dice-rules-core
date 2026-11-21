@@ -157,4 +157,75 @@ public sealed class NativeFirstPartyConstructCraftingTests
         Assert.Contains(result.Origin.Issues,
             issue => issue.Code == "construct-starting-allowance-unresolved");
     }
+
+    [Theory]
+    [InlineData("small", 4, 16)]
+    [InlineData("medium", 8, 32)]
+    [InlineData("large", 16, 64)]
+    public void BodySizeComesFromVerifiedFrameRecipeVariant(
+        string size, long quantity, long cost)
+    {
+        var catalog = Catalog();
+        var frame = Part("body", "structural-frame", "frame", "steel")
+            with { ConstructionVariantId = size };
+        var result = Quote(catalog, frame);
+        Assert.True(result.IsAuthorized,
+            string.Join("; ", result.Issues.Select(x => x.Code)));
+        Assert.Equal(size, result.DerivedCreatureSize);
+        Assert.Equal(quantity,
+            result.RequiredConstructionResources!["construct-material.steel"]);
+        Assert.Equal(cost, result.KnownConstructionCost);
+    }
+
+    [Fact]
+    public void SizedCasingCanRepresentBodyWithoutMandatoryFrame()
+    {
+        var catalog = Catalog();
+        var body = Part("body", "external-casing", "casing", "wood")
+            with { ConstructionVariantId = "small" };
+        var result = Quote(catalog, body);
+        Assert.True(result.IsAuthorized);
+        Assert.Equal("small", result.DerivedCreatureSize);
+        Assert.Equal(4, result.KnownConstructionCost);
+    }
+
+    [Fact]
+    public void UnsizedHardwareDoesNotBecomeAnIndependentSizeChoice()
+    {
+        var catalog = Catalog();
+        var result = Quote(catalog,
+            Part("body", "structural-frame", "frame", "steel"));
+        Assert.True(result.IsAuthorized);
+        Assert.Null(result.DerivedCreatureSize);
+    }
+
+    [Fact]
+    public void ContradictoryBodyComponentsCannotSilentlySelectSize()
+    {
+        var catalog = Catalog();
+        var result = Quote(catalog,
+            Part("frame", "structural-frame", "frame", "steel") with
+            { ConstructionVariantId = "large" },
+            Part("case", "external-casing", "casing", "wood") with
+            { ConstructionVariantId = "small" });
+
+        Assert.Equal(NativeOriginConstructionStatus.Conflicting, result.Status);
+        Assert.Null(result.DerivedCreatureSize);
+        Assert.Contains(result.Issues, x => x.Code == "construct-body-size-conflict");
+        Assert.Equal(68, result.KnownConstructionCost);
+    }
+
+    [Fact]
+    public void UnsupportedManufacturingVariantDoesNotBecomeFreeOrAuthorizeSize()
+    {
+        var catalog = Catalog();
+        var result = Quote(catalog,
+            Part("frame", "structural-frame", "frame", "steel") with
+            { ConstructionVariantId = "gargantuan" });
+
+        Assert.Equal(NativeOriginConstructionStatus.Invalid, result.Status);
+        Assert.Null(result.DerivedCreatureSize);
+        Assert.Contains(result.Issues, x =>
+            x.Code == "construct-construction-variant-invalid");
+    }
 }
