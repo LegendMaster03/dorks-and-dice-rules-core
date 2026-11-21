@@ -96,7 +96,7 @@
   },
   "limitations": [
     "The 30-foot locomotion trait still requires general Character Sheet movement binding and physical-support calibration.",
-    "The generic fuel preview does not authorize inventory expenditure, daily clocks, or condition mutations.",
+    "The shared daily-ration evaluator does not authorize inventory expenditure, daily time advancement, or Exhaustion mutations; the host must connect the engine's alternate sustenance resource to ordinary survival.",
     "Manufactured material mass remains provisional and incomplete; load capacity is not approved.",
     "Consciousness/animation is a separate origination concern; this hardware does not produce a mind.",
     "Ordinary language knowledge is granted by existing character-creation rules, not by the communication trait."
