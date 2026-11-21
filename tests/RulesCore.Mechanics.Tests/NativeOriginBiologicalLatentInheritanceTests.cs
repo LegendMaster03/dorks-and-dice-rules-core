@@ -143,9 +143,10 @@ public sealed class NativeOriginBiologicalLatentInheritanceTests
         Assert.All(powers, x =>
             Assert.Equal(NativeOriginEligibility.Eligible,
                 x.SelectionBasis.Eligibility));
+        var sourceGene = Assert.Single(parent.Profile.Underlying.BiologicalGenes!, x =>
+            x.SourceCandidateId == latent.Id);
         var carried = Assert.Single(powers, x =>
-            x.Id.EndsWith(":gene:gene:" + parent.EvaluatedProposal.Id + ":" + latent.Id,
-                StringComparison.Ordinal));
+            x.Id == "nested:carrier:gene:" + sourceGene.Id);
         var other = Assert.Single(powers, x => x.Id != carried.Id);
         var selected = foundation.Append(carried).ToArray();
         var result = Evaluate(proposal with
