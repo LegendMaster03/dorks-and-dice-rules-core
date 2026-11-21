@@ -301,8 +301,12 @@ public sealed class NativeConstructComponentExpansionTests
         var basic = JsonSerializer.Deserialize<NativeConstructAssemblyRequest>(
             json.RootElement.GetProperty("assembly").GetRawText(),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        // The solar recipe has not undergone separate starting-budget
+        // calibration. Exercise its operating mechanics without assuming
+        // it must fit the mechanical reference build's 200-point allowance.
         var solarAssembly = basic with
         {
+            InitialAllowance = 1000,
             Components = basic.Components.Select(x =>
                 x.InstanceId == "generator"
                     ? x with { PowerSourceId = "construct-power-source.solar-crystal" }
