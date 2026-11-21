@@ -1005,6 +1005,11 @@ public sealed class NativeConstructOriginProjectionTests
             "construct-power-source.solar-crystal"));
         Assert.True(built.IsMechanicallyAuthorized);
         var session = built.OperatingSession!;
+        var genericAllocation = session.EvaluateConfiguration();
+        Assert.False(genericAllocation.IsOperatingConfigurationValid);
+        Assert.Empty(genericAllocation.ApplicableOriginGrantIds);
+        Assert.Contains(genericAllocation.Issues, issue =>
+            issue.Code == "construct-solar-operating-context-required");
         var stored = new Dictionary<string, long> { ["generator"] = 60 };
         var direct = new Dictionary<string, NativeConstructSolarExposure>
             { ["generator"] = NativeConstructSolarExposure.Direct };
