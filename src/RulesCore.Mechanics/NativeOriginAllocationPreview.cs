@@ -86,10 +86,12 @@ public static class NativeOriginAllocationPreview
                     StringComparer.Ordinal).ToArray(), Unlock(catalog, x)))
             .ToArray();
         var issues = new List<string>();
-        if ((creationScope
-                ? result.EvaluatedProposal.Intent is not
-                    (NativeOriginIntent.Direct or NativeOriginIntent.Mixed or NativeOriginIntent.Custom)
-                : result.EvaluatedProposal.Intent != NativeOriginIntent.Mixed) ||
+        var applicableIntent = creationScope
+            ? result.EvaluatedProposal.Intent is
+                (NativeOriginIntent.Direct or NativeOriginIntent.Mixed or
+                    NativeOriginIntent.Custom)
+            : result.EvaluatedProposal.Intent == NativeOriginIntent.Mixed;
+        if (!applicableIntent ||
             result.EvaluatedProposal.Method is null ||
             result.EvaluatedProposal.Method.RuleId != "rule.creature-origination" ||
             result.EvaluatedProposal.Method.MethodId != "biological")
