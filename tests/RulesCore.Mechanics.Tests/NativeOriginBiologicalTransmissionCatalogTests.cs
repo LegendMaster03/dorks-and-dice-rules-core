@@ -107,7 +107,9 @@ public sealed class NativeOriginBiologicalTransmissionCatalogTests
     [InlineData("species.orc", "trait.powerful-build")]
     [InlineData("ancestry.elf.drow", "trait.darkness")]
     [InlineData("ancestry.tiefling.infernal", "trait.darkness")]
-    [InlineData("ancestry.tiefling.infernal", "trait.fire-damage-resistance")]
+    [InlineData("ancestry.tiefling.abyssal", "trait.damage-type-resistance")]
+    [InlineData("ancestry.tiefling.chthonic", "trait.damage-type-resistance")]
+    [InlineData("ancestry.tiefling.infernal", "trait.damage-type-resistance")]
     public void BiologicalGeneFromEachSpeciesIsAnEligibleOffer(
         string nativeDonor, string geneId)
     {
