@@ -72,8 +72,12 @@ class TieflingSpeciesReconciliationTests(unittest.TestCase):
                 self.assertEqual(["intelligence", "wisdom", "charisma"],
                                  leaf["spellcastingAbilityChoice"])
                 resistance, first, third, fifth = leaf["traits"]
-                self.assertEqual({"percent": 50, "damageType": damage},
-                                 resistance["damageResistance"])
+                self.assertEqual(damage, leaf["damageType"])
+                self.assertEqual("damage-type-resistance", resistance["id"])
+                self.assertEqual(50, resistance["damageResistance"]["percent"])
+                self.assertIn("damageTypeFrom", resistance["damageResistance"])
+                self.assertEqual("nearest",
+                                 resistance["originBindings"]["damageType"]["lookup"])
                 self.assertEqual(cantrip, first["spell"])
                 self.assertEqual(1, first["level"])
                 self.assertTrue(first["atWill"])

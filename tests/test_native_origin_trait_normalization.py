@@ -156,7 +156,7 @@ class NativeOriginTraitNormalizationTests(unittest.TestCase):
         self.assertEqual(["damageType", "area"],
                          list(breath["originBindings"]))
         self.assertEqual(4, len(breath["damage"]["progression"]))
-        self.assertEqual("leaf",
+        self.assertEqual("nearest",
                          trait("trait.damage-type-resistance")[
                              "originBindings"]["damageType"]["lookup"])
 
