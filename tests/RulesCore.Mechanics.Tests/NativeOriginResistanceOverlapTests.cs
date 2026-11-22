@@ -99,7 +99,7 @@ public sealed class NativeOriginResistanceOverlapTests
     {
         var (proposal, dwarf, tiefling, permits) = Select("species.dwarf",
             "trait.poison-resilience", "ancestry.tiefling.abyssal",
-            "trait.poison-damage-resistance");
+            "trait.damage-type-resistance");
         var unresolved = Evaluate(proposal, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Unresolved, unresolved.Status);
         Assert.Contains(unresolved.Issues, x =>
@@ -108,7 +108,7 @@ public sealed class NativeOriginResistanceOverlapTests
         Assert.DoesNotContain(unresolved.Profile?.Underlying.InherentGrants ?? [], x =>
             x.Identity.MechanicalDefinitionId is
                 "trait.poison-resilience" or
-                "trait.poison-damage-resistance");
+                "trait.damage-type-resistance");
 
         // The selected Dwarf option retains its full poison-resistance
         // *and* poison-saving-throw benefits. A type overlap does not
@@ -142,7 +142,7 @@ public sealed class NativeOriginResistanceOverlapTests
             .GetProperty("advantageAgainst")[0].GetString());
         Assert.DoesNotContain(result.Profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.poison-damage-resistance");
+                "trait.damage-type-resistance");
         Assert.Empty(result.Issues);
     }
 
@@ -151,7 +151,7 @@ public sealed class NativeOriginResistanceOverlapTests
     {
         var (proposal, infernal, goliath, decisions) = Select(
             "ancestry.tiefling.infernal",
-            "trait.fire-damage-resistance",
+            "trait.damage-type-resistance",
             "ancestry.goliath.fire", "trait.born-of-flame");
         var unresolved = Evaluate(proposal, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Unresolved, unresolved.Status);
@@ -182,7 +182,7 @@ public sealed class NativeOriginResistanceOverlapTests
             .GetProperty("percent").GetInt32());
         Assert.DoesNotContain(result.Profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.fire-damage-resistance");
+                "trait.damage-type-resistance");
     }
 
     [Fact]
@@ -191,15 +191,17 @@ public sealed class NativeOriginResistanceOverlapTests
         var (proposal, dragonborn, infernal, _) = Select(
             "ancestry.dragonborn.red", "trait.damage-type-resistance",
             "ancestry.tiefling.infernal",
-            "trait.fire-damage-resistance");
+            "trait.damage-type-resistance");
         var result = Evaluate(proposal, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Status);
         Assert.Contains(result.Issues, x =>
-            x.Code == "same-damage-resistance-reconciliation-required" &&
-            x.Path == "fire");
+            x.Code == "shared-definition-reconciliation-required" &&
+            x.Path == "trait.damage-type-resistance");
         Assert.Equal("fire", Assert.Single(result.EvaluatedProposal.Candidates, x =>
             x.Id == dragonborn.Id).OfferedParameters!["damageType"].GetString());
-        Assert.NotEqual(dragonborn.Identity.MechanicalDefinitionId,
+        Assert.Equal("fire", Assert.Single(result.EvaluatedProposal.Candidates, x =>
+            x.Id == infernal.Id).OfferedParameters!["damageType"].GetString());
+        Assert.Equal(dragonborn.Identity.MechanicalDefinitionId,
             infernal.Identity.MechanicalDefinitionId);
     }
 
@@ -208,7 +210,7 @@ public sealed class NativeOriginResistanceOverlapTests
     {
         var (proposal, chthonic, goliath, _) = Select(
             "ancestry.tiefling.chthonic",
-            "trait.necrotic-damage-resistance",
+            "trait.damage-type-resistance",
             "ancestry.goliath.fire", "trait.born-of-flame");
         var distinct = Evaluate(proposal, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Authorized, distinct.Status);
@@ -223,7 +225,7 @@ public sealed class NativeOriginResistanceOverlapTests
         // permanent type-based resistance. It does not compete with Fire.
         var (reactionProposal, fire, cloudy, _) = Select(
             "ancestry.tiefling.infernal",
-            "trait.fire-damage-resistance",
+            "trait.damage-type-resistance",
             "ancestry.goliath.cloud", "trait.cloudy-escape");
         var reaction = Evaluate(reactionProposal, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Authorized, reaction.Status);
@@ -233,5 +235,43 @@ public sealed class NativeOriginResistanceOverlapTests
             x => x.Identity.MechanicalDefinitionId == cloudy.Identity.MechanicalDefinitionId);
         Assert.DoesNotContain(reaction.Issues,
             x => x.Code == "same-damage-resistance-reconciliation-required");
+    }
+
+    [Theory]
+    [InlineData("ancestry.tiefling.abyssal", "poison")]
+    [InlineData("ancestry.tiefling.chthonic", "necrotic")]
+    [InlineData("ancestry.tiefling.infernal", "fire")]
+    [InlineData("ancestry.dragonborn.red", "fire")]
+    public void AncestriesBindOneCanonicalResistanceGeneToTheirOwnDamageType(
+        string source, string damageType)
+    {
+        var proposal = new NativeOriginProposal("resistance-source-" + source,
+            NativeOriginIntent.Mixed, new("rule.creature-origination", "biological"),
+            [Parent("owner", source)], [], []);
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var grant = Assert.Single(offered, x =>
+            x.Identity.MechanicalDefinitionId == "trait.damage-type-resistance");
+        Assert.Equal(damageType, grant.OfferedParameters!["damageType"].GetString());
+        var value = grant.OfferedValue!.Value;
+        Assert.Equal(50, value.GetProperty("damageResistance")
+            .GetProperty("percent").GetInt32());
+        Assert.Equal("nearest", value.GetProperty("originBindings")
+            .GetProperty("damageType").GetProperty("lookup").GetString());
+    }
+
+    [Fact]
+    public void FireAndNecroticAreVariantsOfOneGeneNotAutomaticDualExpression()
+    {
+        var (proposal, fire, necrotic, _) = Select(
+            "ancestry.tiefling.infernal", "trait.damage-type-resistance",
+            "ancestry.tiefling.chthonic", "trait.damage-type-resistance");
+        Assert.NotEqual(fire.Id, necrotic.Id);
+        Assert.Equal("fire", fire.OfferedParameters!["damageType"].GetString());
+        Assert.Equal("necrotic", necrotic.OfferedParameters!["damageType"].GetString());
+        var unresolved = Evaluate(proposal, new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Unresolved, unresolved.Status);
+        Assert.Contains(unresolved.Issues, x =>
+            x.Code == "shared-definition-reconciliation-required" &&
+            x.Path == "trait.damage-type-resistance");
     }
 }

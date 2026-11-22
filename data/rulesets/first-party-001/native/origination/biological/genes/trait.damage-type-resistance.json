@@ -4,14 +4,14 @@
   "kind": "origin-trait",
   "trait": {
     "id": "damage-type-resistance",
-    "description": "You have 50 percent resistance to the damage type configured for this resistance. The damage type is supplied by the selected source.",
+    "description": "You have 50 percent resistance to the damage type configured from the selected ancestry or other verified lineage source.",
     "damageResistance": {
       "percent": 50,
       "damageTypeFrom": "selected-dragonborn-leaf"
     },
     "originBindings": {
       "damageType": {
-        "lookup": "leaf",
+        "lookup": "nearest",
         "sourceField": "damageType"
       }
     }

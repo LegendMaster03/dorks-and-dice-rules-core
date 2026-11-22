@@ -560,8 +560,8 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
     /// shape. Keep event-scoped defenses out of this overlap classification:
     /// Cloudy Escape's reaction resistance is not an inherited permanent pool.
     /// Direct "poison": 50 legacy maps and authored percent/damageType records
-    /// are both recognized. Source-bound Dragonborn type is read only from an
-    /// already authorized, actually manifested parameter.
+    /// are both recognized. Source-bound resistance type is read only from a verified
+    /// lineage parameter, not inferred from the canonical gene name.
     /// </summary>
     private IReadOnlyList<string> NativeResistanceKeys(NativeOriginSelectedGrant selected)
     {
@@ -600,7 +600,7 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                 bindings.ValueKind == JsonValueKind.Object &&
                 bindings.TryGetProperty("damageType", out var binding) &&
                 binding.ValueKind == JsonValueKind.Object &&
-                JsonString(binding, "lookup") == "leaf" &&
+                JsonString(binding, "lookup") is "leaf" or "nearest" &&
                 JsonString(binding, "sourceField") == "damageType")
                 return [bound.GetString()!];
             return [];

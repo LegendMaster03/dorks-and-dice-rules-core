@@ -13,7 +13,7 @@
   ],
   "traits": [
     {
-      "traitId": "trait.fire-damage-resistance"
+      "traitId": "trait.damage-type-resistance"
     },
     {
       "traitId": "trait.fire-bolt"
@@ -31,5 +31,6 @@
     "Level 3 and level 5 spells have independent once-per-Long-Rest free castings; appropriate spell slots can be used additionally.",
     "The level 3 free Hellish Rebuke uses a second-level casting, preserving the selected 2014 Infernal Legacy exception. Spell-slot casting follows the actual slot level.",
     "No mandatory cultural Upbringing or language; relative benefit and spell balance remain subject to playtesting."
-  ]
+  ],
+  "damageType": "fire"
 }

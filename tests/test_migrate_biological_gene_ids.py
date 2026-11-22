@@ -79,12 +79,16 @@ class BiologicalGeneIdentityMigrationTests(unittest.TestCase):
             mapping["trait.dwarf.dwarven-resilience"],
             mapping["trait.tiefling.abyssal.abyssal-resistance"],
         )
-        self.assertEqual("trait.poison-damage-resistance",
+        self.assertEqual("trait.damage-type-resistance",
                          mapping["trait.tiefling.abyssal.abyssal-resistance"])
-        self.assertEqual("trait.necrotic-damage-resistance",
+        self.assertEqual("trait.damage-type-resistance",
                          mapping["trait.tiefling.chthonic.chthonic-resistance"])
-        self.assertEqual("trait.fire-damage-resistance",
+        self.assertEqual("trait.damage-type-resistance",
                          mapping["trait.tiefling.infernal.infernal-resistance"])
+        for old in ("trait.poison-damage-resistance",
+                    "trait.fire-damage-resistance",
+                    "trait.necrotic-damage-resistance"):
+            self.assertEqual("trait.damage-type-resistance", mapping[old])
 
     def test_dry_run_preserves_input_and_explicit_output_does_not_overwrite(self):
         with tempfile.TemporaryDirectory() as temporary:
