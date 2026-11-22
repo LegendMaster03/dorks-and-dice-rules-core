@@ -426,4 +426,26 @@ public sealed class NativeOriginCreationAllocationGateTests
         Assert.Contains(checkedResult.Issues, x =>
             x.Code == "creation-allocation-unresolved");
     }
+
+    [Fact]
+    public void MultiplicityPremiumDoesNotChargeLatentGenesAtConstruction()
+    {
+        var proposal = Mixed(twoOrcs: true);
+        var baseline = Evaluate(proposal);
+        var policy = Policy(baseline.Profile!.Underlying.InherentGrants.Count,
+            baseline) with
+        {
+            MultiplicityPremiums =
+            [
+                new("powerful-build-extra", "trait:trait.powerful-build",
+                    PerAdditionalInstanceLoad: 2, PerPairLoad: 3)
+            ]
+        };
+        var authorized = Evaluate(proposal, policy);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, authorized.Status);
+        Assert.Equal(baseline.Profile.Underlying.InherentGrants.Count,
+            authorized.CreationAllocation!.CommittedLoad);
+        Assert.DoesNotContain(authorized.CreationAllocation.Charges,
+            x => x.PriceId == "powerful-build-extra");
+    }
 }

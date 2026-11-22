@@ -52,3 +52,30 @@ The policy author must price the **whole effective characteristic**: immediate a
 Bundles require one grant per member key from a shared contributor; their selected configuration price covers the whole bundle. Optional interaction charges remain explicit and are evaluated separately. Disadvantages do not automatically generate negative prices or refunded points. Policy authors must decide whether a limitation belongs inside a whole-characteristic price or an inseparable bundle rather than mechanically awarding points.
 
 No prices or allowance in this document are a gameplay balance decision. Numerical calibration, gameplay impact estimation, and broad acceptance testing belong to a later WorkChat analysis.
+
+## Optional multiplicity premiums
+
+The pricing ledger charges every **distinct effective grant** with its own canonical base or configured price. A single consolidated grant supported by several contributing parents is charged once; an inherited-but-unexpressed gene is not charged. The existing one-expressed-instance-per-gene limit still applies to normal biological construction. This addition is a **pricing capability**, not authorization to bypass that limit.
+
+To model a second or third expressed instance of the same canonical characteristic after an independently approved inheritance-rule change, an author may set `NativeOriginAllocationPolicy.MultiplicityPremiums`:
+
+```csharp
+new NativeOriginAllocationMultiplicityPremium(
+    "damage-resistance-multiplicity",
+    "trait:trait.damage-type-resistance",
+    PerAdditionalInstanceLoad: 1,
+    PerPairLoad: 2)
+```
+
+These values are **illustrative**, not approved costs. For `N` separately authorized effective instances with the same member key, the optional additional load is:
+
+```text
+(N - 1) * PerAdditionalInstanceLoad
+  + (N * (N - 1) / 2) * PerPairLoad
+```
+
+A nonzero `PerAdditionalInstanceLoad` makes each additional instance cost more than its standalone configured base price. A nonzero `PerPairLoad` adds increasing marginal cost as more instances coexist. Either input may be zero, but both can not be zero. The same pricing policy can omit multiplicity premiums for purely additive costs. There is no authored maximum instance count or ordering dependency in this calculation.
+
+A premium must reference a canonical member with a **standalone** price entry, and only one premium may cover that member key. Premium IDs are unique across base, interaction, and multiplicity charges. Negative or null premiums, duplicate declarations, unpriced effective members, and arithmetic overflow fail closed. A premium is not applied merely because multiple parents contributed evidence for one effective grant; it does not authorize duplicate benefits from equivalent configurations.
+
+`NativeOriginAllocationCharge` lists the grant IDs covered by the multiplicity premium; each instance also retains its own ordinary base/configuration charge. Where multiple characteristics are deliberately bundled into one inseparable grant group, the existing bundle policy remains authoritative and ambiguous multi-member bundles remain unresolved. Real resistance-gene consolidation and any change to the biological expression ceiling require separate approval and content/reconciler work.

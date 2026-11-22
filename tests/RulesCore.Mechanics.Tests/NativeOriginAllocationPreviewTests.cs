@@ -682,4 +682,170 @@ public sealed class NativeOriginAllocationPreviewTests
         Assert.Equal("unresolved", malformedFallback.Status);
         Assert.Null(malformedFallback.CommittedLoad);
     }
+
+    // These instances exist only to exercise the pricing ledger. The normal
+    // construction evaluator still rejects expression beyond its native cap.
+    // Synthesizing an Origin result here never grants playable authorization.
+    private static NativeOriginConstructionResult PricingOnlyRepeatedVision(
+        int count, IReadOnlyList<string>? configurations = null)
+    {
+        var original = ElfProfile();
+        var existing = original.Profile!.Underlying.InherentGrants;
+        var vision = Assert.Single(existing, x =>
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
+        var copies = Enumerable.Range(0, count).Select(i => vision with
+        {
+            Id = "pricing-only-vision-" + i,
+            ManifestationId = "pricing-only-manifestation-" + i,
+            Parameters = configurations is null ? vision.Parameters :
+                new Dictionary<string, JsonElement>
+                {
+                    ["variant"] = JsonSerializer.SerializeToElement(configurations[i])
+                }
+        }).ToArray();
+        var edited = original.Profile.Underlying with
+        {
+            InherentGrants = existing.Where(x => x.Id != vision.Id)
+                .Concat(copies).ToArray()
+        };
+        return original with
+        {
+            Profile = original.Profile with
+            {
+                Underlying = edited, Current = edited
+            }
+        };
+    }
+
+    [Fact]
+    public void IndependentEffectiveOccurrencesOfOneGeneAreEachCharged()
+    {
+        var ledger = Hypothetical(9, new NativeOriginAllocationPrice("sight", 2,
+            ["trait:trait.low-light-vision"]));
+        var one = NativeOriginAllocationPreview.Assess(Catalog(),
+            PricingOnlyRepeatedVision(1), ledger);
+        var two = NativeOriginAllocationPreview.Assess(Catalog(),
+            PricingOnlyRepeatedVision(2), ledger);
+        var three = NativeOriginAllocationPreview.Assess(Catalog(),
+            PricingOnlyRepeatedVision(3), ledger);
+
+        Assert.Equal(5, one.CommittedLoad);
+        Assert.Equal(7, two.CommittedLoad);
+        Assert.Equal(9, three.CommittedLoad);
+        Assert.Equal(2, two.Charges.Count(x => x.PriceId == "sight"));
+        Assert.Equal(3, three.Charges.Count(x => x.PriceId == "sight"));
+        Assert.Equal(3, three.Components.Count(x =>
+            x.Key == "trait:trait.low-light-vision" &&
+            x.AssignedPriceId == "sight"));
+    }
+
+    [Fact]
+    public void SeparateSameGeneConfigurationsEachUseTheirOwnBasePrice()
+    {
+        var key = "trait:trait.low-light-vision";
+        var price = new NativeOriginAllocationPrice("sight", 1, [key],
+            Configurations:
+            [
+                new("variant-a", 2, 1,
+                    [EqualsValue(key, "parameters/variant", "a")]),
+                new("variant-b", 5, 1,
+                    [EqualsValue(key, "parameters/variant", "b")])
+            ]);
+        var profile = PricingOnlyRepeatedVision(2, ["a", "b"]);
+        var policy = Hypothetical(11, price) with
+        {
+            MultiplicityPremiums =
+            [
+                new("sight-extra", key, PerAdditionalInstanceLoad: 1)
+            ]
+        };
+        var assessed = NativeOriginAllocationPreview.Assess(Catalog(), profile, policy);
+        Assert.Equal("within-allowance", assessed.Status);
+        Assert.Equal(11, assessed.CommittedLoad);
+        Assert.Equal(new[] { 2, 5 }, assessed.Charges
+            .Where(x => x.PriceId == "sight")
+            .Select(x => x.Load).OrderBy(x => x).ToArray());
+        Assert.Equal("sight-extra", Assert.Single(assessed.Charges,
+            x => x.PriceId == "sight-extra").PriceId);
+
+        var missing = NativeOriginAllocationPreview.Assess(Catalog(),
+            PricingOnlyRepeatedVision(3, ["a", "b", "c"]), policy);
+        Assert.Equal("unresolved", missing.Status);
+        Assert.Null(missing.CommittedLoad);
+        Assert.Contains(missing.Issues, x =>
+            x.StartsWith("allocation-configuration-unpriced:sight:",
+                StringComparison.Ordinal));
+        Assert.DoesNotContain(missing.Charges, x => x.PriceId == "sight-extra");
+    }
+
+    [Fact]
+    public void MarginalPremiumScalesWithInstancesAndNotWithDonorCount()
+    {
+        var key = "trait:trait.low-light-vision";
+        var policy = Hypothetical(12,
+            new NativeOriginAllocationPrice("sight", 2, [key])) with
+        {
+            MultiplicityPremiums =
+            [
+                new("sight-multiplicity", key,
+                    PerAdditionalInstanceLoad: 1, PerPairLoad: 2)
+            ]
+        };
+        var one = NativeOriginAllocationPreview.Assess(Catalog(),
+            PricingOnlyRepeatedVision(1), policy);
+        var two = NativeOriginAllocationPreview.Assess(Catalog(),
+            PricingOnlyRepeatedVision(2), policy);
+        var three = NativeOriginAllocationPreview.Assess(Catalog(),
+            PricingOnlyRepeatedVision(3), policy);
+        Assert.Equal(5, one.CommittedLoad);
+        Assert.Equal(10, two.CommittedLoad);
+        Assert.Equal(17, three.CommittedLoad);
+        Assert.Equal("over-allowance", three.Status);
+        Assert.Empty(one.Charges.Where(x => x.PriceId == "sight-multiplicity"));
+        Assert.Equal(3, Assert.Single(two.Charges,
+            x => x.PriceId == "sight-multiplicity").Load);
+        Assert.Equal(8, Assert.Single(three.Charges,
+            x => x.PriceId == "sight-multiplicity").Load);
+        // Three donor offers coalescing into one effective benefit still
+        // produce one base charge and no multiplicity surcharge.
+        var sameBenefit = NativeOriginAllocationPreview.Assess(Catalog(),
+            ElfProfile(parents: 3, selectAllVisionOffers: true), policy);
+        Assert.Equal(5, sameBenefit.CommittedLoad);
+        Assert.Empty(sameBenefit.Charges.Where(x =>
+            x.PriceId == "sight-multiplicity"));
+    }
+
+    [Fact]
+    public void InvalidMultiplicityPricingFailsClosedAndDoesNotWrap()
+    {
+        const string key = "trait:trait.low-light-vision";
+        var ordinary = Hypothetical(20,
+            new NativeOriginAllocationPrice("sight", 2, [key]));
+        var pair = PricingOnlyRepeatedVision(2);
+        NativeOriginAllocationPolicy Configure(
+            params NativeOriginAllocationMultiplicityPremium[] premiums) =>
+            ordinary with { MultiplicityPremiums = premiums };
+        foreach (var bad in new[]
+        {
+            Configure(new("free", key, 0, 0)),
+            Configure(new("unknown", "trait:trait.unpriced", 1)),
+            Configure(new("sight", key, 1)),
+            Configure(new("duplicated", key, 1), new("other", key, 2)),
+            Configure(new("negative", key, -1))
+        })
+        {
+            var assessed = NativeOriginAllocationPreview.Assess(Catalog(), pair, bad);
+            Assert.Equal("invalid-policy", assessed.Status);
+            Assert.Null(assessed.CommittedLoad);
+        }
+
+        var huge = NativeOriginAllocationPreview.Assess(Catalog(),
+            PricingOnlyRepeatedVision(3),
+            Configure(new("too-expensive", key, int.MaxValue,
+                PerPairLoad: int.MaxValue)));
+        Assert.Equal("invalid-policy", huge.Status);
+        Assert.Null(huge.CommittedLoad);
+        Assert.Contains("allocation-multiplicity-overflow:too-expensive",
+            huge.Issues);
+    }
 }

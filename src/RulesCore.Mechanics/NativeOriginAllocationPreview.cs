@@ -13,7 +13,20 @@ namespace RulesCore.Mechanics;
 public sealed record NativeOriginAllocationPolicy(
     string Revision, string RuleId, string MethodId, int Allowance,
     IReadOnlyList<NativeOriginAllocationPrice> Prices,
-    IReadOnlyList<NativeOriginAllocationInteractionPrice>? InteractionPrices = null);
+    IReadOnlyList<NativeOriginAllocationInteractionPrice>? InteractionPrices = null,
+    IReadOnlyList<NativeOriginAllocationMultiplicityPremium>? MultiplicityPremiums = null);
+
+/// <summary>
+/// Optional, order-independent marginal cost of expressing several separately
+/// authorized effective instances of one canonical characteristic. The base
+/// price already applies to every instance; this policy adds a surcharge for
+/// each instance beyond the first, plus optionally for each unordered pair.
+/// This is a configurable pricing function, not biological permission to
+/// exceed the ruleset's current per-gene expression capacity.
+/// </summary>
+public sealed record NativeOriginAllocationMultiplicityPremium(
+    string Id, string MemberKey, int PerAdditionalInstanceLoad,
+    int PerPairLoad = 0);
 
 /// <summary>
 /// An additional cost for a specific coexisting set of effective mechanics.
@@ -152,7 +165,27 @@ public static class NativeOriginAllocationPreview
                 (policy.InteractionPrices?.Count ?? 0) + policy.Prices.Count ||
             (policy.InteractionPrices ?? []).SelectMany(x => x.RequiredKeys)
                 .Any(key => !policy.Prices.SelectMany(x => x.MemberKeys)
-                    .Contains(key, StringComparer.Ordinal)))
+                    .Contains(key, StringComparer.Ordinal)) ||
+            // A multiplicity policy must refer to a separately priced member;
+            // repeated members of a bundle are deliberately unresolved.
+            (policy.MultiplicityPremiums ?? []).Any(x =>
+                x is null ||
+                string.IsNullOrWhiteSpace(x.Id) ||
+                string.IsNullOrWhiteSpace(x.MemberKey) ||
+                x.PerAdditionalInstanceLoad < 0 || x.PerPairLoad < 0 ||
+                x.PerAdditionalInstanceLoad == 0 && x.PerPairLoad == 0 ||
+                !policy.Prices.Any(price =>
+                    price.MemberKeys.Count == 1 &&
+                    price.MemberKeys[0] == x.MemberKey)) ||
+            (policy.MultiplicityPremiums ?? []).Select(x => x.MemberKey)
+                .Distinct(StringComparer.Ordinal).Count() !=
+                (policy.MultiplicityPremiums?.Count ?? 0) ||
+            (policy.MultiplicityPremiums ?? []).Select(x => x.Id)
+                .Concat(policy.InteractionPrices?.Select(x => x.Id) ?? [])
+                .Concat(policy.Prices.Select(x => x.Id))
+                .Distinct(StringComparer.Ordinal).Count() !=
+                (policy.MultiplicityPremiums?.Count ?? 0) +
+                (policy.InteractionPrices?.Count ?? 0) + policy.Prices.Count)
             return Finish("invalid-policy", policy.Revision, policy.Allowance,
                 null, [], ["allocation-policy-malformed-or-overlapping"]);
 
@@ -259,6 +292,36 @@ public static class NativeOriginAllocationPreview
             issues.Add("allocation-load-unpriced:" + component.Key + ":" +
                 component.GrantId);
 
+        // A multiplicity premium counts *effective grants*, not candidate
+        // offers or latent genes. Each instance has already received its own
+        // configured base charge, and selection order can not change the cost.
+        // For N occurrences: (N-1)*extra + N*(N-1)/2*pairwise.
+        // Pairwise pricing permits increasing marginal costs without a hard
+        // supported-count ceiling or an unbounded preauthored tier table.
+        var multiplicityOverflow = false;
+        foreach (var premium in (policy.MultiplicityPremiums ?? [])
+            .OrderBy(x => x.Id, StringComparer.Ordinal))
+        {
+            var members = components.Where(x => x.Key == premium.MemberKey)
+                .OrderBy(x => x.GrantId, StringComparer.Ordinal).ToArray();
+            if (members.Length < 2 ||
+                members.Any(x => !assigned.ContainsKey(x.GrantId) ||
+                    unsupported.Contains(x.GrantId)))
+                continue;
+            long count = members.Length;
+            long extra = (count - 1) * premium.PerAdditionalInstanceLoad +
+                count * (count - 1) / 2 * premium.PerPairLoad;
+            if (extra > int.MaxValue)
+            {
+                multiplicityOverflow = true;
+                issues.Add("allocation-multiplicity-overflow:" + premium.Id);
+                continue;
+            }
+            if (extra > 0)
+                charges.Add(new(premium.Id, (int)extra,
+                    members.Select(x => x.GrantId).ToArray(), [premium.MemberKey]));
+        }
+
         // Interaction premiums are additive and explicitly authored. Every
         // required mechanic must already be present as an effective grant.
         // The source need not be the same contributor, unlike inseparable
@@ -285,7 +348,7 @@ public static class NativeOriginAllocationPreview
                 AssignedConfigurationId = selectedConfigurations.GetValueOrDefault(x.GrantId)
             }).ToArray();
 
-        if (ambiguousConfiguration)
+        if (ambiguousConfiguration || multiplicityOverflow)
             return Finish("invalid-policy", policy.Revision, policy.Allowance,
                 null, charges, issues, checkedComponents);
         if (issues.Count > 0)
