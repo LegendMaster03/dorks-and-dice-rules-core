@@ -801,7 +801,7 @@ public sealed class NativeOriginAllocationPreviewTests
         Assert.Equal(10, two.CommittedLoad);
         Assert.Equal(17, three.CommittedLoad);
         Assert.Equal("over-allowance", three.Status);
-        Assert.Empty(one.Charges.Where(x => x.PriceId == "sight-multiplicity"));
+        Assert.DoesNotContain(one.Charges, x => x.PriceId == "sight-multiplicity");
         Assert.Equal(3, Assert.Single(two.Charges,
             x => x.PriceId == "sight-multiplicity").Load);
         Assert.Equal(8, Assert.Single(three.Charges,
@@ -811,8 +811,8 @@ public sealed class NativeOriginAllocationPreviewTests
         var sameBenefit = NativeOriginAllocationPreview.Assess(Catalog(),
             ElfProfile(parents: 3, selectAllVisionOffers: true), policy);
         Assert.Equal(5, sameBenefit.CommittedLoad);
-        Assert.Empty(sameBenefit.Charges.Where(x =>
-            x.PriceId == "sight-multiplicity"));
+        Assert.DoesNotContain(sameBenefit.Charges, x =>
+            x.PriceId == "sight-multiplicity");
     }
 
     [Fact]
@@ -827,11 +827,12 @@ public sealed class NativeOriginAllocationPreviewTests
             ordinary with { MultiplicityPremiums = premiums };
         foreach (var bad in new[]
         {
-            Configure(new("free", key, 0, 0)),
-            Configure(new("unknown", "trait:trait.unpriced", 1)),
-            Configure(new("sight", key, 1)),
-            Configure(new("duplicated", key, 1), new("other", key, 2)),
-            Configure(new("negative", key, -1))
+            Configure(new NativeOriginAllocationMultiplicityPremium("free", key, 0, 0)),
+            Configure(new NativeOriginAllocationMultiplicityPremium("unknown", "trait:trait.unpriced", 1)),
+            Configure(new NativeOriginAllocationMultiplicityPremium("sight", key, 1)),
+            Configure(new NativeOriginAllocationMultiplicityPremium("duplicated", key, 1),
+                new NativeOriginAllocationMultiplicityPremium("other", key, 2)),
+            Configure(new NativeOriginAllocationMultiplicityPremium("negative", key, -1))
         })
         {
             var assessed = NativeOriginAllocationPreview.Assess(Catalog(), pair, bad);
@@ -841,8 +842,8 @@ public sealed class NativeOriginAllocationPreviewTests
 
         var huge = NativeOriginAllocationPreview.Assess(Catalog(),
             PricingOnlyRepeatedVision(3),
-            Configure(new("too-expensive", key, int.MaxValue,
-                PerPairLoad: int.MaxValue)));
+            Configure(new NativeOriginAllocationMultiplicityPremium("too-expensive",
+                key, int.MaxValue, PerPairLoad: int.MaxValue)));
         Assert.Equal("invalid-policy", huge.Status);
         Assert.Null(huge.CommittedLoad);
         Assert.Contains("allocation-multiplicity-overflow:too-expensive",
