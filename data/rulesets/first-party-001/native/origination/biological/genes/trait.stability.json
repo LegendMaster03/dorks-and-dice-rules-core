@@ -4,6 +4,21 @@
   "kind": "origin-trait",
   "trait": {
     "id": "stability",
-    "description": "While on stable ground, gain advantage on checks and saving throws resisting forced pushing or being knocked Prone; does not cover pulling or confer immunity."
+    "description": "While on stable ground, gain advantage on checks and saving throws resisting forced pushing or being knocked Prone; does not cover pulling or confer immunity.",
+    "conditionalAdvantage": {
+      "requires": "stable-ground",
+      "appliesTo": [
+        "ability-checks",
+        "saving-throws"
+      ],
+      "resists": [
+        "forced-push",
+        "being-knocked-prone"
+      ],
+      "excludes": [
+        "forced-pull"
+      ],
+      "grantsImmunity": false
+    }
   }
 }

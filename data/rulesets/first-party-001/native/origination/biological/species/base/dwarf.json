@@ -13,6 +13,9 @@
     },
     {
       "traitId": "trait.stonebound-tremorsense"
+    },
+    {
+      "traitId": "trait.dwarven-fortitude"
     }
   ],
   "creatureType": "humanoid",
@@ -21,7 +24,10 @@
   "darkvisionFeet": 60,
   "reviewNotes": [
     "Darkvision reduced from 120 to 60 feet; underground Dwarf Ancestry distribution remains open. Walking Speed reduced to 25 feet in the approved comparative Species review.",
-    "The maximum-HP rule's application to NPCs or monster Hit Dice remains unresolved."
+    "The maximum-HP rule's application to NPCs or monster Hit Dice remains unresolved.",
+    "Approved: Dwarven Fortitude is an inherent biological adaptation allowing one available Hit Die to be spent for healing when taking Dodge in combat, using the Hit Die roll plus Constitution modifier (minimum 1 HP regained). The original feat's ability-score increase is omitted; the Dodge action and Hit Die are not granted by the trait.",
+    "Approved trial repricing: Level-Based Vitality increases from 1 to 3 points without changing +1 maximum HP per character level. Dwarven Fortitude costs 4 points. Base Dwarf is 17/18; Hill Dwarf, including Stability, is 18/18. These are provisional playtest values.",
+    "Needs review; pending approval — Squat Nimbleness remains a separately considered historical feat; no additional movement or grapple mechanic is granted."
   ],
   "defaultUpbringing": "upbringing.dwarf.general"
 }

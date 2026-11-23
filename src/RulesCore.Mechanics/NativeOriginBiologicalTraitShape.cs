@@ -41,6 +41,12 @@ internal static class NativeOriginBiologicalTraitShape
     {
         "/abilityChoice" => field is
             "from" or "perCharacter" or "when",
+        "/hitDieHealing" => field is
+            "spendHitDice" or "requiresAvailableHitDie" or "rollSpentHitDie" or
+            "addAbilityModifier" or "minimumHitPointsRegained" or
+            "extraHitDiceGranted",
+        "/conditionalAdvantage" => field is
+            "requires" or "appliesTo" or "resists" or "excludes" or "grantsImmunity",
         // Compound inherited weapon techniques are one biological gene;
         // independent mode triggers/resources must not become extra grants.
         "/onWeaponHit" => field is
@@ -199,6 +205,7 @@ internal static class NativeOriginBiologicalTraitShape
         "freeUses" => value is
             JsonValueKind.Number or JsonValueKind.String,
         "abilityChoice" or "advantageOnChecks" or "alternateStrikeMode" or "area" or
+            "hitDieHealing" or "conditionalAdvantage" or
             "onWeaponHit" or "afterTraitUse" or
             "attack" or "bonusDamageDice" or "damage" or "damageReduction" or
             "damageResistance" or "damageResistanceOverride" or "extraDamage" or
