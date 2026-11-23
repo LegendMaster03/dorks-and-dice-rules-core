@@ -51,10 +51,10 @@ public sealed class NativeOriginFirstPartyBiologicalPricingTests
             .Where(x => x.StartsWith("trait:", StringComparison.Ordinal))
             .Select(x => x["trait:".Length..])
             .OrderBy(x => x, StringComparer.Ordinal).ToArray();
-        Assert.Equal(81, genes.Length);
+        Assert.Equal(83, genes.Length);
         Assert.Equal(genes, covered);
-        Assert.Equal(86, prices.Count); // 81 genes + 5 intrinsic slots.
-        Assert.Equal("biological-pricing-20261123-v1",
+        Assert.Equal(88, prices.Count); // 83 genes + 5 intrinsic slots.
+        Assert.Equal("biological-pricing-20261123-v2",
             NativeOriginFirstPartyBiologicalPricing.Revision);
         Assert.Equal(18, NativeOriginFirstPartyBiologicalPricing.TrialAllowance);
     }
@@ -78,6 +78,8 @@ public sealed class NativeOriginFirstPartyBiologicalPricingTests
         Assert.Equal(6, byMember["trait:trait.adaptable-learning"].Load);
         Assert.Equal(10, byMember["trait:trait.versatile"].Load);
         Assert.Equal(3, byMember["trait:trait.breath-weapon"].Load);
+        Assert.Equal(1, byMember["trait:trait.draconic-natural-weapons"].Load);
+        Assert.Equal(5, byMember["trait:trait.draconic-wings"].Load);
         Assert.Equal(5, byMember["trait:trait.hills-tumble"].Load);
         Assert.Equal(3, byMember["trait:trait.spectral-flight"].Load);
         Assert.Equal(3, byMember["trait:trait.clouds-jaunt"].Load);
@@ -277,5 +279,33 @@ public sealed class NativeOriginFirstPartyBiologicalPricingTests
         Assert.Contains(result.CreationAllocation.Charges,
             x => x.CharacteristicKeys.Contains("trait:trait.breath-weapon") &&
                 x.Load == 3);
+    }
+
+    [Theory]
+    [InlineData("ancestry.dragonborn.blue", 16)]
+    [InlineData("ancestry.dragonborn.red", 17)]
+    [InlineData("ancestry.dragonborn.white", 18)]
+    public void OrdinaryDragonbornInheritedGenesArePricedAtCreation(
+        string ancestryId, int expectedPoints)
+    {
+        var catalog = Native().Catalog;
+        var proposal = new NativeOriginProposal("ordinary-dragonborn-priced",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"), [], [], [],
+            SelectedSpeciesId: "species.dragonborn",
+            SelectedAncestryId: ancestryId);
+        var result = new NativeOriginConstructionEngine(catalog).Evaluate(
+            new(proposal, RequireCreationAllocation: true,
+                CreationAllocationPolicy:
+                    NativeOriginFirstPartyBiologicalPricing.Create()));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Equal("within-allowance", result.CreationAllocation!.Status);
+        Assert.Equal(expectedPoints, result.CreationAllocation.CommittedLoad);
+        Assert.Contains(result.CreationAllocation.Charges,
+            x => x.CharacteristicKeys.Contains("trait:trait.draconic-natural-weapons")
+                && x.Load == 1);
+        Assert.Contains(result.CreationAllocation.Charges,
+            x => x.CharacteristicKeys.Contains("trait:trait.draconic-wings")
+                && x.Load == 5);
     }
 }

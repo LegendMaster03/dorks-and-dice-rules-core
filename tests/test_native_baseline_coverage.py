@@ -331,7 +331,8 @@ class NativeSrdBaselineTests(unittest.TestCase):
         self.assertEqual(30, dragonborn["walkingSpeedFeet"])
         self.assertNotIn("darkvisionFeet", dragonborn)
         traits = {x["id"]: x for x in dragonborn["traits"]}
-        self.assertEqual({"low-light-vision", "damage-type-resistance", "breath-weapon"}, set(traits))
+        self.assertEqual({"low-light-vision", "damage-type-resistance", "breath-weapon",
+                          "draconic-natural-weapons", "draconic-wings"}, set(traits))
         self.assertEqual("rule.low-light-vision", traits["low-light-vision"]["rule"])
         self.assertEqual(50, traits["damage-type-resistance"]["damageResistance"]["percent"])
         breath = traits["breath-weapon"]

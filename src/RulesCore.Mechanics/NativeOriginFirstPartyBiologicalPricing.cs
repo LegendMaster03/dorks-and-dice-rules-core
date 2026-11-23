@@ -10,7 +10,7 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public static class NativeOriginFirstPartyBiologicalPricing
 {
-    public const string Revision = "biological-pricing-20261123-v1";
+    public const string Revision = "biological-pricing-20261123-v2";
     public const int TrialAllowance = 18;
 
     /// <summary>
@@ -139,6 +139,9 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.ancestral-aptitude", 1),
         ("trait.brave", 1),
         ("trait.breath-weapon", 3),
+        // Approved ordinary Dragonborn anatomy and limited wing progression.
+        ("trait.draconic-natural-weapons", 1),
+        ("trait.draconic-wings", 5),
         ("trait.bulwark", 1),
         ("trait.cavernous-sight", 2),
         ("trait.cloud-strike", 2),
