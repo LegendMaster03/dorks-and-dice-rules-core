@@ -65,6 +65,17 @@ internal static class NativeOriginBiologicalTraitShape
         "/lifeSiphon/healing" => field is
             "recipient" or "amount" or "maximum" or
             "obeysNormalHitPointMaximum",
+        // Abyssal Fortitude is a level-derived maximum-HP bonus, rather
+        // than the flat per-level HP growth of Dwarven Toughness.
+        "/hitPointMaximumBonus" => field is
+            "formula" or "levelBasis" or "rounding" or "minimum",
+        // Potent Venom modifies effective resistance for this damage
+        // instance only, never target immunity or another damage type.
+        "/damageResistanceReduction" => field is
+            "damageType" or "scope" or "timing" or
+            "reductionPercentagePoints" or "minimumResistancePercent" or
+            "preserveImmunityAtOrAbovePercent" or "stacksWithSelf" or
+            "createsVulnerability",
         "/protectiveFlames" => field is
             "trigger" or "optional" or "endsAt" or "brightLightFeet" or
             "dimLightAdditionalFeet" or "harmsSelfOrPossessions" or "retaliation",
@@ -229,11 +240,13 @@ internal static class NativeOriginBiologicalTraitShape
         "freeUses" => value is
             JsonValueKind.Number or JsonValueKind.String,
         "abilityChoice" or "advantageOnChecks" or "alternateStrikeMode" or "area" or
-            "hitDieHealing" or "conditionalAdvantage" or "rollAdvantage" or
+            "hitDieHealing" or "hitPointMaximumBonus" or
+            "conditionalAdvantage" or "rollAdvantage" or
             "fireSpellDamageReroll" or "protectiveFlames" or "lifeSiphon" or
             "onWeaponHit" or "afterTraitUse" or
             "attack" or "bonusDamageDice" or "damage" or "damageReduction" or
-            "damageResistance" or "damageResistanceOverride" or "extraDamage" or
+            "damageResistance" or "damageResistanceOverride" or
+            "damageResistanceReduction" or "extraDamage" or
             "flyingSpeed" or "invisibility" or "magicalSleep" or "onFailedSave" or
             "originBindings" or "prevents" or "retaliation" or "savingThrow" or
             "savingThrows" or "sizeChange" or "skillBonuses" or "skillCheckAdvantage" or

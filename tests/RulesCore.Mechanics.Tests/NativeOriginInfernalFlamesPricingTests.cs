@@ -58,7 +58,7 @@ public sealed class NativeOriginInfernalFlamesPricingTests
     }
 
     [Theory]
-    [InlineData("abyssal", 13, false)]
+    [InlineData("abyssal", 18, false)]
     [InlineData("chthonic", 17, false)]
     [InlineData("infernal", 18, true)]
     public void EachTieflingAncestryHasCurrentPriceAndOnlyInfernalGainsFlames(

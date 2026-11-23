@@ -10,7 +10,7 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public static class NativeOriginFirstPartyBiologicalPricing
 {
-    public const string Revision = "biological-pricing-20261123-v9";
+    public const string Revision = "biological-pricing-20261123-v10";
     public const int TrialAllowance = 18;
 
     /// <summary>
@@ -132,6 +132,7 @@ public static class NativeOriginFirstPartyBiologicalPricing
     // and Cloudy Escape). Missing new genes intentionally remain unpriced.
     private static readonly (string Id, int Load)[] OrdinaryGenes =
     [
+        ("trait.abyssal-fortitude", 2),
         ("trait.adaptable-learning", 6),
         ("trait.adrenaline-rush", 4),
         ("trait.altitude-acclimation", 1),
@@ -177,6 +178,8 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.orcish-fury", 4),
         ("trait.naturally-stealthy", 2),
         ("trait.poison-resilience", 4),
+        ("trait.poison-tolerance", 1),
+        ("trait.potent-venom", 2),
         ("trait.powerful-build", 1),
         ("trait.psionic-mind", 1),
         ("trait.relentless-endurance", 4),

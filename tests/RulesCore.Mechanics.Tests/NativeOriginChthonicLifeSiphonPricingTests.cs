@@ -58,7 +58,7 @@ public sealed class NativeOriginChthonicLifeSiphonPricingTests
     }
 
     [Theory]
-    [InlineData("abyssal", 13, false)]
+    [InlineData("abyssal", 18, false)]
     [InlineData("chthonic", 17, true)]
     [InlineData("infernal", 18, false)]
     public void DirectTieflingAncestryHasApprovedPriceAndSiphonOnlyWhenChthonic(

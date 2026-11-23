@@ -1,0 +1,20 @@
+{
+  "id": "trait.potent-venom",
+  "name": "Potent Venom",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "potent-venom",
+    "name": "Potent Venom",
+    "description": "When you deal Poison damage, reduce the target's effective Poison damage resistance by 25 percentage points for that damage instance, to a minimum of 0 percent resistance. Poison damage immunity (100 percent or greater) is unchanged. This reduction does not stack with itself and does not create damage vulnerability. Applies to Poison damage you deal regardless of whether its source is a spell, weapon, or other ability.",
+    "damageResistanceReduction": {
+      "damageType": "poison",
+      "scope": "damage-you-deal",
+      "timing": "per-damage-instance",
+      "reductionPercentagePoints": 25,
+      "minimumResistancePercent": 0,
+      "preserveImmunityAtOrAbovePercent": 100,
+      "stacksWithSelf": false,
+      "createsVulnerability": false
+    }
+  }
+}

@@ -23,13 +23,24 @@
     },
     {
       "traitId": "trait.hold-person"
+    },
+    {
+      "traitId": "trait.abyssal-fortitude"
+    },
+    {
+      "traitId": "trait.poison-tolerance"
+    },
+    {
+      "traitId": "trait.potent-venom"
     }
   ],
   "reviewNotes": [
     "Inherits Fiend (Native), normal biological needs, Low-Light Vision and Thaumaturgy from species.tiefling.",
     "Choose Intelligence, Wisdom or Charisma when selecting this ancestry. The choice governs all granted Tiefling spells, including Thaumaturgy.",
     "Level 3 and level 5 spells have independent once-per-Long-Rest free castings; appropriate spell slots can be used additionally.",
-    "No mandatory cultural Upbringing or language; relative benefit and spell balance remain subject to playtesting."
+    "No mandatory cultural Upbringing or language; relative benefit and spell balance remain subject to playtesting.",
+    "Approved Abyssal package: Abyssal Fortitude grants floor(character level / 2), minimum 1, bonus maximum Hit Points; Poison Tolerance grants Advantage on saving throws to avoid or end the Poisoned condition; Potent Venom reduces effective Poison resistance by 25 percentage points for Poison damage dealt by this character, without affecting immunity or stacking with itself.",
+    "Trial pricing: Abyssal Fortitude 2, Poison Tolerance 1, Potent Venom 2, bringing Abyssal from 13 to 18 of 18. The existing Poison resistance, spell grants, and shared Tiefling foundation remain unchanged."
   ],
   "damageType": "poison"
 }
