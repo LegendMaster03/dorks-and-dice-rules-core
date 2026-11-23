@@ -34,11 +34,15 @@ historical ancestors.
 
 The `inheritanceMethods: ["biological"]` six-gene proof of concept was
 retired earlier. The loader still uses the universal `origin-trait` kind;
-there is no second gene definition engine. The identity normalization replaces old gene IDs with 85 active,
-source-neutral canonical IDs, including four consolidated pairs.
-Resistance genes formerly named for Abyssal, Chthonic and Infernal Ancestry
-are named by their actual resisted damage type; they remain separate from the
-broader Poison Resilience gene and the parametrized Damage Type Resistance.
+there is no second gene definition engine. The current catalog contains **83**
+active canonical biological gene IDs. The earlier 85-gene count was a historical
+normalization snapshot before further consolidation and additions. Two of the
+current genes represent the November 22 approved ordinary Dragonborn Natural
+Weapons and Wings. They are inherited from the shared Dragonborn Species.
+The three former Ancestry-specific Fire, Poison, and Necrotic Resistance genes
+were consolidated into the source-configured `trait.damage-type-resistance`.
+The complete Poison Resilience and Goliath Born of Flame/Ice genes remain
+independent from this shared resistance trait.
 Preset references and internal dependency pointers now use those IDs. It
 preserves source occurrence positions and Ancestry links. The unified Powerful
 Build combines carrying/pushing/dragging/lifting size equivalence with
