@@ -52,6 +52,17 @@ internal static class NativeOriginBiologicalTraitShape
         "/rollAdvantage" => field is
             "eligibleRollTypes" or "declarationTiming" or "outcome" or
             "stacksWithExistingAdvantage" or "actionCost",
+        // Infernal Flames of Phlegethos is one inherited characteristic
+        // with two effects. Neither is an additional spell or use pool.
+        "/fireSpellDamageReroll" => field is
+            "source" or "damageType" or "triggerDieResult" or
+            "rerollsPerDie" or "useNewResult",
+        "/protectiveFlames" => field is
+            "trigger" or "optional" or "endsAt" or "brightLightFeet" or
+            "dimLightAdditionalFeet" or "harmsSelfOrPossessions" or "retaliation",
+        "/protectiveFlames/retaliation" => field is
+            "trigger" or "rangeFeet" or "damageDice" or "damageType" or
+            "actionCost",
         // Compound inherited weapon techniques are one biological gene;
         // independent mode triggers/resources must not become extra grants.
         "/onWeaponHit" => field is
@@ -211,6 +222,7 @@ internal static class NativeOriginBiologicalTraitShape
             JsonValueKind.Number or JsonValueKind.String,
         "abilityChoice" or "advantageOnChecks" or "alternateStrikeMode" or "area" or
             "hitDieHealing" or "conditionalAdvantage" or "rollAdvantage" or
+            "fireSpellDamageReroll" or "protectiveFlames" or
             "onWeaponHit" or "afterTraitUse" or
             "attack" or "bonusDamageDice" or "damage" or "damageReduction" or
             "damageResistance" or "damageResistanceOverride" or "extraDamage" or

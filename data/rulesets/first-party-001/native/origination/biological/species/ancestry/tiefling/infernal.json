@@ -23,6 +23,9 @@
     },
     {
       "traitId": "trait.darkness"
+    },
+    {
+      "traitId": "trait.flames-of-phlegethos"
     }
   ],
   "reviewNotes": [
@@ -30,7 +33,9 @@
     "Choose Intelligence, Wisdom or Charisma when selecting this ancestry. The choice governs all granted Tiefling spells, including Thaumaturgy.",
     "Level 3 and level 5 spells have independent once-per-Long-Rest free castings; appropriate spell slots can be used additionally.",
     "The level 3 free Hellish Rebuke uses a second-level casting, preserving the selected 2014 Infernal Legacy exception. Spell-slot casting follows the actual slot level.",
-    "No mandatory cultural Upbringing or language; relative benefit and spell balance remain subject to playtesting."
+    "No mandatory cultural Upbringing or language; relative benefit and spell balance remain subject to playtesting.",
+    "Approved Infernal fire specialization: inherent Flames of Phlegethos, adapted from Xanathar's Guide to Everything without the feat's ability-score increase. It grants one reroll of Fire spell damage dice showing 1 and optional short-lived protective flames that illuminate and retaliate against nearby melee hits; it does not create a new casting resource.",
+    "Provisional valuation: Flames of Phlegethos costs 4 points, making Infernal Tiefling 18 of 18. This change does not modify the Abyssal or Chthonic ancestries or the shared Tiefling foundation."
   ],
   "damageType": "fire"
 }
