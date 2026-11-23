@@ -7,8 +7,8 @@ namespace RulesCore.Mechanics;
 /// A complete allocation price schedule. Preview assessments are always
 /// non-authoritative; the construction engine can separately enforce a
 /// host-supplied schedule during initial character creation. A policy does
-/// not grant traits or establish table authority. No numerical default
-/// is implied while calibration remains incomplete.
+/// not grant traits or establish table authority. First-party numerical policy is versioned and opt-in; callers may
+/// supply their own authenticated table policy.
 /// </summary>
 public sealed record NativeOriginAllocationPolicy(
     string Revision, string RuleId, string MethodId, int Allowance,
@@ -143,7 +143,9 @@ public static class NativeOriginAllocationPreview
             policy.MethodId != result.EvaluatedProposal.Method.MethodId ||
             policy.Allowance < 0 || policy.Prices is null ||
             policy.Prices.Any(x => x is null ||
-                string.IsNullOrWhiteSpace(x.Id) || x.Load <= 0 ||
+                string.IsNullOrWhiteSpace(x.Id) || x.Load < 0 ||
+                (x.Load == 0 &&
+                 !NativeOriginAllocationPriceResolver.PermitsZero(x.MemberKeys)) ||
                 x.MemberKeys is not { Count: > 0 } ||
                 x.MemberKeys.Any(string.IsNullOrWhiteSpace) ||
                 x.MemberKeys.Distinct(StringComparer.Ordinal).Count() != x.MemberKeys.Count ||

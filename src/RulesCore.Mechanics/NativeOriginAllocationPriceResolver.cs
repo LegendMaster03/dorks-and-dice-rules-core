@@ -18,13 +18,24 @@ internal static class NativeOriginAllocationPriceResolver
     // In particular, the latter must not match a cheaper "Absent" tier.
     private enum ReadStatus { Found, Absent, Unresolved }
 
+    /// <summary>
+    /// A zero load is legal only for inherent physical identity, ordinary walking,
+    /// or the derived Sunlight Sensitivity limitation. A zero price can never
+    /// be used as a generic catch-all for an unknown benefit.
+    /// </summary>
+    internal static bool PermitsZero(IReadOnlyList<string> memberKeys) =>
+        memberKeys is { Count: 1 } &&
+        memberKeys[0] is "intrinsic:creatureType" or "intrinsic:size" or
+            "intrinsic:walkingSpeedFeet" or "trait:trait.sunlight-sensitivity";
+
     internal static bool Valid(NativeOriginAllocationPrice entry)
     {
         if (entry.Configurations is null)
             return !entry.AllowUnmatchedConfigurationFallback;
         if (entry.Configurations.Count == 0 ||
             entry.Configurations.Any(x => x is null ||
-                string.IsNullOrWhiteSpace(x.Id) || x.Load <= 0 ||
+                string.IsNullOrWhiteSpace(x.Id) || x.Load < 0 ||
+                (x.Load == 0 && !PermitsZero(entry.MemberKeys)) ||
                 x.Conditions is not { Count: > 0 } ||
                 x.Conditions.Any(condition => condition is null ||
                     !entry.MemberKeys.Contains(condition.MemberKey,
