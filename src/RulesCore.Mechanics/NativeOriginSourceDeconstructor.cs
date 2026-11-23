@@ -398,7 +398,40 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                                 bound.ValueKind is JsonValueKind.Null or JsonValueKind.Undefined)
                                 unresolved.Add("Unresolved authored source binding: " + binding.Name);
                             else
+                            {
+                                // An ancestral biome is a persistent value of this
+                                // canonical trait, not a separate gene or a freely
+                                // switchable biome. A fixed sub-trait (Wood Elf,
+                                // Forest Gnome) needs no choice. An offered list
+                                // (Lightfoot) must resolve to exactly one biome.
+                                if (binding.Name == "subTrait" &&
+                                    bound.ValueKind == JsonValueKind.Object &&
+                                    bound.TryGetProperty("biomeChoices", out var biomeChoices))
+                                {
+                                    var valid = bound.EnumerateObject().Count() == 1 &&
+                                        biomeChoices.ValueKind == JsonValueKind.Array;
+                                    var options = valid
+                                        ? biomeChoices.EnumerateArray()
+                                            .Where(x => x.ValueKind == JsonValueKind.String &&
+                                                !string.IsNullOrWhiteSpace(x.GetString()))
+                                            .Select(x => x.GetString()!).ToArray()
+                                        : Array.Empty<string>();
+                                    if (!valid || options.Length == 0 ||
+                                        options.Length != biomeChoices.GetArrayLength() ||
+                                        options.Distinct(StringComparer.Ordinal).Count() != options.Length)
+                                        unresolved.Add("Ancestral biome choices must be a nonempty unique string list.");
+                                    else
+                                        choices = (choices ?? []).Concat(
+                                        [
+                                            new NativeOriginChoiceRequirement("subTrait.biome",
+                                                new(source, path),
+                                                NativeOriginChoiceTiming.Creation, 1, 1,
+                                                FiniteOptions: options,
+                                                ParameterKey: "subTrait.biome")
+                                        ]).ToArray();
+                                }
                                 parameters[binding.Name] = bound.Clone();
+                            }
                         }
                     }
                     // Symbolic fields are not executable without a complete authored

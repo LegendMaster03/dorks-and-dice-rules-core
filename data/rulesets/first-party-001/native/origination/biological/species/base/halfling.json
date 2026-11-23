@@ -15,16 +15,20 @@
       "traitId": "trait.larger-creature-passage"
     },
     {
-      "traitId": "trait.naturally-stealthy"
+      "traitId": "trait.keen-hearing"
     },
     {
-      "traitId": "trait.keen-hearing"
+      "traitId": "trait.second-chance"
+    },
+    {
+      "traitId": "trait.bountiful-luck"
     }
   ],
   "creatureType": "humanoid",
   "size": "small",
   "walkingSpeedFeet": 25,
   "reviewNotes": [
-    "Walking Speed reduced to 25 feet in the approved comparative Species review; overall balance remains open."
+    "Walking Speed reduced to 25 feet in the approved comparative Species review; overall balance remains open.",
+    "Approved biological revision: Second Chance (reaction reroll of a visible attacker's hit, recharging on initiative or Short/Long Rest) and Bountiful Luck (reaction to share a natural-1 reroll with a visible ally within 30 feet, suspending own Luck Reroll until the end of the next turn). Original feat ability-score increases are not granted; provisional costs 4 and 3."
   ]
 }

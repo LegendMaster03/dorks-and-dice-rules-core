@@ -532,9 +532,46 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                         ? candidate.SelectionBasis.RuleReference : source.Id)
                 : new NativeOriginDecisionBasis(NativeOriginAdjudication.DmAuthorized,
                     TableDecisionId: attribution.Id);
+            var effectiveParameters = manifest.SelectedParameters ?? candidate.OfferedParameters;
+            // Materialize a selected ancestral biome from its trusted finite
+            // source offer. The menu is provenance, not an effective gene value;
+            // never let an unselected biomeChoices array enter a character grant.
+            var biomeSelections = requirements.Where(x =>
+                x.ParameterKey == "subTrait.biome").ToArray();
+            if (biomeSelections.Length > 0)
+            {
+                if (biomeSelections.Length != 1 || manifest.SelectedParameters is not null ||
+                    effectiveParameters?.TryGetValue("subTrait", out var subTrait) != true ||
+                    subTrait.ValueKind != JsonValueKind.Object ||
+                    !subTrait.TryGetProperty("biomeChoices", out var offeredBiomes) ||
+                    offeredBiomes.ValueKind != JsonValueKind.Array)
+                {
+                    Add("subtrait-biome-binding-invalid", candidate.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Configured biological biome must come from its native finite source offer.");
+                    continue;
+                }
+                var selection = choices.Single(x =>
+                    x.RequirementId == biomeSelections[0].Id).SelectedOptionIds.Single();
+                if (!offeredBiomes.EnumerateArray().Any(x =>
+                    x.ValueKind == JsonValueKind.String && x.GetString() == selection))
+                {
+                    Add("subtrait-biome-binding-invalid", candidate.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Chosen biome is not a verified ancestral offer.");
+                    continue;
+                }
+                var selectedSubTrait = JsonSerializer.SerializeToElement(
+                    new { biome = selection });
+                var boundParameters = effectiveParameters.ToDictionary(
+                    x => x.Key, x => x.Value.Clone(), StringComparer.Ordinal);
+                boundParameters["subTrait"] = selectedSubTrait;
+                effectiveParameters = boundParameters;
+            }
+
             var grant = new NativeOriginEffectiveGrant("grant:" + manifest.Id, manifest.Id,
                 candidate.Identity, [candidate.Id], value,
-                manifest.SelectedParameters ?? candidate.OfferedParameters, choices, basis);
+                effectiveParameters, choices, basis);
             if (parentGeneOffers.TryGetValue(candidate.Id, out var previousGene))
             {
                 // The inherited instance may have been latent in its parent.

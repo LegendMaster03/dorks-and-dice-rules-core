@@ -41,6 +41,8 @@ internal static class NativeOriginBiologicalTraitShape
     {
         "/abilityChoice" => field is
             "from" or "perCharacter" or "when",
+        "/reroll" => field is "roll" or "roller" or "useResult",
+        "/suspendsTrait" => field is "id" or "until",
         "/animalCommunication" => field is
             "habitatParameter" or "eligibleAnimals" or "conveys" or "compelsCooperation",
         "/naturalCamouflage" => field is
@@ -193,6 +195,7 @@ internal static class NativeOriginBiologicalTraitShape
             "originBindings" or "prevents" or "retaliation" or "savingThrow" or
             "savingThrows" or "sizeChange" or "skillBonuses" or "skillCheckAdvantage" or
             "animalCommunication" or "naturalCamouflage" or "tracklessPassage" or
+            "reroll" or "suspendsTrait" or
             "slipperyIceSaveExemption" or "speedReduction" or "startsTurnInside" or
             "teleport" or "temporaryHitPoints" or "uses" or "whileActive" => value is
             JsonValueKind.Object,

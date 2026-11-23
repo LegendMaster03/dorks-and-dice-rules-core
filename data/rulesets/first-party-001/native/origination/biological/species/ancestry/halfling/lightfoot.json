@@ -8,9 +8,27 @@
   "traits": [
     {
       "traitId": "trait.natural-agility"
+    },
+    {
+      "traitId": "trait.naturally-stealthy"
+    },
+    {
+      "traitId": "trait.trackless-passage"
     }
   ],
   "reviewNotes": [
-    "Historical ability-score changes deferred."
-  ]
+    "Historical ability-score changes deferred.",
+    "Approved: Naturally Stealthy belongs to the Lightfoot Ancestry rather than every Halfling. Trackless Passage inherits one selected ancestral biome; its finite biological choice is fixed on initial manifestation rather than a freely changing terrain preference."
+  ],
+  "environmentSubTrait": {
+    "biomeChoices": [
+      "woodland",
+      "grassland",
+      "wetland",
+      "desert",
+      "mountain",
+      "coastal",
+      "tundra"
+    ]
+  }
 }

@@ -10,7 +10,7 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public static class NativeOriginFirstPartyBiologicalPricing
 {
-    public const string Revision = "biological-pricing-20261123-v2";
+    public const string Revision = "biological-pricing-20261123-v3";
     public const int TrialAllowance = 18;
 
     /// <summary>
@@ -138,6 +138,7 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.amphibious", 2),
         ("trait.ancestral-aptitude", 1),
         ("trait.brave", 1),
+        ("trait.bountiful-luck", 3),
         ("trait.breath-weapon", 3),
         ("trait.bulwark", 1),
         ("trait.cavernous-sight", 2),
@@ -177,6 +178,7 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.sand-burrower", 2),
         ("trait.savage-attacks", 1),
         ("trait.searing-ignition", 1),
+        ("trait.second-chance", 4),
         ("trait.skillful", 1),
         ("trait.soft-landing", 1),
         ("trait.spectral-flight", 3),
