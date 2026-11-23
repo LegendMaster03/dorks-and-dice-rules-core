@@ -214,4 +214,68 @@ public sealed class NativeOriginFirstPartyBiologicalPricingTests
         Assert.Contains(result.Issues,
             x => x.Code == "creation-allocation-policy-invalid");
     }
+
+    [Fact]
+    public void NativeDrowDarkvisionIncludesItsDerivedSunlightCostExactlyOnce()
+    {
+        var catalog = Native().Catalog;
+        var engine = new NativeOriginConstructionEngine(catalog);
+        var proposal = new NativeOriginProposal("drow-first-party",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"), [], [], [],
+            SelectedSpeciesId: "species.elf",
+            SelectedAncestryId: "ancestry.elf.drow");
+        var offered = engine.Evaluate(new(proposal)).EvaluatedProposal.Candidates;
+        var ability = Assert.Single(offered,
+            x => x.Identity.IntrinsicSlotId == "spellcastingAbility");
+        proposal = proposal with
+        {
+            Manifestations =
+            [
+                new("drow-ability-choice", ability.Id,
+                    Choices: [new(Assert.Single(ability.RequiredChoices!).Id,
+                        ["charisma"])])
+            ]
+        };
+        var result = engine.Evaluate(new(proposal, RequireCreationAllocation: true,
+            CreationAllocationPolicy:
+                NativeOriginFirstPartyBiologicalPricing.Create()));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Equal("within-allowance", result.CreationAllocation!.Status);
+        Assert.Equal(18, result.CreationAllocation.CommittedLoad);
+        Assert.Contains(result.CreationAllocation.Charges,
+            x => x.CharacteristicKeys.Contains("intrinsic:darkvisionFeet") &&
+                x.Load == 4 &&
+                x.ConfigurationId == "120-feet-with-sunlight-drawback");
+        Assert.Contains(result.CreationAllocation.Charges,
+            x => x.CharacteristicKeys.Contains(
+                "trait:trait.sunlight-sensitivity") && x.Load == 0);
+        Assert.Contains(result.CreationAllocation.Charges,
+            x => x.CharacteristicKeys.Contains(
+                "intrinsic:spellcastingAbility") && x.Load == 1);
+    }
+
+    [Fact]
+    public void NativeRedDragonbornBindsOneIndependentFiftyPercentResistance()
+    {
+        var catalog = Native().Catalog;
+        var proposal = new NativeOriginProposal("red-dragonborn-first-party",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"), [], [], [],
+            SelectedSpeciesId: "species.dragonborn",
+            SelectedAncestryId: "ancestry.dragonborn.red");
+        var result = new NativeOriginConstructionEngine(catalog).Evaluate(
+            new(proposal, RequireCreationAllocation: true,
+                CreationAllocationPolicy:
+                    NativeOriginFirstPartyBiologicalPricing.Create()));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.Equal("within-allowance", result.CreationAllocation!.Status);
+        Assert.Contains(result.CreationAllocation.Charges,
+            x => x.CharacteristicKeys.Contains(
+                "trait:trait.damage-type-resistance") &&
+                x.ConfigurationId == "50-percent" && x.Load == 3);
+        Assert.Contains(result.CreationAllocation.Charges,
+            x => x.CharacteristicKeys.Contains("trait:trait.breath-weapon") &&
+                x.Load == 3);
+    }
 }
