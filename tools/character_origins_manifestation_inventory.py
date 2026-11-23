@@ -41,6 +41,8 @@ INTRINSIC_DIMENSIONS = {
 CONTEXT_ONLY_FIELDS = {
     "damageType": "trait-parameter-source",
     "breathWeaponArea": "trait-parameter-source",
+    "environmentSubTrait": "trait-parameter-source",
+    "animalCommunicationSubTrait": "trait-parameter-source",
     "spellcastingAbilityChoice": "dependent-choice",
     "ancestrySelection": "source-selection-control",
 }

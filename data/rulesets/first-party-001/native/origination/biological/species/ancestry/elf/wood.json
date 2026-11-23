@@ -14,6 +14,12 @@
     },
     {
       "traitId": "trait.pass-without-trace"
+    },
+    {
+      "traitId": "trait.natural-camouflage"
+    },
+    {
+      "traitId": "trait.trackless-passage"
     }
   ],
   "walkingSpeedFeet": 35,
@@ -25,5 +31,8 @@
   "reviewNotes": [
     "35-foot walking speed remains subject to comparative Species balance."
   ],
-  "defaultUpbringing": "upbringing.elf.wood"
+  "defaultUpbringing": "upbringing.elf.wood",
+  "environmentSubTrait": {
+    "biome": "woodland"
+  }
 }

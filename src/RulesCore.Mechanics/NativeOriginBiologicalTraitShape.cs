@@ -41,6 +41,16 @@ internal static class NativeOriginBiologicalTraitShape
     {
         "/abilityChoice" => field is
             "from" or "perCharacter" or "when",
+        "/animalCommunication" => field is
+            "habitatParameter" or "eligibleAnimals" or "conveys" or "compelsCooperation",
+        "/naturalCamouflage" => field is
+            "biomeParameter" or "skill" or "advantageOnHideChecks" or
+            "mayHideWhileLightlyObscuredByNaturalVegetation" or "grantsInvisibility",
+        "/tracklessPassage" => field is
+            "biomeParameter" or "targets" or "suppressesTracks" or
+            "suppressesLingeringScentTrail" or "erasesExistingTracks" or
+            "concealsCompanions" or "suppressesCurrentBodyScent" or
+            "preventsVisualOrAuditoryDetection",
         "/activation" => field is
             "action" or "grantsAction" or "replaces" or "requiresSpaceFor" or "timing" or
             "trigger",
@@ -99,9 +109,10 @@ internal static class NativeOriginBiologicalTraitShape
         "/options/*/onFailure" => field is
             "applyCondition" or "direction" or "endsAt" or "forcedMovement" or "pushFeet",
         "/originBindings" => field is
-            "area" or "damageType" or "giantAncestryAbility" or "spellcastingAbility",
-        "/originBindings/area" or "/originBindings/damageType" => field is
-            "lookup" or "sourceField",
+            "area" or "damageType" or "giantAncestryAbility" or "spellcastingAbility" or
+            "subTrait",
+        "/originBindings/area" or "/originBindings/damageType" or
+            "/originBindings/subTrait" => field is "lookup" or "sourceField",
         "/originBindings/giantAncestryAbility" => field is
             "choiceRequirementId" or "lookup" or "mechanicalDefinitionId" or "scope",
         "/originBindings/spellcastingAbility" => field is
@@ -181,6 +192,7 @@ internal static class NativeOriginBiologicalTraitShape
             "flyingSpeed" or "invisibility" or "magicalSleep" or "onFailedSave" or
             "originBindings" or "prevents" or "retaliation" or "savingThrow" or
             "savingThrows" or "sizeChange" or "skillBonuses" or "skillCheckAdvantage" or
+            "animalCommunication" or "naturalCamouflage" or "tracklessPassage" or
             "slipperyIceSaveExemption" or "speedReduction" or "startsTurnInside" or
             "teleport" or "temporaryHitPoints" or "uses" or "whileActive" => value is
             JsonValueKind.Object,

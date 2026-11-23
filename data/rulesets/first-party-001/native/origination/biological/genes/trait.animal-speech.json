@@ -4,10 +4,22 @@
   "kind": "origin-trait",
   "trait": {
     "id": "animal-speech",
-    "description": "Gain Speak with Animals; cast it without a spell slot Proficiency Bonus times per Long Rest, or with an applicable spell slot.",
+    "description": "Cast Speak with Animals to communicate only with ordinary animals native to the habitat configured by this gene's source sub-trait. Communication can convey basic ideas and observations, but does not increase an animal's knowledge or compel cooperation. Free uses equal Proficiency Bonus per Long Rest; additional casts can use applicable spell slots. Independent spellcasting from other sources is unaffected.",
     "spell": "speak-with-animals",
     "freeUses": "proficiency-bonus",
     "recharge": "long-rest",
-    "slotCasting": true
+    "slotCasting": true,
+    "animalCommunication": {
+      "habitatParameter": "subTrait.animalHabitat",
+      "eligibleAnimals": "ordinary-animals-native-to-configured-habitat",
+      "conveys": "basic-ideas-and-observations",
+      "compelsCooperation": false
+    },
+    "originBindings": {
+      "subTrait": {
+        "lookup": "nearest",
+        "sourceField": "animalCommunicationSubTrait"
+      }
+    }
   }
 }

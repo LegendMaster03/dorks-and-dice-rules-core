@@ -1,0 +1,26 @@
+{
+  "id": "trait.trackless-passage",
+  "name": "Trackless Passage",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "trackless-passage",
+    "name": "Trackless Passage",
+    "description": "While traversing the biome specified by your source sub-trait, you personally leave no physical tracks or lingering scent trail. This does not conceal companions, erase earlier traces, suppress your present body scent, or stop creatures from seeing or hearing you.",
+    "tracklessPassage": {
+      "biomeParameter": "subTrait.biome",
+      "targets": "self",
+      "suppressesTracks": true,
+      "suppressesLingeringScentTrail": true,
+      "erasesExistingTracks": false,
+      "concealsCompanions": false,
+      "suppressesCurrentBodyScent": false,
+      "preventsVisualOrAuditoryDetection": false
+    },
+    "originBindings": {
+      "subTrait": {
+        "lookup": "nearest",
+        "sourceField": "environmentSubTrait"
+      }
+    }
+  }
+}
