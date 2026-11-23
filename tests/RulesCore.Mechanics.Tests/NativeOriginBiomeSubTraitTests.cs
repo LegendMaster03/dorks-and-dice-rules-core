@@ -99,12 +99,17 @@ public sealed class NativeOriginBiomeSubTraitTests
         var engine = new NativeOriginConstructionEngine(catalog);
         var offers = engine.Evaluate(new(proposal,
             AutoManifestDirectDefaults: false)).EvaluatedProposal.Candidates;
+        // Wood Elf offers both the inherited 30-foot and its own 35-foot
+        // speed. Select one effective speed, not both competing intrinsics.
+        var expectedSpeed = sourceId == "ancestry.elf.wood" ? 35 : 25;
         var selected = offers.Where(x => x.ContributorId == "parent" &&
-            (x.Identity.IntrinsicSlotId is
-                "creatureType" or "size" or "walkingSpeedFeet" ||
+            (x.Identity.IntrinsicSlotId is "creatureType" or "size" ||
+             (x.Identity.IntrinsicSlotId == "walkingSpeedFeet" &&
+              x.OfferedValue?.GetInt32() == expectedSpeed) ||
              x.Identity.MechanicalDefinitionId is
                 "trait.natural-camouflage" or "trait.trackless-passage"))
             .ToArray();
+        Assert.Equal(5, selected.Length);
         var profile = engine.Evaluate(new(proposal with
         {
             Manifestations = selected.Select((x, i) =>
