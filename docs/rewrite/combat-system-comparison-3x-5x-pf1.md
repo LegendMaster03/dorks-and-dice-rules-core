@@ -2,6 +2,19 @@
 
 Status: **comparative research / pre-design evidence**. 2026-10-09. This is **not** the proposed or accepted combat system of Dorks & Dice. The owner wants to examine what the five combat systems have in common and how they diverge before choosing native procedures. Treat the comparisons as **functional and mechanical**, not just a synonym lookup. The already recovered Dorks & Dice decisions take precedence as descriptions of the existing design; none of these five games supplies implicit missing defaults.
 
+### Parked design idea — relative creature size and Touch AC (2026-11-23)
+
+**Status: observation and proposal only; no native rule approved or implementation requested.** The owner noted that 3.5e gnomes receive a +4 **dodge** bonus to AC against creatures of the **giant type**, and suggested generalizing the underlying idea into an attack-relative **Touch AC** modifier based on the size difference between attacker and defender.
+
+**Historical correction:** The racial trait keys off the opponent's creature type, **not** its size category. Under 3.5e, existing size AC modifiers and eligible dodge bonuses already contribute to Touch AC, so the source feature is not evidence that all size mismatches should create an additional bonus. See [3.5e Gnome](https://www.d20srd.org/srd/monsters/gnome.htm) and [Armor Class / Touch Attacks](https://www.d20srd.org/srd/combat/combatStatistics.htm#armorClass).
+
+**Native interaction:** `native/defenses.json` already includes `size` in ordinary and Touch AC and suppresses `dodge` when Dexterity defense is denied. A new attacker-versus-defender size differential could double-count existing size advantages, while the approved two-stage Grapple procedure uses Touch AC for initial contact and has other size-sensitive resolution.
+
+**Unresolved for future review:** Is the proposed rule a replacement, supplement, or different expression of the defender's size contribution? Should the bonus depend on the relative categories of both combatants, and in which direction? What thresholds, stacking, symmetry, and attack-type restrictions would be appropriate? Does it apply equally to touch attacks by creatures of every type? How does it affect 5.x-origin characters and monsters?
+
+**Boundary:** Do not assign numbers, modify the Gnome, alter the runtime defense formula, or automatically activate the proposal. The structured design note is `native/defenses.json > openDesignInvestigations`.
+
+
 ## 1. Invariant conceptual structure
 
 All five systems support:
