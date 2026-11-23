@@ -541,7 +541,8 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             if (biomeSelections.Length > 0)
             {
                 if (biomeSelections.Length != 1 || manifest.SelectedParameters is not null ||
-                    effectiveParameters?.TryGetValue("subTrait", out var subTrait) != true ||
+                    effectiveParameters is null ||
+                    !effectiveParameters.TryGetValue("subTrait", out var subTrait) ||
                     subTrait.ValueKind != JsonValueKind.Object ||
                     !subTrait.TryGetProperty("biomeChoices", out var offeredBiomes) ||
                     offeredBiomes.ValueKind != JsonValueKind.Array)
