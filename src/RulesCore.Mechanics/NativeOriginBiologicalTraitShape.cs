@@ -41,6 +41,16 @@ internal static class NativeOriginBiologicalTraitShape
     {
         "/abilityChoice" => field is
             "from" or "perCharacter" or "when",
+        // Compound inherited weapon techniques are one biological gene;
+        // independent mode triggers/resources must not become extra grants.
+        "/onWeaponHit" => field is
+            "trigger" or "eligibleWeaponCategories" or "bonusDamageDice" or "uses",
+        "/onWeaponHit/bonusDamageDice" => field is "count" or "dieFrom",
+        "/onWeaponHit/uses" => field is "value" or "recharge",
+        "/afterTraitUse" => field is
+            "triggerTraitId" or "triggerTiming" or "activation" or
+            "requiresManifestedTrait" or "extraUsesGranted",
+        "/afterTraitUse/activation" => field is "action" or "grantsAction",
         "/reroll" => field is "roll" or "roller" or "useResult",
         "/suspendsTrait" => field is "id" or "until",
         "/animalCommunication" => field is
@@ -189,6 +199,7 @@ internal static class NativeOriginBiologicalTraitShape
         "freeUses" => value is
             JsonValueKind.Number or JsonValueKind.String,
         "abilityChoice" or "advantageOnChecks" or "alternateStrikeMode" or "area" or
+            "onWeaponHit" or "afterTraitUse" or
             "attack" or "bonusDamageDice" or "damage" or "damageReduction" or
             "damageResistance" or "damageResistanceOverride" or "extraDamage" or
             "flyingSpeed" or "invisibility" or "magicalSleep" or "onFailedSave" or

@@ -10,7 +10,7 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public static class NativeOriginFirstPartyBiologicalPricing
 {
-    public const string Revision = "biological-pricing-20261123-v3";
+    public const string Revision = "biological-pricing-20261123-v4";
     public const int TrialAllowance = 18;
 
     /// <summary>
@@ -133,7 +133,7 @@ public static class NativeOriginFirstPartyBiologicalPricing
     private static readonly (string Id, int Load)[] OrdinaryGenes =
     [
         ("trait.adaptable-learning", 6),
-        ("trait.adrenaline-rush", 2),
+        ("trait.adrenaline-rush", 4),
         ("trait.altitude-acclimation", 1),
         ("trait.amphibious", 2),
         ("trait.ancestral-aptitude", 1),
@@ -170,6 +170,7 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.natural-agility", 2),
         ("trait.natural-camouflage", 3),
         ("trait.natural-climber", 2),
+        ("trait.orcish-fury", 4),
         ("trait.naturally-stealthy", 2),
         ("trait.poison-resilience", 4),
         ("trait.powerful-build", 1),

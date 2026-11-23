@@ -25,6 +25,9 @@
     },
     {
       "traitId": "trait.menacing-presence"
+    },
+    {
+      "traitId": "trait.orcish-fury"
     }
   ],
   "reviewNotes": [
@@ -34,6 +37,10 @@
     "Savage Attacks is adapted from SRD 5.1 Half-Orc source evidence, without introducing Half-Orc as a distinct Species. Its interaction with optional critical-escalation tiers and maximization remains under review.",
     "Menacing Presence represents a contextual physical trait instead of an unconditional learned Intimidation proficiency.",
     "Orc is directly selectable with no mandatory Ancestry or default Upbringing. Languages, traditions and training remain independently selectable cultural benefits.",
-    "Comparative Species balance and any future Orc Ancestry variants remain open."
+    "Comparative Species balance and any future Orc Ancestry variants remain open.",
+    "Approved Species foundation: Orcish Fury grants one extra weapon damage die on a successful simple or martial weapon attack once per Short or Long Rest, plus one Reaction weapon attack immediately after using Relentless Endurance. The two modes are one biological gene and do not grant an ability-score increase, an extra Relentless Endurance use, or an additional Reaction.",
+    "Approved trial valuation: Adrenaline Rush is repriced from 2 to 4 points without changing its mechanics; Orcish Fury costs 4, bringing the independently selectable base Orc to 17 of the 18-point trial allowance.",
+    "Needs review; pending approval — Headlong Rush (Races of Faerûn) and its charge, attack-of-opportunity, and critical/damage interactions. Not a granted Orc trait.",
+    "Future Orc Ancestries may use explicitly authorized substitutions of base Species traits rather than merely adding traits. No general automatic parent/Ancestry override or replacement rule is approved or implemented."
   ]
 }

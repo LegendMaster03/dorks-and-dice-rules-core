@@ -1,0 +1,35 @@
+{
+  "id": "trait.orcish-fury",
+  "name": "Orcish Fury",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "orcish-fury",
+    "name": "Orcish Fury",
+    "description": "Once per Short or Long Rest, when you hit with an attack using a Simple or Martial weapon, you can roll one additional weapon damage die and add it to the attack's damage. Immediately after you use Relentless Endurance, you may use your Reaction to make one weapon attack. The reaction does not grant an additional Relentless Endurance use or an extra Reaction, and this biological trait grants no ability-score increase.",
+    "onWeaponHit": {
+      "trigger": "when-you-hit-with-simple-or-martial-weapon",
+      "eligibleWeaponCategories": [
+        "simple",
+        "martial"
+      ],
+      "bonusDamageDice": {
+        "count": 1,
+        "dieFrom": "weapon-damage-die"
+      },
+      "uses": {
+        "value": 1,
+        "recharge": "short-or-long-rest"
+      }
+    },
+    "afterTraitUse": {
+      "triggerTraitId": "trait.relentless-endurance",
+      "triggerTiming": "immediately-after-use",
+      "activation": {
+        "action": "reaction",
+        "grantsAction": "one-weapon-attack"
+      },
+      "requiresManifestedTrait": true,
+      "extraUsesGranted": false
+    }
+  }
+}
