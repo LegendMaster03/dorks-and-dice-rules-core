@@ -10,7 +10,7 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public static class NativeOriginFirstPartyBiologicalPricing
 {
-    public const string Revision = "biological-pricing-20261123-v5";
+    public const string Revision = "biological-pricing-20261123-v6";
     public const int TrialAllowance = 18;
 
     /// <summary>
@@ -140,7 +140,7 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.brave", 1),
         ("trait.bountiful-luck", 3),
         ("trait.breath-weapon", 3),
-        ("trait.bulwark", 1),
+        ("trait.bulwark", 3),
         ("trait.cavernous-sight", 2),
         ("trait.cloud-strike", 2),
         ("trait.clouds-jaunt", 3),
@@ -151,19 +151,19 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.dwarven-fortitude", 4),
         ("trait.fey-ancestry", 1),
         ("trait.fires-burn", 3),
-        ("trait.frigid-retaliation", 1),
+        ("trait.frigid-retaliation", 4),
         ("trait.frosts-chill", 3),
         ("trait.hills-tumble", 5),
         ("trait.icewalker", 1),
         ("trait.iron-stomach", 1),
         ("trait.keen-hearing", 1),
         ("trait.keen-senses", 2),
-        ("trait.large-form", 1),
+        ("trait.large-form", 4),
         ("trait.larger-creature-passage", 1),
         ("trait.level-based-vitality", 3),
         ("trait.low-light-vision", 2),
         ("trait.luck-reroll", 2),
-        ("trait.maelstrom-aura", 2),
+        ("trait.maelstrom-aura", 5),
         ("trait.magical-cunning", 3),
         ("trait.magical-sleep", 1),
         ("trait.menacing-presence", 1),
@@ -179,14 +179,14 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.relentless-endurance", 4),
         ("trait.sand-burrower", 2),
         ("trait.savage-attacks", 1),
-        ("trait.searing-ignition", 1),
+        ("trait.searing-ignition", 4),
         ("trait.second-chance", 4),
         ("trait.skillful", 1),
         ("trait.soft-landing", 1),
         ("trait.spectral-flight", 3),
         ("trait.stability", 1),
         ("trait.stone-strike", 1),
-        ("trait.stone-throw", 1),
+        ("trait.stone-throw", 3),
         ("trait.stonebound-tremorsense", 3),
         ("trait.stones-endurance", 4),
         ("trait.storm-strike", 2),
