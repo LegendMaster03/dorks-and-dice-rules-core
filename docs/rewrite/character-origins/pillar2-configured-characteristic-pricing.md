@@ -1,6 +1,10 @@
 # Pillar 2 — Configured Characteristic Pricing
 
-**Status:** Allocation mechanism; no approved numerical allowance or characteristic prices.
+**Status:** Allocation mechanism implemented; versioned first-party provisional pricing now available as an explicit host policy (November 23, 2026).
+
+## First-party trial policy
+
+`NativeOriginFirstPartyBiologicalPricing.Create()` supplies the versioned first-party Biological Origination prices and an 18-point trial allowance. An authenticated host must explicitly pass this policy through `NativeOriginConstructionRequest.CreationAllocationPolicy` and enable the creation gate. Legacy callers are not automatically reclassified, and existing character history is not repriced. The trial values are not final balance decisions. See `pillar2-biological-pricing-implementation-20261123.md` for the revised estimates, catalog coverage, and Task 3 handoff.
 
 ## Scope
 
@@ -51,7 +55,7 @@ The policy author must price the **whole effective characteristic**: immediate a
 
 Bundles require one grant per member key from a shared contributor; their selected configuration price covers the whole bundle. Optional interaction charges remain explicit and are evaluated separately. Disadvantages do not automatically generate negative prices or refunded points. Policy authors must decide whether a limitation belongs inside a whole-characteristic price or an inseparable bundle rather than mechanically awarding points.
 
-No prices or allowance in this document are a gameplay balance decision. Numerical calibration, gameplay impact estimation, and broad acceptance testing belong to a later WorkChat analysis.
+The illustrative code samples in this document are not gameplay prices. The separate first-party trial policy is provisional and subject to playtesting. Numerical calibration, gameplay impact estimation, and broad acceptance testing belong to a later WorkChat analysis.
 
 ## Optional multiplicity premiums
 
