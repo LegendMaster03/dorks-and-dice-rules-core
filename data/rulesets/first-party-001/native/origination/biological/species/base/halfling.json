@@ -25,6 +25,11 @@
   "size": "small",
   "walkingSpeedFeet": 25,
   "reviewNotes": [
-    "Walking Speed reduced to 25 feet in the approved comparative Species review; overall balance remains open."
+    "Walking Speed reduced to 25 feet in the approved comparative Species review; overall balance remains open.",
+    "Needs review; pending approval — Second Chance (Xanathar's Guide to Everything): consider an attack-reroll defensive effect; review whether it belongs to the Halfling Species foundation or remains a feat.",
+    "Needs review; pending approval — Bountiful Luck (Xanathar's Guide to Everything): consider sharing Halfling luck with nearby allies; examine reactions, resource use, and interaction with Luck Reroll.",
+    "Needs review; pending approval — Squat Nimbleness (Xanathar's Guide to Everything): compare its mobility and grapple-escape benefits with existing genes and generic Small-creature rules; this is not Halfling-exclusive.",
+    "Needs review; pending approval — Underfoot Combat (Races of the Wild, 3.5e): examine maneuvering into the spaces of larger creatures and overlap with Larger-Creature Passage.",
+    "Needs review; pending approval — Confound the Big Folk (Races of the Wild, 3.5e): examine tactical effects against larger creatures, feat prerequisites, and overlap with small-creature combat and stealth rules."
   ]
 }

@@ -23,7 +23,8 @@
     "charisma"
   ],
   "reviewNotes": [
-    "35-foot walking speed remains subject to comparative Species balance."
+    "35-foot walking speed remains subject to comparative Species balance.",
+    "Needs review; pending approval — Wood Elf Magic (Xanathar's Guide to Everything): compare its Druidcraft, Longstrider, and Pass Without Trace package to existing Wood Elf inherent spells; do not award the same spells a second time."
   ],
   "defaultUpbringing": "upbringing.elf.wood"
 }

@@ -21,7 +21,9 @@
   "darkvisionFeet": 60,
   "reviewNotes": [
     "Darkvision reduced from 120 to 60 feet; underground Dwarf Ancestry distribution remains open. Walking Speed reduced to 25 feet in the approved comparative Species review.",
-    "The maximum-HP rule's application to NPCs or monster Hit Dice remains unresolved."
+    "The maximum-HP rule's application to NPCs or monster Hit Dice remains unresolved.",
+    "Needs review; pending approval — Dwarven Fortitude (Xanathar's Guide to Everything): examine spending Hit Dice to recover HP while Dodging, and determine whether this is a trained feat or a biological adaptation.",
+    "Needs review; pending approval — Squat Nimbleness (Xanathar's Guide to Everything): Dwarves are an explicit eligible race; assess mobility and grapple-escape features without duplicating existing general rules."
   ],
   "defaultUpbringing": "upbringing.dwarf.general"
 }
