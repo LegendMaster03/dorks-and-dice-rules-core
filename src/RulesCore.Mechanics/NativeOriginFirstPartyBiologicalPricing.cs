@@ -10,7 +10,7 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public static class NativeOriginFirstPartyBiologicalPricing
 {
-    public const string Revision = "biological-pricing-20261123-v6";
+    public const string Revision = "biological-pricing-20261123-v7";
     public const int TrialAllowance = 18;
 
     /// <summary>
@@ -154,6 +154,7 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.frigid-retaliation", 4),
         ("trait.frosts-chill", 3),
         ("trait.hills-tumble", 5),
+        ("trait.human-determination", 4),
         ("trait.icewalker", 1),
         ("trait.iron-stomach", 1),
         ("trait.keen-hearing", 1),
@@ -194,7 +195,7 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.temporary-damage-immunity", 1),
         ("trait.trackless-passage", 1),
         ("trait.trance", 1),
-        ("trait.versatile", 10),
+        ("trait.versatile", 6),
     ];
 
     // Base cost depends on spell level, never individual spell utility.

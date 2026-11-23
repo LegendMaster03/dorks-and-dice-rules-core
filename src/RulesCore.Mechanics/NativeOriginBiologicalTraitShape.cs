@@ -47,6 +47,11 @@ internal static class NativeOriginBiologicalTraitShape
             "extraHitDiceGranted",
         "/conditionalAdvantage" => field is
             "requires" or "appliesTo" or "resists" or "excludes" or "grantsImmunity",
+        // A chosen one-roll advantage applies across attack rolls, checks,
+        // and saves. It is distinct from persistent check-only advantage.
+        "/rollAdvantage" => field is
+            "eligibleRollTypes" or "declarationTiming" or "outcome" or
+            "stacksWithExistingAdvantage" or "actionCost",
         // Compound inherited weapon techniques are one biological gene;
         // independent mode triggers/resources must not become extra grants.
         "/onWeaponHit" => field is
@@ -205,7 +210,7 @@ internal static class NativeOriginBiologicalTraitShape
         "freeUses" => value is
             JsonValueKind.Number or JsonValueKind.String,
         "abilityChoice" or "advantageOnChecks" or "alternateStrikeMode" or "area" or
-            "hitDieHealing" or "conditionalAdvantage" or
+            "hitDieHealing" or "conditionalAdvantage" or "rollAdvantage" or
             "onWeaponHit" or "afterTraitUse" or
             "attack" or "bonusDamageDice" or "damage" or "damageReduction" or
             "damageResistance" or "damageResistanceOverride" or "extraDamage" or

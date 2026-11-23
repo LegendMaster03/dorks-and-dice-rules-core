@@ -1,0 +1,25 @@
+{
+  "id": "trait.human-determination",
+  "name": "Human Determination",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "human-determination",
+    "name": "Human Determination",
+    "description": "Before making an attack roll, ability check, or saving throw, you may choose to make that roll with Advantage. You can use this ability once per Short or Long Rest. You must declare its use before rolling; it does not stack with existing Advantage, consume an Action or Reaction, or grant an ability-score increase.",
+    "rollAdvantage": {
+      "eligibleRollTypes": [
+        "attack-roll",
+        "ability-check",
+        "saving-throw"
+      ],
+      "declarationTiming": "before-roll",
+      "outcome": "advantage",
+      "stacksWithExistingAdvantage": false,
+      "actionCost": "none"
+    },
+    "uses": {
+      "value": 1,
+      "recharge": "short-or-long-rest"
+    }
+  }
+}

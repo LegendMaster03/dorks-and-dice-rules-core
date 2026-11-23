@@ -22,14 +22,19 @@
     },
     {
       "traitId": "trait.adaptable-learning"
+    },
+    {
+      "traitId": "trait.human-determination"
     }
   ],
   "reviewNotes": [
-    "The three Human customization benefits are cumulative rather than mutually exclusive and are part of the approved first-pass Species baseline.",
+    "The four Human customization and determination benefits are cumulative rather than mutually exclusive and form the approved first-pass Species foundation.",
     "Resourceful and Heroic Inspiration remain source candidates, not granted native traits, until the general Inspiration rule is reconciled.",
     "How additional skill-rank entitlements and one selectable proficiency are enforced by the common character-advancement/projector contracts remains an integration question; they are independent benefits and may not circumvent ordinary skill-rank limits.",
     "The Origin feat entitlement is selected as a rule but the final Origin feat catalog, qualification rules and native character integration remain part of the Feats pass.",
     "Humans have no mandatory Ancestry or default Upbringing. Learned languages, local traditions and cultural benefits belong to independently selectable Upbringings.",
-    "No ability-score increase is granted by Human Species; ability-score allocation and comparative balance remain separate reconciliation topics."
+    "No ability-score increase is granted by Human Species; ability-score allocation and comparative balance remain separate reconciliation topics.",
+    "Approved Human Determination: before making an attack roll, ability check, or saving throw, the Human may gain Advantage on that roll once per Short or Long Rest, without an extra Action, Reaction, or ability-score increase. Adapted from the UAFFR Human Determination feat as a single inherent biological gene.",
+    "Approved provisional valuation: Versatile reduced from 10 to 6 points, retaining one additional Origin feat and its selection constraints; Human Determination costs 4 points. Base Human remains 17 of 18 points. Versatile pricing awaits the completed and verified Origin feat catalog."
   ]
 }
