@@ -57,6 +57,14 @@ internal static class NativeOriginBiologicalTraitShape
         "/fireSpellDamageReroll" => field is
             "source" or "damageType" or "triggerDieResult" or
             "rerollsPerDie" or "useNewResult",
+        // Rest-limited healing requires actual delivered Necrotic damage;
+        // its once-per-turn gate and PB-use budget remain a single gene.
+        "/lifeSiphon" => field is
+            "trigger" or "damageType" or "damageMeasured" or
+            "requiresPositiveDamage" or "healing",
+        "/lifeSiphon/healing" => field is
+            "recipient" or "amount" or "maximum" or
+            "obeysNormalHitPointMaximum",
         "/protectiveFlames" => field is
             "trigger" or "optional" or "endsAt" or "brightLightFeet" or
             "dimLightAdditionalFeet" or "harmsSelfOrPossessions" or "retaliation",
@@ -222,7 +230,7 @@ internal static class NativeOriginBiologicalTraitShape
             JsonValueKind.Number or JsonValueKind.String,
         "abilityChoice" or "advantageOnChecks" or "alternateStrikeMode" or "area" or
             "hitDieHealing" or "conditionalAdvantage" or "rollAdvantage" or
-            "fireSpellDamageReroll" or "protectiveFlames" or
+            "fireSpellDamageReroll" or "protectiveFlames" or "lifeSiphon" or
             "onWeaponHit" or "afterTraitUse" or
             "attack" or "bonusDamageDice" or "damage" or "damageReduction" or
             "damageResistance" or "damageResistanceOverride" or "extraDamage" or

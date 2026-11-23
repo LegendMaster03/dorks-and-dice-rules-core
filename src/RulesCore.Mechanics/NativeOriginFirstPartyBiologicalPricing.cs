@@ -10,7 +10,7 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public static class NativeOriginFirstPartyBiologicalPricing
 {
-    public const string Revision = "biological-pricing-20261123-v8";
+    public const string Revision = "biological-pricing-20261123-v9";
     public const int TrialAllowance = 18;
 
     /// <summary>
@@ -145,6 +145,7 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.cloud-strike", 2),
         ("trait.clouds-jaunt", 3),
         ("trait.cloudy-escape", 4),
+        ("trait.chthonic-life-siphon", 4),
         ("trait.coldwater-swimmer", 2),
         ("trait.control-breath-weapon", 1),
         ("trait.displaced-voice", 1),

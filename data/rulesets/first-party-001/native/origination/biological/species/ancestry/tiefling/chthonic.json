@@ -23,13 +23,18 @@
     },
     {
       "traitId": "trait.ray-of-enfeeblement"
+    },
+    {
+      "traitId": "trait.chthonic-life-siphon"
     }
   ],
   "reviewNotes": [
     "Inherits Fiend (Native), normal biological needs, Low-Light Vision and Thaumaturgy from species.tiefling.",
     "Choose Intelligence, Wisdom or Charisma when selecting this ancestry. The choice governs all granted Tiefling spells, including Thaumaturgy.",
     "Level 3 and level 5 spells have independent once-per-Long-Rest free castings; appropriate spell slots can be used additionally.",
-    "No mandatory cultural Upbringing or language; relative benefit and spell balance remain subject to playtesting."
+    "No mandatory cultural Upbringing or language; relative benefit and spell balance remain subject to playtesting.",
+    "Approved Chthonic specialization: Chthonic Life Siphon may restore Hit Points once per turn when this Tiefling deals Necrotic damage to another creature, by at most the lesser of Proficiency Bonus or actual Necrotic damage taken. It may be used Proficiency Bonus times per Long Rest; healing remains subject to the normal maximum HP limit.",
+    "Chthonic Life Siphon is provisionally priced at 4 points, bringing this ancestry to 17 of 18. This does not change the shared Tiefling foundation, or the Abyssal or Infernal ancestries."
   ],
   "damageType": "necrotic"
 }
