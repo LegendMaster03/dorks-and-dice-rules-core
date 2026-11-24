@@ -2263,6 +2263,95 @@ public sealed class NativeMechanicsApiTests
     }
 
     [Fact]
+    public async Task VerifiedConstructSourceReplacementRequiresExactLedgerMigration()
+    {
+        var provider = new ConstructModificationTestAuthority();
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true, dm: true, modificationAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var (construction, _) = ContextualConstruct(catalog, "construct-power-source.mechanical-engine");
+        var profile = construction.Origin.Profile!;
+        var folder = new DirectoryInfo(AppContext.BaseDirectory);
+        string? reference = null;
+        while (folder is not null)
+        {
+            var candidate = Path.Combine(folder.FullName, "data", "reference",
+                "construct-small-starting-build-20261121.json");
+            if (File.Exists(candidate)) { reference = candidate; break; }
+            folder = folder.Parent;
+        }
+        Assert.NotNull(reference);
+        using var data = JsonDocument.Parse(File.ReadAllText(reference!));
+        var initial = data.RootElement.GetProperty("assembly").Deserialize<NativeConstructAssemblyRequest>(
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        var target = initial with
+        {
+            InitialConstruction = false, InitialAllowance = null,
+            Components = initial.Components.Select(p => p.InstanceId == "generator"
+                ? p with { PowerSourceId = "construct-power-source.solar-crystal" } : p).ToArray()
+        };
+        var proposal = construction.Origin.EvaluatedProposal with { Id = "solar-replacement", Candidates = [] };
+        var characterId = Guid.NewGuid();
+        const string endpoint = "/api/mechanics/v1/origins/construct/modification/plan";
+        async Task<HttpResponseMessage> Send(long? resourceRevision = 8)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { characterId, originRevision = 1, operatingRevision = 2,
+                    inventoryRevision = 7, resourceRevision, rulesetId = catalog.RulesetId,
+                    fingerprint = catalog.Fingerprint, eventId = "replacement-1" }));
+            return await fixture.Client.SendAsync(request);
+        }
+        provider.Stored = new(characterId, 1, 2, 7, catalog.RulesetId, catalog.Fingerprint,
+            "replacement-1", construction, profile, target, proposal);
+        using var missing = await Send(null);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, missing.StatusCode);
+        var before = new NativeConstructSourceLedgerState(
+            new Dictionary<string, NativeConstructSourceState>
+            {
+                ["generator"] = new("construct-power-source.mechanical-engine")
+            }, [], 4);
+        var after = new NativeConstructSourceLedgerState(
+            new Dictionary<string, NativeConstructSourceState>
+            {
+                ["generator"] = new("construct-power-source.solar-crystal", 120, 0, 0)
+            }, [], 4);
+        provider.Stored = provider.Stored with { ResourceRevision = 8, SourceMigration = new(before, after) };
+        using var stale = await Send(7);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, stale.StatusCode);
+        using var planned = await Send();
+        var raw = await planned.Content.ReadAsStringAsync();
+        Assert.True(planned.StatusCode == HttpStatusCode.OK, raw);
+        using var result = JsonDocument.Parse(raw);
+        var plan = result.RootElement.GetProperty("plan");
+        var migration = plan.GetProperty("sourceMigration");
+        Assert.Equal("generator", Assert.Single(migration.GetProperty("retiredSourceInstanceIds").EnumerateArray()).GetString());
+        Assert.Equal("generator", Assert.Single(migration.GetProperty("incomingSourceInstanceIds").EnumerateArray()).GetString());
+        Assert.Equal(120L, migration.GetProperty("after").GetProperty("sources").GetProperty("generator")
+            .GetProperty("storedSolarPowerUnitMinutes").GetInt64());
+        Assert.Equal(4, migration.GetProperty("after").GetProperty("consecutiveDaysWithoutFullMechanicalRation").GetInt32());
+        Assert.False(result.RootElement.GetProperty("committed").GetBoolean());
+        provider.Stored = provider.Stored with
+        {
+            SourceMigration = new(before, after with { ConsecutiveDaysWithoutFullMechanicalRation = 0 })
+        };
+        using var reset = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, reset.StatusCode);
+        provider.Stored = provider.Stored with
+        {
+            SourceMigration = new(before, after with
+            {
+                Sources = new Dictionary<string, NativeConstructSourceState>
+                {
+                    ["generator"] = new("construct-power-source.solar-crystal", 99999, 0, 0)
+                }
+            })
+        };
+        using var overCapacity = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, overCapacity.StatusCode);
+    }
+
+    [Fact]
     public async Task RealNativeScopedDmHttpPreviewPreservesSelectedElfOrcEffects()
     {
         await using var fixture = new Fixture();

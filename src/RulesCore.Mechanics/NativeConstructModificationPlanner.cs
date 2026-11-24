@@ -6,7 +6,8 @@ namespace RulesCore.Mechanics;
 public sealed record NativeConstructModificationPlan(
     bool CanApply, NativeConstructOriginConstructionResult? Target,
     IReadOnlyList<string> AddedInstanceIds, IReadOnlyList<string> RemovedInstanceIds,
-    IReadOnlyList<string> ChangedInstanceIds, IReadOnlyList<NativeOriginContractIssue> Issues);
+    IReadOnlyList<string> ChangedInstanceIds, IReadOnlyList<NativeOriginContractIssue> Issues,
+    NativeConstructSourceMigrationPlan? SourceMigration = null);
 
 /// <summary>
 /// Plan an independently authenticated completed installation event. The host
@@ -19,7 +20,8 @@ public sealed class NativeConstructModificationPlanner(NativeCatalogSnapshot cat
     public NativeConstructModificationPlan Plan(
         NativeConstructOriginConstructionResult existingConstruction,
         NativeOriginProfile existingProfile, NativeConstructAssemblyRequest targetAssembly,
-        NativeOriginProposal targetProposal, string eventId)
+        NativeOriginProposal targetProposal, string eventId,
+        NativeConstructSourceMigrationEvidence? sourceMigration = null)
     {
         NativeConstructModificationPlan Reject(string code, string message,
             NativeConstructOriginConstructionResult? target = null) =>
@@ -82,19 +84,25 @@ public sealed class NativeConstructModificationPlanner(NativeCatalogSnapshot cat
         var changed = newParts.Keys.Intersect(oldParts.Keys, StringComparer.Ordinal)
             .Where(id => !SamePart(oldParts[id], newParts[id])).Order(StringComparer.Ordinal).ToArray();
 
-        // Source identities and their ledgers must migrate together. Until
-        // that contract exists, never replace or remove a generator here.
-        if (added.Any(id => newParts[id].PowerSourceId is not null) ||
+        var sourceChanged = added.Any(id => newParts[id].PowerSourceId is not null) ||
             removed.Any(id => oldParts[id].PowerSourceId is not null) ||
             changed.Any(id => oldParts[id].PowerSourceId != newParts[id].PowerSourceId ||
-                (oldParts[id].PowerSourceId is not null &&
-                    !SameHardware(oldParts[id], newParts[id]))))
-            return Reject("construct-modification-source-migration-unresolved",
-                "Power-source acquisition or replacement requires a verified resource/custody migration.", target);
-        if (!JsonElement.DeepEquals(JsonSerializer.SerializeToElement(before.UnavailablePowerSourceInstanceIds ?? []),
-                JsonSerializer.SerializeToElement(targetAssembly.UnavailablePowerSourceInstanceIds ?? [])))
-            return Reject("construct-modification-outage-migration-unresolved",
-                "Installation changes must not clear existing source outages.", target);
+                (oldParts[id].PowerSourceId is not null && !SameHardware(oldParts[id], newParts[id])));
+        var outageChanged = !JsonElement.DeepEquals(
+            JsonSerializer.SerializeToElement(before.UnavailablePowerSourceInstanceIds ?? []),
+            JsonSerializer.SerializeToElement(targetAssembly.UnavailablePowerSourceInstanceIds ?? []));
+        NativeConstructSourceMigrationPlan? migration = null;
+        if (sourceChanged || outageChanged || sourceMigration is not null)
+        {
+            if (sourceMigration is null || target.OperatingSession is not { } nextSession)
+                return Reject("construct-modification-source-migration-unresolved",
+                    "Power-source and outage changes require verified source ledger migration.", target);
+            var evaluated = NativeConstructSourceMigration.Evaluate(previousSession, nextSession,
+                sourceMigration, SameHardware);
+            if (evaluated.Plan is null)
+                return new(false, Uncommittable(target), added, removed, changed, evaluated.Issues);
+            migration = evaluated.Plan;
+        }
 
         var oldGrants = existingProfile.Underlying.InherentGrants.ToDictionary(grant => grant.Id, StringComparer.Ordinal);
         var historicalIds = existingProfile.History
@@ -133,7 +141,7 @@ public sealed class NativeConstructModificationPlanner(NativeCatalogSnapshot cat
             return new(false, Uncommittable(target), added, removed, changed, review.Issues);
 
         return new(true, target with { Origin = target.Origin with { Profile = profile } },
-            added, removed, changed, []);
+            added, removed, changed, [], migration);
     }
 
     // Never expose a mechanically authorized target when the transition itself

@@ -9,6 +9,9 @@ namespace RulesCore.Host;
 /// item identities and inventory reservations. Reload the current authorized
 /// installation and profile. No client-supplied body or recipe quote is proof
 /// of a completed modification; this interface does not persist the event.
+/// For source migration, independently reload both source snapshots and exact
+/// resource revision, verify physical incoming item reserves, source decisions,
+/// retired-item custody and outages, and preserve character conditions.
 /// </summary>
 public interface INativeConstructHostModificationAuthorityProvider
 {
@@ -21,13 +24,14 @@ public sealed record VerifiedConstructModificationAuthorization(
     Guid CharacterId, long OriginRevision, long OperatingRevision, long InventoryRevision,
     string RulesetId, string Fingerprint, string EventId,
     NativeConstructOriginConstructionResult ExistingConstruction, NativeOriginProfile ExistingProfile,
-    NativeConstructAssemblyRequest TargetAssembly, NativeOriginProposal TargetProposal);
+    NativeConstructAssemblyRequest TargetAssembly, NativeOriginProposal TargetProposal,
+    long? ResourceRevision = null, NativeConstructSourceMigrationEvidence? SourceMigration = null);
 
 public static partial class NativeOriginApiEndpoints
 {
     public sealed record VerifiedConstructModificationRequest(
         Guid CharacterId, long OriginRevision, long OperatingRevision, long InventoryRevision,
-        string RulesetId, string Fingerprint, string EventId);
+        string RulesetId, string Fingerprint, string EventId, long? ResourceRevision = null);
 
     public static void MapVerifiedConstructModificationPlan(this RouteGroupBuilder group)
     {
@@ -44,6 +48,7 @@ public static partial class NativeOriginApiEndpoints
             if (request is null || request.CharacterId == Guid.Empty ||
                 request.OriginRevision < 1 || request.OriginRevision == long.MaxValue ||
                 request.OperatingRevision < 0 || request.InventoryRevision < 0 ||
+                request.ResourceRevision is < 0 or long.MaxValue ||
                 string.IsNullOrWhiteSpace(request.EventId) || request.EventId.Length > 200)
                 return Error(400, "invalid_construct_modification_request");
             if (request.RulesetId != catalog.RulesetId || request.Fingerprint != catalog.Fingerprint)
@@ -55,7 +60,8 @@ public static partial class NativeOriginApiEndpoints
                 verified.OriginRevision != request.OriginRevision ||
                 verified.OperatingRevision != request.OperatingRevision ||
                 verified.InventoryRevision != request.InventoryRevision ||
-                verified.EventId != request.EventId ||
+                verified.EventId != request.EventId || verified.ResourceRevision != request.ResourceRevision ||
+                (verified.SourceMigration is not null && request.ResourceRevision is null) ||
                 verified.RulesetId != catalog.RulesetId || verified.Fingerprint != catalog.Fingerprint ||
                 verified.ExistingConstruction is null || verified.ExistingProfile is null ||
                 verified.TargetAssembly is null || verified.TargetProposal is null)
@@ -63,13 +69,14 @@ public static partial class NativeOriginApiEndpoints
 
             var plan = new NativeConstructModificationPlanner(catalog).Plan(
                 verified.ExistingConstruction, verified.ExistingProfile,
-                verified.TargetAssembly, verified.TargetProposal, verified.EventId);
+                verified.TargetAssembly, verified.TargetProposal, verified.EventId, verified.SourceMigration);
             return Results.Json(new
             {
                 contractVersion = 1, rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
                 characterId = request.CharacterId, originRevision = request.OriginRevision,
                 operatingRevision = request.OperatingRevision, inventoryRevision = request.InventoryRevision,
-                eventId = request.EventId, previewOnly = true, committed = false, plan
+                resourceRevision = request.ResourceRevision, eventId = request.EventId,
+                previewOnly = true, committed = false, plan
             }, statusCode: plan.CanApply ? 200 : 422);
         });
     }
