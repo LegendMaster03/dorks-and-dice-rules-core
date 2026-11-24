@@ -55,7 +55,8 @@ public sealed class NativeMechanicsApiTests
             INativeConstructHostOperatingAuthorityProvider? constructOperatingAuthority = null,
             INativeConstructHostSolarIntervalAuthorityProvider? solarIntervalAuthority = null,
             INativeConstructHostContextualPowerAuthorityProvider? contextualPowerAuthority = null,
-            INativeConstructHostSoulCustodyAuthorityProvider? soulCustodyAuthority = null)
+            INativeConstructHostSoulCustodyAuthorityProvider? soulCustodyAuthority = null,
+            INativeConstructHostSustenanceAuthorityProvider? sustenanceAuthority = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -225,6 +226,8 @@ public sealed class NativeMechanicsApiTests
                     services.AddSingleton(contextualPowerAuthority);
                 if (soulCustodyAuthority is not null)
                     services.AddSingleton(soulCustodyAuthority);
+                if (sustenanceAuthority is not null)
+                    services.AddSingleton(sustenanceAuthority);
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -2081,6 +2084,93 @@ public sealed class NativeMechanicsApiTests
             .Deserialize<NativeConstructSoulCustodyRecord[]>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
         Assert.Equal(NativeConstructSoulDisposition.Extracted, Assert.Single(released).Disposition);
         Assert.Equal(NativeConstructSoulDisposition.Imprisoned, Assert.Single(provider.Custody.Records).Disposition);
+    }
+
+    private sealed class ConstructSustenanceTestAuthority : INativeConstructHostSustenanceAuthorityProvider
+    {
+        public VerifiedConstructSustenanceAuthorization? Stored { get; set; }
+        public Task<VerifiedConstructSustenanceAuthorization?> VerifyAsync(Guid actorId,
+            NativeOriginApiEndpoints.VerifiedConstructSustenanceRequest request,
+            CancellationToken cancellationToken) =>
+            Task.FromResult(actorId == Guid.Parse("d66a7a7b-bc0f-4677-829d-0ccf40470d2f") ? Stored : null);
+    }
+
+    [Theory]
+    [InlineData("mechanical-day", "construct-power-source.mechanical-engine")]
+    [InlineData("infernal-long-rest", "construct-power-source.infernal-engine")]
+    public async Task VerifiedConstructSustenancePlansPaidAndMissedEvents(string kind, string sourceId)
+    {
+        var provider = new ConstructSustenanceTestAuthority();
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true, dm: true, sustenanceAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var (construction, _) = ContextualConstruct(catalog, sourceId);
+        var characterId = Guid.NewGuid();
+        var mechanical = kind == "mechanical-day";
+        const string endpoint = "/api/mechanics/v1/origins/construct/sustenance/plan";
+        async Task<HttpResponseMessage> Send(long inventoryRevision = 7, string eventId = "event-1")
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { characterId, originRevision = 1, sustenanceRevision = 4,
+                    inventoryRevision, rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                    eventId, eventKind = kind }));
+            return await fixture.Client.SendAsync(request);
+        }
+        using var missing = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, missing.StatusCode);
+        provider.Stored = new(characterId, 1, 4, 7, catalog.RulesetId, catalog.Fingerprint,
+            "event-1", kind, construction, new Dictionary<string, int> { ["generator"] = 0 },
+            mechanical ? 0 : null, mechanical ? 3 : null);
+        using var stale = await Send(inventoryRevision: 6);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, stale.StatusCode);
+        using var wrongEvent = await Send(eventId: "wrong-event");
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, wrongEvent.StatusCode);
+
+        using var missed = await Send();
+        Assert.Equal(HttpStatusCode.OK, missed.StatusCode);
+        var body = await missed.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.False(body.GetProperty("committed").GetBoolean());
+        var plan = body.GetProperty("plan");
+        var source = Assert.Single(plan.GetProperty("sources").EnumerateArray());
+        Assert.Equal(1, source.GetProperty("requiredUnits").GetInt32());
+        Assert.Equal(0, source.GetProperty("proposedDebitUnits").GetInt32());
+        Assert.False(source.GetProperty("fullSustenanceProvided").GetBoolean());
+        if (mechanical)
+        {
+            var deprivation = plan.GetProperty("dailyDeprivation");
+            Assert.Equal(4, deprivation.GetProperty("consecutiveDaysWithoutFullRation").GetInt32());
+            Assert.Equal(1, deprivation.GetProperty("exhaustionLevelsGained").GetInt32());
+        }
+        else
+        {
+            Assert.True(source.GetProperty("requiresInstabilityAdjudication").GetBoolean());
+            Assert.False(source.GetProperty("empowermentActiveAfter").GetBoolean());
+        }
+        provider.Stored = provider.Stored with
+        {
+            ReservedFuelUnits = new Dictionary<string, int> { ["generator"] = 1 }
+        };
+        using var paid = await Send();
+        Assert.Equal(HttpStatusCode.OK, paid.StatusCode);
+        var paidBody = await paid.Content.ReadFromJsonAsync<JsonElement>();
+        var paidPlan = paidBody.GetProperty("plan");
+        var paidSource = Assert.Single(paidPlan.GetProperty("sources").EnumerateArray());
+        Assert.Equal(1, paidSource.GetProperty("proposedDebitUnits").GetInt32());
+        Assert.True(paidSource.GetProperty("fullSustenanceProvided").GetBoolean());
+        Assert.False(paidSource.GetProperty("requiresInstabilityAdjudication").GetBoolean());
+        if (mechanical)
+            Assert.Equal(0, paidPlan.GetProperty("dailyDeprivation")
+                .GetProperty("consecutiveDaysWithoutFullRation").GetInt32());
+        else
+            Assert.False(paidSource.GetProperty("empowermentActiveAfter").GetBoolean());
+        Assert.Equal(1, provider.Stored.ReservedFuelUnits["generator"]);
+        provider.Stored = provider.Stored with
+        {
+            ReservedFuelUnits = new Dictionary<string, int> { ["fabricated"] = 1 }
+        };
+        using var forged = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, forged.StatusCode);
     }
 
     [Fact]

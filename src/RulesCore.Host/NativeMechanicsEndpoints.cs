@@ -62,6 +62,7 @@ public static class NativeMechanicsEndpoints
             group.MapVerifiedConstructSolarIntervalPlan();
             group.MapVerifiedConstructContextualPower();
             group.MapVerifiedConstructSoulCustodyPlan();
+            group.MapVerifiedConstructSustenancePlan();
             group.MapVerifiedLifeExperiencePlan();
             group.MapVerifiedScopedSkillCheck();
             group.MapVerifiedOriginDirectChoices();
@@ -98,6 +99,7 @@ public static class NativeMechanicsEndpoints
                     verifiedConstructSolarIntervalPlanning = privateTunnel ? "unavailable" : "host-authority-required",
                     verifiedConstructContextualPower = privateTunnel ? "unavailable" : "host-authority-required",
                     verifiedConstructSoulCustodyPlanning = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedConstructSustenancePlanning = privateTunnel ? "unavailable" : "host-authority-required",
                     originMethodDiscovery = true, originPresetDiscovery = true,
                     originChoiceCatalogDiscovery = true,
                     verifiedDirectOriginChoices = privateTunnel ? "unavailable" : "host-authority-required",

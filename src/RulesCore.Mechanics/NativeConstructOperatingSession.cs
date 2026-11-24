@@ -577,6 +577,73 @@ public sealed class NativeConstructOperatingSession
     }
 
     /// <summary>
+    /// Plan one authenticated day or long rest using the native source's
+    /// normalized fuel requirement. The host reserves distinct inventory
+    /// units for this event and atomically commits any proposed debit.
+    /// A missed payment is a valid event, not an invalid operation.
+    /// </summary>
+    public NativeConstructSustenancePlan PlanSustenance(
+        string eventKind, IReadOnlyDictionary<string, int> reservedFuelUnits,
+        int? constitutionModifier = null, int? previousDaysWithoutFullRation = null)
+    {
+        NativeConstructSustenancePlan Reject(string code, string message) =>
+            new(false, [], null, [new(code, "sustenance", NativeOriginIssueSeverity.Invalid, message)]);
+
+        var mechanical = eventKind == "mechanical-day";
+        if (!mechanical && eventKind != "infernal-long-rest")
+            return Reject("construct-sustenance-event-invalid", "An authored daily or long-rest event is required.");
+        var sourceId = mechanical ? "construct-power-source.mechanical-engine"
+            : "construct-power-source.infernal-engine";
+        var installed = _baseline.Components.Where(part => part.PowerSourceId == sourceId)
+            .OrderBy(part => part.InstanceId, StringComparer.Ordinal).ToArray();
+        if (installed.Length == 0 || (mechanical && installed.Length != 1))
+            return Reject("construct-sustenance-source-unresolved",
+                "A matching installed source is required; the allocation of one daily ration across multiple mechanical engines is unresolved.");
+        if (reservedFuelUnits is null || reservedFuelUnits.Count != installed.Length ||
+            installed.Any(part => !reservedFuelUnits.ContainsKey(part.InstanceId)))
+            return Reject("construct-sustenance-reservation-invalid",
+                "The host must account for fuel reserved for each applicable installed source.");
+        if (mechanical && (constitutionModifier is null || previousDaysWithoutFullRation is null ||
+            previousDaysWithoutFullRation < 0))
+            return Reject("construct-sustenance-deprivation-state-invalid",
+                "The host must supply the verified Constitution modifier and existing deprivation counter.");
+        if (!mechanical && (constitutionModifier is not null || previousDaysWithoutFullRation is not null))
+            return Reject("construct-sustenance-deprivation-state-invalid",
+                "Infernal long-rest fuel does not use the ordinary daily deprivation counter.");
+
+        if (!_catalog.TryGetById(sourceId, out var native) || native?.Category != "construct-power-source" ||
+            !native.Definition.TryGetProperty(mechanical ? "dailySustenance" : "longRestSustenance", out var rule) ||
+            rule.ValueKind != JsonValueKind.Object ||
+            !rule.TryGetProperty("resourceKind", out var kind) || kind.ValueKind != JsonValueKind.String ||
+            string.IsNullOrWhiteSpace(kind.GetString()) ||
+            !rule.TryGetProperty(mechanical ? "unitsPerDay" : "unitsPerLongRest", out var quantity) ||
+            quantity.ValueKind != JsonValueKind.Number || !quantity.TryGetInt32(out var required) || required != 1)
+            return Reject("construct-sustenance-model-unresolved",
+                "The native normalized one-charge sustenance rule is required.");
+
+        var results = new List<NativeConstructSustenanceSourcePlan>();
+        NativeDailyRationAssessment? deprivation = null;
+        foreach (var part in installed)
+        {
+            var supplied = reservedFuelUnits[part.InstanceId];
+            if (supplied < 0 || supplied > required)
+                return Reject("construct-sustenance-reservation-invalid",
+                    "Reserved fuel must be zero or the exact authored requirement.");
+            var paid = supplied == required;
+            if (mechanical)
+                deprivation = NativeDailyRationEvaluator.AssessDay(
+                    new NativeDailyRationRequirement(kind.GetString()!, required), supplied,
+                    constitutionModifier!.Value, previousDaysWithoutFullRation!.Value);
+            // Every long rest ends the previous empowerment, regardless of
+            // fuel or operating configuration. Sustenance is not activation.
+            results.Add(new(part.InstanceId, sourceId, kind.GetString()!,
+                required, supplied, paid, !mechanical && !paid,
+                mechanical ? null : false));
+        }
+        return new(true, results, deprivation, []);
+    }
+
+    /// <summary>
     /// Preview Infernal Engine output and a host-authenticated empowerment
     /// condition. Fuel for ordinary sustenance is paid at a long rest;
     /// separate fuel activates empowerment until the next long rest.
