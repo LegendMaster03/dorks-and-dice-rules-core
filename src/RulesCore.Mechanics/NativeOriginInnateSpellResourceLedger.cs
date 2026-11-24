@@ -104,8 +104,11 @@ public static class NativeOriginInnateSpellResourceLedger
                 x => x.Value, StringComparer.Ordinal);
             foreach (var (grantId, max) in allowed)
             {
+                // Recovery follows this grant's canonical spell schedule; do not
+                // refill another Long Rest-only innate spell on a Short Rest.
+                var spell = projection.Spells.Single(x => x.GrantId == grantId);
                 var resource = new NativeResource("origin-spell-free:" + grantId,
-                    max, next[grantId], "long-rest");
+                    max, next[grantId], spell.Recharge!);
                 var change = NativeResourceResolution.Recover(resource,
                     next[grantId], rest);
                 if (change.Status != "resolved" || change.Current is null)
@@ -466,7 +469,7 @@ public static class NativeOriginInnateSpellResourceLedger
                 spell.FreeUsesPerRecharge is null)
                 continue;
             if (spell.FreeUsesPerRecharge is <= 0 or > 1_000_000 ||
-                spell.Recharge != "long-rest" ||
+                spell.Recharge is not ("long-rest" or "short-or-long-rest") ||
                 !pools.TryAdd(spell.GrantId, spell.FreeUsesPerRecharge.Value))
                 return null;
         }

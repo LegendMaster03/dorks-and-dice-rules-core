@@ -10,7 +10,7 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public static class NativeOriginFirstPartyBiologicalPricing
 {
-    public const string Revision = "biological-pricing-20261123-v10";
+    public const string Revision = "biological-pricing-20261123-v11";
     public const int TrialAllowance = 18;
 
     /// <summary>
@@ -223,7 +223,9 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.hellish-rebuke", 2, 0),
         ("trait.hold-person", 2, 0),
         ("trait.longstrider", 1, 0),
-        ("trait.misty-step", 2, 0),
+        // High Elf Fey Teleportation: one 2nd-level free spell per Short or Long Rest.
+        // Price the enhanced COMPLETE Misty Step gene at 5, not a second spell grant.
+        ("trait.misty-step", 2, 2),
         ("trait.otherworldly-presence", 0, 0),
         ("trait.pass-without-trace", 2, 0),
         ("trait.poison-spray", 0, 0),

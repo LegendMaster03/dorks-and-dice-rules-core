@@ -54,7 +54,7 @@ public sealed class NativeOriginFirstPartyBiologicalPricingTests
         Assert.Equal(93, genes.Length);
         Assert.Equal(genes, covered);
         Assert.Equal(98, prices.Count); // 93 genes + 5 intrinsic slots.
-        Assert.Equal("biological-pricing-20261123-v10",
+        Assert.Equal("biological-pricing-20261123-v11",
             NativeOriginFirstPartyBiologicalPricing.Revision);
         Assert.Equal(18, NativeOriginFirstPartyBiologicalPricing.TrialAllowance);
     }
@@ -109,7 +109,7 @@ public sealed class NativeOriginFirstPartyBiologicalPricingTests
         Assert.Equal(2, byMember["trait:trait.detect-magic"].Load);
         Assert.Equal(3, byMember["trait:trait.darkness"].Load);
         Assert.Equal(3, byMember["trait:trait.hellish-rebuke"].Load);
-        Assert.Equal(3, byMember["trait:trait.misty-step"].Load);
+        Assert.Equal(5, byMember["trait:trait.misty-step"].Load);
 
         for (var level = 0; level <= 9; level++)
             Assert.Equal(level + 1,

@@ -159,7 +159,7 @@ public static class NativeOriginInnateSpellProgressionProjector
             {
                 recharge = recovery.ValueKind == JsonValueKind.String
                     ? recovery.GetString() : null;
-                if (recharge is not "long-rest")
+                if (recharge is not ("long-rest" or "short-or-long-rest"))
                 {
                     reasons.Add("spell-recharge-unsupported:" + grant.Id);
                     continue;
