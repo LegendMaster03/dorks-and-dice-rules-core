@@ -137,12 +137,12 @@ public sealed class NativeCatalogRegistryTests
             var location = NativeRulesetLayout.Resolve(root, "markdown-test");
             Directory.CreateDirectory(location.NativeDirectory);
             File.WriteAllText(Path.Combine(root, "markdown-test", "manifest.json"),
-                $$"""{"id":"markdown-test","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/","markdownImport":{"sectionRecords":2,"commit":"{{{commit}}}"}}""");
+                """{"id":"markdown-test","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/","markdownImport":{"sectionRecords":2,"commit":"COMMIT_PLACEHOLDER"}}""".Replace("COMMIT_PLACEHOLDER", commit));
             File.WriteAllText(Path.Combine(location.NativeDirectory, "root.json"),
-                $$"""{"id":"section.root","kind":"chapter","name":"Root","headingLevel":1,"parentId":null,"markdown":"# Root","source":{"commit":"{{{commit}}}"}}""");
+                """{"id":"section.root","kind":"chapter","name":"Root","headingLevel":1,"parentId":null,"markdown":"# Root","source":{"commit":"COMMIT_PLACEHOLDER"}}""".Replace("COMMIT_PLACEHOLDER", commit));
             var parent = valid ? "section.root" : "section.missing";
             File.WriteAllText(Path.Combine(location.NativeDirectory, "child.json"),
-                $$"""{"id":"section.root.child","kind":"rule","name":"Child","headingLevel":2,"parentId":"{{{parent}}}","markdown":"## Child","source":{"commit":"{{{commit}}}"}}""");
+                """{"id":"section.root.child","kind":"rule","name":"Child","headingLevel":2,"parentId":"PARENT_PLACEHOLDER","markdown":"## Child","source":{"commit":"COMMIT_PLACEHOLDER"}}""".Replace("COMMIT_PLACEHOLDER", commit).Replace("PARENT_PLACEHOLDER", parent));
             File.WriteAllText(Path.Combine(location.NativeDirectory, "skill.json"),
                 """{"id":"skill.example","kind":"skill","name":"Example"}""");
             if (valid)
