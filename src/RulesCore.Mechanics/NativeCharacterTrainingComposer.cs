@@ -40,13 +40,11 @@ public static class NativeCharacterTrainingComposer
         NativeCompetencyDuplicateProficiencyPolicy duplicatePolicy,
         CancellationToken cancellationToken = default)
     {
-        var issues = new List<NativeIssue>();
         NativeCharacterTrainingComposition Invalid(string code, string detail) =>
             new("invalid", [], [], [], null, null, [new(code, "training", detail)]);
         bool ValidId(string? id) => !string.IsNullOrWhiteSpace(id) && id.Length <= 512;
         bool SelectableSkill(string id) => catalog.TryGetById(id, out var entity) &&
             entity?.Category == "skill" &&
-            !entity.Definition.TryGetProperty("childSkills", out _) &&
             (!entity.Definition.TryGetProperty("selectable", out var value) ||
                 value.ValueKind != System.Text.Json.JsonValueKind.False);
 
@@ -146,8 +144,9 @@ public static class NativeCharacterTrainingComposer
 
         var projection = new NativeCharacterProjector(catalog).Project(primary with
         { Skills = skillMap, Competencies = competencyMap }, cancellationToken);
-        // The existing kernel still rejects a Skill with simultaneous rank
-        // and proficiency facets. Do not override that unresolved policy here.
+        // Composite Skill entitlements are valid, but the numeric kernel still
+        // lacks a composite proficiency policy. Do not train the children or
+        // silently override its unresolved numeric result.
         return new(projection.Status == "invalid" ? "invalid" : "resolved", skills,
             replacements, [], combined, projection, projection.Issues);
     }

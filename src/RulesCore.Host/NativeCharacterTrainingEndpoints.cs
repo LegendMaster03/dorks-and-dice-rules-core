@@ -9,7 +9,9 @@ namespace RulesCore.Host;
 /// and acquired grant applicability, level allocations, the selected Life
 /// Experiences and their context, duplicate choices and ruleset policy. Do not
 /// supply previously aggregated training or reinclude Life Experience grants
-/// in the other source lists. The request contains no grant assertions.
+/// in the other source lists. Optional equipment sources and replacement
+/// selections must also be independently authenticated, including Class entry
+/// mode and source ownership. The request contains no grant assertions.
 /// </summary>
 public interface INativeCharacterHostTrainingAuthorityProvider
 {
@@ -25,7 +27,9 @@ public sealed record VerifiedCharacterTrainingAuthorization(
     IReadOnlyList<NativeCompetencyTrainingGrant> OtherCompetencies,
     IReadOnlyDictionary<string, string> SkillAlternatives,
     IReadOnlyDictionary<string, string> CompetencyAlternatives,
-    NativeCompetencyDuplicateProficiencyPolicy DuplicatePolicy);
+    NativeCompetencyDuplicateProficiencyPolicy DuplicatePolicy,
+    NativeEquipmentQualificationRequest? OtherEquipmentSources = null,
+    IReadOnlyList<NativeLifeExperienceEquipmentReplacement>? EquipmentAlternatives = null);
 
 public static class NativeCharacterTrainingEndpoints
 {
@@ -65,14 +69,20 @@ public static class NativeCharacterTrainingEndpoints
             var result = NativeCharacterTrainingComposer.Compose(catalog, verified.Primary, earned,
                 verified.OtherSkills, verified.OtherCompetencies, verified.SkillAlternatives,
                 verified.CompetencyAlternatives, verified.DuplicatePolicy, context.RequestAborted);
+            // Equipment aggregation is an independent supported subset.
+            // An omitted source list is not evidence of zero equipment grants.
+            var equipment = verified.OtherEquipmentSources is null ? null :
+                NativeCharacterEquipmentComposer.Compose(catalog, earned.Equipment,
+                    verified.OtherEquipmentSources, verified.EquipmentAlternatives ?? []);
             return Results.Json(new
             {
                 contractVersion = 1, rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
                 characterId = request.CharacterId, originRevision = request.OriginRevision,
                 characterRevision = request.CharacterRevision, committed = false,
                 supportedScope = "verified-primary-training", effectiveMechanicsReady = false,
-                result
-            }, statusCode: result.Status == "resolved" ? 200 : 422);
+                result, equipment
+            }, statusCode: result.Status == "resolved" &&
+                (equipment is null || equipment.Status == "resolved") ? 200 : 422);
         });
     }
 

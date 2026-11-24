@@ -2407,7 +2407,8 @@ public sealed class NativeMechanicsApiTests
         using var pending = await Send();
         Assert.Equal(HttpStatusCode.UnprocessableEntity, pending.StatusCode);
         var pendingBody = await pending.Content.ReadFromJsonAsync<JsonElement>();
-        Assert.Equal("needs-choices", pendingBody.GetProperty("result").GetProperty("status").GetString());
+        Assert.True(pendingBody.GetProperty("result").GetProperty("status").GetString() == "needs-choices",
+            pendingBody.GetRawText());
         provider.Stored = provider.Stored with
         {
             SkillAlternatives = new Dictionary<string, string> { ["class-skill-1"] = "skill.stealth" }
@@ -2429,6 +2430,87 @@ public sealed class NativeMechanicsApiTests
         };
         using var duplicate = await Send();
         Assert.Equal(HttpStatusCode.UnprocessableEntity, duplicate.StatusCode);
+    }
+
+    private sealed class CriminalTrainingContext : INativeLifeExperienceContextAuthority
+    {
+        public bool AuthorizesChoice(NativeLifeExperienceSource source,
+            NativeLifeExperienceChoice choice, string optionId) => false;
+        public NativeLifeExperienceItemProof? VerifyItem(NativeLifeExperienceSource source,
+            NativeLifeExperienceItemIntent intent) =>
+            source.SourceId == "background.criminal" ?
+                new("fixture." + intent.Key.Replace('/', '.'), null, true, true) : null;
+    }
+
+    [Fact]
+    public async Task VerifiedCharacterEquipmentReconcilesCriminalAndRogueToolDuplicate()
+    {
+        var provider = new CharacterTrainingTestAuthority();
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true, dm: true, trainingAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var proposal = new NativeLifeExperienceProposal("upbringing.elf.wood", "background.criminal",
+            new Dictionary<string, IReadOnlyList<string>>
+            {
+                ["upbringing.elf.general/cultural-training"] = ["skill.survival"],
+                ["background.criminal/equipment/criminal-gaming-set"] = ["equipment.tool.dice-set"]
+            });
+        var authorization = new NativeLifeExperienceAuthorization(new Dictionary<string, string>
+        {
+            ["upbringing.elf.general"] = "verified-parent",
+            ["upbringing.elf.wood"] = "verified-upbringing",
+            ["background.criminal"] = "verified-background"
+        }, new CriminalTrainingContext());
+        var primary = new NativeCharacterRequest(catalog.RulesetId, catalog.Fingerprint,
+            new Dictionary<string, int> { ["strength"] = 10, ["dexterity"] = 10, ["constitution"] = 10,
+                ["intelligence"] = 10, ["wisdom"] = 10, ["charisma"] = 10 },
+            [new("class.rogue", 1, "class-1")]);
+        provider.Stored = new(SupernaturalCharacter, 1, 2, primary, proposal, authorization, [], [],
+            new Dictionary<string, string>(), new Dictionary<string, string>(),
+            NativeCompetencyDuplicateProficiencyPolicy.AddRank,
+            new(catalog.RulesetId, catalog.Fingerprint, [new("class.rogue", "class-1")]));
+        const string endpoint = "/api/mechanics/v1/characters/training/resolve";
+        async Task<HttpResponseMessage> Send()
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                characterId = SupernaturalCharacter, originRevision = 1, characterRevision = 2,
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint
+            }));
+            return await fixture.Client.SendAsync(request);
+        }
+        using var pending = await Send();
+        var raw = await pending.Content.ReadAsStringAsync();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, pending.StatusCode);
+        using var pendingJson = JsonDocument.Parse(raw);
+        Assert.True(pendingJson.RootElement.TryGetProperty("equipment", out var discovery), raw);
+        Assert.Equal("needs-choices", discovery.GetProperty("status").GetString());
+        var choice = Assert.Single(discovery.GetProperty("requiredChoices").EnumerateArray());
+        Assert.Equal("equipment.tool.thieves-tools", choice.GetProperty("originalQualificationId").GetString());
+        Assert.DoesNotContain(choice.GetProperty("eligibleQualificationIds").EnumerateArray(),
+            x => x.GetString() == "equipment.tool.dice-set");
+        var provenance = new NativeEquipmentQualificationProvenance("class.rogue", "class-1", "tool-thieves-tools");
+        provider.Stored = provider.Stored with
+        {
+            EquipmentAlternatives = [new(provenance, "equipment.tool.thieves-tools", "equipment.tool.playing-card-set")]
+        };
+        using var completed = await Send();
+        raw = await completed.Content.ReadAsStringAsync();
+        Assert.True(completed.StatusCode == HttpStatusCode.OK, raw);
+        using var json = JsonDocument.Parse(raw);
+        var result = json.RootElement.GetProperty("equipment");
+        var qualifications = result.GetProperty("equipment").GetProperty("qualifications").EnumerateArray().ToArray();
+        Assert.Single(qualifications, q => q.GetProperty("qualificationId").GetString() == "equipment.tool.thieves-tools");
+        Assert.Single(qualifications, q => q.GetProperty("qualificationId").GetString() == "equipment.tool.playing-card-set");
+        var shortbow = Assert.Single(qualifications, q => q.GetProperty("qualificationId").GetString() == "equipment.weapon.shortbow");
+        Assert.Equal(2, shortbow.GetProperty("provenance").GetArrayLength());
+        provider.Stored = provider.Stored with
+        {
+            EquipmentAlternatives = [new(provenance, "equipment.tool.thieves-tools", "equipment.tool.dice-set")]
+        };
+        using var covered = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, covered.StatusCode);
     }
 
     [Fact]
