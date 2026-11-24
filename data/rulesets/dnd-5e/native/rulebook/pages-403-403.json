@@ -1,0 +1,19 @@
+[
+  {
+    "id": "rulebook.page-403",
+    "kind": "rulebook-page",
+    "name": "SRD 5.1 — Page 403",
+    "page": 403,
+    "textLayout": "Speed 30 ft.                                                                               Shortsword. Melee Weapon Attack: +5 to hit, reach 5\n                                                                                                    ft., one target. Hit: 6 (1d6 + 3) piercing damage.\n      STR          DEX         CON           INT          WIS         CHA\n                                                                                                    Heavy Crossbow. Ranged Weapon Attack: +3 to hit,\n   13 (+1)  11 (+0)  12 (+1)  8 (−1)  11 (+0)  8 (−1)           range 100/400 ft., one target. Hit: 6 (1d10 + 1) piercing\nSenses passive Perception 10                                                            damage.\nLanguages any one language\n                                                                                                    Veterans are professional fighters that take up arms\nChallenge 1/8 (25 XP)                                                                   for pay or to protect something they believe in or\n                                                                                                    value. Their ranks include soldiers retired from long\nPack Tactics. The warrior has advantage on an attack                     service and warriors who never served anyone but\nroll against a creature if at least one of the warrior’s           themselves.\nallies is within 5 feet of the creature and the ally isn’t\nincapacitated.\n\nActions\nSpear. Melee or Ranged Weapon Attack: +3 to hit,\nreach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d6 +\n1) piercing damage, or 5 (1d8 + 1) piercing damage if\nused with two hands to make a melee attack.\n\nTribal warriors live beyond civilization, most often\nsubsisting on fishing and hunting. Each tribe acts in\naccordance with the wishes of its chief, who is the\ngreatest or oldest warrior of the tribe or a tribe\nmember blessed by the gods.\n\n\nVeteran\nMedium humanoid (any race), any alignment\nArmor Class 17 (splint)\nHit Points 58 (9d8 + 18)\nSpeed 30 ft.\n\n      STR          DEX         CON           INT          WIS         CHA\n   16 (+3)  13 (+1)  14 (+2)  10 (+0)  11 (+0)  10 (+0)\n\nSkills Athletics +5, Perception +2\nSenses passive Perception 12\nLanguages any one language (usually Common)\nChallenge 3 (700 XP)\n\nActions\nMultiattack.  The veteran makes two longsword attacks.\nIf it has a shortsword drawn, it can also make a\nshortsword attack.\nLongsword. Melee Weapon Attack: +5 to hit, reach 5 ft.,\none target. Hit: 7 (1d8 + 3) slashing damage, or 8 (1d10\n+ 3) slashing damage if used with two hands.\n\n\n\n\n                                                                                                                         System Reference Document 5.1                                403",
+    "representation": "pdf-layout-extract",
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pageUrl": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf#page=403",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "page text extracted; layout whitespace normalized; no rule changes"
+    }
+  }
+]

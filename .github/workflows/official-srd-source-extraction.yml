@@ -4,6 +4,9 @@ on:
     branches: [main]
     paths:
       - 'tools/import_official_srd_pages.py'
+      - 'data/rulesets/dnd-5e/native/rulebook/**'
+      - 'data/rulesets/dnd-5-5e/native/rulebook/**'
+      - 'data/reference/srd/official-page-import.json'
       - '.github/workflows/official-srd-source-extraction.yml'
   workflow_dispatch:
 permissions:
@@ -30,7 +33,7 @@ jobs:
       - name: Extract and inventory publisher pages
         env:
           EDITION: ${{ matrix.edition }}
-        run: python3 tools/import_official_srd_pages.py "$EDITION" /tmp/official-srd.pdf --output build/official-srd --emit-transfer
+        run: python3 tools/import_official_srd_pages.py "$EDITION" /tmp/official-srd.pdf --output build/official-srd --check
       - uses: actions/upload-artifact@v4
         with:
           name: official-source-${{ matrix.edition }}

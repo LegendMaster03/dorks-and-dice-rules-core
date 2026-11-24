@@ -40,13 +40,16 @@ def extract(edition, pdf):
     if sha != pinned[edition]:
         raise ValueError("Publisher PDF differs from pinned source")
     records = []
-    # The 5.1 embedded text layer uses Unicode line separators as word
-    # separators. Preserve physical newlines from pdftotext, not splitlines().
-    # Normalization is restricted to those nonprinting word separators.
+    # The 5.1 text layer uses tab/CR/NBSP sequences between words.
+    # Preserve physical newlines, not splitlines(), and normalize only
+    # the extractor's nonprinting whitespace. Tabs elsewhere become spaces.
     for number, page in enumerate(pages, 1):
         # Preserve the layout extractor's columns and tables; only trim line ends.
         body = "\n".join(line.replace("\u2028", " ").replace("\u2029", " ")
-                         .replace("\u000b", " ").replace("\u0085", " ").rstrip()
+                         .replace("\u000b", " ").replace("\u0085", " ")
+                         .replace("\t\r \u00a0", " ").replace("\t\r", " ")
+                         .replace("\u00a0", " ").replace("\t", "    ")
+                         .replace("\r", "").rstrip()
                          for line in page.split("\n")).strip("\n")
         # Legal information, front matter and contents remain source material
         # rather than becoming gameplay definitions.
@@ -61,7 +64,7 @@ def extract(edition, pdf):
                                    "pageUrl": spec["officialSource"] + f"#page={number}",
                                    "pdfSha256": sha, "license": "CC-BY-4.0",
                                    "attribution": spec["attribution"],
-                                   "adaptation": "page text extracted; no rule changes"}})
+                                   "adaptation": "page text extracted; layout whitespace normalized; no rule changes"}})
     return {"package": package, "edition": edition, "pdfSha256": sha,
             "pdfPages": expected_count, "firstGameplayPage": first_gameplay_page,
             "recordCount": len(records), "records": records}
@@ -85,16 +88,17 @@ if __name__ == "__main__":
     parser.add_argument("edition", choices=PACKAGES)
     parser.add_argument("pdf", type=Path)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--emit-transfer", action="store_true",
-                        help="Emit JSON records to CI logs for audited Git object transfer")
+    parser.add_argument("--check", action="store_true",
+                        help="Compare generated records with the committed native reference pages")
     args = parser.parse_args()
     result = extract(args.edition, args.pdf)
-    print(json.dumps(write_result(result, args.output), ensure_ascii=False))
-    if args.emit_transfer:
-        # Diagnostic: distinguish PDF physical line breaks from text-layer
-        # Unicode separators. Do not treat visual layout as structured tables.
-        probe = result["records"][0]["textLayout"]
-        print("SRD_LAYOUT_SAMPLE " + json.dumps(probe[:1600], ensure_ascii=True))
-        print("SRD_SOURCE_METADATA " + json.dumps({k: v for k, v in result.items() if k != "records"}))
-        for record in result["records"]:
-            print("SRD_PAGE_RECORD " + json.dumps(record, ensure_ascii=False, separators=(",", ":")))
+    metadata = write_result(result, args.output)
+    if args.check:
+        directory = ROOT / "data" / "rulesets" / result["package"] / "native" / "rulebook"
+        committed = []
+        for path in sorted(directory.glob("pages-*.json")):
+            committed.extend(json.loads(path.read_text(encoding="utf-8")))
+        if committed != result["records"]:
+            raise ValueError("Committed native page records differ from official extraction")
+        metadata["nativePageParity"] = True
+    print(json.dumps(metadata, ensure_ascii=False))

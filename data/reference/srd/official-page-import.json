@@ -1,0 +1,22 @@
+{
+  "status": "direct publisher source page import; not entity-level or layout fidelity certification",
+  "sourceExtractionRun": "https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/45509114590",
+  "sources": [
+    {
+      "package": "dnd-5e",
+      "edition": "srd-5.1",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pdfPages": 403,
+      "firstGameplayPage": 3,
+      "recordCount": 401
+    },
+    {
+      "package": "dnd-5-5e",
+      "edition": "srd-5.2.1",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pdfPages": 364,
+      "firstGameplayPage": 5,
+      "recordCount": 360
+    }
+  ]
+}
