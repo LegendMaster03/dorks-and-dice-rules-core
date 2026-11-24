@@ -76,7 +76,10 @@ class NativeOriginTraitNormalizationTests(unittest.TestCase):
             for index, item in enumerate(source.get("traits", [])):
                 owners.setdefault(item["traitId"], []).append((source["id"], index))
         self.assertEqual(5, len(owners["trait.low-light-vision"]))
-        self.assertEqual(2, len(owners["trait.natural-climber"]))
+        climbers = owners["trait.natural-climber"]
+        self.assertEqual(3, len(climbers))
+        self.assertEqual(3, len(set(climbers)))
+        self.assertIn("ancestry.gnome.rock", {source for source, _ in climbers})
         self.assertEqual(4, len(owners["trait.amphibious"]))
         self.assertEqual(2, len(owners["trait.powerful-build"]))
         self.assertEqual(2, len(owners["trait.darkness"]))
@@ -139,12 +142,18 @@ class NativeOriginTraitNormalizationTests(unittest.TestCase):
         human = trait("trait.skillful")
         self.assertEqual("any-native-skill", human["chooseFrom"])
         self.assertEqual(1, human["choiceCount"])
-        for ancestry in ("high", "wood"):
+        spell_traits = {
+            "high": {"trait.arcane-cantrip", "trait.detect-magic", "trait.misty-step"},
+            "wood": {"trait.druidcraft", "trait.longstrider", "trait.pass-without-trace"},
+        }
+        for ancestry, identities in spell_traits.items():
             source = self.sources[f"ancestry.elf.{ancestry}"]
             self.assertEqual(["intelligence", "wisdom", "charisma"],
                              source["spellcastingAbilityChoice"])
-            for occurrence in source["traits"]:
-                value = trait(occurrence["traitId"])
+            self.assertTrue(identities <= {occurrence["traitId"]
+                                          for occurrence in source["traits"]})
+            for identity in identities:
+                value = trait(identity)
                 self.assertEqual("manifested-intrinsic",
                                  value["originBindings"]["spellcastingAbility"]["lookup"])
                 self.assertEqual("source",

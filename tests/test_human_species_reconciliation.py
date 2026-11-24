@@ -35,8 +35,15 @@ class HumanSpeciesReconciliationTests(unittest.TestCase):
         self.assertFalse(WORKING.exists())
 
     def test_all_three_customization_benefits_are_cumulative(self):
-        self.assertEqual({"skillful", "versatile", "adaptable-learning"},
-                         set(self.traits))
+        self.assertEqual({"skillful", "versatile", "adaptable-learning",
+                          "human-determination"}, set(self.traits))
+        determination = self.traits["human-determination"]
+        self.assertEqual({"attack-roll", "ability-check", "saving-throw"},
+                         set(determination["rollAdvantage"]["eligibleRollTypes"]))
+        self.assertEqual("before-roll",
+                         determination["rollAdvantage"]["declarationTiming"])
+        self.assertEqual({"value": 1, "recharge": "short-or-long-rest"},
+                         determination["uses"])
         skill = self.traits["skillful"]
         feat = self.traits["versatile"]
         self.assertEqual("skill-proficiency", skill["grantType"])

@@ -71,7 +71,17 @@ class TieflingSpeciesReconciliationTests(unittest.TestCase):
                 self.assertEqual("species.tiefling", leaf["parent"])
                 self.assertEqual(["intelligence", "wisdom", "charisma"],
                                  leaf["spellcastingAbilityChoice"])
-                resistance, first, third, fifth = leaf["traits"]
+                by_id = {entry["id"]: entry for entry in leaf["traits"]}
+                specializations = {
+                    "abyssal": {"abyssal-fortitude", "poison-tolerance", "potent-venom"},
+                    "chthonic": {"chthonic-life-siphon"},
+                    "infernal": {"flames-of-phlegethos"},
+                }
+                self.assertEqual({"damage-type-resistance", cantrip, level3, level5}
+                                 | specializations[name], set(by_id))
+                resistance = by_id["damage-type-resistance"]
+                first, third, fifth = (by_id[identity]
+                                       for identity in (cantrip, level3, level5))
                 self.assertEqual(damage, leaf["damageType"])
                 self.assertEqual("damage-type-resistance", resistance["id"])
                 self.assertEqual(50, resistance["damageResistance"]["percent"])
@@ -93,7 +103,8 @@ class TieflingSpeciesReconciliationTests(unittest.TestCase):
 
     def test_infernal_2014_hellish_rebuke_exception(self):
         for slug, leaf in self.leaves.items():
-            third = leaf["traits"][2]
+            third = next(entry for entry in leaf["traits"]
+                         if entry.get("level") == 3 and "spell" in entry)
             if slug == "infernal":
                 self.assertEqual(2, third["freeCastSpellLevel"])
             else:
