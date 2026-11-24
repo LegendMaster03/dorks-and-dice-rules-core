@@ -60,6 +60,8 @@ public static class NativeMechanicsEndpoints
             group.MapVerifiedPermanentOriginReconstruction();
             group.MapVerifiedLifeExperiencePlan();
             group.MapVerifiedScopedSkillCheck();
+            group.MapVerifiedOriginDirectChoices();
+            group.MapVerifiedOriginCantripRest();
             group.MapVerifiedSupernaturalOwnershipPlans();
             group.MapVerifiedInfluenceOverlapPlans();
         }
@@ -90,6 +92,8 @@ public static class NativeMechanicsEndpoints
                     constructOriginPreview = "stateless-native-assembly",
                     originMethodDiscovery = true, originPresetDiscovery = true,
                     originChoiceCatalogDiscovery = true,
+                    verifiedDirectOriginChoices = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedCantripReplacement = privateTunnel ? "unavailable" : "host-authority-required",
                     constructConfigurationDiscovery = true,
                     lifeExperiencePreview = "source-qualified-selection",
                     verifiedLifeExperiencePlanning = privateTunnel ? "unavailable" : "host-authority-required",

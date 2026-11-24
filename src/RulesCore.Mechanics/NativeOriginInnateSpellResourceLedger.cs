@@ -405,6 +405,53 @@ public static class NativeOriginInnateSpellResourceLedger
     /// A computed fingerprint only detects internal consistency. The host must
     /// retrieve the actual ledger from authenticated storage and enforce CAS.
     /// </summary>
+    internal static NativeOriginInnateSpellLedgerResult ReplaceCantripAfterLongRest(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult previous,
+        NativeOriginConstructionResult replacement, NativeCharacterProjection character,
+        NativeOriginInnateSpellLedgerState state, long expectedRevision, string grantId)
+    {
+        var before = Resolve(catalog, previous, character);
+        var after = Resolve(catalog, replacement, character);
+        if (before.Reason is not null) return Fail(before.Reason);
+        if (after.Reason is not null) return Fail(after.Reason);
+        var oldView = before.Projection!;
+        var newView = after.Projection!;
+        if (previous.Profile!.Id != replacement.Profile!.Id ||
+            previous.EvaluatedProposal.Id != replacement.EvaluatedProposal.Id ||
+            oldView.CharacterLevel != newView.CharacterLevel ||
+            oldView.Spells.Count != newView.Spells.Count)
+            return Fail("spell-ledger-replacement-course-mismatch");
+
+        var newSpells = newView.Spells.ToDictionary(spell => spell.GrantId, StringComparer.Ordinal);
+        var changed = false;
+        foreach (var old in oldView.Spells)
+        {
+            if (!newSpells.TryGetValue(old.GrantId, out var next))
+                return Fail("spell-ledger-replacement-course-mismatch");
+            if (old.GrantId == grantId)
+            {
+                if (!old.AtWill || old.SlotCasting || old.FreeUsesPerRecharge is not null ||
+                    old.FreeUsesFormula is not null || old.SpellId == next.SpellId ||
+                    old with { SpellId = next.SpellId } != next)
+                    return Fail("spell-ledger-replacement-not-cantrip");
+                changed = true;
+            }
+            else if (old != next) return Fail("spell-ledger-replacement-course-mismatch");
+        }
+        if (!changed) return Fail("spell-ledger-replacement-grant-missing");
+
+        // Apply the ordinary Long Rest exactly once to the OLD validated
+        // ledger, then bind that same result to the replaced cantrip course.
+        // The host must commit this with the Origin revision and rest event.
+        var recovered = Apply(catalog, previous, character, state,
+            new(NativeOriginInnateSpellLedgerActionKind.LongRest, expectedRevision));
+        if (recovered.Status != "resolved" || recovered.State is null) return recovered;
+        return recovered with
+        {
+            State = recovered.State with { ProjectionFingerprint = Fingerprint(newView) }
+        };
+    }
+
     private static string? ValidateSnapshot(
         NativeCatalogSnapshot catalog, NativeOriginConstructionResult origin,
         NativeOriginInnateSpellProgressionProjector.View projection,
