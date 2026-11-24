@@ -102,7 +102,7 @@ public static class NativeCharacterTrainingEndpoints
             // An omitted source list is not evidence of zero equipment grants.
             var equipment = verified.OtherEquipmentSources is null ? null :
                 NativeCharacterEquipmentComposer.Compose(catalog, earned.Equipment,
-                    verified.OtherEquipmentSources, verified.EquipmentAlternatives ?? []);
+                    verified.OtherEquipmentSources, verified.EquipmentAlternatives ?? [], earned.EquipmentReplacements);
             // Derive all supported progression views from the same native
             // character projection. No client-supplied level, separate rank
             // spending, HP mutation or resource initialization is implied.
