@@ -613,6 +613,23 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                     "The inherited persistent choice is not valid in the current native catalog.");
                 continue;
             }
+            if ((parentGeneOffers.ContainsKey(candidate.Id) || inheritedOffers.ContainsKey(candidate.Id)) &&
+                candidate.Identity.MechanicalDefinitionId is { } inheritedDefinitionId &&
+                catalog.TryGetById(inheritedDefinitionId, out var inheritedDefinition) &&
+                inheritedDefinition?.Category == "origin-trait" &&
+                inheritedDefinition.Definition.TryGetProperty("trait", out var inheritedTrait) &&
+                inheritedTrait.TryGetProperty("grantType", out var grantType) &&
+                grantType.ValueKind == JsonValueKind.String && grantType.GetString() == "feat-choice" &&
+                (grant.ResolvedChoices is not { Count: 1 } inheritedChoices ||
+                    inheritedChoices[0].SelectedOptionIds is not { Count: 1 } inheritedOption ||
+                    request.TrustedScope is null ||
+                    authority?.AuthorizesInheritedFeat(candidate, inheritedOption[0]) != true))
+            {
+                Add("inherited-feat-eligibility-unresolved", candidate.Id,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The inherited feat selection requires independent eligibility verification for this character.");
+                continue;
+            }
             accepted.Add(new(candidate, manifest, grant));
         }
 

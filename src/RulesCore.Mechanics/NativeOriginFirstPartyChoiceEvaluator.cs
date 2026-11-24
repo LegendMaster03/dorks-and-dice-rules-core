@@ -110,7 +110,7 @@ public sealed class NativeOriginFirstPartyChoiceEvaluator(NativeCatalogSnapshot 
         return _construction.Evaluate(request with
         {
             Proposal = submitted with { Manifestations = normalized, BiologicalTransmission = transmission }
-        }, new NativeCatalogOnlyAuthority(catalog, proofId, approvedFeatProofs), manifestedAuthority);
+        }, new NativeCatalogOnlyAuthority(catalog, proofId, approvedFeatProofs, featAuthority), manifestedAuthority);
     }
 
     private static string ProofForCatalog(NativeCatalogSnapshot snapshot) =>
@@ -118,10 +118,15 @@ public sealed class NativeOriginFirstPartyChoiceEvaluator(NativeCatalogSnapshot 
 
     private sealed class NativeCatalogOnlyAuthority(
         NativeCatalogSnapshot catalog, string expectedProofId,
-        IReadOnlyDictionary<string, string> approvedFeatProofs) : INativeOriginAuthority
+        IReadOnlyDictionary<string, string> approvedFeatProofs,
+        INativeOriginFeatChoiceAuthority? featAuthority) : INativeOriginAuthority
     {
         public bool Authorizes(NativeTableRuleDecision decision,
             NativeTableDecisionScope trustedScope) => false;
+
+        public bool AuthorizesInheritedFeat(NativeOriginCandidate candidate, string featId) =>
+            NativeOriginChoiceCatalog.IsMember(catalog, "feat:origin", featId) &&
+            featAuthority?.Authorizes(candidate, featId) == true;
 
         public bool AuthorizesCatalogChoice(
             string catalogId, string optionId, string evidenceId) =>

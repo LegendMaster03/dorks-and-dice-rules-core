@@ -860,6 +860,11 @@ public sealed class NativeMechanicsApiTests
     private sealed class VerifiedBiologicalTestAuthority : INativeOriginHostBiologicalAuthorityProvider
     {
         public NativeOriginProfile? Parent { get; set; }
+        public INativeOriginFeatChoiceAuthority? FeatAuthority { get; set; }
+        public Task<INativeOriginFeatChoiceAuthority?> VerifyChoicesAsync(Guid actorId,
+            NativeOriginApiEndpoints.VerifiedBiologicalRequest request, CancellationToken cancellationToken) =>
+            Task.FromResult(actorId == SupernaturalActor && request.CharacterId == SupernaturalCharacter
+                ? FeatAuthority : null);
         public Task<IReadOnlyList<NativeOriginVerifiedManifestedContributor>?> VerifyAsync(
             Guid actorId, Guid characterId, IReadOnlyList<NativeOriginSourceReference> sources,
             string rulesetId, string fingerprint, CancellationToken cancellationToken)
@@ -1079,6 +1084,68 @@ public sealed class NativeMechanicsApiTests
         Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized, stale.GetProperty("status").GetInt32());
         Assert.Contains(stale.GetProperty("issues").EnumerateArray(),
             x => x.GetProperty("code").GetString() == "inherited-open-choice-unresolved");
+    }
+
+    [Fact]
+    public async Task VerifiedInheritedFeatRequiresDescendantEligibility()
+    {
+        var provider = new VerifiedBiologicalTestAuthority();
+        var eligibility = new OpenChoiceTestFeatAuthority();
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true, dm: true, biologicalAuthority: provider, syntheticOpenChoiceCatalog: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var parent = new NativeOriginFirstPartyChoiceEvaluator(catalog).Evaluate(
+            OpenChoiceProposal(catalog, "species.human", "feat.fixture-origin"), eligibility);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, parent.Status);
+        provider.Parent = parent.Profile!;
+        var child = new NativeOriginProposal("fixture-inherited-feat", NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [new("carrier", new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.ManifestedProfile, provider.Parent.Id, "revision-1"))], [], []);
+        async Task<JsonElement> Send(NativeOriginProposal proposal)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post,
+                "/api/mechanics/v1/origins/biological/verified-preview", JsonContent.Create(new
+                {
+                    characterId = SupernaturalCharacter, rulesetId = catalog.RulesetId,
+                    fingerprint = catalog.Fingerprint, proposal
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            var raw = await response.Content.ReadAsStringAsync();
+            Assert.True(response.StatusCode == HttpStatusCode.OK, raw);
+            using var json = JsonDocument.Parse(raw);
+            return json.RootElement.GetProperty("result").Clone();
+        }
+        var discovery = await Send(child);
+        var offers = discovery.GetProperty("evaluatedProposal").GetProperty("candidates")
+            .Deserialize<NativeOriginCandidate[]>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+        var feat = Assert.Single(offers, x => x.Identity.MechanicalDefinitionId == "trait.versatile");
+        var selected = offers.Where(x => x.Identity.IntrinsicSlotId is
+            "creatureType" or "size" or "walkingSpeedFeet").Append(feat).ToArray();
+        var proposal = child with
+        {
+            Manifestations = selected.Select((x, i) => new NativeOriginManifestation("child-" + i,
+                x.Id, SelectedValue: x.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic ? x.OfferedValue : null)).ToArray(),
+            BiologicalTransmission = new(selected.Select(x => x.Id).ToArray())
+        };
+        var absent = await Send(proposal);
+        Assert.Contains(absent.GetProperty("issues").EnumerateArray(),
+            x => x.GetProperty("code").GetString() == "inherited-feat-eligibility-unresolved");
+        provider.FeatAuthority = eligibility;
+        eligibility.Eligible = false;
+        var denied = await Send(proposal);
+        Assert.Contains(denied.GetProperty("issues").EnumerateArray(),
+            x => x.GetProperty("code").GetString() == "inherited-feat-eligibility-unresolved");
+        eligibility.Eligible = true;
+        var authorized = await Send(proposal);
+        Assert.True(authorized.GetProperty("status").GetInt32() == (int)NativeOriginConstructionStatus.Authorized,
+            authorized.GetRawText());
+        var grant = Assert.Single(authorized.GetProperty("profile").GetProperty("underlying")
+            .GetProperty("inherentGrants").EnumerateArray(), x => x.GetProperty("sourceCandidateIds")
+                .EnumerateArray().Any(id => id.GetString() == feat.Id));
+        Assert.Equal("feat.fixture-origin", grant.GetProperty("resolvedChoices")[0]
+            .GetProperty("selectedOptionIds")[0].GetString());
     }
 
     private sealed class VerifiedReconstructionTestAuthority : INativeOriginHostReconstructionAuthorityProvider,

@@ -12,6 +12,11 @@ public interface INativeOriginAuthority
 
     /// <summary>Verifies both membership and the evidence for an open catalog selection.</summary>
     bool AuthorizesCatalogChoice(string catalogId, string optionId, string evidenceId);
+
+    // A parent's committed feat does not prove the descendant's eligibility.
+    // Existing table/native providers remain fail-closed until they explicitly
+    // support this character-specific decision.
+    bool AuthorizesInheritedFeat(NativeOriginCandidate candidate, string featId) => false;
 }
 
 public enum NativeOriginConstructionStatus
