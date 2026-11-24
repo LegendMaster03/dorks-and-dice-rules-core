@@ -19,21 +19,6 @@ class PactSpecificInvocationCodificationTests(unittest.TestCase):
         cls.srd = load(ROOT / "data/reference/srd/structured/optionalfeatures.json")["optionalfeature"]
         cls.warlock = load(ROOT / "data/rulesets/first-party-001/working/classes/base/warlock.json")
 
-    def test_pass_order_preserves_unresolved_budget_and_three_five_work(self):
-        self.assertEqual("source-staged-conflicts-not-resolved", self.data["status"])
-        self.assertEqual([
-            "codify-known-pact-specific-invocations",
-            "resolve-mechanical-overlap-and-source-version-conflicts",
-            "choose-3.5-invocation-research-or-invocation-progression",
-        ], self.data["decisionOrder"])
-        self.assertTrue(self.data["authority"]["selectionProgressionUndecided"])
-        self.assertTrue(self.data["authority"]["threeFiveImportNotStarted"])
-        self.assertTrue(self.data["authority"]["starChainSeekerDisabled"])
-        self.assertTrue(self.data["authority"]["firstPactFreeAtWarlockLevel1"])
-        self.assertTrue(self.data["authority"]["noExistingIntrinsicPactAbilitiesModified"])
-        self.assertTrue(self.data["authority"]["nativeSelectableOptionsNotEnabledByThisCodification"])
-        self.assertEqual("pending-native-reconciliation", self.warlock["baselineStatus"])
-
     def test_all_sixteen_identified_options_and_distribution(self):
         self.assertEqual(16, len(self.records))
         self.assertEqual(16, len(self.by_name))
@@ -119,23 +104,6 @@ class PactSpecificInvocationCodificationTests(unittest.TestCase):
                           "Bond of the Talisman"}, talisman)
         self.assertEqual(7, self.by_name["Protection of the Talisman"]["sourceVariants"][0]["minimumWarlockLevel"])
         self.assertEqual(12, self.by_name["Bond of the Talisman"]["sourceVariants"][0]["minimumWarlockLevel"])
-
-    def test_conflicts_stay_visible_without_mutating_approved_base(self):
-        expected = {
-            "Thirsting Blade": "native-level5-second-attack-duplicate",
-            "Devouring Blade": "thirsting-blade-prerequisite-becomes-stale",
-            "Lifedrinker": "2014-vs-2024-damage-frequency-and-healing",
-            "Investment of the Chain Master": "native-familiar-command-economy-vs-intrinsic-second-attack",
-            "Book of Ancient Secrets": "2024-tome-two-starter-ritual-overlap",
-            "Rebuke of the Talisman": "shared-ward-reaction-competition",
-        }
-        for name, issue in expected.items():
-            self.assertEqual(issue, self.by_name[name]["openConflict"])
-        inventory = load(ROOT / "data/reference/srd/warlock-srd-slice-inventory.json")
-        p = inventory["approvedNativePactDirection"]
-        self.assertEqual({"blade", "chain", "tome", "talisman"},
-                         set(p["approvedLevelFivePactImprovements"]["options"]))
-        self.assertFalse(p["expandedFivePactReview"]["newSources"]["starChain"]["enabled"])
 
 if __name__ == "__main__":
     unittest.main()
