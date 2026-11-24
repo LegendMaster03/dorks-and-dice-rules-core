@@ -190,17 +190,21 @@ public sealed class NativeOriginPassiveEntitlementProjectorTests
     }
 
     [Fact]
-    public void ConventionalHalflingAdmissionRemainsUnresolvedWithoutNewPolicy()
+    public void ConventionalHalflingProjectsVerifiedHearingAndRetainsOtherEffects()
     {
         var catalog = Catalog();
         var halfling = Direct(catalog, "species.halfling");
-        Assert.Equal(NativeOriginConstructionStatus.Unresolved, halfling.Status);
-        Assert.Contains(halfling.Issues, x =>
-            x.Code == "unresolved-source-evidence");
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, halfling.Status);
         var view = NativeOriginPassiveEntitlementProjector.Project(catalog, halfling);
-        Assert.Equal("unresolved", view.Status);
-        Assert.Empty(view.Traits);
-        Assert.Empty(view.OutsideScopeTraits);
+        Assert.Equal("resolved", view.Status);
+        var hearing = Assert.Single(view.Traits);
+        Assert.Equal("trait.keen-hearing", hearing.DefinitionId);
+        Assert.Equal("skill.listen", Assert.Single(hearing.SkillBonuses).SkillId);
+        Assert.Equal(2, Assert.Single(hearing.SkillBonuses).Amount);
+        Assert.Contains(view.OutsideScopeTraits, x =>
+            x.DefinitionId == "trait.luck-reroll");
+        Assert.Contains(view.OutsideScopeTraits, x =>
+            x.DefinitionId == "trait.brave");
     }
 
     [Fact]

@@ -469,6 +469,8 @@ public sealed class NativeMechanicsApiTests
         Assert.True(body.GetProperty("tremorsense").GetProperty("previewOnly").GetBoolean());
         Assert.True(body.GetProperty("innateSpells").GetProperty("previewOnly").GetBoolean());
         Assert.True(body.GetProperty("allocation").GetProperty("previewOnly").GetBoolean());
+        Assert.Equal("within-allowance", body.GetProperty("allocation").GetProperty("status").GetString());
+        Assert.True(body.GetProperty("passiveEntitlements").GetProperty("previewOnly").GetBoolean());
         var view = body.GetProperty("restSurvival");
         Assert.Equal("resolved", view.GetProperty("status").GetString());
         Assert.True(view.GetProperty("previewOnly").GetBoolean());
@@ -493,6 +495,58 @@ public sealed class NativeMechanicsApiTests
             Assert.Equal(JsonValueKind.Null,
                 view.GetProperty("trance").ValueKind);
         }
+    }
+
+    [Fact]
+    public async Task RealNativeRockGnomeHttpPreviewRequiresAndProjectsConfiguredChoices()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var proposal = new NativeOriginProposal("http-rock-gnome",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"), [], [], [],
+            SelectedAncestryId: "ancestry.gnome.rock");
+
+        async Task<JsonElement> Preview(NativeOriginProposal draft)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post,
+                "/api/mechanics/v1/origins/preview", JsonContent.Create(new
+                {
+                    rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                    proposal = draft, characterLevel = 1
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            return await response.Content.ReadFromJsonAsync<JsonElement>();
+        }
+
+        var discovery = await Preview(proposal);
+        var result = discovery.GetProperty("result");
+        Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized,
+            result.GetProperty("status").GetInt32());
+        var candidates = result.GetProperty("evaluatedProposal").GetProperty("candidates")
+            .Deserialize<NativeOriginCandidate[]>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+        var ability = Assert.Single(candidates, x => x.Identity.IntrinsicSlotId == "spellcastingAbility");
+        var trickster = Assert.Single(candidates, x => x.Identity.MechanicalDefinitionId == "trait.natural-trickster");
+        var selected = await Preview(proposal with
+        {
+            Manifestations = [
+                new("ability", ability.Id, Choices: [new(Assert.Single(ability.RequiredChoices!).Id, ["wisdom"])]),
+                new("spell", trickster.Id, Choices: [new(Assert.Single(trickster.RequiredChoices!).Id, ["silent-image"])])
+            ]
+        });
+        Assert.Equal((int)NativeOriginConstructionStatus.Authorized,
+            selected.GetProperty("result").GetProperty("status").GetInt32());
+        Assert.Equal(18, selected.GetProperty("allocation").GetProperty("committedLoad").GetInt32());
+        var spell = Assert.Single(selected.GetProperty("innateSpells").GetProperty("spells").EnumerateArray());
+        Assert.Equal("silent-image", spell.GetProperty("spellId").GetString());
+        Assert.Equal("wisdom", spell.GetProperty("spellcastingAbility").GetString());
+        var sense = Assert.Single(selected.GetProperty("tremorsense").GetProperty("senses").EnumerateArray());
+        Assert.Equal(60, sense.GetProperty("rangeFeet").GetInt32());
+        Assert.Equal(new[] { "earth", "stone" }, sense.GetProperty("contactMaterials")
+            .EnumerateArray().Select(x => x.GetString()).ToArray());
     }
 
     [Fact]
@@ -1675,7 +1729,9 @@ public sealed class NativeMechanicsApiTests
         Assert.False(result.GetProperty("options")[0].TryGetProperty("sourcePath", out _));
         // Skill and Competency summaries are safe identities only, not raw
         // native definitions or private content. Empty result sets are valid.
-        foreach (var category in new[] { "species", "ancestry", "skill", "competency", "monster", "item", "feat", "spell" })
+        foreach (var category in new[] { "species", "ancestry", "skill", "competency", "monster", "item", "feat", "spell",
+            "origin-trait", "construct-component", "construct-power-source", "construct-material",
+            "construct-design", "construct-enhancement", "upbringing", "background" })
         {
             using var catalogSearch = await fixture.Client.SendAsync(fixture.Authenticated(
                 HttpMethod.Get, "/api/mechanics/v1/catalog/options?fingerprint=" +
