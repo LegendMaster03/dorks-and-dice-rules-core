@@ -29,7 +29,8 @@
     "charisma"
   ],
   "reviewNotes": [
-    "35-foot walking speed remains subject to comparative Species balance."
+    "35-foot walking speed remains subject to comparative Species balance.",
+    "Historical review — Wood Elf Magic: its spell package overlaps the existing Wood Elf inherent spell grants; do not grant duplicate spells. No additional biological characteristic was approved."
   ],
   "defaultUpbringing": "upbringing.elf.wood",
   "environmentSubTrait": {
