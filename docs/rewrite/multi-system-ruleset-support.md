@@ -21,13 +21,15 @@ Existing authenticated direct consumer catalog and private Wiki catalog retain f
 | Package | Native records | Status |
 |---|---:|---|
 | first-party-001 | Existing catalog unchanged | Existing first-party mechanics |
-| dnd-5e | 403 | 401 publisher-source gameplay pages (PDF pages 3–403), two structured resolution seeds; full entity-level structured promotion outstanding |
-| dnd-5-5e | 362 | 360 publisher-source gameplay pages (PDF pages 5–364), two structured resolution seeds; full entity-level structured promotion outstanding |
+| dnd-5e | 435 | 401 publisher-source gameplay pages, 18 reviewed skills, 15 reviewed conditions and ability-check seed |
+| dnd-5-5e | 394 | 360 publisher-source gameplay pages, 18 reviewed skills, 15 reviewed conditions and ability-check seed |
 | fate-condensed | 127 | Complete pinned Markdown text segmented by heading; not a structured entity-by-entity import or live edition parity certification |
 
 D&D official source URLs and required CC BY 4.0 attributions are in data/reference/srd/manifest.json and the new packages. The pre-existing structured corpus stays reference-only: source-fidelity audit documents omissions and material outside the SRDs. Edition tags alone do not establish fidelity or licensing. Full import requires inventory of each source array, source-to-official reconciliation, contextual IDs for features/subraces, edition-specific reference validation and a reproducible reviewed promotion pipeline. The official publisher PDFs are now separately imported as native descriptive `rulebook-page` records with pinned PDF hashes, edition identity, page URLs and attribution. Front matter is excluded from gameplay records. This provides direct-source page coverage independent of third-party content; page layout is extracted, not a certified table or semantic parse, and the source PDFs remain authoritative. Use `python3 tools/import_official_srd_pages.py <edition> <pinned-pdf> --output build/official-srd --check` to reproduce. The official-source workflow retrieves the exact pinned PDFs and compares generated page records to committed content. Do not equate page coverage with structured entity coverage or executable mechanics.
 
 Fate source: fate-srd/fate-srd-content, commit 93ed848e723f31b4994b466b7241011ba24be885, docs/markdown/Fate-Condensed-SRD-CC-BY.md, blob cc313c53ee75939e1f5c53f0f2ee59181e78ee00. CC BY 3.0. Preserved original attribution and added publisher's current attribution. Source has unresolved page XX placeholders; do not silently invent destinations. Current website parity and consumer-safe Markdown rendering require review. The original Markdown is reference-only; the native JSON records retain every original section verbatim. Reproduce/check with python3 tools/import_fate_condensed.py [--check].
+
+Structured skills and conditions use the existing 5e.tools entry format with verified official-page provenance. See [edition-specific structured promotion](srd-edition-structured-promotion.md). The remaining named entity categories are incomplete.
 
 ## Edition review catalog generation
 

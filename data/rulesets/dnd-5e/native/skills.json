@@ -1,0 +1,589 @@
+[
+  {
+    "id": "skill.acrobatics",
+    "kind": "skill",
+    "name": "Acrobatics",
+    "ability": "dex",
+    "entries": [
+      "Your Dexterity (Acrobatics) check covers your attempt to stay on your feet in a tricky situation, such as when you're trying to run across a sheet of ice, balance on a tightrope, or stay upright on a rocking ship's deck. The GM might also call for a Dexterity (Acrobatics) check to see if you can perform acrobatic stunts, including dives, rolls, somersaults, and flips."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        80
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/0"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-080"
+    ]
+  },
+  {
+    "id": "skill.animal-handling",
+    "kind": "skill",
+    "name": "Animal Handling",
+    "ability": "wis",
+    "entries": [
+      "When there is any question whether you can calm down a domesticated animal, keep a mount from getting spooked, or intuit an animal's intentions, the GM might call for a Wisdom (Animal Handling) check. You also make a Wisdom (Animal Handling) check to control your mount when you attempt a risky maneuver."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        82
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/2"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-082"
+    ]
+  },
+  {
+    "id": "skill.arcana",
+    "kind": "skill",
+    "name": "Arcana",
+    "ability": "int",
+    "entries": [
+      "Your Intelligence (Arcana) check measures your ability to recall lore about spells, magic items, eldritch symbols, magical traditions, the planes of existence, and the inhabitants of those planes."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        81
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/4"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-081"
+    ]
+  },
+  {
+    "id": "skill.athletics",
+    "kind": "skill",
+    "name": "Athletics",
+    "ability": "str",
+    "entries": [
+      "Your Strength (Athletics) check covers difficult situations you encounter while climbing, jumping, or swimming. Examples include the following activities:",
+      {
+        "type": "list",
+        "items": [
+          "You attempt to climb a sheer or slippery cliff, avoid hazards while scaling a wall, or cling to a surface while something is trying to knock you off.",
+          "You try to jump an unusually long distance or pull off a stunt mid jump.",
+          "You struggle to swim or stay afloat in treacherous currents, storm-tossed waves, or areas of thick seaweed. Or another creature tries to push or pull you underwater or otherwise interfere with your swimming."
+        ]
+      }
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        79
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/6"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-079"
+    ]
+  },
+  {
+    "id": "skill.deception",
+    "kind": "skill",
+    "name": "Deception",
+    "ability": "cha",
+    "entries": [
+      "Your Charisma (Deception) check determines whether you can convincingly hide the truth, either verbally or through your actions. This deception can encompass everything from misleading others through ambiguity to telling outright lies. Typical situations include trying to fast-talk a guard, con a merchant, earn money through gambling, pass yourself off in a disguise, dull someone's suspicions with false assurances, or maintain a straight face while telling a blatant lie."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        82
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/8"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-082"
+    ]
+  },
+  {
+    "id": "skill.history",
+    "kind": "skill",
+    "name": "History",
+    "ability": "int",
+    "entries": [
+      "Your Intelligence (History) check measures your ability to recall lore about historical events, legendary people, ancient kingdoms, past disputes, recent wars, and lost civilizations."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        81
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/10"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-081"
+    ]
+  },
+  {
+    "id": "skill.insight",
+    "kind": "skill",
+    "name": "Insight",
+    "ability": "wis",
+    "entries": [
+      "Your Wisdom (Insight) check decides whether you can determine the true intentions of a creature, such as when searching out a lie or predicting someone's next move. Doing so involves gleaning clues from body language, speech habits, and changes in mannerisms."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        82
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/12"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-082"
+    ]
+  },
+  {
+    "id": "skill.intimidation",
+    "kind": "skill",
+    "name": "Intimidation",
+    "ability": "cha",
+    "entries": [
+      "When you attempt to influence someone through overt threats, hostile actions, and physical violence, the GM might ask you to make a Charisma (Intimidation) check. Examples include trying to pry information out of a prisoner, convincing street thugs to back down from a confrontation, or using the edge of a broken bottle to convince a sneering vizier to reconsider a decision."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        82
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/14"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-082"
+    ]
+  },
+  {
+    "id": "skill.investigation",
+    "kind": "skill",
+    "name": "Investigation",
+    "ability": "int",
+    "entries": [
+      "When you look around for clues and make deductions based on those clues, you make an Intelligence (Investigation) check. You might deduce the location of a hidden object, discern from the appearance of a wound what kind of weapon dealt it, or determine the weakest point in a tunnel that could cause it to collapse. Poring through ancient scrolls in search of a hidden fragment of knowledge might also call for an Intelligence (Investigation) check."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        81
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/16"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-081"
+    ]
+  },
+  {
+    "id": "skill.medicine",
+    "kind": "skill",
+    "name": "Medicine",
+    "ability": "wis",
+    "entries": [
+      "A Wisdom (Medicine) check lets you try to stabilize a dying companion or diagnose an illness."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        82
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/18"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-082"
+    ]
+  },
+  {
+    "id": "skill.nature",
+    "kind": "skill",
+    "name": "Nature",
+    "ability": "int",
+    "entries": [
+      "Your Intelligence (Nature) check measures your ability to recall lore about terrain, plants and animals, the weather, and natural cycles."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        81
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/20"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-081"
+    ]
+  },
+  {
+    "id": "skill.perception",
+    "kind": "skill",
+    "name": "Perception",
+    "ability": "wis",
+    "entries": [
+      "Your Wisdom (Perception) check lets you spot, hear, or otherwise detect the presence of something. It measures your general awareness of your surroundings and the keenness of your senses.",
+      "For example, you might try to hear a conversation through a closed door, eavesdrop under an open window, or hear monsters moving stealthily in the forest. Or you might try to spot things that are obscured or easy to miss, whether they are orcs lying in ambush on a road, thugs hiding in the shadows of an alley, or candlelight under a closed secret door."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        82
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/22"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-082"
+    ]
+  },
+  {
+    "id": "skill.performance",
+    "kind": "skill",
+    "name": "Performance",
+    "ability": "cha",
+    "entries": [
+      "Your Charisma (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        82
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/24"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-082"
+    ]
+  },
+  {
+    "id": "skill.persuasion",
+    "kind": "skill",
+    "name": "Persuasion",
+    "ability": "cha",
+    "entries": [
+      "When you attempt to influence someone or a group of people with tact, social graces, or good nature, the GM might ask you to make a Charisma (Persuasion) check. Typically, you use persuasion when acting in good faith, to foster friendships, make cordial requests, or exhibit proper etiquette. Examples of persuading others include convincing a chamberlain to let your party see the king, negotiating peace between warring tribes, or inspiring a crowd of townsfolk."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        82,
+        83
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/26"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-082",
+      "rulebook.page-083"
+    ]
+  },
+  {
+    "id": "skill.religion",
+    "kind": "skill",
+    "name": "Religion",
+    "ability": "int",
+    "entries": [
+      "Your Intelligence (Religion) check measures your ability to recall lore about deities, rites and prayers, religious hierarchies, holy symbols, and the practices of secret cults."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        81
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/28"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-081"
+    ]
+  },
+  {
+    "id": "skill.sleight-of-hand",
+    "kind": "skill",
+    "name": "Sleight of Hand",
+    "ability": "dex",
+    "entries": [
+      "Whenever you attempt an act of legerdemain or manual trickery, such as planting something on someone else or concealing an object on your person, make a Dexterity (Sleight of Hand) check. The GM might also call for a Dexterity (Sleight of Hand) check to determine whether you can lift a coin purse off another person or slip something out of another person's pocket."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        80
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/30"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-080"
+    ]
+  },
+  {
+    "id": "skill.stealth",
+    "kind": "skill",
+    "name": "Stealth",
+    "ability": "dex",
+    "entries": [
+      "Make a Dexterity (Stealth) check when you attempt to conceal yourself from enemies, slink past guards, slip away without being noticed, or sneak up on someone without being seen or heard."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        80
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/32"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-080"
+    ]
+  },
+  {
+    "id": "skill.survival",
+    "kind": "skill",
+    "name": "Survival",
+    "ability": "wis",
+    "entries": [
+      "The GM might ask you to make a Wisdom (Survival) check to follow tracks, hunt wild game, guide your group through frozen wastelands, identify signs that owlbears live nearby, predict the weather, or avoid quicksand and other natural hazards."
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        78,
+        82
+      ],
+      "section": "Using Ability Scores / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/34"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-078",
+      "rulebook.page-082"
+    ]
+  }
+]
