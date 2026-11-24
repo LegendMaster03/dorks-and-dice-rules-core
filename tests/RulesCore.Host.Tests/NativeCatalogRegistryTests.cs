@@ -61,6 +61,30 @@ public sealed class NativeCatalogRegistryTests
     }
 
     [Fact]
+    public void RepositoryPackagesLoadSeparately()
+    {
+        var dir = new DirectoryInfo(AppContext.BaseDirectory);
+        while (dir is not null && !File.Exists(Path.Combine(dir.FullName, "RulesCore.slnx")))
+            dir = dir.Parent;
+        Assert.NotNull(dir);
+        var root = Path.Combine(dir!.FullName, "data", "rulesets");
+        string[] ids = ["first-party-001", "dnd-5e", "dnd-5-5e", "fate-condensed"];
+        var registry = new NativeCatalogRegistry(ids[0], new NativeCatalogStore(ids[0]), ids.Skip(1));
+        foreach (var id in ids)
+            registry.GetStore(id).Publish(NativeCatalogLoader.Load(NativeRulesetLayout.Resolve(root, id)));
+        Assert.All(ids, id => Assert.True(registry.GetStore(id).Current().IsReady));
+        Assert.Equal(4, ids.Select(id => registry.GetStore(id).Snapshot!.Fingerprint).Distinct().Count());
+        var old = registry.GetStore(ids[1]).Snapshot!;
+        var modern = registry.GetStore(ids[2]).Snapshot!;
+        Assert.True(old.TryGetById("condition.exhaustion", out var a));
+        Assert.True(modern.TryGetById("condition.exhaustion", out var b));
+        Assert.NotEqual(a!.Definition.GetRawText(), b!.Definition.GetRawText());
+        Assert.Throws<ArgumentException>(() => registry.GetStore(ids[1]).Publish(modern));
+        Assert.Equal(127, registry.GetStore(ids[3]).Snapshot!.Count);
+        Assert.Equal(0, registry.GetStore(ids[3]).Snapshot!.CountByCategory("class"));
+    }
+
+    [Fact]
     public void DuplicateRegistrationIsRejected()
     {
         Assert.Throws<ArgumentException>(() => new NativeCatalogRegistry(
