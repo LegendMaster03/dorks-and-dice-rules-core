@@ -47,7 +47,8 @@ public sealed class NativeMechanicsApiTests
             INativeSupernaturalHostAuthorityProvider? supernaturalAuthority = null,
             INativeOriginHostBiologicalAuthorityProvider? biologicalAuthority = null,
             INativeOriginHostReconstructionAuthorityProvider? reconstructionAuthority = null,
-            INativeLifeExperienceHostAuthorityProvider? lifeExperienceAuthority = null)
+            INativeLifeExperienceHostAuthorityProvider? lifeExperienceAuthority = null,
+            INativeScopedSkillCheckHostAuthorityProvider? scopedCheckAuthority = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -160,6 +161,8 @@ public sealed class NativeMechanicsApiTests
                     services.AddSingleton(reconstructionAuthority);
                 if (lifeExperienceAuthority is not null)
                     services.AddSingleton(lifeExperienceAuthority);
+                if (scopedCheckAuthority is not null)
+                    services.AddSingleton(scopedCheckAuthority);
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -1207,6 +1210,50 @@ public sealed class NativeMechanicsApiTests
         Assert.DoesNotContain(earned.GetProperty("equipment").GetProperty("qualifications").EnumerateArray(),
             x => x.GetProperty("qualificationId").GetString()!.StartsWith("equipment.tool.", StringComparison.Ordinal));
         Assert.Equal("fixture.disguise-kit", earned.GetProperty("startingItems")[0].GetProperty("verifiedItemId").GetString());
+    }
+
+    private sealed class VerifiedScopedCheckTestAuthority : INativeScopedSkillCheckHostAuthorityProvider
+    {
+        public Task<VerifiedScopedSkillCheckHostAuthorization?> VerifyAsync(Guid actorId,
+            NativeLifeExperienceEndpoints.ScopedCheckRequest request, CancellationToken cancellationToken)
+        {
+            VerifiedScopedSkillCheckHostAuthorization? result = null;
+            if (actorId == SupernaturalActor && request.CharacterId == SupernaturalCharacter &&
+                request.OriginRevision == 1 && request.CheckEventId == "fixture.stonework")
+                result = new(request.CharacterId, 1, request.CheckEventId,
+                    new NativeScopedSkillCheckInput("upbringing.dwarf.general",
+                        new Dictionary<string, string> { ["upbringing.dwarf.general"] = "verified-dwarf-upbringing" },
+                        "skill.history", "intelligence", ["stonework-history"], 3, 3, 7, true));
+            return Task.FromResult(result);
+        }
+    }
+
+    [Fact]
+    public async Task ScopedUpbringingHttpUsesVerifiedEventAndReplacesOrdinaryContribution()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true, realNativeContent: true,
+            dm: true, scopedCheckAuthority: new VerifiedScopedCheckTestAuthority());
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        const string endpoint = "/api/mechanics/v1/origins/life-experiences/scoped-check/resolve";
+        async Task<(HttpStatusCode, JsonElement)> Send(string checkEventId, string fingerprint)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { characterId = SupernaturalCharacter, originRevision = 1,
+                    rulesetId = catalog.RulesetId, fingerprint, checkEventId }));
+            using var response = await fixture.Client.SendAsync(request);
+            return (response.StatusCode, await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+        var (status, body) = await Send("fixture.stonework", catalog.Fingerprint);
+        Assert.Equal(HttpStatusCode.OK, status);
+        var result = body.GetProperty("result");
+        Assert.Equal(10, result.GetProperty("total").GetInt32());
+        Assert.Equal(6, result.GetProperty("proficiencyContribution").GetInt32());
+        Assert.Equal("verified-dwarf-upbringing", Assert.Single(result.GetProperty("appliedEffects").EnumerateArray())
+            .GetProperty("occurrenceId").GetString());
+        Assert.False(body.GetProperty("committed").GetBoolean());
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, (await Send("forged", catalog.Fingerprint)).Item1);
+        Assert.Equal(HttpStatusCode.Conflict, (await Send("fixture.stonework", "stale")).Item1);
     }
 
     [Fact]

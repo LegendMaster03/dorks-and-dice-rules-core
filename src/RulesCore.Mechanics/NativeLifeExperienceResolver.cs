@@ -360,30 +360,10 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
 
         void AddChain(string id, string category)
         {
-            var chain = new List<NativeRuleEntity>();
-            var seen = new HashSet<string>(StringComparer.Ordinal);
-            var current = id;
-            while (true)
-            {
-                if (!ValidId(current) || !seen.Add(current) || chain.Count >= 16 ||
-                    !catalog.TryGetById(current, out var entity) || entity?.Category != category ||
-                    (chain.Count == 0 && !Flag(entity.Definition, "selectable")))
-                {
-                    Invalid("invalid-life-experience-source", current,
-                        "Direct sources must be selectable; inherited parents must exist and be acyclic.");
-                    return;
-                }
-                chain.Add(entity);
-                if (!entity.Definition.TryGetProperty("parent", out var parent)) break;
-                if (parent.ValueKind != JsonValueKind.String || category != "upbringing")
-                {
-                    Invalid("invalid-life-experience-parent", current, "Only an authored Upbringing parent chain is supported.");
-                    return;
-                }
-                current = parent.GetString()!;
-            }
-            chain.Reverse();
-            definitions.AddRange(chain);
+            var chain = NativeLifeExperienceSourceChain.Resolve(catalog, id, category, out var issue);
+            if (chain is null)
+                Invalid(issue!.Code, issue.Path, issue.Detail);
+            else definitions.AddRange(chain);
         }
 
         IReadOnlyList<string>? Select(NativeLifeExperienceChoice choice, bool open = false)

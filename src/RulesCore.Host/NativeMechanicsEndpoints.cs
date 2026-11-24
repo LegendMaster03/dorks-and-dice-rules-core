@@ -59,6 +59,7 @@ public static class NativeMechanicsEndpoints
             group.MapVerifiedBiologicalOriginPreview();
             group.MapVerifiedPermanentOriginReconstruction();
             group.MapVerifiedLifeExperiencePlan();
+            group.MapVerifiedScopedSkillCheck();
             group.MapVerifiedSupernaturalOwnershipPlans();
             group.MapVerifiedInfluenceOverlapPlans();
         }
@@ -91,6 +92,7 @@ public static class NativeMechanicsEndpoints
                     constructConfigurationDiscovery = true,
                     lifeExperiencePreview = "source-qualified-selection",
                     verifiedLifeExperiencePlanning = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedScopedSkillChecks = privateTunnel ? "unavailable" : "host-authority-required",
                     biologicalAllocationPreview = NativeOriginFirstPartyBiologicalPricing.Revision,
                     originPersistence = false, originDmAdjudication = false,
                     verifiedBiologicalPreview = privateTunnel ? "unavailable" : "host-authority-required",
