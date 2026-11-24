@@ -285,7 +285,20 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
             })
                 if (entity.Definition.TryGetProperty(property, out var value) &&
                     value.ValueKind is not (JsonValueKind.Null or JsonValueKind.Undefined))
+                {
+                    // Only an explicit native descendant override supersedes an
+                    // ancestor's speed in this direct preset. Mixed donor offers
+                    // retain their independent reconciliation requirements.
+                    if (direct && slot == "walkingSpeedFeet" && lineage is not null &&
+                        lineage.TakeWhile(x => x.Id != entity.Id).Any(x =>
+                            x.Category == "ancestry" &&
+                            x.Definition.TryGetProperty("overridesAncestorWalkingSpeed", out var marker) &&
+                            marker.ValueKind == JsonValueKind.True &&
+                            x.Definition.TryGetProperty(property, out var speed) &&
+                            speed.TryGetInt32(out var feet) && feet > 0))
+                        continue;
                     Add(property, NativeOriginCharacteristicKind.Intrinsic, slot, value.Clone());
+                }
 
             if (entity.Definition.TryGetProperty("sizeChoice", out var sizeChoice) &&
                 sizeChoice.ValueKind == JsonValueKind.Object &&

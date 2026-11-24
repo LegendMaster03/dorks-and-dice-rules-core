@@ -586,6 +586,8 @@ public sealed class NativeOriginConstructionTests
         Assert.Equal(NativeOriginEventStage.Completed,
             result.Profile!.History.Single().Stage);
         Assert.Equal(7, result.Profile.Underlying.InherentGrants.Count);
+        Assert.Contains(result.Profile.Underlying.InherentGrants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.human-determination");
         Assert.Equal("medium", result.Profile.Underlying.InherentGrants.Single(x =>
             x.Identity.IntrinsicSlotId == "size").EffectiveValue!.Value.GetString());
         Assert.Contains(result.Profile.Underlying.InherentGrants, x =>

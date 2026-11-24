@@ -640,10 +640,10 @@ public sealed class NativeOriginInnateSpellResourceLedgerTests
         Assert.Null(attempt.State);
 
         var wood = Direct(catalog, "ancestry.elf.wood");
-        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, wood.Status);
-        var blocked = NativeOriginInnateSpellResourceLedger.Initialize(
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, wood.Status);
+        var woodLedger = NativeOriginInnateSpellResourceLedger.Initialize(
             catalog, wood, Character(catalog, 5));
-        Assert.Equal("unresolved", blocked.Status);
-        Assert.Null(blocked.State);
+        Assert.Equal("resolved", woodLedger.Status);
+        Assert.NotNull(woodLedger.State);
     }
 }

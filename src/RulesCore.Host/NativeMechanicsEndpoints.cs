@@ -102,7 +102,9 @@ public static class NativeMechanicsEndpoints
                     "invocation" or "condition" or "leveled-condition" or
                     "skill" or "competency" or "monster" or "item" or
                     "feat" or "spell" or "origin-trait" or "construct-component" or
-                    "construct-power-source" or "construct-material") ||
+                    "construct-power-source" or "construct-material" or
+                    "construct-design" or "construct-enhancement" or
+                    "upbringing" or "background") ||
                 (query?.Length ?? 0) > 200 ||
                 !PageNumber(limitText, 50, 1, 100, out var limit) ||
                 !PageNumber(offsetText, 0, 0, 1_000_000, out var offset))

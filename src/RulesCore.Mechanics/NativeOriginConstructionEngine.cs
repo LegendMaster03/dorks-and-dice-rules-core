@@ -56,8 +56,9 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         var (trustedProposal, verifiedManifested, verificationIssues) =
             NativeOriginManifestedContributorVerifier.Resolve(request.Proposal,
                 request.TrustedScope, manifestedContributorAuthority);
-        var (sourceOffers, discoveryIssues) = _deconstructor.Deconstruct(
-            trustedProposal, trustedNativeOffers);
+        var (sourceOffers, discoveryIssues) = trustedNativeOffers is null
+            ? _deconstructor.Deconstruct(trustedProposal)
+            : _deconstructor.Deconstruct(trustedProposal, trustedNativeOffers);
         var trustedNativeOfferIds = (trustedNativeOffers ?? [])
             .Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
         // Biology is one origination procedure, not a property of every

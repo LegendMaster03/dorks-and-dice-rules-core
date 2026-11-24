@@ -23,6 +23,7 @@
     }
   ],
   "walkingSpeedFeet": 35,
+  "overridesAncestorWalkingSpeed": true,
   "spellcastingAbilityChoice": [
     "intelligence",
     "wisdom",
