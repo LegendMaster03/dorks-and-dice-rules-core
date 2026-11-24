@@ -1,0 +1,35 @@
+{
+  "id": "trait.draconic-wings",
+  "name": "Draconic Wings",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "draconic-wings",
+    "name": "Draconic Wings",
+    "description": "From level 1, when you have space to deploy your wings, you can glide up to 30 feet horizontally per turn while descending at least 5 feet per 20 feet traveled horizontally. A controlled glide prevents falling damage on a safe landing. Gliding does not let you ascend, hover, or remain aloft. Starting at character level 5, you can also fly at 30 feet for up to 1 minute once per Long Rest, without hovering. Gliding remains available after that flight is expended. You do not gain continuous flight at level 11 or later.",
+    "wingMobility": {
+      "glide": {
+        "availableFromCharacterLevel": 1,
+        "maxHorizontalFeetPerTurn": 30,
+        "minDescentFeetPer20HorizontalFeet": 5,
+        "requiresSpaceToDeploy": true,
+        "preventsFallingDamageOnSafeLanding": true,
+        "permitsPoweredAscent": false,
+        "canHover": false
+      },
+      "limitedFlight": {
+        "availableFromCharacterLevel": 5,
+        "flyingSpeedFeet": 30,
+        "durationMinutes": 1,
+        "uses": {
+          "value": 1,
+          "recharge": "long-rest",
+          "resource": "draconic-wing-flight",
+          "independentOf": "breath-weapon"
+        },
+        "canHover": false,
+        "grantsContinuousFlight": false
+      },
+      "glideRemainsAvailable": true
+    }
+  }
+}

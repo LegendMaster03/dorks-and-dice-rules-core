@@ -16,11 +16,17 @@
     },
     {
       "traitId": "trait.breath-weapon"
+    },
+    {
+      "traitId": "trait.draconic-natural-weapons"
+    },
+    {
+      "traitId": "trait.draconic-wings"
     }
   ],
   "reviewNotes": [
     "Low-Light Vision replaces baseline 60-foot Darkvision for all Dragonborn families and currently playable ancestries; 30-foot walking speed remains subject to comparative Species balance. Specialized future ancestries may define their own vision and related light sensitivity.",
-    "5.5e temporary Draconic Flight is not automatically granted by the Dragonborn base Species.",
+    "Ordinary Draconic Wings grant gliding from level 1 and limited non-hovering flight from level 5; this is separate from temporary 5.5e Draconic Flight, Gem Spectral Flight, and exceptional Platinum/Fivefold Wings.",
     "Languages and learned draconic traditions are deferred to independently selectable Upbringings. Ability-score adjustments remain deferred.",
     "Dragon creature type selected in the comparative Species review. Dragon-specific targeting applies; monster Dragon Hit Dice, senses, saving throw competencies and other stat-block defaults are not automatically granted to playable characters."
   ]

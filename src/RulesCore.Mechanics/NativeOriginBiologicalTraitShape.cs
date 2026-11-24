@@ -150,6 +150,23 @@ internal static class NativeOriginBiologicalTraitShape
         "/invisibility" => field is
             "alsoEndsImmediatelyAfter" or "endsAt" or "notGlobalCondition" or "onFailedSave"
             or "onlyAgainst",
+        "/naturalWeapons/*" => field is
+            "id" or "requiresAnatomy" or "attackType" or "ability" or
+            "proficient" or "reachFeet" or "damage",
+        "/naturalWeapons/*/damage" => field is
+            "dice" or "type" or "addAbilityModifier",
+        "/wingMobility" => field is
+            "glide" or "limitedFlight" or "glideRemainsAvailable",
+        "/wingMobility/glide" => field is
+            "availableFromCharacterLevel" or "maxHorizontalFeetPerTurn" or
+            "minDescentFeetPer20HorizontalFeet" or "requiresSpaceToDeploy" or
+            "preventsFallingDamageOnSafeLanding" or "permitsPoweredAscent" or
+            "canHover",
+        "/wingMobility/limitedFlight" => field is
+            "availableFromCharacterLevel" or "flyingSpeedFeet" or
+            "durationMinutes" or "uses" or "canHover" or "grantsContinuousFlight",
+        "/wingMobility/limitedFlight/uses" => field is
+            "value" or "recharge" or "resource" or "independentOf",
         "/magicalSleep" => field is
             "immune" or "mayConsentToSpecificEffect",
         "/onFailedSave" => field is
@@ -207,6 +224,7 @@ internal static class NativeOriginBiologicalTraitShape
     private static bool RecognizesRoot(string field, JsonValueKind value) => field switch
     {
         "allowedMaterials" or "canBreathe" or "disallowedMaterials" or "doesNotChange" or
+            "naturalWeapons" or
             "doesNotGrant" or "ignoresDifficultTerrainFrom" or "options" or
             "requiresSharedContact" or "standingJumpAsRunning" or "terrain" => value is
             JsonValueKind.Array,
@@ -214,7 +232,8 @@ internal static class NativeOriginBiologicalTraitShape
             "doesNotGrantConditionImmunity" or "doesNotNegateOtherHazards" or
             "duplicateStrikeBenefitGranted" or "endsOnLanding" or "extraUsesGranted" or
             "grantsFlight" or "grantsHover" or "grantsPermanentFlight" or
-            "grantsSkillProficiency" or "grantsSwimSpeed" or "grantsThoughtReading" or
+            "grantsBonusActionAttack" or "grantsExtraAttacks" or
+            "grantsSpecialShove" or "grantsSkillProficiency" or "grantsSwimSpeed" or "grantsThoughtReading" or
             "grantsWaterBreathing" or "guaranteesDeception" or
             "ignoreIcySurfaceAbilityChecks" or "ignoresRunningApproachRequirement" or
             "leavesPermanentTraversableTunnel" or "maintainsAcclimationAtLowerElevations"
@@ -253,7 +272,8 @@ internal static class NativeOriginBiologicalTraitShape
             "animalCommunication" or "naturalCamouflage" or "tracklessPassage" or
             "reroll" or "suspendsTrait" or
             "slipperyIceSaveExemption" or "speedReduction" or "startsTurnInside" or
-            "teleport" or "temporaryHitPoints" or "uses" or "whileActive" => value is
+            "teleport" or "temporaryHitPoints" or "uses" or "whileActive" or
+            "wingMobility" => value is
             JsonValueKind.Object,
         "activation" or "applyConditionOnFailedSave" or "duration" => value is
             JsonValueKind.Object or JsonValueKind.String,
