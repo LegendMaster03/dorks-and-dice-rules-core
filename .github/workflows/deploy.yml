@@ -72,6 +72,20 @@ jobs:
           fingerprint=$(printf '%s\n' "$result" | sed -nE 's/^CATALOG_SHA256=([0-9a-f]{64})$/\1/p')
           [[ "$fingerprint" =~ ^[0-9a-f]{64}$ ]]
           printf 'RULES_CORE_EXPECTED_FINGERPRINT=%s\n' "$fingerprint" >> "$GITHUB_ENV"
+          # Review every embedded authoritative package; deploy may select a subset.
+          fingerprints=$(mktemp)
+          for package in data/rulesets/*; do
+            [[ -f "$package/manifest.json" && -d "$package/native" ]] || continue
+            id=${package##*/}
+            digest_result=$(dotnet run --no-build --project tests/NativeCatalogFingerprint/NativeCatalogFingerprint.csproj --configuration Release -- data/rulesets "$id")
+            grep -qx 'CONTENT_FINGERPRINT_VALIDATED=true' <<< "$digest_result"
+            grep -qx "RULESET_ID=$id" <<< "$digest_result"
+            digest=$(printf '%s\n' "$digest_result" | sed -nE 's/^CATALOG_SHA256=([0-9a-f]{64})$/\1/p')
+            [[ "$digest" =~ ^[0-9a-f]{64}$ ]]
+            printf '%s %s\n' "$id" "$digest" >> "$fingerprints"
+          done
+          printf 'RULES_CORE_EXPECTED_FINGERPRINTS=%s\n' "$(python3 -c 'import json,sys; print(json.dumps(dict(line.split() for line in open(sys.argv[1]))))' "$fingerprints")" >> "$GITHUB_ENV"
+          rm -f "$fingerprints"
       - name: Check host isolation before replacing services
         run: python3 tools/deploy_native_core.py preflight
       - name: Inspect unchanged running Core for content-only update

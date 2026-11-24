@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Hosting;
+using System.Net;
 using RulesCore.Content;
 
 namespace RulesCore.Host;
@@ -66,6 +67,26 @@ public static class RulesCoreApplication
             return state.IsReady
                 ? Results.Ok(new { status = "ready" })
                 : Results.Json(new { status = "not_ready", reason = state.Reason }, statusCode: 503);
+        });
+
+        // Deployment can require every configured package without revealing
+        // individual unpublished package IDs or failure details on public ingress.
+        app.MapGet("/ready/all", (NativeCatalogRegistry registry) =>
+            registry.RulesetIds.All(id => registry.GetStore(id).Current().IsReady)
+                ? Results.Ok(new { status = "ready" })
+                : Results.Json(new { status = "not_ready" }, statusCode: 503));
+        // Detailed operational readiness is local to the actual host connection.
+        // Do not use X-Forwarded-For, request Host, or an unverified header as identity.
+        app.MapGet("/ready/rulesets/{rulesetId}", (HttpContext context, string rulesetId,
+            NativeCatalogRegistry registry) =>
+        {
+            if (context.Connection.RemoteIpAddress is not { } address || !IPAddress.IsLoopback(address))
+                return Results.NotFound();
+            if (!registry.TryGetStore(rulesetId, out var store)) return Results.NotFound();
+            var snapshot = store!.Snapshot;
+            return snapshot is not null
+                ? Results.Ok(new { rulesetId, status = "ready", fingerprint = snapshot.Fingerprint })
+                : Results.Json(new { rulesetId, status = "not_ready" }, statusCode: 503);
         });
 
         if (settings.Surface == ApiSurfaceMode.PrivateOnly)

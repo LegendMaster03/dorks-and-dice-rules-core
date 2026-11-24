@@ -43,6 +43,19 @@ def require_site_authentication(environment):
         valid = False
     require(valid, "Core Site ticket redemption URL is missing or invalid")
 
+def configured_rulesets(environment):
+    # Both shipped ingresses use CSV; no implicit fallback to a different default.
+    require(environment.get("Rulesets__DefaultRuleset", "first-party-001") == "first-party-001",
+            "Unexpected default ruleset")
+    require(not any(key.startswith("Rulesets__AdditionalRulesets__") for key in environment),
+            "Use the explicit CSV ruleset registration contract for deployment")
+    raw = environment.get("Rulesets__AdditionalRulesetsCsv", "")
+    ids = ["first-party-001"] + (raw.split(",") if raw else [])
+    require(all(re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", value) for value in ids)
+            and len(ids) == len(set(ids)), "Invalid or duplicate ruleset registration")
+    return set(ids)
+
+
 def validate_compose(config):
     services = config["services"]
     require(set(services) == {"rules-core-public", "rules-core-private"}, "Unexpected service set")
@@ -57,6 +70,8 @@ def validate_compose(config):
         require(not service.get("volumes"), "Use embedded native data without mounts")
         require(not any("PublicDistribution" in key for key in service.get("environment", {})), "Public distribution configuration is prohibited")
     require(private.get("image") == public.get("image"), "Ingress image drift")
+    require(configured_rulesets(private.get("environment", {})) ==
+            configured_rulesets(public.get("environment", {})), "Ingress ruleset registration drift")
     return config["networks"]["rules-core-private-tunnel"]["name"], config["networks"]["dorks-and-dice-tool-control-plane"]["name"]
 
 def validate_members(name, network, allowed):
@@ -69,6 +84,32 @@ def reviewed_fingerprint():
     require(bool(re.fullmatch(r"[0-9a-f]{64}", value)),
             "Reviewed native catalog fingerprint is missing or invalid")
     return value
+
+def reviewed_fingerprints():
+    default = reviewed_fingerprint()
+    raw = os.environ.get("RULES_CORE_EXPECTED_FINGERPRINTS", "")
+    if not raw:
+        return {"first-party-001": default}
+    try:
+        values = json.loads(raw)
+    except (ValueError, TypeError) as exc:
+        raise RuntimeError("Invalid reviewed ruleset fingerprint map") from exc
+    require(isinstance(values, dict) and values.get("first-party-001") == default
+            and all(isinstance(v, str) and re.fullmatch(r"[0-9a-f]{64}", v)
+                    and re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", k)
+                    for k, v in values.items()), "Invalid reviewed ruleset fingerprint map")
+    return values
+
+
+def require_ruleset_fingerprints(log, expected):
+    observed = re.findall(
+        r"Native rules catalog ready: ruleset ([a-z0-9-]+), records [0-9]+, fingerprint ([0-9a-f]{64})", log)
+    require(set(k for k, _ in observed) == set(expected)
+            and all(expected.get(k) == v for k, v in observed),
+            "Ruleset catalog fingerprint mismatch")
+    require(not re.search(r"Native rules catalog unavailable: ruleset ", log),
+            "A configured ruleset failed initialization")
+
 
 def require_catalog_fingerprint(log, expected):
     observed = re.findall(r"\bfingerprint ([0-9a-f]{64})\b", log)
@@ -84,7 +125,7 @@ def require_image_provenance(image, sha):
 def release_config():
     sha = os.environ.get("RELEASE_SHA", "")
     require(bool(re.fullmatch(r"[0-9a-f]{40}", sha)), "RELEASE_SHA must be an exact commit")
-    reviewed_fingerprint()
+    fingerprints = reviewed_fingerprints()
     env_file = os.environ.get("RULES_CORE_ENV_FILE", "")
     require(Path(env_file).is_file(), "Core deployment .env is missing")
     image = "dorks-and-dice-rules-core:rewrite-" + sha
@@ -93,6 +134,8 @@ def release_config():
                "-f", "docker-compose.yml", "-f", "docker-compose.private-tunnel.yml"]
     config = json.loads(command(*compose, "config", "--format", "json", env=env))
     pair, control = validate_compose(config)
+    configured = configured_rulesets(config["services"]["rules-core-public"].get("environment", {}))
+    require(configured <= fingerprints.keys(), "Configured ruleset has no reviewed fingerprint")
     require(len({pair, control, BACKEND}) == 3, "Pair/control/backend networks must be distinct")
     return image, env, compose, pair, control
 
@@ -179,6 +222,7 @@ def probe(network, host, path):
     return output.rsplit("\n", 1)
 
 def verify(image_id, pair, control):
+    observed_registration = {}
     for name, networks in [(PUBLIC, {BACKEND}), (PRIVATE, {pair, control})]:
         state = inspect("container", name)
         require(state["Image"] == image_id, "Running image differs from release")
@@ -187,7 +231,13 @@ def verify(image_id, pair, control):
         require(not state["HostConfig"].get("PortBindings"), "Running Core publishes host ports")
         environment = dict(item.split("=", 1) for item in state["Config"].get("Env", []) if "=" in item)
         require_site_authentication(environment)
+        observed_registration[name] = configured_rulesets(environment)
+    require(observed_registration[PUBLIC] == observed_registration[PRIVATE], "Running ruleset registration drift")
+    fingerprints = reviewed_fingerprints()
+    require(observed_registration[PUBLIC] <= fingerprints.keys(), "Running ruleset has no reviewed fingerprint")
+    expected = {key: fingerprints[key] for key in observed_registration[PUBLIC]}
     checks = [(BACKEND, PUBLIC, "/ready", "200"), (pair, PRIVATE, "/ready", "200"),
+              (BACKEND, PUBLIC, "/ready/all", "200"), (pair, PRIVATE, "/ready/all", "200"),
               (BACKEND, PUBLIC, "/api/private/rulesets", "404"), (pair, PRIVATE, "/api/rulesets", "404"),
               (pair, PRIVATE, "/api/private/rulesets", "401"), (BACKEND, PUBLIC, "/api/rules", "404"),
               (BACKEND, PUBLIC, "/api/rulesets/first-party-001/rules", "404")]
@@ -198,7 +248,7 @@ def verify(image_id, pair, control):
     require(status == "200" and json.loads(body) == {"rulesets": []}, "Anonymous distribution is not closed")
     for name in (PUBLIC, PRIVATE):
         # JsonConsole writes catalog initialization messages to stdout.
-        require_catalog_fingerprint(command("docker", "logs", name), reviewed_fingerprint())
+        require_ruleset_fingerprints(command("docker", "logs", name), expected)
     validate_members(pair, inspect("network", pair), {PRIVATE, WIKI})
     validate_members(control, inspect("network", control), {SITE, PRIVATE})
 
@@ -221,7 +271,7 @@ def deploy():
         command(*compose, "up", "-d", "--no-build", "--no-deps", "rules-core-public", "rules-core-private", env=env)
         for attempt in range(30):
             try:
-                statuses = [probe(network, name, "/ready")[1]
+                statuses = [probe(network, name, "/ready/all")[1]
                             for network, name in ((BACKEND, PUBLIC), (pair, PRIVATE))]
                 if statuses == ["200", "200"]:
                     break

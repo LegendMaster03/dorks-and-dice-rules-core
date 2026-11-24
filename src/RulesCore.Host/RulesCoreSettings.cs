@@ -39,9 +39,16 @@ public sealed record RulesCoreSettings(
         var defaultLocation = NativeRulesetLayout.Resolve(contentRoot, rulesetId);
         var seen = new HashSet<string>(StringComparer.Ordinal) { rulesetId };
         var additional = new List<NativeRulesetLocation>();
-        foreach (var entry in configuration.GetSection("Rulesets:AdditionalRulesets").GetChildren())
+        var indexed = configuration.GetSection("Rulesets:AdditionalRulesets").GetChildren().ToArray();
+        var csv = configuration["Rulesets:AdditionalRulesetsCsv"];
+        if (indexed.Length != 0 && csv is not null)
+            throw new ArgumentException("Configure additional rulesets using either indexed entries or CSV, not both.");
+        var ids = csv is not null
+            ? (csv.Length == 0 ? [] : csv.Split(','))
+            : indexed.Select(entry => entry.Value ?? "").ToArray();
+        foreach (var id in ids)
         {
-            var location = NativeRulesetLayout.Resolve(contentRoot, entry.Value ?? "");
+            var location = NativeRulesetLayout.Resolve(contentRoot, id);
             if (!seen.Add(location.RulesetId))
                 throw new ArgumentException("Duplicate configured ruleset: " + location.RulesetId);
             additional.Add(location);

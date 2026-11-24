@@ -10,7 +10,7 @@ Keep Rulesets:DefaultRuleset = first-party-001 for existing consumers. Register 
     Rulesets__AdditionalRulesets__1=dnd-5-5e
     Rulesets__AdditionalRulesets__2=fate-condensed
 
-Each package has its own native manifest, snapshot, fingerprint and readiness slot. No fallback to another catalog or the working/reference trees. A failed additional package does not invalidate the default. Existing /ready remains default-package readiness, not aggregate health. Registry readiness is internal; a separately authorized operational readiness endpoint remains outstanding.
+Each package has its own native manifest, snapshot, fingerprint and readiness slot. No fallback to another catalog or the working/reference trees. A failed additional package does not invalidate the default. Existing /ready remains default-package readiness, not aggregate health. `/ready/all` checks every configured package without disclosing identities. `/ready/rulesets/{rulesetId}` reports exact package readiness and fingerprint only over an actual loopback connection; it returns 404 for external clients and unknown IDs. The shipped Compose configuration registers the three additional packages through `RULES_CORE_ADDITIONAL_RULESETS` (comma-separated IDs, or empty for default-only); the equivalent host setting is `Rulesets:AdditionalRulesetsCsv`. Do not combine CSV and indexed registration.
 
 Anonymous discovery and reads use /api/rulesets and /api/rulesets/{rulesetId}/rules[/{ruleId}]. Publication remains disabled unless RulesCore:PublicDistribution:Packages:{rulesetId} supplies Enabled=true, RightsReviewReference, AttributionStatement and ApprovedFingerprint matching that package's exact snapshot. Loading is not rights approval. Do not use test approval values in production.
 
@@ -41,6 +41,6 @@ Both D&D editions use d20-ability-check. 5.1 exhaustion imposes disadvantage on 
 
 ## Packaging and validation
 
-Both Docker builds stage only manifests and native trees, and content-only updates replace the whole catalog root. Working/reference/conversion material is excluded. Existing deployment digest and consumer contracts require additional audit before deployment. No deployment is authorized.
+Both Docker builds stage only manifests and native trees, and content-only updates replace the whole catalog root. Working/reference/conversion material is excluded. The release workflow computes independent loader fingerprints for every embedded package and requires both ingresses to load the same configured set with the reviewed per-package fingerprints. The preflight still prohibits public distribution configuration. No deployment is authorized; consumer contracts require separate review. No deployment is authorized.
 
 Run dotnet test RulesCore.slnx -c Release and python3 -m unittest discover -s tests -p 'test_*.py' -v, plus full and content-only Docker builds. Exact-head CI and four-package end-to-end HTTP mechanics acceptance remain required. The synthetic and repository-package tests do not substitute for downstream Character Sheet, Block Initiative and Rules Wiki compatibility verification.

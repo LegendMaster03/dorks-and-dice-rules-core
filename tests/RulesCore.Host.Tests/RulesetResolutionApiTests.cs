@@ -69,6 +69,12 @@ public sealed class RulesetResolutionApiTests
         var registry = app.Services.GetRequiredService<NativeCatalogRegistry>();
         Assert.Equal(4, registry.RulesetIds.Count);
         Assert.All(registry.RulesetIds, id => Assert.True(registry.GetStore(id).Current().IsReady));
+        Assert.Equal(HttpStatusCode.OK, (await client.GetAsync("/ready/all")).StatusCode);
+        foreach (var id in ids)
+        {
+            var ready = await client.GetFromJsonAsync<JsonElement>("/ready/rulesets/" + id);
+            Assert.Equal(fingerprints[id], ready.GetProperty("fingerprint").GetString());
+        }
         var listing = await client.GetFromJsonAsync<JsonElement>("/api/rulesets");
         Assert.Equal(ids.OrderBy(x => x, StringComparer.Ordinal).ToArray(),
             listing.GetProperty("rulesets").EnumerateArray().Select(x => x.GetProperty("id").GetString()).ToArray());
@@ -107,5 +113,11 @@ public sealed class RulesetResolutionApiTests
             new { operation = "d20-ability-check", dice = new[] { 10 }, modifier = 0, target = 10 });
         Assert.Equal(HttpStatusCode.Conflict, wrong.StatusCode);
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(path + "unknown/capabilities")).StatusCode);
+        registry.GetStore(ids[0]).MarkUnavailable("invalid_native_json");
+        Assert.Equal(HttpStatusCode.OK, (await client.GetAsync("/ready")).StatusCode);
+        Assert.Equal(HttpStatusCode.ServiceUnavailable, (await client.GetAsync("/ready/all")).StatusCode);
+        Assert.Equal(HttpStatusCode.ServiceUnavailable, (await client.GetAsync("/ready/rulesets/" + ids[0])).StatusCode);
+        Assert.Equal(HttpStatusCode.OK, (await client.GetAsync("/ready/rulesets/" + ids[1])).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync("/ready/rulesets/unknown")).StatusCode);
     }
 }

@@ -9,6 +9,7 @@ services:
     environment:
       RulesCore__ApiSurface: PrivateOnly
       Rulesets__ContentRoot: /app/data/rulesets
+      Rulesets__AdditionalRulesetsCsv: ${RULES_CORE_ADDITIONAL_RULESETS-dnd-5e,dnd-5-5e,fate-condensed}
       ToolHost__BaseUrl: ${TOOL_HOST_BASE_URL:-http://dorks-and-dice-site:8080}
     networks:
       - rules-core-private-tunnel
