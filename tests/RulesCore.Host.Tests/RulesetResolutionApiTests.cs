@@ -104,6 +104,20 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(
             "/api/rulesets/fate-condensed/rules/monster.avatar-of-death")).StatusCode);
 
+        // Real publisher-derived catalog scale and structured fields.
+        const string animals = "/api/rulesets/dnd-5-5e/rules";
+        var firstPage = await client.GetFromJsonAsync<JsonElement>(animals + "?category=monster&limit=10");
+        var secondPage = await client.GetFromJsonAsync<JsonElement>(animals + "?category=monster&limit=10&offset=10");
+        Assert.Equal(97, firstPage.GetProperty("total").GetInt32());
+        Assert.Equal(97, secondPage.GetProperty("total").GetInt32());
+        Assert.Empty(firstPage.GetProperty("rules").EnumerateArray().Select(x => x.GetProperty("id").GetString())
+            .Intersect(secondPage.GetProperty("rules").EnumerateArray().Select(x => x.GetProperty("id").GetString())));
+        var seahorse = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.seahorse");
+        Assert.Equal(0, seahorse.GetProperty("rule").GetProperty("definition")
+            .GetProperty("challenge").GetProperty("xp").GetInt32());
+        var owl = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.giant-owl");
+        Assert.Equal("celestial", owl.GetProperty("rule").GetProperty("definition").GetProperty("type").GetString());
+
         const string path = "/api/mechanics/v1/rulesets/";
         Assert.Equal(HttpStatusCode.Unauthorized, (await client.GetAsync(path + ids[0] + "/capabilities")).StatusCode);
         client.DefaultRequestHeaders.Add("X-Dorks-Tool-Auth-Ticket", "signed-in-site-ticket");

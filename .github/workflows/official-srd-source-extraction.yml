@@ -4,6 +4,10 @@ on:
     branches: [main]
     paths:
       - 'tools/import_official_srd_pages.py'
+      - 'tools/import_official_srd52_animals.mjs'
+      - 'data/rulesets/dnd-5-5e/native/bestiary/animals-*.json'
+      - 'data/reference/srd/official-animals-import.json'
+      - 'data/reference/srd/structured/bestiary/bestiary-srd52.json'
       - 'data/rulesets/dnd-5e/native/rulebook/**'
       - 'data/rulesets/dnd-5-5e/native/rulebook/**'
       - 'data/reference/srd/official-page-import.json'
@@ -34,6 +38,9 @@ jobs:
         env:
           EDITION: ${{ matrix.edition }}
         run: python3 tools/import_official_srd_pages.py "$EDITION" /tmp/official-srd.pdf --output build/official-srd --check
+      - name: Reproduce structured Animals catalog from validated publisher pages
+        if: matrix.edition == 'srd-5.2.1'
+        run: node tools/import_official_srd52_animals.mjs --check
       - uses: actions/upload-artifact@v4
         with:
           name: official-source-${{ matrix.edition }}
