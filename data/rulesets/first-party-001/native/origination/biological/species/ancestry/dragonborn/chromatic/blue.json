@@ -8,7 +8,7 @@
   "damageType": "lightning",
   "traits": [
     {
-      "traitId": "trait.dragonborn.blue.displaced-voice"
+      "traitId": "trait.displaced-voice"
     }
   ],
   "reviewNotes": [

@@ -1,0 +1,13 @@
+{
+  "name": "Ball joint",
+  "description": "A multi-axis articulation alternative, dependent on suitable structural attachment.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "articulation"
+  ],
+  "materialSlots": [
+    "joint"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.ball-joint",
+  "powerDemand": 0
+}

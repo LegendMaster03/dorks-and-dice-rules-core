@@ -3,7 +3,7 @@
     "id": "construct-enhancement.reinforced-mount",
     "kind": "construct-enhancement",
     "name": "Reinforced mounting",
-    "rulesStatus": "enhancement-candidate; not balanced",
+    "rulesStatus": "candidate enhancement; recipe and mechanical effects provisional",
     "description": "Strengthens a compatible mounting interface; does not itself grant a new attack.",
     "compatibleComponentCapabilities": [
       "equipment-mount",
@@ -11,13 +11,15 @@
     ],
     "provides": [
       "reinforced-mount"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.reinforced-mount",
+    "powerDemand": 0
   },
   {
     "id": "construct-enhancement.concealed-compartment",
     "kind": "construct-enhancement",
     "name": "Concealed storage",
-    "rulesStatus": "enhancement-candidate; not balanced",
+    "rulesStatus": "candidate enhancement; recipe and mechanical effects provisional",
     "description": "Adds concealed internal storage to appropriate housing; storage capacity remains to be authored.",
     "compatibleComponentCapabilities": [
       "enclosure",
@@ -25,13 +27,15 @@
     ],
     "provides": [
       "concealed-storage"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.concealed-compartment",
+    "powerDemand": 0
   },
   {
     "id": "construct-enhancement.tether-deployment",
     "kind": "construct-enhancement",
     "name": "Tether deployment adaptation",
-    "rulesStatus": "enhancement-candidate; not balanced",
+    "rulesStatus": "candidate enhancement; recipe and mechanical effects provisional",
     "description": "Adds a tether deployment mechanism to a compatible equipment mount or manipulator.",
     "compatibleComponentCapabilities": [
       "equipment-mount",
@@ -40,13 +44,15 @@
     ],
     "provides": [
       "tether-deployment"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.tether-deployment",
+    "powerDemand": 0
   },
   {
     "id": "construct-enhancement.environmental-sealing",
     "kind": "construct-enhancement",
     "name": "Environmental sealing",
-    "rulesStatus": "enhancement-candidate; not balanced",
+    "rulesStatus": "candidate enhancement; recipe and mechanical effects provisional",
     "description": "Adds environmental barriers to an appropriate casing or housing; protection parameters remain unapproved.",
     "compatibleComponentCapabilities": [
       "enclosure",
@@ -54,19 +60,284 @@
     ],
     "provides": [
       "environmental-sealing"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.environmental-sealing",
+    "powerDemand": 0
   },
   {
     "id": "construct-enhancement.specialized-grip",
     "kind": "construct-enhancement",
     "name": "Specialized grip",
-    "rulesStatus": "enhancement-candidate; not balanced",
+    "rulesStatus": "candidate enhancement; recipe and mechanical effects provisional",
     "description": "Adapts a compatible manipulator for an authored gripping function.",
     "compatibleComponentCapabilities": [
       "manipulation"
     ],
     "provides": [
       "specialized-grip"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.specialized-grip",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-enhancement.vibration-sensing",
+    "kind": "construct-enhancement",
+    "name": "Vibration-sensing interface",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Adapts sensory hardware to register physical vibration. Does not independently grant tremorsense, a detection radius, or visibility through barriers.",
+    "compatibleComponentCapabilities": [
+      "sensory-interface"
+    ],
+    "provides": [
+      "vibration-sensing-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.vibration-sensing",
+    "powerDemand": 1
+  },
+  {
+    "id": "construct-enhancement.active-ranging",
+    "kind": "construct-enhancement",
+    "name": "Active ranging interface",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Provides active sonar-like or pulse-ranging hardware for compatible sensors. Blindsight, emission restrictions, and detection distance are not granted by the enhancement alone.",
+    "compatibleComponentCapabilities": [
+      "sensory-interface"
+    ],
+    "provides": [
+      "active-ranging-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.active-ranging",
+    "powerDemand": 1
+  },
+  {
+    "id": "construct-enhancement.magical-sensing",
+    "kind": "construct-enhancement",
+    "name": "Magical sensing interface",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Supports appropriate magical detection hardware when powered and separately authorized. It does not automatically cast a spell or reveal all magic.",
+    "compatibleComponentCapabilities": [
+      "sensory-interface"
+    ],
+    "provides": [
+      "magical-sensing-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.magical-sensing",
+    "powerDemand": 1
+  },
+  {
+    "id": "construct-enhancement.target-acquisition",
+    "kind": "construct-enhancement",
+    "name": "Target-acquisition interface",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Adds sensor processing useful for tracking or aiming; attack bonuses, advantage, and target visibility require separate combat or sensing rules.",
+    "compatibleComponentCapabilities": [
+      "sensory-interface",
+      "visual-hardware"
+    ],
+    "provides": [
+      "target-acquisition-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.target-acquisition",
+    "powerDemand": 1
+  },
+  {
+    "id": "construct-enhancement.clawed-grip",
+    "kind": "construct-enhancement",
+    "name": "Clawed gripping surface",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Adapts a manipulator to grip with shaped claws; no weapon attack, climbing speed, or special damage is automatically granted.",
+    "compatibleComponentCapabilities": [
+      "manipulation"
+    ],
+    "provides": [
+      "clawed-grip-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.clawed-grip",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-enhancement.precision-control",
+    "kind": "construct-enhancement",
+    "name": "Precision control linkage",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Enables fine control of an installed manipulator when sufficient actuator and control support is present; it grants no ability-score, tool, or skill bonus by itself.",
+    "compatibleComponentCapabilities": [
+      "manipulation"
+    ],
+    "provides": [
+      "precision-manipulation-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.precision-control",
+    "powerDemand": 1
+  },
+  {
+    "id": "construct-enhancement.interchangeable-tool-coupling",
+    "kind": "construct-enhancement",
+    "name": "Interchangeable tool coupling",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Provides a mechanical connection for fitted tools; does not supply a tool, proficiency, free hand, or action-economy exception.",
+    "compatibleComponentCapabilities": [
+      "manipulation"
+    ],
+    "provides": [
+      "interchangeable-tool-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.interchangeable-tool-coupling",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-enhancement.hazard-adapted-lining",
+    "kind": "construct-enhancement",
+    "name": "Hazard-adapted lining",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Provides a layer that can be configured for an authored hazard. No resistance, immunity, damage reduction, or environmental protection is granted without an approved material effect.",
+    "compatibleComponentCapabilities": [
+      "enclosure",
+      "protective-surface"
+    ],
+    "provides": [
+      "hazard-lining-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.hazard-adapted-lining",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-enhancement.energy-absorption-interface",
+    "kind": "construct-enhancement",
+    "name": "Energy absorption interface",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Adds an absorption pathway to protective hardware or energy storage. No damage negation, stored power gain, or healing occurs without an authored conversion rule.",
+    "compatibleComponentCapabilities": [
+      "protective-surface",
+      "energy-storage-interface"
+    ],
+    "provides": [
+      "energy-absorption-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.energy-absorption-interface",
+    "powerDemand": 1
+  },
+  {
+    "id": "construct-enhancement.coverage-adaptation",
+    "kind": "construct-enhancement",
+    "name": "Protective coverage adaptation",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Adjusts the arrangement and coverage of protective surfaces; region coverage and Armor Class must be resolved by separate physical and armor rules.",
+    "compatibleComponentCapabilities": [
+      "protective-surface"
+    ],
+    "provides": [
+      "coverage-adaptation-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.coverage-adaptation",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-enhancement.programmed-instructions",
+    "kind": "construct-enhancement",
+    "name": "Programmed instructions",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Enables an authored limited instruction set for control hardware without providing consciousness, independent turns, or arbitrary autonomous behavior.",
+    "compatibleComponentCapabilities": [
+      "control"
+    ],
+    "provides": [
+      "programmed-instructions-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.programmed-instructions",
+    "powerDemand": 1
+  },
+  {
+    "id": "construct-enhancement.supervisory-link",
+    "kind": "construct-enhancement",
+    "name": "Supervisory control link",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Allows a controller to coordinate other control nodes or devices under a future command protocol; does not itself create a shared pool of actions.",
+    "compatibleComponentCapabilities": [
+      "control",
+      "control-support"
+    ],
+    "provides": [
+      "supervisory-control-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.supervisory-link",
+    "powerDemand": 1
+  },
+  {
+    "id": "construct-enhancement.remote-command-receiver",
+    "kind": "construct-enhancement",
+    "name": "Remote command receiver",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Provides a physical input for remote instructions; the range, authority, signal security, and control effects require separately authored mechanics.",
+    "compatibleComponentCapabilities": [
+      "control"
+    ],
+    "provides": [
+      "remote-command-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.remote-command-receiver",
+    "powerDemand": 1
+  },
+  {
+    "id": "construct-enhancement.occupant-protection",
+    "kind": "construct-enhancement",
+    "name": "Occupant protection interface",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Provides a supported means of securing occupants within a compatible compartment or platform; no automatic saving throw, damage reduction, or crash protection.",
+    "compatibleComponentCapabilities": [
+      "transport-interior",
+      "transport-platform"
+    ],
+    "provides": [
+      "occupant-protection-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.occupant-protection",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-enhancement.compartment-access",
+    "kind": "construct-enhancement",
+    "name": "Compartment access mechanism",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Adds a mechanical access opening or hatch to an interior; does not grant a free action to enter or leave, nor modify creature capacity.",
+    "compatibleComponentCapabilities": [
+      "transport-interior"
+    ],
+    "provides": [
+      "compartment-access-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.compartment-access",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-enhancement.environmental-support",
+    "kind": "construct-enhancement",
+    "name": "Environmental support interface",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Provides fittings for a controllable internal environment. Air supply, pressure control, heating, and resource consumption must be separately authored.",
+    "compatibleComponentCapabilities": [
+      "transport-interior"
+    ],
+    "provides": [
+      "environmental-support-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.environmental-support",
+    "powerDemand": 2
+  },
+  {
+    "id": "construct-enhancement.operator-controls",
+    "kind": "construct-enhancement",
+    "name": "Operator control station fittings",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Provides an accessible interface for an operator in a crew or platform area. Pilot proficiency, command priority, and action use are governed independently.",
+    "compatibleComponentCapabilities": [
+      "transport-interior",
+      "transport-platform"
+    ],
+    "provides": [
+      "operator-station-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-enhancement.operator-controls",
+    "powerDemand": 1
   }
 ]

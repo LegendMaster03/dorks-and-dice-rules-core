@@ -497,6 +497,20 @@ def reconstruct_preset(catalog: dict, selected_id: str) -> dict:
                 raise ValueError(f"Missing canonical definition: {identifier}")
             occurrences.append({"traitId": identifier, "sourceId": record["id"]})
             effective_traits.setdefault(identifier, copy.deepcopy(catalog["traits"][identifier]))
+    # This read-only research view resolves the authored source-bound sense
+    # configuration. It does not select an innate spell or create a grant.
+    for trait in effective_traits.values():
+        binding = trait.get("originBindings", {}).get("subTrait", {})
+        if (trait.get("sense") == "tremorsense" and binding == {
+                "lookup": "nearest", "sourceField": "tremorsenseSubTrait"}):
+            config = intrinsics.get("tremorsenseSubTrait")
+            if (isinstance(config, dict) and type(config.get("rangeFeet")) is int
+                    and config["rangeFeet"] > 0
+                    and isinstance(config.get("contactMaterials"), list)
+                    and config["contactMaterials"]
+                    and all(isinstance(m, str) and m for m in config["contactMaterials"])):
+                trait["rangeFeet"] = config["rangeFeet"]
+                trait["contactMaterials"] = copy.deepcopy(config["contactMaterials"])
     return {"selectedSourceId": selected_id,
             "lineage": [r["id"] for r in lineage],
             "intrinsics": intrinsics, "occurrences": occurrences,
@@ -643,12 +657,18 @@ def spell_demand_outcomes(traits: dict, level: int, pb: int,
         if at_will and uses is not None:
             issues.append({"traitId": identifier, "reason": "both-at-will-and-limited-casts"})
             continue
+        recharge = trait.get("recharge")
         if not at_will and (isinstance(charges, bool) or
                             not isinstance(charges, int) or charges < 0 or
-                            trait.get("recharge") != "long-rest"):
+                            recharge not in ("long-rest", "short-or-long-rest")):
             continue
+        # Spell demand fixtures have no ordered rest events. Count one
+        # initial pool, not an invented number of short-rest recoveries.
         entitlements.append({"traitId": identifier, "spell": spell,
-                             "atWill": at_will, "freeUsesPerLongRest": None if at_will else charges,
+                             "atWill": at_will,
+                             "freeUsesPerLongRest": charges if not at_will and recharge == "long-rest" else None,
+                             "freeUsesPerRecharge": None if at_will else charges,
+                             "recharge": None if at_will else recharge,
                              "canUseSpellSlots": trait.get("slotCasting", False) is True,
                              "freeCastSpellLevel": trait.get("freeCastSpellLevel")})
         by_spell[spell].append({"traitId": identifier, "atWill": at_will,
@@ -1473,6 +1493,8 @@ def _sense_contact_detected(trait: dict, contact: dict, active: bool) -> bool:
         return False
     if "requiresContact" in trait and contact.get("sensorTouches") != trait["requiresContact"]:
         return False
+    if "contactMaterials" in trait and contact.get("sensorTouches") not in trait["contactMaterials"]:
+        return False
     if "requiresSharedContact" in trait:
         media = trait["requiresSharedContact"]
         if (contact.get("sensorTouches") not in media or
@@ -1709,8 +1731,8 @@ def evaluate(profile: dict, catalog: dict, level: int,
         if identifier in modeled_spells:
             recognized = True
             interpreted.update(("spell", "atWill", "freeUses", "recharge",
-                                "slotCasting", "alwaysPrepared", "freeCastSpellLevel"))
-        if "spellList" in trait:
+                                "slotCasting", "freeCastSpellLevel"))
+        if "spellList" in trait or "spellChoices" in trait:
             unmodeled.append({"traitId": identifier,
                               "reason": "unresolved-spell-list-selection"})
         if trait.get("grantType") == "feat-choice" and trait.get("featCategory") == "origin":
@@ -1759,7 +1781,7 @@ def evaluate(profile: dict, catalog: dict, level: int,
         if trait.get("sense") == "tremorsense":
             recognized = True
             interpreted.update(("sense", "rangeFeet", "requiresContact",
-                                "requiresSharedContact", "activation", "uses"))
+                                "requiresSharedContact", "contactMaterials", "activation", "uses"))
         if "movementMode" in trait or "flyingSpeed" in trait:
             if identifier in modeled_movement:
                 recognized = True

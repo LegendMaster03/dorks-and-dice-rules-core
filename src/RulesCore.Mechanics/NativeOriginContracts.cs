@@ -175,16 +175,25 @@ public sealed record NativeOriginInheritedGrantEvidence(
     IReadOnlyDictionary<string, string>? PriorResourceOwners = null);
 
 /// <summary>
-/// The exact effective inputs of a native or authenticated table-authored interaction, retained for
-/// deterministic replay, provenance audits and cascading invalidation.
+/// The exact effective-grant inputs of a native or authenticated interaction,
+/// retained for deterministic replay, provenance audits and cascading invalidation.
+/// Inherited-expression rules instead retain their complete gene instances below.
 /// </summary>
 public sealed record NativeOriginSynergyInputEvidence(
     string GrantId, string ManifestationId, NativeOriginCharacteristicIdentity Identity,
     IReadOnlyList<string> SourceCandidateIds);
 
+/// <summary>
+/// A verified, selected genotype input to one authored expression. The complete
+/// instance is evidence, not an additional effective grant or resource pool.
+/// </summary>
+public sealed record NativeOriginInheritedSynergyInputEvidence(
+    NativeOriginBiologicalGeneInstance Gene);
+
 public sealed record NativeOriginSynergyEvidence(
     string RuleId, string InteractionId,
-    IReadOnlyList<NativeOriginSynergyInputEvidence> Inputs);
+    IReadOnlyList<NativeOriginSynergyInputEvidence> Inputs,
+    IReadOnlyList<NativeOriginInheritedSynergyInputEvidence>? InheritedInputs = null);
 
 /// <summary>
 /// This identity is issued by the construction evaluator, not by candidate discovery.
@@ -229,10 +238,33 @@ public sealed record NativeOriginIndependentGrantApplicability(
 /// role is implicit in this value type; the owning profile distinguishes them.
 /// A mixed or custom configuration may have no first-party Species label.
 /// </summary>
+/// <summary>
+/// One inherited biological gene or physical intrinsic instance. Presence is
+/// heritable evidence, not an effective grant. Expression is derived from the
+/// configuration's current grants through SourceCandidateId; unexpressed
+/// instances are latent, not a separately authored or limited state.
+/// </summary>
+public sealed record NativeOriginBiologicalGeneInstance(
+    string Id, string SourceCandidateId,
+    NativeOriginCharacteristicIdentity Identity,
+    JsonElement? ConfiguredValue = null,
+    IReadOnlyDictionary<string, JsonElement>? Parameters = null,
+    IReadOnlyList<NativeOriginChoiceSelection>? ResolvedChoices = null,
+    NativeOriginInheritedGeneEvidence? InheritedFrom = null);
+
+/// <summary>
+/// The immediate verified contributor snapshot for one inherited instance.
+/// It retains no transitive pedigree or independently grantable authority.
+/// </summary>
+public sealed record NativeOriginInheritedGeneEvidence(
+    string ContributorId, string ContributorProfileId, string ContributorRevision,
+    string SourceInstanceId, bool SourceWasGrant);
+
 public sealed record NativeOriginCurrentConfiguration(
     string? SpeciesId, string? AncestryId,
     IReadOnlyList<NativeOriginEffectiveGrant> InherentGrants,
-    string? ProfileId = null);
+    string? ProfileId = null,
+    IReadOnlyList<NativeOriginBiologicalGeneInstance>? BiologicalGenes = null);
 
 /// <summary>
 /// A completed historical reconstruction may retain its former baseline for audit,
@@ -270,6 +302,36 @@ public sealed record NativeOriginActiveTemporaryTransformation(
     IReadOnlyList<string>? EffectiveFormGrantIds = null,
     NativeOriginDecisionBasis? Authorization = null);
 
+/// <summary>
+/// Explicit player intent for biological transmission. Candidate IDs identify exact
+/// contributor offers rather than freely granting a canonical gene. The plan
+/// does not itself create effective grants or authenticated gene instances.
+/// Unexpressed instances are persisted only after the construction evaluator
+/// validates the selection and authored capacity. A null plan preserves the existing
+/// manifestation-only construction contract;
+/// a nonnull plan opts into explicit transmission checks.
+/// </summary>
+/// <summary>
+/// Optional configuration for a transmitted but unexpressed instance.
+/// Values and parameters cannot bypass original offers; authored persistent
+/// choices must be fully resolved before such an instance is inheritable.
+/// </summary>
+public sealed record NativeOriginBiologicalGeneConfiguration(
+    string CandidateId, IReadOnlyList<NativeOriginChoiceSelection>? Choices = null);
+
+/// <summary>
+/// Player selection of one explicitly authored inherited-instance expression.
+/// Candidate IDs are the exact transmitted occurrences consumed by the expression;
+/// naming an interaction alone never activates a characteristic.
+/// </summary>
+public sealed record NativeOriginBiologicalCombinationSelection(
+    string RuleOwnerId, string InteractionId, IReadOnlyList<string> CandidateIds);
+
+public sealed record NativeOriginBiologicalTransmissionPlan(
+    IReadOnlyList<string> CandidateIds,
+    IReadOnlyList<NativeOriginBiologicalGeneConfiguration>? LatentConfigurations = null,
+    IReadOnlyList<NativeOriginBiologicalCombinationSelection>? Combinations = null);
+
 public sealed record NativeOriginProposal(
     string Id, NativeOriginIntent Intent, NativeOriginMethodReference Method,
     IReadOnlyList<NativeOriginContributor> Contributors,
@@ -292,7 +354,8 @@ public sealed record NativeOriginProposal(
     NativeOriginDecisionBasis? ExistingEffectiveConfigurationBasis = null,
     // Process classification is an eligibility input, not an effective creature-type
     // grant. A custom claim requires a verified process-type table decision.
-    string? ProcessCreatureTypeId = null);
+    string? ProcessCreatureTypeId = null,
+    NativeOriginBiologicalTransmissionPlan? BiologicalTransmission = null);
 
 /// <summary>
 /// Underlying is the latest authoritative Species/Ancestry baseline; Current is

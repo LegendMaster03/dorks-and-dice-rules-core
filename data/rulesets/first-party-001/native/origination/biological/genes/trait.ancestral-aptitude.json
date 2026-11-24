@@ -1,0 +1,27 @@
+{
+  "id": "trait.ancestral-aptitude",
+  "name": "Ancestral Aptitude",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "ancestral-aptitude",
+    "name": "Ancestral Aptitude",
+    "description": "When you select this aptitude, choose Strength or Constitution as the ability governing linked abilities that require a saving throw or attack modifier. The chosen modifier is used for those abilities, including advanced features unlocked later. This choice does not grant any proficiency, ability-score increase or additional use of another feature.",
+    "requiredCharacterLevel": 1,
+    "abilityChoice": {
+      "from": [
+        "strength",
+        "constitution"
+      ],
+      "when": "goliath-ancestry-selection",
+      "perCharacter": true
+    },
+    "savingThrowDC": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+    "attackModifier": "proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+    "doesNotGrant": [
+      "ability-score-increase",
+      "feat-selection",
+      "proficiency",
+      "extra-use-pool"
+    ]
+  }
+}

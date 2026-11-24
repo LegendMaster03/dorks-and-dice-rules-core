@@ -18,7 +18,7 @@ from character_origins_source_inventory import read_catalog, source_inventory
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONTRACTS = (
     ROOT / "docs/rewrite/character-origins/"
-    "pillar2-legacy-binding-evidence-20261111.json"
+    "pillar2-legacy-binding-evidence-20261121.json"
 )
 _FIELD_PATH = re.compile(r"[A-Za-z][A-Za-z0-9]*(?:\[\d+\])?"
                          r"(?:\.[A-Za-z][A-Za-z0-9]*(?:\[\d+\])?)*")

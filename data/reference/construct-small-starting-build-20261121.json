@@ -1,0 +1,104 @@
+{
+  "description": "Small Construct Origination MVP reference: source-derived Small body size through the existing structural-frame.small recipe. Candidate quantities and prices.",
+  "status": "provisional-starting-playtest",
+  "assembly": {
+    "components": [
+      {
+        "instanceId": "frame",
+        "definitionId": "construct-component.structural-frame",
+        "materials": {
+          "frame": "construct-material.steel"
+        },
+        "enabled": true,
+        "constructionVariantId": "small"
+      },
+      {
+        "instanceId": "generator",
+        "definitionId": "construct-component.power-source-housing",
+        "materials": {
+          "housing": "construct-material.wood"
+        },
+        "enabled": true,
+        "powerSourceId": "construct-power-source.mechanical-engine",
+        "connectedTo": [
+          "frame",
+          "control",
+          "circulation",
+          "actuator",
+          "manipulator",
+          "drive",
+          "eye"
+        ]
+      },
+      {
+        "instanceId": "control",
+        "definitionId": "construct-component.control-module",
+        "materials": {
+          "controller": "construct-material.wood"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "circulation",
+        "definitionId": "construct-component.alchemical-circulation",
+        "materials": {
+          "conduit": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "actuator",
+        "definitionId": "construct-component.alchemical-actuator",
+        "materials": {
+          "actuator": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "manipulator",
+        "definitionId": "construct-component.manipulator",
+        "materials": {
+          "grip": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "drive",
+        "definitionId": "construct-component.locomotion-unit",
+        "materials": {
+          "contact": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "eye",
+        "definitionId": "construct-component.crystal-eye",
+        "materials": {
+          "crystal": "construct-material.crystal"
+        },
+        "enabled": true
+      }
+    ],
+    "initialAllowance": 200
+  },
+  "expected": {
+    "ingredientCost": 147,
+    "powerOutput": 8,
+    "requestedPowerDemand": 7,
+    "unusedStartingPoints": 53,
+    "bodySize": "small",
+    "originTraits": [
+      "trait.construct.ordinary-optical-sight",
+      "trait.construct.physical-manipulation",
+      "trait.construct.ordinary-communication",
+      "trait.construct.ordinary-ground-movement"
+    ],
+    "comparison": "Four fewer units of steel in the structural-frame recipe reduce the quoted price by 16 candidate points and the known retained mass subtotal by 28 pounds; this does not prove total body envelope or capacity."
+  },
+  "limitations": [
+    "Small size is derived from the authenticated frame recipe variant, not assigned freely as a standalone size choice.",
+    "Other attached component dimensions and complete body envelope remain uncalibrated.",
+    "Nominal movement, sight, manipulation and communication use the same source-verified traits as the Medium reference.",
+    "Body mass, locomotion capacity and material statistics remain provisional."
+  ]
+}

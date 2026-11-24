@@ -19,6 +19,32 @@ public sealed class NativeEquipmentQualificationsTests
     }
 
     [Fact]
+    public void CountedEquipmentChoicePreservesEveryTargetAndRejectsReplayedSource()
+    {
+        using var f = new Fixture();
+        var resolver = new NativeEquipmentQualifications(f.Catalog);
+        var life = resolver.Resolve(f.Request(new NativeEquipmentQualificationSource(
+            "feature.one-mace", "life-mace")));
+        var other = f.Request(new NativeEquipmentQualificationSource(
+            "feature.two-weapons", "class-weapons")) with
+        {
+            SelectedChoices = new Dictionary<string, IReadOnlyList<string>>
+            {
+                ["class-weapons/weapons"] = ["equipment.weapon.mace", "equipment.weapon.longsword"]
+            }
+        };
+        var result = NativeCharacterEquipmentComposer.Compose(f.Catalog, life, other, []);
+        Assert.Equal("resolved", result.Status);
+        Assert.Equal(2, resolver.Covers(result.Equipment!, "equipment.weapon.mace").Provenance.Count);
+        Assert.Single(resolver.Covers(result.Equipment!, "equipment.weapon.longsword").Provenance);
+
+        var replayed = NativeCharacterEquipmentComposer.Compose(f.Catalog, life,
+            f.Request(new NativeEquipmentQualificationSource("feature.sword", "life-mace")), []);
+        Assert.Equal("invalid", replayed.Status);
+        Assert.Contains(replayed.Issues, issue => issue.Code == "character-equipment-occurrence-duplicate");
+    }
+
+    [Fact]
     public void EquipmentTrainingUsesOneTwoBitMaskAcrossOrdinaryAndMagicItems()
     {
         using var f = new Fixture();
@@ -842,6 +868,8 @@ public sealed class NativeEquipmentQualificationsTests
                   {"id":"feature.gladiator","name":"Gladiator","kind":"feature","equipmentProficiencyGrants":{"choices":[
                     {"id":"arena","count":1,"fromCategory":"weapon",
                      "fromTypeIds":["equipment.weapon.longsword"]}]}},
+                  {"id":"feature.two-weapons","name":"Two Weapon Qualifications","kind":"feature","equipmentProficiencyGrants":{"choices":[
+                    {"id":"weapons","count":2,"fromCategory":"weapon"}]}},
                   {"id":"feature.invalid-choice","name":"Invalid Weapon Choice","kind":"feature","equipmentProficiencyGrants":{"choices":[
                     {"id":"arena","count":1,"fromCategory":"weapon",
                      "fromTypeIds":["equipment.weapon.unknown"]}]}},

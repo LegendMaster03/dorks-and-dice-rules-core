@@ -1,0 +1,21 @@
+{
+  "id": "trait.brave",
+  "name": "Brave",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "brave",
+    "description": "Advantage on saves to resist or end Shaken, Frightened, Panicked, and fear-induced Cowering; this does not create new saving throw opportunities.",
+    "fearSavingThrowAdvantage": {
+      "conditionIds": [
+        "condition.shaken",
+        "condition.frightened",
+        "condition.panicked"
+      ],
+      "fearInducedConditionIds": [
+        "condition.cowering"
+      ],
+      "scope": "resist-or-end",
+      "grantsSavingThrowOpportunity": false
+    }
+  }
+}

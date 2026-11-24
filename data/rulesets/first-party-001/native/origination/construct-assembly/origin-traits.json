@@ -1,0 +1,115 @@
+[
+  {
+    "id": "trait.construct.ordinary-optical-sight",
+    "name": "Construct Optical Sight",
+    "kind": "origin-trait",
+    "rulesStatus": "candidate physical functional trait; nonvisual conditions apply; no special vision or bonus",
+    "trait": {
+      "id": "ordinary-optical-sight",
+      "name": "Ordinary Optical Sight",
+      "description": "While the installed eye is operational and exposed to sufficient visible light, its user can see through that optical interface. This does not grant darkvision, low-light vision, blindsight, or an independent Perception bonus.",
+      "sense": "ordinary-vision",
+      "requiresOperationalComponent": true
+    }
+  },
+  {
+    "id": "trait.construct.physical-manipulation",
+    "name": "Construct Physical Manipulation",
+    "kind": "origin-trait",
+    "rulesStatus": "candidate physical functional trait; no bonus action or weapon proficiency",
+    "trait": {
+      "id": "physical-manipulation",
+      "name": "Physical Manipulation",
+      "description": "While the installed manipulator and its required actuation and control support are operational, it can physically grasp and handle ordinary objects within its reach. This does not grant extra actions, additional hands for equipment rules, weapon proficiency, or any ability-score increase.",
+      "physicalManipulation": true,
+      "requiresOperationalComponent": true
+    }
+  },
+  {
+    "id": "trait.construct.ordinary-communication",
+    "name": "Construct Ordinary Communication",
+    "kind": "origin-trait",
+    "rulesStatus": "starting-playtest functional trait; no additional language entitlement",
+    "trait": {
+      "id": "ordinary-communication",
+      "name": "Ordinary Communication",
+      "description": "While its control interface is operational, the Construct can communicate audibly in languages it already knows. This does not grant language proficiencies, telepathy, or unusual communication ranges.",
+      "ordinaryAudibleCommunication": true,
+      "requiresOperationalComponent": true
+    }
+  },
+  {
+    "id": "trait.construct.ordinary-ground-movement",
+    "name": "Construct Ordinary Ground Movement",
+    "kind": "origin-trait",
+    "rulesStatus": "starting-playtest functional trait; movement and structural support integration remain provisional",
+    "trait": {
+      "id": "ordinary-ground-movement",
+      "name": "Ordinary Ground Movement",
+      "description": "While this locomotion component is operational, it supports ordinary ground movement with a nominal 30-foot walking speed, subject to other applicable movement and physical-support rules. This does not waive body-mass limitations or grant movement while disabled.",
+      "walkingSpeedFeet": 30,
+      "requiresOperationalComponent": true
+    }
+  },
+  {
+    "id": "trait.construct.climbing-movement",
+    "name": "Construct Climbing Movement",
+    "kind": "origin-trait",
+    "rulesStatus": "provisional playable movement-speed candidate; mobility, energy and physical-load balance require integrated testing",
+    "trait": {
+      "id": "climbing-movement",
+      "name": "Climbing Movement",
+      "description": "Supports climbing on compatible surfaces while installed and operational. An authorized climbing speed and surface limitations are required before the character can use this mode; no walking speed, fall protection, or universal adhesion is granted.",
+      "movementMode": "climb",
+      "grantsFallProtection": false,
+      "requiresOperationalComponent": true,
+      "speedFeet": 20
+    }
+  },
+  {
+    "id": "trait.construct.flying-movement",
+    "name": "Construct Flying Movement",
+    "kind": "origin-trait",
+    "rulesStatus": "provisional playable movement-speed candidate; mobility, energy and physical-load balance require integrated testing",
+    "trait": {
+      "id": "flying-movement",
+      "name": "Flying Movement",
+      "description": "Supports aerial movement while installed and operational, pending an authorized flying speed and lift/load rules. Does not grant hover, immunity to falling, or an unrestricted ability to fly.",
+      "movementMode": "fly",
+      "grantsHover": false,
+      "requiresOperationalComponent": true,
+      "speedFeet": 30
+    }
+  },
+  {
+    "id": "trait.construct.burrowing-movement",
+    "name": "Construct Burrowing Movement",
+    "kind": "origin-trait",
+    "rulesStatus": "provisional playable movement-speed candidate; mobility, energy and physical-load balance require integrated testing",
+    "trait": {
+      "id": "burrowing-movement",
+      "name": "Burrowing Movement",
+      "description": "Supports excavating movement in author-permitted material while installed and operational. Requires an authorized burrowing speed and permitted substrates; does not grant universal stone penetration, permanent tunnels, or suffocation protection.",
+      "movementMode": "burrow",
+      "negatesSuffocation": false,
+      "leavesPermanentTraversableTunnel": false,
+      "requiresOperationalComponent": true,
+      "speedFeet": 15
+    }
+  },
+  {
+    "id": "trait.construct.swimming-movement",
+    "name": "Construct Swimming Movement",
+    "kind": "origin-trait",
+    "rulesStatus": "provisional playable movement-speed candidate; mobility, energy and physical-load balance require integrated testing",
+    "trait": {
+      "id": "swimming-movement",
+      "name": "Swimming Movement",
+      "description": "Supports self-propelled aquatic movement while installed and operational, pending an authorized swimming speed and applicable water conditions. Does not grant underwater breathing, pressure protection, or water breathing.",
+      "movementMode": "swim",
+      "grantsWaterBreathing": false,
+      "requiresOperationalComponent": true,
+      "speedFeet": 20
+    }
+  }
+]

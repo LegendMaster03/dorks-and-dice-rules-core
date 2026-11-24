@@ -1,0 +1,14 @@
+{
+  "name": "Deployable unit bay",
+  "description": "A physical housing and deployment mechanism for separately constructed units. Capacity, launch/recovery procedures, ownership, control, and action costs remain to be defined.",
+  "rulesStatus": "provisional first-party playable construction candidate; advanced effect binding and balance still required",
+  "provides": [
+    "deployable-unit-interface",
+    "transport-interior"
+  ],
+  "materialSlots": [
+    "bay"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.deployable-unit-bay",
+  "powerDemand": 0
+}

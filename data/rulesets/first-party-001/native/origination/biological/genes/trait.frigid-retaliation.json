@@ -1,0 +1,43 @@
+{
+  "id": "trait.frigid-retaliation",
+  "name": "Frigid Retaliation",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "frigid-retaliation",
+    "name": "Frigid Retaliation",
+    "requiredCharacterLevel": 4,
+    "description": "Immediately after a creature you can see within 30 feet hits you with an attack roll and damages you, you can use your Reaction to require it to make a Constitution saving throw. On failure it takes 1d8 plus Proficiency Bonus Cold damage and has Speed 0 until the end of its next turn; on success it suffers neither effect. Proficiency Bonus uses per Long Rest.",
+    "activation": {
+      "action": "reaction",
+      "trigger": "visible-creature-within-30-feet-hits-you-with-attack-roll-and-deals-damage",
+      "timing": "immediately-after-damage"
+    },
+    "rangeFeet": 30,
+    "savingThrow": {
+      "ability": "constitution",
+      "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+      "onSuccess": "no-effect"
+    },
+    "onFailedSave": {
+      "damage": {
+        "dice": "1d8",
+        "add": "proficiency-bonus",
+        "damageType": "cold"
+      },
+      "speedSetFeet": 0,
+      "speedEndsAt": "end-of-targets-next-turn"
+    },
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    },
+    "originBindings": {
+      "giantAncestryAbility": {
+        "lookup": "manifested-trait-choice",
+        "mechanicalDefinitionId": "trait.ancestral-aptitude",
+        "choiceRequirementId": "abilityChoice",
+        "scope": "contributor"
+      }
+    }
+  }
+}

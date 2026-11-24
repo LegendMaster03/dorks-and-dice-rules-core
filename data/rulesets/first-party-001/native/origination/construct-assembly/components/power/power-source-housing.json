@@ -1,0 +1,15 @@
+{
+  "name": "Power-source housing",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "description": "A configurable housing for a selected power-source mechanism. Housing and source are separate installed definitions.",
+  "provides": [
+    "power-housing",
+    "power-distribution"
+  ],
+  "powerSourceSlot": true,
+  "powerDemand": 0,
+  "materialSlots": [
+    "housing"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.power-source-housing"
+}

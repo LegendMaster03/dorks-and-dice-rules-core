@@ -98,26 +98,6 @@ class SameSpeciesPairAuditTests(unittest.TestCase):
             pair["sharedSourceNodeIds"],
         )
 
-    def test_existing_wood_elf_conflict_not_misclassified_as_pair_caused(self):
-        report = self.audit()
-        species = next(s for s in report["species"]
-                       if s["rootSpeciesSourceId"] == "species.elf")
-        pair = next(p for p in species["pairs"]
-                    if {p["firstSourceId"], p["secondSourceId"]} == {
-                        "ancestry.elf.high", "ancestry.elf.wood"
-                    })
-        self.assertIn(
-            "movement.walk.speed",
-            {f["identity"] for f in pair["sourceReviewFlags"]
-             if f["kind"] == "multiple-source-values-needs-origin-policy"},
-        )
-        self.assertNotIn(
-            "movement.walk.speed",
-            {f["identity"] for f in pair["newPairReviewFlags"]},
-        )
-        self.assertEqual("not-evaluated",
-                         pair["defaultCompatibility"])
-
     def test_synthetic_new_family_and_leaf_automatically_join_matrix(self):
         altered = copy.deepcopy(self.catalog)
         altered["ancestry.dragonborn.prismatic"] = {

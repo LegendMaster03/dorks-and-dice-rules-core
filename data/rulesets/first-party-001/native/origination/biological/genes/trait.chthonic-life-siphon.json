@@ -1,0 +1,27 @@
+{
+  "id": "trait.chthonic-life-siphon",
+  "name": "Chthonic Life Siphon",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "chthonic-life-siphon",
+    "name": "Chthonic Life Siphon",
+    "description": "Once per turn, when you deal Necrotic damage to another creature, you may regain Hit Points equal to your Proficiency Bonus, up to the amount of Necrotic damage that creature actually takes. You can use this ability a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest. Healing can not exceed your maximum Hit Points. No healing is granted if the creature takes no Necrotic damage.",
+    "oncePerTurn": true,
+    "lifeSiphon": {
+      "trigger": "deal-necrotic-damage-to-another-creature",
+      "damageType": "necrotic",
+      "damageMeasured": "necrotic-damage-actually-taken",
+      "requiresPositiveDamage": true,
+      "healing": {
+        "recipient": "self",
+        "amount": "proficiency-bonus",
+        "maximum": "necrotic-damage-actually-taken",
+        "obeysNormalHitPointMaximum": true
+      }
+    },
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    }
+  }
+}

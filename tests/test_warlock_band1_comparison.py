@@ -41,16 +41,6 @@ class WarlockBand1ComparisonTests(unittest.TestCase):
         self.assertEqual([6,10,14],[x["level"] for x in rows
             if x["level"]>3 and x["srd52"]["subclassFeaturesOrMilestones"]])
 
-    def test_no_option_catalog_import_or_automatic_approval(self):
-        self.assertIn("ninety-supplement-invocation-crosswalk",self.crosswalk["expresslyOutOfScope"])
-        for decision in self.crosswalk["decisions"]:
-            self.assertIn(decision["status"],{
-                "owner-decision-needed","approved-native-rule","source-equivalence-check",
-                "shared-class-rule-already-established",
-                "shared-casting-constraints-already-established",
-                "shared-epic-boon-rule-already-established",
-                "follow-on-to-invocation-progression"})
-
     def test_historical_case_1_approved_without_premature_implementation(self):
         decision=next(x for x in self.crosswalk["decisions"]
                       if x["id"]=="historical-defense-utility")

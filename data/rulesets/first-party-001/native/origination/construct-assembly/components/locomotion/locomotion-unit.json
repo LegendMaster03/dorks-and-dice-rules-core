@@ -1,0 +1,17 @@
+{
+  "name": "Locomotion unit",
+  "description": "Generic ground locomotion support adaptable to different arrangements. Its operational trait supplies candidate ordinary ground movement, subject to applicable movement and physical-support rules. Additional units do not independently grant extra movement speed.",
+  "rulesStatus": "candidate ordinary ground-movement trait; numerical support capacity remains unapproved",
+  "provides": [
+    "locomotion-interface"
+  ],
+  "materialSlots": [
+    "contact"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.locomotion-unit",
+  "powerDemand": 1,
+  "sharesLoadSupport": true,
+  "operationalOriginTraitIds": [
+    "trait.construct.ordinary-ground-movement"
+  ]
+}

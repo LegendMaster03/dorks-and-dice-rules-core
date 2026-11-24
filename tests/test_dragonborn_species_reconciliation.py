@@ -42,6 +42,46 @@ class DragonbornReconciliationTests(unittest.TestCase):
                         self.assertNotIn(leaf["id"], ids)
                         ids.add(leaf["id"])
 
+
+    def test_ordinary_dragonborn_natural_weapons_and_limited_wings(self):
+        base = read(DRAGONBORN / "base/dragonborn.json")
+        traits = {t["id"]: t for t in base["traits"]}
+        weapons = traits["draconic-natural-weapons"]
+        self.assertEqual(
+            [("claws", "slashing"), ("bite", "piercing"), ("tail", "bludgeoning")],
+            [(w["id"], w["damage"]["type"]) for w in weapons["naturalWeapons"]],
+        )
+        for weapon in weapons["naturalWeapons"]:
+            self.assertEqual("melee-weapon-attack", weapon["attackType"])
+            self.assertEqual("strength", weapon["ability"])
+            self.assertEqual("strength", weapon["damage"]["addAbilityModifier"])
+            self.assertTrue(weapon["proficient"])
+            self.assertEqual(5, weapon["reachFeet"])
+            self.assertEqual("1d6", weapon["damage"]["dice"])
+            self.assertTrue(weapon["requiresAnatomy"])
+        self.assertFalse(weapons["grantsExtraAttacks"])
+        self.assertFalse(weapons["grantsBonusActionAttack"])
+        self.assertFalse(weapons["grantsSpecialShove"])
+
+        mobility = traits["draconic-wings"]["wingMobility"]
+        glide = mobility["glide"]
+        self.assertEqual(1, glide["availableFromCharacterLevel"])
+        self.assertEqual(30, glide["maxHorizontalFeetPerTurn"])
+        self.assertEqual(5, glide["minDescentFeetPer20HorizontalFeet"])
+        self.assertTrue(glide["requiresSpaceToDeploy"])
+        self.assertTrue(glide["preventsFallingDamageOnSafeLanding"])
+        self.assertFalse(glide["permitsPoweredAscent"])
+        self.assertFalse(glide["canHover"])
+        flight = mobility["limitedFlight"]
+        self.assertEqual(5, flight["availableFromCharacterLevel"])
+        self.assertEqual(30, flight["flyingSpeedFeet"])
+        self.assertEqual(1, flight["durationMinutes"])
+        self.assertEqual(1, flight["uses"]["value"])
+        self.assertEqual("long-rest", flight["uses"]["recharge"])
+        self.assertFalse(flight["canHover"])
+        self.assertFalse(flight["grantsContinuousFlight"])
+        self.assertTrue(mobility["glideRemainsAvailable"])
+
     def test_gem_family_and_leaf_mechanics(self):
         gem = read(DRAGONBORN / "ancestry/dragonborn/gem.json")
         base = read(DRAGONBORN / "base/dragonborn.json")
@@ -52,7 +92,7 @@ class DragonbornReconciliationTests(unittest.TestCase):
         self.assertNotIn("defaultUpbringing", gem)
         self.assertNotIn("damageType", gem)
         t = {x["id"]: x for x in gem["traits"]}
-        self.assertEqual({"psionic-mind", "gem-flight"}, set(t))
+        self.assertEqual({"psionic-mind", "spectral-flight"}, set(t))
         mind = t["psionic-mind"]
         self.assertTrue(mind["atWill"])
         self.assertEqual("telepathic-message", mind["communicationMode"])
@@ -63,7 +103,7 @@ class DragonbornReconciliationTests(unittest.TestCase):
         self.assertFalse(mind["requiresSharedLanguage"])
         self.assertTrue(mind["oneWay"])
         self.assertFalse(mind["grantsThoughtReading"])
-        flight = t["gem-flight"]
+        flight = t["spectral-flight"]
         self.assertEqual(5, flight["requiredCharacterLevel"])
         self.assertEqual("bonus-action", flight["activation"]["action"])
         self.assertEqual({"minutes": 1}, flight["duration"])
@@ -116,7 +156,7 @@ class DragonbornReconciliationTests(unittest.TestCase):
         metallic = read(DRAGONBORN / "ancestry/dragonborn/metallic.json")
         self.assertEqual({"shape": "line", "lengthFeet": 30, "widthFeet": 5}, chromatic["breathWeaponArea"])
         self.assertEqual({"shape": "cone", "lengthFeet": 15}, metallic["breathWeaponArea"])
-        breath = next(t for t in metallic["traits"] if t["id"] == "metallic-breath-weapon")
+        breath = next(t for t in metallic["traits"] if t["id"] == "control-breath-weapon")
         self.assertEqual(5, breath["requiredCharacterLevel"])
         self.assertEqual({"action": "attack", "replaces": "one-attack", "timing": "on-your-turn"}, breath["activation"])
         self.assertEqual(1, breath["uses"]["value"])

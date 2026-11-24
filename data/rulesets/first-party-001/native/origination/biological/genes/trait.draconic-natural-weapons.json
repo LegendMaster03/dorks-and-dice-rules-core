@@ -1,0 +1,54 @@
+{
+  "id": "trait.draconic-natural-weapons",
+  "name": "Draconic Natural Weapons",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "draconic-natural-weapons",
+    "name": "Draconic Natural Weapons",
+    "description": "Your functional claws, bite, and tail are natural melee weapons. Each may replace an ordinary melee weapon attack when the corresponding anatomy is present: claws deal 1d6 Slashing, bite 1d6 Piercing, and tail 1d6 Bludgeoning. Use Strength for the attack and damage rolls, adding your Proficiency Bonus to the attack roll, with 5-foot reach. This trait grants no additional attacks, Bonus Action attack, or special Shove.",
+    "naturalWeapons": [
+      {
+        "id": "claws",
+        "requiresAnatomy": "functional-claws",
+        "attackType": "melee-weapon-attack",
+        "ability": "strength",
+        "proficient": true,
+        "reachFeet": 5,
+        "damage": {
+          "dice": "1d6",
+          "type": "slashing",
+          "addAbilityModifier": "strength"
+        }
+      },
+      {
+        "id": "bite",
+        "requiresAnatomy": "functional-bite",
+        "attackType": "melee-weapon-attack",
+        "ability": "strength",
+        "proficient": true,
+        "reachFeet": 5,
+        "damage": {
+          "dice": "1d6",
+          "type": "piercing",
+          "addAbilityModifier": "strength"
+        }
+      },
+      {
+        "id": "tail",
+        "requiresAnatomy": "functional-tail",
+        "attackType": "melee-weapon-attack",
+        "ability": "strength",
+        "proficient": true,
+        "reachFeet": 5,
+        "damage": {
+          "dice": "1d6",
+          "type": "bludgeoning",
+          "addAbilityModifier": "strength"
+        }
+      }
+    ],
+    "grantsExtraAttacks": false,
+    "grantsBonusActionAttack": false,
+    "grantsSpecialShove": false
+  }
+}

@@ -11,15 +11,18 @@ namespace RulesCore.Mechanics.Tests;
 /// </summary>
 public sealed class NativeCharacterManifestationTests
 {
-    private sealed class Authority : INativeCharacterManifestationAuthority
+    private sealed class Authority : INativeCharacterManifestationAuthority,
+        INativeCharacterInfluenceOverlapAuthority
     {
         public bool DenyLedger { get; set; }
         public bool DenyInstance { get; set; }
         public bool DenyResource { get; set; }
+        public bool RequireExactResourceProvenance { get; set; }
         public bool DenyPolicy { get; set; }
         public bool DenyInteraction { get; set; }
         public bool DenyTransition { get; set; }
         public bool DenyInfluence { get; set; }
+        public bool DenyOverlap { get; set; }
         public bool DenyProgression { get; set; }
         public bool DenyGrant { get; set; }
         public bool PermitIndependentEnding { get; set; }
@@ -41,6 +44,12 @@ public sealed class NativeCharacterManifestationTests
             NativeSheetEarnedProgression progression, NativeSheetEarnedGrant grant) => true;
         public bool AuthorizesInfluenceApplicability(string id, string influence,
             NativeInfluenceGrantApplicability decision) => true;
+        public bool AuthorizesOverlapSelection(string id,
+            NativeInfluenceOverlapSelection selection) =>
+            !DenyOverlap && id == "character.1" &&
+            selection.RuleOccurrence == Occurrence("interactions.primary") &&
+            selection.AuthorizationEvidenceId == "receipt.interaction.primary" &&
+            selection.Basis == Rule();
         public bool AuthorizesLedger(string id, NativeManifestationLedger ledger) => !DenyLedger;
         public bool AuthorizesInstance(string id, NativeManifestationInstance instance,
             NativePersistentCharacterSheet sheet) =>
@@ -51,7 +60,26 @@ public sealed class NativeCharacterManifestationTests
             instance.ActivationEvidenceId == "receipt.activate." + instance.ActivationEventId &&
             (ExpectedSlots is null || instance.ContributionSlots is { } slots &&
                 ExpectedSlots.SequenceEqual(slots));
-        public bool AuthorizesResource(string id, NativeManifestationResourceState resource) => !DenyResource;
+        public bool AuthorizesResource(string id, NativeManifestationResourceState resource)
+        {
+            if (DenyResource) return false;
+            if (!RequireExactResourceProvenance) return true;
+            // Independent synthetic evidence: never infer matching source
+            // provenance merely because a saved ledger carries these labels.
+            var expected = resource.Id switch
+            {
+                "resource.primary" => PrimaryPool(),
+                "resource.shared" => SharedPool(),
+                "resource.wolf.manifest.wolf" => WolfPool("manifest.wolf"),
+                _ => null
+            };
+            return expected is not null &&
+                resource.DefinitionId == expected.DefinitionId &&
+                resource.SourceOccurrence == expected.SourceOccurrence &&
+                resource.EvidenceId == expected.EvidenceId &&
+                resource.OwnerKind == expected.OwnerKind &&
+                resource.OwnerId == expected.OwnerId;
+        }
         public bool AuthorizesResourcePolicy(string id, NativeManifestationInstance instance,
             NativeManifestationResourcePolicy policy) => !DenyPolicy;
         public bool AuthorizesInteraction(string id, NativeManifestationInteractionDecision decision) =>
@@ -1134,6 +1162,52 @@ public sealed class NativeCharacterManifestationTests
     }
 
     [Fact]
+    public void VerifiedPrimaryWriterDecisionSurvivesFormEntryAndReversion()
+    {
+        static NativeCharacterPersistentInfluence Primary(string suffix, int speed) =>
+            new("influence." + suffix, "definition." + suffix, Source(),
+                "receipt.acquire." + suffix, "receipt.expression." + suffix,
+                new Dictionary<string, string>(),
+                [new NativeCharacterInfluenceEffect("effect." + suffix,
+                    Occurrence("effects." + suffix), "receipt.effect." + suffix,
+                    Rule(), new Dictionary<string, string>(),
+                    [NativeCharacterSheetResolver.PrimarySheetId],
+                    NativeInfluenceCharacteristic.BaseWalkSpeed,
+                    NativeInfluenceOperation.Replace, NumericValue: speed)]);
+
+        var state = Character([Primary("a", 40), Primary("b", 45)]) with
+        {
+            InfluenceOverlapSelections =
+            [
+                new NativeInfluenceOverlapSelection("primary-selection",
+                    ["effect.a", "effect.b"], "effect.b",
+                    Occurrence("interactions.primary"), Rule(),
+                    "receipt.interaction.primary",
+                    NativeCharacterSheetResolver.PrimarySheetId)
+            ]
+        };
+        var active = ActivatedWolf();
+        var transformed = Resolve(state, active);
+        Assert.Equal("partial", transformed.Status);
+        Assert.Equal("wolf", transformed.EffectiveSheetId);
+
+        var ended = Plan(state, active, "e2",
+            Action(NativeManifestationTransitionAction.End, "manifest.wolf"));
+        Assert.Equal("planned", ended.Status);
+        Assert.Equal("resolved", ended.ProposedEffective!.Status);
+        Assert.Equal(45, ended.ProposedEffective.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal("effect.b", Assert.Single(ended.ProposedEffective.AppliedEffects).Effect.Id);
+        Assert.Equal(NativeManifestationLifecycle.Ended,
+            ended.Proposed!.Instances.Single().Lifecycle);
+
+        var denied = Resolve(state, active, new Authority { DenyOverlap = true });
+        Assert.Equal("invalid", denied.Status);
+        Assert.Null(denied.EffectiveMechanics);
+        Assert.Contains(denied.Issues, x =>
+            x.Code == "unauthorized-influence-overlap-selection");
+    }
+
+    [Fact]
     public void TransitionPreviewEvaluatesTargetedInfluenceConflictBeforeOfferingCommit()
     {
         var effect = new NativeCharacterInfluenceEffect(
@@ -1382,6 +1456,65 @@ public sealed class NativeCharacterManifestationTests
         Assert.Null(denied.State);
     }
 
+    [Fact]
+    public void IndependentlyVerifiedResourceProvenanceRejectsTamperedLedger()
+    {
+        var state = Character();
+        var original = ActivatedWolf(state);
+        var authority = new Authority { RequireExactResourceProvenance = true };
+        Assert.NotEqual("invalid", Resolve(state, original, authority).Status);
+
+        var primary = original.Resources.Single(x => x.Id == "resource.primary");
+        var forged = new[]
+        {
+            primary with { DefinitionId = "resource.definition.forged" },
+            primary with { SourceOccurrence = Occurrence("resources.forged") },
+            primary with { EvidenceId = "receipt.resource.forged" },
+            primary with { OwnerKind = NativeManifestationResourceOwner.Sheet },
+            primary with { OwnerId = "wolf" }
+        };
+        foreach (var change in forged)
+        {
+            var altered = original with
+            {
+                Resources = original.Resources.Select(x =>
+                    x.Id == primary.Id ? change : x).ToArray()
+            };
+            var result = Resolve(state, altered, authority);
+            Assert.Equal("invalid", result.Status);
+            Assert.Null(result.EffectiveMechanics);
+        }
+
+        Assert.Equal(primary, original.Resources.Single(x => x.Id == primary.Id));
+        Assert.Equal(7, Ledger().Revision);
+    }
+
+    [Fact]
+    public void ActivationRejectsNullResourcePolicyBeforeAuthorityVerification()
+    {
+        var step = Activate("manifest.wolf", "wolf", "e1", addWolfPool: true);
+        var malformed = step.NewInstance! with
+        {
+            ResourcePolicies = [null!, .. step.NewInstance.ResourcePolicies]
+        };
+        var authority = new Authority();
+        var current = Ledger();
+
+        var result = NativeCharacterManifestationTransitionPlanner.Plan(
+            Character(), current,
+            new("character.1", current.Revision, "e1",
+                [step with { NewInstance = malformed }]), authority);
+
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.Proposed);
+        Assert.Contains(result.Issues,
+            issue => issue.Code == "invalid-manifestation-activation");
+        Assert.Equal(0, authority.TransitionCalls);
+        Assert.Equal(7, current.Revision);
+        Assert.Empty(current.Instances);
+    }
+
+
     private sealed class NativeProjectionFixture : IDisposable
     {
         private readonly string _root = Path.Combine(Path.GetTempPath(),
@@ -1495,6 +1628,104 @@ public sealed class NativeCharacterManifestationTests
         Assert.Equal(2, reverted.BaseMechanics!.Values["advancement.total-level"].Value);
         Assert.Equal(45, reverted.EffectiveCharacter.EffectiveMechanics!.BaseWalkSpeed);
         Assert.Equal(10, reverted.BaseMechanics.Values["ability.strength.score"].Value);
+    }
+
+    // Only inventory evidence is synthetic here. Use the actual native
+    // Upbringing, Background, biological Origin, Class and qualification data.
+    private sealed class CompositionItemAuthority : INativeLifeExperienceContextAuthority
+    {
+        public bool AuthorizesChoice(NativeLifeExperienceSource source,
+            NativeLifeExperienceChoice choice, string optionId) => false;
+
+        public NativeLifeExperienceItemProof? VerifyItem(NativeLifeExperienceSource source,
+            NativeLifeExperienceItemIntent intent) =>
+            source.SourceId != "background.entertainer" ? null : intent.Key switch
+            {
+                "background.entertainer/item/0" when intent.SelectedItemId == "fixture.disguise-kit" &&
+                    intent.OrdinaryOptions.Contains("Disguise Kit") =>
+                    new("fixture.disguise-kit", "equipment.tool.disguise-kit", true, true),
+                "background.entertainer/item/1" => new("fixture.token", null, true, true),
+                "background.entertainer/item/2" => new("fixture.costume", null, true, true),
+                "background.entertainer/item/3" => new("fixture.pouch", null, true, true),
+                _ => null
+            };
+    }
+
+    [Fact]
+    public void ComposedPrimaryTrainingSurvivesManifestationAndLatestBaselineReversion()
+    {
+        var folder = new DirectoryInfo(AppContext.BaseDirectory);
+        while (folder is not null && !File.Exists(Path.Combine(folder.FullName, "data", "rulesets",
+            "first-party-001", "native", "rules", "creature-origination.json")))
+            folder = folder.Parent;
+        Assert.NotNull(folder);
+        var catalog = NativeCatalogLoader.Load(NativeRulesetLayout.Resolve(
+            Path.Combine(folder.FullName, "data", "rulesets"), "first-party-001"));
+        var origin = new NativeOriginConstructionEngine(catalog).Evaluate(new(
+            new NativeOriginProposal("composition-dwarf", NativeOriginIntent.Direct,
+                new("rule.creature-origination", "biological"), [], [], [], SelectedSpeciesId: "species.dwarf")));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, origin.Status);
+        var walk = Assert.Single(origin.Profile!.Underlying.InherentGrants,
+            grant => grant.Identity.IntrinsicSlotId == "walkingSpeedFeet").EffectiveValue!.Value.GetInt32();
+
+        var life = new NativeLifeExperienceResolver(catalog).Resolve(
+            new("upbringing.elf.wood", "background.entertainer",
+                new Dictionary<string, IReadOnlyList<string>>
+                {
+                    ["upbringing.elf.general/cultural-training"] = ["skill.survival"],
+                    ["background.entertainer/entertainer-performance-specialty"] = ["skill.acrobatics"],
+                    ["background.entertainer/entertainer-performance-method"] = ["disguise-kit"]
+                }, new Dictionary<string, string> { ["background.entertainer/item/0"] = "fixture.disguise-kit" }),
+            new(new Dictionary<string, string>
+            {
+                ["upbringing.elf.general"] = "verified-parent",
+                ["upbringing.elf.wood"] = "verified-upbringing",
+                ["background.entertainer"] = "verified-background"
+            }, new CompositionItemAuthority()));
+        Assert.NotNull(life.EarnedProjection);
+        var unaggregated = Character(speed: walk).PrimaryMechanics with
+        {
+            Fingerprint = catalog.Fingerprint,
+            Advancements = [new("class.rogue", 1, "class-1")]
+        };
+        NativeCharacterTrainingComposition Compose(NativeCharacterRequest primary) =>
+            NativeCharacterTrainingComposer.Compose(catalog, primary, life.EarnedProjection,
+                [new("class.rogue", "class-skill-1", "skill.survival")],
+                [new("class.rogue", "class-competency-1", "competency.disguise", Proficient: true)],
+                new Dictionary<string, string> { ["class-skill-1"] = "skill.stealth" },
+                new Dictionary<string, string>(), NativeCompetencyDuplicateProficiencyPolicy.AddRank);
+        var composed = Compose(unaggregated);
+        Assert.Equal("resolved", composed.Status);
+        Assert.NotNull(composed.ComposedPrimary);
+        Assert.True(composed.ComposedPrimary.Skills!["skill.survival"].Proficient);
+        Assert.True(composed.ComposedPrimary.Skills["skill.stealth"].Proficient);
+        Assert.Equal(1, composed.ComposedPrimary.Competencies!["competency.disguise"].Ranks);
+        Assert.True(composed.ComposedPrimary.Competencies["competency.disguise"].Proficient);
+        Assert.Null(unaggregated.Skills);
+        Assert.Equal("invalid", Compose(composed.ComposedPrimary).Status);
+
+        // Use the existing independently authorized form resolver, not a
+        // second training pass or a copied pre-activation character snapshot.
+        var state = Character() with { PrimaryMechanics = composed.ComposedPrimary };
+        var active = ActivatedWolf(state);
+        var effective = Resolve(state, active).EffectiveMechanics!;
+        Assert.Equal(17, effective.AbilityScores["strength"]);
+        Assert.Equal(walk, effective.BaseWalkSpeed);
+        Assert.True(effective.Skills!["skill.survival"].Proficient);
+        Assert.Equal(1, effective.Competencies!["competency.disguise"].Ranks);
+
+        var advanced = Compose(unaggregated with { Advancements = [new("class.rogue", 2, "class-1")] });
+        Assert.NotNull(advanced.ComposedPrimary);
+        var latest = state with { PrimaryMechanics = advanced.ComposedPrimary };
+        var ended = Plan(latest, active, "e2",
+            Action(NativeManifestationTransitionAction.End, "manifest.wolf"));
+        Assert.Equal("planned", ended.Status);
+        var reverted = ended.ProposedEffective!.EffectiveMechanics!;
+        Assert.Equal(10, reverted.AbilityScores["strength"]);
+        Assert.Equal(2, Assert.Single(reverted.Advancements).Level);
+        Assert.Equal(walk, reverted.BaseWalkSpeed);
+        Assert.True(reverted.Skills!["skill.stealth"].Proficient);
+        Assert.Equal(1, reverted.Competencies!["competency.disguise"].Ranks);
     }
 
     [Fact]

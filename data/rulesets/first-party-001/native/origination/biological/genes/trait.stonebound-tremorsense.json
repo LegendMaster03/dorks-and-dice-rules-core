@@ -1,0 +1,22 @@
+{
+  "id": "trait.stonebound-tremorsense",
+  "name": "Stonebound Tremorsense",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "stonebound-tremorsense",
+    "description": "While in contact with a configured material, activate Tremorsense at the configured range for 10 minutes as a Bonus Action. Uses equal Proficiency Bonus per Long Rest.",
+    "sense": "tremorsense",
+    "activation": "bonus-action",
+    "durationMinutes": 10,
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    },
+    "originBindings": {
+      "subTrait": {
+        "lookup": "nearest",
+        "sourceField": "tremorsenseSubTrait"
+      }
+    }
+  }
+}

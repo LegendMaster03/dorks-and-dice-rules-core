@@ -75,9 +75,9 @@ public sealed class NativeOriginAuthenticatedDescendantTests
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         Assert.Equal(3, foundation.Length);
         var lowLight = Assert.Single(offers, x => x.ContributorId == "elf" &&
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         var trance = Assert.Single(offers, x => x.ContributorId == "elf" &&
-            x.Identity.MechanicalDefinitionId == "trait.elf.trance");
+            x.Identity.MechanicalDefinitionId == "trait.trance");
         var selected = foundation.Append(lowLight).Append(trance).ToArray();
         var result = Evaluate(proposal with
         {
@@ -105,7 +105,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
     {
         var parent = MixedParent().Profile!;
         var fake = parent.Underlying.InherentGrants.Single(x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.trance") with
+            x.Identity.MechanicalDefinitionId == "trait.trance") with
         {
             Id = "fabricated-form-grant"
         };
@@ -215,7 +215,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         var breaths = offers.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.dragonborn.breath-weapon")
+            x.Identity.MechanicalDefinitionId == "trait.breath-weapon")
             .ToArray();
         var red = Assert.Single(breaths, x => x.ContributorId == "red");
         var bronze = Assert.Single(breaths, x => x.ContributorId == "bronze");
@@ -237,11 +237,11 @@ public sealed class NativeOriginAuthenticatedDescendantTests
             ]).ToArray(),
             Relationships = [new("breath-composition",
                 NativeOriginRelationshipKind.Substitution, [red.Id, bronze.Id],
-                AuthoredRuleReference: "trait.dragonborn.breath-weapon")],
+                AuthoredRuleReference: "trait.breath-weapon")],
             Resolutions = [new("breath-composition",
                 NativeOriginResolutionAction.Replace,
                 new(NativeOriginAdjudication.Supported,
-                    NativeRuleReference: "trait.dragonborn.breath-weapon"),
+                    NativeRuleReference: "trait.breath-weapon"),
                 red.Id, chosen, chosenSources)]
         });
         Assert.Equal(NativeOriginConstructionStatus.Authorized, parent.Status);
@@ -250,7 +250,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
         var fixture = new LocalSelfOverride(parent.Profile!);
         var inherited = Evaluate(proposal, fixture).EvaluatedProposal.Candidates;
         var breathOffer = Assert.Single(inherited, x =>
-            x.Identity.MechanicalDefinitionId == "trait.dragonborn.breath-weapon");
+            x.Identity.MechanicalDefinitionId == "trait.breath-weapon");
         Assert.Equal("fire", breathOffer.OfferedParameters!["damageType"].GetString());
         Assert.Equal("cone", breathOffer.OfferedParameters["area"]
             .GetProperty("shape").GetString());
@@ -261,7 +261,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
         }, fixture);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, child.Status);
         var breath = Assert.Single(child.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.dragonborn.breath-weapon");
+            x.Identity.MechanicalDefinitionId == "trait.breath-weapon");
         Assert.Equal("fire", breath.Parameters!["damageType"].GetString());
         Assert.Equal("cone", breath.Parameters["area"].GetProperty("shape").GetString());
         Assert.Single(breath.SourceCandidateIds);
@@ -275,7 +275,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
                 .GetProperty("value").GetString());
         Assert.DoesNotContain(child.Profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.dragonborn.draconic-resistance");
+                "trait.damage-type-resistance");
     }
 
 
@@ -296,7 +296,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
             .ToArray();
         var visions = offers.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision").ToArray();
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision").ToArray();
         Assert.Equal(2, visions.Length);
         var result = Evaluate(proposal with
         {
@@ -304,7 +304,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
         }, fixture);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var vision = Assert.Single(result.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         Assert.Equal(2, vision.SourceCandidateIds.Count);
         Assert.Equal(2, vision.InheritedFrom!.Count);
         Assert.Equal(new[] { "parent-a", "parent-b" },
@@ -385,7 +385,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
         Assert.Equal(NativeOriginConstructionStatus.Authorized, constructed.Status);
         var original = constructed.Profile!;
         var grant = Assert.Single(original.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         var prior = Assert.Single(grant.InheritedFrom!);
         var forgedCases = new[]
         {
@@ -499,7 +499,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
         var discovered = engine.Evaluate(new(direct)).EvaluatedProposal.Candidates;
         var aptitude = Assert.Single(discovered, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.goliath.giant-ancestry-aptitude");
+                "trait.ancestral-aptitude");
         var parent = engine.Evaluate(new(direct with
         {
             Manifestations =
@@ -509,8 +509,8 @@ public sealed class NativeOriginAuthenticatedDescendantTests
             ]
         }));
         Assert.Equal(NativeOriginConstructionStatus.Authorized, parent.Status);
-        var ownerId = "trait.goliath.stone.stones-endurance";
-        var strikeId = "trait.goliath.stone.stone-strike";
+        var ownerId = "trait.stones-endurance";
+        var strikeId = "trait.stone-strike";
         var originalOwner = Assert.Single(parent.Profile!.Underlying.InherentGrants,
             x => x.Identity.MechanicalDefinitionId == ownerId);
         var originalStrike = Assert.Single(parent.Profile.Underlying.InherentGrants,
@@ -524,7 +524,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
             "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         var ability = Assert.Single(offers, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.goliath.giant-ancestry-aptitude");
+                "trait.ancestral-aptitude");
         var owner = Assert.Single(offers, x =>
             x.Identity.MechanicalDefinitionId == ownerId);
         var strike = Assert.Single(offers, x =>
@@ -558,7 +558,7 @@ public sealed class NativeOriginAuthenticatedDescendantTests
             x.Identity.MechanicalDefinitionId == strikeId);
         var childAptitude = Assert.Single(grants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.goliath.giant-ancestry-aptitude");
+                "trait.ancestral-aptitude");
         Assert.Equal("constitution", Assert.Single(childAptitude.ResolvedChoices!)
             .SelectedOptionIds.Single());
         Assert.Equal("constitution",

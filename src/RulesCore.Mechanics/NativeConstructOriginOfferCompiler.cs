@@ -30,14 +30,16 @@ internal static class NativeConstructOriginOfferCompiler
             issues.Add(new(code, path, severity, detail));
 
         void AddIntrinsic(string slot, string path, JsonElement? value,
-            IReadOnlyList<NativeOriginChoiceRequirement>? choices = null)
+            IReadOnlyList<NativeOriginChoiceRequirement>? choices = null,
+            string? sourceId = null)
         {
+            var actualSource = sourceId ?? proposal.Method.RuleId;
             var source = new NativeOriginSourceReference(NativeOriginSourceKind.Native,
-                proposal.Method.RuleId);
+                actualSource);
             var occurrence = new NativeOriginSourceOccurrence(source, path);
             offers.Add(new("construct:intrinsic:" + slot,
                 new(NativeOriginCharacteristicKind.Intrinsic, occurrence,
-                    proposal.Method.RuleId + "#" + path, IntrinsicSlotId: slot),
+                    actualSource + "#" + path, IntrinsicSlotId: slot),
                 new(NativeOriginEligibility.Eligible,
                     RuleReference: proposal.Method.RuleId,
                     Explanation: "Authored intrinsic selection of the Construct Assembly method."),
@@ -137,6 +139,28 @@ internal static class NativeConstructOriginOfferCompiler
                         }
                     }
                 }
+            }
+        }
+
+        // A body-defining construction variant can establish size only through
+        // its exact source-bound manufacturing recipe. This is not a freely
+        // selected method-level intrinsic or a mandatory structural frame.
+        if (proposal.Intent == NativeOriginIntent.Custom)
+        {
+            var derived = NativeConstructBodySizeResolver.Resolve(
+                catalog, assembly.Components, Issue);
+            if (derived is not null)
+            {
+                if (offers.Any(x => x.Identity.IntrinsicSlotId == "size"))
+                    Issue("construct-body-size-method-conflict", "method.constructIntrinsics.size",
+                        NativeOriginIssueSeverity.Conflict,
+                        "Method-authored and part-derived creature sizes cannot both apply.");
+                else
+                    AddIntrinsic("size",
+                        "/constructionVariants/" + derived.VariantId +
+                        "/instance/" + derived.InstanceId,
+                        JsonSerializer.SerializeToElement(derived.Size),
+                        sourceId: derived.DefinitionId);
             }
         }
 
@@ -267,6 +291,18 @@ internal static class NativeConstructOriginOfferCompiler
                                 else
                                     parameters[binding.Name] = bound.Clone();
                             }
+                    }
+                    // A physical movement mechanism can be cataloged before speed
+                    // calibration. Never authorize its Origin movement entitlement
+                    // merely because the part carries a movement-mode label.
+                    if (canonical.TryGetProperty("movementMode", out var movementMode))
+                    {
+                        if (movementMode.ValueKind != JsonValueKind.String ||
+                            string.IsNullOrWhiteSpace(movementMode.GetString()) ||
+                            !canonical.TryGetProperty("speedFeet", out var speed) ||
+                            speed.ValueKind != JsonValueKind.Number ||
+                            !speed.TryGetInt32(out var feet) || feet is <= 0 or > 1_000_000)
+                            unresolved.Add("Construct movement mode requires an authored positive speed in feet before it can grant movement.");
                     }
                     if (!canonical.EnumerateObject().Any(property =>
                         property.Name is not ("id" or "name" or "description" or "reviewNotes")))

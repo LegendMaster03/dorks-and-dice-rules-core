@@ -51,6 +51,23 @@ class OrcSpeciesReconciliationTests(unittest.TestCase):
                           "recharge": "short-or-long-rest"}, t["uses"])
         self.assertNotIn("aggressive", self.traits)
 
+    def test_orcish_fury_is_a_single_biological_gene_with_two_modes(self):
+        fury = self.traits["orcish-fury"]
+        strike = fury["onWeaponHit"]
+        self.assertEqual(["simple", "martial"], strike["eligibleWeaponCategories"])
+        self.assertEqual({"count": 1, "dieFrom": "weapon-damage-die"},
+                         strike["bonusDamageDice"])
+        self.assertEqual({"value": 1, "recharge": "short-or-long-rest"},
+                         strike["uses"])
+        endurance = fury["afterTraitUse"]
+        self.assertEqual("trait.relentless-endurance", endurance["triggerTraitId"])
+        self.assertEqual("immediately-after-use", endurance["triggerTiming"])
+        self.assertEqual({"action": "reaction", "grantsAction": "one-weapon-attack"},
+                         endurance["activation"])
+        self.assertTrue(endurance["requiresManifestedTrait"])
+        self.assertFalse(endurance["extraUsesGranted"])
+        self.assertNotIn("abilityScoreIncrease", fury)
+
     def test_survival_and_physical_traits(self):
         endure = self.traits["relentless-endurance"]
         self.assertEqual(1, endure["hitPointsInstead"])
@@ -58,7 +75,8 @@ class OrcSpeciesReconciliationTests(unittest.TestCase):
         powerful = self.traits["powerful-build"]
         self.assertEqual(1, powerful["effectiveSizeCategoriesHigherForCarryingCapacity"])
         self.assertEqual(1, powerful["effectiveSizeCategoriesHigherForPushingDraggingLifting"])
-        self.assertIn("advantage-on-checks-to-end-grappled", powerful["doesNotGrant"])
+        self.assertEqual("condition.grappled", powerful["advantageOnAbilityChecksToEndCondition"])
+        self.assertIn("grapple-size-modifiers", powerful["doesNotChange"])
         savage = self.traits["savage-attacks"]
         self.assertEqual("critical-hit-with-melee-weapon-attack", savage["trigger"])
         self.assertEqual(1, savage["bonusDamageDice"]["count"])

@@ -1,0 +1,14 @@
+{
+  "name": "Protective plating",
+  "description": "A protective covering; armor values depend on later authored material, design and balancing rules.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "enclosure",
+    "protective-surface"
+  ],
+  "materialSlots": [
+    "plating"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.protective-plating",
+  "powerDemand": 0
+}

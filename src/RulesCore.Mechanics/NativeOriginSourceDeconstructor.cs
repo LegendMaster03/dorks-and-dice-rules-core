@@ -153,9 +153,32 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                         "Historical references are not a replacement for a current manifested profile.");
                     continue;
                 }
+                // A constructed parent's authenticated gene instances are the
+                // complete selectable genetic state, including unexpressed ones.
+                // The grant list remains the fallback for older/direct profiles
+                // without an explicit biological instance for that same grant.
+                var genes = contributor.ManifestedProfile.BiologicalGenes ?? [];
+                foreach (var gene in genes)
+                {
+                    if (gene?.Identity is null || string.IsNullOrWhiteSpace(gene.Id)) continue;
+                    var id = "nested:" + contributor.Id + ":gene:" + gene.Id;
+                    candidates.TryAdd(id, new NativeOriginCandidate(id, gene.Identity,
+                        new(NativeOriginEligibility.Unreviewed, Explanation:
+                            "Authenticated inherited gene instance, not an automatic grant."),
+                        contributor.Id, gene.ConfiguredValue, gene.Parameters));
+                }
                 foreach (var grant in contributor.ManifestedProfile.InherentGrants ?? [])
                 {
-                    if (grant?.Identity is null) continue;
+                    if (grant?.Identity is null ||
+                        (genes.Count > 0 && grant.Synergy is not null) ||
+                        genes.Any(gene => gene?.Identity is not null &&
+                            gene.Identity.Kind == grant.Identity.Kind &&
+                            gene.Identity.MechanicalDefinitionId ==
+                                grant.Identity.MechanicalDefinitionId &&
+                            gene.Identity.IntrinsicSlotId == grant.Identity.IntrinsicSlotId &&
+                            grant.SourceCandidateIds.Contains(
+                                gene.SourceCandidateId, StringComparer.Ordinal)))
+                        continue;
                     var id = "nested:" + contributor.Id + ":" + grant.Id;
                     candidates.TryAdd(id, new NativeOriginCandidate(id, grant.Identity,
                         new(NativeOriginEligibility.Unreviewed, Explanation:
@@ -262,7 +285,24 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
             })
                 if (entity.Definition.TryGetProperty(property, out var value) &&
                     value.ValueKind is not (JsonValueKind.Null or JsonValueKind.Undefined))
-                    Add(property, NativeOriginCharacteristicKind.Intrinsic, slot, value.Clone());
+                {
+                    // Only an explicit native descendant override supersedes an
+                    // ancestor's speed in this direct preset. Mixed donor offers
+                    // retain their independent reconciliation requirements.
+                    var superseded = direct && slot == "walkingSpeedFeet" && lineage is not null &&
+                        lineage.TakeWhile(x => x.Id != entity.Id).Any(x =>
+                            x.Category == "ancestry" &&
+                            x.Definition.TryGetProperty("overridesAncestorWalkingSpeed", out var marker) &&
+                            marker.ValueKind == JsonValueKind.True &&
+                            x.Definition.TryGetProperty(property, out var speed) &&
+                            speed.ValueKind == JsonValueKind.Number &&
+                            speed.TryGetInt32(out var feet) && feet > 0);
+                    // Keep the original occurrence for discovery and provenance,
+                    // but it is no longer an ordinary selectable preset default.
+                    Add(property, NativeOriginCharacteristicKind.Intrinsic, slot, value.Clone(),
+                        basisOverride: superseded ? new(NativeOriginEligibility.Restricted,
+                            Explanation: "Superseded by the authored descendant walking-speed override.") : null);
+                }
 
             if (entity.Definition.TryGetProperty("sizeChoice", out var sizeChoice) &&
                 sizeChoice.ValueKind == JsonValueKind.Object &&
@@ -338,6 +378,29 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                         ]).ToArray();
                     }
                     var unresolved = new List<string>();
+                    // A finite spell menu is an inherited, persistent choice. It is
+                    // separate from open spell-list authorization and never permits
+                    // an arbitrary spell or an on-use replacement.
+                    if (trait.TryGetProperty("spellChoices", out var spellChoices))
+                    {
+                        var spells = spellChoices.ValueKind == JsonValueKind.Array
+                            ? spellChoices.EnumerateArray()
+                                .Where(x => x.ValueKind == JsonValueKind.String &&
+                                    !string.IsNullOrWhiteSpace(x.GetString()))
+                                .Select(x => x.GetString()!).ToArray()
+                            : Array.Empty<string>();
+                        if (spells.Length == 0 || spells.Length != spellChoices.GetArrayLength() ||
+                            spells.Distinct(StringComparer.Ordinal).Count() != spells.Length ||
+                            menu is not null || trait.TryGetProperty("spell", out _))
+                            unresolved.Add("Authored finite spell choices must be a nonempty unique list without another spell selection.");
+                        else
+                            choices = (choices ?? []).Concat(
+                            [
+                                new NativeOriginChoiceRequirement("spell", new(source, path),
+                                    NativeOriginChoiceTiming.Creation, 1, 1,
+                                    FiniteOptions: spells, ParameterKey: "spell")
+                            ]).ToArray();
+                    }
                     // A malformed authored count must not become an implicit choice of one.
                     if (trait.TryGetProperty("choiceCount", out var rawCount) &&
                         (rawCount.ValueKind != JsonValueKind.Number ||
@@ -375,7 +438,40 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                                 bound.ValueKind is JsonValueKind.Null or JsonValueKind.Undefined)
                                 unresolved.Add("Unresolved authored source binding: " + binding.Name);
                             else
+                            {
+                                // An ancestral biome is a persistent value of this
+                                // canonical trait, not a separate gene or a freely
+                                // switchable biome. A fixed sub-trait (Wood Elf,
+                                // Forest Gnome) needs no choice. An offered list
+                                // (Lightfoot) must resolve to exactly one biome.
+                                if (binding.Name == "subTrait" &&
+                                    bound.ValueKind == JsonValueKind.Object &&
+                                    bound.TryGetProperty("biomeChoices", out var biomeChoices))
+                                {
+                                    var valid = bound.EnumerateObject().Count() == 1 &&
+                                        biomeChoices.ValueKind == JsonValueKind.Array;
+                                    var biomeOptions = valid
+                                        ? biomeChoices.EnumerateArray()
+                                            .Where(x => x.ValueKind == JsonValueKind.String &&
+                                                !string.IsNullOrWhiteSpace(x.GetString()))
+                                            .Select(x => x.GetString()!).ToArray()
+                                        : Array.Empty<string>();
+                                    if (!valid || biomeOptions.Length == 0 ||
+                                        biomeOptions.Length != biomeChoices.GetArrayLength() ||
+                                        biomeOptions.Distinct(StringComparer.Ordinal).Count() != biomeOptions.Length)
+                                        unresolved.Add("Ancestral biome choices must be a nonempty unique string list.");
+                                    else
+                                        choices = (choices ?? []).Concat(
+                                        [
+                                            new NativeOriginChoiceRequirement("subTrait.biome",
+                                                new(source, path),
+                                                NativeOriginChoiceTiming.Creation, 1, 1,
+                                                FiniteOptions: biomeOptions,
+                                                ParameterKey: "subTrait.biome")
+                                        ]).ToArray();
+                                }
                                 parameters[binding.Name] = bound.Clone();
+                            }
                         }
                     }
                     // Symbolic fields are not executable without a complete authored
@@ -400,7 +496,8 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
             void Add(string property, NativeOriginCharacteristicKind kind, string? slot,
                 JsonElement? value, IReadOnlyList<NativeOriginChoiceRequirement>? choices = null,
                 string? definitionId = null, IReadOnlyList<string>? unresolved = null,
-                IReadOnlyDictionary<string, JsonElement>? parameters = null)
+                IReadOnlyDictionary<string, JsonElement>? parameters = null,
+                NativeOriginSelectionBasis? basisOverride = null)
             {
                 var path = property.StartsWith('/') ? property : "/" + property;
                 var candidateId = (contributorId is null ? "direct" : "contributor:" + contributorId) +
@@ -408,7 +505,7 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                 var identity = new NativeOriginCharacteristicIdentity(kind,
                     new(source, path), definitionId ?? entity.Id + "#" + path,
                     IntrinsicSlotId: slot);
-                candidates.TryAdd(candidateId, new(candidateId, identity, basis, contributorId, value,
+                candidates.TryAdd(candidateId, new(candidateId, identity, basisOverride ?? basis, contributorId, value,
                     OfferedParameters: parameters, RequiredChoices: choices,
                     UnresolvedEvidence: unresolved));
             }

@@ -27,8 +27,8 @@ from character_origins_parameter_inheritance import (  # noqa: E402
 from character_origins_source_inventory import read_catalog  # noqa: E402
 
 BREATH = "species.dragonborn#trait:breath-weapon"
-RESISTANCE = "species.dragonborn#trait:draconic-resistance"
-WARDING = "ancestry.dragonborn.chromatic#trait:chromatic-warding"
+RESISTANCE = "species.dragonborn#trait:damage-type-resistance"
+WARDING = "ancestry.dragonborn.chromatic#trait:temporary-damage-immunity"
 
 
 def contributor(identity, source):
@@ -104,7 +104,7 @@ class Pillar2DragonbornBindingTests(unittest.TestCase):
         red = contributor("red", "ancestry.dragonborn.red")
         p = self.preview(RESISTANCE, red, damage="fire")
         self.assertTrue(p["configured"])
-        self.assertEqual("ability.draconic-resistance", p["mechanicId"])
+        self.assertEqual("ability.damage-type-resistance", p["mechanicId"])
         self.assertEqual(50, p["configuredDefinition"]["damageResistance"]["percent"])
         self.assertEqual("fire",
                          p["configuredDefinition"]["damageResistance"]["damageType"])
@@ -136,7 +136,7 @@ class Pillar2DragonbornBindingTests(unittest.TestCase):
         ):
             with self.subTest(field=field):
                 self.assertEqual(authored[field], configured[field])
-        self.assertEqual("ability.chromatic-warding", p["mechanicId"])
+        self.assertEqual("ability.temporary-damage-immunity", p["mechanicId"])
         self.assertEqual("configured-preview-not-earned", p["status"])
 
     def test_metallic_source_has_resistance_but_not_chromatic_warding(self):
@@ -314,7 +314,7 @@ class Pillar2DragonbornBindingTests(unittest.TestCase):
                 )
         mismatch = copy.deepcopy(self.catalog)
         resistance = next(x for x in mismatch["species.dragonborn"]["traits"]
-                          if x["id"] == "draconic-resistance")
+                          if x["id"] == "damage-type-resistance")
         resistance["damageResistance"]["damageTypeFrom"] = "unknown-symbol"
         p = self.pool(RESISTANCE, red, catalog=mismatch)
         self.assertFalse(p["traitCandidateAvailable"])

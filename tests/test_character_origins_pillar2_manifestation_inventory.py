@@ -107,7 +107,7 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
                 }
                 self.assertEqual(fields, offered_fields | deferred_fields)
 
-    def test_human_has_choice_of_size_and_three_distinct_traits(self):
+    def test_human_has_choice_of_size_and_four_distinct_traits(self):
         p = self.pool([direct("human", "species.human")])
         sizes = [o["value"] for o in p["offers"]
                  if o["kind"] == "intrinsic"
@@ -116,7 +116,8 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
         self.assertEqual(
             {"species.human#trait:skillful",
              "species.human#trait:versatile",
-             "species.human#trait:adaptable-learning"},
+             "species.human#trait:adaptable-learning",
+             "species.human#trait:human-determination"},
             {o["identity"] for o in p["offers"]
              if o["kind"] == "trait"},
         )
@@ -170,26 +171,6 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
                 [x["contributorId"] for x in entry["contributedBy"]],
             )
 
-    def test_wood_elf_speed_override_is_flagged_not_assumed(self):
-        p = self.pool([direct("wood", "ancestry.elf.wood")])
-        speed_offers = [
-            x for x in p["offers"] if x["kind"] == "intrinsic"
-            and x["identity"] == "movement.walk.speed"
-        ]
-        self.assertEqual([30, 35], [x["value"] for x in speed_offers])
-        self.assertEqual(
-            "multiple-source-values-needs-origin-policy",
-            next(flag["kind"] for flag in p["reviewFlags"]
-                 if flag["identity"] == "movement.walk.speed"),
-        )
-        # Explicitly selecting 35 is a design hypothesis, not an
-        # automatically approved replacement rule.
-        profile = self.draft("wood", [
-            direct("wood", "ancestry.elf.wood")
-        ], [intrinsic("movement.walk.speed", 35)])
-        self.assertEqual(35, profile["manifestedCharacteristics"][0]["value"])
-        self.assertTrue(profile["reviewFlags"])
-
     def test_drow_darkvision_and_low_light_vision_are_distinct(self):
         p = self.pool([direct("drow", "ancestry.elf.drow")])
         self.assertIn(
@@ -223,9 +204,15 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
         )
 
     def test_prose_only_traits_remain_manifestable_for_review(self):
+        # Use an intentionally prose-only research fixture rather than
+        # reverting the approved native Luck Reroll normalization.
+        catalog = copy.deepcopy(self.catalog)
+        catalog["species.halfling"]["traits"].append({
+            "id": "fixture-prose-effect", "description": "An unspecified effect."
+        })
         p = self.draft("halfling", [direct("one", "species.halfling")], [
-            trait("species.halfling#trait:halfling-luck"),
-        ])
+            trait("species.halfling#trait:fixture-prose-effect"),
+        ], catalog=catalog)
         self.assertEqual(
             ["prose-only-effect"],
             p["manifestedCharacteristics"][0]["reviewRequired"],
@@ -365,11 +352,11 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
         ])
         deferred = {x["field"]: x for x in p["deferredSourceFields"]}
         self.assertIn(
-            "species.dragonborn#trait:draconic-resistance", deferred,
+            "species.dragonborn#trait:damage-type-resistance", deferred,
         )
         self.assertEqual(
             "trait-parameters-not-modeled",
-            deferred["species.dragonborn#trait:draconic-resistance"][
+            deferred["species.dragonborn#trait:damage-type-resistance"][
                 "classification"],
         )
         with self.assertRaisesRegex(
@@ -377,7 +364,7 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
         ):
             self.draft("red", [
                 direct("red", "ancestry.dragonborn.red")
-            ], [trait("species.dragonborn#trait:draconic-resistance")])
+            ], [trait("species.dragonborn#trait:damage-type-resistance")])
 
     def test_no_trait_auto_manifests_and_duplicate_identity_is_rejected(self):
         p = self.draft("empty", [

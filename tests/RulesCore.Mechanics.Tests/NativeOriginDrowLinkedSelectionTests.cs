@@ -70,7 +70,7 @@ public sealed class NativeOriginDrowLinkedSelectionTests
             x.ContributorId == "a" && x.Identity.IntrinsicSlotId == "darkvisionFeet");
         var drawback = Assert.Single(offers.Candidates, x =>
             x.ContributorId == "a" &&
-            x.Identity.MechanicalDefinitionId == "trait.elf.drow.sunlight-sensitivity");
+            x.Identity.MechanicalDefinitionId == "trait.sunlight-sensitivity");
         Assert.Equal(120, vision.OfferedValue!.Value.GetInt32());
         var constraint = Assert.Single(offers.Constraints!, x =>
             x.Subjects.Any(y => y.CandidateId == vision.Id));
@@ -138,7 +138,7 @@ public sealed class NativeOriginDrowLinkedSelectionTests
         Assert.Equal(120, projected.Darkvision!.RangeFeet);
         Assert.Equal("ancestry.elf.drow", projected.Darkvision.SourceId);
         var sensitivity = Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.drow.sunlight-sensitivity");
+            x.Identity.MechanicalDefinitionId == "trait.sunlight-sensitivity");
         Assert.Equal("direct-unprotected-sunlight",
             sensitivity.EffectiveValue!.Value.GetProperty("trigger").GetString());
         Assert.Equal("remove-exposure-or-use-effective-protection",
@@ -162,7 +162,7 @@ public sealed class NativeOriginDrowLinkedSelectionTests
         var preview = Evaluate(proposal).EvaluatedProposal;
         var other = Assert.Single(preview.Candidates, x =>
             x.ContributorId == "b" &&
-            x.Identity.MechanicalDefinitionId == "trait.elf.drow.sunlight-sensitivity");
+            x.Identity.MechanicalDefinitionId == "trait.sunlight-sensitivity");
         var extra = Decision("allow-other-sensitivity", "candidate", other.Id,
             new { eligibility = "eligible" });
         var result = Evaluate(proposal with
@@ -197,9 +197,12 @@ public sealed class NativeOriginDrowLinkedSelectionTests
         Assert.DoesNotContain(result.Profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId == drawback.Identity.MechanicalDefinitionId);
         Assert.DoesNotContain(result.Issues, x => x.Code == "required-mechanic-missing");
-        Assert.Equal(120,
-            NativeOriginDarkvisionProjector.ProjectApprovedMixed(Catalog(), result)
-                .Darkvision!.RangeFeet);
+        var projected = NativeOriginDarkvisionProjector.ProjectApprovedMixed(Catalog(), result);
+        Assert.Equal(120, projected.Darkvision!.RangeFeet);
+        // A waiver of the source-local selection requirement does not waive the
+        // independent, ruleset-wide range threshold.
+        Assert.Equal("condition.dazzled",
+            projected.RequiredSunlightSensitivity?.ConditionId);
         Assert.Contains(result.EvaluatedProposal.Candidates, x => x.Id == vision.Id);
 
         var unverified = Evaluate(result.EvaluatedProposal);
@@ -215,7 +218,7 @@ public sealed class NativeOriginDrowLinkedSelectionTests
         var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
         var dancing = Assert.Single(offered, x =>
             x.ContributorId == "a" &&
-            x.Identity.MechanicalDefinitionId == "trait.elf.drow.dancing-lights");
+            x.Identity.MechanicalDefinitionId == "trait.dancing-lights");
         // Dancing Lights now has the previously missing native Drow ancestry
         // spellcasting-ability dependency. Select it from the same contributor
         // so this test isolates the intended Darkvision/drawback relationship.
@@ -326,7 +329,7 @@ public sealed class NativeOriginDrowLinkedSelectionTests
         var candidate = Assert.Single(preview.Candidates, x =>
             x.Identity.IntrinsicSlotId == "darkvisionFeet");
         var sunlight = Assert.Single(preview.Candidates, x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.drow.sunlight-sensitivity");
+            x.Identity.MechanicalDefinitionId == "trait.sunlight-sensitivity");
         Assert.Null(candidate.ContributorId);
         Assert.Single(preview.Constraints!, x =>
             x.Subjects.Single().CandidateId == candidate.Id &&
@@ -346,7 +349,7 @@ public sealed class NativeOriginDrowLinkedSelectionTests
             .EffectiveValue!.Value.GetInt32());
         Assert.Contains(full.Profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.elf.drow.sunlight-sensitivity");
+                "trait.sunlight-sensitivity");
         Assert.DoesNotContain(full.Issues, x =>
             x.Code is "required-mechanic-missing" or "native-linked-constraint-tampered");
         var projected = NativeOriginDarkvisionProjector.Project(Catalog(), full);

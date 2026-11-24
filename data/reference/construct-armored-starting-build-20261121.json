@@ -1,0 +1,113 @@
+{
+  "description": "Armored Medium Construct MVP reference: basic functional hardware plus one passive steel protective surface on a named region. Candidate values only; no automatic AC or damage reduction.",
+  "status": "provisional-starting-playtest",
+  "assembly": {
+    "components": [
+      {
+        "instanceId": "frame",
+        "definitionId": "construct-component.structural-frame",
+        "materials": {
+          "frame": "construct-material.steel"
+        },
+        "enabled": true,
+        "constructionVariantId": "medium"
+      },
+      {
+        "instanceId": "generator",
+        "definitionId": "construct-component.power-source-housing",
+        "materials": {
+          "housing": "construct-material.wood"
+        },
+        "enabled": true,
+        "powerSourceId": "construct-power-source.mechanical-engine",
+        "connectedTo": [
+          "frame",
+          "control",
+          "circulation",
+          "actuator",
+          "manipulator",
+          "drive",
+          "eye"
+        ]
+      },
+      {
+        "instanceId": "control",
+        "definitionId": "construct-component.control-module",
+        "materials": {
+          "controller": "construct-material.wood"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "circulation",
+        "definitionId": "construct-component.alchemical-circulation",
+        "materials": {
+          "conduit": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "actuator",
+        "definitionId": "construct-component.alchemical-actuator",
+        "materials": {
+          "actuator": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "manipulator",
+        "definitionId": "construct-component.manipulator",
+        "materials": {
+          "grip": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "drive",
+        "definitionId": "construct-component.locomotion-unit",
+        "materials": {
+          "contact": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "eye",
+        "definitionId": "construct-component.crystal-eye",
+        "materials": {
+          "crystal": "construct-material.crystal"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "outer-shell",
+        "definitionId": "construct-component.protective-plating",
+        "materials": {
+          "plating": "construct-material.steel"
+        },
+        "enabled": true,
+        "protectedRegionId": "front-hull"
+      }
+    ],
+    "initialAllowance": 200
+  },
+  "expected": {
+    "ingredientCost": 187,
+    "powerOutput": 8,
+    "requestedPowerDemand": 7,
+    "unusedStartingPoints": 13,
+    "bodySize": "medium",
+    "originTraits": [
+      "trait.construct.ordinary-optical-sight",
+      "trait.construct.physical-manipulation",
+      "trait.construct.ordinary-communication",
+      "trait.construct.ordinary-ground-movement"
+    ],
+    "comparison": "The additional protective-plating recipe costs 24 points and accounts for at least 42 additional pounds of retained steel; its declared surface does not grant AC, damage reduction, or immunity."
+  },
+  "limitations": [
+    "The front-hull protection region is a source-provenance example, not a mandatory body topology or hit-location system.",
+    "Protective material does not grant unapproved AC, damage reduction, or material stacking.",
+    "An extra 42 pounds is an authenticated recipe-derived lower-bound comparison, not proven total body mass.",
+    "Power demand remains unchanged for this passive plate; installed mass may create further movement limits when approved."
+  ]
+}

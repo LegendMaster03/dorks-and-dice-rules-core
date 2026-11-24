@@ -9,7 +9,7 @@
 
 The playable `ancestry.elf.drow` already declares a character-creation `spellcastingAbilityChoice` of Intelligence, Wisdom or Charisma. Its historical native review and associated Origin pipeline require that one chosen ability govern granted Drow ancestry spells; the original three Drow spell traits did not yet express the binding.
 
-`data/rulesets/first-party-001/native/origination/biological/genes/elf/ancestry.elf.drow.json` now specifies the same canonical `originBindings` mechanism already used by High Elf and Wood Elf traits:
+The separately stored Drow genes `trait.dancing-lights`, `trait.faerie-fire`, and `trait.darkness` now specify the same canonical `originBindings` mechanism already used by High Elf and Wood Elf traits. Their current files live directly under `data/rulesets/first-party-001/native/origination/biological/genes/`, named by their stable IDs:
 
 ```json
 "originBindings": {
@@ -25,9 +25,9 @@ This exact binding is attached to all three separately authored Drow traits:
 
 | Native trait | Spell | Character-level availability | Preserved semantics |
 | --- | --- | --- | --- |
-| `trait.elf.drow.dancing-lights` | Dancing Lights | Level 1 | At-will casting |
-| `trait.elf.drow.faerie-fire` | Faerie Fire | Level 3 | One free use per Long Rest; also spell-slot casting |
-| `trait.elf.drow.darkness` | Darkness | Level 5 | One free use per Long Rest; also spell-slot casting |
+| `trait.dancing-lights` | Dancing Lights | Level 1 | At-will casting |
+| `trait.faerie-fire` | Faerie Fire | Level 3 | One free use per Long Rest; also spell-slot casting |
+| `trait.darkness` | Darkness | Level 5 | One free use per Long Rest; also spell-slot casting |
 
 The binder does **not** alter spell level, learn/cast behavior, slot rules, action economy, or progression timing; it merely makes the previously authored choice a required, durable parameter of each completed spell grant.
 

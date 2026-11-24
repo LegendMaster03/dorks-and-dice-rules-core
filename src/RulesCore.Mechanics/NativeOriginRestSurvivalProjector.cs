@@ -46,8 +46,8 @@ public static class NativeOriginRestSurvivalProjector
                 ? "mixed-origin-foundation-unverified"
                 : "direct-origin-foundation-unverified");
 
-        const string tranceId = "trait.elf.trance";
-        const string enduranceId = "trait.orc.relentless-endurance";
+        const string tranceId = "trait.trance";
+        const string enduranceId = "trait.relentless-endurance";
 
         // A changed canonical trait must not become an absent benefit merely
         // because its stored definition ID or executable payload is removed.

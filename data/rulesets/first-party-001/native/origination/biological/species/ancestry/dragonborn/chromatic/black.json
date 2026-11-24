@@ -8,7 +8,7 @@
   "damageType": "acid",
   "traits": [
     {
-      "traitId": "trait.shared.amphibious"
+      "traitId": "trait.amphibious"
     }
   ],
   "reviewNotes": [

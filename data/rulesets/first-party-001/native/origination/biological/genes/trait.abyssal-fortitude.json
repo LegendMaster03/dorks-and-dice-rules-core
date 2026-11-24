@@ -1,0 +1,16 @@
+{
+  "id": "trait.abyssal-fortitude",
+  "name": "Abyssal Fortitude",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "abyssal-fortitude",
+    "name": "Abyssal Fortitude",
+    "description": "Your maximum Hit Points increase by half your total character level, rounded down, with a minimum increase of 1 Hit Point. Recalculate this bonus when your character level changes. This is a single total maximum-HP bonus, not an additional half-level increment on each level gained.",
+    "hitPointMaximumBonus": {
+      "formula": "half-level",
+      "levelBasis": "total-character-level",
+      "rounding": "down",
+      "minimum": 1
+    }
+  }
+}

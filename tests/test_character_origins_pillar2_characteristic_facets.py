@@ -99,8 +99,8 @@ class OriginCharacteristicFacetTests(unittest.TestCase):
                          b_part["candidateSemanticId"])
         self.assertEqual(1, a_part["authoredValue"])
         self.assertEqual(1, b_part["authoredValue"])
-        # A shared component does not make the complete grants equivalent.
-        self.assertNotEqual(
+        # Both presets now reference the same complete mechanical definition.
+        self.assertEqual(
             {f["nativeField"] for f in a["candidateFacets"]},
             {f["nativeField"] for f in b["candidateFacets"]},
         )
@@ -163,16 +163,21 @@ class OriginCharacteristicFacetTests(unittest.TestCase):
             for finding in analyze_shared_trait_ids(self.catalog)
         }
         self.assertIn("powerful-build", collisions)
-        self.assertFalse(
+        self.assertTrue(
             collisions["powerful-build"]["mechanicalFieldsIdentical"]
         )
         self.assertIn("amphibious", collisions)
         self.assertTrue(
             collisions["amphibious"]["mechanicalFieldsIdentical"]
         )
+        # Both lineages now use one source-neutral Darkness definition.
         self.assertIn("darkness", collisions)
-        self.assertFalse(
-            collisions["darkness"]["mechanicalFieldsIdentical"]
+        self.assertTrue(collisions["darkness"]["mechanicalFieldsIdentical"])
+        self.assertEqual(
+            next(x["id"] for x in self.catalog["ancestry.elf.drow"]["traits"]
+                 if x.get("spell") == "darkness"),
+            next(x["id"] for x in self.catalog["ancestry.tiefling.infernal"]["traits"]
+                 if x.get("spell") == "darkness"),
         )
         self.assertGreaterEqual(
             len(collisions["powerful-build"]["occurrenceIds"]), 2

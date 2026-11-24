@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RulesCore.Content;
 using RulesCore.Host;
+using RulesCore.Mechanics;
 using Xunit;
 
 namespace RulesCore.Host.Tests;
@@ -54,6 +55,23 @@ public sealed class NativeAuthenticatedApiTests
         }
     }
 
+    private sealed class OriginVerifier(
+        Guid characterId, bool authorize = true)
+        : INativeOriginHostUnderlyingAuthorityProvider
+    {
+        public int Calls { get; private set; }
+
+        public Task<bool> VerifyAsync(Guid actorId, Guid id, long revision,
+            NativeOriginProfile profile, CancellationToken cancellationToken)
+        {
+            Calls++;
+            return Task.FromResult(authorize &&
+                actorId == Guid.Parse("d66a7a7b-bc0f-4677-829d-0ccf40470d2f") &&
+                id == characterId && revision == 2 &&
+                profile.Id == "origin:verified");
+        }
+    }
+
     private sealed class Fixture : IAsyncDisposable
     {
         public WebApplication App { get; }
@@ -70,7 +88,8 @@ public sealed class NativeAuthenticatedApiTests
 
         public static async Task<Fixture> StartAsync(
             string surface = "PublicOnly", string? source = null, string mode = "dorks-and-dice",
-            bool dm = false)
+            bool dm = false,
+            INativeOriginHostUnderlyingAuthorityProvider? originVerifier = null)
         {
             var root = Path.Combine(Path.GetTempPath(), "native-consumer-" + Guid.NewGuid().ToString("N"));
             var package = Path.Combine(root, Ruleset);
@@ -93,6 +112,8 @@ public sealed class NativeAuthenticatedApiTests
             {
                 services.AddHttpClient<CharacterSheetMechanicsTicketValidator>()
                     .ConfigurePrimaryHttpMessageHandler(() => new SiteHandler(source, mode, dm));
+                if (originVerifier is not null)
+                    services.AddSingleton(originVerifier);
             });
             await app.StartAsync();
             var server = app.Services.GetRequiredService<IServer>();
@@ -115,6 +136,88 @@ public sealed class NativeAuthenticatedApiTests
             await App.DisposeAsync();
             Directory.Delete(Root, recursive: true);
         }
+    }
+
+    [Fact]
+    public async Task VerifiedOriginUnderlyingRequiresIndependentSourceAndKeepsCurrentDistinct()
+    {
+        var id = Guid.NewGuid();
+        var verified = new OriginVerifier(id);
+        await using var fixture = await Fixture.StartAsync(
+            source: "character-sheet", originVerifier: verified);
+        var catalog = fixture.Store.Snapshot!;
+        var underlying = new NativeOriginCurrentConfiguration(
+            "species.human", null, []);
+        var current = new NativeOriginCurrentConfiguration(
+            "species.elf", null, []);
+        var profile = new NativeOriginProfile(
+            "origin:verified", underlying, current, [], [],
+            new NativeOriginDecisionBasis(NativeOriginAdjudication.Supported),
+            EffectiveConfigurationBasis: new NativeOriginDecisionBasis(
+                NativeOriginAdjudication.Supported,
+                NativeRuleReference: "rule.creature-origination"));
+
+        async Task<(HttpStatusCode Status, JsonElement Body)> SendAsync(
+            NativeOriginProfile submitted, long revision, string fingerprint)
+        {
+            using var request = fixture.Authorized(
+                "/api/mechanics/v1/origins/underlying/verify");
+            request.Method = HttpMethod.Post;
+            request.Content = JsonContent.Create(new
+            {
+                characterId = id, originRevision = revision,
+                rulesetId = Ruleset, fingerprint, profile = submitted
+            });
+            using var response = await fixture.Client.SendAsync(request);
+            return (response.StatusCode,
+                await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+
+        var mismatch = await SendAsync(profile, 2, "obsolete");
+        Assert.Equal(HttpStatusCode.Conflict, mismatch.Status);
+        Assert.Equal(0, verified.Calls);
+
+        var altered = await SendAsync(profile with { Id = "origin:forged" },
+            2, catalog.Fingerprint);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, altered.Status);
+        Assert.Equal("origin_authority_unverified",
+            altered.Body.GetProperty("error").GetString());
+
+        var accepted = await SendAsync(profile, 2, catalog.Fingerprint);
+        Assert.Equal(HttpStatusCode.OK, accepted.Status);
+        Assert.Equal("partial", accepted.Body.GetProperty("status").GetString());
+        Assert.False(accepted.Body.GetProperty("effectiveMechanicsReady").GetBoolean());
+        Assert.Equal("species.human",
+            accepted.Body.GetProperty("underlying").GetProperty("speciesId").GetString());
+        Assert.Equal("species.elf",
+            accepted.Body.GetProperty("current").GetProperty("speciesId").GetString());
+        Assert.Equal(2, verified.Calls);
+    }
+
+    [Fact]
+    public async Task VerifiedOriginUnderlyingRejectsDelegationWithoutHostAuthority()
+    {
+        await using var fixture = await Fixture.StartAsync(source: "character-sheet");
+        using var request = fixture.Authorized(
+            "/api/mechanics/v1/origins/underlying/verify");
+        request.Method = HttpMethod.Post;
+        request.Content = JsonContent.Create(new
+        {
+            characterId = Guid.NewGuid(), originRevision = 1,
+            rulesetId = Ruleset,
+            fingerprint = fixture.Store.Snapshot!.Fingerprint,
+            profile = new NativeOriginProfile(
+                "origin:unverified",
+                new NativeOriginCurrentConfiguration("species.human", null, []),
+                new NativeOriginCurrentConfiguration("species.human", null, []),
+                [], [], new NativeOriginDecisionBasis(
+                    NativeOriginAdjudication.Supported))
+        });
+        using var response = await fixture.Client.SendAsync(request);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
+        var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("origin_authority_unavailable",
+            body.GetProperty("error").GetString());
     }
 
     [Fact]
@@ -243,6 +346,223 @@ public sealed class NativeAuthenticatedApiTests
                 requestBody.approvalEvidenceId, requestBody.proposal
             });
         Assert.Equal(HttpStatusCode.Forbidden, wrongCampaignResponse.StatusCode);
+    }
+
+
+    [Fact]
+    public async Task DelegatedPrimaryStateEvaluationIsReadOnlyAndDeniesUnverifiedForms()
+    {
+        const string path = "/api/mechanics/v1/characters/effective-state-baseline";
+        var characterId = Guid.NewGuid().ToString("D");
+
+        await using var delegated = await Fixture.StartAsync(source: "character-sheet");
+        object Body(long ledgerRevision = 0, object[]? alternate = null,
+            object[]? events = null, string? fingerprint = null) => new
+        {
+            state = new
+            {
+                characterId,
+                primaryMechanics = new
+                {
+                    rulesetId = Ruleset,
+                    fingerprint = fingerprint ?? delegated.Store.Snapshot!.Fingerprint,
+                    abilityScores = new Dictionary<string, int>
+                    {
+                        ["strength"] = 12, ["dexterity"] = 12,
+                        ["constitution"] = 12, ["intelligence"] = 12,
+                        ["wisdom"] = 12, ["charisma"] = 12
+                    },
+                    advancements = Array.Empty<object>()
+                },
+                alternateSheets = alternate ?? Array.Empty<object>(),
+                persistentInfluences = Array.Empty<object>()
+            },
+            ledger = new
+            {
+                characterId, revision = ledgerRevision,
+                instances = Array.Empty<object>(),
+                resources = Array.Empty<object>(),
+                processedEventIds = events ?? Array.Empty<object>()
+            }
+        };
+
+        static async Task<HttpResponseMessage> Send(Fixture f, string path, object body)
+        {
+            using var request = f.Authorized(path);
+            request.Method = HttpMethod.Post;
+            request.Content = JsonContent.Create(body);
+            return await f.Client.SendAsync(request);
+        }
+
+        using var allowed = await Send(delegated, path, Body());
+        Assert.Equal(HttpStatusCode.OK, allowed.StatusCode);
+        var output = await allowed.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("primary-only", output.GetProperty("supportedScope").GetString());
+        Assert.False(output.GetProperty("effectiveMechanicsReady").GetBoolean());
+        Assert.Equal("partial", output.GetProperty("status").GetString());
+
+        // A delegated tool ticket does not attest to arbitrary supernatural
+        // acquisitions or a claimed processed transformation event.
+        using var claimedLedger = await Send(delegated, path,
+            Body(1, events: ["forged:wolf:activation"]));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, claimedLedger.StatusCode);
+        Assert.Contains("supernatural_authority_unavailable",
+            await claimedLedger.Content.ReadAsStringAsync());
+
+        using var staleCatalog = await Send(delegated, path,
+            Body(fingerprint: new string('0', 64)));
+        Assert.Equal(HttpStatusCode.Conflict, staleCatalog.StatusCode);
+
+        await using var notDelegated = await Fixture.StartAsync();
+        using var rejectedDirect = await Send(notDelegated, path, Body());
+        Assert.Equal(HttpStatusCode.Forbidden, rejectedDirect.StatusCode);
+
+        using var rejectedAnonymous = await delegated.Client.PostAsJsonAsync(path, Body());
+        Assert.Equal(HttpStatusCode.Unauthorized, rejectedAnonymous.StatusCode);
+    }
+
+
+    [Fact]
+    public async Task ManifestationPlanRequiresIndependentAuthorityNotJustDelegationOrEvidenceLabels()
+    {
+        const string path = "/api/mechanics/v1/characters/manifestations/plan";
+        var id = Guid.NewGuid().ToString("D");
+        await using var delegated = await Fixture.StartAsync(source: "character-sheet");
+        var fingerprint = delegated.Store.Snapshot!.Fingerprint;
+        object Body(string? catalog = null, long expectedRevision = 0,
+            string? characterId = null) => new
+        {
+            state = new
+            {
+                characterId = id,
+                primaryMechanics = new
+                {
+                    rulesetId = Ruleset, fingerprint = catalog ?? fingerprint,
+                    abilityScores = new Dictionary<string, int>(),
+                    advancements = Array.Empty<object>()
+                },
+                alternateSheets = new[]
+                {
+                    new
+                    {
+                        id = "wolf", parentId = "@primary",
+                        definitionId = "forged.wolf",
+                        definitionSource = new { kind = 0, id = "test.source", version = "v1" },
+                        acquisitionEvidenceId = "receipt:asserted-by-caller"
+                    }
+                },
+                persistentInfluences = Array.Empty<object>()
+            },
+            ledger = new
+            {
+                characterId = id, revision = 0,
+                instances = Array.Empty<object>(),
+                resources = Array.Empty<object>(),
+                processedEventIds = Array.Empty<string>()
+            },
+            transition = new
+            {
+                characterId = characterId ?? id, expectedRevision,
+                eventId = "activate:wolf",
+                steps = new[]
+                {
+                    new
+                    {
+                        action = 0, targetInstanceId = "manifest.wolf",
+                        ruleOccurrence = new
+                        {
+                            source = new { kind = 0, id = "test.source", version = "v1" },
+                            occurrencePath = "forms.wolf"
+                        },
+                        basis = new { adjudication = 0, nativeRuleReference = "test.rule" },
+                        authorizationEvidenceId = "receipt:claimed",
+                        newInstance = new
+                        {
+                            characterId = id, id = "manifest.wolf", sheetId = "wolf",
+                            definitionId = "test.wolf",
+                            definitionOccurrence = new
+                            {
+                                source = new { kind = 0, id = "test.source", version = "v1" },
+                                occurrencePath = "forms.wolf"
+                            },
+                            sourceInfluenceId = (string?)null,
+                            activationEventId = "activate:wolf",
+                            activationEvidenceId = "receipt:claimed",
+                            activationBasis = new { adjudication = 0, nativeRuleReference = "test.rule" },
+                            lifecycle = 0, contribution = 0,
+                            activationCaptures = new Dictionary<string, int>(),
+                            endingConditions = Array.Empty<string>(),
+                            resourcePolicies = Array.Empty<object>(),
+                            lastEventId = "activate:wolf"
+                        }
+                    }
+                }
+            }
+        };
+
+        static async Task<HttpResponseMessage> Send(Fixture f, string path, object body)
+        {
+            using var message = f.Authorized(path);
+            message.Method = HttpMethod.Post;
+            message.Content = JsonContent.Create(body);
+            return await f.Client.SendAsync(message);
+        }
+
+        using var missingSourceAuthority = await Send(delegated, path, Body());
+        Assert.Equal(HttpStatusCode.UnprocessableEntity,
+            missingSourceAuthority.StatusCode);
+        Assert.Contains("supernatural_authority_unavailable",
+            await missingSourceAuthority.Content.ReadAsStringAsync());
+
+        // Structural failures must be rejected before any authority is called,
+        // even if the sender holds an authenticated Character Sheet ticket.
+        var missingSheets = JsonSerializer.SerializeToNode(Body())!;
+        missingSheets["state"]!["alternateSheets"] = null;
+        using var incompleteState = await Send(delegated, path, missingSheets);
+        Assert.Equal(HttpStatusCode.BadRequest, incompleteState.StatusCode);
+        Assert.Contains("invalid_character_scope",
+            await incompleteState.Content.ReadAsStringAsync());
+
+        var missingJournal = JsonSerializer.SerializeToNode(Body())!;
+        missingJournal["ledger"]!["processedEventIds"] = null;
+        using var incompleteLedger = await Send(delegated, path, missingJournal);
+        Assert.Equal(HttpStatusCode.BadRequest, incompleteLedger.StatusCode);
+
+        var malformedPolicies = JsonSerializer.SerializeToNode(Body())!;
+        malformedPolicies["transition"]!["steps"]![0]!["newInstance"]!
+            ["resourcePolicies"] = new System.Text.Json.Nodes.JsonArray((System.Text.Json.Nodes.JsonNode?)null);
+        using var invalidPolicy = await Send(delegated, path, malformedPolicies);
+        Assert.Equal(HttpStatusCode.BadRequest, invalidPolicy.StatusCode);
+        Assert.Contains("invalid_character_scope",
+            await invalidPolicy.Content.ReadAsStringAsync());
+
+        var missingSteps = JsonSerializer.SerializeToNode(Body())!;
+        missingSteps["transition"]!["steps"] = new System.Text.Json.Nodes.JsonArray();
+        using var incompleteTransition = await Send(delegated, path, missingSteps);
+        Assert.Equal(HttpStatusCode.BadRequest, incompleteTransition.StatusCode);
+
+        var noncanonicalId = JsonSerializer.SerializeToNode(Body())!;
+        noncanonicalId["state"]!["characterId"] = id.ToUpperInvariant();
+        noncanonicalId["ledger"]!["characterId"] = id.ToUpperInvariant();
+        noncanonicalId["transition"]!["characterId"] = id.ToUpperInvariant();
+        using var ambiguousScope = await Send(delegated, path, noncanonicalId);
+        Assert.Equal(HttpStatusCode.BadRequest, ambiguousScope.StatusCode);
+
+        using var staleContent = await Send(delegated, path,
+            Body(catalog: new string('a', 64)));
+        Assert.Equal(HttpStatusCode.Conflict, staleContent.StatusCode);
+
+        using var staleRevision = await Send(delegated, path,
+            Body(expectedRevision: 1));
+        Assert.Equal(HttpStatusCode.Conflict, staleRevision.StatusCode);
+
+        using var foreignCharacter = await Send(delegated, path,
+            Body(characterId: Guid.NewGuid().ToString("D")));
+        Assert.Equal(HttpStatusCode.BadRequest, foreignCharacter.StatusCode);
+
+        await using var direct = await Fixture.StartAsync();
+        using var notDelegated = await Send(direct, path, Body());
+        Assert.Equal(HttpStatusCode.Forbidden, notDelegated.StatusCode);
     }
 
     [Fact]

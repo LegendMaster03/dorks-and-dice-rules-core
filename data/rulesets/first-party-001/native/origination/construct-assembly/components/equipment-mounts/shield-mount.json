@@ -1,0 +1,14 @@
+{
+  "name": "Shield mount",
+  "description": "Mounting interface for a shield or protective device.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "equipment-mount",
+    "defensive-interface"
+  ],
+  "materialSlots": [
+    "mount"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.shield-mount",
+  "powerDemand": 0
+}

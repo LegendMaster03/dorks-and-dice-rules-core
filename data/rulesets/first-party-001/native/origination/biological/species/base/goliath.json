@@ -9,23 +9,23 @@
   "walkingSpeedFeet": 35,
   "traits": [
     {
-      "traitId": "trait.goliath.powerful-build"
+      "traitId": "trait.powerful-build"
     },
     {
-      "traitId": "trait.goliath.large-form"
+      "traitId": "trait.large-form"
     },
     {
-      "traitId": "trait.goliath.mountain-leap"
+      "traitId": "trait.mountain-leap"
     },
     {
-      "traitId": "trait.goliath.altitude-acclimation"
+      "traitId": "trait.altitude-acclimation"
     },
     {
-      "traitId": "trait.goliath.giant-ancestry-aptitude"
+      "traitId": "trait.ancestral-aptitude"
     }
   ],
   "reviewNotes": [
-    "Powerful Build grants advantage on ability checks to end Grappled, not an automatic 3.5e opposed-grapple size modifier or oversized-weapon permission. Exact interplay with the native opposed grapple procedure remains part of combat-integration review.",
+    "Powerful Build grants advantage on ability checks to end Grappled, and counts as one size larger for carrying, pushing, dragging, or lifting. It does not change actual size, grant historical automatic opposed-grapple size modifiers, or permit oversized weapons. Exact interplay with the native opposed grapple procedure remains part of combat-integration review.",
     "Large Form uses the native actual Large size category, not historical automatic 3.5e AC/grapple modifiers; reach and occupancy follow the native spatial rules.",
     "The standing-jump portion of 3.5e Mountain Movement and high-altitude acclimation are selected. No compulsory Ordning status or Upbringing choice is granted by biology.",
     "Giant creature type selected in the comparative Species review. Size remains Medium. Giant-specific targeting applies, but Giant monster stat-block defaults and Humanoid targeting via hierarchy parentage are not automatically inherited."

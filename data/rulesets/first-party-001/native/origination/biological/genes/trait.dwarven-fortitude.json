@@ -1,0 +1,19 @@
+{
+  "id": "trait.dwarven-fortitude",
+  "name": "Dwarven Fortitude",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "dwarven-fortitude",
+    "name": "Dwarven Fortitude",
+    "description": "When you take the Dodge action in combat, you may spend one of your available Hit Dice to recover hit points. Roll the spent Hit Die and add your Constitution modifier; regain hit points equal to the total (minimum 1), subject to your ordinary maximum hit points. You must have an unspent Hit Die. This trait grants neither the Dodge action nor additional Hit Dice, and does not grant an ability-score increase.",
+    "trigger": "when-taking-dodge-action-in-combat",
+    "hitDieHealing": {
+      "spendHitDice": 1,
+      "requiresAvailableHitDie": true,
+      "rollSpentHitDie": true,
+      "addAbilityModifier": "constitution",
+      "minimumHitPointsRegained": 1,
+      "extraHitDiceGranted": false
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Energy accumulator",
+  "description": "A storage buffer for energy received from another mechanism. Storage capacity, charge rate, discharge limits, and conversion into operational power are unresolved; this does not generate free output.",
+  "rulesStatus": "provisional first-party playable construction candidate; advanced effect binding and balance still required",
+  "provides": [
+    "energy-storage-interface"
+  ],
+  "materialSlots": [
+    "storage"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.energy-accumulator",
+  "powerDemand": 0
+}

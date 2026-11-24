@@ -6,8 +6,9 @@ using Xunit;
 namespace RulesCore.Mechanics.Tests;
 
 /// <summary>
-/// Real native Dragonborn movement modes: a shared mode name is not permission
-/// to stack distinct traits or silently prefer a faster/more permissive mode.
+/// Real native Dragonborn movement modes: distinct source occurrences of a
+/// shared gene still require reconciliation, and different modes must not stack
+/// or receive invented speed and terrain permissions.
 /// Tests use exact in-process DM decisions only for traits that remain outside
 /// the approved first-party biological inheritance set.
 /// </summary>
@@ -69,10 +70,10 @@ public sealed class NativeOriginMovementOverlapTests
         var offers = Evaluate(initial).EvaluatedProposal.Candidates;
         var red = Assert.Single(offers, x => x.ContributorId == "red" &&
             x.Identity.MechanicalDefinitionId ==
-                "trait.dragonborn.red.natural-climber");
+                "trait.natural-climber");
         var copper = Assert.Single(offers, x => x.ContributorId == "copper" &&
             x.Identity.MechanicalDefinitionId ==
-                "trait.dragonborn.copper.natural-climber");
+                "trait.natural-climber");
         Assert.Equal(NativeOriginEligibility.Eligible,
             red.SelectionBasis.Eligibility);
         Assert.Equal(NativeOriginEligibility.Eligible,
@@ -101,25 +102,23 @@ public sealed class NativeOriginMovementOverlapTests
     }
 
     [Fact]
-    public void SeparateClimbDefinitionsRequireExplicitDisposition()
+    public void SharedClimbGeneFromDifferentSourcesRequiresExplicitDisposition()
     {
         var (proposal, red, copper) = TwoClimbs();
         var result = Evaluate(proposal, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Status);
         Assert.Contains(result.Issues, x =>
-            x.Code == "same-movement-mode-reconciliation-required" &&
-            x.Path == "climb");
+            x.Code == "shared-definition-reconciliation-required" &&
+            x.Path == "trait.natural-climber");
         Assert.DoesNotContain(result.Profile?.Underlying.InherentGrants ?? [], x =>
-            x.Identity.MechanicalDefinitionId is
-                "trait.dragonborn.red.natural-climber" or
-                "trait.dragonborn.copper.natural-climber");
+            x.Identity.MechanicalDefinitionId == "trait.natural-climber");
         Assert.Contains(result.EvaluatedProposal.Candidates, x => x.Id == red.Id);
         Assert.Contains(result.EvaluatedProposal.Candidates, x => x.Id == copper.Id);
     }
 
     [Theory]
-    [InlineData(true, "trait.dragonborn.red.natural-climber")]
-    [InlineData(false, "trait.dragonborn.copper.natural-climber")]
+    [InlineData(true, "trait.natural-climber")]
+    [InlineData(false, "trait.natural-climber")]
     public void ScopedChoiceRetainsOneCompleteAuthoredClimbTrait(
         bool keepFirst, string expectedTrait)
     {
@@ -156,9 +155,7 @@ public sealed class NativeOriginMovementOverlapTests
             .GetProperty("doesNotGrant").EnumerateArray()
             .Select(x => x.GetString()));
         Assert.DoesNotContain(result.Profile.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId is
-                "trait.dragonborn.red.natural-climber" or
-                "trait.dragonborn.copper.natural-climber" &&
+            x.Identity.MechanicalDefinitionId == "trait.natural-climber" &&
                 x.Id != climb.Id);
 
         var roundTripped = JsonSerializer.Deserialize<NativeOriginProfile>(
@@ -193,9 +190,7 @@ public sealed class NativeOriginMovementOverlapTests
         var result = Evaluate(eligible, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var selected = result.Profile!.Underlying.InherentGrants.Where(x =>
-            x.Identity.MechanicalDefinitionId is
-                "trait.dragonborn.red.natural-climber" or
-                "trait.dragonborn.copper.natural-climber").ToArray();
+            x.Identity.MechanicalDefinitionId == "trait.natural-climber").ToArray();
         Assert.Equal(2, selected.Length);
         Assert.All(selected, x =>
         {
@@ -212,9 +207,7 @@ public sealed class NativeOriginMovementOverlapTests
         var unauthenticated = Evaluate(result.EvaluatedProposal);
         Assert.NotEqual(NativeOriginConstructionStatus.Authorized, unauthenticated.Status);
         Assert.DoesNotContain(unauthenticated.Profile?.Underlying.InherentGrants ?? [],
-            x => x.Identity.MechanicalDefinitionId is
-                "trait.dragonborn.red.natural-climber" or
-                "trait.dragonborn.copper.natural-climber");
+            x => x.Identity.MechanicalDefinitionId == "trait.natural-climber");
     }
 
     [Fact]
@@ -234,9 +227,9 @@ public sealed class NativeOriginMovementOverlapTests
         Assert.Equal(3, foundational.Length);
         var ids = new[]
         {
-            "trait.dragonborn.red.natural-climber",
-            "trait.dragonborn.white.coldwater-swimmer",
-            "trait.dragonborn.brass.sand-burrower"
+            "trait.natural-climber",
+            "trait.coldwater-swimmer",
+            "trait.sand-burrower"
         };
         var movement = ids.Select(id => Assert.Single(offered,
             x => x.Identity.MechanicalDefinitionId == id)).ToArray();
@@ -264,12 +257,12 @@ public sealed class NativeOriginMovementOverlapTests
                 .GetString()).OrderBy(x => x, StringComparer.Ordinal).ToArray());
         var swim = Assert.Single(chosen, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.dragonborn.white.coldwater-swimmer");
+                "trait.coldwater-swimmer");
         Assert.False(swim.EffectiveValue!.Value
             .GetProperty("grantsWaterBreathing").GetBoolean());
         var burrow = Assert.Single(chosen, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.dragonborn.brass.sand-burrower");
+                "trait.sand-burrower");
         Assert.Equal("loose-natural-sand", burrow.EffectiveValue!.Value
             .GetProperty("allowedMaterials")[0].GetString());
         Assert.False(burrow.EffectiveValue.Value
@@ -287,7 +280,7 @@ public sealed class NativeOriginMovementOverlapTests
         Assert.Equal(NativeOriginConstructionStatus.Authorized, direct.Status);
         var climb = Assert.Single(direct.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.dragonborn.copper.natural-climber");
+                "trait.natural-climber");
         Assert.Equal(15, climb.EffectiveValue!.Value.GetProperty("speedFeet").GetInt32());
         Assert.Equal("ancestry.dragonborn.copper",
             climb.Identity.Occurrence.Source.Id);

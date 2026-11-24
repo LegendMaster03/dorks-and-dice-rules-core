@@ -69,7 +69,7 @@ public sealed class NativeOriginHitPointProgressionTests
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         var toughness = offers.Where(x => x.Identity.MechanicalDefinitionId ==
-            "trait.dwarf.dwarven-toughness").ToArray();
+            "trait.level-based-vitality").ToArray();
         Assert.Equal(donorCount, toughness.Length);
         Assert.All(toughness, x =>
             Assert.Equal(NativeOriginEligibility.Eligible,
@@ -130,7 +130,7 @@ public sealed class NativeOriginHitPointProgressionTests
         Assert.Equal(1, projected.PerLevelBonus);
         Assert.Equal(level, projected.MaximumHitPointBonus);
         Assert.Null(projected.CombinedMaximumHitPoints);
-        Assert.Equal("trait.dwarf.dwarven-toughness",
+        Assert.Equal("trait.level-based-vitality",
             direct.Profile!.Underlying.InherentGrants.Single(
                 x => x.Id == projected.GrantId).Identity.MechanicalDefinitionId);
 
@@ -176,7 +176,7 @@ public sealed class NativeOriginHitPointProgressionTests
         var mixed = SelectedMixed(catalog, donorCount: 2);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, mixed.Status);
         var toughness = Assert.Single(mixed.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.dwarf.dwarven-toughness");
+            x.Identity.MechanicalDefinitionId == "trait.level-based-vitality");
         Assert.Equal(2, toughness.SourceCandidateIds.Count);
         var projected = NativeOriginHitPointProgressionProjector.Combine(
             catalog, mixed, Character(catalog, 5));
@@ -210,7 +210,7 @@ public sealed class NativeOriginHitPointProgressionTests
         var catalog = Catalog();
         var completed = Evaluate(catalog, Direct());
         var grant = Assert.Single(completed.Profile!.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.dwarf.dwarven-toughness");
+            x.Identity.MechanicalDefinitionId == "trait.level-based-vitality");
         var forgedValue = JsonSerializer.SerializeToElement(new
         {
             id = "dwarven-toughness",

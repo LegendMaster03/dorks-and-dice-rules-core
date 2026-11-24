@@ -1,0 +1,104 @@
+{
+  "description": "Lightweight Medium Construct for the Character Origins MVP: darkwood structural frame, same installed functional hardware as the basic example. Candidate values only.",
+  "status": "provisional-starting-playtest",
+  "assembly": {
+    "components": [
+      {
+        "instanceId": "frame",
+        "definitionId": "construct-component.structural-frame",
+        "materials": {
+          "frame": "construct-material.darkwood"
+        },
+        "enabled": true,
+        "constructionVariantId": "medium"
+      },
+      {
+        "instanceId": "generator",
+        "definitionId": "construct-component.power-source-housing",
+        "materials": {
+          "housing": "construct-material.wood"
+        },
+        "enabled": true,
+        "powerSourceId": "construct-power-source.mechanical-engine",
+        "connectedTo": [
+          "frame",
+          "control",
+          "circulation",
+          "actuator",
+          "manipulator",
+          "drive",
+          "eye"
+        ]
+      },
+      {
+        "instanceId": "control",
+        "definitionId": "construct-component.control-module",
+        "materials": {
+          "controller": "construct-material.wood"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "circulation",
+        "definitionId": "construct-component.alchemical-circulation",
+        "materials": {
+          "conduit": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "actuator",
+        "definitionId": "construct-component.alchemical-actuator",
+        "materials": {
+          "actuator": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "manipulator",
+        "definitionId": "construct-component.manipulator",
+        "materials": {
+          "grip": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "drive",
+        "definitionId": "construct-component.locomotion-unit",
+        "materials": {
+          "contact": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "eye",
+        "definitionId": "construct-component.crystal-eye",
+        "materials": {
+          "crystal": "construct-material.crystal"
+        },
+        "enabled": true
+      }
+    ],
+    "initialAllowance": 200
+  },
+  "expected": {
+    "ingredientCost": 187,
+    "powerOutput": 8,
+    "requestedPowerDemand": 7,
+    "unusedStartingPoints": 13,
+    "bodySize": "medium",
+    "originTraits": [
+      "trait.construct.ordinary-optical-sight",
+      "trait.construct.physical-manipulation",
+      "trait.construct.ordinary-communication",
+      "trait.construct.ordinary-ground-movement"
+    ],
+    "comparison": "The 8 recipe units of darkwood cost 24 more points but have 40 fewer pounds of known retained material mass than the original 8 units of steel. This is not total body mass or an approved speed or protection bonus."
+  },
+  "limitations": [
+    "Darkwood is a material substitution, not an automatic armor bonus or extra speed.",
+    "Known retained material mass is partial evidence; no numeric load capacity is authorized.",
+    "Actual walking speed remains subject to valid active locomotion and the campaign's load adjudication.",
+    "Manufacturing requirements and starting resource values are provisional playtest figures."
+  ]
+}

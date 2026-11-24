@@ -1,0 +1,16 @@
+{
+  "name": "Crystal eye",
+  "description": "Crystal visual hardware described on Warforged; any sense or perception grant must be separately authored.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "visual-hardware"
+  ],
+  "materialSlots": [
+    "crystal"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.crystal-eye",
+  "powerDemand": 1,
+  "operationalOriginTraitIds": [
+    "trait.construct.ordinary-optical-sight"
+  ]
+}

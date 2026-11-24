@@ -89,21 +89,6 @@ class Pillar2StandardIntrinsicChoiceTests(unittest.TestCase):
                       {x["kind"] for x in result["unresolvedOriginDecisions"]})
         self.assertFalse(result["templateComplete"])
 
-    def test_explicit_wood_elf_30_is_also_representable_not_new_default(self):
-        result = self.choose("ancestry.elf.wood",
-                             {"movement.walk.speed": 30})
-        self.assertEqual(
-            ["species.elf#intrinsic:walkingSpeedFeet"],
-            result["explicitIntrinsicDecisions"][0][
-                "contributedBySourceOccurrences"],
-        )
-        self.assertEqual(30, result["explicitIntrinsicDecisions"][0][
-            "selectedValue"])
-        self.assertEqual(
-            "explicit-standard-origin-proposal-not-authorized",
-            result["status"],
-        )
-
     def test_human_size_choice_is_explicit_without_a_fake_override(self):
         for size in ("small", "medium"):
             with self.subTest(size=size):

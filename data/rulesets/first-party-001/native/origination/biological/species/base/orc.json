@@ -9,31 +9,38 @@
   "walkingSpeedFeet": 30,
   "traits": [
     {
-      "traitId": "trait.shared.low-light-vision"
+      "traitId": "trait.low-light-vision"
     },
     {
-      "traitId": "trait.orc.adrenaline-rush"
+      "traitId": "trait.adrenaline-rush"
     },
     {
-      "traitId": "trait.orc.relentless-endurance"
+      "traitId": "trait.relentless-endurance"
     },
     {
-      "traitId": "trait.orc.powerful-build"
+      "traitId": "trait.powerful-build"
     },
     {
-      "traitId": "trait.orc.savage-attacks"
+      "traitId": "trait.savage-attacks"
     },
     {
-      "traitId": "trait.orc.menacing-presence"
+      "traitId": "trait.menacing-presence"
+    },
+    {
+      "traitId": "trait.orcish-fury"
     }
   ],
   "reviewNotes": [
     "Low-Light Vision, as defined by rule.low-light-vision, replaces the SRD 5.2.1 Orc's 120-foot Darkvision. Base Orc has no Sunlight Sensitivity or other daylight penalty. Future darkness-adapted Orc Ancestry can be reconciled separately.",
     "Adrenaline Rush retains the SRD 5.2.1 Bonus Action Dash, Proficiency Bonus Temporary Hit Points, Proficiency Bonus uses, and Short or Long Rest recharge. Older Aggressive is not granted separately.",
-    "Powerful Build restores carrying/pushing/dragging/lifting size equivalence without Goliath's additional grapple-escape advantage or automatic 3.x size modifiers.",
+    "Powerful Build restores carrying/pushing/dragging/lifting size equivalence and grants advantage on checks to end Grappled, without changing actual size or applying automatic 3.x grapple-size modifiers.",
     "Savage Attacks is adapted from SRD 5.1 Half-Orc source evidence, without introducing Half-Orc as a distinct Species. Its interaction with optional critical-escalation tiers and maximization remains under review.",
     "Menacing Presence represents a contextual physical trait instead of an unconditional learned Intimidation proficiency.",
     "Orc is directly selectable with no mandatory Ancestry or default Upbringing. Languages, traditions and training remain independently selectable cultural benefits.",
-    "Comparative Species balance and any future Orc Ancestry variants remain open."
+    "Comparative Species balance and any future Orc Ancestry variants remain open.",
+    "Approved Species foundation: Orcish Fury grants one extra weapon damage die on a successful simple or martial weapon attack once per Short or Long Rest, plus one Reaction weapon attack immediately after using Relentless Endurance. The two modes are one biological gene and do not grant an ability-score increase, an extra Relentless Endurance use, or an additional Reaction.",
+    "Approved trial valuation: Adrenaline Rush is repriced from 2 to 4 points without changing its mechanics; Orcish Fury costs 4, bringing the independently selectable base Orc to 17 of the 18-point trial allowance.",
+    "Needs review; pending approval — Headlong Rush (Races of Faerûn) and its charge, attack-of-opportunity, and critical/damage interactions. Not a granted Orc trait.",
+    "Future Orc Ancestries may use explicitly authorized substitutions of base Species traits rather than merely adding traits. No general automatic parent/Ancestry override or replacement rule is approved or implemented."
   ]
 }

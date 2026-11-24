@@ -75,7 +75,6 @@ TRAIT_FACETS = {
     "duration": "ability.duration",
     "durationMinutes": "ability.duration-minutes",
     "atWill": "ability.at-will",
-    "alwaysPrepared": "spellcasting.always-prepared",
     "freeUses": "spellcasting.free-uses",
     "recharge": "ability.recharge",
     "slotCasting": "spellcasting.slot-casting",

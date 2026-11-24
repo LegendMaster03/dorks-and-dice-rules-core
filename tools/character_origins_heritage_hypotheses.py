@@ -101,8 +101,10 @@ def overlay_narrative_hypotheses(reconstruction, evidence, catalog):
             }:
                 raise ParameterInheritanceError("Invalid trait-variant evidence")
             if (relationship["inheritanceEffect"] != "none"
-                or relationship["proposedRelationship"]
-                != "possibly-divergent-mechanical-variants"):
+                or relationship["proposedRelationship"] not in {
+                    "possibly-divergent-mechanical-variants",
+                    "shared-canonical-mechanic",
+                }):
                 raise ParameterInheritanceError(
                     "Narrative hypothesis can not authorize inheritance"
                 )
@@ -116,6 +118,11 @@ def overlay_narrative_hypotheses(reconstruction, evidence, catalog):
                 )
             descendant = _trait(catalog, descendant_id)
             ancestor = _trait(catalog, source_id)
+            if (relationship["proposedRelationship"] == "shared-canonical-mechanic"
+                and _value_key(descendant) != _value_key(ancestor)):
+                raise ParameterInheritanceError(
+                    "A shared canonical mechanic requires identical source definitions"
+                )
             field = relationship["sharedAuthoredField"]
             if not isinstance(field, str) or field not in descendant or (
                 field not in ancestor

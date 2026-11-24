@@ -1,0 +1,15 @@
+{
+  "id": "trait.poison-tolerance",
+  "name": "Poison Tolerance",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "poison-tolerance",
+    "name": "Poison Tolerance",
+    "description": "You have Advantage on saving throws to avoid or end the Poisoned condition. This does not provide immunity to that condition, additional Poison damage resistance, or Advantage on all poison-related saving throws.",
+    "savingThrows": {
+      "advantageAgainst": [
+        "condition.poisoned"
+      ]
+    }
+  }
+}

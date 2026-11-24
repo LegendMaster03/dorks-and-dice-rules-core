@@ -34,9 +34,16 @@ class HumanSpeciesReconciliationTests(unittest.TestCase):
         self.assertNotIn("candidateDefinitions", human)
         self.assertFalse(WORKING.exists())
 
-    def test_all_three_customization_benefits_are_cumulative(self):
-        self.assertEqual({"skillful", "versatile", "adaptable-learning"},
-                         set(self.traits))
+    def test_current_customization_benefits_are_cumulative(self):
+        self.assertEqual({"skillful", "versatile", "adaptable-learning",
+                          "human-determination"}, set(self.traits))
+        determination = self.traits["human-determination"]
+        self.assertEqual({"attack-roll", "ability-check", "saving-throw"},
+                         set(determination["rollAdvantage"]["eligibleRollTypes"]))
+        self.assertEqual("before-roll",
+                         determination["rollAdvantage"]["declarationTiming"])
+        self.assertEqual({"value": 1, "recharge": "short-or-long-rest"},
+                         determination["uses"])
         skill = self.traits["skillful"]
         feat = self.traits["versatile"]
         self.assertEqual("skill-proficiency", skill["grantType"])
@@ -52,12 +59,6 @@ class HumanSpeciesReconciliationTests(unittest.TestCase):
         self.assertEqual(1, ranks["additionalRanksPerSubsequentCharacterLevel"])
         self.assertEqual("player-choice", ranks["allocation"])
         self.assertTrue(ranks["obeysNormalSkillRankLimits"])
-
-    def test_inspiration_is_not_prematurely_granted(self):
-        self.assertNotIn("resourceful", self.traits)
-        self.assertNotIn("heroic-inspiration", self.traits)
-        self.assertTrue(any("Heroic Inspiration" in note
-                            for note in self.human["reviewNotes"]))
 
     def test_source_coverage_is_promoted_without_dropping_evidence(self):
         manifest = read(MANIFEST)

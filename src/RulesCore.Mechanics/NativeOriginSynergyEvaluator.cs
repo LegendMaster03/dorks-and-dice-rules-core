@@ -6,8 +6,9 @@ using RulesCore.Content;
 namespace RulesCore.Mechanics;
 
 /// <summary>
-/// Evaluates native or verified table-authored combinations of effective Origin characteristics.
-/// Candidate offers and unverified proposal-supplied rules never create synergies.
+/// Evaluates native or verified table-authored interactions of effective grants or
+/// explicitly selected, authenticated inherited instances. Mere contributor offers,
+/// unexpressed genes, and unverified proposal-supplied rules never grant synergies.
 /// Each rule issues at most one stable result; separate acquisition/balance policies
 /// remain the responsibility of the origination procedure.
 /// </summary>
@@ -16,7 +17,8 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
     private sealed record Input(IReadOnlyList<NativeOriginCharacteristicSelector> Alternatives,
         int Count);
     private sealed record Rule(string OwnerId, string Id, string ResultTraitId,
-        IReadOnlyList<Input> Inputs, JsonElement Effect, string? TableDecisionId = null);
+        IReadOnlyList<Input> Inputs, JsonElement Effect, string? TableDecisionId = null,
+        bool Inherited = false);
 
     public (IReadOnlyList<NativeOriginEffectiveGrant> Grants,
         IReadOnlyList<NativeOriginContractIssue> Issues) Evaluate(
@@ -24,7 +26,8 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
         IReadOnlyList<NativeTableRuleDecision>? verifiedTableSynergies = null)
     {
         var issues = new List<NativeOriginContractIssue>();
-        var rules = ReadRules(issues, verifiedTableSynergies);
+        var rules = ReadRules(issues, verifiedTableSynergies)
+            .Where(rule => !rule.Inherited).ToList();
         if (rules.Count == 0) return ([], issues);
 
         // An authored interaction graph may be cyclic even if a particular
@@ -177,6 +180,236 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
         return (derived.OrderBy(x => x.Id, StringComparer.Ordinal).ToArray(), issues);
     }
 
+    /// <summary>
+    /// Evaluates explicitly selected genotype expressions. This shares the
+    /// ordinary synergy rule parser and canonical fixed-trait safeguards but
+    /// reads authenticated inherited instances, not available contributor offers.
+    /// The caller retracts consumed ordinary grants before dependency closure.
+    /// </summary>
+    public (IReadOnlyList<NativeOriginEffectiveGrant> Grants,
+        IReadOnlySet<string> ConsumedCandidateIds,
+        IReadOnlyList<NativeOriginContractIssue> Issues) EvaluateInherited(
+        NativeOriginProposal proposal,
+        IReadOnlyList<NativeOriginBiologicalGeneInstance> genes,
+        IReadOnlyList<NativeOriginEffectiveGrant> directGrants,
+        int maxExpressedInstancesPerKind,
+        IReadOnlyList<NativeTableRuleDecision>? verifiedTableSynergies = null)
+    {
+        var issues = new List<NativeOriginContractIssue>();
+        var choices = proposal.BiologicalTransmission?.Combinations ?? [];
+        if (choices.Count == 0)
+            return ([], new HashSet<string>(StringComparer.Ordinal), issues);
+        var rules = ReadRules(issues, verifiedTableSynergies)
+            .Where(rule => rule.Inherited).ToArray();
+        var offers = (proposal.Candidates ?? []).Where(x =>
+                x is not null && !string.IsNullOrWhiteSpace(x.Id) &&
+                x.Identity?.Occurrence?.Source is not null)
+            .GroupBy(x => x.Id, StringComparer.Ordinal)
+            .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
+        var verified = genes.Where(g =>
+                g is not null && !string.IsNullOrWhiteSpace(g.Id) &&
+                !string.IsNullOrWhiteSpace(g.SourceCandidateId) &&
+                g.Identity?.Occurrence?.Source is not null)
+            .GroupBy(g => g.SourceCandidateId, StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
+        var transmitted = (proposal.BiologicalTransmission?.CandidateIds ?? [])
+            .ToHashSet(StringComparer.Ordinal);
+        var selectedRules = new HashSet<string>(StringComparer.Ordinal);
+        var matched = new List<(Rule Rule, NativeOriginBiologicalGeneInstance[] Genes)>();
+
+        foreach (var choice in choices)
+        {
+            var path = "biologicalTransmission.combinations";
+            if (choice is null || string.IsNullOrWhiteSpace(choice.RuleOwnerId) ||
+                string.IsNullOrWhiteSpace(choice.InteractionId) ||
+                choice.CandidateIds is null || choice.CandidateIds.Count is < 2 or > 16 ||
+                choice.CandidateIds.Any(string.IsNullOrWhiteSpace) ||
+                choice.CandidateIds.Distinct(StringComparer.Ordinal).Count() !=
+                    choice.CandidateIds.Count ||
+                !selectedRules.Add(choice.RuleOwnerId + "\n" + choice.InteractionId))
+            {
+                issues.Add(new("inherited-combination-selection-invalid", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "A selected expression needs one distinct authored rule and two or more distinct transmitted instances."));
+                continue;
+            }
+            path += "." + choice.InteractionId;
+            var rule = rules.FirstOrDefault(x => x.OwnerId == choice.RuleOwnerId &&
+                x.Id == choice.InteractionId);
+            if (rule is null)
+            {
+                issues.Add(new("inherited-combination-rule-unavailable", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The selected inherited expression has no authorized authored rule."));
+                continue;
+            }
+            if (choice.CandidateIds.Any(id => !transmitted.Contains(id) ||
+                !verified.ContainsKey(id) || !offers.TryGetValue(id, out var offer) ||
+                offer.ContributorId is null || offer.Identity != verified[id].Identity ||
+                offer.SelectionBasis?.Eligibility is not
+                    (NativeOriginEligibility.Eligible or NativeOriginEligibility.DmAuthorized)))
+            {
+                issues.Add(new("inherited-combination-instance-unverified", path,
+                    NativeOriginIssueSeverity.Invalid,
+                    "Every input must be an actually transmitted, authenticated inherited occurrence."));
+                continue;
+            }
+            var selected = choice.CandidateIds.Select(id => verified[id]).ToArray();
+            if (!TrySelectInheritedInputs(rule, selected, out var ordered))
+            {
+                issues.Add(new("inherited-combination-input-mismatch", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The exact inherited instances do not meet the authored selectors and counts."));
+                continue;
+            }
+            matched.Add((rule, ordered));
+        }
+
+        // Evaluate all selections together. Sort order must never choose a
+        // winner for competing canonical results or shared genetic evidence.
+        var rejected = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var entry in matched)
+            if (directGrants.Any(grant =>
+                    grant.Identity.MechanicalDefinitionId == entry.Rule.ResultTraitId &&
+                    !entry.Genes.Any(g => grant.SourceCandidateIds.Contains(
+                        g.SourceCandidateId, StringComparer.Ordinal))) ||
+                matched.Any(other => !ReferenceEquals(other.Rule, entry.Rule) &&
+                    (other.Rule.ResultTraitId == entry.Rule.ResultTraitId ||
+                     other.Genes.Any(g => entry.Genes.Any(x =>
+                         x.SourceCandidateId == g.SourceCandidateId)))))
+                rejected.Add(Key(entry.Rule));
+
+        var involvedKinds = matched.SelectMany(x => x.Genes)
+            .Select(g => GeneKind(g.Identity)).ToHashSet();
+        // A rejected expression restores its direct inputs. Recompute capacity
+        // until stable so later rejections can never leave an over-limit grant
+        // authorized based on inputs that were only provisionally consumed.
+        bool newlyRejected;
+        do
+        {
+            var active = new Dictionary<
+                (NativeOriginCharacteristicKind Kind, string Id), int>();
+            foreach (var grant in directGrants.Where(x => x.Synergy is null))
+            {
+                var kind = GeneKind(grant.Identity);
+                if (!involvedKinds.Contains(kind)) continue;
+                if (matched.Any(entry => !rejected.Contains(Key(entry.Rule)) &&
+                    entry.Genes.Any(g =>
+                        grant.SourceCandidateIds.Contains(g.SourceCandidateId,
+                            StringComparer.Ordinal))))
+                    continue;
+                active[kind] = active.GetValueOrDefault(kind) + 1;
+            }
+            // Count one combined grant per kind, not once per contributing gene.
+            foreach (var entry in matched.Where(x => !rejected.Contains(Key(x.Rule))))
+                foreach (var kind in entry.Genes.Select(g =>
+                    GeneKind(g.Identity)).Distinct())
+                    active[kind] = active.GetValueOrDefault(kind) + 1;
+            newlyRejected = false;
+            foreach (var entry in matched.Where(x => !rejected.Contains(Key(x.Rule))))
+                if (entry.Genes.Any(g =>
+                    active.GetValueOrDefault(GeneKind(g.Identity)) >
+                        maxExpressedInstancesPerKind))
+                    newlyRejected |= rejected.Add(Key(entry.Rule));
+        } while (newlyRejected);
+
+        foreach (var entry in matched.Where(x => rejected.Contains(Key(x.Rule))))
+            issues.Add(new("inherited-combination-conflict",
+                "biologicalTransmission.combinations." + entry.Rule.Id,
+                NativeOriginIssueSeverity.Conflict,
+                "The expression conflicts with another result, shared input, or the authored expression capacity."));
+
+        var consumed = new HashSet<string>(StringComparer.Ordinal);
+        var results = new List<NativeOriginEffectiveGrant>();
+        foreach (var (rule, sourceGenes) in matched.Where(x => !rejected.Contains(Key(x.Rule))))
+        {
+            var proof = sourceGenes.OrderBy(x => x.Id, StringComparer.Ordinal)
+                .Select(g => new NativeOriginInheritedSynergyInputEvidence(g)).ToArray();
+            var token = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(
+                rule.OwnerId + "\n" + rule.Id)))[..24];
+            var manifestationId = "synergy:" + token;
+            var identity = new NativeOriginCharacteristicIdentity(
+                NativeOriginCharacteristicKind.Trait,
+                new(new(rule.TableDecisionId is null
+                        ? NativeOriginSourceKind.Native : NativeOriginSourceKind.Custom,
+                        rule.OwnerId),
+                    "/originSynergies/" + Uri.EscapeDataString(rule.Id)),
+                MechanicalDefinitionId: rule.ResultTraitId);
+            results.Add(new NativeOriginEffectiveGrant("grant:" + manifestationId,
+                manifestationId, identity,
+                sourceGenes.Select(x => x.SourceCandidateId)
+                    .Distinct(StringComparer.Ordinal)
+                    .OrderBy(x => x, StringComparer.Ordinal).ToArray(),
+                EffectiveValue: rule.Effect.Clone(),
+                Authorization: rule.TableDecisionId is null
+                    ? new NativeOriginDecisionBasis(NativeOriginAdjudication.Supported,
+                        rule.OwnerId)
+                    : new NativeOriginDecisionBasis(NativeOriginAdjudication.DmAuthorized,
+                        TableDecisionId: rule.TableDecisionId))
+            {
+                Synergy = new(rule.OwnerId, rule.Id, [], proof)
+            });
+            foreach (var gene in sourceGenes) consumed.Add(gene.SourceCandidateId);
+        }
+        return (results.OrderBy(x => x.Id, StringComparer.Ordinal).ToArray(),
+            consumed, issues);
+    }
+
+    private static (NativeOriginCharacteristicKind Kind, string Id) GeneKind(
+        NativeOriginCharacteristicIdentity identity) =>
+        (identity.Kind, identity.Kind == NativeOriginCharacteristicKind.Trait
+            ? identity.MechanicalDefinitionId ?? "" : identity.IntrinsicSlotId ?? "");
+
+    private static bool TrySelectInheritedInputs(Rule rule,
+        IReadOnlyList<NativeOriginBiologicalGeneInstance> selected,
+        out NativeOriginBiologicalGeneInstance[] ordered)
+    {
+        ordered = [];
+        var slots = rule.Inputs.SelectMany(input =>
+            Enumerable.Repeat(input.Alternatives, input.Count)).ToArray();
+        if (slots.Length != selected.Count) return false;
+        var occupants = new Dictionary<string, int>(StringComparer.Ordinal);
+        var genes = selected.OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+        bool Assign(int slot, HashSet<string> visited)
+        {
+            foreach (var gene in genes)
+            {
+                if (!slots[slot].Any(selector => MatchesInherited(selector, gene)) ||
+                    !visited.Add(gene.Id)) continue;
+                if (!occupants.TryGetValue(gene.Id, out var prior) ||
+                    Assign(prior, visited))
+                {
+                    occupants[gene.Id] = slot;
+                    return true;
+                }
+            }
+            return false;
+        }
+        for (var slot = 0; slot < slots.Length; slot++)
+            if (!Assign(slot, new HashSet<string>(StringComparer.Ordinal)))
+                return false;
+        ordered = genes.Where(x => occupants.ContainsKey(x.Id)).ToArray();
+        return ordered.Length == slots.Length;
+    }
+
+    private static bool MatchesInherited(NativeOriginCharacteristicSelector selector,
+        NativeOriginBiologicalGeneInstance gene)
+    {
+        if (selector.MechanicalDefinitionId is not null &&
+                selector.MechanicalDefinitionId != gene.Identity.MechanicalDefinitionId ||
+            selector.IntrinsicSlotId is not null &&
+                selector.IntrinsicSlotId != gene.Identity.IntrinsicSlotId ||
+            selector.SourceId is not null &&
+                selector.SourceId != gene.Identity.Occurrence.Source.Id)
+            return false;
+        if (selector.ParameterKey is null) return true;
+        if (gene.Parameters is null ||
+            !gene.Parameters.TryGetValue(selector.ParameterKey, out var actual))
+            return false;
+        return selector.ExpectedValue is not { } expected ||
+            JsonElement.DeepEquals(expected, actual);
+    }
+
     private IReadOnlyList<Rule> ReadRules(List<NativeOriginContractIssue> issues,
         IReadOnlyList<NativeTableRuleDecision>? verifiedTableSynergies)
     {
@@ -221,8 +454,11 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
             if (ownerId.IndexOfAny(['\r', '\n']) >= 0 ||
                 item.ValueKind != JsonValueKind.Object ||
                 item.EnumerateObject().Any(p => p.Name is not (
-                    "id" or "resultTraitId" or "inputs" or "name" or
-                    "description" or "reviewNotes")) ||
+                    "id" or "resultTraitId" or "inputs" or "inputEvidence" or
+                    "name" or "description" or "reviewNotes")) ||
+                item.TryGetProperty("inputEvidence", out var inputEvidence) &&
+                (inputEvidence.ValueKind != JsonValueKind.String ||
+                 inputEvidence.GetString() is not ("effective-grant" or "inherited-gene")) ||
                 !String(item, "id", out var id) ||
                 targetedId is not null && targetedId != id ||
                 !String(item, "resultTraitId", out var resultTraitId) ||
@@ -251,6 +487,13 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                 grantType.GetString() == "feat-choice")
             {
                 Invalid(ownerId, "Interaction must identify an authorized, canonical, fixed Origin trait with a matching target.");
+                continue;
+            }
+            var inherited = item.TryGetProperty("inputEvidence", out var evidenceType) &&
+                evidenceType.GetString() == "inherited-gene";
+            if (inherited && !NativeOriginBiologicalTraitShape.IsRecognized(effect))
+            {
+                Invalid(ownerId, "An inherited expression result has an unsupported biological mechanic.");
                 continue;
             }
             var groups = new List<Input>();
@@ -313,7 +556,7 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
                 continue;
             }
             results.Add(new(ownerId, id, resultTraitId, groups, effect.Clone(),
-                tableDecisionId));
+                tableDecisionId, inherited));
         }
         return results.OrderBy(Key, StringComparer.Ordinal).ToArray();
 

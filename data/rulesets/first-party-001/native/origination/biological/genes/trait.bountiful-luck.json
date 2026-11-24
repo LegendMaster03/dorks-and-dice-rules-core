@@ -1,0 +1,25 @@
+{
+  "id": "trait.bountiful-luck",
+  "name": "Bountiful Luck",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "bountiful-luck",
+    "name": "Bountiful Luck",
+    "description": "When an ally you can see within 30 feet rolls a natural 1 on a d20 attack roll, ability check, or saving throw, use your Reaction to allow that ally to reroll and use the new result. You can not use your own Luck Reroll until the end of your next turn. This does not increase the ally's normal Luck Reroll allowance or grant an additional Reaction.",
+    "activation": {
+      "action": "reaction",
+      "trigger": "visible-ally-natural-one-on-d20-test"
+    },
+    "rangeFeet": 30,
+    "requiresSight": true,
+    "reroll": {
+      "roll": "ally-natural-one-on-attack-check-or-saving-throw",
+      "roller": "ally",
+      "useResult": "new-roll"
+    },
+    "suspendsTrait": {
+      "id": "trait.luck-reroll",
+      "until": "end-of-next-turn"
+    }
+  }
+}

@@ -2,16 +2,16 @@
 
 ## Scope and authority
 
-Selected-native Species/Ancestry content now stores every named inherent trait as an independently addressable `origin-trait` entity initially under `native/traits/` (relocated without mechanical changes to `native/origination/biological/genes/` on November 20, 2026). This is a representation change, not an approval of new gameplay rules, trait equivalences, inherited benefits, allocation budgets, or homebrew import formats.
+Selected-native Species/Ancestry content now stores every named inherent trait as an independently addressable `origin-trait` entity initially under `native/traits/` (relocated without mechanical changes to `native/origination/biological/genes/` on November 20, 2026). This is a representation change, not an approval of new gameplay rules, trait equivalences, inherited benefits, allocation budgets, or homebrew import formats. The later source-neutral catalog stores 85 canonical genes as individual `genes/trait.<mechanical-id>.json` files. Four pairs were consolidated: Natural Climber and Low-Light Vision had equivalent mechanics, while Darkness and Powerful Build were unified by a subsequent explicit rules decision. Powerful Build now grants both prior benefits, and prepared-spell authoring was removed from biological spells.
 
 The model distinguishes (1) one canonical trait definition and its complete mechanical payload, (2) a position-specific reference in a Species or Ancestry record, (3) a contributor's offered candidate, and (4) a manifested, authorized grant. A trait may contain multiple effects without making each effect a separately inheritable component.
 
-Each reference is `{"traitId": "trait.…"}`, and the definition is an entity `{"id": "trait.…", "kind": "origin-trait", "name": "...", "trait": {...}}`. Identifiers are stable independent of their physical files. The original local `trait.id` is preserved within the canonical payload for the legacy source projection.
+Each reference is `{"traitId": "trait.…"}`, and the definition is an entity `{"id": "trait.…", "kind": "origin-trait", "name": "...", "trait": {...}}`. Identifiers are stable independent of their physical files. The local `trait.id` remains part of the legacy source projection. Selected local labels and IDs were renamed where they explicitly identified the source Species rather than the mechanic.
 
 ## Migration behavior
 
 - **Nine Species and 34 Ancestries** were audited. Five currently unselectable Gem Dragonborn leaf records had no traits to move. **38 source records** containing traits were changed.
-- **95 authored trait occurrences** were moved to **89 canonical definitions**. Four occurrences share one strictly identical `trait.shared.amphibious` definition; four share one strictly identical `trait.shared.low-light-vision`. Distinct `low-light-vision` in Tiefling, Orc/Goliath Powerful Build, and Red/Copper Natural Climber remain different definitions where authored behavior differs.
+- **95 authored trait occurrences** were moved to **89 canonical definitions**. Four occurrences share one strictly identical `trait.amphibious` definition; four share one strictly identical `trait.low-light-vision`. Distinct `low-light-vision` in Tiefling, Orc/Goliath Powerful Build, and Red/Copper Natural Climber remain different definitions where authored behavior differs.
 - Full trait payloads, choice fields, `originBindings`, dependent spellcasting, and source-relative Dragonborn parameters are retained, without editing their inner mechanics.
 - `NativeCatalogLoader` validates reference existence and category, and produces the exact previous embedded source `traits` view for catalog and mechanics consumers. It simultaneously registers `origin-trait` entities for canonical lookup and maps each source ID plus authored trait index to its definition ID.
 - `NativeOriginSourceDeconstructor` retains source occurrence and contributor evidence but uses the canonical definition ID in new candidates. The reconciler already reports shared definitions at different occurrences as unresolved pending explicit policy; this refactor adds no automatic stacking.
@@ -26,3 +26,23 @@ Intrinsic creature type, size, movement values, spellcasting choice, Species/Anc
 ## Verification
 
 Review the added C# loader tests for shared definition identity, runtime projection, dependent bindings, and missing/wrong-category failures. Run `dotnet restore RulesCore.slnx`, `dotnet build RulesCore.slnx -c Release`, `dotnet test RulesCore.slnx -c Release`, `python3 -m unittest discover -s tests -p 'test_*.py' -v`, `python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/native --strict`, and `python3 tools/validate_ruleset_split.py` before merge or deployment. The branch remains for review until these gates complete.
+
+## Source-neutral ID migration — 2026-11-21
+
+The 89-definition normalization above is preserved as a historical step. The
+active biological catalog now has 85 genes and uses mechanical IDs rather than
+Species/Ancestry-qualified IDs. Natural Climber and Low-Light Vision are
+consolidated because their mechanical payloads agree after disregarding
+non-mechanical wording. Darkness was unified after retiring prepared spells,
+and Powerful Build now combines its former Grappled escape and carrying/lifting
+benefits for both original Species presets. Every Species/Ancestry `traitId` and active
+source-bound `mechanicalDefinitionId` reference is updated.
+
+Persisted Origin data must be migrated explicitly using
+`data/migrations/biological-gene-ids-20261121.json`. The separate
+`tools/migrate_biological_gene_ids.py` tool changes recognized gene-ID
+references only, preserving source provenance and history IDs. Existing
+serialized profiles are not silently normalized by catalog lookup. Because
+Powerful Build and spell grant payloads changed, an ID-only migration does
+not validate or rebuild saved effects; affected grants require reconstruction
+against the revised native catalog before gameplay.

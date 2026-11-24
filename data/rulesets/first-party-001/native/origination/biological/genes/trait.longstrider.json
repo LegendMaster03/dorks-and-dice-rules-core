@@ -1,0 +1,21 @@
+{
+  "id": "trait.longstrider",
+  "name": "Longstrider",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "longstrider",
+    "originBindings": {
+      "spellcastingAbility": {
+        "lookup": "manifested-intrinsic",
+        "intrinsicSlot": "spellcastingAbility",
+        "scope": "source"
+      }
+    },
+    "description": "At level 3, know Longstrider; once per Long Rest free, and also with spell slots.",
+    "spell": "longstrider",
+    "level": 3,
+    "freeUses": 1,
+    "recharge": "long-rest",
+    "slotCasting": true
+  }
+}

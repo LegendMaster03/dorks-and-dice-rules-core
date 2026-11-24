@@ -72,7 +72,20 @@ public sealed partial class NativeEquipmentQualifications
     /// Combines only explicitly authored grants. Validates definition shape and
     /// choices, but never attempts to prove that the character earned a source.
     /// </summary>
-    public NativeEquipmentQualificationProjection Resolve(NativeEquipmentQualificationRequest request)
+    public NativeEquipmentQualificationProjection Resolve(NativeEquipmentQualificationRequest request) =>
+        ResolveCore(request, null);
+
+    // Only the native Life Experiences evaluator calls this internal path, after
+    // validating the outer source-local choices. No public request accepts branch
+    // paths or raw equipment grant blocks as proof of an earned qualification.
+    internal NativeEquipmentQualificationProjection ResolveLifeExperiences(
+        NativeEquipmentQualificationRequest request,
+        IReadOnlyDictionary<string, IReadOnlyList<NativeLifeExperienceEquipmentBranch>> selectedBranches) =>
+        ResolveCore(request, selectedBranches);
+
+    private NativeEquipmentQualificationProjection ResolveCore(
+        NativeEquipmentQualificationRequest request,
+        IReadOnlyDictionary<string, IReadOnlyList<NativeLifeExperienceEquipmentBranch>>? selectedBranches)
     {
         ArgumentNullException.ThrowIfNull(request);
         var issues = new List<NativeIssue>();
@@ -162,13 +175,29 @@ public sealed partial class NativeEquipmentQualifications
                     "A source cannot define equipment grants at both the root and inside definition."));
                 continue;
             }
-            if (!hasRoot && !hasNested)
+            JsonElement grants;
+            if (selectedBranches is not null)
             {
-                issues.Add(new("equipment-grants-not-reconciled", source.SourceId,
-                    "The source has no executable equipment proficiency grants."));
-                continue;
+                if (entity.Category is not ("upbringing" or "background") ||
+                    source.GrantMode != "standard" || hasNested ||
+                    !selectedBranches.TryGetValue(source.OccurrenceId, out var branches) ||
+                    !TryLifeExperienceGrantBlock(definition, branches, out grants))
+                {
+                    issues.Add(new("invalid-origin-equipment-source", source.SourceId,
+                        "The selected native Life Experiences equipment path is unavailable."));
+                    continue;
+                }
             }
-            var grants = hasRoot ? rootGrants : nestedGrants;
+            else
+            {
+                if (!hasRoot && !hasNested)
+                {
+                    issues.Add(new("equipment-grants-not-reconciled", source.SourceId,
+                        "The source has no executable equipment proficiency grants."));
+                    continue;
+                }
+                grants = hasRoot ? rootGrants : nestedGrants;
+            }
             if (grants.ValueKind != JsonValueKind.Object)
             {
                 issues.Add(new("invalid-equipment-grants", source.SourceId,
@@ -454,6 +483,51 @@ public sealed partial class NativeEquipmentQualifications
             if (covers == true) matches.AddRange(grant.Provenance);
         }
         return new("resolved", matches.Count != 0, matches, []);
+    }
+
+    // Re-resolve the exact selected source/benefit/option path from the same
+    // catalog. The existing fixed/choice evaluator then checks all targets,
+    // counts, and group membership. Unselected sibling options are never read.
+    private static bool TryLifeExperienceGrantBlock(JsonElement definition,
+        IReadOnlyList<NativeLifeExperienceEquipmentBranch> branches, out JsonElement result)
+    {
+        result = default;
+        var blocks = new List<JsonElement>();
+        if (definition.TryGetProperty("equipmentProficiencyGrants", out var root))
+            blocks.Add(root);
+        var seen = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var branch in branches)
+        {
+            if (!seen.Add(branch.BenefitId) ||
+                !TryArray(definition, "benefits", out var benefits)) return false;
+            var matches = benefits.EnumerateArray().Where(x =>
+                Text(x, "id") == branch.BenefitId &&
+                Text(x, "grantType") == "benefit-choice").ToArray();
+            if (matches.Length != 1 || !TryArray(matches[0], "options", out var options))
+                return false;
+            var selected = options.EnumerateArray().Where(x =>
+                Text(x, "id") == branch.OptionId).ToArray();
+            if (selected.Length != 1 ||
+                !TryObject(selected[0], "equipmentProficiencyGrants", out var block))
+                return false;
+            blocks.Add(block);
+        }
+        var combined = new Dictionary<string, List<JsonElement>>(StringComparer.Ordinal);
+        foreach (var block in blocks)
+        {
+            if (block.ValueKind != JsonValueKind.Object ||
+                block.EnumerateObject().Any(field => field.Name is not ("fixed" or "choices") ||
+                    field.Value.ValueKind != JsonValueKind.Array)) return false;
+            foreach (var field in block.EnumerateObject())
+            {
+                if (!combined.TryGetValue(field.Name, out var list))
+                    combined[field.Name] = list = [];
+                list.AddRange(field.Value.EnumerateArray());
+            }
+        }
+        if (combined.Count == 0) return false;
+        result = JsonSerializer.SerializeToElement(combined);
+        return true;
     }
 
     private IEnumerable<NativeRuleEntity> EquipmentOfKind(string kind)

@@ -7,23 +7,34 @@
   "parent": "species.elf",
   "traits": [
     {
-      "traitId": "trait.elf.wood.druidcraft"
+      "traitId": "trait.druidcraft"
     },
     {
-      "traitId": "trait.elf.wood.longstrider"
+      "traitId": "trait.longstrider"
     },
     {
-      "traitId": "trait.elf.wood.pass-without-trace"
+      "traitId": "trait.pass-without-trace"
+    },
+    {
+      "traitId": "trait.natural-camouflage"
+    },
+    {
+      "traitId": "trait.trackless-passage"
     }
   ],
   "walkingSpeedFeet": 35,
+  "overridesAncestorWalkingSpeed": true,
   "spellcastingAbilityChoice": [
     "intelligence",
     "wisdom",
     "charisma"
   ],
   "reviewNotes": [
-    "35-foot walking speed remains subject to comparative Species balance."
+    "35-foot walking speed remains subject to comparative Species balance.",
+    "Historical review — Wood Elf Magic: its spell package overlaps the existing Wood Elf inherent spell grants; do not grant duplicate spells. No additional biological characteristic was approved."
   ],
-  "defaultUpbringing": "upbringing.elf.wood"
+  "defaultUpbringing": "upbringing.elf.wood",
+  "environmentSubTrait": {
+    "biome": "woodland"
+  }
 }

@@ -1,0 +1,14 @@
+{
+  "name": "Energy emitter mount",
+  "description": "Mounting interface for an authored beam or elemental projector.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "equipment-mount",
+    "energy-weapon-interface"
+  ],
+  "materialSlots": [
+    "mount"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.energy-emitter-mount",
+  "powerDemand": 1
+}

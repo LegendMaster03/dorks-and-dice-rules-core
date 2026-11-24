@@ -1,0 +1,19 @@
+{
+  "id": "trait.druidcraft",
+  "name": "Druidcraft",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "druidcraft",
+    "originBindings": {
+      "spellcastingAbility": {
+        "lookup": "manifested-intrinsic",
+        "intrinsicSlot": "spellcastingAbility",
+        "scope": "source"
+      }
+    },
+    "description": "Gain Druidcraft at level 1.",
+    "spell": "druidcraft",
+    "level": 1,
+    "atWill": true
+  }
+}

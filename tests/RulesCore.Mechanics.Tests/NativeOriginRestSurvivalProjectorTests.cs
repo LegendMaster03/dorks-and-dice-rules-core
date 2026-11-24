@@ -117,7 +117,7 @@ public sealed class NativeOriginRestSurvivalProjectorTests
     {
         var catalog = Catalog();
         var result = Mixed(["species.elf", "species.orc"],
-            "trait.elf.trance", "trait.orc.relentless-endurance");
+            "trait.trance", "trait.relentless-endurance");
         Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
             string.Join("; ", result.Issues.Select(x => x.Code + ": " + x.Detail)));
         var view = NativeOriginRestSurvivalProjector.ProjectApprovedMixed(
@@ -143,7 +143,7 @@ public sealed class NativeOriginRestSurvivalProjectorTests
     public void UnselectedOrcOfferDoesNotAddAnEnduranceBenefit()
     {
         var result = Mixed(["species.elf", "species.orc"],
-            "trait.elf.trance");
+            "trait.trance");
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var view = NativeOriginRestSurvivalProjector.ProjectApprovedMixed(
             Catalog(), result);
@@ -171,7 +171,7 @@ public sealed class NativeOriginRestSurvivalProjectorTests
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         var trances = offered.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.elf.trance").ToArray();
+            x.Identity.MechanicalDefinitionId == "trait.trance").ToArray();
         Assert.Equal(2, trances.Length);
         Assert.All(trances, x =>
             Assert.Equal(NativeOriginEligibility.Eligible,
@@ -186,7 +186,7 @@ public sealed class NativeOriginRestSurvivalProjectorTests
         }));
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var grant = Assert.Single(result.Profile!.Underlying.InherentGrants,
-            x => x.Identity.MechanicalDefinitionId == "trait.elf.trance");
+            x => x.Identity.MechanicalDefinitionId == "trait.trance");
         Assert.Equal(2, grant.SourceCandidateIds.Count);
         var projected = NativeOriginRestSurvivalProjector.ProjectApprovedMixed(
             catalog, result);
@@ -202,7 +202,7 @@ public sealed class NativeOriginRestSurvivalProjectorTests
         var orc = Direct("species.orc");
         var effect = Assert.Single(orc.Profile!.Underlying.InherentGrants,
             x => x.Identity.MechanicalDefinitionId ==
-                "trait.orc.relentless-endurance");
+                "trait.relentless-endurance");
         var changed = effect with
         {
             EffectiveValue = JsonSerializer.SerializeToElement(new
