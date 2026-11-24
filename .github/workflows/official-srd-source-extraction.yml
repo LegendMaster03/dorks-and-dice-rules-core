@@ -5,6 +5,7 @@ on:
     paths:
       - 'tools/import_official_srd_pages.py'
       - 'tools/import_official_srd52_animals.mjs'
+      - 'tools/promote_srd_json.mjs'
       - 'data/rulesets/dnd-5-5e/native/bestiary/animals-*.json'
       - 'data/reference/srd/official-animals-import.json'
       - 'data/reference/srd/structured/bestiary/bestiary-srd52.json'
@@ -41,6 +42,9 @@ jobs:
       - name: Reproduce structured Animals catalog from validated publisher pages
         if: matrix.edition == 'srd-5.2.1'
         run: node tools/import_official_srd52_animals.mjs --check
+      - name: Verify structured JSON promotion
+        if: matrix.edition == 'srd-5.2.1'
+        run: node tools/promote_srd_json.mjs --check
       - uses: actions/upload-artifact@v4
         with:
           name: official-source-${{ matrix.edition }}

@@ -144,6 +144,10 @@ const json=value=>JSON.stringify(value,null,2)+"\n";
 const files=new Map();
 for(let i=0;i<result.records.length;i+=20){const number=String(i/20+1).padStart(2,"0");files.set(path.join(directory,"animals-"+number+".json"),json(result.records.slice(i,i+20)));}
 files.set(path.join(root,"data/reference/srd/official-animals-import.json"),json(result.report));
-if(process.argv.includes("--check")){for(const [file,body] of files)if(fs.readFileSync(file,"utf8")!==body)throw Error("Stale generated file: "+file);for(const file of fs.readdirSync(directory).filter(f=>/^animals-\\d+\\.json$/.test(f)))if(!files.has(path.join(directory,file)))throw Error("Stale animals file: "+file);}
+if(process.argv.includes("--check")){for(const [file,body] of files){
+  const expected=JSON.parse(body),actual=JSON.parse(fs.readFileSync(file,"utf8"));
+  const projection=rows=>rows.map(row=>{const copy={...row,source:{...row.source}};delete copy.source.structuredStatus;for(const key of ["trait","action","bonus","reaction","spellcasting"])delete copy[key];return copy;});
+  if(Array.isArray(expected)?JSON.stringify(projection(expected))!==JSON.stringify(projection(actual)):JSON.stringify(expected)!==JSON.stringify(actual))throw Error("Stale publisher evidence: "+file);
+}for(const file of fs.readdirSync(directory).filter(f=>/^animals-\\d+\\.json$/.test(f)))if(!files.has(path.join(directory,file)))throw Error("Stale animals file: "+file);}
 else {for(const [file,body] of files){fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,body);}}
 console.log(JSON.stringify(result.report));

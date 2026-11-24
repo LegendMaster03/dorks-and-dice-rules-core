@@ -175,7 +175,16 @@ if __name__ == "__main__":
         committed = []
         for path in sorted(directory.glob("spells-*.json")):
             committed.extend(json.loads(path.read_text(encoding="utf-8")))
-        if committed != rows:
-            raise SystemExit("Native spell records differ from pinned publisher extraction")
+        # Compare publisher evidence only; structured entries come from the
+        # separately checked pinned JSON promotion.
+        projection = []
+        for row in committed:
+            source = {key: value for key, value in row["source"].items()
+                      if key not in ("structuredSource", "structuredStatus")}
+            projection.append({**{key: row[key] for key in
+                ("id", "kind", "name", "level", "school", "officialTextLayout", "header", "catalogReferences")},
+                "source": source})
+        if projection != rows:
+            raise SystemExit("Native spell publisher evidence differs from pinned publisher extraction")
         report["nativeSpellParity"] = True
     print("SPELL_IMPORT_REPORT " + json.dumps(report))
