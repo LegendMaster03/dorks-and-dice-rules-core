@@ -176,15 +176,25 @@ public static class NativeCatalogLoader
             }
         }
 
-        if (ReadString(manifest, "sourceFormat") == "markdown-headings")
+        if (manifest.TryGetProperty("markdownImport", out var markdown))
         {
-            var byId = entities.ToDictionary(entity => entity.Id, StringComparer.Ordinal);
-            foreach (var entity in entities)
+            var count = Integer(markdown, "sectionRecords");
+            var commit = ReadString(markdown, "commit");
+            var sections = entities.Where(entity => entity.Id.StartsWith("section.", StringComparison.Ordinal)).ToArray();
+            if (count < 1 || commit is null || !Regex.IsMatch(commit, "^[0-9a-f]{40}$"))
+                throw Invalid("invalid_manifest", "Invalid Markdown import declaration.");
+            if (sections.Length != count)
+                throw Invalid("invalid_native_json", "Markdown section inventory is incomplete.");
+            // The package may also contain separately authored structured rules.
+            var byId = sections.ToDictionary(entity => entity.Id, StringComparer.Ordinal);
+            foreach (var entity in sections)
             {
                 var level = Integer(entity.Definition, "headingLevel");
                 if (level < 1 || level > 6 || string.IsNullOrWhiteSpace(ReadString(entity.Definition, "markdown")) ||
-                    !entity.Definition.TryGetProperty("parentId", out var parent))
-                    throw Invalid("invalid_native_json", "Invalid Markdown section.");
+                    !entity.Definition.TryGetProperty("parentId", out var parent) ||
+                    !entity.Definition.TryGetProperty("source", out var source) ||
+                    ReadString(source, "commit") != commit)
+                    throw Invalid("invalid_native_json", "Invalid Markdown section or provenance.");
                 if (parent.ValueKind == JsonValueKind.Null)
                 {
                     if (level != 1) throw Invalid("invalid_native_json", "Markdown root must be a top-level heading.");

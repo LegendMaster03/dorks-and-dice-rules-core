@@ -125,6 +125,37 @@ public sealed class NativeCatalogRegistryTests
         }
     }
 
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void DeclaredMarkdownSourceRejectsMissingParentWithoutImposingRulesOnOtherEntities(bool valid)
+    {
+        var root = Path.Combine(Path.GetTempPath(), "rules-core-md-" + Guid.NewGuid().ToString("N"));
+        const string commit = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        try
+        {
+            var location = NativeRulesetLayout.Resolve(root, "markdown-test");
+            Directory.CreateDirectory(location.NativeDirectory);
+            File.WriteAllText(Path.Combine(root, "markdown-test", "manifest.json"),
+                $$"""{"id":"markdown-test","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/","markdownImport":{"sectionRecords":2,"commit":"{{commit}}"}}""");
+            File.WriteAllText(Path.Combine(location.NativeDirectory, "root.json"),
+                $$"""{"id":"section.root","kind":"chapter","name":"Root","headingLevel":1,"parentId":null,"markdown":"# Root","source":{"commit":"{{commit}}"}}""");
+            var parent = valid ? "section.root" : "section.missing";
+            File.WriteAllText(Path.Combine(location.NativeDirectory, "child.json"),
+                $$"""{"id":"section.root.child","kind":"rule","name":"Child","headingLevel":2,"parentId":"{{parent}}","markdown":"## Child","source":{"commit":"{{commit}}"}}""");
+            File.WriteAllText(Path.Combine(location.NativeDirectory, "skill.json"),
+                """{"id":"skill.example","kind":"skill","name":"Example"}""");
+            if (valid)
+                Assert.Equal(3, NativeCatalogLoader.Load(location).Count);
+            else
+                Assert.Throws<NativeCatalogLoadException>(() => NativeCatalogLoader.Load(location));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
     [Fact]
     public void DuplicateRegistrationIsRejected()
     {
