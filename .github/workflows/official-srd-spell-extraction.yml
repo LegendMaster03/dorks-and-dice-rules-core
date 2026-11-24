@@ -1,0 +1,38 @@
+name: Official SRD Spell Extraction
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tools/import_official_srd_spells.py'
+      - '.github/workflows/official-srd-spell-extraction.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - edition: srd-5.1
+            url: https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf
+          - edition: srd-5.2.1
+            url: https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PDF extractor
+        run: sudo apt-get update -qq && sudo apt-get install -y poppler-utils
+      - name: Retrieve pinned publisher source
+        env:
+          OFFICIAL_URL: ${{ matrix.url }}
+        run: curl --fail --location --retry 3 --silent --show-error "$OFFICIAL_URL" -o /tmp/official-srd.pdf
+      - name: Extract named spell definitions
+        env:
+          EDITION: ${{ matrix.edition }}
+        run: python3 tools/import_official_srd_spells.py "$EDITION" /tmp/official-srd.pdf --output build/official-spells --emit-transfer
+      - uses: actions/upload-artifact@v4
+        with:
+          name: official-spells-${{ matrix.edition }}
+          path: build/official-spells/
+          if-no-files-found: error
