@@ -1630,6 +1630,104 @@ public sealed class NativeCharacterManifestationTests
         Assert.Equal(10, reverted.BaseMechanics.Values["ability.strength.score"].Value);
     }
 
+    // Only inventory evidence is synthetic here. Use the actual native
+    // Upbringing, Background, biological Origin, Class and qualification data.
+    private sealed class CompositionItemAuthority : INativeLifeExperienceContextAuthority
+    {
+        public bool AuthorizesChoice(NativeLifeExperienceSource source,
+            NativeLifeExperienceChoice choice, string optionId) => false;
+
+        public NativeLifeExperienceItemProof? VerifyItem(NativeLifeExperienceSource source,
+            NativeLifeExperienceItemIntent intent) =>
+            source.SourceId != "background.entertainer" ? null : intent.Key switch
+            {
+                "background.entertainer/item/0" when intent.SelectedItemId == "fixture.disguise-kit" &&
+                    intent.OrdinaryOptions.Contains("Disguise Kit") =>
+                    new("fixture.disguise-kit", "equipment.tool.disguise-kit", true, true),
+                "background.entertainer/item/1" => new("fixture.token", null, true, true),
+                "background.entertainer/item/2" => new("fixture.costume", null, true, true),
+                "background.entertainer/item/3" => new("fixture.pouch", null, true, true),
+                _ => null
+            };
+    }
+
+    [Fact]
+    public void ComposedPrimaryTrainingSurvivesManifestationAndLatestBaselineReversion()
+    {
+        var folder = new DirectoryInfo(AppContext.BaseDirectory);
+        while (folder is not null && !File.Exists(Path.Combine(folder.FullName, "data", "rulesets",
+            "first-party-001", "native", "rules", "creature-origination.json")))
+            folder = folder.Parent;
+        Assert.NotNull(folder);
+        var catalog = NativeCatalogLoader.Load(NativeRulesetLayout.Resolve(
+            Path.Combine(folder.FullName, "data", "rulesets"), "first-party-001"));
+        var origin = new NativeOriginConstructionEngine(catalog).Evaluate(new(
+            new NativeOriginProposal("composition-dwarf", NativeOriginIntent.Direct,
+                new("rule.creature-origination", "biological"), [], [], [], SelectedSpeciesId: "species.dwarf")));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, origin.Status);
+        var walk = Assert.Single(origin.Profile!.Underlying.InherentGrants,
+            grant => grant.Identity.IntrinsicSlotId == "walkingSpeedFeet").EffectiveValue!.Value.GetInt32();
+
+        var life = new NativeLifeExperienceResolver(catalog).Resolve(
+            new("upbringing.elf.wood", "background.entertainer",
+                new Dictionary<string, IReadOnlyList<string>>
+                {
+                    ["upbringing.elf.general/cultural-training"] = ["skill.survival"],
+                    ["background.entertainer/entertainer-performance-specialty"] = ["skill.acrobatics"],
+                    ["background.entertainer/entertainer-performance-method"] = ["disguise-kit"]
+                }, new Dictionary<string, string> { ["background.entertainer/item/0"] = "fixture.disguise-kit" }),
+            new(new Dictionary<string, string>
+            {
+                ["upbringing.elf.general"] = "verified-parent",
+                ["upbringing.elf.wood"] = "verified-upbringing",
+                ["background.entertainer"] = "verified-background"
+            }, new CompositionItemAuthority()));
+        Assert.NotNull(life.EarnedProjection);
+        var unaggregated = Character(speed: walk).PrimaryMechanics with
+        {
+            Fingerprint = catalog.Fingerprint,
+            Advancements = [new("class.rogue", 1, "class-1")]
+        };
+        NativeCharacterTrainingComposition Compose(NativeCharacterRequest primary) =>
+            NativeCharacterTrainingComposer.Compose(catalog, primary, life.EarnedProjection,
+                [new("class.rogue", "class-skill-1", "skill.survival")],
+                [new("class.rogue", "class-competency-1", "competency.disguise", Proficient: true)],
+                new Dictionary<string, string> { ["class-skill-1"] = "skill.stealth" },
+                new Dictionary<string, string>(), NativeCompetencyDuplicateProficiencyPolicy.AddRank);
+        var composed = Compose(unaggregated);
+        Assert.Equal("resolved", composed.Status);
+        Assert.NotNull(composed.ComposedPrimary);
+        Assert.True(composed.ComposedPrimary.Skills!["skill.survival"].Proficient);
+        Assert.True(composed.ComposedPrimary.Skills["skill.stealth"].Proficient);
+        Assert.Equal(1, composed.ComposedPrimary.Competencies!["competency.disguise"].Ranks);
+        Assert.True(composed.ComposedPrimary.Competencies["competency.disguise"].Proficient);
+        Assert.Null(unaggregated.Skills);
+        Assert.Equal("invalid", Compose(composed.ComposedPrimary).Status);
+
+        // Use the existing independently authorized form resolver, not a
+        // second training pass or a copied pre-activation character snapshot.
+        var state = Character() with { PrimaryMechanics = composed.ComposedPrimary };
+        var active = ActivatedWolf(state);
+        var effective = Resolve(state, active).EffectiveMechanics!;
+        Assert.Equal(17, effective.AbilityScores["strength"]);
+        Assert.Equal(walk, effective.BaseWalkSpeed);
+        Assert.True(effective.Skills!["skill.survival"].Proficient);
+        Assert.Equal(1, effective.Competencies!["competency.disguise"].Ranks);
+
+        var advanced = Compose(unaggregated with { Advancements = [new("class.rogue", 2, "class-1")] });
+        Assert.NotNull(advanced.ComposedPrimary);
+        var latest = state with { PrimaryMechanics = advanced.ComposedPrimary };
+        var ended = Plan(latest, active, "e2",
+            Action(NativeManifestationTransitionAction.End, "manifest.wolf"));
+        Assert.Equal("planned", ended.Status);
+        var reverted = ended.ProposedEffective!.EffectiveMechanics!;
+        Assert.Equal(10, reverted.AbilityScores["strength"]);
+        Assert.Equal(2, Assert.Single(reverted.Advancements).Level);
+        Assert.Equal(walk, reverted.BaseWalkSpeed);
+        Assert.True(reverted.Skills!["skill.stealth"].Proficient);
+        Assert.Equal(1, reverted.Competencies!["competency.disguise"].Ranks);
+    }
+
     [Fact]
     public void NativeProjectionRejectsStaleNativeCatalogVersion()
     {

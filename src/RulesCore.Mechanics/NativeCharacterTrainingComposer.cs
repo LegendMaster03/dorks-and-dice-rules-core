@@ -20,7 +20,8 @@ public sealed record NativeCharacterTrainingComposition(
     IReadOnlyList<NativeCharacterSkillReplacement> SkillReplacements,
     IReadOnlyList<NativeCharacterSkillDuplicateChoice> RequiredSkillChoices,
     NativeCompetencyGrantResult? Competencies,
-    NativeCharacterProjection? Projection, IReadOnlyList<NativeIssue> Issues);
+    NativeCharacterProjection? Projection, IReadOnlyList<NativeIssue> Issues,
+    NativeCharacterRequest? ComposedPrimary = null);
 
 /// <summary>
 /// Combine already-authorized class, inherent, acquired and Life Experience
@@ -142,12 +143,18 @@ public static class NativeCharacterTrainingComposer
             competencyMap[id] = (competencyMap.GetValueOrDefault(id) ?? new()) with
             { Ranks = training.Ranks, Proficient = training.Proficient };
 
-        var projection = new NativeCharacterProjector(catalog).Project(primary with
-        { Skills = skillMap, Competencies = competencyMap }, cancellationToken);
+        // Retain the exact detached request used for the numeric projection.
+        // The owning host can verify and store it as the primary sheet input,
+        // without re-awarding source entitlements or reverse-engineering check
+        // modifiers. Alternate sheets resolve against this latest baseline.
+        var composed = NativeCharacterSheetResolver.CopyMechanics(primary with
+        { Skills = skillMap, Competencies = competencyMap });
+        var projection = new NativeCharacterProjector(catalog).Project(composed, cancellationToken);
         // Composite Skill entitlements are valid, but the numeric kernel still
         // lacks a composite proficiency policy. Do not train the children or
         // silently override its unresolved numeric result.
         return new(projection.Status == "invalid" ? "invalid" : "resolved", skills,
-            replacements, [], combined, projection, projection.Issues);
+            replacements, [], combined, projection, projection.Issues,
+            projection.Status == "invalid" ? null : composed);
     }
 }
