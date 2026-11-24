@@ -1,0 +1,589 @@
+[
+  {
+    "id": "skill.academics",
+    "kind": "skill",
+    "name": "Academics",
+    "description": "Mundane, everyday human knowledge and education, including history, sciences, and medicine. Academics stunts often refer to specialized areas of knowledge and medical skills.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.athletics",
+    "kind": "skill",
+    "name": "Athletics",
+    "description": "A measurement of physical potential. Athletics stunts focus on movement—running, jumping, parkour—and dodging attacks.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.burglary",
+    "kind": "skill",
+    "name": "Burglary",
+    "description": "Knowledge of and ability to bypass security systems, pick pockets, and generally commit crimes. Burglary stunts give bonuses to the various stages of committing a crime, from the planning to the execution and escape.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.contacts",
+    "kind": "skill",
+    "name": "Contacts",
+    "description": "Knowledge of the right people and connections that can help you. Contacts stunts give you ready allies and an information network wherever you go in the world.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.crafts",
+    "kind": "skill",
+    "name": "Crafts",
+    "description": "Ability to make or break machinery, build contraptions, and pull off MacGyver-esque feats of ingenuity. Crafts stunts let you have the gizmo on hand, give bonuses to building and breaking things, and provide justification for using Crafts in place of skills like Burglary or Academics under certain circumstances.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.deceive",
+    "kind": "skill",
+    "name": "Deceive",
+    "description": "Ability to lie and cheat convincingly and with aplomb. Deceive stunts might improve your ability to tell a particular breed of lie or help invent false identities.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.drive",
+    "kind": "skill",
+    "name": "Drive",
+    "description": "Controlling vehicles under the most grueling circumstances, pulling wicked maneuvers, and simply getting the most out of your ride. Drive stunts can be signature maneuvers, a special vehicle of your own, or the ability to use Drive in place of a skill like Burglary or Academics under certain circumstances.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.empathy",
+    "kind": "skill",
+    "name": "Empathy",
+    "description": "Ability to accurately judge someone’s mood and intentions. Empathy stunts can be about judging a crowd, picking up on lies, or helping others recover from mental consequences.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.fight",
+    "kind": "skill",
+    "name": "Fight",
+    "description": "Ability to excel at hand-to-hand combat, whether with weapons or fists. Fight stunts include signature weapons and special techniques.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.investigate",
+    "kind": "skill",
+    "name": "Investigate",
+    "description": "Deliberate, careful study and puzzling out mysteries. Use this to piece together clues or reconstruct a crime scene. Investigate stunts help you form brilliant deductions or piece together information more quickly.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.lore",
+    "kind": "skill",
+    "name": "Lore",
+    "description": "Specialized, arcane knowledge that falls outside of the scope of Academics, including supernatural topics of one sort or another. This is where the weird stuff happens. Lore stunts often support practical applications of your arcane knowledge, such as casting spells. Some settings may remove Lore, replace it with a different skill, or combine it with Academics.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.notice",
+    "kind": "skill",
+    "name": "Notice",
+    "description": "Ability to pick up details in the moment, spot trouble before it happens, and generally be perceptive. It contrasts Investigate, which is for slow, deliberate observation. Notice stunts sharpen your senses, improve your reaction time, or make you harder to sneak up on.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.physique",
+    "kind": "skill",
+    "name": "Physique",
+    "description": "Raw power and durability. Physique stunts let you perform superhuman feats of strength, throw your weight around while wrestling, and shrug off physical consequences. In addition, a high Physique rating gives you more physical stress or consequence slots (**page XX**).",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.provoke",
+    "kind": "skill",
+    "name": "Provoke",
+    "description": "Ability to push people to act the way you want them to. It’s coarse and manipulative, not a positive interaction. Provoke stunts let you push opponents into foolhardy action, draw aggression toward you, or scare enemies (assuming they can feel fear).",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.rapport",
+    "kind": "skill",
+    "name": "Rapport",
+    "description": "Building connections with others and working together. Where Provoke is manipulation, Rapport is sincerity, trust, and goodwill. Rapport stunts let you sway the crowd, improve relationships, or build contacts.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.resources",
+    "kind": "skill",
+    "name": "Resources",
+    "description": "Access to material things, not just money or direct ownership. It might reflect your ability to borrow from friends or dip into an organization’s armory. Resources stunts let you use Resources in place of Rapport or Contacts or give you extra free invokes when you pay for the best.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.shoot",
+    "kind": "skill",
+    "name": "Shoot",
+    "description": "All forms of ranged combat, whether guns, throwing knives, or bow and arrow. Shoot stunts let you make called shots, quick-draw, or always have a gun handy.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.stealth",
+    "kind": "skill",
+    "name": "Stealth",
+    "description": "Staying unseen or unheard and escaping when you need to hide. Stealth stunts let you vanish in plain sight, blend into crowds, or advance through shadows unseen.",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "skill.will",
+    "kind": "skill",
+    "name": "Will",
+    "description": "Mental fortitude, the ability to overcome temptation and to withstand trauma. Will stunts let you ignore mental consequences, withstand the mental agony of strange powers, and hold steady against enemies who provoke you. In addition, a high Will rating gives you more mental stress or consequence slots (**page XX**).",
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.skill-list",
+      "section.getting-started.create-your-characters.skills"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 352,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "defaultRating": 0
+  },
+  {
+    "id": "action.overcome",
+    "kind": "action",
+    "name": "Overcome",
+    "markdown": "### Overcome\n\nOvercome to surmount obstacles with your skills.\n\nEvery character will face untold challenges in the course of the story. The <a id=\"_idTextAnchor010\"></a>**overcome** action is how they face and surmount those obstacles.\n\nA character good at Athletics can climb over walls and race through crowded streets. A detective with high Investigate can piece together clues others have missed. Someone skilled in Rapport will find it easier to avoid a fight in a hostile bar.\n\nYour outcomes when overcoming are:\n\n*   **If you fail,** discuss with the GM (and the defending player, if any) whether it’s a failure or success at a major cost (**page XX**).\n\n*   **If you tie,** it’s success at a minor cost (**page XX**)—you’re in a tough spot, the enemy gets a boost (**page XX**), or you may take a hit. Alternatively, you fail but gain a boost.\n\n*   **If you succeed,** you meet your goal and the story moves on without hiccups.\n\n*   **If you succeed with style,** it’s a success and you also get a boost.\n\nCharles has made his way to an Antarctic research facility. The buildings have been wrecked, and the occupants are missing. He wants to search the wreckage for clues. The GM tells him to roll Investigate against Fair (+2) difficulty. Charles gets <dice>[0][0][+][+]</dice> on the dice, plus his Average (+1) Investigate, for a Good (+3) effort. A success! The GM describes the clue he finds: footprints in the snow, made by creatures walking on many thin, inhuman legs.\n\nOvercome actions are often used to determine whether a character can access or notice a particular fact or clue. Keep a close eye on those success-at-a-cost options when that’s the case. If missing a detail would cause your story to stall, take failure off the table, and focus on the cost instead.\n\n",
+    "catalogReferences": [
+      "section.taking-action-rolling-the-dice.actions.overcome"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 720,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "reactive": false
+  },
+  {
+    "id": "action.create-an-advantage",
+    "kind": "action",
+    "name": "Create an Advantage",
+    "markdown": "### Create an Advantage\n\nCreate A situation aspect or gain a benefit from an existing aspect.\n\nYou can use the <a id=\"_idTextAnchor011\"></a>**create an advantage** action to change the course of the story. By using your skills to introduce new aspects or add invokes to existing aspects, you can stack the deck for yourself and your teammates. You might change the circumstances (barring a door or creating a plan), discover new information (learning a monster’s weakness through research), or take advantage of something already known (such as a CEO’s taste for scotch).\n\nAn aspect created (or discovered) by creating an advantage works like any other: It defines the narrative circumstances and can allow, prevent, or impede actions—for instance, you cannot read a spell if the room has been made **Pitch Black**. It can also be invoked (**page XX**) or compelled (**page XX**). In addition, creating an advantage gives you one or more **free invokes** of the created aspect. A free invoke, as the name suggests, lets you invoke an aspect without spending a fate point. You can even let your allies use free invokes you have created.\n\nWhen you roll to create an advantage, specify whether you’re creating a new aspect or taking advantage of an existing one. If the former, are you attaching the aspect to an ally, opponent, or the environment? If you’re attaching it to an opponent, they can take the defend action to oppose you. Otherwise you’ll usually face a difficulty, but the GM can decide if something or someone opposes your efforts with a defend roll instead.\n\nYour outcomes when creating a new aspect are:\n\n*   **If you fail,** you either don’t create the aspect (failure) or you create it but the enemy gets the free invoke (success at a cost). If you succeed at a cost, the final aspect may need to be rewritten to benefit the enemy. This may still be worth it because aspects are true (**page XX**).\n\n*   **If you tie,** you don’t create an aspect, but you do get a boost (**page XX**).\n\n*   **If you succeed,** you create a situation aspect with one free invoke on it.\n\n*   **If you succeed with style,** you create a situation aspect with _two_ free invokes on it.\n\nWith an existing known or unknown aspect the outcomes are:\n\n*   **If you fail,** and the aspect was known, the enemy gets a free invoke. If it was unknown, they may choose to reveal it to get a free invoke.\n\n*   **If you tie,** you gain a boost if the aspect was unknown; it stays unknown. If the aspect is known, you get a free invoke on it instead.\n\n*   **If you succeed,** gain a free invoke on the aspect, revealing it if unknown.\n\n*   **If you succeed with style,** gain two free invokes, revealing it if unknown.\n\nEthan is face-to-something with a shoggoth, a massive and tireless fleshy beast. He knows it’s too powerful to attack directly, so he decides his best bet is to distract it: “I’d like to make a Molotov cocktail and set this thing on fire!” he announces.\n\nThe GM decides that actually hitting the shoggoth is trivial, so this is a Crafts roll—how quickly can he find and weaponize something flammable? The difficulty is set at Good (+3). Ethan has Average (+1) Crafts but rolls <dice>[0][+][+][+]</dice>, giving a Great (+4) effort.\n\nEthan cobbles together the Molotov and tosses it at the beast. The shoggoth is now **On Fire**, and Ethan has one free invoke on that aspect. The shoggoth is definitely distracted, and if it does try to chase him, Ethan can use that invoke to help himself get away.\n\n",
+    "catalogReferences": [
+      "section.taking-action-rolling-the-dice.actions.create-an-advantage"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 742,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "reactive": false
+  },
+  {
+    "id": "action.attack",
+    "kind": "action",
+    "name": "Attack",
+    "markdown": "### Attack\n\nAttack to harm the enemy.\n\nThe <a id=\"_idTextAnchor012\"></a>**attack** action is how you try to take out an opponent—whether you’re looking to kill a loathsome monster, or knock out an innocent guard who doesn’t know the truth about what he’s guarding. An attack can be unloading with a machine gun, throwing a solid punch, or casting a baleful spell.\n\nKeep in mind whether or not harming your target is even possible. Not every attack is equal. You can’t just punch a kaiju and hope to hurt it. Determine whether the attack even has a chance of being successful before you start rolling the dice. A number of powerful beings may have specific weaknesses that need to be exploited, or some means of defense you must get through before you can even begin to hurt them.\n\nYour outcomes when attacking are:\n\n*   **If you fail,** you fail to connect—the attack is parried, dodged, or maybe just absorbed by armor.\n\n*   **If you tie,** maybe you barely connect, maybe you cause the defender to flinch. Either way, you get a boost (**page XX**).\n\n*   **If you succeed,** you deal a hit equal to the difference between your attack’s total and the defense’s effort. The defender must absorb this hit with stress or consequences, or else be taken out (**page XX**).\n\n*   **If you succeed with style,** you deal a hit just like a success, but you may reduce the shifts of the hit by one to get a boost.\n\nRuth has stumbled across a corpse raised by arcane powers to fulfill some dark purpose. She decides to punch it. She has Great (+4) Fight but rolls <dice>[-][-][0][0]</dice>, giving a Fair (+2) effort.\n\n",
+    "catalogReferences": [
+      "section.taking-action-rolling-the-dice.actions.attack"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 778,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "reactive": false
+  },
+  {
+    "id": "action.defend",
+    "kind": "action",
+    "name": "Defend",
+    "markdown": "### Defend\n\nDefend to survive an attack or interfere with a foe’s action.\n\nIs a monster trying to eat your face? Is a foe pushing you out of the way as they flee your wrath? What about when that cultist tries to stab you in both kidneys? **Defend**, defend, defend.\n\nDefend is the only reactive action in _Fate Condensed_. You use it to stop something from happening outside your turn, so you’re often facing an opposing roll rather than a set difficulty. Your enemy rolls, and you immediately roll to defend, so long as you’re the target or can justify your opposition (which often makes you the target). Aspects or stunts may provide justification.\n\nYour outcomes when defending are:\n\n*   **If you fail** against an attack, you take a hit, which you must absorb with stress (**page XX**) or consequences (**page XX**). Regardless, the enemy succeeds as described for their action.\n\n*   **If you tie,** proceed according to the tie result for the opposed action.\n\n*   **If you succeed,** you don’t take a hit or you deny the enemy’s action.\n\n*   **If you succeed with style,** you don’t take a hit, you deny the enemy’s action, and you even get a boost as you gain the upper hand for a moment.\n\nContinuing from the previous example, the corpse gets to defend itself against Ruth. The GM rolls <dice>[-][0][0][+]</dice>, which doesn’t change the creature’s Mediocre (+0) Athletics.\n\nBecause Ruth’s effort was higher, her attack succeeds by two shifts, and the corpse is a little closer to being down for good. Had the corpse rolled better, then its defense would have succeeded, and the undead monstrosity would have avoided taking a hit.\n\n",
+    "catalogReferences": [
+      "section.taking-action-rolling-the-dice.actions.defend"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 798,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    },
+    "reactive": true
+  },
+  {
+    "id": "rule.adjective-ladder",
+    "kind": "rule",
+    "name": "Adjective Ladder",
+    "ratings": [
+      {
+        "rating": 8,
+        "name": "Legendary"
+      },
+      {
+        "rating": 7,
+        "name": "Epic"
+      },
+      {
+        "rating": 6,
+        "name": "Fantastic"
+      },
+      {
+        "rating": 5,
+        "name": "Superb"
+      },
+      {
+        "rating": 4,
+        "name": "Great"
+      },
+      {
+        "rating": 3,
+        "name": "Good"
+      },
+      {
+        "rating": 2,
+        "name": "Fair"
+      },
+      {
+        "rating": 1,
+        "name": "Average"
+      },
+      {
+        "rating": 0,
+        "name": "Mediocre"
+      },
+      {
+        "rating": -1,
+        "name": "Poor"
+      },
+      {
+        "rating": -2,
+        "name": "Terrible"
+      },
+      {
+        "rating": -3,
+        "name": "Catastrophic"
+      },
+      {
+        "rating": -4,
+        "name": "Horrifying"
+      }
+    ],
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills.the-adjective-ladder"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 116,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    }
+  },
+  {
+    "id": "rule.starting-skill-pyramid",
+    "kind": "rule",
+    "name": "Starting Skill Pyramid",
+    "allocations": [
+      {
+        "rating": 4,
+        "count": 1
+      },
+      {
+        "rating": 3,
+        "count": 2
+      },
+      {
+        "rating": 2,
+        "count": 3
+      },
+      {
+        "rating": 1,
+        "count": 4
+      }
+    ],
+    "remainingRating": 0,
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.skills",
+      "section.getting-started.create-your-characters.skills.skill-list"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 102,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    }
+  },
+  {
+    "id": "rule.stress-capacity",
+    "kind": "rule",
+    "name": "Stress Capacity",
+    "tracks": [
+      {
+        "id": "physical",
+        "skillId": "skill.physique"
+      },
+      {
+        "id": "mental",
+        "skillId": "skill.will"
+      }
+    ],
+    "boxValue": 1,
+    "thresholds": [
+      {
+        "minimumRating": 0,
+        "boxes": 3
+      },
+      {
+        "minimumRating": 1,
+        "boxes": 4
+      },
+      {
+        "minimumRating": 3,
+        "boxes": 6
+      },
+      {
+        "minimumRating": 5,
+        "boxes": 6,
+        "additionalMildConsequence": true
+      }
+    ],
+    "catalogReferences": [
+      "section.getting-started.create-your-characters.stress-and-consequences",
+      "skill.physique",
+      "skill.will"
+    ],
+    "source": {
+      "commit": "93ed848e723f31b4994b466b7241011ba24be885",
+      "path": "docs/markdown/Fate-Condensed-SRD-CC-BY.md",
+      "line": 467,
+      "license": "CC-BY-3.0",
+      "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
+      "url": "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+    }
+  }
+]

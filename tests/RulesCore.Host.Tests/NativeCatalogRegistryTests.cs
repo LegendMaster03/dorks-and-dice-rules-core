@@ -87,7 +87,9 @@ public sealed class NativeCatalogRegistryTests
             Assert.Equal(15, catalog.CountByCategory("condition"));
         }
         Assert.Throws<ArgumentException>(() => registry.GetStore(ids[1]).Publish(modern));
-        Assert.Equal(127, registry.GetStore(ids[3]).Snapshot!.Count);
+        Assert.Equal(153, registry.GetStore(ids[3]).Snapshot!.Count);
+        Assert.Equal(19, registry.GetStore(ids[3]).Snapshot!.CountByCategory("skill"));
+        Assert.Equal(4, registry.GetStore(ids[3]).Snapshot!.CountByCategory("action"));
         Assert.Equal(0, registry.GetStore(ids[3]).Snapshot!.CountByCategory("class"));
     }
 
