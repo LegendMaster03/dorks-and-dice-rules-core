@@ -68,7 +68,7 @@ public sealed class NativePublicApiTests
                     var location = NativeRulesetLayout.Resolve(root, id);
                     Directory.CreateDirectory(location.NativeDirectory);
                     File.WriteAllText(Path.Combine(root, id, "manifest.json"),
-                        $"""{"id":"{{id}}","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/"}""");
+                        $$"""{"id":"{{id}}","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/"}""");
                     File.WriteAllText(Path.Combine(location.NativeDirectory, "base.json"),
                         id == "dnd-5-5e" ? "{ broken" :
                         """{"id":"rule.initiative","name":"Foreign Initiative","kind":"rule"}""");
