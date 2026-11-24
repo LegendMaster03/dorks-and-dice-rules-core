@@ -1,0 +1,31 @@
+name: SRD Edition Review Catalogs
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tools/stage_srd_editions.py'
+      - 'tools/inventory_srd_editions.py'
+      - 'data/reference/srd/structured/**'
+      - 'data/reference/srd/structured-manifest.json'
+      - '.github/workflows/srd-edition-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-review-catalogs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build isolated edition review catalogs
+        run: python3 tools/stage_srd_editions.py --output build/srd-review
+      - name: Publish review inventory to summary
+        run: |
+          echo '## Unreviewed SRD candidate inventory' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The artifact is reference-only; no runtime promotion.' >> "$GITHUB_STEP_SUMMARY"
+          python3 -c 'import json; d=json.load(open("build/srd-review/srd-review-summary.json")); print("\n".join("- {}: {} candidates".format(k, v["count"]) for k,v in d.items()))' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: srd-edition-review-catalogs
+          path: build/srd-review/
+          retention-days: 30
+          if-no-files-found: error

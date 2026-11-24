@@ -29,6 +29,10 @@ D&D official source URLs and required CC BY 4.0 attributions are in data/referen
 
 Fate source: fate-srd/fate-srd-content, commit 93ed848e723f31b4994b466b7241011ba24be885, docs/markdown/Fate-Condensed-SRD-CC-BY.md, blob cc313c53ee75939e1f5c53f0f2ee59181e78ee00. CC BY 3.0. Preserved original attribution and added publisher's current attribution. Source has unresolved page XX placeholders; do not silently invent destinations. Current website parity and consumer-safe Markdown rendering require review. The original Markdown is reference-only; the native JSON records retain every original section verbatim. Reproduce/check with python3 tools/import_fate_condensed.py [--check].
 
+## Edition review catalog generation
+
+Run `python3 tools/stage_srd_editions.py --output build/srd-review` to materialize both full source-tagged working catalogs from the pinned 5e.tools-shaped reference input. The workflow SRD Edition Review Catalogs uploads the working-only output and summary as an artifact. Every tagged top-level source occurrence is preserved verbatim with an exact source pointer, payload digest, contextual proposed identity and unreviewed status. The original inventory also records untagged and non-object values; these need separate classification. Metadata, fluff and source defects are not silently promoted. Proposed identity collisions are reported rather than collapsed. This is the candidate import, not a claim of official completeness or a native promotion. Generated artifacts never enter native roots.
+
 ## Representative evaluation
 
 GET /api/mechanics/v1/rulesets/{rulesetId}/capabilities lists only representative operations, complete=false. POST /api/mechanics/v1/rulesets/{rulesetId}/resolution accepts fingerprint and resolution object (operation, dice, modifier, target, optional d20 options advantage/disadvantage/exhaustion). The private ingress uses /api/private/mechanics/v1 instead. All require existing tickets and matching package publication approval.
