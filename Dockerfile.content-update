@@ -1,13 +1,17 @@
 # Native JSON-only release layer. The application binary is inherited unchanged
 # from the previously deployed and validated Rules Core image.
 ARG RULES_CORE_BASE_IMAGE
-FROM ${RULES_CORE_BASE_IMAGE}
-
-# Replace (do not merge) the catalog so deleted JSON cannot survive the update.
+FROM ${RULES_CORE_BASE_IMAGE} AS catalogs
 USER root
-RUN rm -rf /app/data/rulesets/first-party-001/native
-COPY data/rulesets/first-party-001/manifest.json /app/data/rulesets/first-party-001/manifest.json
-COPY data/rulesets/first-party-001/native/ /app/data/rulesets/first-party-001/native/
+COPY data/rulesets/ /source/rulesets/
+COPY tools/stage_runtime_catalogs.sh /stage_runtime_catalogs.sh
+RUN sh /stage_runtime_catalogs.sh /source/rulesets /staged-catalogs
+
+FROM ${RULES_CORE_BASE_IMAGE}
+# Replace all catalogs so removed packages and deleted JSON cannot survive.
+USER root
+RUN rm -rf /app/data/rulesets
+COPY --from=catalogs /staged-catalogs/ /app/data/rulesets/
 
 # Restore the same non-root identity used by the original .NET runtime image.
 USER $APP_UID
