@@ -2,6 +2,11 @@
 
 Status: **comparative research / pre-design evidence**. 2026-10-09. This is **not** the proposed or accepted combat system of Dorks & Dice. The owner wants to examine what the five combat systems have in common and how they diverge before choosing native procedures. Treat the comparisons as **functional and mechanical**, not just a synonym lookup. The already recovered Dorks & Dice decisions take precedence as descriptions of the existing design; none of these five games supplies implicit missing defaults.
 
+### Parked idea: size differences and Touch AC (2026-11-23)
+
+**Not approved or implemented.** Inspired by the D&D 3.5e Gnome's +4 **dodge** AC versus the **giant creature type** (not a general size-difference rule), consider whether a defender's **Touch AC** could vary by the relative size categories of attacker and defender. Native Touch AC already includes the defender's size contribution, as well as eligible dodge modifiers; a new relative-size adjustment could double-count that advantage. No direction, magnitude, stacking, profile interaction, grapple-contact rule, or source conversion policy has been selected. The full open investigation is retained under `native/defenses.json`.
+
+
 ## 1. Invariant conceptual structure
 
 All five systems support:

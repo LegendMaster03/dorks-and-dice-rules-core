@@ -28,8 +28,14 @@ The following paths are relative to the appropriate `/api/**/mechanics/v1` base:
 | POST | `/conditions/roll-mode` | Conditional roll-mode effects |
 | GET | `/creatures/{entityId}` | Supported native creature facts |
 | POST | `/resources/resolve` | Resource expenditure or recovery |
+| POST | `/experimental/combat/action-budget` | Opt-in resource-accounting comparison, not an approved action-economy rule |
+| POST | `/experimental/combat/attack-check` | Native roll + condition + Normal/Touch/Flat-Footed AC preview; no damage or encounter authorization |
 
 The private mechanics surface additionally maps `GET /catalog/rules` and `POST /catalog/resolve`. Newer or incomplete mechanics must be verified against code and tests rather than inferred from this navigation table.
+
+## Experimental combat contract (no active gameplay rules)
+
+Both `/experimental/combat/action-budget` and `/experimental/combat/attack-check` use the existing delegated/private authenticated mechanics boundaries, ruleset IDs and catalog fingerprints. They return deterministic calculations and **do not persist combat state, prove attacker ownership, validate whether an ability may be used, or apply damage**. `/experimental/combat/action-budget` requires explicit `independent` or `shared-end-turn` selection for each encounter; its state is caller-owned and neither policy is an approved default. The attack check takes caller-supplied attack bonus, actual die faces, native defense profile and trusted defender contributions; it composes applicable typed conditions. Missing predicates fail closed. Natural critical candidates require separate adjudication. See the [first combat-engine slice](rewrite/combat-kernel-first-slice-20261124.md) and [action-budget protocol](rewrite/combat-action-budget-playtest.md).
 
 ## Related design
 
