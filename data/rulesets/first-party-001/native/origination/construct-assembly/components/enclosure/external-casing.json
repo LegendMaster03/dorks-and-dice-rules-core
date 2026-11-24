@@ -1,0 +1,31 @@
+{
+  "name": "External casing",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "description": "An outer covering whose mechanical protection depends on material and later authored design rules.",
+  "provides": [
+    "enclosure"
+  ],
+  "materialSlots": [
+    "casing"
+  ],
+  "powerDemand": 0,
+  "craftingRecipeId": "crafting-recipe.construct-component.external-casing",
+  "definesBodySize": true,
+  "constructionVariants": [
+    {
+      "id": "small",
+      "craftingRecipeId": "crafting-recipe.construct-component.external-casing.small",
+      "bodySize": "small"
+    },
+    {
+      "id": "medium",
+      "craftingRecipeId": "crafting-recipe.construct-component.external-casing.medium",
+      "bodySize": "medium"
+    },
+    {
+      "id": "large",
+      "craftingRecipeId": "crafting-recipe.construct-component.external-casing.large",
+      "bodySize": "large"
+    }
+  ]
+}

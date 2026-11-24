@@ -3,7 +3,7 @@
     "id": "construct-design.reinforced-frame",
     "kind": "construct-design",
     "name": "Reinforced frame",
-    "rulesStatus": "design-candidate; not balanced",
+    "rulesStatus": "candidate design; recipe and functional effects provisional",
     "description": "Strengthens an assembly's structural implementation without assuming its material, dimensions, or limb count.",
     "compatibleComponentCapabilities": [
       "structural-support",
@@ -11,13 +11,15 @@
     ],
     "provides": [
       "reinforced-structure"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.reinforced-frame",
+    "powerDemand": 0
   },
   {
     "id": "construct-design.articulated",
     "kind": "construct-design",
     "name": "Articulated construction",
-    "rulesStatus": "design-candidate; not balanced",
+    "rulesStatus": "candidate design; recipe and functional effects provisional",
     "description": "Jointed or articulated arrangement of suitable components.",
     "compatibleComponentCapabilities": [
       "structural-support",
@@ -26,13 +28,15 @@
     ],
     "provides": [
       "articulated-structure"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.articulated",
+    "powerDemand": 0
   },
   {
     "id": "construct-design.flexible",
     "kind": "construct-design",
     "name": "Flexible construction",
-    "rulesStatus": "design-candidate; not balanced",
+    "rulesStatus": "candidate design; recipe and functional effects provisional",
     "description": "Permits a compliant or deformable structural arrangement when its component and material allow it.",
     "compatibleComponentCapabilities": [
       "structural-support",
@@ -41,13 +45,15 @@
     ],
     "provides": [
       "flexible-structure"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.flexible",
+    "powerDemand": 0
   },
   {
     "id": "construct-design.compartmentalized",
     "kind": "construct-design",
     "name": "Compartmentalized housing",
-    "rulesStatus": "design-candidate; not balanced",
+    "rulesStatus": "candidate design; recipe and functional effects provisional",
     "description": "Divides suitable internal housing into accessible sections.",
     "compatibleComponentCapabilities": [
       "enclosure",
@@ -55,6 +61,132 @@
     ],
     "provides": [
       "compartmentalized-housing"
-    ]
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.compartmentalized",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-design.wheeled-drive",
+    "kind": "construct-design",
+    "name": "Wheeled drive arrangement",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Mounts rotating wheels for suitable ground movement; wheel count, traction, clearance, and walking speed remain governed by actual component and movement rules.",
+    "compatibleComponentCapabilities": [
+      "locomotion-interface"
+    ],
+    "provides": [
+      "wheeled-drive-arrangement"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.wheeled-drive",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-design.tracked-drive",
+    "kind": "construct-design",
+    "name": "Tracked drive arrangement",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Arranges a ground locomotion unit around articulated tracks; traction, terrain restrictions, wear, and load capacities require authored rules.",
+    "compatibleComponentCapabilities": [
+      "locomotion-interface"
+    ],
+    "provides": [
+      "tracked-drive-arrangement"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.tracked-drive",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-design.multi-legged-drive",
+    "kind": "construct-design",
+    "name": "Multi-legged drive arrangement",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Coordinates multiple supported leg assemblies without prescribing a specific number of legs or granting additional actions or speed.",
+    "compatibleComponentCapabilities": [
+      "locomotion-interface",
+      "limb-support"
+    ],
+    "provides": [
+      "multi-legged-drive-arrangement"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.multi-legged-drive",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-design.rolling-body",
+    "kind": "construct-design",
+    "name": "Rolling body arrangement",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Uses a rolling enclosure or other rotating body as ground support; articulation and power transmission must come from compatible installed hardware.",
+    "compatibleComponentCapabilities": [
+      "locomotion-interface",
+      "structural-support"
+    ],
+    "provides": [
+      "rolling-body-arrangement"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.rolling-body",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-design.compliant-manipulator",
+    "kind": "construct-design",
+    "name": "Compliant manipulator arrangement",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Provides a flexible manipulatory geometry; reach, grip strength, dexterity, and tool access still require suitable capabilities.",
+    "compatibleComponentCapabilities": [
+      "manipulation"
+    ],
+    "provides": [
+      "compliant-manipulation-arrangement"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.compliant-manipulator",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-design.layered-plating",
+    "kind": "construct-design",
+    "name": "Layered protective covering",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Arranges multiple protective surfaces in layers with authored locations. Does not itself increase Armor Class, damage reduction, coverage, or resistances.",
+    "compatibleComponentCapabilities": [
+      "protective-surface"
+    ],
+    "provides": [
+      "layered-protection-arrangement"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.layered-plating",
+    "powerDemand": 0
+  },
+  {
+    "id": "construct-design.distributed-control",
+    "kind": "construct-design",
+    "name": "Distributed control arrangement",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Links primary and auxiliary controllers across an assembly; no additional consciousness, simultaneous actions, or immunity to control loss follows.",
+    "compatibleComponentCapabilities": [
+      "control",
+      "control-support"
+    ],
+    "provides": [
+      "distributed-control-topology"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.distributed-control",
+    "powerDemand": 1
+  },
+  {
+    "id": "construct-design.multi-operator-control",
+    "kind": "construct-design",
+    "name": "Multiple-operator control arrangement",
+    "rulesStatus": "provisional starting-playtest option; recipe and power are candidates; gameplay effects need integration",
+    "description": "Organizes control stations for multiple operators. Separate operators do not gain extra turns or shared action resources by selecting the arrangement.",
+    "compatibleComponentCapabilities": [
+      "control",
+      "transport-interior"
+    ],
+    "provides": [
+      "multi-operator-coordination-interface"
+    ],
+    "craftingRecipeId": "crafting-recipe.construct-design.multi-operator-control",
+    "powerDemand": 1
   }
 ]

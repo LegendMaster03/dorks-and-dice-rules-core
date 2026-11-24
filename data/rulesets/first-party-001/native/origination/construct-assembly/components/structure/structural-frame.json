@@ -1,0 +1,31 @@
+{
+  "name": "Structural frame",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "description": "A load-bearing framework. No humanoid topology, body size, or minimum quantity is implied.",
+  "provides": [
+    "structural-support"
+  ],
+  "materialSlots": [
+    "frame"
+  ],
+  "powerDemand": 0,
+  "craftingRecipeId": "crafting-recipe.construct-component.structural-frame",
+  "definesBodySize": true,
+  "constructionVariants": [
+    {
+      "id": "small",
+      "craftingRecipeId": "crafting-recipe.construct-component.structural-frame.small",
+      "bodySize": "small"
+    },
+    {
+      "id": "medium",
+      "craftingRecipeId": "crafting-recipe.construct-component.structural-frame.medium",
+      "bodySize": "medium"
+    },
+    {
+      "id": "large",
+      "craftingRecipeId": "crafting-recipe.construct-component.structural-frame.large",
+      "bodySize": "large"
+    }
+  ]
+}

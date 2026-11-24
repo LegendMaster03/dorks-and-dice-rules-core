@@ -1,0 +1,13 @@
+{
+  "name": "Passenger platform",
+  "description": "A structural platform for carried passengers subject to size and capacity rules.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "transport-platform"
+  ],
+  "materialSlots": [
+    "platform"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.passenger-platform",
+  "powerDemand": 0
+}

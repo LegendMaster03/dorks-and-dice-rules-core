@@ -6,8 +6,27 @@ import json
 from pathlib import Path
 
 
-def top_level_records(document):
-    """Enumerate native entities, not nested source or mechanic details."""
+def top_level_records(document, *, path=None, native_root=None):
+    """Enumerate native entities, expanding strictly scoped path-derived components."""
+    if path is not None and native_root is not None:
+        parts = Path(path).relative_to(native_root).parts
+        if parts[:3] == ("origination", "construct-assembly", "components"):
+            if len(parts) != 5 or Path(parts[-1]).suffix != ".json":
+                raise ValueError("Construct components require a type directory and JSON file")
+            import re
+            valid = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+            component_type, stem = parts[3], Path(parts[4]).stem
+            if not valid.fullmatch(component_type) or not valid.fullmatch(stem):
+                raise ValueError("Invalid Construct component path")
+            if not isinstance(document, dict):
+                raise ValueError("Construct component must be a single JSON object")
+            ident = "construct-component." + stem
+            if (document.get("id", ident) != ident or
+                    document.get("kind", "construct-component") != "construct-component" or
+                    document.get("componentCategory", component_type) != component_type):
+                raise ValueError("Construct component metadata conflicts with its path")
+            return [{**document, "id": ident, "kind": "construct-component",
+                     "componentCategory": component_type}]
     if isinstance(document, dict):
         if "id" in document:
             return [document]
@@ -32,7 +51,8 @@ def audit(root):
     for path in sorted(root.rglob("*.json")):
         relative = path.relative_to(root).as_posix()
         try:
-            records = top_level_records(json.loads(path.read_text(encoding="utf-8")))
+            records = top_level_records(json.loads(path.read_text(encoding="utf-8")),
+                                        path=path, native_root=root)
         except (ValueError, UnicodeError) as exc:
             invalid.append(f"{relative}: {exc}")
             continue

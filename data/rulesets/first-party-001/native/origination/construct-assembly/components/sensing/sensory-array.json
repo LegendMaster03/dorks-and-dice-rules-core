@@ -1,0 +1,13 @@
+{
+  "name": "Sensory array",
+  "description": "Supports a configurable sense or measurement subsystem; perception traits are not automatically granted.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "sensory-interface"
+  ],
+  "materialSlots": [
+    "sensor"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.sensory-array",
+  "powerDemand": 1
+}

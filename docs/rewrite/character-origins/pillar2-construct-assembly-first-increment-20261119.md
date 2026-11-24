@@ -1,5 +1,8 @@
 # Pillar 2 — Construct Assembly initial implementation increment
 
+
+> **Current playtest follow-up (2026-11-20):** The earlier statements below that no starting allowance exists describe the pre-playtest state. The working branch now sets a **provisional 200-point** allowance and provides a [163-point basic starting Construct](pillar2-construct-basic-playtest-20261120.md). This does not approve the remaining recipe/material values for production.
+
 **Branch:** `feature/pillar2-construct-assembly-20261119`
 **Baseline:** `4bb764f702bec348c111603c3accd18f48e50e0e`
 **Scope:** Construct-specific component catalog and a bounded diagnostic assembly evaluator.
@@ -200,23 +203,36 @@ All mode behavior is demonstrated through isolated synthetic test fixtures.
 This increment expands the procedure's *reference catalog* while maintaining
 the separation of component, material, design, enhancement and source.
 
-- `components.json`: 31 component candidates covering structural support,
-  articulation, actuation, manipulators, controls, sensory interfaces,
-  equipment mounts, integrated weapon mounting, storage and transport.
+- `components/<category>/<component>.json`: 31 component candidates
+  (previously one `components.json` catalog), grouped by established
+  functions: structural support, articulation, actuation, manipulation,
+  locomotion, control, sensing, power interfaces, enclosure, equipment mounts,
+  integrated weapon mounts, utility, storage and transport. The path supplies
+  `componentCategory`, canonical `id`, and `kind` at catalog load; the
+  authored component effects and stable IDs are unchanged.
   Names are design candidates; neither descriptions nor functional tags alone
   grant mechanical attacks, senses, armor, movement speeds, or other traits.
+This section records the **original 31-component first increment**.
+The subsequent November 21 expansion brings the current branch to
+46 component definitions, 12 designs, 22 enhancements and 18 materials,
+including the stat-block-inspired options. See
+`pillar2-construct-component-expansion-20261121.md` for those later
+candidates; their mechanics and resource costs remain provisional.
+
 - `designs.json`: 4 reusable construction arrangements. A component instance
   can choose one optional design through `DesignId`.
 - `enhancements.json`: 5 optional improvements. A component may select
   multiple **distinct** enhancement IDs through `EnhancementIds`, subject
   to the current bounded evaluator. No design or enhancement is duplicated
   for each possible material.
-- `power-sources.json`: 6 previously discussed working concepts:
-  artificial-life core, solar/rechargeable crystal, soul gem, Infernal Engine,
-  arcane-consuming core and mechanical engine. A `powerSourceSlot` on a
-  component houses one selected `PowerSourceId`. The housing and power
-  mechanism are different definitions. A source must match its housing's
-  authored compatible component capabilities.
+- `power-sources.json`: The original reference inventory contained six
+  working concepts. The artificial-life core was subsequently rejected and
+  removed because it would allow Constructs to bypass fuel requirements.
+  The remaining five sources are solar/rechargeable crystal, soul gem,
+  Infernal Engine, arcane-consuming core, and the completed mechanical engine.
+  A `powerSourceSlot` on a component houses one selected `PowerSourceId`.
+  The housing and power mechanism are different definitions. A source must
+  match its housing's authored compatible component capabilities.
 
 ### Executable interpretation
 
@@ -679,3 +695,54 @@ mechanical initial origination with synthetic native definitions.
 
 This increment stops at mechanically integrated creation and acceptance
 coverage. It does not implement the complete Construct gameplay simulation.
+
+
+## Recipe-derived starting-resource quotation (candidate integration, 2026-11-20)
+
+The native \`construct-assembly\` method can opt into
+\`initialConstructionCostModel: "recipe-inputs"\` and author a
+\`startingResourceUnitCosts\` object (native material IDs to nonnegative
+integer values). This is a **synthetic-tested infrastructure option**, not an
+approved first-party allowance or resource pricing schedule. The current
+first-party definitions intentionally do not select this mode or invent values.
+
+In this mode each installed component, chosen design/enhancement and selected
+power source resolves its exact native \`craftingRecipeId\`. The referenced
+native \`crafting-recipe\` definition must identify the corresponding
+\`producesDefinitionId\`. Recipes may author flat \`inputs\`, or \`stages\` with
+\`stepId\`, \`competencyId\`, \`minimumRanks\`, \`dependencies\`, \`inputs\`,
+and \`outputs\`. Each recipe material entry has a positive \`amount\` and
+either a fixed \`materialId\` or a \`materialSlot\` resolved from its installed
+component selection. The shared \`NativeCraftingProcess\` contract validates
+stage dependencies and cycles. Resource quotation processes those stages in
+dependency order and credits an intermediate output only against later inputs
+of **the same recipe invocation**. It does not also charge the finished part's
+legacy \`constructionCost\` or the selected material's legacy per-slot price.
+Different installed instances repeat their own recipes.
+
+The resulting external resource quantities are multiplied by the native
+method's starting values and checked against its existing trusted
+\`initialConstructionAllowance\`. Missing recipes, missing input amounts,
+unpriced required inputs, invalid products, or malformed stage graphs cannot
+authorize creation. An incomplete quote is not assumed to be free.
+
+**Boundaries:** A quote is neither inventory authorization nor a completed
+manufacturing check. Starting-character history need not simulate every NPC
+craft roll. The creator's verified expertise, recipe knowledge, facilities
+and material acquisition remain separate responsibilities of the ordinary
+crafting system. Later gameplay modification still requires an independently
+authorized acquisition, crafting and installation workflow. Neither the
+initial allowance nor recipe quotation is a permanent upgrade ceiling.
+No Construct-specific crafting engine, persisted inventory mutation, or
+first-party numerical balance values are introduced by this integration.
+
+The assembly result exposes a detached `RequiredConstructionResources` bill
+for recipe-input starting construction. It is not an authorized inventory debit.
+
+A later-modification assembly preview in recipe-input mode may also quote
+required ingredients, but does **not** apply the historical starting allowance
+or authorize ownership, manufacture, installation, or new permanent traits.
+
+The selected material for every component material slot must be represented
+by at least one manufacturing input through its `materialSlot` binding;
+omitting a slot cannot create a free material-derived characteristic.

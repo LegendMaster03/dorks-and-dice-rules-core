@@ -1,0 +1,14 @@
+{
+  "name": "Armblade mount",
+  "description": "Weapon mount inspired by Warforged armblades. No weapon damage is granted without an approved canonical rule.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "equipment-mount",
+    "integrated-melee-interface"
+  ],
+  "materialSlots": [
+    "mount"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.armblade-mount",
+  "powerDemand": 0
+}

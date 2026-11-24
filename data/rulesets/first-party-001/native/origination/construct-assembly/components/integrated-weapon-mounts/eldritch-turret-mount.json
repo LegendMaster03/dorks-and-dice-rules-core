@@ -1,0 +1,14 @@
+{
+  "name": "Eldritch turret mount",
+  "description": "Mounting interface for an authored magical turret mechanism.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "equipment-mount",
+    "arcane-weapon-interface"
+  ],
+  "materialSlots": [
+    "mount"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.eldritch-turret-mount",
+  "powerDemand": 1
+}

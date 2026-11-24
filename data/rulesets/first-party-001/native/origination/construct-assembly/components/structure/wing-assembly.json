@@ -1,0 +1,13 @@
+{
+  "name": "Wing assembly",
+  "description": "A wing-shaped support assembly that may be configured for authored locomotion or weapon use.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "wing-support"
+  ],
+  "materialSlots": [
+    "wing"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.wing-assembly",
+  "powerDemand": 0
+}

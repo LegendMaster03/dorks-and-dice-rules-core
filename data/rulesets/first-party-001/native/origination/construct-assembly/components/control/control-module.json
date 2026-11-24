@@ -1,0 +1,16 @@
+{
+  "name": "Control module",
+  "description": "Coordinates dependent mechanisms and supports ordinary audible communication while operational. It does not inherently create consciousness, intelligence, or grant language knowledge.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "control"
+  ],
+  "materialSlots": [
+    "controller"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.control-module",
+  "powerDemand": 1,
+  "operationalOriginTraitIds": [
+    "trait.construct.ordinary-communication"
+  ]
+}

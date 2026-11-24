@@ -1,68 +1,103 @@
 [
   {
-    "id": "construct-power-source.artificial-life-core",
-    "kind": "construct-power-source",
-    "name": "Artificial-life core",
-    "rulesStatus": "working concept; output, cost, limitations not balanced",
-    "description": "A proposed source for self-sustaining artificial life. Its ability to bypass other construction limitations is not approved.",
-    "compatibleComponentCapabilities": [
-      "power-housing"
-    ],
-    "operatingPrinciple": "artificial-life"
-  },
-  {
     "id": "construct-power-source.solar-crystal",
     "kind": "construct-power-source",
-    "name": "Solar/rechargeable crystal",
-    "rulesStatus": "working concept; output, cost, recharge not balanced",
-    "description": "A rechargeable crystal source requiring an authored charging and storage model.",
+    "name": "Solar energy collector",
+    "rulesStatus": "owner-approved generation, storage, solar exhaustion fallback, and Overdrive; host exhaustion authority/persistence pending",
+    "description": "A solar-driven magical generator with an integrated rechargeable battery. Sunlight generates and stores energy. If supply is insufficient, the generator continues at normal output while the Construct accrues exhaustion. Concentrated sunlight enables Overdrive.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
-    "operatingPrinciple": "solar-recharge"
+    "operatingPrinciple": "solar-recharge",
+    "craftingRecipeId": "crafting-recipe.construct-power-source.solar-crystal",
+    "powerOutput": 8,
+    "overdrivePowerOutput": 12,
+    "overdriveIncreasePercent": 50,
+    "solarCollectionPower": {
+      "none": 0,
+      "indirect": 8,
+      "direct": 16,
+      "concentrated": 24
+    },
+    "storageCapacityPowerUnitHours": 96,
+    "storageResourceKind": "solar-energy",
+    "overdriveCondition": "dm-confirmed-concentrated-sunlight",
+    "energyShortagePolicy": {
+      "fallbackPowerOutput": 8,
+      "consequence": "exhaustion",
+      "firstLevel": "on-first-operation-with-insufficient-energy",
+      "additionalLevelPeriodMinutes": 1440,
+      "recoveryBlockedWhileShortageContinues": true
+    }
   },
   {
     "id": "construct-power-source.soul-gem",
     "kind": "construct-power-source",
-    "name": "Soul gem",
-    "rulesStatus": "working concept; output, cost, depletion not balanced",
-    "description": "A soul-energy storage mechanism. Naming and acquisition implications are unresolved.",
+    "name": "Soul-powered core",
+    "rulesStatus": "owner-approved narrative behavior; candidate 8/12 output and 30-foot radius; soul-energy sufficiency and consumption remain DM-adjudicated",
+    "description": "An inherently active magical generator that automatically imprisons eligible souls released by deaths within its capture range. Capture is involuntary and has no fixed storage limit. Captured souls fuel power; their consumption and the nature of the core's interior are intentionally undefined.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
-    "operatingPrinciple": "soul-energy"
+    "operatingPrinciple": "soul-energy",
+    "craftingRecipeId": "crafting-recipe.construct-power-source.soul-gem",
+    "powerOutput": 8,
+    "overdrivePowerOutput": 12,
+    "overdriveIncreasePercent": 50,
+    "captureRangeFeet": 30,
+    "captureTrigger": "eligible-soul-released-by-death-within-range",
+    "capturePolicy": "automatic-unselective",
+    "storagePolicy": "no-fixed-soul-cap",
+    "operatingPolicy": "inherently-active-independent-of-construct-power",
+    "energyAvailabilityPolicy": "dm-adjudicated",
+    "consumptionRatePolicy": "intentionally-unspecified",
+    "overdriveFuelUsePolicy": "accelerated-consumption-unquantified"
   },
   {
     "id": "construct-power-source.infernal-engine",
     "kind": "construct-power-source",
     "name": "Infernal Engine",
-    "rulesStatus": "working concept; output, cost, fuel not balanced",
-    "description": "An infernal-energy mechanism requiring separate fuel and failure rules.",
+    "rulesStatus": "owner-approved 8-unit output, long-rest fuel, and once-per-turn fire-damage Infernal Empowerment; damage amount, qualifying attacks, fuel quantity and instability remain unresolved",
+    "description": "An infernal generator with long-rest sustaining fuel. Missed sustenance imposes instability without shutting down normal power. Additional fuel activates Infernal Empowerment until the next long rest, granting a once-per-turn fire-damage enhancement once its damage value and trigger are separately authored.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
-    "operatingPrinciple": "infernal"
-  },
-  {
-    "id": "construct-power-source.arcane-consuming-core",
-    "kind": "construct-power-source",
-    "name": "Arcane-consuming core",
-    "rulesStatus": "working concept; output, cost, fuel not balanced",
-    "description": "Consumes an available arcane energy resource under separately authored operating rules.",
-    "compatibleComponentCapabilities": [
-      "power-housing"
-    ],
-    "operatingPrinciple": "arcane-consumption"
+    "operatingPrinciple": "infernal",
+    "craftingRecipeId": "crafting-recipe.construct-power-source.infernal-engine",
+    "powerOutput": 8,
+    "longRestSustenance": {
+      "resourceKind": "infernal-engine-fuel-charge",
+      "unitsPerLongRest": 1
+    },
+    "fuelShortagePolicy": "continues-at-normal-output-with-infernal-instability-or-overheating",
+    "overheatingConsequencesStatus": "not-yet-authored",
+    "infernalEmpowerment": {
+      "activation": "host-verified-additional-infernal-fuel-consumption",
+      "duration": "until-next-long-rest",
+      "powerOutputBonus": 0,
+      "effectStatus": "approved-shape-pending-damage-and-trigger",
+      "additionalFuelQuantityStatus": "not-yet-authored",
+      "damageType": "fire",
+      "maximumApplicationsPerTurn": 1,
+      "damageAmountStatus": "not-yet-authored",
+      "qualifyingAttackStatus": "not-yet-authored"
+    }
   },
   {
     "id": "construct-power-source.mechanical-engine",
     "kind": "construct-power-source",
     "name": "Mechanical engine",
-    "rulesStatus": "working concept; output, cost, energy input not balanced",
-    "description": "A mechanical generator driven by separately authored fuel or winding input.",
+    "rulesStatus": "provisional output and recipe; fuel/sustaining rules not yet balanced",
+    "description": "A basic mechanical generator with eight power output. Its daily sustenance is one ordinary mechanical-fuel charge instead of a food ration. Normal deprivation and recovery use the shared 2014 food-survival rules. Overdrive and fuel inventory transactions remain separately authored.",
     "compatibleComponentCapabilities": [
       "power-housing"
     ],
-    "operatingPrinciple": "mechanical"
+    "operatingPrinciple": "mechanical",
+    "craftingRecipeId": "crafting-recipe.construct-power-source.mechanical-engine",
+    "powerOutput": 8,
+    "dailySustenance": {
+      "resourceKind": "mechanical-engine-fuel-charge",
+      "unitsPerDay": 1
+    }
   }
 ]
