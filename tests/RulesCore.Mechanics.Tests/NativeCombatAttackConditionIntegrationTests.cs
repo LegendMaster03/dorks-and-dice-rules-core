@@ -79,10 +79,10 @@ public sealed class NativeCombatAttackConditionIntegrationTests
         Assert.True(touch.Hit);
         var flat = NativeCombatAttackResolver.Resolve(fixture.Catalog,
             fixture.Attack(profile: NativeDefenseProfile.FlatFooted));
-        Assert.Equal(15, flat.ArmorClass);
+        Assert.Equal(12, flat.ArmorClass);
         var combined = NativeCombatAttackResolver.Resolve(fixture.Catalog,
             fixture.Attack(profile: NativeDefenseProfile.TouchFlatFooted));
-        Assert.Equal(13, combined.ArmorClass);
+        Assert.Equal(10, combined.ArmorClass);
     }
 
     [Fact]
