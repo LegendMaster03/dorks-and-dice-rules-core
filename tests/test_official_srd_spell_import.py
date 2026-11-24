@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 import unittest
-from tools.import_official_srd_spells import slug
+from tools.import_official_srd_spells import normalized, slug
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -28,7 +28,7 @@ class OfficialSrdSpellImportTests(unittest.TestCase):
                     self.assertEqual(manifest["officialPageImport"]["pdfSha256"], record["source"]["pdfSha256"])
                     self.assertEqual(manifest["attribution"], record["source"]["attribution"])
                     self.assertEqual({"Casting Time", "Range", "Components", "Duration"}, set(record["header"]))
-                    self.assertTrue(record["officialTextLayout"].startswith(record["name"]))
+                    self.assertEqual(record["name"], normalized(record["officialTextLayout"].splitlines()[0]))
                     self.assertEqual([f"rulebook.page-{n:03}" for n in record["source"]["pages"]],
                                      record["catalogReferences"])
 
