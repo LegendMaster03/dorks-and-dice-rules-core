@@ -16,6 +16,9 @@ public sealed record RulesCoreSettings(
     NativeRulesetLocation Ruleset,
     ApiSurfaceMode Surface)
 {
+    // Additional packages are opt-in and use the same authoritative root.
+    public IReadOnlyList<NativeRulesetLocation> AdditionalRulesets { get; init; } = [];
+
     public static RulesCoreSettings Read(IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(configuration);
@@ -33,8 +36,20 @@ public sealed record RulesCoreSettings(
                 "RulesCore:ApiSurface must be PublicOnly or PrivateOnly.")
         };
 
-        return new RulesCoreSettings(
-            NativeRulesetLayout.Resolve(contentRoot, rulesetId),
-            surface);
+        var defaultLocation = NativeRulesetLayout.Resolve(contentRoot, rulesetId);
+        var seen = new HashSet<string>(StringComparer.Ordinal) { rulesetId };
+        var additional = new List<NativeRulesetLocation>();
+        foreach (var entry in configuration.GetSection("Rulesets:AdditionalRulesets").GetChildren())
+        {
+            var location = NativeRulesetLayout.Resolve(contentRoot, entry.Value ?? "");
+            if (!seen.Add(location.RulesetId))
+                throw new ArgumentException("Duplicate configured ruleset: " + location.RulesetId);
+            additional.Add(location);
+        }
+
+        return new RulesCoreSettings(defaultLocation, surface)
+        {
+            AdditionalRulesets = additional.AsReadOnly()
+        };
     }
 }

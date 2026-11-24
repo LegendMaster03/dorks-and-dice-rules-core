@@ -84,7 +84,8 @@ public static class NativeCatalogLoader
             ValidateProperties(document.RootElement, "invalid_native_json");
             var relative = "native/" + Path.GetRelativePath(native, file)
                 .Replace(Path.DirectorySeparatorChar, '/');
-            if (relative.StartsWith("native/origination/construct-assembly/components/", StringComparison.Ordinal))
+            if (expected.RulesetId == "first-party-001" &&
+                relative.StartsWith("native/origination/construct-assembly/components/", StringComparison.Ordinal))
             {
                 // A component's stable identity and catalog category come from its
                 // type directory and filename. Expand them before ordinary catalog
@@ -101,12 +102,17 @@ public static class NativeCatalogLoader
 
         // References are authoritative in native files; the expanded view keeps
         // existing consumers of source.Definition.traits backward compatible.
-        var (resolvedEntities, traitReferences) = ResolveOriginTraitReferences(entities);
-        ValidateConditionReferences(resolvedEntities);
-        // Validate the complete group graph once at load. Coverage requests
-        // subsequently use the immutable snapshot and must not repair or
-        // reinterpret malformed catalog relationships on the fly.
-        ValidateEquipmentReferences(resolvedEntities);
+        var resolvedEntities = entities;
+        Dictionary<string, string>? traitReferences = null;
+        // These projections and relationship schemas belong to the first-party
+        // game, not the common entity envelope. Imported systems require their
+        // own source-specific reference validation before promotion.
+        if (expected.RulesetId == "first-party-001")
+        {
+            (resolvedEntities, traitReferences) = ResolveOriginTraitReferences(entities);
+            ValidateConditionReferences(resolvedEntities);
+            ValidateEquipmentReferences(resolvedEntities);
+        }
         var fingerprint = Fingerprint(expected.RulesetId, schemaVersion, resolvedEntities);
         return new NativeCatalogSnapshot(expected.RulesetId, schemaVersion, fingerprint,
             resolvedEntities, traitReferences);
