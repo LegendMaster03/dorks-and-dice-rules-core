@@ -111,23 +111,4 @@ public sealed class NativeOriginHighElfFeyTeleportationPricingTests
             NativeRecoveryEvent.LongRest).Current);
     }
 
-    [Fact]
-    public void WoodElfRemainsUnchangedPendingIndependentBalanceDecision()
-    {
-        var catalog = Catalog();
-        var wood = Definition(catalog, "ancestry.elf.wood");
-        var ids = wood.GetProperty("traits").EnumerateArray()
-            .Select((_, index) => catalog.OriginTraitDefinitionId("ancestry.elf.wood", index)).ToArray();
-        Assert.Equal(new[]
-        {
-            "trait.druidcraft", "trait.longstrider",
-            "trait.pass-without-trace", "trait.natural-camouflage",
-            "trait.trackless-passage"
-        }, ids);
-        var druidcraft = Definition(catalog, "trait.druidcraft")
-            .GetProperty("trait");
-        Assert.Equal("druidcraft", druidcraft.GetProperty("spell").GetString());
-        Assert.True(druidcraft.GetProperty("atWill").GetBoolean());
-        Assert.False(druidcraft.TryGetProperty("spellList", out _));
-    }
 }

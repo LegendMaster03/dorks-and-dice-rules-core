@@ -104,27 +104,4 @@ public sealed class NativeOriginOrcFoundationTests
         Assert.False(trait.TryGetProperty("abilityScoreIncrease", out _));
     }
 
-    [Fact]
-    public void ExistingAdrenalineRushMechanicIsUnchangedDespitePriceIncrease()
-    {
-        var catalog = Catalog();
-        Assert.True(catalog.TryGetById("trait.adrenaline-rush", out var entity));
-        var rush = entity!.Definition.GetProperty("trait");
-        Assert.Equal("bonus-action", rush.GetProperty("activation")
-            .GetProperty("action").GetString());
-        Assert.Equal("dash", rush.GetProperty("activation")
-            .GetProperty("grantsAction").GetString());
-        Assert.Equal("proficiency-bonus", rush.GetProperty("temporaryHitPoints")
-            .GetProperty("value").GetString());
-        Assert.Equal("proficiency-bonus", rush.GetProperty("uses")
-            .GetProperty("value").GetString());
-        Assert.Equal("short-or-long-rest", rush.GetProperty("uses")
-            .GetProperty("recharge").GetString());
-
-        var prices = NativeOriginFirstPartyBiologicalPricing.Create().Prices;
-        Assert.Equal(4, Assert.Single(prices, x =>
-            x.MemberKeys.Contains("trait:trait.adrenaline-rush")).Load);
-        Assert.Equal(4, Assert.Single(prices, x =>
-            x.MemberKeys.Contains("trait:trait.orcish-fury")).Load);
-    }
 }

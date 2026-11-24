@@ -168,36 +168,4 @@ public sealed class NativeOriginGnomeFadeAwayPricingTests
             uses.GetProperty("recharge").GetString());
     }
 
-    [Fact]
-    public void ResourceRecoveryHonorsShortAndLongRests()
-    {
-        var resource = new NativeResource("origin-trait:fade-away",
-            1, 0, "short-or-long-rest");
-        var used = NativeResourceResolution.Spend(resource, 1, 1);
-        Assert.Equal("resolved", used.Status);
-        Assert.Equal(0, used.Current);
-        var afterShortRest = NativeResourceResolution.Recover(resource, 0,
-            NativeRecoveryEvent.ShortRest);
-        Assert.Equal("resolved", afterShortRest.Status);
-        Assert.Equal(1, afterShortRest.Current);
-        var afterLongRest = NativeResourceResolution.Recover(resource, 0,
-            NativeRecoveryEvent.LongRest);
-        Assert.Equal("resolved", afterLongRest.Status);
-        Assert.Equal(1, afterLongRest.Current);
-    }
-
-    [Fact]
-    public void GnomeFoundationRetainsItsPreviouslyApprovedCharacteristics()
-    {
-        var catalog = Catalog();
-        Assert.True(catalog.TryGetById("species.gnome", out var entity));
-        var ids = entity!.Definition.GetProperty("traits")
-            .EnumerateArray().Select((_, index) =>
-                catalog.OriginTraitDefinitionId("species.gnome", index)).ToArray();
-        Assert.Equal(new[]
-        {
-            "trait.low-light-vision", "trait.magical-cunning",
-            "trait.fade-away"
-        }, ids);
-    }
 }

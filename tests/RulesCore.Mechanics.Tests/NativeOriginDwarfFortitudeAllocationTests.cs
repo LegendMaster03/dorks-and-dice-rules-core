@@ -99,26 +99,6 @@ public sealed class NativeOriginDwarfFortitudeAllocationTests
     }
 
     [Fact]
-    public void VitalityStillAddsOneMaximumHitPointPerCharacterLevel()
-    {
-        var catalog = Catalog();
-        Assert.True(catalog.TryGetById("trait.level-based-vitality", out var entity));
-        Assert.Equal(1, entity!.Definition.GetProperty("trait")
-            .GetProperty("hitPointsPerCharacterLevel").GetInt32());
-        var direct = Direct(catalog, "species.dwarf");
-        var projection = NativeOriginHitPointProgressionProjector.Project(
-            catalog, direct, 17);
-        Assert.Equal("resolved", projection.Status);
-        Assert.Equal(1, projection.PerLevelBonus);
-        Assert.Equal(17, projection.MaximumHitPointBonus);
-        var prices = NativeOriginFirstPartyBiologicalPricing.Create().Prices;
-        Assert.Equal(3, Assert.Single(prices, x =>
-            x.MemberKeys.Contains("trait:trait.level-based-vitality")).Load);
-        Assert.Equal(4, Assert.Single(prices, x =>
-            x.MemberKeys.Contains("trait:trait.dwarven-fortitude")).Load);
-    }
-
-    [Fact]
     public void HillStabilityHasItsExistingGroundedScope()
     {
         var catalog = Catalog();

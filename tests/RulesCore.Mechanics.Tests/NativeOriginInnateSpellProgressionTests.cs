@@ -153,6 +153,9 @@ public sealed class NativeOriginInnateSpellProgressionTests
         Assert.Equal("resolved", projected.Status);
         Assert.Equal(new[] { "druidcraft", "longstrider", "pass-without-trace" },
             projected.Spells.Select(x => x.SpellId).OrderBy(x => x).ToArray());
+        var druidcraft = Assert.Single(projected.Spells, x => x.SpellId == "druidcraft");
+        Assert.True(druidcraft.AtWill);
+        Assert.Null(druidcraft.FreeUsesPerRecharge);
     }
 
     [Fact]

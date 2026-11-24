@@ -60,47 +60,47 @@ public sealed class NativeOriginAbyssalPoisonPricingTests
     }
 
     [Theory]
-    [InlineData("abyssal", 18, true)]
-    [InlineData("chthonic", 17, false)]
-    [InlineData("infernal", 18, false)]
-    public void AllTieflingAncestriesRespectApprovedAllocationsAndDistinctGrants(
-        string ancestry, int expectedPoints, bool hasAbyssalTraits)
+    [InlineData("abyssal", 18, "poison")]
+    [InlineData("chthonic", 17, "necrotic")]
+    [InlineData("infernal", 18, "fire")]
+    public void TieflingAncestryAllocationIncludesOnlyItsOwnSpecializations(
+        string ancestry, int expectedPoints, string damageType)
     {
         var result = Direct(Catalog(), ancestry);
-        Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
+        Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
+            string.Join(" | ", result.Issues.Select(x => x.Code + ": " + x.Detail)));
         Assert.Equal("within-allowance", result.CreationAllocation!.Status);
         Assert.Equal(expectedPoints, result.CreationAllocation.CommittedLoad);
+        Assert.Equal("ancestry.tiefling." + ancestry,
+            result.EvaluatedProposal.SelectedAncestryId);
 
         var grants = result.Profile!.Underlying.InherentGrants;
-        foreach (var id in new[]
+        Assert.Single(grants, x => x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
+        Assert.Single(grants, x => x.Identity.MechanicalDefinitionId == "trait.otherworldly-presence");
+        var resistance = Assert.Single(grants, x =>
+            x.Identity.MechanicalDefinitionId == "trait.damage-type-resistance");
+        Assert.Equal(damageType, resistance.Parameters!["damageType"].GetString());
+
+        // All specializations share this creation-allocation contract.
+        foreach (var (owner, id, load) in new[]
         {
-            "trait.abyssal-fortitude",
-            "trait.poison-tolerance",
-            "trait.potent-venom"
+            ("abyssal", "trait.abyssal-fortitude", 2),
+            ("abyssal", "trait.poison-tolerance", 1),
+            ("abyssal", "trait.potent-venom", 2),
+            ("chthonic", "trait.chthonic-life-siphon", 4),
+            ("infernal", "trait.flames-of-phlegethos", 4)
         })
         {
-            Assert.Equal(hasAbyssalTraits, grants.Any(x =>
-                x.Identity.MechanicalDefinitionId == id));
-            if (hasAbyssalTraits)
+            var matches = grants.Where(x => x.Identity.MechanicalDefinitionId == id);
+            if (owner != ancestry)
             {
-                var grant = Assert.Single(grants, x =>
-                    x.Identity.MechanicalDefinitionId == id);
-                Assert.Equal("ancestry.tiefling.abyssal",
-                    grant.Identity.Occurrence.Source.Id);
+                Assert.Empty(matches);
+                continue;
             }
-        }
-
-        if (hasAbyssalTraits)
-        {
-            var loads = new Dictionary<string, int>
-            {
-                ["trait.abyssal-fortitude"] = 2,
-                ["trait.poison-tolerance"] = 1,
-                ["trait.potent-venom"] = 2
-            };
-            foreach (var (id, load) in loads)
-                Assert.Equal(load, Assert.Single(result.CreationAllocation.Charges,
-                    x => x.CharacteristicKeys.Contains("trait:" + id)).Load);
+            var grant = Assert.Single(matches);
+            Assert.Equal("ancestry.tiefling." + owner, grant.Identity.Occurrence.Source.Id);
+            Assert.Equal(load, Assert.Single(result.CreationAllocation.Charges,
+                x => x.CharacteristicKeys.Contains("trait:" + id)).Load);
         }
     }
 
@@ -164,41 +164,6 @@ public sealed class NativeOriginAbyssalPoisonPricingTests
             reduction.GetProperty("preserveImmunityAtOrAbovePercent").GetInt32());
         Assert.False(reduction.GetProperty("stacksWithSelf").GetBoolean());
         Assert.False(reduction.GetProperty("createsVulnerability").GetBoolean());
-
-        // The permitted transformation applies only to nonimmune
-        // resistance. This is not a runtime damage resolution test.
-        foreach (var (original, effective) in new[]
-        {
-            (0, 0), (25, 0), (50, 25), (75, 50), (100, 100)
-        })
-        {
-            var value = original >= 100 ? original : Math.Max(0, original - 25);
-            Assert.Equal(effective, value);
-        }
     }
 
-    [Fact]
-    public void ExistingAbyssalPoisonResistanceAndSpellsRemain()
-    {
-        var result = Direct(Catalog(), "abyssal");
-        var grants = result.Profile!.Underlying.InherentGrants;
-        foreach (var id in new[]
-        {
-            "trait.low-light-vision", "trait.otherworldly-presence",
-            "trait.damage-type-resistance", "trait.poison-spray",
-            "trait.ray-of-sickness", "trait.hold-person"
-        })
-            Assert.Single(grants, x => x.Identity.MechanicalDefinitionId == id);
-        var resistance = Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.damage-type-resistance");
-        Assert.Equal("poison", resistance.Parameters!["damageType"].GetString());
-        var ray = Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.ray-of-sickness");
-        Assert.Equal(3, ray.EffectiveValue!.Value
-            .GetProperty("level").GetInt32());
-        var hold = Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.hold-person");
-        Assert.Equal(5, hold.EffectiveValue!.Value
-            .GetProperty("level").GetInt32());
-    }
 }

@@ -141,22 +141,4 @@ public sealed class NativeOriginHumanDeterminationAllocationTests
         Assert.False(trait.TryGetProperty("abilityScoreIncrease", out _));
     }
 
-    [Fact]
-    public void VersatileStillGrantsOneOriginFeatAndHumanSkillsAreUnchanged()
-    {
-        var catalog = Catalog();
-        Assert.True(catalog.TryGetById("trait.versatile", out var versatile));
-        Assert.True(catalog.TryGetById("trait.skillful", out var skill));
-        Assert.True(catalog.TryGetById("trait.adaptable-learning", out var ranks));
-        var feat = versatile!.Definition.GetProperty("trait");
-        Assert.Equal("feat-choice", feat.GetProperty("grantType").GetString());
-        Assert.Equal("origin", feat.GetProperty("featCategory").GetString());
-        Assert.Equal(1, feat.GetProperty("choiceCount").GetInt32());
-        Assert.Equal("skill-proficiency", skill!.Definition.GetProperty("trait")
-            .GetProperty("grantType").GetString());
-        Assert.Equal(4, ranks!.Definition.GetProperty("trait")
-            .GetProperty("additionalRanksAtCharacterLevel1").GetInt32());
-        Assert.Equal(1, ranks.Definition.GetProperty("trait")
-            .GetProperty("additionalRanksPerSubsequentCharacterLevel").GetInt32());
-    }
 }

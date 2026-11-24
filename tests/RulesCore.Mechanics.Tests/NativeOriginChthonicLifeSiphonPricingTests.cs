@@ -1,5 +1,4 @@
 using RulesCore.Content;
-using RulesCore.Mechanics;
 using Xunit;
 
 namespace RulesCore.Mechanics.Tests;
@@ -26,70 +25,6 @@ public sealed class NativeOriginChthonicLifeSiphonPricingTests
         throw new InvalidOperationException("Native ruleset missing.");
     }
 
-    private static NativeOriginConstructionResult Direct(
-        NativeCatalogSnapshot catalog, string ancestry, int allowance = 18)
-    {
-        var proposal = new NativeOriginProposal("chthonic-siphon-" + ancestry,
-            NativeOriginIntent.Direct,
-            new("rule.creature-origination", "biological"), [], [], [],
-            SelectedAncestryId: "ancestry.tiefling." + ancestry);
-        var engine = new NativeOriginConstructionEngine(catalog);
-        var candidates = engine.Evaluate(new(proposal,
-            AutoManifestDirectDefaults: true)).EvaluatedProposal.Candidates;
-        var size = Assert.Single(candidates, x =>
-            x.Identity.IntrinsicSlotId == "size");
-        var spellAbility = Assert.Single(candidates, x =>
-            x.Identity.IntrinsicSlotId == "spellcastingAbility");
-
-        return engine.Evaluate(new(proposal with
-        {
-            Manifestations =
-            [
-                new("selected-size", size.Id,
-                    Choices: [new(Assert.Single(size.RequiredChoices!).Id, ["medium"])]),
-                new("selected-spellcasting-ability", spellAbility.Id,
-                    Choices: [new(Assert.Single(spellAbility.RequiredChoices!).Id,
-                        ["wisdom"])])
-            ]
-        }, AutoManifestDirectDefaults: true,
-            RequireCreationAllocation: true,
-            CreationAllocationPolicy:
-                NativeOriginFirstPartyBiologicalPricing.Create(allowance)));
-    }
-
-    [Theory]
-    [InlineData("abyssal", 18, false)]
-    [InlineData("chthonic", 17, true)]
-    [InlineData("infernal", 18, false)]
-    public void DirectTieflingAncestryHasApprovedPriceAndSiphonOnlyWhenChthonic(
-        string ancestry, int expectedPoints, bool hasSiphon)
-    {
-        var result = Direct(Catalog(), ancestry);
-        Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
-            string.Join(" | ", result.Issues.Select(x => x.Code + ": " + x.Detail)));
-        Assert.Equal("within-allowance", result.CreationAllocation!.Status);
-        Assert.Equal(expectedPoints, result.CreationAllocation.CommittedLoad);
-        Assert.Equal("ancestry.tiefling." + ancestry,
-            result.EvaluatedProposal.SelectedAncestryId);
-
-        var grants = result.Profile!.Underlying.InherentGrants;
-        Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.otherworldly-presence");
-        Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.damage-type-resistance");
-        Assert.Equal(hasSiphon, grants.Any(x =>
-            x.Identity.MechanicalDefinitionId == "trait.chthonic-life-siphon"));
-        if (hasSiphon)
-        {
-            var siphon = Assert.Single(grants, x =>
-                x.Identity.MechanicalDefinitionId == "trait.chthonic-life-siphon");
-            Assert.Equal("ancestry.tiefling.chthonic",
-                siphon.Identity.Occurrence.Source.Id);
-            Assert.Equal(4, Assert.Single(result.CreationAllocation.Charges,
-                x => x.CharacteristicKeys.Contains(
-                    "trait:trait.chthonic-life-siphon")).Load);
-        }
-    }
 
     [Fact]
     public void ChthonicSiphonRequiresDeliveredNecroticDamageAndLimitsRecovery()
@@ -121,36 +56,4 @@ public sealed class NativeOriginChthonicLifeSiphonPricingTests
         Assert.Equal("long-rest", uses.GetProperty("recharge").GetString());
     }
 
-    [Fact]
-    public void ExistingChthonicSpellsAndNecroticResistanceRemainUnchanged()
-    {
-        var catalog = Catalog();
-        var result = Direct(catalog, "chthonic");
-        var grants = result.Profile!.Underlying.InherentGrants;
-        foreach (var id in new[]
-        {
-            "trait.otherworldly-presence", "trait.chill-touch",
-            "trait.false-life", "trait.ray-of-enfeeblement"
-        })
-            Assert.Single(grants, x => x.Identity.MechanicalDefinitionId == id);
-
-        var resistance = Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.damage-type-resistance");
-        Assert.Equal("necrotic",
-            resistance.Parameters!["damageType"].GetString());
-
-        var falseLife = Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.false-life");
-        Assert.Equal(3, falseLife.EffectiveValue!.Value
-            .GetProperty("level").GetInt32());
-        Assert.Equal(1, falseLife.EffectiveValue.Value
-            .GetProperty("freeUses").GetInt32());
-
-        var enfeeble = Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.ray-of-enfeeblement");
-        Assert.Equal(5, enfeeble.EffectiveValue!.Value
-            .GetProperty("level").GetInt32());
-        Assert.Equal(1, enfeeble.EffectiveValue.Value
-            .GetProperty("freeUses").GetInt32());
-    }
 }

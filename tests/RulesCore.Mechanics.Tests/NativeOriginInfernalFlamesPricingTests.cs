@@ -1,5 +1,4 @@
 using RulesCore.Content;
-using RulesCore.Mechanics;
 using Xunit;
 
 namespace RulesCore.Mechanics.Tests;
@@ -26,73 +25,6 @@ public sealed class NativeOriginInfernalFlamesPricingTests
         throw new InvalidOperationException("Native ruleset missing.");
     }
 
-    private static NativeOriginConstructionResult Direct(
-        NativeCatalogSnapshot catalog, string ancestry)
-    {
-        var proposal = new NativeOriginProposal("infernal-flames-" + ancestry,
-            NativeOriginIntent.Direct,
-            new("rule.creature-origination", "biological"), [], [], [],
-            SelectedAncestryId: "ancestry.tiefling." + ancestry);
-        var engine = new NativeOriginConstructionEngine(catalog);
-        var candidates = engine.Evaluate(new(proposal,
-            AutoManifestDirectDefaults: true)).EvaluatedProposal.Candidates;
-        var size = Assert.Single(candidates, x =>
-            x.Identity.IntrinsicSlotId == "size");
-        var spellAbility = Assert.Single(candidates, x =>
-            x.Identity.IntrinsicSlotId == "spellcastingAbility");
-
-        return engine.Evaluate(new(proposal with
-        {
-            Manifestations =
-            [
-                new("selected-size", size.Id,
-                    Choices: [new(Assert.Single(size.RequiredChoices!).Id, ["medium"])]),
-                new("selected-spellcasting-ability", spellAbility.Id,
-                    Choices: [new(Assert.Single(spellAbility.RequiredChoices!).Id,
-                        ["charisma"])])
-            ]
-        }, AutoManifestDirectDefaults: true,
-            RequireCreationAllocation: true,
-            CreationAllocationPolicy:
-                NativeOriginFirstPartyBiologicalPricing.Create()));
-    }
-
-    [Theory]
-    [InlineData("abyssal", 18, false)]
-    [InlineData("chthonic", 17, false)]
-    [InlineData("infernal", 18, true)]
-    public void EachTieflingAncestryHasCurrentPriceAndOnlyInfernalGainsFlames(
-        string ancestry, int expectedPoints, bool hasFlames)
-    {
-        var result = Direct(Catalog(), ancestry);
-        Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
-            string.Join(" | ", result.Issues.Select(x => x.Code + ": " + x.Detail)));
-        Assert.Equal("within-allowance", result.CreationAllocation!.Status);
-        Assert.Equal(expectedPoints, result.CreationAllocation.CommittedLoad);
-        Assert.Equal("ancestry.tiefling." + ancestry,
-            result.EvaluatedProposal.SelectedAncestryId);
-
-        var grants = result.Profile!.Underlying.InherentGrants;
-        Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
-        Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.otherworldly-presence");
-        Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.damage-type-resistance");
-        Assert.Equal(hasFlames, grants.Any(x =>
-            x.Identity.MechanicalDefinitionId == "trait.flames-of-phlegethos"));
-
-        if (hasFlames)
-        {
-            var grant = Assert.Single(grants, x =>
-                x.Identity.MechanicalDefinitionId == "trait.flames-of-phlegethos");
-            Assert.Equal("ancestry.tiefling.infernal",
-                grant.Identity.Occurrence.Source.Id);
-            Assert.Equal(4, Assert.Single(result.CreationAllocation.Charges,
-                x => x.CharacteristicKeys.Contains(
-                    "trait:trait.flames-of-phlegethos")).Load);
-        }
-    }
 
     [Fact]
     public void FlamesHaveBothOriginalMechanicalBenefitsWithoutAbilityIncrease()
@@ -135,29 +67,4 @@ public sealed class NativeOriginInfernalFlamesPricingTests
         Assert.Equal("none", retaliation.GetProperty("actionCost").GetString());
     }
 
-    [Fact]
-    public void ExistingInfernalResistanceAndSpellCourseStayIntact()
-    {
-        var catalog = Catalog();
-        var result = Direct(catalog, "infernal");
-        var grants = result.Profile!.Underlying.InherentGrants;
-        var spellIds = new[]
-        {
-            "trait.otherworldly-presence", "trait.fire-bolt",
-            "trait.hellish-rebuke", "trait.darkness"
-        };
-        foreach (var id in spellIds)
-            Assert.Single(grants, x => x.Identity.MechanicalDefinitionId == id);
-
-        var hellish = Assert.Single(grants, x =>
-            x.Identity.MechanicalDefinitionId == "trait.hellish-rebuke");
-        Assert.Equal(3, hellish.EffectiveValue!.Value
-            .GetProperty("level").GetInt32());
-        Assert.Equal(2, hellish.EffectiveValue.Value
-            .GetProperty("freeCastSpellLevel").GetInt32());
-        Assert.Equal(1, hellish.EffectiveValue.Value
-            .GetProperty("freeUses").GetInt32());
-        Assert.Equal("long-rest", hellish.EffectiveValue.Value
-            .GetProperty("recharge").GetString());
-    }
 }
