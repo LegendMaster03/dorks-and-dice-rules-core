@@ -640,7 +640,7 @@ public sealed class NativeOriginConstructionTests
     }
 
     [Fact]
-    public void WoodElfDirectReplacementRequiresAnAuthorizedPolicy()
+    public void WoodElfDirectPresetRetainsSupersededSourceWithoutManifestingIt()
     {
         var source = Evaluate(Proposal("wood-choice", ancestry: "ancestry.elf.wood"))
             .EvaluatedProposal;
@@ -650,30 +650,27 @@ public sealed class NativeOriginConstructionTests
             x.Identity.Occurrence.Source.Id == "ancestry.elf.wood");
         var elf = walk.Single(x =>
             x.Identity.Occurrence.Source.Id == "species.elf");
+        Assert.Equal(35, wood.OfferedValue!.Value.GetInt32());
+        Assert.Equal(30, elf.OfferedValue!.Value.GetInt32());
+        Assert.Equal(NativeOriginEligibility.Eligible, wood.SelectionBasis.Eligibility);
+        Assert.Equal(NativeOriginEligibility.Restricted, elf.SelectionBasis.Eligibility);
         var ability = source.Candidates.Single(x =>
             x.Identity.IntrinsicSlotId == "spellcastingAbility");
-        var decision = Decision("wood-speed-decision", "relationship",
-            "wood-speed", new { action = "retain-first" });
         var proposal = Proposal("wood-choice", ancestry: "ancestry.elf.wood",
             manifests: [new("ability", ability.Id,
-                Choices: [new("spellcastingAbility", ["wisdom"])])],
-            decisions: [decision]) with
-        {
-            Relationships = [new("wood-speed", NativeOriginRelationshipKind.Substitution,
-                [wood.Id, elf.Id])],
-            Resolutions = [new("wood-speed", NativeOriginResolutionAction.RetainFirst,
-                new(NativeOriginAdjudication.DmAuthorized,
-                    TableDecisionId: decision.Id))]
-        };
-        var without = Evaluate(proposal);
-        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, without.Status);
-        var resolved = Evaluate(proposal, new TestAuthority());
+                Choices: [new("spellcastingAbility", ["wisdom"])])]);
+        var resolved = Evaluate(proposal);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, resolved.Status);
-        Assert.Equal(35, resolved.Profile!.Underlying.InherentGrants.Single(x =>
-            x.Identity.IntrinsicSlotId == "walkingSpeedFeet")
-            .EffectiveValue!.Value.GetInt32());
-        Assert.Equal("wood-speed-decision",
-            resolved.Profile.Adjudication.TableDecisionId);
+        var speed = Assert.Single(resolved.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        Assert.Equal(35, speed.EffectiveValue!.Value.GetInt32());
+        Assert.Equal(wood.Id, Assert.Single(speed.SourceCandidateIds));
+        var attempted = Evaluate(proposal with
+        {
+            Manifestations = [.. proposal.Manifestations,
+                new("superseded", elf.Id, elf.OfferedValue)]
+        });
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, attempted.Status);
     }
 
     [Fact]

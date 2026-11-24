@@ -289,15 +289,19 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                     // Only an explicit native descendant override supersedes an
                     // ancestor's speed in this direct preset. Mixed donor offers
                     // retain their independent reconciliation requirements.
-                    if (direct && slot == "walkingSpeedFeet" && lineage is not null &&
+                    var superseded = direct && slot == "walkingSpeedFeet" && lineage is not null &&
                         lineage.TakeWhile(x => x.Id != entity.Id).Any(x =>
                             x.Category == "ancestry" &&
                             x.Definition.TryGetProperty("overridesAncestorWalkingSpeed", out var marker) &&
                             marker.ValueKind == JsonValueKind.True &&
                             x.Definition.TryGetProperty(property, out var speed) &&
-                            speed.TryGetInt32(out var feet) && feet > 0))
-                        continue;
-                    Add(property, NativeOriginCharacteristicKind.Intrinsic, slot, value.Clone());
+                            speed.ValueKind == JsonValueKind.Number &&
+                            speed.TryGetInt32(out var feet) && feet > 0);
+                    // Keep the original occurrence for discovery and provenance,
+                    // but it is no longer an ordinary selectable preset default.
+                    Add(property, NativeOriginCharacteristicKind.Intrinsic, slot, value.Clone(),
+                        basisOverride: superseded ? new(NativeOriginEligibility.Restricted,
+                            Explanation: "Superseded by the authored descendant walking-speed override.") : null);
                 }
 
             if (entity.Definition.TryGetProperty("sizeChoice", out var sizeChoice) &&
@@ -492,7 +496,8 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
             void Add(string property, NativeOriginCharacteristicKind kind, string? slot,
                 JsonElement? value, IReadOnlyList<NativeOriginChoiceRequirement>? choices = null,
                 string? definitionId = null, IReadOnlyList<string>? unresolved = null,
-                IReadOnlyDictionary<string, JsonElement>? parameters = null)
+                IReadOnlyDictionary<string, JsonElement>? parameters = null,
+                NativeOriginSelectionBasis? basisOverride = null)
             {
                 var path = property.StartsWith('/') ? property : "/" + property;
                 var candidateId = (contributorId is null ? "direct" : "contributor:" + contributorId) +
@@ -500,7 +505,7 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                 var identity = new NativeOriginCharacteristicIdentity(kind,
                     new(source, path), definitionId ?? entity.Id + "#" + path,
                     IntrinsicSlotId: slot);
-                candidates.TryAdd(candidateId, new(candidateId, identity, basis, contributorId, value,
+                candidates.TryAdd(candidateId, new(candidateId, identity, basisOverride ?? basis, contributorId, value,
                     OfferedParameters: parameters, RequiredChoices: choices,
                     UnresolvedEvidence: unresolved));
             }
