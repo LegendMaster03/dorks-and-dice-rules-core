@@ -72,12 +72,14 @@ public static class RulesCoreApplication
         {
             app.MapNativePrivateReferences();
             app.MapAuthenticatedNativeMechanics(privateTunnel: true);
+            app.MapRulesetResolution(privateTunnel: true);
         }
         else
         {
             app.MapNativePublicReferences();
             app.MapNativeAuthenticatedReferences();
             app.MapAuthenticatedNativeMechanics(privateTunnel: false);
+            app.MapRulesetResolution(privateTunnel: false);
         }
         // Unrecognized API paths never resolve to the UI or a legacy endpoint.
         app.Map("/api/{**unmatched}", () => Results.NotFound(new { error = "api_not_found" }));
