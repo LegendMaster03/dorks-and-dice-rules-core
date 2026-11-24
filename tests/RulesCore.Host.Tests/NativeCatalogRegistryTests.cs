@@ -79,9 +79,50 @@ public sealed class NativeCatalogRegistryTests
         Assert.True(old.TryGetById("condition.exhaustion", out var a));
         Assert.True(modern.TryGetById("condition.exhaustion", out var b));
         Assert.NotEqual(a!.Definition.GetRawText(), b!.Definition.GetRawText());
+        Assert.Equal(401, old.CountByCategory("rulebook-page"));
+        Assert.Equal(360, modern.CountByCategory("rulebook-page"));
+        foreach (var catalog in new[] { old, modern })
+        {
+            Assert.Equal(18, catalog.CountByCategory("skill"));
+            Assert.Equal(15, catalog.CountByCategory("condition"));
+        }
         Assert.Throws<ArgumentException>(() => registry.GetStore(ids[1]).Publish(modern));
         Assert.Equal(127, registry.GetStore(ids[3]).Snapshot!.Count);
         Assert.Equal(0, registry.GetStore(ids[3]).Snapshot!.CountByCategory("class"));
+    }
+
+    [Theory]
+    [InlineData("rule.target", true)]
+    [InlineData("rule.missing", false)]
+    public void ExplicitReferenceNeverResolvesAcrossPackages(string target, bool valid)
+    {
+        var root = Path.Combine(Path.GetTempPath(), "rules-core-ref-" + Guid.NewGuid().ToString("N"));
+        try
+        {
+            foreach (var id in new[] { "package-a", "package-b" })
+            {
+                var location = NativeRulesetLayout.Resolve(root, id);
+                Directory.CreateDirectory(location.NativeDirectory);
+                File.WriteAllText(Path.Combine(root, id, "manifest.json"),
+                    $$"""{"id":"{{id}}","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/"}""");
+                File.WriteAllText(Path.Combine(location.NativeDirectory, "target.json"),
+                    id == "package-a"
+                        ? """{"id":"rule.target","kind":"rule","name":"Local"}"""
+                        : """{"id":"rule.missing","kind":"rule","name":"Foreign"}""");
+            }
+            var first = NativeRulesetLayout.Resolve(root, "package-a");
+            File.WriteAllText(Path.Combine(first.NativeDirectory, "source.json"),
+                $$"""{"id":"rule.source","kind":"rule","name":"Source","catalogReferences":["{{target}}"]}""");
+            if (valid)
+                Assert.Equal(2, NativeCatalogLoader.Load(first).Count);
+            else
+                Assert.Throws<NativeCatalogLoadException>(() => NativeCatalogLoader.Load(first));
+            Assert.Equal(1, NativeCatalogLoader.Load(NativeRulesetLayout.Resolve(root, "package-b")).Count);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
     }
 
     [Fact]

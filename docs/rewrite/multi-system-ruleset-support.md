@@ -29,7 +29,7 @@ D&D official source URLs and required CC BY 4.0 attributions are in data/referen
 
 Fate source: fate-srd/fate-srd-content, commit 93ed848e723f31b4994b466b7241011ba24be885, docs/markdown/Fate-Condensed-SRD-CC-BY.md, blob cc313c53ee75939e1f5c53f0f2ee59181e78ee00. CC BY 3.0. Preserved original attribution and added publisher's current attribution. Source has unresolved page XX placeholders; do not silently invent destinations. Current website parity and consumer-safe Markdown rendering require review. The original Markdown is reference-only; the native JSON records retain every original section verbatim. Reproduce/check with python3 tools/import_fate_condensed.py [--check].
 
-Structured skills and conditions use the existing 5e.tools entry format with verified official-page provenance. See [edition-specific structured promotion](srd-edition-structured-promotion.md). The remaining named entity categories are incomplete.
+Structured skills and conditions use the existing 5e.tools entry format with verified official-page provenance. Explicit `catalogReferences` are validated against the current package only. Optional manifest declarations validate publisher-page coverage/provenance and Markdown parent relationships without imposing any game-specific schema on other packages. See [edition-specific structured promotion](srd-edition-structured-promotion.md). The remaining named entity categories are incomplete.
 
 ## Edition review catalog generation
 

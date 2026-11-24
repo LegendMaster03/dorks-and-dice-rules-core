@@ -9,5 +9,6 @@
   "description": "Pinned CC BY SRD text segmented by heading. Original cross-reference placeholders are retained.",
   "license": "CC-BY-3.0",
   "attribution": "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/).",
-  "coverageStatus": "pinned-source-text; live-edition parity unverified"
+  "coverageStatus": "pinned-source-text; live-edition parity unverified",
+  "sourceFormat": "markdown-headings"
 }
