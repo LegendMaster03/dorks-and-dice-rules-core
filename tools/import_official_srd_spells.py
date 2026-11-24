@@ -99,7 +99,7 @@ def parse(lines):
         if len(name) > 100 or not name:
             raise ValueError(f"Invalid spell heading {name!r}")
         starts.append((j, i, parsed))
-    records = []
+    records, malformed = [], []
     for k, (j, i, (level, school)) in enumerate(starts):
         end = starts[k+1][0] if k+1 < len(starts) else len(lines)
         block = lines[j:end]
@@ -107,17 +107,20 @@ def parse(lines):
         text = "\n".join(x[2] for x in block).strip()
         metadata = {}
         for field in ("Casting Time", "Range", "Components", "Duration"):
-            hits = [x[2].strip()[len(field)+1:].strip() for x in block if x[2].strip().startswith(field + ":")]
+            aliases = (field, "Component") if field == "Components" else (field,)
+            hits = [x[2].strip().split(":", 1)[1].strip() for x in block
+                    if any(x[2].strip().startswith(alias + ":") for alias in aliases)]
             if len(hits) != 1:
-                raise ValueError(f"{name}: expected one {field}, got {len(hits)}")
-            metadata[field] = hits[0]
+                malformed.append({"name": name, "field": field, "matches": len(hits)})
+            else:
+                metadata[field] = hits[0]
         records.append({"name": name, "level": level, "school": school,
                         "officialTextLayout": text,
                         "pages": sorted({x[0] for x in block if x[2].strip()}),
                         "header": metadata})
     if len({slug(x["name"]) for x in records}) != len(records):
         raise ValueError("Duplicate extracted spell identities")
-    return records
+    return records, malformed
 
 
 def build(edition, pdf):
@@ -128,7 +131,7 @@ def build(edition, pdf):
         raise ValueError("Publisher PDF differs from pinned source")
     candidates = json.loads((ROOT / f"data/reference/srd/structured/spells/spells-srd{tag}.json").read_text())["spell"]
     expected = {slug(x["name"]): x for x in candidates}
-    parsed = parse(columns(pdf, first, last))
+    parsed, malformed = parse(columns(pdf, first, last))
     actual = {slug(x["name"]): x for x in parsed}
     missing = sorted(set(expected) - set(actual))
     additional = sorted(set(actual) - set(expected))
@@ -137,7 +140,7 @@ def build(edition, pdf):
                         (actual[key]["level"], actual[key]["school"]))
     report = {"edition": edition, "extracted": len(parsed), "candidateCount": len(expected),
               "missingCandidateNames": missing, "additionalOfficialNames": additional,
-              "levelOrSchoolDifferences": mismatches}
+              "levelOrSchoolDifferences": mismatches, "malformedHeaders": malformed}
     result = []
     source = next(x for x in json.loads((ROOT / "data/reference/srd/manifest.json").read_text())["srds"]
                   if x["id"] == edition)
