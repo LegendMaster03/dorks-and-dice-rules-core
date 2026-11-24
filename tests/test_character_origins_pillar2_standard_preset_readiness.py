@@ -104,11 +104,12 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
 
     def test_human_size_and_skill_feat_choices_are_explicitly_pending(self):
         report = self.propose("species.human")
-        self.assertEqual(3, len(self.entries(report, "trait")))
+        self.assertEqual(4, len(self.entries(report, "trait")))
         self.assertEqual(
             {"species.human#trait:skillful",
              "species.human#trait:versatile",
-             "species.human#trait:adaptable-learning"},
+             "species.human#trait:adaptable-learning",
+             "species.human#trait:human-determination"},
             {x["identity"] for x in self.entries(report, "trait")},
         )
         self.assertEqual(

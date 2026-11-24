@@ -107,7 +107,7 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
                 }
                 self.assertEqual(fields, offered_fields | deferred_fields)
 
-    def test_human_has_choice_of_size_and_three_distinct_traits(self):
+    def test_human_has_choice_of_size_and_four_distinct_traits(self):
         p = self.pool([direct("human", "species.human")])
         sizes = [o["value"] for o in p["offers"]
                  if o["kind"] == "intrinsic"
@@ -116,7 +116,8 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
         self.assertEqual(
             {"species.human#trait:skillful",
              "species.human#trait:versatile",
-             "species.human#trait:adaptable-learning"},
+             "species.human#trait:adaptable-learning",
+             "species.human#trait:human-determination"},
             {o["identity"] for o in p["offers"]
              if o["kind"] == "trait"},
         )
@@ -223,9 +224,15 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
         )
 
     def test_prose_only_traits_remain_manifestable_for_review(self):
+        # Use an intentionally prose-only research fixture rather than
+        # reverting the approved native Luck Reroll normalization.
+        catalog = copy.deepcopy(self.catalog)
+        catalog["species.halfling"]["traits"].append({
+            "id": "fixture-prose-effect", "description": "An unspecified effect."
+        })
         p = self.draft("halfling", [direct("one", "species.halfling")], [
-            trait("species.halfling#trait:luck-reroll"),
-        ])
+            trait("species.halfling#trait:fixture-prose-effect"),
+        ], catalog=catalog)
         self.assertEqual(
             ["prose-only-effect"],
             p["manifestedCharacteristics"][0]["reviewRequired"],

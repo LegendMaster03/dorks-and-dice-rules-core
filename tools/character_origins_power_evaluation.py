@@ -657,12 +657,18 @@ def spell_demand_outcomes(traits: dict, level: int, pb: int,
         if at_will and uses is not None:
             issues.append({"traitId": identifier, "reason": "both-at-will-and-limited-casts"})
             continue
+        recharge = trait.get("recharge")
         if not at_will and (isinstance(charges, bool) or
                             not isinstance(charges, int) or charges < 0 or
-                            trait.get("recharge") != "long-rest"):
+                            recharge not in ("long-rest", "short-or-long-rest")):
             continue
+        # Spell demand fixtures have no ordered rest events. Count one
+        # initial pool, not an invented number of short-rest recoveries.
         entitlements.append({"traitId": identifier, "spell": spell,
-                             "atWill": at_will, "freeUsesPerLongRest": None if at_will else charges,
+                             "atWill": at_will,
+                             "freeUsesPerLongRest": charges if not at_will and recharge == "long-rest" else None,
+                             "freeUsesPerRecharge": None if at_will else charges,
+                             "recharge": None if at_will else recharge,
                              "canUseSpellSlots": trait.get("slotCasting", False) is True,
                              "freeCastSpellLevel": trait.get("freeCastSpellLevel")})
         by_spell[spell].append({"traitId": identifier, "atWill": at_will,

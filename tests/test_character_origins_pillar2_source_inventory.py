@@ -66,7 +66,7 @@ class OriginCharacteristicInventoryTests(unittest.TestCase):
                     "Distinct source occurrences cannot be flattened by name",
                 )
 
-    def test_human_preserves_three_benefits_and_open_choices(self):
+    def test_human_preserves_four_benefits_and_open_choices(self):
         p = source_inventory("species.human", self.catalog)
         self.assertEqual(
             ["species.human"],
@@ -78,7 +78,7 @@ class OriginCharacteristicInventoryTests(unittest.TestCase):
             human["intrinsicFields"]["sizeChoice"]["from"],
         )
         self.assertEqual(
-            {"skillful", "versatile", "adaptable-learning"},
+            {"skillful", "versatile", "adaptable-learning", "human-determination"},
             {trait["localTraitId"] for trait in human["traits"]},
         )
         skill = next(
