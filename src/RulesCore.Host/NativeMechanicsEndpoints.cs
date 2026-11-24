@@ -71,6 +71,7 @@ public static class NativeMechanicsEndpoints
                 capabilities = new { characterProjection = true, resourceResolution = true,
                     actionBudgetComparison = "experimental-opt-in",
                     combatAttackCheck = "preview-no-damage",
+                    combatDamagePreview = "arithmetic-no-commit",
                     conditionValueIsolation = true,
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
