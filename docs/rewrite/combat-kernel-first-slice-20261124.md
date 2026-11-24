@@ -28,7 +28,7 @@ The new operation is `POST /api/mechanics/v1/experimental/combat/attack-check` (
   "attackBonus": 5,
   "firstDie": 13,
   "secondDie": null,
-  "defenseProfile": "Normal",
+  "defenseProfile": 0,
   "defenderContributions": {
     "armor": 4,
     "shield": 2,
@@ -36,12 +36,12 @@ The new operation is `POST /api/mechanics/v1/experimental/combat/attack-check` (
   },
   "attackerConditionIds": [],
   "defenderConditionIds": [],
-  "baseRollMode": "Normal",
+  "baseRollMode": 0,
   "criticalThreatMinimum": 20
 }
 ```
 
-Here `defenseProfile` and `baseRollMode` are the existing C# enums and use their default JSON representation unless an approved serializer configuration explicitly changes it; clients must verify the current transport representation rather than infer that these illustrative names are accepted JSON strings. The resulting effective normal AC is 19; the roll total is 18, so this is an ordinary miss. The response includes `contractVersion`, `experimental`, `rulesetId`, `fingerprint`, and a `result` containing `status`, `hit`, `attackTotal`, `armorClass`, `naturalDie`, `rollMode`, `issues` and `reason`.
+The numeric enum values in this request use the existing native serializer defaults: `defenseProfile: 0` means Normal AC and `baseRollMode: 0` means a Normal roll. Other profile and roll-mode values are defined in `NativeMechanicsContracts.cs`. The endpoint does not infer eligibility or grant an action. The resulting effective normal AC is 19; the roll total is 18, so this is an ordinary miss. The response includes `contractVersion`, `experimental`, `rulesetId`, `fingerprint`, and a `result` containing `status`, `hit`, `attackTotal`, `armorClass`, `naturalDie`, `rollMode`, `issues` and `reason`.
 
 **Trust boundary:** The consumer, not Rules Core, is responsible for validating attack permissions, entity state, target identities, dice provenance, the source of AC components, and all change requests. Do not treat a successful calculator result as an authorized encounter transaction. These authenticated endpoints are not anonymous, but their input fields are still caller claims rather than server-loaded combatant facts.
 
