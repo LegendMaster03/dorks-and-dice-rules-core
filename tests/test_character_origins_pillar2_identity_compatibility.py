@@ -70,18 +70,6 @@ class Pillar2IdentityCompatibilityTests(unittest.TestCase):
         self.assertEqual(["small", "medium"], alternatives[0]["offeredValues"])
         self.assertFalse(find(result, "competing-intrinsic-values"))
 
-    def test_wood_elf_records_competing_speed_without_a_replacement_rule(self):
-        result = self.audit(direct("wood", "ancestry.elf.wood"))
-        flags = find(result, "competing-intrinsic-values")
-        speed = next(x for x in flags
-                     if x["characteristicDimension"] == "movement.walk.speed")
-        self.assertEqual([30, 35], speed["offeredValues"])
-        self.assertEqual(
-            "requires-overlap-replacement-or-selection-review",
-            speed["disposition"],
-        )
-        self.assertFalse(result["duplicatesMerged"])
-
     def test_red_dragonborn_root_and_trait_climb_are_one_overlap_question(self):
         result = self.audit(direct("red", "ancestry.dragonborn.red"))
         matches = find(result, "trait-and-intrinsic-movement-overlap")

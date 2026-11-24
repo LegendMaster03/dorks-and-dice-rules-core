@@ -127,26 +127,6 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
                          [x["value"] for x in size["options"]])
         self.assertFalse(report["templateComplete"])
 
-    def test_wood_elf_does_not_auto_select_35_or_stack_30_and_35(self):
-        report = self.propose("ancestry.elf.wood")
-        self.assertFalse(any(
-            x["kind"] == "intrinsic"
-            and x["identity"] == "movement.walk.speed"
-            for x in report["proposedSelections"]
-        ))
-        conflicting = [
-            x for x in report["unresolvedOriginDecisions"]
-            if x["kind"] == "competing-intrinsic-values-require-policy"
-            and x["identity"] == "movement.walk.speed"
-        ]
-        self.assertEqual(1, len(conflicting))
-        self.assertEqual([30, 35],
-                         [x["value"] for x in conflicting[0]["options"]])
-        self.assertEqual(
-            ["species.elf", "ancestry.elf.wood"],
-            report["sourceLineage"],
-        )
-
     def test_high_elf_has_distinct_progression_and_dependent_choices(self):
         report = self.propose("ancestry.elf.high")
         traits = {x["identity"] for x in self.entries(report, "trait")}

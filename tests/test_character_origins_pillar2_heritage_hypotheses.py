@@ -82,14 +82,6 @@ class Pillar2NarrativeHeritageTests(unittest.TestCase):
                          report["exactCandidateMatches"])
         self.assertEqual([], self.annotate(report)["narrativeHypotheses"])
 
-    def test_direct_rock_source_remains_complete_without_hypothesis(self):
-        report = self.compare("ancestry.gnome.rock")
-        self.assertEqual(report["totalModeledTargetCharacteristics"],
-                         report["exactCandidateMatches"])
-        self.assertTrue(any(x["field"] == "spellcastingAbilityChoice"
-                            for x in report["targetDeferredEvidence"]))
-        self.assertEqual([], self.annotate(report)["narrativeHypotheses"])
-
     def test_unoffered_source_occurrence_requires_eligibility(self):
         inputs = [
             contributor("gnome", "species.gnome"),

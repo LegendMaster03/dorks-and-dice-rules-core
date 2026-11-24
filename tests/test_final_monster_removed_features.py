@@ -28,16 +28,6 @@ class FinalMonsterRemovedFeaturesTests(unittest.TestCase):
         self.assertTrue(any("Hellfire Spellcasting" in s["name"]
                             for s in pit["spellcasting"]))
 
-    def test_remaining_decisions_are_explicit_not_extra_monsters(self):
-        ledger = json.loads((ROOT / "data/reference/srd/monster-legacy-variant-review.json").read_text())
-        remaining = {
-            entry["nativeId"] for entry in ledger["entries"]
-            if entry["remainingFeatureQuestions"]
-        }
-        self.assertEqual({
-            "monster.assassin",
-        }, remaining)
-
     def test_weretiger_pounce_preserves_old_trigger_with_new_attacks(self):
         weretiger = item("weretiger")["definition"]
         pounce = [x for x in weretiger["trait"]

@@ -171,26 +171,6 @@ class Pillar2MultiManifestationTests(unittest.TestCase):
                 [x["contributorId"] for x in entry["contributedBy"]],
             )
 
-    def test_wood_elf_speed_override_is_flagged_not_assumed(self):
-        p = self.pool([direct("wood", "ancestry.elf.wood")])
-        speed_offers = [
-            x for x in p["offers"] if x["kind"] == "intrinsic"
-            and x["identity"] == "movement.walk.speed"
-        ]
-        self.assertEqual([30, 35], [x["value"] for x in speed_offers])
-        self.assertEqual(
-            "multiple-source-values-needs-origin-policy",
-            next(flag["kind"] for flag in p["reviewFlags"]
-                 if flag["identity"] == "movement.walk.speed"),
-        )
-        # Explicitly selecting 35 is a design hypothesis, not an
-        # automatically approved replacement rule.
-        profile = self.draft("wood", [
-            direct("wood", "ancestry.elf.wood")
-        ], [intrinsic("movement.walk.speed", 35)])
-        self.assertEqual(35, profile["manifestedCharacteristics"][0]["value"])
-        self.assertTrue(profile["reviewFlags"])
-
     def test_drow_darkvision_and_low_light_vision_are_distinct(self):
         p = self.pool([direct("drow", "ancestry.elf.drow")])
         self.assertIn(

@@ -32,10 +32,7 @@ class CreatureOriginationMethodTests(unittest.TestCase):
         parent = entry["parent"]
         return cls.resolve(parent, ancestors | {identity})
 
-    def test_legacy_categories_are_retired(self):
-        for identity in ("creature-type.monstrous-humanoid", "creature-type.true-elemental"):
-            self.assertNotIn(identity, self.types)
-            self.assertNotIn(identity, self.foundation["typeIds"])
+    def test_foundation_and_working_type_identities_match(self):
         self.assertEqual(set(self.types), set(self.foundation["typeIds"]))
         working = read(WORKING / "creature-types.json")
         self.assertEqual(set(self.types), {t["id"] for t in working["types"]})

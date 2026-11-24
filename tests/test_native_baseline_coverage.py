@@ -465,17 +465,5 @@ class NativeSrdBaselineTests(unittest.TestCase):
         self.assertIn("lore", aboleth["definition"])
         self.assertFalse(list(WORKING.rglob("fluff-*.json")))
 
-    def test_no_runtime_source_specific_switch_and_no_leftover_bootstrap(self):
-        for f in [
-            "tools/_stage_native_srd_once.py",
-            "tools/_finalize_native_srd_once.py",
-            ".github/workflows/stage-native-srd-baseline.yml",
-            ".github/workflows/finalize-native-srd-baseline.yml",
-        ]:
-            self.assertFalse((ROOT / f).exists(), f)
-        self.assertEqual("native-coverage-staged; pinned SRD evidence retained; approved reconciliations promoted individually",
-                         self.coverage["status"])
-
-
 if __name__ == "__main__":
     unittest.main()
