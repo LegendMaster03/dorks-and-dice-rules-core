@@ -196,8 +196,9 @@ class DeploymentBoundaryTests(unittest.TestCase):
         contents = (Path(__file__).parents[1] / "Dockerfile.content-update"
                     ).read_text(encoding="utf-8")
         self.assertIn("FROM ${RULES_CORE_BASE_IMAGE}", contents)
-        self.assertIn("rm -rf /app/data/rulesets/first-party-001/native", contents)
-        self.assertIn("COPY data/rulesets/first-party-001/native/", contents)
+        self.assertIn("RUN rm -rf /app/data/rulesets\n", contents)
+        self.assertIn("COPY --from=catalogs /staged-catalogs/ /app/data/rulesets/", contents)
+        self.assertIn("RUN sh /stage_runtime_catalogs.sh", contents)
         self.assertIn("USER $APP_UID", contents)
         self.assertNotIn("dotnet publish", contents)
 

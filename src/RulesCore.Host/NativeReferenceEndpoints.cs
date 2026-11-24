@@ -19,7 +19,11 @@ public static class NativeReferenceEndpoints
         {
             var validator = invocation.HttpContext.RequestServices.GetRequiredService<PrivateReferenceTicketValidator>();
             var failure = await validator.ValidateAsync(invocation.HttpContext);
-            return failure is not null ? failure : await next(invocation);
+            if (failure is not null) return failure;
+            if (invocation.HttpContext.RequestServices.GetRequiredService<RulesCoreSettings>()
+                    .Ruleset.RulesetId != "first-party-001")
+                return Results.Json(new { error = "catalog_access_denied" }, statusCode: 403);
+            return await next(invocation);
         });
 
         group.MapGet("", (NativeCatalogStore store) =>

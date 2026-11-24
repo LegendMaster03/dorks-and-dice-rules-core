@@ -19,7 +19,7 @@ public static class RulesCoreApplication
         builder.Services.Configure<HostOptions>(options =>
             options.ShutdownTimeout = TimeSpan.FromSeconds(15));
         builder.Services.AddSingleton(settings);
-        builder.Services.AddSingleton<NativeCatalogStore>();
+        builder.Services.AddSingleton(new NativeCatalogStore(settings.Ruleset.RulesetId));
         builder.Services.AddSingleton(services => new NativeCatalogRegistry(
             settings.Ruleset.RulesetId,
             services.GetRequiredService<NativeCatalogStore>(),

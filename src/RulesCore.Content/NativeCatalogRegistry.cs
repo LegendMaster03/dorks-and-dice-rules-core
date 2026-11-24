@@ -21,7 +21,7 @@ public sealed class NativeCatalogRegistry
             [defaultRulesetId] = defaultStore
         };
         foreach (var id in additionalRulesetIds)
-            if (!stores.TryAdd(id, new NativeCatalogStore()))
+            if (!stores.TryAdd(id, new NativeCatalogStore(id)))
                 throw new ArgumentException("Duplicate registered ruleset: " + id,
                     nameof(additionalRulesetIds));
         _stores = stores.ToFrozenDictionary(StringComparer.Ordinal);
