@@ -1077,6 +1077,138 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal(HttpStatusCode.Unauthorized, anonymous.StatusCode);
     }
 
+    // Synthetic inventory records and authority are fixture-only. This does
+    // not imply that the production ordinary item catalog already exists.
+    private sealed class VerifiedLifeExperienceTestAuthority :
+        INativeLifeExperienceHostAuthorityProvider, INativeLifeExperienceContextAuthority
+    {
+        public bool MismatchedInstrument { get; set; }
+        public bool ForgedOccurrence { get; set; }
+        public bool MagicalItem { get; set; }
+        public bool DenyContext { get; set; }
+        public Task<VerifiedLifeExperienceHostAuthorization?> VerifyAsync(Guid actorId,
+            NativeLifeExperienceEndpoints.VerifiedRequest request, CancellationToken cancellationToken)
+        {
+            VerifiedLifeExperienceHostAuthorization? result = null;
+            if (actorId == SupernaturalActor && request.CharacterId == SupernaturalCharacter &&
+                request.OriginRevision == 1 && request.Proposal.UpbringingId == "upbringing.elf.wood" &&
+                request.Proposal.BackgroundId == "background.entertainer")
+                result = new(request.CharacterId, 1, new NativeLifeExperienceAuthorization(
+                    new Dictionary<string, string>
+                    {
+                        ["upbringing.elf.general"] = "verified-parent",
+                        ["upbringing.elf.wood"] = ForgedOccurrence ? "verified-parent" : "verified-upbringing",
+                        ["background.entertainer"] = "verified-background"
+                    }, this));
+            return Task.FromResult(result);
+        }
+
+        public bool AuthorizesChoice(NativeLifeExperienceSource source,
+            NativeLifeExperienceChoice choice, string optionId) => !DenyContext &&
+            choice.Kind == "language" && optionId == "language.fixture";
+
+        public NativeLifeExperienceItemProof? VerifyItem(NativeLifeExperienceSource source,
+            NativeLifeExperienceItemIntent intent)
+        {
+            if (source.SourceId != "background.entertainer" || source.OccurrenceId != "verified-background")
+                return null;
+            return intent.Key switch
+            {
+                "background.entertainer/item/0" when
+                    intent.ExpectedEquipmentTypeId == "equipment.tool.flute" &&
+                    intent.SelectedItemId == "fixture.flute" =>
+                    new("fixture.flute", MismatchedInstrument ? "equipment.tool.lute" : "equipment.tool.flute",
+                        !MagicalItem, true),
+                "background.entertainer/item/0" when intent.ExpectedEquipmentTypeId is null &&
+                    intent.SelectedItemId == "fixture.disguise-kit" &&
+                    intent.OrdinaryOptions.Contains("Disguise Kit") =>
+                    new("fixture.disguise-kit", "equipment.tool.disguise-kit", true, true),
+                "background.entertainer/item/1" when intent.SelectedItemId is null =>
+                    new("fixture.token", null, true, true),
+                "background.entertainer/item/2" when intent.SelectedItemId is null =>
+                    new("fixture.costume", null, true, true),
+                "background.entertainer/item/3" when intent.SelectedItemId is null =>
+                    new("fixture.pouch", null, true, true),
+                _ => null
+            };
+        }
+    }
+
+    [Fact]
+    public async Task VerifiedLifeExperienceHttpRequiresWholeSelectionAndMatchingOrdinaryInventory()
+    {
+        await using var fixture = new Fixture();
+        var authority = new VerifiedLifeExperienceTestAuthority();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true, dm: true, lifeExperienceAuthority: authority);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        const string endpoint = "/api/mechanics/v1/origins/life-experiences/verified-plan";
+        var selections = new Dictionary<string, IReadOnlyList<string>>
+        {
+            ["upbringing.elf.general/cultural-training"] = ["skill.survival"],
+            ["background.entertainer/entertainer-performance-specialty"] = ["skill.acrobatics"],
+            ["background.entertainer/entertainer-performance-method"] = ["musical-instrument"],
+            ["background.entertainer/equipment/entertainer-musical-instrument"] = ["equipment.tool.flute"]
+        };
+        var items = new Dictionary<string, string> { ["background.entertainer/item/0"] = "fixture.flute" };
+        var proposal = new NativeLifeExperienceProposal("upbringing.elf.wood", "background.entertainer", selections, items);
+        async Task<(HttpStatusCode Code, JsonElement Body)> Send(long revision = 1)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new
+                {
+                    characterId = SupernaturalCharacter, originRevision = revision,
+                    rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint, proposal
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            return (response.StatusCode, await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+        var (status, body) = await Send();
+        Assert.True(status == HttpStatusCode.OK, body.GetRawText());
+        Assert.False(body.GetProperty("committed").GetBoolean());
+        var earned = body.GetProperty("result").GetProperty("earnedProjection");
+        var qualification = Assert.Single(earned.GetProperty("equipment").GetProperty("qualifications")
+            .EnumerateArray(), x => x.GetProperty("qualificationId").GetString() == "equipment.tool.flute");
+        Assert.Equal("verified-background", Assert.Single(qualification.GetProperty("provenance")
+            .EnumerateArray()).GetProperty("sourceOccurrenceId").GetString());
+        Assert.DoesNotContain(earned.GetProperty("grants").EnumerateArray(),
+            x => x.GetProperty("targetId").GetString() == "competency.disguise");
+        var first = earned.GetProperty("startingItems")[0];
+        Assert.Equal("fixture.flute", first.GetProperty("verifiedItemId").GetString());
+        Assert.Equal("equipment.tool.flute", first.GetProperty("expectedEquipmentTypeId").GetString());
+        Assert.Equal(15, Assert.Single(earned.GetProperty("currency").EnumerateArray()).GetProperty("quantity").GetInt32());
+        Assert.Equal(4, earned.GetProperty("startingItems").GetArrayLength());
+
+        authority.MismatchedInstrument = true;
+        (status, body) = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, status);
+        Assert.Equal(JsonValueKind.Null, body.GetProperty("result").GetProperty("earnedProjection").ValueKind);
+        authority.MismatchedInstrument = false;
+        authority.MagicalItem = true;
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, (await Send()).Code);
+        authority.MagicalItem = false;
+        authority.ForgedOccurrence = true;
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, (await Send()).Code);
+        authority.ForgedOccurrence = false;
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, (await Send(2)).Code);
+
+        // Switching outer branch invalidates a stale inner equipment choice.
+        selections["background.entertainer/entertainer-performance-method"] = ["disguise-kit"];
+        items["background.entertainer/item/0"] = "fixture.disguise-kit";
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, (await Send()).Code);
+        selections.Remove("background.entertainer/equipment/entertainer-musical-instrument");
+        (status, body) = await Send();
+        Assert.True(status == HttpStatusCode.OK, body.GetRawText());
+        earned = body.GetProperty("result").GetProperty("earnedProjection");
+        var competency = Assert.Single(earned.GetProperty("competencyGrants").EnumerateArray());
+        Assert.Equal("competency.disguise", competency.GetProperty("competencyId").GetString());
+        Assert.Equal(1, competency.GetProperty("ranks").GetInt32());
+        Assert.False(competency.GetProperty("proficient").GetBoolean());
+        Assert.DoesNotContain(earned.GetProperty("equipment").GetProperty("qualifications").EnumerateArray(),
+            x => x.GetProperty("qualificationId").GetString()!.StartsWith("equipment.tool.", StringComparison.Ordinal));
+        Assert.Equal("fixture.disguise-kit", earned.GetProperty("startingItems")[0].GetProperty("verifiedItemId").GetString());
+    }
+
     [Fact]
     public async Task NativeOriginDiscoveryReturnsAuthoredPresetsMethodsAndConstructConfiguration()
     {

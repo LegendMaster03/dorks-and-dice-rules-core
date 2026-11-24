@@ -11,9 +11,12 @@ namespace RulesCore.Host;
 /// </summary>
 public interface INativeLifeExperienceHostAuthorityProvider
 {
-    Task<NativeLifeExperienceAuthorization?> VerifyAsync(Guid actorId,
+    Task<VerifiedLifeExperienceHostAuthorization?> VerifyAsync(Guid actorId,
         NativeLifeExperienceEndpoints.VerifiedRequest request, CancellationToken cancellationToken);
 }
+
+public sealed record VerifiedLifeExperienceHostAuthorization(Guid CharacterId,
+    long OriginRevision, NativeLifeExperienceAuthorization Authorization);
 
 public static class NativeLifeExperienceEndpoints
 {
@@ -62,8 +65,10 @@ public static class NativeLifeExperienceEndpoints
             var provider = services.GetService<INativeLifeExperienceHostAuthorityProvider>();
             if (provider is null) return Error(422, "life_experience_authority_unavailable");
             var verified = await provider.VerifyAsync(actor.UserId, request, context.RequestAborted);
-            if (verified is null) return Error(422, "life_experience_authority_unverified");
-            var result = new NativeLifeExperienceResolver(catalog).Resolve(request.Proposal, verified);
+            if (verified is null || verified.CharacterId != request.CharacterId ||
+                verified.OriginRevision != request.OriginRevision || verified.Authorization is null)
+                return Error(422, "life_experience_authority_unverified");
+            var result = new NativeLifeExperienceResolver(catalog).Resolve(request.Proposal, verified.Authorization);
             return Results.Json(new
             {
                 contractVersion = 1, rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,

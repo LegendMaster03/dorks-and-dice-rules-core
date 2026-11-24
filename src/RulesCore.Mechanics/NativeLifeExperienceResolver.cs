@@ -22,7 +22,8 @@ public sealed record NativeLifeExperienceSelectedPath(string SourceId, string Oc
     string BenefitId, string OptionId);
 public sealed record NativeLifeExperienceGrant(string SourceId, string OccurrenceId,
     string BenefitId, string? OptionId, string Kind, string TargetId,
-    int Ranks = 0, bool Proficient = false, JsonElement? AuthoredEffect = null);
+    int Ranks = 0, bool Proficient = false, JsonElement? AuthoredEffect = null,
+    string? GrantPath = null, string? OriginalTargetId = null);
 public sealed record NativeLifeExperienceItemIntent(string Key, string Name, int Quantity,
     IReadOnlyList<string> OrdinaryOptions, string? ExpectedEquipmentTypeId,
     bool RequiresMundane, bool RequiresInexpensive, string? SelectedItemId,
@@ -57,6 +58,7 @@ public sealed record NativeLifeExperienceAuthorization(
 /// </summary>
 public sealed record NativeLifeExperienceEarnedProjection(
     IReadOnlyList<NativeLifeExperienceGrant> Grants,
+    IReadOnlyList<NativeCompetencyTrainingGrant> CompetencyGrants,
     NativeEquipmentQualificationProjection Equipment,
     IReadOnlyList<NativeLifeExperienceItemIntent> StartingItems,
     IReadOnlyList<NativeLifeExperienceCurrency> Currency);
@@ -120,8 +122,11 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
             // No partial earned projection. Stateless calculation also never
             // authorizes acquisition, even when every choice is decidable.
             var earned = status == "resolved" && authorization is not null && equipment?.Status == "resolved"
-                ? new NativeLifeExperienceEarnedProjection(grants.ToArray(), equipment,
-                    items.ToArray(), currency.ToArray()) : null;
+                ? new NativeLifeExperienceEarnedProjection(grants.ToArray(),
+                    grants.Where(grant => grant.Kind == "competency-training")
+                        .Select(grant => new NativeCompetencyTrainingGrant(grant.SourceId,
+                            CompetencyOccurrence(grant), grant.TargetId, grant.Ranks, grant.Proficient)).ToArray(),
+                    equipment, items.ToArray(), currency.ToArray()) : null;
             return new(status, sources.ToArray(), choices.ToArray(), selectedPaths.ToArray(),
                 invalid ? [] : grants.ToArray(), invalid ? null : equipment,
                 invalid ? [] : items.ToArray(), invalid ? [] : currency.ToArray(),
@@ -227,13 +232,32 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
             Unavailable(issue.Code, issue.Path, issue.Detail);
         if (equipment.Status == "needs-choices") needsChoices = true;
 
-        // Do not silently turn a duplicate Skill into a rank or a duplicate
-        // tool into a Competency. Final whole-character duplicate arbitration
-        // remains in the common controller; report collisions inside this pair.
-        foreach (var group in grants.Where(g => g.Kind == "skill-training")
-            .GroupBy(g => g.TargetId, StringComparer.Ordinal).Where(g => g.Count() > 1))
-            Unavailable("duplicate-skill-alternative-required", group.Key,
-                "Independent duplicate Skill proficiency needs an authorized same-kind alternative.");
+        // Skill duplicates are distinct earned occurrences, not extra ranks.
+        // Reserve all original targets first; assign the replacement to the
+        // lexically later source path so replay/input order never changes it.
+        // The character controller must still combine other earned sources.
+        var skillTargets = grants.Where(g => g.Kind == "skill-training")
+            .Select(g => g.TargetId).ToHashSet(StringComparer.Ordinal);
+        var duplicateSkills = grants.Select((grant, index) => (grant, index))
+            .Where(x => x.grant.Kind == "skill-training")
+            .GroupBy(x => x.grant.TargetId, StringComparer.Ordinal)
+            .SelectMany(group => group.OrderBy(x => x.grant.GrantPath, StringComparer.Ordinal).Skip(1))
+            .OrderBy(x => x.grant.GrantPath, StringComparer.Ordinal).ToArray();
+        foreach (var (grant, index) in duplicateSkills)
+        {
+            var eligible = All("skill").Where(entity => Eligible(entity.Id, "skill") &&
+                !skillTargets.Contains(entity.Id)).Select(entity => entity.Id).ToArray();
+            var choice = new NativeLifeExperienceChoice(grant.GrantPath + "/duplicate-skill",
+                "duplicate-skill", 1, eligible);
+            var alternative = Select(choice);
+            if (alternative is { Count: 1 })
+            {
+                skillTargets.Add(alternative[0]);
+                grants[index] = grant with { TargetId = alternative[0], OriginalTargetId = grant.TargetId };
+            }
+        }
+        // Do not invent a tool-kind membership policy for duplicate tools.
+        // They stay separate from Competencies and retain source provenance.
         foreach (var qualification in equipment.Qualifications.Where(q =>
             q.EquipmentCategory == "tool" && q.Provenance.Count > 1))
             Unavailable("duplicate-tool-alternative-required", qualification.QualificationId,
@@ -288,26 +312,27 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
                 var requirements = itemRule.TryGetProperty("itemRequirements", out var req) ? req : default;
                 seenItems.Add(key);
                 var submitted = proposal.StartingItemIds?.GetValueOrDefault(key);
+                // All currently authored Background starting possessions are
+                // ordinary items. A verified application may resolve a fixed
+                // item without making the player manually choose its ID.
                 var intent = new NativeLifeExperienceItemIntent(key, name!, quantity.Value,
-                    ordinaryOptions, expectedType, Flag(requirements, "mundane"),
+                    ordinaryOptions, expectedType, true,
                     Flag(requirements, "inexpensive"), submitted);
-                if (submitted is null)
+                var proof = authorization?.ContextAuthority.VerifyItem(source, intent);
+                if (proof is null && submitted is null && ordinaryOptions.Length > 1)
                 {
                     needsChoices = true;
                     issues.Add(new("starting-item-selection-required", key,
-                        "Resolve one ordinary inventory definition for this authored item."));
+                        "Select one permitted ordinary item."));
                 }
-                else
-                {
-                    var proof = authorization?.ContextAuthority.VerifyItem(source, intent);
-                    if (proof is null || proof.ItemId != submitted ||
-                        (expectedType is not null && proof.EquipmentTypeId != expectedType) ||
-                        (intent.RequiresMundane && !proof.Mundane) ||
-                        (intent.RequiresInexpensive && !proof.Inexpensive))
-                        Unavailable("starting-item-unverified", key,
-                            "An independent inventory authority must verify the exact ordinary item and any training/type binding.");
-                    else intent = intent with { VerifiedItemId = proof.ItemId };
-                }
+                else if (proof is null || !ValidId(proof.ItemId) ||
+                    (submitted is not null && proof.ItemId != submitted) ||
+                    (expectedType is not null && proof.EquipmentTypeId != expectedType) ||
+                    (intent.RequiresMundane && !proof.Mundane) ||
+                    (intent.RequiresInexpensive && !proof.Inexpensive))
+                    Unavailable("starting-item-unverified", key,
+                        "An independent inventory authority must verify the exact ordinary item and any training/type binding.");
+                else intent = intent with { VerifiedItemId = proof.ItemId };
                 items.Add(intent);
             }
             if (package.TryGetProperty("currency", out var money))
@@ -315,7 +340,8 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
                 if (money.ValueKind != JsonValueKind.Object)
                     Unavailable("starting-currency-invalid", source.SourceId, "Native currency must be a keyed quantity.");
                 else foreach (var entry in money.EnumerateObject())
-                    if (entry.Value.TryGetInt32(out var quantity) && quantity >= 0)
+                    if (entry.Value.ValueKind == JsonValueKind.Number &&
+                        entry.Value.TryGetInt32(out var quantity) && quantity >= 0)
                         currency.Add(new(source.SourceId, source.OccurrenceId, entry.Name, quantity));
                     else Unavailable("starting-currency-invalid", source.SourceId, "Native currency quantity is invalid.");
             }
@@ -389,7 +415,7 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
             void Grant(string domain, string target, int ranks = 0, bool proficient = false,
                 JsonElement? effect = null) =>
                 grants.Add(new(source.SourceId, source.OccurrenceId, benefitId, optionId,
-                    domain, target, ranks, proficient, effect));
+                    domain, target, ranks, proficient, effect, path));
             if (kind is "skill-training" or "competency-training")
             {
                 var domain = kind == "skill-training" ? "skill" : "competency";
@@ -419,6 +445,7 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
                 if (domain == "competency")
                 {
                     if (!benefit.TryGetProperty("competencyTraining", out var training) ||
+                        training.ValueKind != JsonValueKind.Object ||
                         Number(training, "ranks") is not int rank || rank < 0 ||
                         !training.TryGetProperty("proficient", out var prof) ||
                         prof.ValueKind is not (JsonValueKind.True or JsonValueKind.False) ||
@@ -484,6 +511,14 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
             Grant("manual-feature", benefitId, effect: benefit);
         }
     }
+
+    // The shared competency reducer requires a unique grant occurrence,
+    // not the enclosing source occurrence reused by two different benefits.
+    // Hash a structured identity; retain its human-readable provenance in Grants.
+    private static string CompetencyOccurrence(NativeLifeExperienceGrant grant) =>
+        "life-experience:" + Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(
+            JsonSerializer.SerializeToUtf8Bytes(new { grant.SourceId, grant.OccurrenceId,
+                grant.GrantPath, grant.TargetId }))).ToLowerInvariant();
 
     private bool Eligible(string id, string category) =>
         catalog.TryGetById(id, out var entity) && entity?.Category == category &&
