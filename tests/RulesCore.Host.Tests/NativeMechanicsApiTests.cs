@@ -46,7 +46,8 @@ public sealed class NativeMechanicsApiTests
             bool realNativeContent = false, bool dm = false,
             INativeSupernaturalHostAuthorityProvider? supernaturalAuthority = null,
             INativeOriginHostBiologicalAuthorityProvider? biologicalAuthority = null,
-            INativeOriginHostReconstructionAuthorityProvider? reconstructionAuthority = null)
+            INativeOriginHostReconstructionAuthorityProvider? reconstructionAuthority = null,
+            INativeLifeExperienceHostAuthorityProvider? lifeExperienceAuthority = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -157,6 +158,8 @@ public sealed class NativeMechanicsApiTests
                     services.AddSingleton(biologicalAuthority);
                 if (reconstructionAuthority is not null)
                     services.AddSingleton(reconstructionAuthority);
+                if (lifeExperienceAuthority is not null)
+                    services.AddSingleton(lifeExperienceAuthority);
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -1017,6 +1020,61 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal(60, sense.GetProperty("rangeFeet").GetInt32());
         Assert.Equal(new[] { "earth", "stone" }, sense.GetProperty("contactMaterials")
             .EnumerateArray().Select(x => x.GetString()).ToArray());
+    }
+
+    [Fact]
+    public async Task LifeExperienceHttpPreviewNeverGrantsUnselectedNestedEquipment()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true, realNativeContent: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var endpoint = "/api/mechanics/v1/origins/life-experiences/preview";
+        async Task<(HttpStatusCode, JsonElement)> Send(NativeLifeExperienceProposal proposal, string fingerprint)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { rulesetId = catalog.RulesetId, fingerprint, proposal }));
+            using var response = await fixture.Client.SendAsync(request);
+            return (response.StatusCode, await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+        var selections = new Dictionary<string, IReadOnlyList<string>>
+        {
+            ["upbringing.elf.general/cultural-training"] = ["skill.survival"],
+            ["background.spy/spy-field-skills"] = ["skill.deception", "skill.stealth"],
+            ["background.spy/spy-tradecraft-competency"] = ["thieves-tools"]
+        };
+        var proposal = new NativeLifeExperienceProposal("upbringing.elf.wood", "background.spy", selections);
+        var (status, body) = await Send(proposal, catalog.Fingerprint);
+        Assert.Equal(HttpStatusCode.OK, status);
+        Assert.False(body.GetProperty("committed").GetBoolean());
+        var result = body.GetProperty("result");
+        Assert.Equal("needs-choices", result.GetProperty("status").GetString());
+        Assert.Equal(JsonValueKind.Null, result.GetProperty("earnedProjection").ValueKind);
+        var sources = result.GetProperty("sources").EnumerateArray().ToArray();
+        Assert.Equal(3, sources.Length);
+        Assert.True(Assert.Single(sources, x => x.GetProperty("sourceId").GetString() ==
+            "upbringing.elf.general").GetProperty("inherited").GetBoolean());
+        var qualifications = result.GetProperty("candidateEquipment").GetProperty("qualifications")
+            .EnumerateArray().Select(x => x.GetProperty("qualificationId").GetString()).ToArray();
+        Assert.Contains("equipment.tool.thieves-tools", qualifications);
+        Assert.Contains("equipment.weapon.longbow", qualifications);
+
+        selections["background.spy/spy-tradecraft-competency"] = ["forgery"];
+        (_, body) = await Send(proposal, catalog.Fingerprint);
+        result = body.GetProperty("result");
+        Assert.DoesNotContain(result.GetProperty("candidateEquipment").GetProperty("qualifications").EnumerateArray(),
+            x => x.GetProperty("qualificationId").GetString() == "equipment.tool.thieves-tools");
+        var forgery = Assert.Single(result.GetProperty("candidateGrants").EnumerateArray(),
+            x => x.GetProperty("targetId").GetString() == "competency.forgery");
+        Assert.Equal(1, forgery.GetProperty("ranks").GetInt32());
+        Assert.False(forgery.GetProperty("proficient").GetBoolean());
+
+        selections["background.spy/spy-field-skills"] = ["skill.stealth", "skill.stealth"];
+        (_, body) = await Send(proposal, catalog.Fingerprint);
+        Assert.Equal("invalid", body.GetProperty("result").GetProperty("status").GetString());
+        Assert.Equal(HttpStatusCode.Conflict, (await Send(proposal, "stale")).Item1);
+        using var anonymous = await fixture.Client.PostAsJsonAsync(endpoint,
+            new { rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint, proposal });
+        Assert.Equal(HttpStatusCode.Unauthorized, anonymous.StatusCode);
     }
 
     [Fact]

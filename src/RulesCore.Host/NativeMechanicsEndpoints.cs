@@ -47,6 +47,7 @@ public static class NativeMechanicsEndpoints
         group.MapNativeOriginPreview();
         group.MapNativeConstructPreview();
         group.MapNativeOriginDiscovery();
+        group.MapNativeLifeExperiencePreview();
         // Character-owned supernatural routes have independent host-side
         // verifiers; delegation is not proof of source entitlement.
         if (!privateTunnel)
@@ -57,6 +58,7 @@ public static class NativeMechanicsEndpoints
             group.MapNativeOriginVerifiedUnderlying();
             group.MapVerifiedBiologicalOriginPreview();
             group.MapVerifiedPermanentOriginReconstruction();
+            group.MapVerifiedLifeExperiencePlan();
             group.MapVerifiedSupernaturalOwnershipPlans();
             group.MapVerifiedInfluenceOverlapPlans();
         }
@@ -87,6 +89,8 @@ public static class NativeMechanicsEndpoints
                     constructOriginPreview = "stateless-native-assembly",
                     originMethodDiscovery = true, originPresetDiscovery = true,
                     constructConfigurationDiscovery = true,
+                    lifeExperiencePreview = "source-qualified-selection",
+                    verifiedLifeExperiencePlanning = privateTunnel ? "unavailable" : "host-authority-required",
                     biologicalAllocationPreview = NativeOriginFirstPartyBiologicalPricing.Revision,
                     originPersistence = false, originDmAdjudication = false,
                     verifiedBiologicalPreview = privateTunnel ? "unavailable" : "host-authority-required",
