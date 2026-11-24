@@ -24,7 +24,51 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/169"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "s": true,
+      "m": {
+        "text": "ink worth 10+ GP, which the spell consumes",
+        "cost": 1000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "day",
+          "amount": 10
+        }
+      }
+    ],
+    "entries": [
+      "You write on parchment, paper, or another suitable material and imbue it with an illusion that lasts for the duration. To you and any creatures you designate when you cast the spell, the writing appears normal, seems to be written in your hand, and conveys whatever meaning you intended when you wrote the text. To all others, the writing appears as if it were written in an unknown or magical script that is unintelligible. Alternatively, the illusion can alter the meaning, handwriting, and language of the text, though the language must be one you know.",
+      "If the spell is dispelled, the original script and the illusion both disappear.",
+      "A creature that has {@sense Truesight|SRD52} can read the hidden message."
+    ],
+    "meta": {
+      "ritual": true
     }
   },
   {
@@ -52,8 +96,110 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/170"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a statuette of the target worth 5,000+ GP",
+        "cost": 500000
+      }
+    },
+    "duration": [
+      {
+        "type": "permanent",
+        "ends": [
+          "dispel"
+        ]
+      }
+    ],
+    "entries": [
+      "You create a magical restraint to hold a creature that you can see within range. The target must make a Wisdom saving throw. On a successful save, the target is unaffected, and it is immune to this spell for the next 24 hours. On a failed save, the target is imprisoned. While imprisoned, the target doesn't need to breathe, eat, or drink, and it doesn't age. Divination spells can't locate or perceive the imprisoned target, and the target can't teleport.",
+      "Until the spell ends, the target is also affected by one of the following effects of your choice:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Burial",
+            "entries": [
+              "The target is entombed beneath the earth in a hollow globe of magical force that is just large enough to contain the target. Nothing can pass into or out of the globe."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Chaining",
+            "entries": [
+              "Chains firmly rooted in the ground hold the target in place. The target has the {@condition Restrained|SRD52} condition and can't be moved by any means."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Hedged Prison",
+            "entries": [
+              "The target is trapped in a demiplane that is warded against teleportation and planar travel. The demiplane is your choice of a labyrinth, a cage, a tower, or the like."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Minimus Containment",
+            "entries": [
+              "The target becomes 1 inch tall and is trapped inside an indestructible gemstone or a similar object. Light can pass through the gemstone (allowing the target to see out and other creatures to see in), but nothing else can pass through by any means."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Slumber",
+            "entries": [
+              "The target has the {@condition Unconscious|SRD52} condition and can't be awoken."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Ending the Spell",
+        "entries": [
+          "When you cast the spell, specify a trigger that will end it. The trigger can be as simple or as elaborate as you choose, but the DM must agree that it has a high likelihood of happening within the next decade. The trigger must be an observable action, such as someone making a particular offering at the temple of your god, saving your true love, or defeating a specific monster.",
+          "A {@spell Dispel Magic|SRD52} spell can end the spell only if it is cast with a level 9 spell slot, targeting either the prison or the component used to create it."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "wisdom"
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionInflict": [
+      "restrained",
+      "unconscious"
+    ]
   },
   {
     "id": "spell.incendiary-cloud",
@@ -82,8 +228,59 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/171"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 150
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "A swirling cloud of embers and smoke fills a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point within range. The cloud's area is {@variantrule Heavily Obscured|SRD52}. It lasts for the duration or until a strong wind (like that created by {@spell Gust of Wind|SRD52}) disperses it.",
+      "When the cloud appears, each creature in it makes a Dexterity saving throw, taking {@damage 10d8} Fire damage on a failed save or half as much damage on a successful one. A creature must also make this save when the {@variantrule Sphere [Area of Effect]|SRD52|Sphere} moves into its space and when it enters the {@variantrule Sphere [Area of Effect]|SRD52|Sphere} or ends its turn there. A creature makes this save only once per turn.",
+      "The cloud moves 10 feet away from you in a direction you choose at the start of each of your turns."
+    ],
+    "damageInflict": [
+      "fire"
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "miscTags": [
+      "OBS"
+    ],
+    "areaTags": [
+      "S"
+    ]
   },
   {
     "id": "spell.inflict-wounds",
@@ -110,8 +307,57 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/172"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A creature you touch makes a Constitution saving throw, taking {@damage 2d10} Necrotic damage on a failed save or half as much damage on a successful one."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The damage increases by {@scaledamage 2d10|1-9|1d10} for each spell slot level above 1."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "necrotic"
+    ],
+    "savingThrow": [
+      "constitution"
+    ],
+    "areaTags": [
+      "ST"
+    ]
   },
   {
     "id": "spell.insect-plague",
@@ -138,8 +384,69 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/173"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 300
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a locust"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "Swarming locusts fill a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point you choose within range. The {@variantrule Sphere [Area of Effect]|SRD52|Sphere} remains for the duration, and its area is {@variantrule Lightly Obscured|SRD52} and {@variantrule Difficult Terrain|SRD52}.",
+      "When the swarm appears, each creature in it makes a Constitution saving throw, taking {@damage 4d10} Piercing damage on a failed save or half as much damage on a successful one. A creature also makes this save when it enters the spell's area for the first time on a turn or ends its turn there. A creature makes this save only once per turn."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The damage increases by {@scaledamage 4d10|5-9|1d10} for each spell slot level above 5."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "piercing"
+    ],
+    "savingThrow": [
+      "constitution"
+    ],
+    "miscTags": [
+      "DFT",
+      "OBS"
+    ],
+    "areaTags": [
+      "S"
+    ]
   },
   {
     "id": "spell.instant-summons",
@@ -166,7 +473,53 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/94"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a sapphire worth 1,000+ GP",
+        "cost": 100000
+      }
+    },
+    "duration": [
+      {
+        "type": "permanent",
+        "ends": [
+          "dispel"
+        ]
+      }
+    ],
+    "entries": [
+      "You touch the sapphire used in the casting and an object weighing 10 pounds or less whose longest dimension is 6 feet or less. The spell leaves an {@condition Invisible|SRD52} mark on that object and invisibly inscribes the object's name on the sapphire. Each time you cast this spell, you must use a different sapphire.",
+      "Thereafter, you can take a {@action Magic|SRD52} action to speak the object's name and crush the sapphire. The object instantly appears in your hand regardless of physical or planar distances, and the spell ends.",
+      "If another creature is holding or carrying the object, crushing the sapphire doesn't transport it, but instead you learn who that creature is and where that creature is currently located."
+    ],
+    "miscTags": [
+      "OBJ"
+    ],
+    "meta": {
+      "ritual": true
     }
   },
   {
@@ -194,8 +547,57 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/224"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "One creature that you can see within range must make a Wisdom saving throw. On a successful save, the target dances comically until the end of its next turn, during which it must spend all its movement to dance in place.",
+      "On a failed save, the target has the {@condition Charmed|SRD52} condition for the duration. While {@condition Charmed|SRD52}, the target dances comically, must use all its movement to dance in place, and has {@variantrule Disadvantage|SRD52} on Dexterity saving throws and attack rolls, and other creatures have {@variantrule Advantage|SRD52} on attack rolls against it. On each of its turns, the target can take an action to collect itself and repeat the save, ending the spell on itself on a success."
+    ],
+    "savingThrow": [
+      "wisdom"
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionInflict": [
+      "charmed"
+    ]
   },
   {
     "id": "spell.invisibility",
@@ -222,8 +624,63 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/174"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "an eyelash in gum arabic"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "A creature you touch has the {@condition Invisible|SRD52} condition until the spell ends. The spell ends early immediately after the target makes an attack roll, deals damage, or casts a spell."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "You can target one additional creature for each spell slot level above 2."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SCT"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionInflict": [
+      "invisible"
+    ]
   },
   {
     "id": "spell.jump",
@@ -250,8 +707,59 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/175"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "bonus"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a grasshopper's hind leg"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You touch a willing creature. Once on each of its turns until the spell ends, that creature can jump up to 30 feet by spending 10 feet of movement."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "You can target one additional creature for each spell slot level above 1."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SCT"
+    ],
+    "areaTags": [
+      "ST"
+    ]
   },
   {
     "id": "spell.knock",
@@ -280,8 +788,46 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/176"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "Choose an object that you can see within range. The object can be a door, a box, a chest, a set of manacles, a padlock, or another object that contains a mundane or magical means that prevents access.",
+      "A target that is held shut by a mundane lock or that is stuck or barred becomes unlocked, unstuck, or unbarred. If the object has multiple locks, only one of them is unlocked.",
+      "If the target is held shut by {@spell Arcane Lock|SRD52}, that spell is suppressed for 10 minutes, during which time the target can be opened and closed.",
+      "When you cast the spell, a loud knock, audible up to 300 feet away, emanates from the target."
+    ],
+    "miscTags": [
+      "OBJ",
+      "SGT"
+    ]
   },
   {
     "id": "spell.legend-lore",
@@ -308,8 +854,49 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/177"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 10,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "incense worth 250+ GP, which the spell consumes, and four ivory strips worth 50+ GP each",
+        "cost": 25000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "Name or describe a famous person, place, or object. The spell brings to your mind a brief summary of the significant lore about that famous thing, as described by the DM.",
+      "The lore might consist of important details, amusing revelations, or even secret lore that has never been widely known. The more information you already know about the thing, the more precise and detailed the information you receive is. That information is accurate but might be couched in figurative language or poetry, as determined by the DM.",
+      "If the famous thing you chose isn't actually famous, you hear sad musical notes played on a trombone, and the spell fails."
+    ],
+    "miscTags": [
+      "OBJ"
+    ]
   },
   {
     "id": "spell.lesser-restoration",
@@ -336,8 +923,42 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/180"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "bonus"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You touch a creature and end one condition on it: {@condition Blinded|SRD52}, {@condition Deafened|SRD52}, {@condition Paralyzed|SRD52}, or {@condition Poisoned|SRD52}."
+    ],
+    "areaTags": [
+      "ST"
+    ]
   },
   {
     "id": "spell.levitate",
@@ -364,8 +985,58 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/181"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a metal spring"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "One creature or loose object of your choice that you can see within range rises vertically up to 20 feet and remains suspended there for the duration. The spell can levitate an object that weighs up to 500 pounds. An unwilling creature that succeeds on a Constitution saving throw is unaffected.",
+      "The target can move only by pushing or pulling against a fixed object or surface within reach (such as a wall or a ceiling), which allows it to move as if it were climbing. You can change the target's altitude by up to 20 feet in either direction on your turn. If you are the target, you can move up or down as part of your move. Otherwise, you can take a {@action Magic|SRD52} action to move the target, which must remain within the spell's range.",
+      "When the spell ends, the target floats gently to the ground if it is still aloft."
+    ],
+    "savingThrow": [
+      "constitution"
+    ],
+    "miscTags": [
+      "OBJ",
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ]
   },
   {
     "id": "spell.light",
@@ -392,8 +1063,48 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/182"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "m": "a firefly or phosphorescent moss"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You touch one Large or smaller object that isn't being worn or carried by someone else. Until the spell ends, the object sheds {@variantrule Bright Light|SRD52} in a 20-foot radius and {@variantrule Dim Light|SRD52} for an additional 20 feet. The light can be colored as you like.",
+      "Covering the object with something opaque blocks the light. The spell ends if you cast it again."
+    ],
+    "miscTags": [
+      "LGT",
+      "OBJ"
+    ]
   },
   {
     "id": "spell.lightning-bolt",
@@ -420,8 +1131,62 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/183"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "line",
+      "distance": {
+        "type": "feet",
+        "amount": 100
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a bit of fur and a crystal rod"
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A stroke of lightning forming a 100-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line} blasts out from you in a direction you choose. Each creature in the {@variantrule Line [Area of Effect]|SRD52|Line} makes a Dexterity saving throw, taking {@damage 8d6} Lightning damage on a failed save or half as much damage on a successful one."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The damage increases by {@scaledamage 8d6|3-9|1d6} for each spell slot level above 3."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "lightning"
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "miscTags": [
+      "OBJ"
+    ],
+    "areaTags": [
+      "L"
+    ]
   },
   {
     "id": "spell.locate-animals-or-plants",
@@ -448,8 +1213,47 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/184"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "fur from a bloodhound"
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "Describe or name a specific kind of Beast, Plant creature, or nonmagical plant. You learn the direction and distance to the closest creature or plant of that kind within 5 miles, if any are present."
+    ],
+    "meta": {
+      "ritual": true
+    },
+    "affectsCreatureType": [
+      "beast",
+      "plant"
+    ]
   },
   {
     "id": "spell.locate-creature",
@@ -476,8 +1280,47 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/185"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "fur from a bloodhound"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "Describe or name a creature that is familiar to you. You sense the direction to the creature's location if that creature is within 1,000 feet of you. If the creature is moving, you know the direction of its movement.",
+      "The spell can locate a specific creature known to you or the nearest creature of a specific kind (such as a human or a unicorn) if you have seen such a creature up close—within 30 feet—at least once. If the creature you described or named is in a different form, such as under the effects of a {@spell Flesh to Stone|SRD52} or {@spell Polymorph|SRD52} spell, this spell doesn't locate the creature.",
+      "This spell can't locate a creature if any thickness of lead blocks a direct path between you and the creature."
+    ]
   },
   {
     "id": "spell.locate-object",
@@ -504,8 +1347,50 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/186"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a forked twig"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "Describe or name an object that is familiar to you. You sense the direction to the object's location if that object is within 1,000 feet of you. If the object is in motion, you know the direction of its movement.",
+      "The spell can locate a specific object known to you if you have seen it up close—within 30 feet—at least once. Alternatively, the spell can locate the nearest object of a particular kind, such as a certain kind of apparel, jewelry, furniture, tool, or weapon.",
+      "This spell can't locate an object if any thickness of lead blocks a direct path between you and the object."
+    ],
+    "miscTags": [
+      "OBJ"
+    ]
   },
   {
     "id": "spell.longstrider",
@@ -532,8 +1417,59 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/187"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a pinch of dirt"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You touch a creature. The target's {@variantrule Speed|SRD52} increases by 10 feet until the spell ends."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "You can target one additional creature for each spell slot level above 1."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SCT"
+    ],
+    "areaTags": [
+      "ST"
+    ]
   },
   {
     "id": "spell.mage-armor",
@@ -560,8 +1496,50 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/188"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a piece of cured leather"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 8
+        }
+      }
+    ],
+    "entries": [
+      "You touch a willing creature who isn't wearing armor. Until the spell ends, the target's base AC becomes 13 plus its Dexterity modifier. The spell ends early if the target dons armor."
+    ],
+    "miscTags": [
+      "MAC"
+    ],
+    "areaTags": [
+      "ST"
+    ]
   },
   {
     "id": "spell.mage-hand",
@@ -588,8 +1566,50 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/189"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "A spectral, floating hand appears at a point you choose within range. The hand lasts for the duration. The hand vanishes if it is ever more than 30 feet away from you or if you cast this spell again.",
+      "When you cast the spell, you can use the hand to manipulate an object, open an unlocked door or container, stow or retrieve an item from an open container, or pour the contents out of a vial.",
+      "As a {@action Magic|SRD52} action on your later turns, you can control the hand thus again. As part of that action, you can move the hand up to 30 feet.",
+      "The hand can't attack, activate magic items, or carry more than 10 pounds."
+    ],
+    "miscTags": [
+      "OBJ"
+    ]
   },
   {
     "id": "spell.magic-circle",
@@ -618,8 +1638,84 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/190"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 10
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "salt and powdered silver worth 100+ GP, which the spell consumes",
+        "cost": 10000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You create a 10-foot-radius, 20-foot-tall {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} of magical energy centered on a point on the ground that you can see within range. Glowing runes appear wherever the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} intersects with the floor or other surface.",
+      "Choose one or more of the following types of creatures: Celestials, Elementals, Fey, Fiends, or Undead. The circle affects a creature of the chosen type in the following ways:",
+      {
+        "type": "list",
+        "items": [
+          "The creature can't willingly enter the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} by nonmagical means. If the creature tries to use teleportation or interplanar travel to do so, it must first succeed on a Charisma saving throw.",
+          "The creature has {@variantrule Disadvantage|SRD52} on attack rolls against targets within the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder}.",
+          "Targets within the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} can't be possessed by or gain the {@condition Charmed|SRD52} or {@condition Frightened|SRD52} condition from the creature."
+        ]
+      },
+      "Each time you cast this spell, you can cause its magic to operate in the reverse direction, preventing a creature of the specified type from leaving the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} and protecting targets outside it."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The duration increases by 1 hour for each spell slot level above 3."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "charisma"
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "areaTags": [
+      "Y"
+    ],
+    "affectsCreatureType": [
+      "celestial",
+      "elemental",
+      "fey",
+      "fiend",
+      "undead"
+    ]
   },
   {
     "id": "spell.magic-jar",
@@ -646,8 +1742,61 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/191"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a gem, crystal, or reliquary worth 500+ GP",
+        "cost": 50000
+      }
+    },
+    "duration": [
+      {
+        "type": "permanent",
+        "ends": [
+          "dispel"
+        ]
+      }
+    ],
+    "entries": [
+      "Your body falls into a catatonic state as your soul leaves it and enters the container you used for the spell's Material component. While your soul inhabits the container, you are aware of your surroundings as if you were in the container's space. You can't move or take Reactions. The only action you can take is to project your soul up to 100 feet out of the container, either returning to your living body (and ending the spell) or attempting to possess a Humanoid's body.",
+      "You can attempt to possess any Humanoid within 100 feet of you that you can see (creatures warded by a {@spell Protection from Evil and Good|SRD52} or {@spell Magic Circle|SRD52} spell can't be possessed). The target makes a Charisma saving throw. On a failed save, your soul enters the target's body, and the target's soul becomes trapped in the container. On a successful save, the target resists your efforts to possess it, and you can't attempt to possess it again for 24 hours.",
+      "Once you possess a creature's body, you control it. Your {@variantrule Hit Points|SRD52}, {@variantrule Hit Point Dice|SRD52}, Strength, Dexterity, Constitution, {@variantrule Speed|SRD52}, and senses are replaced by the creature's. You otherwise keep your game statistics.",
+      "Meanwhile, the possessed creature's soul can perceive from the container using its own senses, but it can't move and it is {@condition Incapacitated|SRD52}.",
+      "While possessing a body, you can take a {@action Magic|SRD52} action to return from the host body to the container if it is within 100 feet of you, returning the host creature's soul to its body. If the host body dies while you're in it, the creature dies, and you make a Charisma saving throw against your own spellcasting DC. On a success, you return to the container if it is within 100 feet of you. Otherwise, you die.",
+      "If the container is destroyed or the spell ends, your soul returns to your body. If your body is more than 100 feet away from you or if your body is dead, you die. If another creature's soul is in the container when it is destroyed, the creature's soul returns to its body if the body is alive and within 100 feet. Otherwise, that creature dies.",
+      "When the spell ends, the container is destroyed."
+    ],
+    "savingThrow": [
+      "charisma"
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "affectsCreatureType": [
+      "humanoid"
+    ]
   },
   {
     "id": "spell.magic-missile",
@@ -674,8 +1823,59 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
-    }
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/192"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You create three glowing darts of magical force. Each dart strikes a creature of your choice that you can see within range. A dart deals {@damage 1d4 + 1} Force damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The spell creates one more dart for each spell slot level above 1."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "force"
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "areaTags": [
+      "MT",
+      "ST"
+    ]
   },
   {
     "id": "spell.magic-mouth",
@@ -702,7 +1902,56 @@
       ],
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/193"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "jade dust worth 10+ GP, which the spell consumes",
+        "cost": 1000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "permanent",
+        "ends": [
+          "dispel"
+        ]
+      }
+    ],
+    "entries": [
+      "You implant a message within an object in range—a message that is uttered when a trigger condition is met. Choose an object that you can see and that isn't being worn or carried by another creature. Then speak the message, which must be 25 words or fewer, though it can be delivered over as long as 10 minutes. Finally, determine the circumstance that will trigger the spell to deliver your message.",
+      "When that trigger occurs, a magical mouth appears on the object and recites the message in your voice and at the same volume you spoke. If the object you chose has a mouth or something that looks like a mouth (for example, the mouth of a statue), the magical mouth appears there, so the words appear to come from the object's mouth. When you cast this spell, you can have the spell end after it delivers its message, or it can remain and repeat its message whenever the trigger occurs.",
+      "The trigger can be as general or as detailed as you like, though it must be based on visual or audible conditions that occur within 30 feet of the object. For example, you could instruct the mouth to speak when any creature moves within 30 feet of the object or when a silver bell rings within 30 feet of it."
+    ],
+    "miscTags": [
+      "OBJ",
+      "SGT"
+    ],
+    "meta": {
+      "ritual": true
     }
   }
 ]
