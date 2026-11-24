@@ -111,5 +111,38 @@
     "touch": 13,
     "flat-footed": 16,
     "touch-flat-footed": 10
-  }
+  },
+  "openDesignInvestigations": [
+    {
+      "id": "relative-size-touch-ac",
+      "status": "idea noted; NOT approved as native gameplay rule; numeric formula and eligibility unresolved",
+      "originalObservation": {
+        "source": "D&D 3.5e gnome racial trait",
+        "rule": "Gnomes receive a +4 dodge bonus to Armor Class against creatures of the giant type.",
+        "correction": "The source condition is the attacker's giant creature type, not simply whether the attacking creature is larger.",
+        "existingTouchInteraction": "Dodge bonuses and ordinary size AC modifiers already apply to Touch AC when eligible; applicable dodge bonuses are lost with denied Dexterity defense.",
+        "references": [
+          "https://www.d20srd.org/srd/monsters/gnome.htm",
+          "https://www.d20srd.org/srd/races.htm",
+          "https://www.d20srd.org/srd/combat/combatStatistics.htm#armorClass"
+        ]
+      },
+      "ownerSuggestion": "Explore a generalized, attacker-relative Touch AC adjustment based on the size category difference between attacker and defender, instead of assuming the gnome-versus-giant trait applies universally.",
+      "notYetDecided": [
+        "Whether relative size should influence Touch AC at all beyond already approved defender size contributions",
+        "Whether the modifier is in addition to, or substitutes for, the existing intrinsic size AC contribution",
+        "Direction, magnitude, thresholds, caps, and symmetry of relative-size adjustments",
+        "How any adjustment interacts with attack-side size bonuses, dodge bonuses, denied Dexterity/Flat-Footed defenses, and source-granted racial defenses",
+        "Whether reach, anatomy, attacker size, attack delivery, or movement changes applicability",
+        "Impact on touch-contact grapple initiation and on 5.x conversion balance"
+      ],
+      "nonGoals": [
+        "No numeric modifiers or creature-eligibility values granted",
+        "No change to approved Touch/Flat-Footed AC computation",
+        "No modification of gnome/giant or other Species content",
+        "No runtime execution, migration, or source-conversion rules approved"
+      ],
+      "discussionState": "Parked for future combat-defense design; no immediate implementation requested."
+    }
+  ]
 }

@@ -140,5 +140,14 @@
     "Stat block visual layout",
     "Automatic CR recalculation",
     "Rebalancing existing monsters during data migration"
-  ]
+  ],
+  "combatantModels": {
+    "classificationRuleId": "rule.combatant-models",
+    "modelIds": [
+      "combatant-model.standard",
+      "combatant-model.complex"
+    ],
+    "description": "Standard and Complex are statblock/combatant mechanic classifications, not creature-size, creature-type, boss-role, or player-preference classifications. The same encounter may include both. Shared rules mediate their interactions; individual models can have distinct vitality, targeting, behavior, and defeat mechanics.",
+    "migrationBoundary": "This is a design link only. Existing bestiary entries are not automatically reclassified, assigned new hit-point models, given size-based abilities, or made runtime-executable. Explicit per-entry selection and resolution contracts are pending."
+  }
 }
