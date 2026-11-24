@@ -79,6 +79,31 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal(ids.OrderBy(x => x, StringComparer.Ordinal).ToArray(),
             listing.GetProperty("rulesets").EnumerateArray().Select(x => x.GetProperty("id").GetString()).ToArray());
 
+        // Exercise real, edition-specific bestiary entities through the same
+        // running four-package host, not just synthetic catalog fixtures.
+        foreach (var id in ids.Take(2))
+        {
+            var prefix = "/api/rulesets/" + id + "/rules";
+            var results = await client.GetFromJsonAsync<JsonElement>(
+                prefix + "?category=monster&q=Avatar%20of%20Death&limit=1");
+            Assert.Equal(1, results.GetProperty("total").GetInt32());
+            Assert.Equal(fingerprints[id], results.GetProperty("fingerprint").GetString());
+            Assert.Equal("monster.avatar-of-death",
+                results.GetProperty("rules")[0].GetProperty("id").GetString());
+            var detail = await client.GetFromJsonAsync<JsonElement>(prefix + "/monster.avatar-of-death");
+            Assert.Equal(id, detail.GetProperty("rulesetId").GetString());
+            var definition = detail.GetProperty("rule").GetProperty("definition");
+            Assert.Equal(id == "dnd-5-5e" ? 2 : 1, definition.GetProperty("action").GetArrayLength());
+            Assert.Equal(id == "dnd-5-5e", definition.GetProperty("conditionImmune")
+                .EnumerateArray().Any(x => x.GetString() == "exhaustion"));
+            var localAcolyte = id == "dnd-5e" ? "acolyte" : "priest-acolyte";
+            var foreignAcolyte = id == "dnd-5e" ? "priest-acolyte" : "acolyte";
+            Assert.Equal(HttpStatusCode.OK, (await client.GetAsync(prefix + "/monster." + localAcolyte)).StatusCode);
+            Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(prefix + "/monster." + foreignAcolyte)).StatusCode);
+        }
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(
+            "/api/rulesets/fate-condensed/rules/monster.avatar-of-death")).StatusCode);
+
         const string path = "/api/mechanics/v1/rulesets/";
         Assert.Equal(HttpStatusCode.Unauthorized, (await client.GetAsync(path + ids[0] + "/capabilities")).StatusCode);
         client.DefaultRequestHeaders.Add("X-Dorks-Tool-Auth-Ticket", "signed-in-site-ticket");

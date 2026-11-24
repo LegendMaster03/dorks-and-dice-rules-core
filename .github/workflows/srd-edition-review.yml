@@ -8,6 +8,9 @@ on:
       - 'tests/NativeCatalogFingerprint/**'
       - 'src/RulesCore.Content/**'
       - 'tools/inventory_srd_editions.py'
+      - 'tools/report_srd_promotion.py'
+      - 'data/rulesets/dnd-5e/native/**'
+      - 'data/rulesets/dnd-5-5e/native/**'
       - 'data/reference/srd/structured/**'
       - 'data/reference/srd/structured-manifest.json'
       - '.github/workflows/srd-edition-review.yml'
@@ -21,6 +24,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build isolated edition review catalogs
         run: python3 tools/stage_srd_editions.py --output build/srd-review
+      - name: Reconcile native promotion coverage (diagnostic only)
+        run: python3 tools/report_srd_promotion.py --output build/srd-review/promotion-coverage.json
       - name: Publish review inventory to summary
         run: |
           echo '## Unreviewed SRD candidate inventory' >> "$GITHUB_STEP_SUMMARY"
