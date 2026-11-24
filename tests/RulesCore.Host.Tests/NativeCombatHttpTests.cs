@@ -169,6 +169,43 @@ public sealed class NativeCombatHttpTests
         Assert.Equal(HttpStatusCode.BadRequest, changed.StatusCode);
     }
 
+    [Theory]
+    [InlineData(NativeActionBudgetExperiment.Independent, true)]
+    [InlineData(NativeActionBudgetExperiment.SharedEndTurn, false)]
+    public async Task EndTurnRefreshPolicyChangesNextTurnBonusAvailability(
+        string policy, bool nextBonusAvailable)
+    {
+        await using var f = new Fixture();
+        await f.StartAsync();
+        JsonElement? state = null;
+        async Task<JsonElement> Transition(string command)
+        {
+            using var response = await f.Post("action-budget", new
+            {
+                rulesetId = f.Catalog.RulesetId,
+                fingerprint = f.Catalog.Fingerprint,
+                policyId = policy,
+                command = command,
+                state
+            });
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal("resolved", result.GetProperty("status").GetString());
+            return result.GetProperty("state").Clone();
+        }
+
+        state = await Transition("initialize");
+        state = await Transition("start-turn");
+        state = await Transition("bonus-action");
+        state = await Transition("end-turn");
+        state = await Transition("reaction");
+        state = await Transition("start-turn");
+        Assert.Equal(nextBonusAvailable,
+            state.Value.GetProperty("bonusActionAvailable").GetBoolean());
+        Assert.Equal(nextBonusAvailable,
+            state.Value.GetProperty("reactionAvailable").GetBoolean());
+    }
+
     [Fact]
     public async Task NormalAttackPreviewUsesNativeDefenseAndDoesNotApplyDamage()
     {
