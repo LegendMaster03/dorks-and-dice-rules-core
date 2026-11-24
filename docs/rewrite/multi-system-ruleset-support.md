@@ -14,7 +14,7 @@ Each package has its own native manifest, snapshot, fingerprint and readiness sl
 
 Anonymous discovery and reads use /api/rulesets and /api/rulesets/{rulesetId}/rules[/{ruleId}]. Publication remains disabled unless RulesCore:PublicDistribution:Packages:{rulesetId} supplies Enabled=true, RightsReviewReference, AttributionStatement and ApprovedFingerprint matching that package's exact snapshot. Loading is not rights approval. Do not use test approval values in production.
 
-Existing authenticated direct consumer catalog and private Wiki catalog remain first-party only. Site tickets have no ruleset entitlement claims. Do not broaden them to unreleased foreign content. New representative mechanics require existing Character Sheet ticket validation plus exact package publication approval. This is a conservative interim boundary, not a substitute for future scoped Site authorization. Legacy first-party character mechanics do not execute against foreign defaults.
+Existing authenticated direct consumer catalog and private Wiki catalog retain first-party access, and can discover/read foreign packages only when their exact fingerprints are independently approved for public distribution. Site tickets have no ruleset entitlement claims and confer no unpublished foreign access. New representative mechanics require existing Character Sheet ticket validation plus exact package publication approval. This is a conservative interim boundary, not a substitute for future scoped Site authorization. Legacy first-party character mechanics do not execute against foreign defaults.
 
 ## Coverage and source provenance
 

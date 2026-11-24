@@ -26,27 +26,30 @@ public static class NativeReferenceEndpoints
             return await next(invocation);
         });
 
-        group.MapGet("", (NativeCatalogStore store) =>
+        group.MapGet("", (NativeCatalogRegistry registry, NativePublicDistributionPolicy policy) =>
         {
-            // Capture exactly one published immutable catalog per request.
-            var snapshot = store.Snapshot;
-            return snapshot is null ? Unavailable() : Results.Ok(new
+            var snapshots = registry.RulesetIds.OrderBy(id => id, StringComparer.Ordinal)
+                .Select(id => registry.GetStore(id).Snapshot)
+                .OfType<NativeCatalogSnapshot>().ToArray();
+            return snapshots.Length == 0 ? Unavailable() : Results.Ok(new
             {
-                rulesets = new[] { new
-                {
-                    id = snapshot.RulesetId,
-                    entityCount = snapshot.Count,
-                    fingerprint = snapshot.Fingerprint,
-                    capabilities = new { read = true, write = false }
-                } }
+                rulesets = snapshots.Where(snapshot => NativePublicEndpoints.MayRead(snapshot, policy, true))
+                    .Select(snapshot => new
+                    {
+                        id = snapshot.RulesetId,
+                        entityCount = snapshot.Count,
+                        fingerprint = snapshot.Fingerprint,
+                        capabilities = new { read = true, write = false }
+                    }).ToArray()
             });
         });
 
-        group.MapGet("/{rulesetId}/rules", (string rulesetId, HttpRequest request, NativeCatalogStore store) =>
+        group.MapGet("/{rulesetId}/rules", (string rulesetId, HttpRequest request, NativeCatalogRegistry registry,
+            NativePublicDistributionPolicy policy) =>
         {
-            var snapshot = store.Snapshot;
-            if (snapshot is null) return Unavailable();
-            if (!string.Equals(rulesetId, snapshot.RulesetId, StringComparison.Ordinal))
+            var snapshot = Select(rulesetId, registry);
+            if (snapshot is null && rulesetId == "first-party-001") return Unavailable();
+            if (snapshot is null || !NativePublicEndpoints.MayRead(snapshot, policy, true))
                 return Results.NotFound(new { error = "ruleset_not_found" });
 
             if (request.Query.Keys.Any(key => key is not ("q" or "category" or "limit" or "offset")) ||
@@ -73,11 +76,12 @@ public static class NativeReferenceEndpoints
         });
 
         group.MapGet("/{rulesetId}/rules/{ruleId}",
-            (string rulesetId, string ruleId, NativeCatalogStore store) =>
+            (string rulesetId, string ruleId, NativeCatalogRegistry registry,
+                NativePublicDistributionPolicy policy) =>
         {
-            var snapshot = store.Snapshot;
-            if (snapshot is null) return Unavailable();
-            if (!string.Equals(rulesetId, snapshot.RulesetId, StringComparison.Ordinal))
+            var snapshot = Select(rulesetId, registry);
+            if (snapshot is null && rulesetId == "first-party-001") return Unavailable();
+            if (snapshot is null || !NativePublicEndpoints.MayRead(snapshot, policy, true))
                 return Results.NotFound(new { error = "ruleset_not_found" });
             if (ruleId.Length > 160 || !SafeRuleId.IsMatch(ruleId))
                 return Results.BadRequest(new { error = "invalid_rule_id" });
@@ -91,6 +95,9 @@ public static class NativeReferenceEndpoints
             });
         });
     }
+
+    private static NativeCatalogSnapshot? Select(string rulesetId, NativeCatalogRegistry registry) =>
+        registry.TryGetStore(rulesetId, out var store) ? store!.Snapshot : null;
 
     private static IResult Unavailable() =>
         Results.Json(new { error = "native_catalog_unavailable" }, statusCode: 503);
