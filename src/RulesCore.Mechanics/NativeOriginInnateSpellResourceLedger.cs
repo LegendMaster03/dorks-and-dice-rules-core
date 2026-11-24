@@ -106,9 +106,9 @@ public static class NativeOriginInnateSpellResourceLedger
             {
                 // Recovery follows this grant's canonical spell schedule; do not
                 // refill another Long Rest-only innate spell on a Short Rest.
-                var spell = projection.Spells.Single(x => x.GrantId == grantId);
+                var recoverySpell = projection.Spells.Single(x => x.GrantId == grantId);
                 var resource = new NativeResource("origin-spell-free:" + grantId,
-                    max, next[grantId], spell.Recharge!);
+                    max, next[grantId], recoverySpell.Recharge!);
                 var change = NativeResourceResolution.Recover(resource,
                     next[grantId], rest);
                 if (change.Status != "resolved" || change.Current is null)

@@ -433,15 +433,15 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                                 {
                                     var valid = bound.EnumerateObject().Count() == 1 &&
                                         biomeChoices.ValueKind == JsonValueKind.Array;
-                                    var options = valid
+                                    var biomeOptions = valid
                                         ? biomeChoices.EnumerateArray()
                                             .Where(x => x.ValueKind == JsonValueKind.String &&
                                                 !string.IsNullOrWhiteSpace(x.GetString()))
                                             .Select(x => x.GetString()!).ToArray()
                                         : Array.Empty<string>();
-                                    if (!valid || options.Length == 0 ||
-                                        options.Length != biomeChoices.GetArrayLength() ||
-                                        options.Distinct(StringComparer.Ordinal).Count() != options.Length)
+                                    if (!valid || biomeOptions.Length == 0 ||
+                                        biomeOptions.Length != biomeChoices.GetArrayLength() ||
+                                        biomeOptions.Distinct(StringComparer.Ordinal).Count() != biomeOptions.Length)
                                         unresolved.Add("Ancestral biome choices must be a nonempty unique string list.");
                                     else
                                         choices = (choices ?? []).Concat(
@@ -449,7 +449,7 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                                             new NativeOriginChoiceRequirement("subTrait.biome",
                                                 new(source, path),
                                                 NativeOriginChoiceTiming.Creation, 1, 1,
-                                                FiniteOptions: options,
+                                                FiniteOptions: biomeOptions,
                                                 ParameterKey: "subTrait.biome")
                                         ]).ToArray();
                                 }
