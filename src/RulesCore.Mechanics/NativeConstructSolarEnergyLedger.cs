@@ -175,7 +175,7 @@ internal sealed record NativeConstructSolarLedgerReceipt(
     long PreviousRevision, long NewRevision,
     IReadOnlyList<NativeConstructSolarLedgerChange> Changes);
 
-internal sealed record NativeConstructSolarExhaustionAccrual(
+public sealed record NativeConstructSolarExhaustionAccrual(
     string InstanceId, long MinutesBefore, long MinutesAfter,
     int NewExhaustionLevels, bool InsufficientEnergyThisInterval);
 

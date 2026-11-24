@@ -52,7 +52,8 @@ public sealed class NativeMechanicsApiTests
             INativeOriginHostFeatChoiceAuthorityProvider? featChoiceAuthority = null,
             INativeOriginHostCantripRestAuthorityProvider? cantripRestAuthority = null,
             bool syntheticOpenChoiceCatalog = false,
-            INativeConstructHostOperatingAuthorityProvider? constructOperatingAuthority = null)
+            INativeConstructHostOperatingAuthorityProvider? constructOperatingAuthority = null,
+            INativeConstructHostSolarIntervalAuthorityProvider? solarIntervalAuthority = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -216,6 +217,8 @@ public sealed class NativeMechanicsApiTests
                     services.AddSingleton(cantripRestAuthority);
                 if (constructOperatingAuthority is not null)
                     services.AddSingleton(constructOperatingAuthority);
+                if (solarIntervalAuthority is not null)
+                    services.AddSingleton(solarIntervalAuthority);
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -1786,6 +1789,127 @@ public sealed class NativeMechanicsApiTests
         var recovery = await restored.Content.ReadFromJsonAsync<JsonElement>();
         Assert.Contains(recovery.GetProperty("afterMovement").GetProperty("modes")
             .EnumerateArray(), mode => mode.GetProperty("mode").GetString() == "walk");
+    }
+
+    private sealed class ConstructSolarTestAuthority : INativeConstructHostSolarIntervalAuthorityProvider
+    {
+        public VerifiedConstructSolarIntervalAuthorization? Stored { get; set; }
+        public Task<VerifiedConstructSolarIntervalAuthorization?> VerifyAsync(Guid actorId,
+            NativeOriginApiEndpoints.VerifiedConstructSolarIntervalRequest request,
+            CancellationToken cancellationToken) =>
+            Task.FromResult(actorId == Guid.Parse("d66a7a7b-bc0f-4677-829d-0ccf40470d2f")
+                ? Stored : null);
+    }
+
+    [Fact]
+    public async Task VerifiedConstructSolarHttpPlansExhaustionAndPreservesDurableState()
+    {
+        var provider = new ConstructSolarTestAuthority();
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true, dm: true,
+            solarIntervalAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var folder = new DirectoryInfo(AppContext.BaseDirectory);
+        string? reference = null;
+        while (folder is not null)
+        {
+            var candidate = Path.Combine(folder.FullName, "data", "reference",
+                "construct-small-starting-build-20261121.json");
+            if (File.Exists(candidate)) { reference = candidate; break; }
+            folder = folder.Parent;
+        }
+        Assert.NotNull(reference);
+        using var data = JsonDocument.Parse(File.ReadAllText(reference!));
+        var baseAssembly = data.RootElement.GetProperty("assembly")
+            .Deserialize<NativeConstructAssemblyRequest>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        var assembly = baseAssembly with
+        {
+            Components = baseAssembly.Components.Select(part => part.InstanceId == "generator"
+                ? part with { PowerSourceId = "construct-power-source.solar-crystal" } : part).ToArray()
+        };
+        var proposal = new NativeOriginProposal("verified-solar-construct",
+            NativeOriginIntent.Custom, new("rule.creature-origination", "construct-assembly"),
+            [], [], []);
+        var service = new NativeConstructOriginConstructionService(catalog);
+        var discovery = service.Evaluate(new(new(proposal), assembly));
+        var selected = proposal with
+        {
+            Manifestations = discovery.Origin.EvaluatedProposal.Candidates.Select((candidate, i) =>
+                new NativeOriginManifestation("selection-" + i, candidate.Id,
+                    SelectedValue: candidate.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic
+                        ? candidate.OfferedValue : null)).ToArray()
+        };
+        var construction = service.Evaluate(new(new(selected), assembly));
+        Assert.True(construction.IsMechanicallyAuthorized,
+            JsonSerializer.Serialize(construction.Origin.Issues));
+        var current = new NativeConstructOperatingPreset("current",
+            assembly.Components.Select(part => new NativeConstructPresetComponent(
+                part.InstanceId, part.DefinitionId, part.Enabled, part.ModeId)).ToArray());
+        var characterId = Guid.NewGuid();
+        const string endpoint = "/api/mechanics/v1/origins/construct/solar/interval/plan";
+
+        async Task<HttpResponseMessage> Send(string eventId = "dark-hour", long revision = 4)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { characterId, originRevision = 1, operatingRevision = 2,
+                    solarRevision = revision, rulesetId = catalog.RulesetId,
+                    fingerprint = catalog.Fingerprint, intervalEventId = eventId }));
+            return await fixture.Client.SendAsync(request);
+        }
+        using var missing = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, missing.StatusCode);
+        provider.Stored = new(characterId, 1, 2, 4, catalog.RulesetId, catalog.Fingerprint,
+            "dark-hour", construction, current,
+            new(new Dictionary<string, long> { ["generator"] = 0 },
+                new Dictionary<string, long> { ["generator"] = 0 },
+                new Dictionary<string, int> { ["generator"] = 0 }),
+            new Dictionary<string, NativeConstructSolarExposure> { ["generator"] = NativeConstructSolarExposure.None }, 60);
+        using var stale = await Send(revision: 3);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, stale.StatusCode);
+        using var wrongEvent = await Send("unverified-event");
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, wrongEvent.StatusCode);
+
+        using var first = await Send();
+        Assert.Equal(HttpStatusCode.OK, first.StatusCode);
+        var firstBody = await first.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.False(firstBody.GetProperty("committed").GetBoolean());
+        var plan = firstBody.GetProperty("plan");
+        Assert.True(plan.GetProperty("canAdvance").GetBoolean());
+        var next = plan.GetProperty("nextState");
+        Assert.Equal(60L, next.GetProperty("consecutiveDeficitMinutes").GetProperty("generator").GetInt64());
+        Assert.Equal(1, next.GetProperty("exhaustionEventsIssued").GetProperty("generator").GetInt32());
+        Assert.True(next.GetProperty("blocksSolarExhaustionRecovery").GetBoolean());
+        Assert.Equal(0, provider.Stored.State.ExhaustionEventsIssued["generator"]);
+        // The owning application, not Rules Core, commits and consumes the event.
+        provider.Stored = provider.Stored with
+        {
+            SolarRevision = 5, IntervalEventId = "second-dark-hour",
+            State = next.Deserialize<NativeConstructSolarState>(
+                new JsonSerializerOptions(JsonSerializerDefaults.Web))!
+        };
+        using var replay = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, replay.StatusCode);
+        using var second = await Send("second-dark-hour", 5);
+        Assert.Equal(HttpStatusCode.OK, second.StatusCode);
+        var secondBody = await second.Content.ReadFromJsonAsync<JsonElement>();
+        var secondState = secondBody.GetProperty("plan").GetProperty("nextState");
+        Assert.Equal(120L, secondState.GetProperty("consecutiveDeficitMinutes").GetProperty("generator").GetInt64());
+        Assert.Equal(1, secondState.GetProperty("exhaustionEventsIssued").GetProperty("generator").GetInt32());
+        provider.Stored = provider.Stored with
+        {
+            SolarRevision = 6, IntervalEventId = "daylight-hour",
+            State = secondState.Deserialize<NativeConstructSolarState>(
+                new JsonSerializerOptions(JsonSerializerDefaults.Web))!,
+            Exposures = new Dictionary<string, NativeConstructSolarExposure> { ["generator"] = NativeConstructSolarExposure.Direct }
+        };
+        using var daylight = await Send("daylight-hour", 6);
+        Assert.Equal(HttpStatusCode.OK, daylight.StatusCode);
+        var daylightBody = await daylight.Content.ReadFromJsonAsync<JsonElement>();
+        var recovered = daylightBody.GetProperty("plan").GetProperty("nextState");
+        Assert.False(recovered.GetProperty("blocksSolarExhaustionRecovery").GetBoolean());
+        Assert.Equal(1, recovered.GetProperty("exhaustionEventsIssued").GetProperty("generator").GetInt32());
     }
 
     [Fact]
