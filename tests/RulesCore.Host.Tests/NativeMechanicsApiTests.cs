@@ -2642,6 +2642,54 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal(baselineHp + 5, hp.GetProperty("combinedMaximumHitPoints").GetInt32());
         Assert.False(progression.GetProperty("effectiveMechanicsReady").GetBoolean());
 
+        // An advancement plan consumes neither the saved ledger nor the
+        // event. A previously spent pool stays spent; newly unlocked pools
+        // use the authored maximum. The same primary projection supplies level.
+        var tiefling = new NativeOriginFirstPartyChoiceEvaluator(catalog).Evaluate(
+            OpenChoiceProposal(catalog, "ancestry.tiefling.infernal", "unused"));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, tiefling.Status);
+        var previousCharacter = new NativeCharacterProjector(catalog).Project(primary with
+        { Advancements = [new("class.rogue", 3, "class-1")] });
+        var initial = NativeOriginInnateSpellResourceLedger.Initialize(catalog, tiefling, previousCharacter);
+        Assert.Equal("resolved", initial.Status);
+        var hellish = Assert.Single(tiefling.Profile!.Underlying.InherentGrants,
+            grant => grant.Identity.MechanicalDefinitionId == "trait.hellish-rebuke").Id;
+        var darkness = Assert.Single(tiefling.Profile.Underlying.InherentGrants,
+            grant => grant.Identity.MechanicalDefinitionId == "trait.darkness").Id;
+        var spent = NativeOriginInnateSpellResourceLedger.Apply(catalog, tiefling,
+            previousCharacter, initial.State!, new(NativeOriginInnateSpellLedgerActionKind.SpendFreeCast,
+                initial.State!.Revision, hellish)).State!;
+        provider.Stored = provider.Stored with
+        {
+            VerifiedOrigin = tiefling,
+            InnateAdvancement = new("level-five", previousCharacter, spent)
+        };
+        async Task<HttpResponseMessage> Advance(string eventId = "level-five", long? revision = null)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                characterId = SupernaturalCharacter, originRevision = 1, characterRevision = 2,
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                advancementEventId = eventId, innateLedgerRevision = revision ?? spent.Revision
+            }));
+            return await fixture.Client.SendAsync(request);
+        }
+        using var advanced = await Advance();
+        raw = await advanced.Content.ReadAsStringAsync();
+        Assert.True(advanced.StatusCode == HttpStatusCode.OK, raw);
+        using var advanceJson = JsonDocument.Parse(raw);
+        var migrated = advanceJson.RootElement.GetProperty("innateAdvancement").GetProperty("state");
+        Assert.Equal(5, migrated.GetProperty("characterLevel").GetInt32());
+        Assert.Equal(spent.Revision + 1, migrated.GetProperty("revision").GetInt64());
+        Assert.Equal(0, migrated.GetProperty("remainingFreeCasts").GetProperty(hellish).GetInt32());
+        Assert.Equal(1, migrated.GetProperty("remainingFreeCasts").GetProperty(darkness).GetInt32());
+        Assert.False(advanceJson.RootElement.GetProperty("committed").GetBoolean());
+        Assert.Equal(0, spent.RemainingFreeCasts[hellish]);
+        using var wrongEvent = await Advance("different-event");
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, wrongEvent.StatusCode);
+        using var wrongRevision = await Advance(revision: 0);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, wrongRevision.StatusCode);
+
         provider.Stored = provider.Stored with
         {
             SkillAlternatives = new Dictionary<string, string> { ["class-skill-1"] = "skill.survival" }
