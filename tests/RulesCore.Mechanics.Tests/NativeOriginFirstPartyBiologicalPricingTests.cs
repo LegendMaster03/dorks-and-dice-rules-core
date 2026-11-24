@@ -51,10 +51,10 @@ public sealed class NativeOriginFirstPartyBiologicalPricingTests
             .Where(x => x.StartsWith("trait:", StringComparison.Ordinal))
             .Select(x => x["trait:".Length..])
             .OrderBy(x => x, StringComparer.Ordinal).ToArray();
-        Assert.Equal(93, genes.Length);
+        Assert.Equal(94, genes.Length);
         Assert.Equal(genes, covered);
-        Assert.Equal(98, prices.Count); // 93 genes + 5 intrinsic slots.
-        Assert.Equal("biological-pricing-20261123-v11",
+        Assert.Equal(99, prices.Count); // 94 genes + 5 intrinsic slots.
+        Assert.Equal("biological-pricing-20261123-v12",
             NativeOriginFirstPartyBiologicalPricing.Revision);
         Assert.Equal(18, NativeOriginFirstPartyBiologicalPricing.TrialAllowance);
     }
@@ -100,6 +100,7 @@ public sealed class NativeOriginFirstPartyBiologicalPricingTests
         Assert.Equal(4, byMember["trait:trait.adrenaline-rush"].Load);
         Assert.Equal(4, byMember["trait:trait.orcish-fury"].Load);
         Assert.Equal(4, byMember["trait:trait.dwarven-fortitude"].Load);
+        Assert.Equal(4, byMember["trait:trait.fade-away"].Load);
         Assert.Equal(3, byMember["trait:trait.level-based-vitality"].Load);
         Assert.Equal(3, byMember["trait:trait.bountiful-luck"].Load);
         Assert.Equal(3, byMember["trait:trait.natural-camouflage"].Load);
