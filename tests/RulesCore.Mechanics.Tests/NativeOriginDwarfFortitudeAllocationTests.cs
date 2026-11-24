@@ -54,7 +54,7 @@ public sealed class NativeOriginDwarfFortitudeAllocationTests
         Assert.Equal("within-allowance", result.CreationAllocation!.Status);
         Assert.Equal(expectedLoad, result.CreationAllocation.CommittedLoad);
         var traits = result.Profile!.Underlying.InherentGrants
-            .Where(x => x.Identity.MechanicalDefinitionId is not null)
+            .Where(x => x.Identity.Kind == NativeOriginCharacteristicKind.Trait)
             .Select(x => x.Identity.MechanicalDefinitionId).ToArray();
 
         Assert.Equal(expectedTraitCount, traits.Length);

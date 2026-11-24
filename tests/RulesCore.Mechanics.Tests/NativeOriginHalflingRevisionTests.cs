@@ -150,7 +150,7 @@ public sealed class NativeOriginHalflingRevisionTests
             ]
         }, price: false);
         Assert.NotEqual(NativeOriginConstructionStatus.Authorized, attempt.Status);
-        Assert.DoesNotContain(attempt.Profile!.Underlying.InherentGrants, x =>
+        Assert.DoesNotContain(attempt.Profile?.Underlying.InherentGrants ?? [], x =>
             x.Identity.MechanicalDefinitionId == "trait.trackless-passage");
     }
 

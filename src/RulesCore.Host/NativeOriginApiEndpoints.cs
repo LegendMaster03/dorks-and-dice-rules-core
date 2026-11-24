@@ -403,7 +403,7 @@ public static class NativeOriginApiEndpoints
     private static NativeOriginAllocationAssessment? BiologicalAllocation(
         NativeCatalogSnapshot catalog, NativeOriginConstructionResult result) =>
         result.EvaluatedProposal.Method is { RuleId: "rule.creature-origination", MethodId: "biological" }
-            ? NativeOriginAllocationPreview.Assess(catalog, result,
+            ? NativeOriginAllocationPreview.AssessInitialPreview(catalog, result,
                 NativeOriginFirstPartyBiologicalPricing.Create())
             : null;
 

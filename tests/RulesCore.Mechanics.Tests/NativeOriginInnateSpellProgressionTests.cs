@@ -165,6 +165,7 @@ public sealed class NativeOriginInnateSpellProgressionTests
         Assert.Equal("resolved", raw.Status);
         var animal = Assert.Single(raw.Spells, x =>
             x.SpellId == "speak-with-animals");
+        Assert.Equal("woodland", animal.AnimalHabitat);
         Assert.Equal("proficiency-bonus", animal.FreeUsesFormula);
         Assert.Null(animal.FreeUsesPerRecharge);
         Assert.Equal("long-rest", animal.Recharge);

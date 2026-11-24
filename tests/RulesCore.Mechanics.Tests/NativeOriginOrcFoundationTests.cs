@@ -48,7 +48,7 @@ public sealed class NativeOriginOrcFoundationTests
         Assert.Equal(17, result.CreationAllocation.CommittedLoad);
         Assert.Null(result.EvaluatedProposal.SelectedAncestryId);
         var traits = result.Profile!.Underlying.InherentGrants
-            .Where(x => x.Identity.MechanicalDefinitionId is not null)
+            .Where(x => x.Identity.Kind == NativeOriginCharacteristicKind.Trait)
             .Select(x => x.Identity.MechanicalDefinitionId).ToArray();
         Assert.Equal(7, traits.Length);
         Assert.Contains("trait.orcish-fury", traits);

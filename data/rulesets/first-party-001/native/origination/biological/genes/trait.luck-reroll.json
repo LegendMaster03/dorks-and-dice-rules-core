@@ -5,6 +5,11 @@
   "trait": {
     "id": "luck-reroll",
     "description": "On a natural 1 for a d20 test, reroll and use the new result.",
-    "name": "Luck Reroll"
+    "name": "Luck Reroll",
+    "reroll": {
+      "roll": "self-natural-one-on-d20-test",
+      "roller": "self",
+      "useResult": "new-roll"
+    }
   }
 }

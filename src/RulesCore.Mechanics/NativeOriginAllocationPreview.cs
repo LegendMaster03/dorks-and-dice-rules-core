@@ -97,6 +97,12 @@ public static class NativeOriginAllocationPreview
         NativeOriginAllocationPolicy? policy = null) =>
         AssessCore(catalog, result, policy, creationScope: false);
 
+    /// <summary>Assess initial creation without changing the result's authorization.</summary>
+    public static NativeOriginAllocationAssessment AssessInitialPreview(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult result,
+        NativeOriginAllocationPolicy? policy = null) =>
+        AssessCore(catalog, result, policy, creationScope: true) with { PreviewOnly = true };
+
     /// <summary>
     /// The creation gate uses the same price ledger as the read-only preview.
     /// Direct Species presets and mixed/custom biological Origins are assessed

@@ -192,8 +192,8 @@ public sealed class NativeOriginGnomeFadeAwayPricingTests
         var catalog = Catalog();
         Assert.True(catalog.TryGetById("species.gnome", out var entity));
         var ids = entity!.Definition.GetProperty("traits")
-            .EnumerateArray().Select(x =>
-                x.GetProperty("traitId").GetString()).ToArray();
+            .EnumerateArray().Select((_, index) =>
+                catalog.OriginTraitDefinitionId("species.gnome", index)).ToArray();
         Assert.Equal(new[]
         {
             "trait.low-light-vision", "trait.magical-cunning",

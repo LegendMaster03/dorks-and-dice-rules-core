@@ -585,7 +585,7 @@ public sealed class NativeOriginConstructionTests
         Assert.Empty(result.EvaluatedProposal.Contributors);
         Assert.Equal(NativeOriginEventStage.Completed,
             result.Profile!.History.Single().Stage);
-        Assert.Equal(6, result.Profile.Underlying.InherentGrants.Count);
+        Assert.Equal(7, result.Profile.Underlying.InherentGrants.Count);
         Assert.Equal("medium", result.Profile.Underlying.InherentGrants.Single(x =>
             x.Identity.IntrinsicSlotId == "size").EffectiveValue!.Value.GetString());
         Assert.Contains(result.Profile.Underlying.InherentGrants, x =>

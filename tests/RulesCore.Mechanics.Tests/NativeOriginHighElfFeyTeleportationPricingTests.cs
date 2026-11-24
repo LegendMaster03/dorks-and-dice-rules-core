@@ -40,7 +40,7 @@ public sealed class NativeOriginHighElfFeyTeleportationPricingTests
         var catalog = Catalog();
         var high = Definition(catalog, "ancestry.elf.high");
         var traits = high.GetProperty("traits").EnumerateArray()
-            .Select(x => x.GetProperty("traitId").GetString()).ToArray();
+            .Select((_, index) => catalog.OriginTraitDefinitionId("ancestry.elf.high", index)).ToArray();
         Assert.Equal(new[]
         {
             "trait.arcane-cantrip", "trait.detect-magic", "trait.misty-step"
@@ -63,7 +63,7 @@ public sealed class NativeOriginHighElfFeyTeleportationPricingTests
     {
         var catalog = Catalog();
         var price = NativeOriginFirstPartyBiologicalPricing.Create();
-        Assert.Equal("biological-pricing-20261123-v11", price.Revision);
+        Assert.Equal(NativeOriginFirstPartyBiologicalPricing.Revision, price.Revision);
         var byMember = price.Prices.SelectMany(x =>
                 x.MemberKeys.Select(key => (Key: key, Entry: x)))
             .ToDictionary(x => x.Key, x => x.Entry, StringComparer.Ordinal);
@@ -71,11 +71,11 @@ public sealed class NativeOriginHighElfFeyTeleportationPricingTests
         var baseElf = Definition(catalog, "species.elf");
         var highElf = Definition(catalog, "ancestry.elf.high");
         var baseCost = baseElf.GetProperty("traits").EnumerateArray()
-            .Sum(x => byMember["trait:" +
-                x.GetProperty("traitId").GetString()].Load);
+            .Select((_, index) => catalog.OriginTraitDefinitionId("species.elf", index))
+            .Sum(id => byMember["trait:" + id].Load);
         var ancestryCost = highElf.GetProperty("traits").EnumerateArray()
-            .Sum(x => byMember["trait:" +
-                x.GetProperty("traitId").GetString()].Load);
+            .Select((_, index) => catalog.OriginTraitDefinitionId("ancestry.elf.high", index))
+            .Sum(id => byMember["trait:" + id].Load);
         var abilityCost = byMember["intrinsic:spellcastingAbility"].Load;
         Assert.Equal(7, baseCost);
         Assert.Equal(9, ancestryCost);
@@ -117,7 +117,7 @@ public sealed class NativeOriginHighElfFeyTeleportationPricingTests
         var catalog = Catalog();
         var wood = Definition(catalog, "ancestry.elf.wood");
         var ids = wood.GetProperty("traits").EnumerateArray()
-            .Select(x => x.GetProperty("traitId").GetString()).ToArray();
+            .Select((_, index) => catalog.OriginTraitDefinitionId("ancestry.elf.wood", index)).ToArray();
         Assert.Equal(new[]
         {
             "trait.druidcraft", "trait.longstrider",

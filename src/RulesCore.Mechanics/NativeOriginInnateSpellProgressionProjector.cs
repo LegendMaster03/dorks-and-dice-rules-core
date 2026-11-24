@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using RulesCore.Content;
 
 namespace RulesCore.Mechanics;
@@ -16,7 +17,9 @@ public static class NativeOriginInnateSpellProgressionProjector
         string Availability, int UnlockCharacterLevel,
         string? SpellcastingAbility, bool AtWill,
         bool SlotCasting, int? FreeUsesPerRecharge, string? FreeUsesFormula,
-        string? Recharge, int? FreeCastSpellLevel);
+        string? Recharge, int? FreeCastSpellLevel,
+        [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        string? AnimalHabitat = null);
 
     public sealed record View(
         string Status, int? CharacterLevel, IReadOnlyList<Spell> Spells,
@@ -121,7 +124,38 @@ public static class NativeOriginInnateSpellProgressionProjector
                 continue;
             }
             var ability = default(string);
-            if (authored.TryGetProperty("originBindings", out var bindings))
+            string? animalHabitat = null;
+            // Habitat-limited communication is a source configuration, not a
+            // spellcasting-ability choice or permission to speak to all animals.
+            if (authored.TryGetProperty("animalCommunication", out var communication))
+            {
+                if (spellId != "speak-with-animals" ||
+                    TextValue(communication, "habitatParameter") != "subTrait.animalHabitat" ||
+                    TextValue(communication, "eligibleAnimals") != "ordinary-animals-native-to-configured-habitat" ||
+                    TextValue(communication, "conveys") != "basic-ideas-and-observations" ||
+                    !communication.TryGetProperty("compelsCooperation", out var compels) ||
+                    compels.ValueKind != JsonValueKind.False ||
+                    !authored.TryGetProperty("originBindings", out var habitatBindings) ||
+                    habitatBindings.ValueKind != JsonValueKind.Object ||
+                    habitatBindings.EnumerateObject().Count() != 1 ||
+                    !habitatBindings.TryGetProperty("subTrait", out var habitatBinding) ||
+                    TextValue(habitatBinding, "lookup") != "nearest" ||
+                    TextValue(habitatBinding, "sourceField") != "animalCommunicationSubTrait" ||
+                    grant.Parameters?.TryGetValue("subTrait", out var habitat) != true ||
+                    !source.Definition.TryGetProperty("animalCommunicationSubTrait", out var sourceHabitat) ||
+                    !JsonElement.DeepEquals(habitat, sourceHabitat) ||
+                    !Text(habitat, "animalHabitat", out animalHabitat) ||
+                    !grant.SourceCandidateIds.All(candidateId =>
+                        origin.EvaluatedProposal.Candidates.Any(candidate =>
+                            candidate.Id == candidateId &&
+                            candidate.OfferedParameters?.TryGetValue("subTrait", out var offeredHabitat) == true &&
+                            JsonElement.DeepEquals(offeredHabitat, habitat))))
+                {
+                    reasons.Add("spell-animal-habitat-unverified:" + grant.Id);
+                    continue;
+                }
+            }
+            else if (authored.TryGetProperty("originBindings", out var bindings))
             {
                 if (bindings.ValueKind != JsonValueKind.Object ||
                     bindings.EnumerateObject().Count() != 1 ||
@@ -204,7 +238,7 @@ public static class NativeOriginInnateSpellProgressionProjector
             spells.Add(new(grant.Id, id, grant.Identity.Occurrence.Source.Id,
                 spellId!, characterLevel >= unlock ? "available" : "locked",
                 unlock, ability, atWill, slots,
-                freeUses, formula, recharge, freeLevel));
+                freeUses, formula, recharge, freeLevel, animalHabitat));
         }
 
         // Validate derived intrinsic parameters from the actual construction

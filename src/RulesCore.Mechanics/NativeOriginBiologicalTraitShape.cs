@@ -93,6 +93,11 @@ internal static class NativeOriginBiologicalTraitShape
             "requiresManifestedTrait" or "extraUsesGranted",
         "/afterTraitUse/activation" => field is "action" or "grantsAction",
         "/reroll" => field is "roll" or "roller" or "useResult",
+        "/fearSavingThrowAdvantage" => field is
+            "conditionIds" or "fearInducedConditionIds" or "scope" or "grantsSavingThrowOpportunity",
+        "/occupiedSpaceTraversal" => field is
+            "occupantSize" or "mayPassThrough" or "mayEndMovement" or "independentPermissionUnaffected",
+        "/hideEligibility" => field is "obscuredBy",
         "/suspendsTrait" => field is "id" or "until",
         "/animalCommunication" => field is
             "habitatParameter" or "eligibleAnimals" or "conveys" or "compelsCooperation",
@@ -270,7 +275,8 @@ internal static class NativeOriginBiologicalTraitShape
             "originBindings" or "prevents" or "retaliation" or "savingThrow" or
             "savingThrows" or "sizeChange" or "skillBonuses" or "skillCheckAdvantage" or
             "animalCommunication" or "naturalCamouflage" or "tracklessPassage" or
-            "reroll" or "suspendsTrait" or
+            "reroll" or "suspendsTrait" or "fearSavingThrowAdvantage" or
+            "occupiedSpaceTraversal" or "hideEligibility" or
             "slipperyIceSaveExemption" or "speedReduction" or "startsTurnInside" or
             "teleport" or "temporaryHitPoints" or "uses" or "whileActive" or
             "wingMobility" => value is
