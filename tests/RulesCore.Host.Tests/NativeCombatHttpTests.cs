@@ -109,7 +109,23 @@ public sealed class NativeCombatHttpTests
     {
         await using var fixture = new Fixture();
         await fixture.StartAsync();
-        using var reply = await fixture.Post(endpoint, new { }, authorized: false);
+        object request = endpoint switch
+        {
+            "action-budget" => new
+            {
+                rulesetId = fixture.Catalog.RulesetId,
+                fingerprint = fixture.Catalog.Fingerprint,
+                policyId = NativeActionBudgetExperiment.Independent,
+                command = "initialize"
+            },
+            "attack-check" => new NativeCombatAttackRequest(
+                fixture.Catalog.RulesetId, fixture.Catalog.Fingerprint,
+                "melee", 2, 10, null, NativeDefenseProfile.Normal,
+                new Dictionary<string, int> { ["armor"] = 2 }),
+            _ => new NativeCombatDamageRequest(
+                fixture.Catalog.RulesetId, fixture.Catalog.Fingerprint, 10)
+        };
+        using var reply = await fixture.Post(endpoint, request, authorized: false);
         Assert.Equal(HttpStatusCode.Unauthorized, reply.StatusCode);
     }
 
