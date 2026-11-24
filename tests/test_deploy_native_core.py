@@ -154,7 +154,10 @@ class DeploymentBoundaryTests(unittest.TestCase):
             args = diff.call_args.args[0]
             self.assertEqual(args[:5], ["git", "diff", "--quiet", prior, current])
             self.assertIn("src/RulesCore.Host/", args)
+            self.assertIn("src/RulesCore.Mechanics/", args)
+            self.assertIn("tools/stage_runtime_catalogs.sh", args)
             self.assertIn("Dockerfile", args)
+            self.assertIn("Dockerfile.content-update", args)
             self.assertNotIn("data/rulesets/", args)
 
             diff.return_value.returncode = 1

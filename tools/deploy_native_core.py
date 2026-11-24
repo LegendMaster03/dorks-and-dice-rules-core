@@ -120,7 +120,10 @@ def preflight():
 RUNTIME_PATHS = (
     "src/RulesCore.Content/",
     "src/RulesCore.Host/",
+    "src/RulesCore.Mechanics/",
+    "tools/stage_runtime_catalogs.sh",
     "Dockerfile",
+    "Dockerfile.content-update",
     "docker-compose.yml",
     "docker-compose.private-tunnel.yml",
     ".dockerignore",
