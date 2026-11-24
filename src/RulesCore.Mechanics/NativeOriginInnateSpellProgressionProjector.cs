@@ -96,9 +96,10 @@ public static class NativeOriginInnateSpellProgressionProjector
                 continue;
             }
 
-            // Finite authored spell choices are fixed at creation. Open spell
-            // lists retain their separate catalog-eligibility/replacement gate.
+            // Finite authored spell choices are fixed at creation. The
+            // open Wizard cantrip must be a verified native level-zero member.
             var fixedSpell = Text(authored, "spell", out var spellId);
+            var openCantrip = false;
             if (authored.TryGetProperty("spellChoices", out var menu))
             {
                 if (fixedSpell || authored.TryGetProperty("spellList", out _) ||
@@ -110,8 +111,14 @@ public static class NativeOriginInnateSpellProgressionProjector
             }
             else if (!fixedSpell)
             {
-                reasons.Add("spell-list-projection-deferred:" + grant.Id);
-                continue;
+                if (mixed || TextValue(authored, "spellList") != "wizard" ||
+                    TextValue(authored, "replacement") != "after-long-rest" ||
+                    !VerifiedOpenCantrip(catalog, origin, grant, out spellId))
+                {
+                    reasons.Add("spell-list-projection-deferred:" + grant.Id);
+                    continue;
+                }
+                openCantrip = true;
             }
             else if (authored.TryGetProperty("spellList", out _))
             {
@@ -174,7 +181,9 @@ public static class NativeOriginInnateSpellProgressionProjector
                 }
             }
 
-            var atWill = True(authored, "atWill");
+            // A selected level-zero cantrip has no leveled-slot or free-use
+            // pool. The authored level on this trait is CHARACTER unlock level.
+            var atWill = openCantrip || True(authored, "atWill");
             var slots = True(authored, "slotCasting");
             if (authored.TryGetProperty("atWill", out var atWillField) &&
                 atWillField.ValueKind is not (JsonValueKind.True or JsonValueKind.False) ||
@@ -319,6 +328,37 @@ public static class NativeOriginInnateSpellProgressionProjector
             JsonElement.DeepEquals(offered, grant.EffectiveValue!.Value) &&
             origin.EvaluatedProposal.Manifestations.Count(m =>
                 m.CandidateId == candidateId) == 1);
+    }
+
+    private static bool VerifiedOpenCantrip(NativeCatalogSnapshot catalog,
+        NativeOriginConstructionResult origin, NativeOriginEffectiveGrant grant, out string? spellId)
+    {
+        spellId = null;
+        if (grant.SourceCandidateIds is not { Count: 1 } ||
+            grant.ResolvedChoices is not { Count: 1 } choices ||
+            choices[0] is null || choices[0].RequirementId != "selection" ||
+            choices[0].SelectedOptionIds is not { Count: 1 } selected ||
+            !NativeOriginChoiceCatalog.IsMember(catalog, "spell:wizard", selected[0]))
+            return false;
+        var proof = "native-catalog:" + catalog.RulesetId + ":" + catalog.Fingerprint;
+        if (choices[0].CatalogEligibilityEvidenceId != proof) return false;
+        var candidateId = grant.SourceCandidateIds[0];
+        var candidates = origin.EvaluatedProposal.Candidates.Where(x => x.Id == candidateId).ToArray();
+        var manifestations = origin.EvaluatedProposal.Manifestations.Where(x => x.CandidateId == candidateId).ToArray();
+        if (candidates.Length != 1 || manifestations.Length != 1 ||
+            candidates[0].RequiredChoices is not { Count: 1 } requirements ||
+            requirements[0].Id != "selection" || requirements[0].OptionCatalogId != "spell:wizard" ||
+            requirements[0].Minimum != 1 || requirements[0].Maximum != 1 ||
+            requirements[0].Timing != NativeOriginChoiceTiming.Creation ||
+            manifestations[0].Choices is not { Count: 1 } submitted ||
+            submitted[0].RequirementId != "selection" ||
+            submitted[0].CatalogEligibilityEvidenceId != proof ||
+            submitted[0].SelectedOptionIds is not { Count: 1 } submittedIds ||
+            submittedIds[0] != selected[0]) return false;
+        // Existing spell course/ledger identities use bare spell slugs.
+        // Normalize the verified canonical spell ID once at this boundary.
+        spellId = selected[0]["spell.".Length..];
+        return true;
     }
 
     private static bool VerifiedFiniteSpellChoice(NativeOriginConstructionResult origin,

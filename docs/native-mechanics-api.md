@@ -27,6 +27,7 @@ The following paths are relative to the appropriate `/api/**/mechanics/v1` base:
 | POST | `/characters/project` | Native character mechanics projection |
 | GET | `/origins/methods` | Authored method identities, optional creature-type defaults, executable transport scope |
 | GET | `/origins/presets` | Species/Ancestry hierarchy, selectability and authored acquisition metadata |
+| GET | `/origins/choice-catalog` | Fingerprint-pinned native Skill, Wizard cantrip or Origin Feat membership discovery (not ownership or feat eligibility) |
 | POST | `/origins/life-experiences/preview` | Source-local Upbringing/Background selections and nonauthoritative grant/item candidates |
 | POST | `/origins/life-experiences/verified-plan` | Independent source/choice/item authority, all-or-nothing earned projection proposal |
 | POST | `/origins/life-experiences/scoped-check/resolve` | Apply authored scoped Upbringing contribution to a verified ordinary Skill check |
@@ -83,3 +84,10 @@ Site delegation alone does not establish character ownership, source entitlement
 - [Authenticated consumer catalog](native-authenticated-consumer-catalog.md)
 
 Do not reinstate retired tool-as-Competency or legacy source-translation semantics when implementing these endpoints. Preserve independent equipment qualifications, native skills, and native Competencies, with their respective approved progression rules.
+
+
+### Native open Origin choice eligibility
+
+`GET /origins/choice-catalog?fingerprint=...&catalogId=...` uses the same closed predicates as first-party selection. Supported catalogs are `any-native-skill`, `spell:wizard`, and `feat:origin`. A native Wizard cantrip requires a canonical `spell.*` record with `kind: "spell"`, explicit `level: 0`, and `spellListIds` containing `"wizard"`. An Origin Feat membership candidate requires canonical `feat.*`, `kind: "feat"`, and `featCategory: "origin"`. Explicit unselectable definitions are excluded. Feat membership never proves character-specific prerequisites or repeatability. Empty eligible catalogs report `catalog-unavailable`, rather than a fabricated default selection. These are integration contracts for future reviewed native definitions, not publication or approval of working spell/feat content.
+
+A direct High Elf's source-bound Arcane Cantrip projects the selected native Wizard cantrip as at-will, with the same inherited spellcasting ability, and no free-use pool or additional spell slot. The trait's level is the character unlock level, not the spell level. Rock Gnome Upbringing's independently learned Prestidigitation resolves a learned-cantrip entitlement only when the named canonical native cantrip exists; its separate ability selection is retained. Full spell execution remains a spell-domain responsibility.

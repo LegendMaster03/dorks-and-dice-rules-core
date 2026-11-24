@@ -70,6 +70,21 @@ public static class NativeOriginDiscoveryEndpoints
             });
         });
 
+        group.MapGet("/origins/choice-catalog", (string fingerprint, string catalogId,
+            NativeCatalogStore store, HttpContext context) =>
+        {
+            context.Response.Headers.CacheControl = "no-store";
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (fingerprint != catalog.Fingerprint) return Error(409, "ruleset_version_mismatch");
+            if (string.IsNullOrWhiteSpace(catalogId) || catalogId.Length > 160)
+                return Error(400, "invalid_origin_choice_catalog");
+            var choices = NativeOriginChoiceCatalog.Discover(catalog, catalogId);
+            if (choices.Status == "unsupported") return Error(404, "origin_choice_catalog_unsupported");
+            return Results.Ok(new { contractVersion = 1, rulesetId = catalog.RulesetId,
+                fingerprint = catalog.Fingerprint, previewOnly = true, choices });
+        });
+
         group.MapGet("/origins/presets", (string fingerprint,
             NativeCatalogStore store, HttpContext context) =>
         {

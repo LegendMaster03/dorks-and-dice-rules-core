@@ -89,6 +89,7 @@ public static class NativeMechanicsEndpoints
                     originPreview = "stateless-first-party",
                     constructOriginPreview = "stateless-native-assembly",
                     originMethodDiscovery = true, originPresetDiscovery = true,
+                    originChoiceCatalogDiscovery = true,
                     constructConfigurationDiscovery = true,
                     lifeExperiencePreview = "source-qualified-selection",
                     verifiedLifeExperiencePlanning = privateTunnel ? "unavailable" : "host-authority-required",

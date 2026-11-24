@@ -523,11 +523,15 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
             if (Text(benefit, "spell") is string spell)
             {
                 var selected = Select(new(path, "spellcasting-ability", 1, Strings(benefit, "spellcastingAbilityChoice")));
+                var spellId = "spell." + spell;
+                var available = NativeOriginChoiceCatalog.IsNativeCantrip(catalog, spellId);
                 if (selected is { Count: 1 })
-                    Grant("learned-spell-reference", spell, effect: JsonSerializer.SerializeToElement(
-                        new { spellcastingAbility = selected[0], authoredBenefit = benefit }));
-                Unavailable("learned-spell-execution-unavailable", path,
-                    "The learned spell reference is not a verified native spell grant.");
+                    Grant(available ? "learned-cantrip" : "learned-spell-reference",
+                        available ? spellId : spell, effect: JsonSerializer.SerializeToElement(
+                            new { spellcastingAbility = selected[0], authoredBenefit = benefit }));
+                if (!available)
+                    Unavailable("learned-spell-execution-unavailable", path,
+                        "The learned spell reference is not a verified native cantrip.");
                 return;
             }
             // Preserve conditional/manual features without turning their prose

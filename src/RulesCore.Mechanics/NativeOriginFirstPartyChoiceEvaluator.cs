@@ -6,14 +6,15 @@ namespace RulesCore.Mechanics;
 /// Supplies first-party membership evidence for creation choices whose catalog
 /// eligibility is fully decidable from the current immutable native snapshot.
 /// This never authenticates a DM, awards a separately earned grant, or grants
-/// access to unimplemented choice catalogs (notably Origin Feats).
+/// access to unapproved content or character-specific feat prerequisites.
 /// </summary>
 public sealed class NativeOriginFirstPartyChoiceEvaluator(NativeCatalogSnapshot catalog)
 {
     private readonly NativeOriginConstructionEngine _construction = new(catalog);
     private readonly NativeOriginSourceDeconstructor _sources = new(catalog);
 
-    public NativeOriginConstructionResult Evaluate(NativeOriginProposal submitted)
+    public NativeOriginConstructionResult Evaluate(NativeOriginProposal submitted,
+        INativeOriginFeatChoiceAuthority? featAuthority = null)
     {
         ArgumentNullException.ThrowIfNull(submitted);
 
@@ -25,6 +26,9 @@ public sealed class NativeOriginFirstPartyChoiceEvaluator(NativeCatalogSnapshot 
         var (discovered, _) = _sources.Deconstruct(submitted);
         var candidates = discovered.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var proofId = ProofForCatalog(catalog);
+        // Feat proofs are minted only after independently verifying the
+        // actual candidate/feat pair. They are scoped to this evaluation.
+        var approvedFeatProofs = new Dictionary<string, string>(StringComparer.Ordinal);
         var normalized = (submitted.Manifestations ?? []).Select(manifest =>
         {
             if (manifest.Choices is null ||
@@ -53,8 +57,19 @@ public sealed class NativeOriginFirstPartyChoiceEvaluator(NativeCatalogSnapshot 
                         choice.SelectedOptionIds.Distinct(StringComparer.Ordinal).Count() !=
                             choice.SelectedOptionIds.Count ||
                         !choice.SelectedOptionIds.All(id =>
-                            IsAuthoritativelyEligible(catalog, req.OptionCatalogId, id)))
-                        return choice;
+                            NativeOriginChoiceCatalog.IsMember(catalog, req.OptionCatalogId, id)))
+                        return choice with { CatalogEligibilityEvidenceId = null };
+                    if (req.OptionCatalogId == "feat:origin")
+                    {
+                        // The only current native feat-choice grants one feat.
+                        // Do not infer prerequisites or repeatability.
+                        if (choice.SelectedOptionIds.Count != 1 ||
+                            featAuthority?.Authorizes(candidate, choice.SelectedOptionIds[0]) != true)
+                            return choice with { CatalogEligibilityEvidenceId = null };
+                        var featProof = proofId + ":feat:" + candidate.Id;
+                        approvedFeatProofs[featProof] = choice.SelectedOptionIds[0];
+                        return choice with { CatalogEligibilityEvidenceId = featProof };
+                    }
                     return choice with { CatalogEligibilityEvidenceId = proofId };
                 }).ToArray()
             };
@@ -66,42 +81,24 @@ public sealed class NativeOriginFirstPartyChoiceEvaluator(NativeCatalogSnapshot 
         return _construction.Evaluate(
             new(submitted with { Manifestations = normalized },
                 TrustedScope: new("first-party-catalog", catalog.RulesetId)),
-            new NativeCatalogOnlyAuthority(catalog, proofId));
+            new NativeCatalogOnlyAuthority(catalog, proofId, approvedFeatProofs));
     }
 
     private static string ProofForCatalog(NativeCatalogSnapshot snapshot) =>
         "native-catalog:" + snapshot.RulesetId + ":" + snapshot.Fingerprint;
 
-    /// <summary>
-    /// This is deliberately a closed set of *fully authored* catalog predicates.
-    /// A missing feat category or a future source-specific prerequisite cannot
-    /// be inferred from a general name/category match. New predicates require
-    /// their own reviewed native eligibility rules and tests.
-    /// </summary>
-    private static bool IsAuthoritativelyEligible(NativeCatalogSnapshot snapshot,
-        string catalogId, string optionId)
-    {
-        if (catalogId != "any-native-skill" ||
-            !snapshot.TryGetById(optionId, out var option) || option is null ||
-            option.Category != "skill")
-            return false;
-
-        // A native Skill with an explicit selectable=false is not a creation
-        // choice. No local invented hierarchy/rank formula is applied here.
-        var definition = option.Definition;
-        return !definition.TryGetProperty("selectable", out var selectable) ||
-            selectable.ValueKind != System.Text.Json.JsonValueKind.False;
-    }
-
     private sealed class NativeCatalogOnlyAuthority(
-        NativeCatalogSnapshot catalog, string expectedProofId) : INativeOriginAuthority
+        NativeCatalogSnapshot catalog, string expectedProofId,
+        IReadOnlyDictionary<string, string> approvedFeatProofs) : INativeOriginAuthority
     {
         public bool Authorizes(NativeTableRuleDecision decision,
             NativeTableDecisionScope trustedScope) => false;
 
         public bool AuthorizesCatalogChoice(
             string catalogId, string optionId, string evidenceId) =>
-            evidenceId == expectedProofId &&
-            IsAuthoritativelyEligible(catalog, catalogId, optionId);
+            NativeOriginChoiceCatalog.IsMember(catalog, catalogId, optionId) &&
+            (catalogId == "feat:origin"
+                ? approvedFeatProofs.TryGetValue(evidenceId, out var featId) && featId == optionId
+                : evidenceId == expectedProofId);
     }
 }
