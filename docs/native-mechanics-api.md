@@ -45,6 +45,21 @@ The private mechanics surface additionally maps `GET /catalog/rules` and `POST /
 - Private catalog resolution retains its existing source boundary. Ordinary option lookup returns identities and names only, including native Origin traits, Construct components, power sources, materials, designs and enhancements, Upbringings and Backgrounds.
 - Persisted parent state, character-level authorization, permanent reconstruction, transformation execution, inventory/fuel transactions and migration require authoritative application state. None can be authorized by replaying a browser-authored profile through these stateless previews.
 
+## Verified character state and supernatural planning
+
+These endpoints are on the ordinary Character Sheet-delegated public mechanics surface. They are the existing Pillar 4 infrastructure integrated with the consolidated Origin engine; they are not alternate construction or transformation engines.
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| POST | `/origins/underlying/verify` | Verify an existing underlying Origin through independent host authority |
+| POST | `/characters/effective-state-baseline` | Project the supported baseline character state |
+| POST | `/characters/effective-state` | Read verified effective character and manifestation state |
+| POST | `/characters/manifestations/plan` | Plan a revision-checked manifestation transition |
+| POST | `/characters/supernatural/ownership/plan` | Plan supernatural acquisition, advancement, or expression |
+| POST | `/characters/supernatural/overlaps/plan` | Plan an exact, source-authorized overlap decision |
+
+Site delegation alone does not establish character ownership, source entitlement, event evidence, or current storage revision. The independently verified provider interfaces in the host must be supplied by an authoritative application integration. The routes fail closed without that authority; successful plans do not commit state. Existing synthetic fixtures demonstrate the contracts, not production authorization or approved supernatural content. No first-party lycanthropy or vampirism rules are introduced by this infrastructure integration.
+
 ## Related design
 
 - [Equipment qualification contract](rewrite/equipment-qualification-contract.md)

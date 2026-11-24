@@ -43,7 +43,8 @@ public sealed class NativeMechanicsApiTests
         public WebApplication App { get; private set; } = null!;
         public HttpClient Client { get; private set; } = null!;
         public async Task StartAsync(string surface, string source, bool ordinary = false,
-            bool realNativeContent = false, bool dm = false)
+            bool realNativeContent = false, bool dm = false,
+            INativeSupernaturalHostAuthorityProvider? supernaturalAuthority = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -148,6 +149,8 @@ public sealed class NativeMechanicsApiTests
             }, services => {
                 services.AddHttpClient<CharacterSheetMechanicsTicketValidator>()
                     .ConfigurePrimaryHttpMessageHandler(() => new SiteHandler(source, ordinary, dm));
+                if (supernaturalAuthority is not null)
+                    services.AddSingleton(supernaturalAuthority);
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -185,6 +188,279 @@ public sealed class NativeMechanicsApiTests
             if (App is not null) await App.DisposeAsync();
             if (Directory.Exists(_root)) Directory.Delete(_root, recursive: true);
         }
+    }
+
+
+    // This source and authority exist only inside the HTTP test fixture. An
+    // authenticated delegation must never register a production entitlement.
+    private static readonly Guid SupernaturalActor =
+        Guid.Parse("d66a7a7b-bc0f-4677-829d-0ccf40470d2f");
+    private static readonly Guid SupernaturalCharacter =
+        Guid.Parse("11111111-2222-3333-4444-555555555555");
+    private static readonly NativeOriginSourceReference SupernaturalSource =
+        new(NativeOriginSourceKind.Native, "fixture.wolf", "synthetic-v1");
+    private static readonly NativeOriginDecisionBasis SupernaturalBasis =
+        new(NativeOriginAdjudication.Supported,
+            NativeRuleReference: "fixture.rule.wolf");
+
+    private sealed class VerifiedSupernaturalTestAuthority :
+        INativeSupernaturalHostAuthorityProvider, INativeSupernaturalProgressionAuthority
+    {
+        private static NativeOriginSourceOccurrence Occurrence(string path) =>
+            new(SupernaturalSource, path);
+
+        private static readonly NativeSupernaturalDefinition Definition = new(
+            "fixture.definition.wolf", SupernaturalSource,
+            new Dictionary<string, string> { ["form"] = "human" },
+            [
+                new NativeSupernaturalProgressionNode("acquired",
+                    Occurrence("nodes.acquired"), OnAcquisition: true),
+                new NativeSupernaturalProgressionNode("moonrise",
+                    Occurrence("nodes.moonrise"),
+                    RequiredEventKeys: ["lunar-event"],
+                    Grants: [new NativeSupernaturalGrantDefinition(
+                        "moonrise-grant", "fixture.capability.moonrise",
+                        Occurrence("grants.moonrise"))]),
+                new NativeSupernaturalProgressionNode("second-moonrise",
+                    Occurrence("nodes.second-moonrise"),
+                    RequiredEventKeys: ["lunar-event"])
+            ]);
+
+        public Task<VerifiedSupernaturalHostAuthorization?> VerifyAsync(
+            Guid actor, VerifiedSupernaturalOwnershipPlanRequest request,
+            CancellationToken cancellationToken)
+        {
+            // Independently recognized, fixture-scoped events. No transition
+            // is minted by echoing an arbitrary supplied event or source.
+            NativeSupernaturalTransitionRequest? transition =
+                actor != SupernaturalActor ||
+                request.CharacterId != SupernaturalCharacter.ToString("D")
+                    ? null : request.EventId switch
+                    {
+                        "wolf-acquire" => new(request.CharacterId, 0,
+                            "wolf-acquire", NativeSupernaturalTransitionKind.Acquire,
+                            "fixture.wolf.owned", "fixture-proof:acquire",
+                            SupernaturalBasis),
+                        "wolf-advance" => new(request.CharacterId, 1,
+                            "wolf-advance", NativeSupernaturalTransitionKind.Advance,
+                            "fixture.wolf.owned", "fixture-proof:advance",
+                            SupernaturalBasis, NodeId: "moonrise",
+                            RequirementEvidence: new Dictionary<string, string> {
+                                ["lunar-event"] = "fixture-proof:moon-1"
+                            }),
+                        "wolf-replay" => new(request.CharacterId, 2,
+                            "wolf-replay", NativeSupernaturalTransitionKind.Advance,
+                            "fixture.wolf.owned", "fixture-proof:replay",
+                            SupernaturalBasis, NodeId: "second-moonrise",
+                            RequirementEvidence: new Dictionary<string, string> {
+                                ["lunar-event"] = "fixture-proof:moon-1"
+                            }),
+                        _ => null
+                    };
+            VerifiedSupernaturalHostAuthorization? verified = transition is null
+                ? null : new(Definition, transition, this);
+            return Task.FromResult(verified);
+        }
+
+        public bool AuthorizesPrimary(string id, NativeCharacterRequest character) =>
+            id == SupernaturalCharacter.ToString("D");
+        public bool AuthorizesSheet(string id, NativePersistentCharacterSheet sheet) => true;
+        public bool AuthorizesProgression(string id, string sheet,
+            NativeSheetEarnedProgression item) => true;
+        public bool AuthorizesGrant(string id, string sheet,
+            NativeSheetEarnedProgression progression, NativeSheetEarnedGrant grant) => true;
+        public bool AuthorizesApplicability(string id, string sheet,
+            NativeSheetGrantApplicability decision) => true;
+        public bool AuthorizesInfluence(string id, NativeCharacterPersistentInfluence item) => true;
+        public bool AuthorizesExpression(string id, NativeCharacterPersistentInfluence item) => true;
+        public bool AuthorizesEffect(string id, string influence,
+            NativeCharacterInfluenceEffect effect) => true;
+        public bool AuthorizesInfluenceProgression(string id, string influence,
+            NativeSheetEarnedProgression record) => true;
+        public bool AuthorizesInfluenceGrant(string id, string influence,
+            NativeSheetEarnedProgression record, NativeSheetEarnedGrant grant) => true;
+        public bool AuthorizesInfluenceApplicability(string id, string influence,
+            NativeInfluenceGrantApplicability rule) => true;
+        public bool AuthorizesJournal(string id, NativeSupernaturalTransitionJournal journal) =>
+            id == SupernaturalCharacter.ToString("D");
+        public bool AuthorizesDefinition(string id, NativeSupernaturalDefinition definition,
+            NativeOriginDecisionBasis basis) => id == SupernaturalCharacter.ToString("D");
+        public bool AuthorizesAcquisition(string id, NativeSupernaturalDefinition definition,
+            NativeSupernaturalTransitionRequest request) => true;
+        public bool AuthorizesAdvancement(string id, NativeCharacterPersistentInfluence influence,
+            NativeSupernaturalProgressionNode node,
+            NativeSupernaturalTransitionRequest request) => true;
+        public bool AuthorizesExpressionChange(string id, NativeCharacterPersistentInfluence influence,
+            NativeSupernaturalTransitionRequest request) => false;
+        public bool AuthorizesEventRequirement(string id, string influence, string key,
+            string evidence, NativeSupernaturalTransitionRequest request) =>
+            key == "lunar-event" && evidence == "fixture-proof:moon-1";
+        public NativeSupernaturalEligibilityVerdict EvaluateRequirement(string id,
+            string influence, string key, NativeSupernaturalTransitionRequest request) =>
+            NativeSupernaturalEligibilityVerdict.Unresolved;
+    }
+
+    [Fact]
+    public async Task VerifiedSupernaturalOwnershipHttpPlansAcquisitionAndAdvanceButRejectsReplayedEvidence()
+    {
+        const string endpoint = "/api/mechanics/v1/characters/supernatural/ownership/plan";
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            dm: true, supernaturalAuthority: new VerifiedSupernaturalTestAuthority());
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+        var characterId = SupernaturalCharacter.ToString("D");
+        var state = new NativeCharacterState(characterId,
+            new NativeCharacterRequest(catalog.RulesetId, catalog.Fingerprint,
+                new Dictionary<string, int> { ["strength"] = 10 },
+                [new NativeAdvancement("class.demo", 2, "class:demo")]), [], [], []);
+        var journal = new NativeSupernaturalTransitionJournal(characterId, 0, [], []);
+
+        object Payload(string operation, string eventId, string evidence,
+            NativeCharacterState current, NativeSupernaturalTransitionJournal currentJournal,
+            string intent = "fixture-intent") => new
+        {
+            contractVersion = 2, operation, characterId, eventId, intentId = intent,
+            rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+            expectedSupernaturalRevision = currentJournal.Revision,
+            expectedLedgerRevision = 0,
+            authoritativeInputsFingerprint = "fixture-inputs",
+            state = current, ledger = new {
+                characterId, revision = 0, instances = Array.Empty<object>(),
+                resources = Array.Empty<object>(), processedEventIds = Array.Empty<string>()
+            },
+            progressionJournal = currentJournal,
+            authorizationEvidenceId = evidence,
+            verifiedSource = new {
+                characterId, operation, eventId,
+                authorizationEvidenceId = evidence,
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                sourceOccurrence = new NativeOriginSourceOccurrence(
+                    SupernaturalSource, "fixture.wolf.acquisition")
+            }
+        };
+
+        async Task<(HttpStatusCode Code, JsonElement Body)> SendAsync(object payload,
+            bool authenticated = true)
+        {
+            using var request = authenticated
+                ? fixture.Authenticated(HttpMethod.Post, endpoint, JsonContent.Create(payload))
+                : new HttpRequestMessage(HttpMethod.Post, endpoint) {
+                    Content = JsonContent.Create(payload)
+                };
+            using var response = await fixture.Client.SendAsync(request);
+            return (response.StatusCode,
+                await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+
+        var acquire = Payload("Acquire", "wolf-acquire", "fixture-proof:acquire",
+            state, journal);
+        var anonymous = await SendAsync(acquire, authenticated: false);
+        Assert.Equal(HttpStatusCode.Unauthorized, anonymous.Code);
+
+        var first = await SendAsync(acquire);
+        Assert.True(first.Code == HttpStatusCode.OK,
+            "Acquisition HTTP " + (int)first.Code + ": " + first.Body.GetRawText());
+        Assert.False(first.Body.GetProperty("committed").GetBoolean());
+        Assert.False(first.Body.GetProperty("effectiveMechanicsReady").GetBoolean());
+        var planned = first.Body.GetProperty("plan");
+        Assert.Equal("planned", planned.GetProperty("status").GetString());
+        state = planned.GetProperty("proposedState").Deserialize<NativeCharacterState>(options)!;
+        journal = planned.GetProperty("proposedJournal")
+            .Deserialize<NativeSupernaturalTransitionJournal>(options)!;
+        Assert.Equal(1, journal.Revision);
+        Assert.Single(state.PersistentInfluences!);
+        Assert.Single(state.PersistentInfluences![0].Progression!);
+
+        var advance = await SendAsync(Payload("Advance", "wolf-advance",
+            "fixture-proof:advance", state, journal));
+        Assert.Equal(HttpStatusCode.OK, advance.Code);
+        planned = advance.Body.GetProperty("plan");
+        state = planned.GetProperty("proposedState").Deserialize<NativeCharacterState>(options)!;
+        journal = planned.GetProperty("proposedJournal")
+            .Deserialize<NativeSupernaturalTransitionJournal>(options)!;
+        Assert.Equal(2, journal.Revision);
+        Assert.Equal(2, state.PersistentInfluences![0].Progression!.Count);
+        Assert.Single(planned.GetProperty("newGrants").EnumerateArray());
+        Assert.Contains("fixture-proof:moon-1", journal.ConsumedEligibilityEvidenceIds);
+
+        var replay = await SendAsync(Payload("Advance", "wolf-replay",
+            "fixture-proof:replay", state, journal));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, replay.Code);
+        Assert.Equal("supernatural_plan_not_committable",
+            replay.Body.GetProperty("error").GetString());
+
+        var forged = await SendAsync(Payload("Acquire", "wolf-acquire",
+            "forged-proof", new NativeCharacterState(characterId,
+                state.PrimaryMechanics, [], [], []),
+            new NativeSupernaturalTransitionJournal(characterId, 0, [], [])));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, forged.Code);
+        Assert.Equal("supernatural_authority_unverified",
+            forged.Body.GetProperty("error").GetString());
+    }
+
+    [Fact]
+    public async Task SupernaturalOverlapHttpRequiresIndependentAuthorityEvenWithSiteDelegation()
+    {
+        const string endpoint = "/api/mechanics/v1/characters/supernatural/overlaps/plan";
+        await using var fixture = new Fixture();
+        // The authorization test must use a valid Site actor GUID. An
+        // arbitrary "unit-test" identity is rejected before host authority.
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true, dm: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var id = Guid.Parse("11111111-2222-3333-4444-555555555555").ToString("D");
+        var payload = new
+        {
+            contractVersion = 1,
+            characterId = id, eventId = "fixture:overlap",
+            intentId = "intent:fixture:overlap",
+            rulesetId = catalog.RulesetId,
+            fingerprint = catalog.Fingerprint,
+            expectedSupernaturalRevision = 1,
+            expectedLedgerRevision = 0,
+            authoritativeInputsFingerprint = "fixture-input-fingerprint",
+            state = new NativeCharacterState(id,
+                new NativeCharacterRequest(
+                    catalog.RulesetId, catalog.Fingerprint,
+                    new Dictionary<string, int> { ["strength"] = 10 },
+                    [new NativeAdvancement("class.demo", 1, "fixture.class")]),
+                [], [], []),
+            ledger = new NativeManifestationLedger(id, 0, [], [], []),
+            progressionJournal = new NativeSupernaturalTransitionJournal(id, 0, [], []),
+            verifiedSource = new
+            {
+                characterId = id, eventId = "fixture:overlap",
+                intentId = "intent:fixture:overlap",
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                decisionId = "fixture.decision",
+                replacedDecisionId = (string?)null,
+                sourceOccurrence = new
+                {
+                    source = new { kind = 0, id = "fixture.supernatural", version = "v1" },
+                    occurrencePath = "fixture.overlap"
+                },
+                authorizationEvidenceId = "fixture:proof"
+            },
+            authorizationEvidenceId = "fixture:proof"
+        };
+        using var anonymous = await fixture.Client.PostAsJsonAsync(endpoint, payload);
+        Assert.Equal(HttpStatusCode.Unauthorized, anonymous.StatusCode);
+
+        using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(payload));
+        using var response = await fixture.Client.SendAsync(request);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
+        using var body = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        Assert.Equal("overlap_authority_unavailable",
+            body.RootElement.GetProperty("error").GetString());
+
+        var malformed = JsonSerializer.SerializeToElement(payload);
+        var changed = System.Text.Json.Nodes.JsonNode.Parse(malformed.GetRawText())!;
+        changed["contractVersion"] = 7;
+        using var invalidRequest = fixture.Authenticated(HttpMethod.Post, endpoint,
+            JsonContent.Create(changed));
+        using var invalid = await fixture.Client.SendAsync(invalidRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, invalid.StatusCode);
     }
 
     [Theory]

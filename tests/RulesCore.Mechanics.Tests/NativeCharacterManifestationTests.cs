@@ -11,15 +11,18 @@ namespace RulesCore.Mechanics.Tests;
 /// </summary>
 public sealed class NativeCharacterManifestationTests
 {
-    private sealed class Authority : INativeCharacterManifestationAuthority
+    private sealed class Authority : INativeCharacterManifestationAuthority,
+        INativeCharacterInfluenceOverlapAuthority
     {
         public bool DenyLedger { get; set; }
         public bool DenyInstance { get; set; }
         public bool DenyResource { get; set; }
+        public bool RequireExactResourceProvenance { get; set; }
         public bool DenyPolicy { get; set; }
         public bool DenyInteraction { get; set; }
         public bool DenyTransition { get; set; }
         public bool DenyInfluence { get; set; }
+        public bool DenyOverlap { get; set; }
         public bool DenyProgression { get; set; }
         public bool DenyGrant { get; set; }
         public bool PermitIndependentEnding { get; set; }
@@ -41,6 +44,12 @@ public sealed class NativeCharacterManifestationTests
             NativeSheetEarnedProgression progression, NativeSheetEarnedGrant grant) => true;
         public bool AuthorizesInfluenceApplicability(string id, string influence,
             NativeInfluenceGrantApplicability decision) => true;
+        public bool AuthorizesOverlapSelection(string id,
+            NativeInfluenceOverlapSelection selection) =>
+            !DenyOverlap && id == "character.1" &&
+            selection.RuleOccurrence == Occurrence("interactions.primary") &&
+            selection.AuthorizationEvidenceId == "receipt.interaction.primary" &&
+            selection.Basis == Rule();
         public bool AuthorizesLedger(string id, NativeManifestationLedger ledger) => !DenyLedger;
         public bool AuthorizesInstance(string id, NativeManifestationInstance instance,
             NativePersistentCharacterSheet sheet) =>
@@ -51,7 +60,26 @@ public sealed class NativeCharacterManifestationTests
             instance.ActivationEvidenceId == "receipt.activate." + instance.ActivationEventId &&
             (ExpectedSlots is null || instance.ContributionSlots is { } slots &&
                 ExpectedSlots.SequenceEqual(slots));
-        public bool AuthorizesResource(string id, NativeManifestationResourceState resource) => !DenyResource;
+        public bool AuthorizesResource(string id, NativeManifestationResourceState resource)
+        {
+            if (DenyResource) return false;
+            if (!RequireExactResourceProvenance) return true;
+            // Independent synthetic evidence: never infer matching source
+            // provenance merely because a saved ledger carries these labels.
+            var expected = resource.Id switch
+            {
+                "resource.primary" => PrimaryPool(),
+                "resource.shared" => SharedPool(),
+                "resource.wolf.manifest.wolf" => WolfPool("manifest.wolf"),
+                _ => null
+            };
+            return expected is not null &&
+                resource.DefinitionId == expected.DefinitionId &&
+                resource.SourceOccurrence == expected.SourceOccurrence &&
+                resource.EvidenceId == expected.EvidenceId &&
+                resource.OwnerKind == expected.OwnerKind &&
+                resource.OwnerId == expected.OwnerId;
+        }
         public bool AuthorizesResourcePolicy(string id, NativeManifestationInstance instance,
             NativeManifestationResourcePolicy policy) => !DenyPolicy;
         public bool AuthorizesInteraction(string id, NativeManifestationInteractionDecision decision) =>
@@ -1134,6 +1162,52 @@ public sealed class NativeCharacterManifestationTests
     }
 
     [Fact]
+    public void VerifiedPrimaryWriterDecisionSurvivesFormEntryAndReversion()
+    {
+        static NativeCharacterPersistentInfluence Primary(string suffix, int speed) =>
+            new("influence." + suffix, "definition." + suffix, Source(),
+                "receipt.acquire." + suffix, "receipt.expression." + suffix,
+                new Dictionary<string, string>(),
+                [new NativeCharacterInfluenceEffect("effect." + suffix,
+                    Occurrence("effects." + suffix), "receipt.effect." + suffix,
+                    Rule(), new Dictionary<string, string>(),
+                    [NativeCharacterSheetResolver.PrimarySheetId],
+                    NativeInfluenceCharacteristic.BaseWalkSpeed,
+                    NativeInfluenceOperation.Replace, NumericValue: speed)]);
+
+        var state = Character([Primary("a", 40), Primary("b", 45)]) with
+        {
+            InfluenceOverlapSelections =
+            [
+                new NativeInfluenceOverlapSelection("primary-selection",
+                    ["effect.a", "effect.b"], "effect.b",
+                    Occurrence("interactions.primary"), Rule(),
+                    "receipt.interaction.primary",
+                    NativeCharacterSheetResolver.PrimarySheetId)
+            ]
+        };
+        var active = ActivatedWolf();
+        var transformed = Resolve(state, active);
+        Assert.Equal("partial", transformed.Status);
+        Assert.Equal("wolf", transformed.EffectiveSheetId);
+
+        var ended = Plan(state, active, "e2",
+            Action(NativeManifestationTransitionAction.End, "manifest.wolf"));
+        Assert.Equal("planned", ended.Status);
+        Assert.Equal("resolved", ended.ProposedEffective!.Status);
+        Assert.Equal(45, ended.ProposedEffective.EffectiveMechanics!.BaseWalkSpeed);
+        Assert.Equal("effect.b", Assert.Single(ended.ProposedEffective.AppliedEffects).Effect.Id);
+        Assert.Equal(NativeManifestationLifecycle.Ended,
+            ended.Proposed!.Instances.Single().Lifecycle);
+
+        var denied = Resolve(state, active, new Authority { DenyOverlap = true });
+        Assert.Equal("invalid", denied.Status);
+        Assert.Null(denied.EffectiveMechanics);
+        Assert.Contains(denied.Issues, x =>
+            x.Code == "unauthorized-influence-overlap-selection");
+    }
+
+    [Fact]
     public void TransitionPreviewEvaluatesTargetedInfluenceConflictBeforeOfferingCommit()
     {
         var effect = new NativeCharacterInfluenceEffect(
@@ -1381,6 +1455,65 @@ public sealed class NativeCharacterManifestationTests
         Assert.Equal("unresolved", denied.Status);
         Assert.Null(denied.State);
     }
+
+    [Fact]
+    public void IndependentlyVerifiedResourceProvenanceRejectsTamperedLedger()
+    {
+        var state = Character();
+        var original = ActivatedWolf(state);
+        var authority = new Authority { RequireExactResourceProvenance = true };
+        Assert.NotEqual("invalid", Resolve(state, original, authority).Status);
+
+        var primary = original.Resources.Single(x => x.Id == "resource.primary");
+        var forged = new[]
+        {
+            primary with { DefinitionId = "resource.definition.forged" },
+            primary with { SourceOccurrence = Occurrence("resources.forged") },
+            primary with { EvidenceId = "receipt.resource.forged" },
+            primary with { OwnerKind = NativeManifestationResourceOwner.Sheet },
+            primary with { OwnerId = "wolf" }
+        };
+        foreach (var change in forged)
+        {
+            var altered = original with
+            {
+                Resources = original.Resources.Select(x =>
+                    x.Id == primary.Id ? change : x).ToArray()
+            };
+            var result = Resolve(state, altered, authority);
+            Assert.Equal("invalid", result.Status);
+            Assert.Null(result.EffectiveMechanics);
+        }
+
+        Assert.Equal(primary, original.Resources.Single(x => x.Id == primary.Id));
+        Assert.Equal(7, Ledger().Revision);
+    }
+
+    [Fact]
+    public void ActivationRejectsNullResourcePolicyBeforeAuthorityVerification()
+    {
+        var step = Activate("manifest.wolf", "wolf", "e1", addWolfPool: true);
+        var malformed = step.NewInstance! with
+        {
+            ResourcePolicies = [null!, .. step.NewInstance.ResourcePolicies]
+        };
+        var authority = new Authority();
+        var current = Ledger();
+
+        var result = NativeCharacterManifestationTransitionPlanner.Plan(
+            Character(), current,
+            new("character.1", current.Revision, "e1",
+                [step with { NewInstance = malformed }]), authority);
+
+        Assert.Equal("invalid", result.Status);
+        Assert.Null(result.Proposed);
+        Assert.Contains(result.Issues,
+            issue => issue.Code == "invalid-manifestation-activation");
+        Assert.Equal(0, authority.TransitionCalls);
+        Assert.Equal(7, current.Revision);
+        Assert.Empty(current.Instances);
+    }
+
 
     private sealed class NativeProjectionFixture : IDisposable
     {

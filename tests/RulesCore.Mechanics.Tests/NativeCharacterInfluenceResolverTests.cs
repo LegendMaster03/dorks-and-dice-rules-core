@@ -11,7 +11,8 @@ namespace RulesCore.Mechanics.Tests;
 /// </summary>
 public sealed class NativeCharacterInfluenceResolverTests
 {
-    private sealed class Authority : INativeCharacterInfluenceAuthority
+    private sealed class Authority : INativeCharacterInfluenceAuthority,
+        INativeCharacterInfluenceOverlapAuthority
     {
         public bool DenyInfluence { get; set; }
         public bool DenyExpression { get; set; }
@@ -19,6 +20,8 @@ public sealed class NativeCharacterInfluenceResolverTests
         public bool DenyProgression { get; set; }
         public bool DenyGrant { get; set; }
         public bool DenyApplicability { get; set; }
+        public bool DenyOverlap { get; set; }
+        public int OverlapCallbacks { get; private set; }
         public int InfluenceCallbacks { get; private set; }
 
         public bool AuthorizesPrimary(string characterId, NativeCharacterRequest primary) =>
@@ -45,6 +48,12 @@ public sealed class NativeCharacterInfluenceResolverTests
             NativeSheetEarnedProgression progression, NativeSheetEarnedGrant grant) => !DenyGrant;
         public bool AuthorizesInfluenceApplicability(string characterId, string influenceId,
             NativeInfluenceGrantApplicability decision) => !DenyApplicability;
+        public bool AuthorizesOverlapSelection(string characterId,
+            NativeInfluenceOverlapSelection selection)
+        {
+            OverlapCallbacks++;
+            return !DenyOverlap && characterId == "character.test";
+        }
     }
 
     private static NativeOriginSourceReference Source() =>
@@ -368,6 +377,148 @@ public sealed class NativeCharacterInfluenceResolverTests
         Assert.Equal("unresolved", reverse.Status);
         Assert.Null(reverse.EffectiveMechanics);
         Assert.Contains(first.Issues, x => x.Code == "influence-overlap-unresolved");
+    }
+
+    private static NativeInfluenceOverlapSelection Choose(
+        string id, string winner, params string[] effectIds) =>
+        new(id, effectIds, winner, Occurrence("interactions." + id),
+            Rule(), "receipt.interaction." + id,
+            NativeCharacterSheetResolver.PrimarySheetId);
+
+    [Fact]
+    public void ExactAuthorizedOverlapSelectsOneWriterRegardlessOfInputOrder()
+    {
+        var a = Influence("influence.a", effects:
+        [
+            Effect("strength-a", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 13)
+        ]);
+        var b = Influence("influence.b", effects:
+        [
+            Effect("strength-b", NativeInfluenceCharacteristic.AbilityScore,
+                NativeInfluenceOperation.Adjust, "strength", number: 2)
+        ]);
+        var choice = Choose("decision.strength", "strength-b", "strength-a", "strength-b");
+        foreach (var order in new[] { new[] { a, b }, new[] { b, a } })
+        {
+            var state = Character(order) with { InfluenceOverlapSelections = [choice] };
+            var original = JsonSerializer.Serialize(state);
+            var result = Resolve(state);
+            Assert.Equal("resolved", result.Status);
+            Assert.Equal(12, result.EffectiveMechanics!.AbilityScores["strength"]);
+            Assert.Single(result.AppliedEffects);
+            Assert.Equal("influence.b", result.AppliedEffects[0].InfluenceId);
+            Assert.Equal("effects.strength-b",
+                result.AppliedEffects[0].Effect.DefinitionOccurrence.OccurrencePath);
+            Assert.Equal(original, JsonSerializer.Serialize(state));
+        }
+    }
+
+    [Fact]
+    public void DormantChoiceNeverChangesAnUncontestedWriter()
+    {
+        var a = Influence("influence.a", effects:
+        [
+            Effect("strength-a", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 13)
+        ]);
+        var b = Influence("influence.b", effects:
+        [
+            Effect("strength-b", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 18, gate: Expression(("phase", "active")))
+        ]);
+        var state = Character([a, b]) with
+        {
+            InfluenceOverlapSelections =
+            [
+                Choose("choice", "strength-b", "strength-a", "strength-b")
+            ]
+        };
+        var result = Resolve(state);
+        Assert.Equal("resolved", result.Status);
+        Assert.Equal(13, result.EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal("strength-a", Assert.Single(result.AppliedEffects).Effect.Id);
+    }
+
+    [Fact]
+    public void PartialOrAmbiguousOverlapSelectionsRemainUnresolved()
+    {
+        var influences = new[]
+        {
+            Influence("influence.a", effects: [
+                Effect("strength-a", NativeInfluenceCharacteristic.AbilityScore,
+                    key: "strength", number: 13)]),
+            Influence("influence.b", effects: [
+                Effect("strength-b", NativeInfluenceCharacteristic.AbilityScore,
+                    key: "strength", number: 14)]),
+            Influence("influence.c", effects: [
+                Effect("strength-c", NativeInfluenceCharacteristic.AbilityScore,
+                    key: "strength", number: 15)])
+        };
+        var first = Choose("choice-1", "strength-a", "strength-a", "strength-b");
+        var full = Choose("choice-full", "strength-a",
+            "strength-a", "strength-b", "strength-c");
+        foreach (var selections in new[]
+        {
+            new[] { first },
+            new[] { full, full with { Id = "choice-other" } }
+        })
+        {
+            var result = Resolve(Character(influences) with
+            {
+                InfluenceOverlapSelections = selections
+            });
+            Assert.Equal("unresolved", result.Status);
+            Assert.Null(result.EffectiveMechanics);
+            Assert.Contains(result.Issues, x => x.Code == "influence-overlap-unresolved");
+        }
+    }
+
+    [Fact]
+    public void InvalidOrUnauthorizedOverlapFailsClosedBeforeApplication()
+    {
+        var influences = new[]
+        {
+            Influence("influence.a", effects: [
+                Effect("strength-a", NativeInfluenceCharacteristic.AbilityScore,
+                    key: "strength", number: 13)]),
+            Influence("influence.b", effects: [
+                Effect("strength-b", NativeInfluenceCharacteristic.AbilityScore,
+                    key: "strength", number: 14)])
+        };
+        var valid = Choose("choice", "strength-a", "strength-a", "strength-b");
+        var malformed = new[]
+        {
+            valid with { SelectedEffectId = "strength-forged" },
+            valid with { EffectIds = ["strength-a", "foreign"] },
+            valid with { EffectIds = ["strength-a", "strength-a"] },
+            valid with { EffectIds = ["strength-a", "strength-b", "foreign"] },
+            valid with { TargetSheetId = "sheet.nonexistent" }
+        };
+        foreach (var decision in malformed)
+        {
+            var authority = new Authority();
+            var result = Resolve(Character(influences) with
+            {
+                InfluenceOverlapSelections = [decision]
+            }, authority);
+            Assert.Equal("invalid", result.Status);
+            Assert.Null(result.EffectiveMechanics);
+            Assert.Equal(0, authority.InfluenceCallbacks);
+            Assert.Equal(0, authority.OverlapCallbacks);
+            Assert.Contains(result.Issues, x =>
+                x.Code == "invalid-influence-overlap-selection");
+        }
+        var denied = new Authority { DenyOverlap = true };
+        var blocked = Resolve(Character(influences) with
+        {
+            InfluenceOverlapSelections = [valid]
+        }, denied);
+        Assert.Equal("invalid", blocked.Status);
+        Assert.Null(blocked.EffectiveMechanics);
+        Assert.Equal(1, denied.OverlapCallbacks);
+        Assert.Contains(blocked.Issues, x =>
+            x.Code == "unauthorized-influence-overlap-selection");
     }
 
     [Fact]
@@ -998,4 +1149,125 @@ public sealed class NativeCharacterInfluenceResolverTests
         Assert.Single(result.AppliedEffects);
         Assert.Equal("exact-phase", result.AppliedEffects[0].Effect.Id);
     }
+
+    [Fact]
+    public void WriterSelectionsAreIndependentForPrimaryAndAlternateSheet()
+    {
+        var targets = new[] { NativeCharacterSheetResolver.PrimarySheetId, "sheet.wolf" };
+        var first = Influence("influence.a", effects: [
+            Effect("scope-a", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 13, targets: targets)]);
+        var second = Influence("influence.b", effects: [
+            Effect("scope-b", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 15, targets: targets)]);
+        var primaryDecision = Choose("primary", "scope-a", "scope-a", "scope-b");
+        var formDecision = Choose("alternate", "scope-b", "scope-a", "scope-b") with
+        {
+            TargetSheetId = "sheet.wolf"
+        };
+        var state = Character([first, second], [Alternate()]) with
+        {
+            InfluenceOverlapSelections = [primaryDecision, formDecision]
+        };
+        var primary = Resolve(state);
+        Assert.Equal("resolved", primary.Status);
+        Assert.Equal(13, primary.EffectiveMechanics!.AbilityScores["strength"]);
+        var alternate = Resolve(state, target: "sheet.wolf");
+        Assert.Equal("resolved", alternate.Status);
+        Assert.Equal(15, alternate.EffectiveMechanics!.AbilityScores["strength"]);
+
+        var primaryOnly = state with { InfluenceOverlapSelections = [primaryDecision] };
+        Assert.Equal("resolved", Resolve(primaryOnly).Status);
+        Assert.Equal("unresolved", Resolve(primaryOnly, target: "sheet.wolf").Status);
+        Assert.Equal("resolved", NativeCharacterInfluenceResolver.ValidateState(
+            primaryOnly, "sheet.wolf", new Authority()).Status);
+    }
+
+
+    [Fact]
+    public void SeparateVerifiedOverlapEventAddsThenSupersedesExactWriterWithoutChangingOwners()
+    {
+        var a = Influence("influence.a", effects:
+        [
+            Effect("strength-a", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 13)
+        ]);
+        var b = Influence("influence.b", effects:
+        [
+            Effect("strength-b", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 15)
+        ]);
+        var state = Character([a, b]);
+        Assert.Equal("unresolved", Resolve(state).Status);
+
+        var first = Choose("first-winner", "strength-a",
+            "strength-a", "strength-b");
+        var planned = NativeInfluenceOverlapDecisionPlanner.Plan(
+            state, first, null, new Authority());
+        Assert.Equal("planned", planned.Status);
+        var owned = Assert.IsType<NativeCharacterState>(planned.ProposedState);
+        Assert.Empty(state.InfluenceOverlapSelections ?? []);
+        Assert.Equal(13, Resolve(owned).EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal(state.PersistentInfluences!.Count, owned.PersistentInfluences!.Count);
+
+        var second = Choose("revised-winner", "strength-b",
+            "strength-a", "strength-b");
+        var replaced = NativeInfluenceOverlapDecisionPlanner.Plan(
+            owned, second, "first-winner", new Authority());
+        Assert.Equal("planned", replaced.Status);
+        var updated = Assert.IsType<NativeCharacterState>(replaced.ProposedState);
+        Assert.Single(updated.InfluenceOverlapSelections!);
+        Assert.Equal("revised-winner", updated.InfluenceOverlapSelections![0].Id);
+        Assert.Equal(15, Resolve(updated).EffectiveMechanics!.AbilityScores["strength"]);
+        Assert.Equal("first-winner", owned.InfluenceOverlapSelections![0].Id);
+
+        var duplicate = NativeInfluenceOverlapDecisionPlanner.Plan(
+            owned, second, null, new Authority());
+        Assert.Equal("invalid", duplicate.Status);
+        Assert.Contains(duplicate.Issues,
+            issue => issue.Code == "duplicate-overlap-decision-scope");
+    }
+
+    [Fact]
+    public void OverlapEventRejectsUnauthorizedDecisionAndCrossScopeReplacement()
+    {
+        var a = Influence("influence.a", effects:
+        [
+            Effect("strength-a", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 13)
+        ]);
+        var b = Influence("influence.b", effects:
+        [
+            Effect("strength-b", NativeInfluenceCharacteristic.AbilityScore,
+                key: "strength", number: 15)
+        ]);
+        var prior = Choose("prior", "strength-a", "strength-a", "strength-b");
+        var state = Character([a, b]) with
+        {
+            InfluenceOverlapSelections = [prior]
+        };
+
+        var denied = NativeInfluenceOverlapDecisionPlanner.Plan(
+            state, Choose("new", "strength-b", "strength-a", "strength-b"),
+            "prior", new Authority { DenyOverlap = true });
+        Assert.Equal("invalid", denied.Status);
+        Assert.Null(denied.ProposedState);
+
+        var wrong = NativeInfluenceOverlapDecisionPlanner.Plan(
+            state, Choose("new", "strength-b", "strength-a", "strength-b") with
+            {
+                TargetSheetId = "sheet.wolf"
+            }, "prior", new Authority());
+        Assert.Equal("invalid", wrong.Status);
+        Assert.Contains(wrong.Issues,
+            issue => issue.Code == "overlap-replacement-scope-changed");
+
+        var missing = NativeInfluenceOverlapDecisionPlanner.Plan(
+            state, Choose("new", "strength-b", "strength-a", "strength-b"),
+            "nonexistent", new Authority());
+        Assert.Equal("invalid", missing.Status);
+        Assert.Contains(missing.Issues,
+            issue => issue.Code == "unknown-overlap-decision");
+    }
+
 }

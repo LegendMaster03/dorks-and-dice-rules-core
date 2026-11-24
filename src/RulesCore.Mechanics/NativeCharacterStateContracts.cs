@@ -10,7 +10,10 @@ public sealed record NativeCharacterState(
     string CharacterId,
     NativeCharacterRequest PrimaryMechanics,
     IReadOnlyList<NativePersistentCharacterSheet> AlternateSheets,
-    IReadOnlyList<NativeCharacterPersistentInfluence>? PersistentInfluences = null);
+    IReadOnlyList<NativeCharacterPersistentInfluence>? PersistentInfluences = null,
+    // Optional, independently verified exact-effect collision decisions.
+    // Never used to establish acquisition, progression, or resource ownership.
+    IReadOnlyList<NativeInfluenceOverlapSelection>? InfluenceOverlapSelections = null);
 
 /// <summary>
 /// A stable, persistent partial sheet. The parent is the primary sheet or another
