@@ -105,9 +105,16 @@ public static class NativeCharacterTrainingComposer
             return Invalid("training-skill-alternative-unknown", "An alternative references an unknown occurrence.");
         if (required.Count > 0)
         {
-            var eligible = catalog.Search(null, "skill", 0, 1000).Items
-                .Select(entity => entity.Id).Where(id => SelectableSkill(id) && !occupied.Contains(id))
-                .Order(StringComparer.Ordinal).ToArray();
+            var eligibleIds = new List<string>();
+            for (var offset = 0; ; offset += 100)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var page = catalog.Search(null, "skill", offset, 100);
+                eligibleIds.AddRange(page.Items.Select(entity => entity.Id)
+                    .Where(id => SelectableSkill(id) && !occupied.Contains(id)));
+                if (page.Items.Length < 100) break;
+            }
+            var eligible = eligibleIds.Order(StringComparer.Ordinal).ToArray();
             return new("needs-choices", [], replacements, required.Select(choice =>
                 choice with { EligibleSkillIds = eligible }).ToArray(), null, null, []);
         }
