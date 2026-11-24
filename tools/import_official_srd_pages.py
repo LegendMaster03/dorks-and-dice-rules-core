@@ -32,10 +32,22 @@ def extract(edition, pdf):
     if "Creative Commons" not in legal or "4.0" not in legal:
         raise ValueError("Official CC licensing page not found")
     version = edition.removeprefix("srd-")
+    # Fail if extraction drifts from the initial publisher snapshot.
+    pinned = {
+        "srd-5.1": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+        "srd-5.2.1": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+    }
+    if sha != pinned[edition]:
+        raise ValueError("Publisher PDF differs from pinned source")
     records = []
+    # The 5.1 embedded text layer uses Unicode line separators as word
+    # separators. Preserve physical newlines from pdftotext, not splitlines().
+    # Normalization is restricted to those nonprinting word separators.
     for number, page in enumerate(pages, 1):
         # Preserve the layout extractor's columns and tables; only trim line ends.
-        body = "\n".join(line.rstrip() for line in page.splitlines()).strip("\n")
+        body = "\n".join(line.replace("\u2028", " ").replace("\u2029", " ")
+                         .replace("\u000b", " ").replace("\u0085", " ").rstrip()
+                         for line in page.split("\n")).strip("\n")
         # Legal information, front matter and contents remain source material
         # rather than becoming gameplay definitions.
         if number < first_gameplay_page:
@@ -79,6 +91,10 @@ if __name__ == "__main__":
     result = extract(args.edition, args.pdf)
     print(json.dumps(write_result(result, args.output), ensure_ascii=False))
     if args.emit_transfer:
+        # Diagnostic: distinguish PDF physical line breaks from text-layer
+        # Unicode separators. Do not treat visual layout as structured tables.
+        probe = result["records"][0]["textLayout"]
+        print("SRD_LAYOUT_SAMPLE " + json.dumps(probe[:1600], ensure_ascii=True))
         print("SRD_SOURCE_METADATA " + json.dumps({k: v for k, v in result.items() if k != "records"}))
         for record in result["records"]:
             print("SRD_PAGE_RECORD " + json.dumps(record, ensure_ascii=False, separators=(",", ":")))
