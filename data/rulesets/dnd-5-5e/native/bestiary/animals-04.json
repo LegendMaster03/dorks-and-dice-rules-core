@@ -50,22 +50,6 @@
     ],
     "passive": 9,
     "officialTextLayout": "Lizard\nTiny Beast, Unaligned\nAC 10                            Initiative +0 (10)\nHP 2 (1d4)\nSpeed 20 ft., Climb 20 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 2 −4 −4          Dex 11 +0 +0         Con 10 +0 +0\nInt 1 −5 −5          Wis 8 −1 −1          Cha 3 −4 −4\nSenses Darkvision 30 ft.; Passive Perception 9\nLanguages None\nCR 0 (XP 10; PB +2)\nTraits\nSpider Climb. The lizard can climb difficult surfaces,\nincluding along ceilings, without needing to make an\nability check.\nActions\nBite. Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing\ndamage.",
-    "trait": [
-      {
-        "name": "Spider Climb",
-        "entries": [
-          "The lizard can climb difficult surfaces,\nincluding along ceilings, without needing to make an\nability check."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Bite",
-        "entries": [
-          "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing\ndamage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-357"
     ],
@@ -85,8 +69,25 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/189"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The lizard can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 2}, reach 5 ft. {@h}1 Piercing damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.mammoth",
@@ -135,28 +136,6 @@
     },
     "passive": 10,
     "officialTextLayout": "Mammoth\nHuge Beast, Unaligned\nAC 13                            Initiative +2 (12)\nHP 126 (11d12 + 55)\nSpeed 50 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 24 +7 +10 Dex 9 −1 −1                 Con 21 +5 +8\nInt 3 −4 −4 Wis 11 +0 +0                  Cha 6 −2 −2\nSenses Passive Perception 10\nLanguages None\nCR 6 (XP 2,300; PB +3)\nActions\nMultiattack. The mammoth makes two Gore attacks.\nGore. Melee Attack Roll: +10, reach 10 ft. Hit: 18 (2d10\n+ 7) Piercing damage. If the target is a Huge or smaller\ncreature and the mammoth moved 20+ feet straight\ntoward it immediately before the hit, the target has the\nProne condition.\nBonus Actions\nTrample. Dexterity Saving Throw: DC 18, one creature\nwithin 5 feet that has the Prone condition. Failure: 29\n(4d10 + 7) Bludgeoning damage. Success: Half damage.",
-    "action": [
-      {
-        "name": "Multiattack",
-        "entries": [
-          "The mammoth makes two Gore attacks."
-        ]
-      },
-      {
-        "name": "Gore",
-        "entries": [
-          "Melee Attack Roll: +10, reach 10 ft. Hit: 18 (2d10\n+ 7) Piercing damage. If the target is a Huge or smaller\ncreature and the mammoth moved 20+ feet straight\ntoward it immediately before the hit, the target has the\nProne condition."
-        ]
-      }
-    ],
-    "bonus": [
-      {
-        "name": "Trample",
-        "entries": [
-          "Dexterity Saving Throw: DC 18, one creature\nwithin 5 feet that has the Prone condition. Failure: 29\n(4d10 + 7) Bludgeoning damage. Success: Half damage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-357"
     ],
@@ -176,8 +155,31 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/193"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The mammoth makes two Gore attacks."
+        ]
+      },
+      {
+        "name": "Gore",
+        "entries": [
+          "{@atkr m} {@hit 10}, reach 10 ft. {@h}18 ({@damage 2d10 + 7}) Piercing damage. If the target is a Huge or smaller creature and the mammoth moved 20+ feet straight toward it immediately before the hit, the target has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Trample",
+        "entries": [
+          "{@actSave dex} {@dc 18}, one creature within 5 feet that has the {@condition Prone|SRD52} condition. {@actSaveFail} 29 ({@damage 4d10 + 7}) Bludgeoning damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.mastiff",
@@ -232,14 +234,6 @@
     ],
     "passive": 15,
     "officialTextLayout": "Mastiff\nMedium Beast, Unaligned\nAC 12                            Initiative +2 (12)\nHP 5 (1d8 + 1)\nSpeed 40 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 13 +1 +1         Dex 14 +2 +2         Con 12 +1 +1\nInt 3 −4 −4          Wis 12 +1 +3         Cha 7 −2 −2\nSkills Perception +5\nSenses Darkvision 60 ft.; Passive Perception 15\nLanguages None\nCR 1/8 (XP 25; PB +2)\nActions\nBite. Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1)\nPiercing damage. If the target is a Medium or smaller\ncreature, it has the Prone condition.",
-    "action": [
-      {
-        "name": "Bite",
-        "entries": [
-          "Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1)\nPiercing damage. If the target is a Medium or smaller\ncreature, it has the Prone condition."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-357"
     ],
@@ -259,8 +253,17 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/196"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}4 ({@damage 1d6 + 1}) Piercing damage. If the target is a Medium or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.mule",
@@ -309,22 +312,6 @@
     },
     "passive": 10,
     "officialTextLayout": "Mule\nMedium Beast, Unaligned\nAC 10                            Initiative +0 (10)\nHP 11 (2d8 + 2)\nSpeed 40 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 14 +2 +4         Dex 10 +0 +0         Con 13 +1 +1\nInt 2 −4 −4          Wis 10 +0 +0         Cha 5 −3 −3\nSenses Passive Perception 10\nLanguages None\nCR 1/8 (XP 25; PB +2)\nTraits\nBeast of Burden. The mule counts as one size larger for\nthe purpose of determining its carrying capacity.\nActions\nHooves. Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4\n+ 2) Bludgeoning damage.",
-    "trait": [
-      {
-        "name": "Beast of Burden",
-        "entries": [
-          "The mule counts as one size larger for\nthe purpose of determining its carrying capacity."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Hooves",
-        "entries": [
-          "Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4\n+ 2) Bludgeoning damage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-357"
     ],
@@ -344,8 +331,25 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/203"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Beast of Burden",
+        "entries": [
+          "The mule counts as one size larger for the purpose of determining its carrying capacity."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}4 ({@damage 1d4 + 2}) Bludgeoning damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.octopus",
@@ -402,36 +406,6 @@
     ],
     "passive": 12,
     "officialTextLayout": "Octopus\nSmall Beast, Unaligned\nAC 12                            Initiative +2 (12)\nHP 3 (1d6)\nSpeed 5 ft., Swim 30 ft.\nMOD SAVE             MOD SAVE            MOD SAVE\nStr 4 −3 −3          Dex 15 +2 +2         Con 11 +0 +0\nInt 3 −4 −4          Wis 10 +0 +0         Cha 4 −3 −3\nSkills Perception +2, Stealth +6\nSenses Darkvision 30 ft.; Passive Perception 12\nLanguages None\nCR 0 (XP 10; PB +2)\nTraits\nCompression. The octopus can move through a space\nas narrow as 1 inch without expending extra move-\nment to do so.\nWater Breathing. The octopus can breathe only\nunderwater.\nActions\nTentacles. Melee Attack Roll: +4, reach 5 ft. Hit: 1\nBludgeoning damage.\nReactions\nInk Cloud (1/Day). Trigger: A creature ends its turn\nwithin 5 feet of the octopus while underwater. Re-\nsponse: The octopus releases ink that fills a 5-foot\nCube centered on itself, and the octopus moves up to\nits Swim Speed. The Cube is Heavily Obscured for 1\nminute or until a strong current or similar effect dis-\nperses the ink.",
-    "trait": [
-      {
-        "name": "Compression",
-        "entries": [
-          "The octopus can move through a space\nas narrow as 1 inch without expending extra move-\nment to do so."
-        ]
-      },
-      {
-        "name": "Water Breathing",
-        "entries": [
-          "The octopus can breathe only\nunderwater."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Tentacles",
-        "entries": [
-          "Melee Attack Roll: +4, reach 5 ft. Hit: 1\nBludgeoning damage."
-        ]
-      }
-    ],
-    "reaction": [
-      {
-        "name": "Ink Cloud (1/Day)",
-        "entries": [
-          "Trigger: A creature ends its turn\nwithin 5 feet of the octopus while underwater. Re-\nsponse: The octopus releases ink that fills a 5-foot\nCube centered on itself, and the octopus moves up to\nits Swim Speed. The Cube is Heavily Obscured for 1\nminute or until a strong current or similar effect dis-\nperses the ink."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-357",
       "rulebook.page-358"
@@ -453,8 +427,39 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/211"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Compression",
+        "entries": [
+          "The octopus can move through a space as narrow as 1 inch without expending extra movement to do so."
+        ]
+      },
+      {
+        "name": "Water Breathing",
+        "entries": [
+          "The octopus can breathe only underwater."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Tentacles",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}1 Bludgeoning damage."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Ink Cloud (1/Day)",
+        "entries": [
+          "{@actTrigger} A creature ends its turn within 5 feet of the octopus while underwater. {@actResponse} The octopus releases ink that fills a 5-foot {@variantrule Cube [Area of Effect]|SRD52|Cube} centered on itself, and the octopus moves up to its {@variantrule Swim Speed|SRD52}. The {@variantrule Cube [Area of Effect]|SRD52|Cube} is {@variantrule Heavily Obscured|SRD52} for 1 minute or until a strong current or similar effect disperses the ink."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.owl",
@@ -511,22 +516,6 @@
     ],
     "passive": 15,
     "officialTextLayout": "Owl\nTiny Beast, Unaligned\nAC 11                            Initiative +1 (11)\nHP 1 (1d4 − 1)\nSpeed 5 ft., Fly 60 ft.\nMOD SAVE             MOD SAVE            MOD SAVE\nStr 3 −4 −4          Dex 13 +1 +1         Con 8 −1 −1\nInt 2 −4 −4          Wis 12 +1 +1         Cha 7 −2 −2\nSkills Perception +5, Stealth +5\nSenses Darkvision 120 ft.; Passive Perception 15\nLanguages None\nCR 0 (XP 10; PB +2)\nTraits\nFlyby. The owl doesn’t provoke an Opportunity Attack\nwhen it flies out of an enemy’s reach.\nActions\nTalons. Melee Attack Roll: +3, reach 5 ft. Hit: 1 Slash-\ning damage.",
-    "trait": [
-      {
-        "name": "Flyby",
-        "entries": [
-          "The owl doesn’t provoke an Opportunity Attack\nwhen it flies out of an enemy’s reach."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Talons",
-        "entries": [
-          "Melee Attack Roll: +3, reach 5 ft. Hit: 1 Slash-\ning damage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-358"
     ],
@@ -546,8 +535,25 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/216"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Flyby",
+        "entries": [
+          "The owl doesn't provoke {@action Opportunity Attack|SRD52|Opportunity Attacks} when it flies out of an enemy's reach."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Talons",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}1 Slashing damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.panther",
@@ -604,22 +610,6 @@
     ],
     "passive": 14,
     "officialTextLayout": "Panther\nMedium Beast, Unaligned\nAC 13                            Initiative +3 (13)\nHP 13 (3d8)\nSpeed 50 ft., Climb 40 ft.\nMOD SAVE            MOD SAVE            MOD SAVE\nStr 14 +2 +2         Dex 16 +3 +3         Con 10 +0 +0\nInt 3 −4 −4          Wis 14 +2 +2         Cha 7 −2 −2\nSkills Perception +4, Stealth +7\nSenses Darkvision 60 ft.; Passive Perception 14\nLanguages None\nCR 1/4 (XP 50; PB +2)\nActions\nRend. Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3)\nSlashing damage.\nBonus Actions\nNimble Escape. The panther takes the Disengage or\nHide action.",
-    "action": [
-      {
-        "name": "Rend",
-        "entries": [
-          "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3)\nSlashing damage."
-        ]
-      }
-    ],
-    "bonus": [
-      {
-        "name": "Nimble Escape",
-        "entries": [
-          "The panther takes the Disengage or\nHide action."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-358"
     ],
@@ -639,8 +629,25 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/218"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Slashing damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Nimble Escape",
+        "entries": [
+          "The panther takes the {@action Disengage|SRD52} or {@action Hide|SRD52} action."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.piranha",
@@ -693,22 +700,6 @@
     ],
     "passive": 8,
     "officialTextLayout": "Piranha\nTiny Beast, Unaligned\nAC 13                            Initiative +3 (13)\nHP 1 (1d4 − 1)\nSpeed 5 ft., Swim 40 ft.\nMOD SAVE            MOD SAVE            MOD SAVE\nStr 2 −4 −4          Dex 16 +3 +3         Con 9 −1 −1\nInt 1 −5 −5          Wis 7 −2 −2          Cha 2 −4 −4\nSenses Darkvision 60 ft.; Passive Perception 8\nLanguages None\nCR 0 (XP 10; PB +2)\nTraits\nWater Breathing. The piranha can breathe only\nunderwater.\nActions\nBite. Melee Attack Roll: +5 (with Advantage if the target\ndoesn’t have all its Hit Points), reach 5 ft. Hit: 1 Pierc-\ning damage.",
-    "trait": [
-      {
-        "name": "Water Breathing",
-        "entries": [
-          "The piranha can breathe only\nunderwater."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Bite",
-        "entries": [
-          "Melee Attack Roll: +5 (with Advantage if the target\ndoesn’t have all its Hit Points), reach 5 ft. Hit: 1 Pierc-\ning damage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-358"
     ],
@@ -728,8 +719,25 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/221"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Water Breathing",
+        "entries": [
+          "The piranha can breathe only underwater."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 5} (with {@variantrule Advantage|SRD52} if the target doesn't have all its {@variantrule Hit Points|SRD52}), reach 5 ft. {@h}1 Piercing damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.plesiosaurus",
@@ -788,22 +796,6 @@
     },
     "passive": 13,
     "officialTextLayout": "Plesiosaurus\nLarge Beast (Dinosaur), Unaligned\nAC 13                           Initiative +2 (12)\nHP 68 (8d10 + 24)\nSpeed 20 ft., Swim 40 ft.\nMOD SAVE            MOD SAVE            MOD SAVE\nStr 18 +4 +4         Dex 15 +2 +2         Con 16 +3 +3\nInt 2 −4 −4          Wis 12 +1 +1         Cha 5 −3 −3\nSkills Perception +3, Stealth +4\nSenses Passive Perception 13\nLanguages None\nCR 2 (XP 450; PB +2)\nTraits\nHold Breath. The plesiosaurus can hold its breath\nfor 1 hour.\nActions\nBite. Melee Attack Roll: +6, reach 10 ft. Hit: 11 (2d6 +\n4) Piercing damage.",
-    "trait": [
-      {
-        "name": "Hold Breath",
-        "entries": [
-          "The plesiosaurus can hold its breath\nfor 1 hour."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Bite",
-        "entries": [
-          "Melee Attack Roll: +6, reach 10 ft. Hit: 11 (2d6 +\n4) Piercing damage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-358",
       "rulebook.page-359"
@@ -825,8 +817,25 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/226"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Hold Breath",
+        "entries": [
+          "The plesiosaurus can hold its breath for 1 hour."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.polar-bear",
@@ -886,20 +895,6 @@
       "cold"
     ],
     "officialTextLayout": "Polar Bear\nLarge Beast, Unaligned\nAC 12                           Initiative +2 (12)\nHP 42 (5d10 + 15)\nSpeed 40 ft., Swim 40 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 20 +5 +5          Dex 14 +2 +2        Con 16 +3 +3\nInt 2 −4 −4           Wis 13 +1 +1        Cha 7 −2 −2\nSkills Perception +5, Stealth +4\nResistances Cold\nSenses Darkvision 60 ft.; Passive Perception 15\nLanguages None\nCR 2 (XP 450; PB +2)\nActions\nMultiattack. The bear makes two Rend attacks.\nRend. Melee Attack Roll: +7, reach 5 ft. Hit: 9 (1d8 + 5)\nSlashing damage.",
-    "action": [
-      {
-        "name": "Multiattack",
-        "entries": [
-          "The bear makes two Rend attacks."
-        ]
-      },
-      {
-        "name": "Rend",
-        "entries": [
-          "Melee Attack Roll: +7, reach 5 ft. Hit: 9 (1d8 + 5)\nSlashing damage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-359"
     ],
@@ -919,8 +914,23 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/227"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The bear makes two Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}9 ({@damage 1d8 + 5}) Slashing damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.pony",
@@ -969,14 +979,6 @@
     },
     "passive": 10,
     "officialTextLayout": "Pony\nMedium Beast, Unaligned\nAC 10                            Initiative +0 (10)\nHP 11 (2d8 + 2)\nSpeed 40 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 15 +2 +4          Dex 10 +0 +0        Con 13 +1 +1\nInt 2 −4 −4           Wis 11 +0 +0        Cha 7 −2 −2\nSenses Passive Perception 10\nLanguages None\nCR 1/8 (XP 25; PB +2)\nActions\nHooves. Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4\n+ 2) Bludgeoning damage.",
-    "action": [
-      {
-        "name": "Hooves",
-        "entries": [
-          "Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4\n+ 2) Bludgeoning damage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-359"
     ],
@@ -996,8 +998,17 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/228"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}4 ({@damage 1d4 + 2}) Bludgeoning damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.pteranodon",
@@ -1055,22 +1066,6 @@
     },
     "passive": 11,
     "officialTextLayout": "Pteranodon\nMedium Beast (Dinosaur), Unaligned\nAC 13                            Initiative +2 (12)\nHP 13 (3d8)\nSpeed 10 ft., Fly 60 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 12 +1 +1          Dex 15 +2 +2        Con 10 +0 +0\nInt 2 −4 −4           Wis 9 −1 −1         Cha 5 −3 −3\nSkills Perception +1\nSenses Passive Perception 11\nLanguages None\nCR 1/4 (XP 50; PB +2)\nTraits\nFlyby. The pteranodon doesn’t provoke an Opportunity\nAttack when it flies out of an enemy’s reach.\nActions\nBite. Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2)\nPiercing damage.",
-    "trait": [
-      {
-        "name": "Flyby",
-        "entries": [
-          "The pteranodon doesn’t provoke an Opportunity\nAttack when it flies out of an enemy’s reach."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Bite",
-        "entries": [
-          "Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2)\nPiercing damage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-359"
     ],
@@ -1090,8 +1085,25 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/232"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Flyby",
+        "entries": [
+          "The pteranodon doesn't provoke an {@action Opportunity Attack|SRD52} when it flies out of an enemy's reach."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}6 ({@damage 1d8 + 2}) Piercing damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.rat",
@@ -1147,22 +1159,6 @@
     ],
     "passive": 12,
     "officialTextLayout": "Rat\nTiny Beast, Unaligned\nAC 10                            Initiative +0 (10)\nHP 1 (1d4 − 1)\nSpeed 20 ft., Climb 20 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 2 −4 −4           Dex 11 +0 +0        Con 9 −1 −1\nInt 2 −4 −4           Wis 10 +0 +0        Cha 4 −3 −3\nSkills Perception +2\nSenses Darkvision 30 ft.; Passive Perception 12\nLanguages None\nCR 0 (XP 10; PB +2)\nTraits\nAgile. The rat doesn’t provoke an Opportunity Attack\nwhen it moves out of an enemy’s reach.\nActions\nBite. Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing\ndamage.",
-    "trait": [
-      {
-        "name": "Agile",
-        "entries": [
-          "The rat doesn’t provoke an Opportunity Attack\nwhen it moves out of an enemy’s reach."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Bite",
-        "entries": [
-          "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing\ndamage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-359"
     ],
@@ -1182,8 +1178,25 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/236"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Agile",
+        "entries": [
+          "The rat doesn't provoke {@action Opportunity Attack|SRD52|Opportunity Attacks} when it moves out of an enemy's reach."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 2}, reach 5 ft. {@h}1 Piercing damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.raven",
@@ -1236,22 +1249,6 @@
     },
     "passive": 13,
     "officialTextLayout": "Raven\nTiny Beast, Unaligned\nAC 12                            Initiative +2 (12)\nHP 2 (1d4)\nSpeed 10 ft., Fly 50 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 2 −4 −4           Dex 14 +2 +2        Con 10 +0 +0\nInt 5 −3 −3           Wis 13 +1 +1        Cha 6 −2 −2\nSkills Perception +3\nSenses Passive Perception 13\nLanguages None\nCR 0 (XP 10; PB +2)\nTraits\nMimicry. The raven can mimic simple sounds it has\nheard, such as a whisper or chitter. A hearer can dis-\ncern the sounds are imitations with a successful DC 10\nWisdom (Insight) check.\nActions\nBeak. Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing\ndamage.",
-    "trait": [
-      {
-        "name": "Mimicry",
-        "entries": [
-          "The raven can mimic simple sounds it has\nheard, such as a whisper or chitter. A hearer can dis-\ncern the sounds are imitations with a successful DC 10\nWisdom (Insight) check."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Beak",
-        "entries": [
-          "Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing\ndamage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-359"
     ],
@@ -1271,8 +1268,25 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/237"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Mimicry",
+        "entries": [
+          "The raven can mimic simple sounds it has heard, such as a whisper or chitter. A hearer can discern the sounds are imitations with a successful {@dc 10} Wisdom ({@skill Insight|SRD52}) check."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Beak",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}1 Piercing damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.reef-shark",
@@ -1328,28 +1342,6 @@
     ],
     "passive": 12,
     "officialTextLayout": "Reef Shark\nMedium Beast, Unaligned\nAC 12                            Initiative +2 (12)\nHP 22 (4d8 + 4)\nSpeed 5 ft., Swim 30 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 14 +2 +2         Dex 15 +2 +2         Con 13 +1 +1\nInt 1 −5 −5          Wis 10 +0 +0         Cha 4 −3 −3\nSkills Perception +2\nSenses Blindsight 30 ft.; Passive Perception 12\nLanguages None\nCR 1/2 (XP 100; PB +2)\nTraits\nPack Tactics. The shark has Advantage on an attack roll\nagainst a creature if at least one of the shark’s allies is\nwithin 5 feet of the creature and the ally doesn’t have\nthe Incapacitated condition.\nWater Breathing. The shark can breathe only underwater.\nActions\nBite. Melee Attack Roll: +4, reach 5 ft. Hit: 7 (2d4 + 2)\nPiercing damage.",
-    "trait": [
-      {
-        "name": "Pack Tactics",
-        "entries": [
-          "The shark has Advantage on an attack roll\nagainst a creature if at least one of the shark’s allies is\nwithin 5 feet of the creature and the ally doesn’t have\nthe Incapacitated condition."
-        ]
-      },
-      {
-        "name": "Water Breathing",
-        "entries": [
-          "The shark can breathe only underwater."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Bite",
-        "entries": [
-          "Melee Attack Roll: +4, reach 5 ft. Hit: 7 (2d4 + 2)\nPiercing damage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-360"
     ],
@@ -1369,8 +1361,31 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/239"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The shark has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the shark's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Water Breathing",
+        "entries": [
+          "The shark can breathe only underwater."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}7 ({@damage 2d4 + 2}) Piercing damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.rhinoceros",
@@ -1419,14 +1434,6 @@
     },
     "passive": 11,
     "officialTextLayout": "Rhinoceros\nLarge Beast, Unaligned\nAC 13                            Initiative −1 (9)\nHP 45 (6d10 + 12)\nSpeed 40 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 21 +5 +5         Dex 8 −1 −1          Con 15 +2 +2\nInt 2 −4 −4          Wis 12 +1 +1         Cha 6 −2 −2\nSenses Passive Perception 11\nLanguages None\nCR 2 (XP 450; PB +2)\nActions\nGore. Melee Attack Roll: +7, reach 5 ft. Hit: 14 (2d8 +\n5) Piercing damage. If target is a Large or smaller crea-\nture and the rhinoceros moved 20+ feet straight toward\nit immediately before the hit, the target takes an extra 9\n(2d8) Piercing damage and has the Prone condition.",
-    "action": [
-      {
-        "name": "Gore",
-        "entries": [
-          "Melee Attack Roll: +7, reach 5 ft. Hit: 14 (2d8 +\n5) Piercing damage. If target is a Large or smaller crea-\nture and the rhinoceros moved 20+ feet straight toward\nit immediately before the hit, the target takes an extra 9\n(2d8) Piercing damage and has the Prone condition."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-360"
     ],
@@ -1446,8 +1453,17 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/241"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Gore",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}14 ({@damage 2d8 + 5}) Piercing damage. If target is a Large or smaller creature and the rhinoceros moved 20+ feet straight toward it immediately before the hit, the target takes an extra 9 ({@damage 2d8}) Piercing damage and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.riding-horse",
@@ -1496,14 +1512,6 @@
     },
     "passive": 10,
     "officialTextLayout": "Riding Horse\nLarge Beast, Unaligned\nAC 11                            Initiative +1 (11)\nHP 13 (2d10 + 2)\nSpeed 60 ft.\nMOD SAVE\nStr 16 +3 +3\nMOD SAVE\nDex 13 +1 +1\nMOD SAVE\nCon 12 +1 +1\nInt 2 −4 −4          Wis 11 +0 +0         Cha 7 −2 −2\nSenses Passive Perception 10\nLanguages None\nCR 1/4 (XP 50; PB +2)\nActions\nHooves. Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8\n+ 3) Bludgeoning damage.",
-    "action": [
-      {
-        "name": "Hooves",
-        "entries": [
-          "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8\n+ 3) Bludgeoning damage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-360"
     ],
@@ -1523,8 +1531,17 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/242"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Bludgeoning damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.saber-toothed-tiger",
@@ -1580,36 +1597,6 @@
     ],
     "passive": 15,
     "officialTextLayout": "Saber-Toothed Tiger\nLarge Beast, Unaligned\nAC 13                            Initiative +3 (13)\nHP 52 (7d10 + 14)\nSpeed 40 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 18 +4 +6         Dex 17 +3 +5         Con 15 +2 +2\nInt 3 −4 −4          Wis 12 +1 +1         Cha 8 −1 −1\nSkills Perception +5, Stealth +7\nSenses Darkvision 60 ft.; Passive Perception 15\nLanguages None\nCR 2 (XP 450; PB +2)\nTraits\nRunning Leap. With a 10-foot running start, the tiger\ncan Long Jump up to 25 feet.\nActions\nMultiattack. The tiger makes two Rend attacks.\nRend. Melee Attack Roll: +6, reach 5 ft. Hit: 11 (2d6\n+ 4) Slashing damage.\nBonus Actions\nNimble Escape. The tiger takes the Disengage or Hide\naction.",
-    "trait": [
-      {
-        "name": "Running Leap",
-        "entries": [
-          "With a 10-foot running start, the tiger\ncan Long Jump up to 25 feet."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Multiattack",
-        "entries": [
-          "The tiger makes two Rend attacks."
-        ]
-      },
-      {
-        "name": "Rend",
-        "entries": [
-          "Melee Attack Roll: +6, reach 5 ft. Hit: 11 (2d6\n+ 4) Slashing damage."
-        ]
-      }
-    ],
-    "bonus": [
-      {
-        "name": "Nimble Escape",
-        "entries": [
-          "The tiger takes the Disengage or Hide\naction."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-360"
     ],
@@ -1629,8 +1616,39 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/246"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Running Leap",
+        "entries": [
+          "With a 10-foot running start, the tiger can {@variantrule Long Jump|SRD52} up to 25 feet."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The tiger makes two Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Slashing damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Nimble Escape",
+        "entries": [
+          "The tiger takes the {@action Disengage|SRD52} or {@action Hide|SRD52} action."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.scorpion",
@@ -1682,14 +1700,6 @@
     ],
     "passive": 9,
     "officialTextLayout": "Scorpion\nTiny Beast, Unaligned\nAC 11                            Initiative +0 (10)\nHP 1 (1d4 − 1)\nSpeed 10 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 2 −4 −4          Dex 11 +0 +0         Con 8 −1 −1\nInt 1 −5 −5          Wis 8 −1 −1          Cha 2 −4 −4\nSenses Blindsight 10 ft.; Passive Perception 9\nLanguages None\nCR 0 (XP 10; PB +2)\nActions\nSting. Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing\ndamage plus 3 (1d6) Poison damage.",
-    "action": [
-      {
-        "name": "Sting",
-        "entries": [
-          "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing\ndamage plus 3 (1d6) Poison damage."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-360"
     ],
@@ -1709,8 +1719,17 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/250"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Sting",
+        "entries": [
+          "{@atkr m} {@hit 2}, reach 5 ft. {@h}1 Piercing damage plus 3 ({@damage 1d6}) Poison damage."
+        ]
+      }
+    ]
   },
   {
     "id": "monster.seahorse",
@@ -1764,22 +1783,6 @@
     },
     "passive": 12,
     "officialTextLayout": "Seahorse\nTiny Beast, Unaligned\nAC 12                            Initiative +1 (11)\nHP 1 (1d4 − 1)\nSpeed 5 ft., Swim 20 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 1 −5 −5          Dex 12 +1 +1         Con 8 −1 −1\nInt 1 −5 −5          Wis 10 +0 +0         Cha 2 −4 −4\nSkills Perception +2, Stealth +5\nSenses Passive Perception 12\nLanguages None\nCR 0 (XP 0; PB +2)\nTraits\nWater Breathing. The seahorse can breathe only\nunderwater.\nActions\nBubble Dash. While underwater, the seahorse moves\nup to its Swim Speed without provoking Opportu-\nnity Attacks.",
-    "trait": [
-      {
-        "name": "Water Breathing",
-        "entries": [
-          "The seahorse can breathe only\nunderwater."
-        ]
-      }
-    ],
-    "action": [
-      {
-        "name": "Bubble Dash",
-        "entries": [
-          "While underwater, the seahorse moves\nup to its Swim Speed without provoking Opportu-\nnity Attacks."
-        ]
-      }
-    ],
     "catalogReferences": [
       "rulebook.page-361"
     ],
@@ -1799,7 +1802,24 @@
         "path": "bestiary/bestiary-srd52.json",
         "pointer": "/monster/253"
       },
-      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text."
-    }
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Water Breathing",
+        "entries": [
+          "The seahorse can breathe only underwater."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bubble Dash",
+        "entries": [
+          "While underwater, the seahorse moves up to its {@variantrule Swim Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+        ]
+      }
+    ]
   }
 ]
