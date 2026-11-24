@@ -186,6 +186,14 @@ internal sealed class NativeOriginBiologicalInheritanceEvaluator(
             var choices = (expressed ? grants[0].ResolvedChoices :
                 inheritedGene?.ResolvedChoices ?? inheritedGrant?.ResolvedChoices ??
                 configurations.GetValueOrDefault(candidate.Id)?.Choices) ?? [];
+            if ((inheritedGene is not null || inheritedGrant is not null) &&
+                !NativeOriginChoiceCatalog.ValidInheritedOpenChoice(catalog, candidate, choices))
+            {
+                Issue("inherited-open-choice-unresolved", candidate.Id,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The inherited persistent choice is not valid in the current native catalog.");
+                continue;
+            }
             if (!expressed)
             {
                 var requirements = candidate.RequiredChoices ?? [];

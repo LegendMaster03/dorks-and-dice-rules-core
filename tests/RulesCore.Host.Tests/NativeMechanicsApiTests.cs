@@ -1003,7 +1003,7 @@ public sealed class NativeMechanicsApiTests
         var selected = draft with
         {
             Manifestations = [.. baseSelections, new("skill-selection", skill.Id,
-                Choices: [new("selection", ["skill.intimidation"], "browser-assertion")])],
+                Choices: [new("selection", ["skill.intimidation"])])],
             BiologicalTransmission = new(foundation.Append(skill).Select(x => x.Id).ToArray())
         };
         var result = await Send(selected);
@@ -1032,11 +1032,53 @@ public sealed class NativeMechanicsApiTests
         var invalid = await Send(selected with
         {
             Manifestations = [.. baseSelections, new("skill-selection", skill.Id,
-                Choices: [new("selection", ["competency.disguise"], "browser-assertion")])]
+                Choices: [new("selection", ["competency.disguise"])])]
         });
         Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized, invalid.GetProperty("status").GetInt32());
         Assert.Contains(invalid.GetProperty("issues").EnumerateArray(),
             x => x.GetProperty("code").GetString() == "choice-authorization-unresolved");
+
+        // Carry a saved latent Skill through the authenticated parent path.
+        // The descendant selects the existing instance, not a new menu.
+        var parent = latent.GetProperty("profile").Deserialize<NativeOriginProfile>(
+            new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+        provider.Parent = parent;
+        var child = new NativeOriginProposal("http-mixed-skill-child", NativeOriginIntent.Mixed,
+            draft.Method, [new("carrier", new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.ManifestedProfile, parent.Id, "revision-1"))], [], []);
+        var childOffers = (await Send(child)).GetProperty("evaluatedProposal").GetProperty("candidates")
+            .Deserialize<NativeOriginCandidate[]>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+        var inherited = Assert.Single(childOffers, x => x.Id == "nested:carrier:gene:" + gene.GetProperty("id").GetString());
+        var childSelected = childOffers.Where(x => x.Identity.IntrinsicSlotId is
+            "creatureType" or "size" or "walkingSpeedFeet").Append(inherited).ToArray();
+        var childRequest = child with
+        {
+            Manifestations = childSelected.Select((x, i) =>
+                new NativeOriginManifestation("child-" + i, x.Id,
+                    SelectedValue: x.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic ? x.OfferedValue : null)).ToArray(),
+            BiologicalTransmission = new(childSelected.Select(x => x.Id).ToArray())
+        };
+        var carried = await Send(childRequest);
+        Assert.True(carried.GetProperty("status").GetInt32() == (int)NativeOriginConstructionStatus.Authorized, carried.GetRawText());
+        var inheritedGrant = Assert.Single(carried.GetProperty("profile").GetProperty("underlying")
+            .GetProperty("inherentGrants").EnumerateArray(), x => x.GetProperty("sourceCandidateIds")
+                .EnumerateArray().Any(id => id.GetString() == inherited.Id));
+        Assert.Equal("skill.intimidation", inheritedGrant.GetProperty("resolvedChoices")[0]
+            .GetProperty("selectedOptionIds")[0].GetString());
+
+        // Simulate an older saved configuration with a now-invalid option.
+        // It cannot become an effective grant merely because the record is authenticated.
+        var staleConfiguration = parent.Underlying with
+        {
+            BiologicalGenes = parent.Underlying.BiologicalGenes!.Select(g => g.SourceCandidateId == skill.Id
+                ? g with { ResolvedChoices = [g.ResolvedChoices![0] with { SelectedOptionIds = ["competency.disguise"] }] }
+                : g).ToArray()
+        };
+        provider.Parent = parent with { Underlying = staleConfiguration, Current = staleConfiguration };
+        var stale = await Send(childRequest);
+        Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized, stale.GetProperty("status").GetInt32());
+        Assert.Contains(stale.GetProperty("issues").EnumerateArray(),
+            x => x.GetProperty("code").GetString() == "inherited-open-choice-unresolved");
     }
 
     private sealed class VerifiedReconstructionTestAuthority : INativeOriginHostReconstructionAuthorityProvider,

@@ -605,6 +605,14 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                     ]
                 };
             }
+            if ((parentGeneOffers.ContainsKey(candidate.Id) || inheritedOffers.ContainsKey(candidate.Id)) &&
+                !NativeOriginChoiceCatalog.ValidInheritedOpenChoice(catalog, candidate, grant.ResolvedChoices))
+            {
+                Add("inherited-open-choice-unresolved", candidate.Id,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The inherited persistent choice is not valid in the current native catalog.");
+                continue;
+            }
             accepted.Add(new(candidate, manifest, grant));
         }
 

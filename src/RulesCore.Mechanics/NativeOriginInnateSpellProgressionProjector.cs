@@ -111,7 +111,7 @@ public static class NativeOriginInnateSpellProgressionProjector
             }
             else if (!fixedSpell)
             {
-                if (mixed || TextValue(authored, "spellList") != "wizard" ||
+                if (TextValue(authored, "spellList") != "wizard" ||
                     TextValue(authored, "replacement") != "after-long-rest" ||
                     !VerifiedOpenCantrip(catalog, origin, grant, out spellId))
                 {
@@ -341,11 +341,19 @@ public static class NativeOriginInnateSpellProgressionProjector
             !NativeOriginChoiceCatalog.IsMember(catalog, "spell:wizard", selected[0]))
             return false;
         var proof = "native-catalog:" + catalog.RulesetId + ":" + catalog.Fingerprint;
-        if (choices[0].CatalogEligibilityEvidenceId != proof) return false;
+        if (string.IsNullOrWhiteSpace(choices[0].CatalogEligibilityEvidenceId)) return false;
         var candidateId = grant.SourceCandidateIds[0];
         var candidates = origin.EvaluatedProposal.Candidates.Where(x => x.Id == candidateId).ToArray();
         var manifestations = origin.EvaluatedProposal.Manifestations.Where(x => x.CandidateId == candidateId).ToArray();
-        if (candidates.Length != 1 || manifestations.Length != 1 ||
+        if (candidates.Length != 1 || manifestations.Length != 1) return false;
+        if (origin.EvaluatedProposal.Intent == NativeOriginIntent.Mixed &&
+            (candidates[0].RequiredChoices?.Count ?? 0) == 0)
+        {
+            if ((manifestations[0].Choices?.Count ?? 0) != 0 ||
+                !NativeOriginChoiceCatalog.MatchesInheritedChoice(origin, candidates[0], choices[0]))
+                return false;
+        }
+        else if (choices[0].CatalogEligibilityEvidenceId != proof ||
             candidates[0].RequiredChoices is not { Count: 1 } requirements ||
             requirements[0].Id != "selection" || requirements[0].OptionCatalogId != "spell:wizard" ||
             requirements[0].Minimum != 1 || requirements[0].Maximum != 1 ||

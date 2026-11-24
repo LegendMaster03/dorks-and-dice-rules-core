@@ -31,6 +31,61 @@ public static class NativeOriginChoiceCatalog
         };
     }
 
+    // Inherited configurations retain their original selection evidence, but
+    // membership must still hold in the active catalog. Never reopen a saved
+    // parent's menu or substitute an option from the working catalog.
+    internal static bool ValidInheritedOpenChoice(NativeCatalogSnapshot snapshot,
+        NativeOriginCandidate candidate, IReadOnlyList<NativeOriginChoiceSelection>? choices)
+    {
+        if (candidate.Identity.MechanicalDefinitionId is not { } id ||
+            !snapshot.TryGetById(id, out var entity) || entity?.Category != "origin-trait" ||
+            !entity.Definition.TryGetProperty("trait", out var trait) ||
+            trait.ValueKind != JsonValueKind.Object)
+            return true; // Other inherited characteristics use their own validators.
+
+        var menu = Text(trait, "chooseFrom");
+        if (menu is null && Text(trait, "grantType") == "feat-choice")
+            menu = "feat:" + (Text(trait, "featCategory") ?? "all");
+        if (menu is null && Text(trait, "spellList") is { } list && Text(trait, "spell") is null)
+            menu = "spell:" + list;
+        if (menu is null || Text(trait, "when") == "on-use") return true;
+        var count = trait.TryGetProperty("choiceCount", out var number) &&
+            number.TryGetInt32(out var n) ? n : 1;
+        return count > 0 && choices is { Count: 1 } &&
+            choices[0] is { RequirementId: "selection" } choice &&
+            !string.IsNullOrWhiteSpace(choice.CatalogEligibilityEvidenceId) &&
+            choice.SelectedOptionIds is { } selected && selected.Count == count &&
+            selected.Distinct(StringComparer.Ordinal).Count() == count &&
+            selected.All(option => IsMember(snapshot, menu, option));
+    }
+
+    // Match a projected selection against the exact authenticated donor
+    // occurrence carried in the evaluated proposal, not an ancestral menu.
+    internal static bool MatchesInheritedChoice(NativeOriginConstructionResult result,
+        NativeOriginCandidate candidate, NativeOriginChoiceSelection selected)
+    {
+        var donors = result.EvaluatedProposal.Contributors.Where(c =>
+            c.Id == candidate.ContributorId &&
+            c.Source.Kind == NativeOriginSourceKind.ManifestedProfile &&
+            !string.IsNullOrWhiteSpace(c.Source.Version) &&
+            c.ManifestedProfile is not null).ToArray();
+        if (donors.Length != 1) return false;
+        var donor = donors[0];
+        var snapshot = donor.ManifestedProfile!;
+        bool Matches(IReadOnlyList<NativeOriginChoiceSelection>? choices) =>
+            choices is { Count: 1 } && choices[0] is { } choice &&
+            choice.RequirementId == selected.RequirementId &&
+            choice.CatalogEligibilityEvidenceId == selected.CatalogEligibilityEvidenceId &&
+            choice.SelectedOptionIds is not null && selected.SelectedOptionIds is not null &&
+            choice.SelectedOptionIds.SequenceEqual(selected.SelectedOptionIds, StringComparer.Ordinal);
+        return (snapshot.BiologicalGenes ?? []).Count(g =>
+            candidate.Id == "nested:" + donor.Id + ":gene:" + g.Id &&
+            candidate.Identity == g.Identity && Matches(g.ResolvedChoices)) +
+            snapshot.InherentGrants.Count(g =>
+                candidate.Id == "nested:" + donor.Id + ":" + g.Id &&
+                candidate.Identity == g.Identity && Matches(g.ResolvedChoices)) == 1;
+    }
+
     public static bool IsNativeCantrip(NativeCatalogSnapshot snapshot, string optionId) =>
         !string.IsNullOrWhiteSpace(optionId) && optionId.Length <= 160 &&
         snapshot.TryGetById(optionId, out var entity) && entity is not null &&
