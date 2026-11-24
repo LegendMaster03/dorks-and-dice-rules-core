@@ -1,10 +1,10 @@
 # Pillar 2 — High Elf Fey Teleportation; Wood Elf Magic review (2026-11-23)
 
 **Status:** Owner-approved High Elf enhancement implemented on a draft branch
-stacked on Abyssal PR #207. The owner also approved the **direction** of
-retaining Druidcraft and adding one separately selectable Druid cantrip to
-Wood Elf, but that Ancestry's already-full price requires a separate balance
-decision before enabling the new choice. No changes to `main`.
+stacked on Abyssal PR #207. The owner subsequently decided to **leave Wood
+Elf and Drow unchanged at their existing 18/18 biological allocations**.
+The earlier discussion of an additional Wood Elf Druid cantrip is superseded,
+not pending implementation. No changes to `main`.
 
 ## High Elf — approved and implemented
 
@@ -55,32 +55,30 @@ The first-party trial pricing revision is updated from
 `biological-pricing-20261123-v10` to **v11**, retaining **93 genes,
 98 entries**.
 
-## Wood Elf — approved concept, balance still unresolved
+## Wood Elf and Drow — balance settled, unchanged
 
-The existing Wood Elf `ancestry.elf.wood` provides:
-- **Druidcraft** cantrip at will (one point);
-- **Longstrider**, free once per Long Rest starting at character level 3;
-- **Pass Without Trace**, free once per Long Rest starting at level 5;
-- **Natural Camouflage** and **Trackless Passage**, with a woodland
-  biome binding;
-- 35-foot walking speed, source-selected spellcasting ability, and
-  the common Elf biological foundation.
+**Decision:** Both Wood Elf and Drow are already at the **18/18** trial
+allowance. Leave their existing native biological characteristics,
+spells and prices unchanged. Do not introduce additional spell grants,
+replace existing spells or adjust their point costs merely to incorporate
+historical XGE feats.
 
-The user-approved *Wood Elf Magic* direction is to **retain Druidcraft
-and add one other Druid cantrip of choice**. The feat's other two spells
-are already present and must not become duplicate spell grants.
+Wood Elf retains **Druidcraft, Longstrider, Pass Without Trace, Natural
+Camouflage, Trackless Passage**, its 35-foot walking speed, and current
+spellcasting choice. The previously discussed extension of *Wood Elf
+Magic* (Druidcraft plus one extra selectable Druid cantrip) would have
+cost at least one additional point and exceeded the allowance; that
+proposal has been **set aside by the owner**, not deferred as a required
+implementation task. Its existing spell package already captures the
+feat's two leveled spells.
 
-The existing Wood Elf allocation is **18/18**. A second Druid cantrip
-conservatively costs **at least one additional point** under the
-first-party spell pricing rule, resulting in **19/18** before considering
-any surcharge for choice flexibility or later replacement. Do not
-silently declare the extra cantrip free, decrease the prices of
-unrelated characteristics, or raise the universal allowance.
-**No additional Wood Elf cantrip has been added in this branch.**
-The follow-up review should select an authorized way to resolve this
-budget conflict, then choose whether the added Druid cantrip is fixed
-at creation or replaceable after a Long Rest. Open-list spell selection
-needs corresponding mechanical projection and provenance support.
+Drow retains its existing innate spell progression and linked
+Darkvision/Sunlight Sensitivity. *Drow High Magic* is not added to this
+full-budget Ancestry.
+
+The separate **Wood Elf 30-/35-foot movement reconciliation** is a
+pre-existing technical integration issue and is not a reason to reopen
+biological balance or grant new characteristics.
 
 ## Elven Accuracy
 
