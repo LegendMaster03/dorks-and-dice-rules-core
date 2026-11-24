@@ -118,6 +118,20 @@ public sealed class RulesetResolutionApiTests
         var owl = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.giant-owl");
         Assert.Equal("celestial", owl.GetProperty("rule").GetProperty("definition").GetProperty("type").GetString());
 
+        // The foreign catalogs expose original typed spell fields and entries,
+        // not just publisher layout strings.
+        foreach (var id in ids.Take(2))
+        {
+            var spell = await client.GetFromJsonAsync<JsonElement>(
+                "/api/rulesets/" + id + "/rules/spell.barkskin");
+            var definition = spell.GetProperty("rule").GetProperty("definition");
+            Assert.Equal(id == "dnd-5e" ? "action" : "bonus",
+                definition.GetProperty("time")[0].GetProperty("unit").GetString());
+            Assert.Equal(JsonValueKind.Object, definition.GetProperty("range").ValueKind);
+            Assert.Equal(JsonValueKind.Object, definition.GetProperty("components").ValueKind);
+            Assert.NotEmpty(definition.GetProperty("entries").EnumerateArray());
+        }
+
         const string path = "/api/mechanics/v1/rulesets/";
         Assert.Equal(HttpStatusCode.Unauthorized, (await client.GetAsync(path + ids[0] + "/capabilities")).StatusCode);
         client.DefaultRequestHeaders.Add("X-Dorks-Tool-Auth-Ticket", "signed-in-site-ticket");

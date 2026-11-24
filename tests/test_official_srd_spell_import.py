@@ -25,6 +25,12 @@ class OfficialSrdSpellImportTests(unittest.TestCase):
                 for record in spells:
                     self.assertEqual("spell." + slug(record["name"]), record["id"])
                     self.assertEqual("spell", record["kind"])
+                    pointer = record["source"]["structuredSource"]["pointer"]
+                    candidate = expected[int(pointer.split("/")[-1])]
+                    self.assertEqual("SRD" + tag, candidate["source"])
+                    self.assertEqual(record["id"], "spell." + slug(candidate["name"]))
+                    for field in ("time", "range", "components", "duration", "entries", "entriesHigherLevel"):
+                        self.assertEqual(candidate.get(field), record.get(field), (record["id"], field))
                     self.assertEqual(manifest["officialPageImport"]["pdfSha256"], record["source"]["pdfSha256"])
                     self.assertEqual(manifest["attribution"], record["source"]["attribution"])
                     self.assertEqual({"Casting Time", "Range", "Components", "Duration"}, set(record["header"]))
@@ -48,3 +54,6 @@ class OfficialSrdSpellImportTests(unittest.TestCase):
         self.assertEqual("Concentration, up to 1 hour", find("dnd-5e", "barkskin")["header"]["Duration"])
         self.assertEqual("1 hour", find("dnd-5-5e", "barkskin")["header"]["Duration"])
         self.assertEqual("Bonus Action", find("dnd-5-5e", "barkskin")["header"]["Casting Time"])
+        self.assertTrue(find("dnd-5e", "barkskin")["duration"][0]["concentration"])
+        self.assertFalse(find("dnd-5-5e", "barkskin")["duration"][0].get("concentration", False))
+        self.assertEqual("bonus", find("dnd-5-5e", "barkskin")["time"][0]["unit"])
