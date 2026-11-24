@@ -53,7 +53,9 @@ public sealed class NativeMechanicsApiTests
             INativeOriginHostCantripRestAuthorityProvider? cantripRestAuthority = null,
             bool syntheticOpenChoiceCatalog = false,
             INativeConstructHostOperatingAuthorityProvider? constructOperatingAuthority = null,
-            INativeConstructHostSolarIntervalAuthorityProvider? solarIntervalAuthority = null)
+            INativeConstructHostSolarIntervalAuthorityProvider? solarIntervalAuthority = null,
+            INativeConstructHostContextualPowerAuthorityProvider? contextualPowerAuthority = null,
+            INativeConstructHostSoulCustodyAuthorityProvider? soulCustodyAuthority = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -219,6 +221,10 @@ public sealed class NativeMechanicsApiTests
                     services.AddSingleton(constructOperatingAuthority);
                 if (solarIntervalAuthority is not null)
                     services.AddSingleton(solarIntervalAuthority);
+                if (contextualPowerAuthority is not null)
+                    services.AddSingleton(contextualPowerAuthority);
+                if (soulCustodyAuthority is not null)
+                    services.AddSingleton(soulCustodyAuthority);
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -1910,6 +1916,171 @@ public sealed class NativeMechanicsApiTests
         var recovered = daylightBody.GetProperty("plan").GetProperty("nextState");
         Assert.False(recovered.GetProperty("blocksSolarExhaustionRecovery").GetBoolean());
         Assert.Equal(1, recovered.GetProperty("exhaustionEventsIssued").GetProperty("generator").GetInt32());
+    }
+
+    private sealed class ConstructContextualTestAuthority :
+        INativeConstructHostContextualPowerAuthorityProvider, INativeConstructHostSoulCustodyAuthorityProvider
+    {
+        public VerifiedConstructContextualPowerAuthorization? Power { get; set; }
+        public VerifiedConstructSoulCustodyAuthorization? Custody { get; set; }
+        public Task<VerifiedConstructContextualPowerAuthorization?> VerifyAsync(Guid actorId,
+            NativeOriginApiEndpoints.VerifiedConstructContextualPowerRequest request,
+            CancellationToken cancellationToken) =>
+            Task.FromResult(actorId == Guid.Parse("d66a7a7b-bc0f-4677-829d-0ccf40470d2f")
+                ? Power : null);
+        public Task<VerifiedConstructSoulCustodyAuthorization?> VerifyAsync(Guid actorId,
+            NativeOriginApiEndpoints.VerifiedConstructSoulCustodyRequest request,
+            CancellationToken cancellationToken) =>
+            Task.FromResult(actorId == Guid.Parse("d66a7a7b-bc0f-4677-829d-0ccf40470d2f")
+                ? Custody : null);
+    }
+
+    private static (NativeConstructOriginConstructionResult Construction, NativeConstructOperatingPreset Preset)
+        ContextualConstruct(NativeCatalogSnapshot catalog, string sourceId)
+    {
+        var folder = new DirectoryInfo(AppContext.BaseDirectory);
+        string? reference = null;
+        while (folder is not null)
+        {
+            var candidate = Path.Combine(folder.FullName, "data", "reference",
+                "construct-small-starting-build-20261121.json");
+            if (File.Exists(candidate)) { reference = candidate; break; }
+            folder = folder.Parent;
+        }
+        Assert.NotNull(reference);
+        using var data = JsonDocument.Parse(File.ReadAllText(reference!));
+        var initial = data.RootElement.GetProperty("assembly").Deserialize<NativeConstructAssemblyRequest>(
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        var assembly = initial with
+        {
+            Components = initial.Components.Select(part => part.InstanceId == "generator"
+                ? part with { PowerSourceId = sourceId } : part).ToArray()
+        };
+        var proposal = new NativeOriginProposal("verified-contextual-construct",
+            NativeOriginIntent.Custom, new("rule.creature-origination", "construct-assembly"),
+            [], [], []);
+        var service = new NativeConstructOriginConstructionService(catalog);
+        var discovery = service.Evaluate(new(new(proposal), assembly));
+        var selected = proposal with
+        {
+            Manifestations = discovery.Origin.EvaluatedProposal.Candidates.Select((candidate, i) =>
+                new NativeOriginManifestation("selection-" + i, candidate.Id,
+                    SelectedValue: candidate.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic
+                        ? candidate.OfferedValue : null)).ToArray()
+        };
+        var construction = service.Evaluate(new(new(selected), assembly));
+        Assert.True(construction.IsMechanicallyAuthorized, JsonSerializer.Serialize(construction.Origin.Issues));
+        return (construction, new("current", assembly.Components.Select(part =>
+            new NativeConstructPresetComponent(part.InstanceId, part.DefinitionId, part.Enabled, part.ModeId)).ToArray()));
+    }
+
+    [Theory]
+    [InlineData("soul", "construct-power-source.soul-gem")]
+    [InlineData("infernal", "construct-power-source.infernal-engine")]
+    public async Task VerifiedConstructContextualPowerPreservesDistinctSourceMechanics(string kind, string sourceId)
+    {
+        var provider = new ConstructContextualTestAuthority();
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true, dm: true, contextualPowerAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var (construction, current) = ContextualConstruct(catalog, sourceId);
+        var characterId = Guid.NewGuid();
+        const string endpoint = "/api/mechanics/v1/origins/construct/contextual-power/resolve";
+
+        async Task<HttpResponseMessage> Send(long revision = 4, string? requestedKind = null)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { characterId, originRevision = 1, operatingRevision = 2,
+                    contextRevision = revision, rulesetId = catalog.RulesetId,
+                    fingerprint = catalog.Fingerprint, sourceKind = requestedKind ?? kind }));
+            return await fixture.Client.SendAsync(request);
+        }
+        using var missing = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, missing.StatusCode);
+        provider.Power = new(characterId, 1, 2, 4, catalog.RulesetId, catalog.Fingerprint,
+            kind, construction, current,
+            new Dictionary<string, bool> { ["generator"] = kind == "soul" },
+            new Dictionary<string, bool> { ["generator"] = kind == "soul" });
+        using var stale = await Send(revision: 3);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, stale.StatusCode);
+        using var wrong = await Send(requestedKind: kind == "soul" ? "infernal" : "soul");
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, wrong.StatusCode);
+        using var resolved = await Send();
+        Assert.Equal(HttpStatusCode.OK, resolved.StatusCode);
+        var body = await resolved.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.False(body.GetProperty("committed").GetBoolean());
+        var projection = body.GetProperty(kind);
+        Assert.True(projection.GetProperty("canOperate").GetBoolean());
+        var source = Assert.Single(projection.GetProperty("sources").EnumerateArray());
+        Assert.Equal(kind == "soul" ? 12 : 8, source.GetProperty("availablePowerOutput").GetInt32());
+        if (kind == "soul")
+            Assert.True(source.GetProperty("overdriveActive").GetBoolean());
+        else
+        {
+            Assert.True(source.GetProperty("requiresInstabilityAdjudication").GetBoolean());
+            Assert.False(source.GetProperty("empowermentActive").GetBoolean());
+        }
+    }
+
+    [Fact]
+    public async Task VerifiedConstructSoulCustodyPlansCaptureAndResolutionWithoutDurableWrites()
+    {
+        var provider = new ConstructContextualTestAuthority();
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true, dm: true, soulCustodyAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var (construction, _) = ContextualConstruct(catalog, "construct-power-source.soul-gem");
+        var characterId = Guid.NewGuid();
+        const string endpoint = "/api/mechanics/v1/origins/construct/soul/custody/plan";
+
+        async Task<HttpResponseMessage> Send(string eventId = "death-1", long revision = 4)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { characterId, originRevision = 1,
+                    custodyRevision = revision, rulesetId = catalog.RulesetId,
+                    fingerprint = catalog.Fingerprint, eventId }));
+            return await fixture.Client.SendAsync(request);
+        }
+        using var missing = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, missing.StatusCode);
+        provider.Custody = new(characterId, 1, 4, catalog.RulesetId, catalog.Fingerprint,
+            construction, [], new("death-1", "soul-1", "generator",
+                NativeConstructSoulDisposition.Imprisoned,
+                new Dictionary<string, int> { ["generator"] = 10 }, true));
+        using var stale = await Send(revision: 3);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, stale.StatusCode);
+        using var wrongEvent = await Send("forged-event");
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, wrongEvent.StatusCode);
+        using var captured = await Send();
+        Assert.Equal(HttpStatusCode.OK, captured.StatusCode);
+        var body = await captured.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.False(body.GetProperty("committed").GetBoolean());
+        Assert.Empty(provider.Custody.Records);
+        var next = body.GetProperty("plan").GetProperty("nextRecords")
+            .Deserialize<NativeConstructSoulCustodyRecord[]>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+        Assert.Equal(NativeConstructSoulDisposition.Imprisoned, Assert.Single(next).Disposition);
+        provider.Custody = provider.Custody with { Records = next, CustodyRevision = 5 };
+        using var duplicate = await Send(revision: 5);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, duplicate.StatusCode);
+        provider.Custody = provider.Custody with
+        {
+            Event = new("rescue-1", "soul-1", "wrong-core", NativeConstructSoulDisposition.Extracted)
+        };
+        using var wrongCore = await Send("rescue-1", 5);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, wrongCore.StatusCode);
+        provider.Custody = provider.Custody with
+        {
+            Event = provider.Custody.Event with { CoreInstanceId = "generator" }
+        };
+        using var extracted = await Send("rescue-1", 5);
+        Assert.Equal(HttpStatusCode.OK, extracted.StatusCode);
+        var extractedBody = await extracted.Content.ReadFromJsonAsync<JsonElement>();
+        var released = extractedBody.GetProperty("plan").GetProperty("nextRecords")
+            .Deserialize<NativeConstructSoulCustodyRecord[]>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+        Assert.Equal(NativeConstructSoulDisposition.Extracted, Assert.Single(released).Disposition);
+        Assert.Equal(NativeConstructSoulDisposition.Imprisoned, Assert.Single(provider.Custody.Records).Disposition);
     }
 
     [Fact]

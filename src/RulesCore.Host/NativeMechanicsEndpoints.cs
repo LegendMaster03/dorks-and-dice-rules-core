@@ -60,6 +60,8 @@ public static class NativeMechanicsEndpoints
             group.MapVerifiedPermanentOriginReconstruction();
             group.MapVerifiedConstructOperatingPlan();
             group.MapVerifiedConstructSolarIntervalPlan();
+            group.MapVerifiedConstructContextualPower();
+            group.MapVerifiedConstructSoulCustodyPlan();
             group.MapVerifiedLifeExperiencePlan();
             group.MapVerifiedScopedSkillCheck();
             group.MapVerifiedOriginDirectChoices();
@@ -94,6 +96,8 @@ public static class NativeMechanicsEndpoints
                     constructOriginPreview = "stateless-native-assembly",
                     verifiedConstructOperatingPlanning = privateTunnel ? "unavailable" : "host-authority-required",
                     verifiedConstructSolarIntervalPlanning = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedConstructContextualPower = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedConstructSoulCustodyPlanning = privateTunnel ? "unavailable" : "host-authority-required",
                     originMethodDiscovery = true, originPresetDiscovery = true,
                     originChoiceCatalogDiscovery = true,
                     verifiedDirectOriginChoices = privateTunnel ? "unavailable" : "host-authority-required",
