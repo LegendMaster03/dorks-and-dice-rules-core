@@ -11,7 +11,12 @@ namespace RulesCore.Host;
 /// supply previously aggregated training or reinclude Life Experience grants
 /// in the other source lists. Optional equipment sources and replacement
 /// selections must also be independently authenticated, including Class entry
-/// mode and source ownership. The request contains no grant assertions.
+/// mode and source ownership. Optional Origin construction evidence must be
+/// the independently revalidated current-catalog underlying construction at
+/// the requested Origin revision, not a historical or active-form snapshot.
+/// Primary HitPointGains must contain ordinary class gains only, without any
+/// inherent Origin maximum-HP bonus already included. The request contains no
+/// grant assertions.
 /// </summary>
 public interface INativeCharacterHostTrainingAuthorityProvider
 {
@@ -29,7 +34,8 @@ public sealed record VerifiedCharacterTrainingAuthorization(
     IReadOnlyDictionary<string, string> CompetencyAlternatives,
     NativeCompetencyDuplicateProficiencyPolicy DuplicatePolicy,
     NativeEquipmentQualificationRequest? OtherEquipmentSources = null,
-    IReadOnlyList<NativeLifeExperienceEquipmentReplacement>? EquipmentAlternatives = null);
+    IReadOnlyList<NativeLifeExperienceEquipmentReplacement>? EquipmentAlternatives = null,
+    NativeOriginConstructionResult? VerifiedOrigin = null);
 
 public static class NativeCharacterTrainingEndpoints
 {
@@ -74,16 +80,49 @@ public static class NativeCharacterTrainingEndpoints
             var equipment = verified.OtherEquipmentSources is null ? null :
                 NativeCharacterEquipmentComposer.Compose(catalog, earned.Equipment,
                     verified.OtherEquipmentSources, verified.EquipmentAlternatives ?? []);
+            // Derive all supported progression views from the same native
+            // character projection. No client-supplied level, separate rank
+            // spending, HP mutation or resource initialization is implied.
+            var progression = verified.VerifiedOrigin is { } origin && result.Projection is { } character
+                ? ProjectOriginProgression(catalog, origin, character) : null;
+
             return Results.Json(new
             {
                 contractVersion = 1, rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
                 characterId = request.CharacterId, originRevision = request.OriginRevision,
                 characterRevision = request.CharacterRevision, committed = false,
                 supportedScope = "verified-primary-training", effectiveMechanicsReady = false,
-                result, equipment
+                result, equipment, originProgression = progression,
+                // Source-only entitlements/intents, not a second combined
+                // training set and not committed inventory or languages.
+                lifeExperiences = earned
             }, statusCode: result.Status == "resolved" &&
                 (equipment is null || equipment.Status == "resolved") ? 200 : 422);
         });
+    }
+
+    private static object ProjectOriginProgression(NativeCatalogSnapshot catalog,
+        NativeOriginConstructionResult origin, NativeCharacterProjection character)
+    {
+        int? level = character.Values.TryGetValue("advancement.total-level", out var total) &&
+            total.Status == "resolved" && total.Value is > 0 ? total.Value : null;
+        // Keep these views distinct. Unsupported/suppressed characteristics
+        // must not be interpreted as a zero or an active-form entitlement.
+        var mixed = origin.EvaluatedProposal.Intent == NativeOriginIntent.Mixed;
+        return new
+        {
+            status = "partial",
+            characterLevel = level,
+            hitPoints = NativeOriginHitPointProgressionProjector.Combine(catalog, origin, character),
+            skillRanks = NativeOriginSkillRankEntitlementProjector.ForCharacter(catalog, origin, character),
+            innateSpells = NativeOriginInnateSpellProgressionProjector.ForCharacter(catalog, origin, character),
+            darkvision = mixed
+                ? NativeOriginDarkvisionProjector.ProjectApprovedMixed(catalog, origin, level)
+                : NativeOriginDarkvisionProjector.Project(catalog, origin, level),
+            // These are primary-form views only. Do not convert a resolved
+            // entitlement schedule into a spendable balance or live condition.
+            effectiveMechanicsReady = false
+        };
     }
 
     private static IResult Error(int status, string code) => Results.Json(new { error = code }, statusCode: status);

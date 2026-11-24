@@ -2609,6 +2609,39 @@ public sealed class NativeMechanicsApiTests
         Assert.True(disguise.GetProperty("proficient").GetBoolean());
         Assert.Equal(1, disguise.GetProperty("ranks").GetInt32());
         Assert.False(json.RootElement.GetProperty("committed").GetBoolean());
+        Assert.Equal(JsonValueKind.Null, json.RootElement.GetProperty("originProgression").ValueKind);
+        Assert.Contains(json.RootElement.GetProperty("lifeExperiences").GetProperty("grants").EnumerateArray(),
+            grant => grant.GetProperty("targetId").GetString() == "elvish");
+
+        // The same verified primary request can derive level-dependent
+        // Origin mechanics without trusting a separately submitted level.
+        var dwarf = new NativeOriginConstructionEngine(catalog).Evaluate(new(
+            new NativeOriginProposal("verified-dwarf-progression", NativeOriginIntent.Direct,
+                new("rule.creature-origination", "biological"), [], [], [], SelectedSpeciesId: "species.dwarf")));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, dwarf.Status);
+        provider.Stored = provider.Stored with
+        {
+            VerifiedOrigin = dwarf,
+            Primary = primary with
+            {
+                Advancements = [new("class.rogue", 5, "class-1")],
+                HitPointGains = Enumerable.Range(1, 5).ToDictionary(i => "level-" + i, _ => 6)
+            }
+        };
+        using var progressed = await Send();
+        raw = await progressed.Content.ReadAsStringAsync();
+        Assert.True(progressed.StatusCode == HttpStatusCode.OK, raw);
+        using var progressedJson = JsonDocument.Parse(raw);
+        var progression = progressedJson.RootElement.GetProperty("originProgression");
+        Assert.Equal(5, progression.GetProperty("characterLevel").GetInt32());
+        var hp = progression.GetProperty("hitPoints");
+        Assert.Equal("resolved", hp.GetProperty("status").GetString());
+        Assert.Equal(5, hp.GetProperty("maximumHitPointBonus").GetInt32());
+        var baselineHp = progressedJson.RootElement.GetProperty("result").GetProperty("projection")
+            .GetProperty("values").GetProperty("hit-points.maximum").GetProperty("value").GetInt32();
+        Assert.Equal(baselineHp + 5, hp.GetProperty("combinedMaximumHitPoints").GetInt32());
+        Assert.False(progression.GetProperty("effectiveMechanicsReady").GetBoolean());
+
         provider.Stored = provider.Stored with
         {
             SkillAlternatives = new Dictionary<string, string> { ["class-skill-1"] = "skill.survival" }
