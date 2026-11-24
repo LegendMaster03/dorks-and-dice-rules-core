@@ -216,7 +216,12 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
             "upbringing.gnome.rock",
             report["nearestSuggestedUpbringing"]["upbringingId"],
         )
-        self.assertTrue(report["templateComplete"])
+        self.assertIn("ancestry.gnome.rock#trait:natural-climber", traits)
+        self.assertIn("ancestry.gnome.rock#trait:natural-trickster", traits)
+        self.assertFalse(report["templateComplete"])
+        self.assertTrue(any(x["kind"] == "dependent-trait-choices-not-selected"
+                            and x["identity"] == "ancestry.gnome.rock#trait:natural-trickster"
+                            for x in report["unresolvedOriginDecisions"]))
 
     def test_repeated_same_value_intrinsic_generates_one_selection(self):
         altered = copy.deepcopy(self.catalog)

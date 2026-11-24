@@ -51,10 +51,10 @@ public sealed class NativeOriginFirstPartyBiologicalPricingTests
             .Where(x => x.StartsWith("trait:", StringComparison.Ordinal))
             .Select(x => x["trait:".Length..])
             .OrderBy(x => x, StringComparer.Ordinal).ToArray();
-        Assert.Equal(96, genes.Length);
+        Assert.Equal(97, genes.Length);
         Assert.Equal(genes, covered);
-        Assert.Equal(101, prices.Count); // 96 genes + 5 intrinsic slots.
-        Assert.Equal("biological-pricing-20261124-v13",
+        Assert.Equal(102, prices.Count); // 97 genes + 5 intrinsic slots.
+        Assert.Equal("biological-pricing-20261124-v14",
             NativeOriginFirstPartyBiologicalPricing.Revision);
         Assert.Equal(18, NativeOriginFirstPartyBiologicalPricing.TrialAllowance);
     }
@@ -103,6 +103,10 @@ public sealed class NativeOriginFirstPartyBiologicalPricingTests
         Assert.Equal(4, byMember["trait:trait.orcish-fury"].Load);
         Assert.Equal(4, byMember["trait:trait.dwarven-fortitude"].Load);
         Assert.Equal(4, byMember["trait:trait.fade-away"].Load);
+        Assert.Equal(2, byMember["trait:trait.natural-trickster"].Load);
+        var tremor = byMember["trait:trait.stonebound-tremorsense"];
+        Assert.False(tremor.AllowUnmatchedConfigurationFallback);
+        Assert.Equal(new[] { 3, 4 }, tremor.Configurations!.Select(x => x.Load).ToArray());
         Assert.Equal(3, byMember["trait:trait.level-based-vitality"].Load);
         Assert.Equal(3, byMember["trait:trait.bountiful-luck"].Load);
         Assert.Equal(3, byMember["trait:trait.natural-camouflage"].Load);

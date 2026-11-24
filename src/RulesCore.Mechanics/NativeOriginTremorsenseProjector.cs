@@ -16,7 +16,8 @@ public static class NativeOriginTremorsenseProjector
         IReadOnlyList<string> SourceCandidateIds, int RangeFeet, string Activation,
         string? RequiresContact, IReadOnlyList<string> RequiresSharedContact,
         int? DurationMinutes, string? UsesFormula, string? Recharge,
-        string? ResourcePoolOwnerGrantId, JsonElement CompleteEffect);
+        string? ResourcePoolOwnerGrantId, JsonElement CompleteEffect,
+        IReadOnlyList<string>? ContactMaterials = null);
 
     public sealed record View(
         string Status, IReadOnlyList<GrantedSense> Senses,
@@ -78,15 +79,54 @@ public static class NativeOriginTremorsenseProjector
                 return Unresolved("tremorsense-grant-not-verified:" + (id ?? grant.Id));
 
             var canonical = definition!.Definition.GetProperty("trait");
-            // Neither authored Tremorsense mode has configurable bindings or
-            // shared-use dependencies. A saved extra parameter/owner needs a
-            // separate native rule review, not a silently presumed pool.
-            if (grant.Parameters is { Count: > 0 } ||
-                grant.ResourceOwners is { Count: > 0 })
+            // The selected source supplies the entire range/material configuration.
+            // Do not substitute an arbitrary saved parameter or infer a use pool.
+            if (grant.ResourceOwners is { Count: > 0 })
                 return Unresolved("tremorsense-parameter-or-resource-owner-unrecognized:" + id);
-            if (!canonical.TryGetProperty("rangeFeet", out var distance) ||
-                distance.ValueKind != JsonValueKind.Number ||
-                !distance.TryGetInt32(out var feet) || feet is <= 0 or > 1_000_000 ||
+            var configured = canonical.TryGetProperty("originBindings", out var bindings);
+            var contactMaterials = Array.Empty<string>();
+            int feet;
+            if (configured)
+            {
+                if (bindings.ValueKind != JsonValueKind.Object ||
+                    bindings.EnumerateObject().Count() != 1 ||
+                    !bindings.TryGetProperty("subTrait", out var binding) ||
+                    binding.ValueKind != JsonValueKind.Object ||
+                    !binding.TryGetProperty("lookup", out var lookup) ||
+                    lookup.ValueKind != JsonValueKind.String || lookup.GetString() != "nearest" ||
+                    !binding.TryGetProperty("sourceField", out var field) ||
+                    field.ValueKind != JsonValueKind.String ||
+                    field.GetString() != "tremorsenseSubTrait" ||
+                    grant.Parameters is not { Count: 1 } ||
+                    !grant.Parameters.TryGetValue("subTrait", out var subTrait) ||
+                    subTrait.ValueKind != JsonValueKind.Object ||
+                    subTrait.EnumerateObject().Count() != 2 ||
+                    !source.Definition.TryGetProperty("tremorsenseSubTrait", out var sourceValue) ||
+                    !JsonElement.DeepEquals(sourceValue, subTrait) ||
+                    !grant.SourceCandidateIds.All(candidateId =>
+                        result.EvaluatedProposal.Candidates.Any(candidate =>
+                            candidate.Id == candidateId &&
+                            candidate.OfferedParameters?.TryGetValue("subTrait", out var offered) == true &&
+                            JsonElement.DeepEquals(offered, subTrait))) ||
+                    !subTrait.TryGetProperty("rangeFeet", out var range) ||
+                    range.ValueKind != JsonValueKind.Number || !range.TryGetInt32(out feet) ||
+                    !subTrait.TryGetProperty("contactMaterials", out var contacts) ||
+                    contacts.ValueKind != JsonValueKind.Array || contacts.GetArrayLength() == 0 ||
+                    contacts.EnumerateArray().Any(x => x.ValueKind != JsonValueKind.String ||
+                        string.IsNullOrWhiteSpace(x.GetString())) ||
+                    canonical.TryGetProperty("rangeFeet", out _) ||
+                    canonical.TryGetProperty("requiresContact", out _))
+                    return Unresolved("tremorsense-source-configuration-unverified:" + id);
+                contactMaterials = contacts.EnumerateArray().Select(x => x.GetString()!).ToArray();
+                if (contactMaterials.Distinct(StringComparer.Ordinal).Count() != contactMaterials.Length)
+                    return Unresolved("tremorsense-source-configuration-unverified:" + id);
+            }
+            else if (grant.Parameters is { Count: > 0 } ||
+                !canonical.TryGetProperty("rangeFeet", out var distance) ||
+                distance.ValueKind != JsonValueKind.Number || !distance.TryGetInt32(out feet))
+                return Unresolved("tremorsense-grammar-unrecognized:" + id);
+
+            if (feet is <= 0 or > 1_000_000 ||
                 !canonical.TryGetProperty("activation", out var activation) ||
                 activation.ValueKind != JsonValueKind.String)
                 return Unresolved("tremorsense-grammar-unrecognized:" + id);
@@ -100,7 +140,8 @@ public static class NativeOriginTremorsenseProjector
 
             if (mode == "passive")
             {
-                if (!canonical.TryGetProperty("requiresSharedContact", out var materials) ||
+                if (configured ||
+                    !canonical.TryGetProperty("requiresSharedContact", out var materials) ||
                     materials.ValueKind != JsonValueKind.Array ||
                     materials.GetArrayLength() == 0 ||
                     materials.EnumerateArray().Any(x =>
@@ -114,10 +155,15 @@ public static class NativeOriginTremorsenseProjector
             }
             else if (mode == "bonus-action")
             {
-                if (!canonical.TryGetProperty("requiresContact", out var surface) ||
-                    surface.ValueKind != JsonValueKind.String ||
-                    string.IsNullOrWhiteSpace(surface.GetString()) ||
-                    !canonical.TryGetProperty("durationMinutes", out var time) ||
+                if (!configured)
+                {
+                    if (!canonical.TryGetProperty("requiresContact", out var surface) ||
+                        surface.ValueKind != JsonValueKind.String ||
+                        string.IsNullOrWhiteSpace(surface.GetString()))
+                        return Unresolved("tremorsense-activated-grammar-unrecognized:" + id);
+                    contactMaterials = [surface.GetString()!];
+                }
+                if (!canonical.TryGetProperty("durationMinutes", out var time) ||
                     time.ValueKind != JsonValueKind.Number ||
                     !time.TryGetInt32(out var minutes) ||
                     minutes is <= 0 or > 1_000_000 ||
@@ -132,7 +178,10 @@ public static class NativeOriginTremorsenseProjector
                     canonical.TryGetProperty("requiresSharedContact", out _))
                     return Unresolved("tremorsense-activated-grammar-unrecognized:" + id);
 
-                contact = surface.GetString();
+                // Keep the old single-contact display field and expose the
+                // machine-readable alternatives separately. Either material
+                // suffices; they are not cumulative requirements.
+                contact = string.Join("-or-", contactMaterials);
                 duration = minutes;
                 usesFormula = amount.GetString();
                 recharge = rest.GetString();
@@ -144,7 +193,7 @@ public static class NativeOriginTremorsenseProjector
             senses.Add(new(grant.Id, id, occurrence.Source.Id,
                 occurrence.OccurrencePath, grant.SourceCandidateIds.ToArray(),
                 feet, mode!, contact, shared, duration, usesFormula, recharge,
-                usesFormula is null ? null : grant.Id, canonical.Clone()));
+                usesFormula is null ? null : grant.Id, canonical.Clone(), contactMaterials));
         }
 
         // Distinct native definitions can coexist only when construction has

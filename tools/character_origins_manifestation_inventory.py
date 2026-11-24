@@ -43,6 +43,7 @@ CONTEXT_ONLY_FIELDS = {
     "breathWeaponArea": "trait-parameter-source",
     "environmentSubTrait": "trait-parameter-source",
     "animalCommunicationSubTrait": "trait-parameter-source",
+    "tremorsenseSubTrait": "trait-parameter-source",
     "spellcastingAbilityChoice": "dependent-choice",
     "ancestrySelection": "source-selection-control",
 }

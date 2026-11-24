@@ -42,8 +42,12 @@ class Pillar2RockGnomeReconstructionTests(unittest.TestCase):
                     if trait["id"] == "stonebound-tremorsense")
         self.assertEqual(dwarf, rock)
         self.assertEqual("bonus-action", rock["activation"])
-        self.assertEqual("stone", rock["requiresContact"])
-        self.assertEqual(60, rock["rangeFeet"])
+        self.assertEqual({"lookup": "nearest", "sourceField": "tremorsenseSubTrait"},
+                         rock["originBindings"]["subTrait"])
+        self.assertEqual({"rangeFeet": 60, "contactMaterials": ["stone"]},
+                         self.catalog["species.dwarf"]["tremorsenseSubTrait"])
+        self.assertEqual({"rangeFeet": 60, "contactMaterials": ["earth", "stone"]},
+                         self.catalog[TARGET]["tremorsenseSubTrait"])
         self.assertEqual(10, rock["durationMinutes"])
 
     def test_parent_species_does_not_invent_ancestry_sense(self):
@@ -55,7 +59,11 @@ class Pillar2RockGnomeReconstructionTests(unittest.TestCase):
 
     def test_complete_native_source_can_reconstruct_its_own_traits(self):
         report = self.compare(contributor("rock", TARGET))
-        self.assertTrue(report["canExactlyReconstructAllModeledTargetCharacteristics"])
+        self.assertEqual(report["totalModeledTargetCharacteristics"],
+                         report["exactCandidateMatches"])
+        # Explicit spellcasting choices remain pending, not inferred.
+        self.assertTrue(any(x["field"] == "spellcastingAbilityChoice"
+                            for x in report["targetDeferredEvidence"]))
 
     def test_comparison_preserves_source_provenance(self):
         report = self.compare(contributor("gnome", "species.gnome"),

@@ -56,9 +56,13 @@ class Pillar2NarrativeHeritageTests(unittest.TestCase):
         comparison = self.compare("species.gnome", "species.dwarf")
         annotated = self.annotate(comparison)
         self.assertEqual(comparison, annotated["reconstruction"])
-        self.assertEqual(5, annotated["reconstruction"]["exactCandidateMatches"])
-        self.assertEqual(6, annotated["reconstruction"][
-            "totalModeledTargetCharacteristics"])
+        matches = [row for row in comparison["comparison"]
+                   if row["coverage"] == "exact-candidate"]
+        self.assertTrue(matches)
+        self.assertFalse(any(row["identity"].startswith("ancestry.gnome.rock#")
+                             for row in matches))
+        self.assertLess(comparison["exactCandidateMatches"],
+                        comparison["totalModeledTargetCharacteristics"])
         self.assertFalse(annotated["annotationsAffectEligibility"])
         self.assertEqual(1, len(annotated["narrativeHypotheses"]))
         hypothesis = annotated["narrativeHypotheses"][0]
@@ -74,13 +78,16 @@ class Pillar2NarrativeHeritageTests(unittest.TestCase):
 
     def test_no_hypothesis_annotation_for_gnome_without_dwarf(self):
         report = self.compare("species.gnome")
-        self.assertEqual(5, report["exactCandidateMatches"])
+        self.assertEqual(self.compare("species.gnome", "species.dwarf")["exactCandidateMatches"],
+                         report["exactCandidateMatches"])
         self.assertEqual([], self.annotate(report)["narrativeHypotheses"])
 
     def test_direct_rock_source_remains_complete_without_hypothesis(self):
         report = self.compare("ancestry.gnome.rock")
-        self.assertEqual(6, report["exactCandidateMatches"])
-        self.assertTrue(report["canExactlyReconstructAllModeledTargetCharacteristics"])
+        self.assertEqual(report["totalModeledTargetCharacteristics"],
+                         report["exactCandidateMatches"])
+        self.assertTrue(any(x["field"] == "spellcastingAbilityChoice"
+                            for x in report["targetDeferredEvidence"]))
         self.assertEqual([], self.annotate(report)["narrativeHypotheses"])
 
     def test_unoffered_source_occurrence_requires_eligibility(self):

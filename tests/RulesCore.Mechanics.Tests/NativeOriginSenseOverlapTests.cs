@@ -48,6 +48,10 @@ public sealed class NativeOriginSenseOverlapTests
             rock.Identity.Occurrence.Source.Id);
         Assert.Equal(dwarf.OfferedValue!.Value.GetRawText(),
             rock.OfferedValue!.Value.GetRawText());
+        Assert.Equal(new[] { "stone" }, dwarf.OfferedParameters!["subTrait"]
+            .GetProperty("contactMaterials").EnumerateArray().Select(x => x.GetString()).ToArray());
+        Assert.Equal(new[] { "earth", "stone" }, rock.OfferedParameters!["subTrait"]
+            .GetProperty("contactMaterials").EnumerateArray().Select(x => x.GetString()).ToArray());
     }
 
     [Fact]

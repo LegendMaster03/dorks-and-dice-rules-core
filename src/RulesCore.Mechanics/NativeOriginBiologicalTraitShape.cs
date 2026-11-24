@@ -226,7 +226,7 @@ internal static class NativeOriginBiologicalTraitShape
         "allowedMaterials" or "canBreathe" or "disallowedMaterials" or "doesNotChange" or
             "naturalWeapons" or
             "doesNotGrant" or "ignoresDifficultTerrainFrom" or "options" or
-            "requiresSharedContact" or "standingJumpAsRunning" or "terrain" => value is
+            "requiresSharedContact" or "spellChoices" or "standingJumpAsRunning" or "terrain" => value is
             JsonValueKind.Array,
         "additionalSavingThrow" or "atWill" or "canHover" or
             "doesNotGrantConditionImmunity" or "doesNotNegateOtherHazards" or

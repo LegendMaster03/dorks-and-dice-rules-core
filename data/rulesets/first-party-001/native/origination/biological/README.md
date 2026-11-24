@@ -34,7 +34,7 @@ historical ancestors.
 
 The `inheritanceMethods: ["biological"]` six-gene proof of concept was
 retired earlier. The loader still uses the universal `origin-trait` kind;
-there is no second gene definition engine. The current catalog contains **96**
+there is no second gene definition engine. The current catalog contains **97**
 active canonical biological gene IDs. The earlier 85-gene count was a historical
 normalization snapshot before further consolidation and additions. Two of the
 current genes represent the November 22 approved ordinary Dragonborn Natural

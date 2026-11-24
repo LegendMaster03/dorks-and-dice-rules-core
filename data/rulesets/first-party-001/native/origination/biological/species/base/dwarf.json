@@ -29,5 +29,11 @@
     "Approved trial repricing: Level-Based Vitality increases from 1 to 3 points without changing +1 maximum HP per character level. Dwarven Fortitude costs 4 points. Base Dwarf is 17/18; Hill Dwarf, including Stability, is 18/18. These are provisional playtest values.",
     "Needs review; pending approval — Squat Nimbleness remains a separately considered historical feat; no additional movement or grapple mechanic is granted."
   ],
-  "defaultUpbringing": "upbringing.dwarf.general"
+  "defaultUpbringing": "upbringing.dwarf.general",
+  "tremorsenseSubTrait": {
+    "rangeFeet": 60,
+    "contactMaterials": [
+      "stone"
+    ]
+  }
 }

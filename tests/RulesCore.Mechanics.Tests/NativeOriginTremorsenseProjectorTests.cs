@@ -6,8 +6,8 @@ using Xunit;
 namespace RulesCore.Mechanics.Tests;
 
 /// <summary>
-/// The same canonical activated, stone-contact Tremorsense is used by Dwarves
-/// and Rock Gnomes; source occurrences remain distinct hereditary evidence.
+/// One canonical activated Tremorsense gene has different verified contact
+/// configurations for Dwarves and Rock Gnomes.
 /// </summary>
 public sealed class NativeOriginTremorsenseProjectorTests
 {
@@ -27,7 +27,9 @@ public sealed class NativeOriginTremorsenseProjectorTests
     }
 
     private static NativeOriginConstructionResult Direct(string source) =>
-        new NativeOriginConstructionEngine(Catalog()).Evaluate(
+        source == "ancestry.gnome.rock"
+            ? NativeOriginGnomeFadeAwayPricingTests.Direct(Catalog(), "rock")
+            : new NativeOriginConstructionEngine(Catalog()).Evaluate(
             new(new NativeOriginProposal("direct-" + source,
                 NativeOriginIntent.Direct,
                 new("rule.creature-origination", "biological"),
@@ -39,7 +41,7 @@ public sealed class NativeOriginTremorsenseProjectorTests
     [Theory]
     [InlineData("species.dwarf")]
     [InlineData("ancestry.gnome.rock")]
-    public void BothNativeSourcesGrantTheSameActivatedStoneContactSense(string source)
+    public void BothNativeSourcesGrantTheirConfiguredActivatedSense(string source)
     {
         var catalog = Catalog();
         var completed = Direct(source);
@@ -51,7 +53,10 @@ public sealed class NativeOriginTremorsenseProjectorTests
         Assert.Equal(source, sense.SourceId);
         Assert.Equal(60, sense.RangeFeet);
         Assert.Equal("bonus-action", sense.Activation);
-        Assert.Equal("stone", sense.RequiresContact);
+        var rock = source == "ancestry.gnome.rock";
+        Assert.Equal(rock ? "earth-or-stone" : "stone", sense.RequiresContact);
+        Assert.Equal(rock ? new[] { "earth", "stone" } : new[] { "stone" },
+            sense.ContactMaterials);
         Assert.Empty(sense.RequiresSharedContact);
         Assert.Equal(10, sense.DurationMinutes);
         Assert.Equal("proficiency-bonus", sense.UsesFormula);
@@ -115,8 +120,7 @@ public sealed class NativeOriginTremorsenseProjectorTests
                 }
             }));
         Assert.Equal("unresolved", authority.Status);
-        // The authored modes have no linked-resource or configurable
-        // parameter grammar; such claims must not become usable charges.
+        // Unauthored resource owners and parameter overrides are not valid.
         var fabricatedPool = NativeOriginTremorsenseProjector.Project(catalog,
             Tampered(grant with
             {
@@ -135,6 +139,16 @@ public sealed class NativeOriginTremorsenseProjectorTests
                 }
             }));
         Assert.Equal("unresolved", fabricatedParameter.Status);
+        var wrongMaterial = NativeOriginTremorsenseProjector.Project(catalog,
+            Tampered(grant with
+            {
+                Parameters = new Dictionary<string, JsonElement>
+                {
+                    ["subTrait"] = JsonSerializer.SerializeToElement(
+                        new { rangeFeet = 60, contactMaterials = new[] { "earth", "stone" } })
+                }
+            }));
+        Assert.Equal("unresolved", wrongMaterial.Status);
         Assert.Equal("unresolved", NativeOriginTremorsenseProjector.Project(
             catalog, completed with
             {

@@ -10,7 +10,7 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public static class NativeOriginFirstPartyBiologicalPricing
 {
-    public const string Revision = "biological-pricing-20261124-v13";
+    public const string Revision = "biological-pricing-20261124-v14";
     public const int TrialAllowance = 18;
 
     /// <summary>
@@ -58,6 +58,17 @@ public static class NativeOriginFirstPartyBiologicalPricing
                     // price, never a separate positive charge or refund.
                     new("120-feet-with-sunlight-drawback", 4, 10, [
                         EqualsValue("intrinsic:darkvisionFeet", "value", 120)
+                    ])
+                ]),
+            new("configured-tremorsense", 3, ["trait:trait.stonebound-tremorsense"],
+                Configurations: [
+                    new("stone-60-feet", 3, 10, [
+                        EqualsValue("trait:trait.stonebound-tremorsense", "parameters/subTrait/rangeFeet", 60),
+                        EqualsValue("trait:trait.stonebound-tremorsense", "parameters/subTrait/contactMaterials", new[] { "stone" })
+                    ]),
+                    new("earth-and-stone-60-feet", 4, 10, [
+                        EqualsValue("trait:trait.stonebound-tremorsense", "parameters/subTrait/rangeFeet", 60),
+                        EqualsValue("trait:trait.stonebound-tremorsense", "parameters/subTrait/contactMaterials", new[] { "earth", "stone" })
                     ])
                 ]),
             new("derived-sunlight-sensitivity", 0,
@@ -197,7 +208,6 @@ public static class NativeOriginFirstPartyBiologicalPricing
         ("trait.stability", 1),
         ("trait.stone-strike", 1),
         ("trait.stone-throw", 3),
-        ("trait.stonebound-tremorsense", 3),
         ("trait.stones-endurance", 4),
         ("trait.storm-strike", 2),
         ("trait.storms-thunder", 2),
@@ -230,6 +240,7 @@ public static class NativeOriginFirstPartyBiologicalPricing
         // High Elf Fey Teleportation: one 2nd-level free spell per Short or Long Rest.
         // Price the enhanced COMPLETE Misty Step gene at 5, not a second spell grant.
         ("trait.misty-step", 2, 2),
+        ("trait.natural-trickster", 1, 0),
         ("trait.otherworldly-presence", 0, 0),
         ("trait.pass-without-trace", 2, 0),
         ("trait.poison-spray", 0, 0),

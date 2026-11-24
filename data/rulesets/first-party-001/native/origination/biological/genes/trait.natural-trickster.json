@@ -1,0 +1,25 @@
+{
+  "id": "trait.natural-trickster",
+  "name": "Natural Trickster",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "natural-trickster",
+    "description": "Choose one of Disguise Self, Silent Image, or Ventriloquism as an innate spell at character creation. Cast the chosen first-level illusion once without a spell slot per Long Rest. This trait does not itself grant spell slots or slot casting.",
+    "spellChoices": [
+      "disguise-self",
+      "silent-image",
+      "ventriloquism"
+    ],
+    "level": 1,
+    "freeUses": 1,
+    "recharge": "long-rest",
+    "slotCasting": false,
+    "originBindings": {
+      "spellcastingAbility": {
+        "lookup": "manifested-intrinsic",
+        "intrinsicSlot": "spellcastingAbility",
+        "scope": "source"
+      }
+    }
+  }
+}

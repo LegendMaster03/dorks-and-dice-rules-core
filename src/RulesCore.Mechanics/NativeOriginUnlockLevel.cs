@@ -7,7 +7,8 @@ internal static class NativeOriginUnlockLevel
     public static int? Read(JsonElement trait)
     {
         var required = ReadField("requiredCharacterLevel");
-        if (!trait.TryGetProperty("spell", out _) && !trait.TryGetProperty("spellList", out _))
+        if (!trait.TryGetProperty("spell", out _) && !trait.TryGetProperty("spellList", out _) &&
+            !trait.TryGetProperty("spellChoices", out _))
             return required;
 
         var spellLevel = ReadField("level");

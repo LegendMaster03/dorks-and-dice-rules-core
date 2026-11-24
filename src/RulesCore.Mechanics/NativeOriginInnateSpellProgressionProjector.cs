@@ -72,10 +72,12 @@ public static class NativeOriginInnateSpellProgressionProjector
                 definition.Definition.TryGetProperty("trait", out var canonical) &&
                 canonical.ValueKind == JsonValueKind.Object &&
                 (canonical.TryGetProperty("spell", out _) ||
-                 canonical.TryGetProperty("spellList", out _));
+                 canonical.TryGetProperty("spellList", out _) ||
+                 canonical.TryGetProperty("spellChoices", out _));
             var hasEffective = grant.EffectiveValue is { ValueKind: JsonValueKind.Object } value &&
                 (value.TryGetProperty("spell", out _) ||
-                 value.TryGetProperty("spellList", out _));
+                 value.TryGetProperty("spellList", out _) ||
+                 value.TryGetProperty("spellChoices", out _));
             if (!hasCanonical && !hasEffective) continue;
             if (!hasCanonical || id is null ||
                 grant.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
@@ -91,14 +93,24 @@ public static class NativeOriginInnateSpellProgressionProjector
                 continue;
             }
 
-            // A selected open spell-list choice needs a separately validated
-            // selected spell identity and replacement policy before execution.
-            if (!Text(authored, "spell", out var spellId))
+            // Finite authored spell choices are fixed at creation. Open spell
+            // lists retain their separate catalog-eligibility/replacement gate.
+            var fixedSpell = Text(authored, "spell", out var spellId);
+            if (authored.TryGetProperty("spellChoices", out var menu))
+            {
+                if (fixedSpell || authored.TryGetProperty("spellList", out _) ||
+                    !VerifiedFiniteSpellChoice(origin, grant, menu, out spellId))
+                {
+                    reasons.Add("spell-choice-unverified:" + grant.Id);
+                    continue;
+                }
+            }
+            else if (!fixedSpell)
             {
                 reasons.Add("spell-list-projection-deferred:" + grant.Id);
                 continue;
             }
-            if (authored.TryGetProperty("spellList", out _))
+            else if (authored.TryGetProperty("spellList", out _))
             {
                 reasons.Add("spell-definition-ambiguous:" + grant.Id);
                 continue;
@@ -273,6 +285,74 @@ public static class NativeOriginInnateSpellProgressionProjector
             JsonElement.DeepEquals(offered, grant.EffectiveValue!.Value) &&
             origin.EvaluatedProposal.Manifestations.Count(m =>
                 m.CandidateId == candidateId) == 1);
+    }
+
+    private static bool VerifiedFiniteSpellChoice(NativeOriginConstructionResult origin,
+        NativeOriginEffectiveGrant grant, JsonElement menu, out string? spellId)
+    {
+        spellId = null;
+        if (menu.ValueKind != JsonValueKind.Array || menu.GetArrayLength() == 0 ||
+            menu.EnumerateArray().Any(x => x.ValueKind != JsonValueKind.String ||
+                string.IsNullOrWhiteSpace(x.GetString())))
+            return false;
+        var options = menu.EnumerateArray().Select(x => x.GetString()!).ToArray();
+        if (options.Distinct(StringComparer.Ordinal).Count() != options.Length ||
+            grant.ResolvedChoices is not { Count: 1 } choices ||
+            choices[0] is null || choices[0].RequirementId != "spell" ||
+            choices[0].SelectedOptionIds is not { Count: 1 } selected ||
+            !options.Contains(selected[0], StringComparer.Ordinal))
+            return false;
+        var chosen = selected[0];
+        foreach (var candidateId in grant.SourceCandidateIds)
+        {
+            var offeredCandidates = origin.EvaluatedProposal.Candidates
+                .Where(x => x.Id == candidateId).ToArray();
+            var manifestations = origin.EvaluatedProposal.Manifestations
+                .Where(x => x.CandidateId == candidateId).ToArray();
+            if (offeredCandidates.Length != 1 || manifestations.Length != 1)
+                return false;
+            var candidate = offeredCandidates[0];
+            var manifestation = manifestations[0];
+            if (candidate.RequiredChoices is { Count: > 0 } requirements)
+            {
+                if (requirements.Count != 1 || requirements[0] is null ||
+                    requirements[0].Id != "spell" ||
+                    requirements[0].Timing != NativeOriginChoiceTiming.Creation ||
+                    requirements[0].Minimum != 1 || requirements[0].Maximum != 1 ||
+                    requirements[0].FiniteOptions is not { } offered ||
+                    !options.SequenceEqual(offered, StringComparer.Ordinal) ||
+                    !Matches(manifestation.Choices))
+                    return false;
+            }
+            else
+            {
+                // An authenticated manifested parent carries its committed choice;
+                // a descendant must not reopen that parent's spell menu.
+                var parents = origin.EvaluatedProposal.Contributors.Where(x =>
+                    x.Id == candidate.ContributorId &&
+                    x.Source.Kind == NativeOriginSourceKind.ManifestedProfile).ToArray();
+                if (parents.Length != 1 || parents[0].ManifestedProfile is not { } snapshot ||
+                    (manifestation.Choices?.Count ?? 0) != 0)
+                    return false;
+                var parent = parents[0];
+                var matchingGenes = (snapshot.BiologicalGenes ?? []).Where(g =>
+                    candidateId == "nested:" + parent.Id + ":gene:" + g.Id &&
+                    g.Identity == candidate.Identity && Matches(g.ResolvedChoices)).Count();
+                var matchingGrants = snapshot.InherentGrants.Count(g =>
+                    candidateId == "nested:" + parent.Id + ":" + g.Id &&
+                    g.Identity == candidate.Identity && Matches(g.ResolvedChoices));
+                if (matchingGenes + matchingGrants != 1)
+                    return false;
+            }
+        }
+        spellId = chosen;
+        return true;
+
+        bool Matches(IReadOnlyList<NativeOriginChoiceSelection>? evidence) =>
+            evidence is { Count: 1 } && evidence[0] is not null &&
+            evidence[0].RequirementId == "spell" &&
+            evidence[0].SelectedOptionIds is { Count: 1 } selectedEvidence &&
+            selectedEvidence[0] == chosen;
     }
 
     private static bool Text(JsonElement source, string key, out string? value)

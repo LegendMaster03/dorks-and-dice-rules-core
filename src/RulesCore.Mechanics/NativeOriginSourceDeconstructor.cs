@@ -361,6 +361,29 @@ public sealed class NativeOriginSourceDeconstructor(NativeCatalogSnapshot catalo
                         ]).ToArray();
                     }
                     var unresolved = new List<string>();
+                    // A finite spell menu is an inherited, persistent choice. It is
+                    // separate from open spell-list authorization and never permits
+                    // an arbitrary spell or an on-use replacement.
+                    if (trait.TryGetProperty("spellChoices", out var spellChoices))
+                    {
+                        var spells = spellChoices.ValueKind == JsonValueKind.Array
+                            ? spellChoices.EnumerateArray()
+                                .Where(x => x.ValueKind == JsonValueKind.String &&
+                                    !string.IsNullOrWhiteSpace(x.GetString()))
+                                .Select(x => x.GetString()!).ToArray()
+                            : Array.Empty<string>();
+                        if (spells.Length == 0 || spells.Length != spellChoices.GetArrayLength() ||
+                            spells.Distinct(StringComparer.Ordinal).Count() != spells.Length ||
+                            menu is not null || trait.TryGetProperty("spell", out _))
+                            unresolved.Add("Authored finite spell choices must be a nonempty unique list without another spell selection.");
+                        else
+                            choices = (choices ?? []).Concat(
+                            [
+                                new NativeOriginChoiceRequirement("spell", new(source, path),
+                                    NativeOriginChoiceTiming.Creation, 1, 1,
+                                    FiniteOptions: spells, ParameterKey: "spell")
+                            ]).ToArray();
+                    }
                     // A malformed authored count must not become an implicit choice of one.
                     if (trait.TryGetProperty("choiceCount", out var rawCount) &&
                         (rawCount.ValueKind != JsonValueKind.Number ||
