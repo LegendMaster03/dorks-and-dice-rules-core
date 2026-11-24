@@ -51,7 +51,8 @@ public sealed class NativeMechanicsApiTests
             INativeScopedSkillCheckHostAuthorityProvider? scopedCheckAuthority = null,
             INativeOriginHostFeatChoiceAuthorityProvider? featChoiceAuthority = null,
             INativeOriginHostCantripRestAuthorityProvider? cantripRestAuthority = null,
-            bool syntheticOpenChoiceCatalog = false)
+            bool syntheticOpenChoiceCatalog = false,
+            INativeConstructHostOperatingAuthorityProvider? constructOperatingAuthority = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -213,6 +214,8 @@ public sealed class NativeMechanicsApiTests
                     services.AddSingleton(featChoiceAuthority);
                 if (cantripRestAuthority is not null)
                     services.AddSingleton(cantripRestAuthority);
+                if (constructOperatingAuthority is not null)
+                    services.AddSingleton(constructOperatingAuthority);
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -1674,6 +1677,115 @@ public sealed class NativeMechanicsApiTests
             assembly with { InitialConstruction = false, InitialAllowance = null }, catalog.Fingerprint);
         var modified = await modification.Content.ReadFromJsonAsync<JsonElement>();
         Assert.False(modified.GetProperty("result").GetProperty("isMechanicallyAuthorized").GetBoolean());
+    }
+
+    private sealed class ConstructOperatingTestAuthority : INativeConstructHostOperatingAuthorityProvider
+    {
+        public VerifiedConstructOperatingAuthorization? Stored { get; set; }
+
+        public Task<VerifiedConstructOperatingAuthorization?> VerifyAsync(Guid actorId,
+            NativeOriginApiEndpoints.VerifiedConstructOperatingRequest request,
+            CancellationToken cancellationToken) =>
+            Task.FromResult(actorId == Guid.Parse("d66a7a7b-bc0f-4677-829d-0ccf40470d2f")
+                ? Stored : null);
+    }
+
+    [Fact]
+    public async Task VerifiedConstructOperatingHttpPlansOnlyInstalledComponentTransitions()
+    {
+        var provider = new ConstructOperatingTestAuthority();
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true, dm: true,
+            constructOperatingAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var folder = new DirectoryInfo(AppContext.BaseDirectory);
+        string? reference = null;
+        while (folder is not null)
+        {
+            var candidate = Path.Combine(folder.FullName, "data", "reference",
+                "construct-basic-starting-build-20261120.json");
+            if (File.Exists(candidate)) { reference = candidate; break; }
+            folder = folder.Parent;
+        }
+        Assert.NotNull(reference);
+        using var data = JsonDocument.Parse(File.ReadAllText(reference!));
+        var assembly = data.RootElement.GetProperty("assembly")
+            .Deserialize<NativeConstructAssemblyRequest>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        var proposal = new NativeOriginProposal("verified-operating-construct",
+            NativeOriginIntent.Custom, new("rule.creature-origination", "construct-assembly"),
+            [], [], []);
+        var service = new NativeConstructOriginConstructionService(catalog);
+        var discovery = service.Evaluate(new(new(proposal), assembly));
+        var selected = proposal with
+        {
+            Manifestations = discovery.Origin.EvaluatedProposal.Candidates.Select((candidate, i) =>
+                new NativeOriginManifestation("selection-" + i, candidate.Id,
+                    SelectedValue: candidate.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic
+                        ? candidate.OfferedValue : null)).ToArray()
+        };
+        var construction = service.Evaluate(new(new(selected), assembly));
+        Assert.True(construction.IsMechanicallyAuthorized);
+        var current = new NativeConstructOperatingPreset("current",
+            assembly.Components.Select(part => new NativeConstructPresetComponent(
+                part.InstanceId, part.DefinitionId, part.Enabled, part.ModeId)).ToArray());
+        var target = current with
+        {
+            Name = "drive off",
+            Components = current.Components.Select(part => part.InstanceId == "drive"
+                ? part with { Enabled = false } : part).ToArray()
+        };
+        var characterId = Guid.NewGuid();
+        const string endpoint = "/api/mechanics/v1/origins/construct/operating/plan";
+
+        async Task<HttpResponseMessage> Send(NativeConstructOperatingPreset preset,
+            long revision = 2, string? fingerprint = null)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { characterId, originRevision = 1,
+                    operatingRevision = revision, rulesetId = catalog.RulesetId,
+                    fingerprint = fingerprint ?? catalog.Fingerprint, target = preset }));
+            return await fixture.Client.SendAsync(request);
+        }
+
+        using var unverified = await Send(target);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, unverified.StatusCode);
+        provider.Stored = new(characterId, 1, 2, catalog.RulesetId, catalog.Fingerprint,
+            construction, current);
+        using var stale = await Send(target, revision: 1);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, stale.StatusCode);
+        using var staleCatalog = await Send(target, fingerprint: "stale");
+        Assert.Equal(HttpStatusCode.Conflict, staleCatalog.StatusCode);
+
+        using var planned = await Send(target);
+        Assert.Equal(HttpStatusCode.OK, planned.StatusCode);
+        var result = await planned.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.False(result.GetProperty("committed").GetBoolean());
+        Assert.True(result.GetProperty("transition").GetProperty("isTargetValid").GetBoolean());
+        Assert.Contains(result.GetProperty("transition").GetProperty("interruptedComponentInstanceIds")
+            .EnumerateArray(), item => item.GetString() == "drive");
+        Assert.Contains(result.GetProperty("beforeMovement").GetProperty("modes")
+            .EnumerateArray(), mode => mode.GetProperty("mode").GetString() == "walk");
+        Assert.DoesNotContain(result.GetProperty("afterMovement").GetProperty("modes")
+            .EnumerateArray(), mode => mode.GetProperty("mode").GetString() == "walk");
+
+        // A caller cannot install or substitute a component via operating preferences.
+        using var forged = await Send(target with
+        {
+            Components = target.Components.Select(part => part.InstanceId == "drive"
+                ? part with { DefinitionId = "construct-component.crystal-eye" } : part).ToArray()
+        });
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, forged.StatusCode);
+
+        // A preview does not change the provider's committed operating revision.
+        Assert.Equal(2L, provider.Stored.OperatingRevision);
+        provider.Stored = provider.Stored with { CurrentPreset = target, OperatingRevision = 3 };
+        using var restored = await Send(current, revision: 3);
+        Assert.Equal(HttpStatusCode.OK, restored.StatusCode);
+        var recovery = await restored.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Contains(recovery.GetProperty("afterMovement").GetProperty("modes")
+            .EnumerateArray(), mode => mode.GetProperty("mode").GetString() == "walk");
     }
 
     [Fact]

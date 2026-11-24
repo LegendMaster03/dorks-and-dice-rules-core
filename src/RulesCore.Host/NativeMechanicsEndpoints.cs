@@ -58,6 +58,7 @@ public static class NativeMechanicsEndpoints
             group.MapNativeOriginVerifiedUnderlying();
             group.MapVerifiedBiologicalOriginPreview();
             group.MapVerifiedPermanentOriginReconstruction();
+            group.MapVerifiedConstructOperatingPlan();
             group.MapVerifiedLifeExperiencePlan();
             group.MapVerifiedScopedSkillCheck();
             group.MapVerifiedOriginDirectChoices();
@@ -90,6 +91,7 @@ public static class NativeMechanicsEndpoints
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
                     originPreview = "stateless-first-party",
                     constructOriginPreview = "stateless-native-assembly",
+                    verifiedConstructOperatingPlanning = privateTunnel ? "unavailable" : "host-authority-required",
                     originMethodDiscovery = true, originPresetDiscovery = true,
                     originChoiceCatalogDiscovery = true,
                     verifiedDirectOriginChoices = privateTunnel ? "unavailable" : "host-authority-required",
