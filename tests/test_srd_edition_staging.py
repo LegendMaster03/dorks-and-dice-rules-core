@@ -6,6 +6,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from stage_srd_editions import build, canonical_digest, identity, write_catalogs
+from build_srd_loader_fixtures import fixture_records
 
 
 class SrdEditionStagingTests(unittest.TestCase):
@@ -32,6 +33,16 @@ class SrdEditionStagingTests(unittest.TestCase):
                             identity("classFeature", dict(base, level=6)))
         self.assertNotEqual(identity("classFeature", base),
                             identity("classFeature", dict(base, className="Rogue")))
+
+    def test_fixture_projection_preserves_every_occurrence_without_merging(self):
+        for rows in self.packages.values():
+            projected = fixture_records(rows)
+            self.assertEqual(len(rows), len(projected))
+            self.assertEqual(len(rows), len({r["id"] for r in projected}))
+            for source, fixture in zip(rows, projected):
+                self.assertTrue(fixture["fixtureOnly"])
+                self.assertEqual(source["payload"], fixture["definition"])
+                self.assertEqual(source["source"], fixture["sourceOccurrence"])
 
     def test_output_is_review_only_and_round_trips(self):
         with tempfile.TemporaryDirectory() as tmp:

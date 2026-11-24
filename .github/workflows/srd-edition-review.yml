@@ -4,6 +4,9 @@ on:
     branches: [main]
     paths:
       - 'tools/stage_srd_editions.py'
+      - 'tools/build_srd_loader_fixtures.py'
+      - 'tests/NativeCatalogFingerprint/**'
+      - 'src/RulesCore.Content/**'
       - 'tools/inventory_srd_editions.py'
       - 'data/reference/srd/structured/**'
       - 'data/reference/srd/structured-manifest.json'
@@ -23,6 +26,22 @@ jobs:
           echo '## Unreviewed SRD candidate inventory' >> "$GITHUB_STEP_SUMMARY"
           echo 'The artifact is reference-only; no runtime promotion.' >> "$GITHUB_STEP_SUMMARY"
           python3 -c 'import json; d=json.load(open("build/srd-review/srd-review-summary.json")); print("\n".join("- {}: {} candidates".format(k, v["count"]) for k,v in d.items()))' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Validate complete candidate-sized isolated catalogs with the C# loader
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/build_srd_loader_fixtures.py
+          for id in dnd-5e dnd-5-5e; do
+            result=$(dotnet run --project tests/NativeCatalogFingerprint/NativeCatalogFingerprint.csproj --configuration Release -- build/srd-loader-fixtures "$id")
+            printf '%s\n' "$result"
+            grep -qx "RULESET_ID=$id" <<< "$result"
+            grep -qx 'CONTENT_FINGERPRINT_VALIDATED=true' <<< "$result"
+            expected=$(python3 -c 'import json,sys; print(json.load(open("build/srd-loader-fixtures/expected-counts.json"))[sys.argv[1]])' "$id")
+            grep -qx "NATIVE_ENTITY_COUNT=$expected" <<< "$result"
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: srd-edition-review-catalogs
