@@ -1499,6 +1499,14 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal("fixture-cantrip-b", newCantrip.SpellId);
         Assert.Equal("wisdom", newCantrip.SpellcastingAbility);
         Assert.Equal(misty, Assert.Single(after.Spells, spell => spell.GrantId == misty.GrantId));
+        Assert.NotNull(plan.UpdatedSourceProposal);
+        Assert.DoesNotContain(plan.UpdatedSourceProposal!.Manifestations.SelectMany(manifest =>
+            manifest.Choices ?? []), choice => choice.CatalogEligibilityEvidenceId is not null);
+        var followingRest = NativeOriginCantripReplacementPlanner.Plan(catalog,
+            plan.UpdatedSourceProposal, plan.Replacement!.Profile!, character,
+            plan.Ledger!, plan.Ledger!.Revision, grantId, "spell.fixture-cantrip-a");
+        Assert.True(followingRest.Status == "resolved", followingRest.Reason);
+        Assert.Equal(plan.Ledger.Revision + 1, followingRest.Ledger!.Revision);
         Assert.Equal("permitted", NativeOriginInnateSpellResourceLedger.Apply(catalog, plan.Replacement!, character,
             plan.Ledger, new(NativeOriginInnateSpellLedgerActionKind.CheckAtWill, plan.Ledger.Revision, grantId)).Status);
         Assert.Equal("unresolved", NativeOriginInnateSpellResourceLedger.Apply(catalog, before, character,

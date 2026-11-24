@@ -10,7 +10,7 @@ namespace RulesCore.Mechanics;
 public sealed record NativeOriginCantripReplacementPlan(string Status, string? Reason,
     NativeOriginConstructionResult? Replacement, NativeOriginInnateSpellLedgerState? Ledger,
     string? GrantId = null, string? PreviousSpellId = null, string? NewSpellId = null,
-    bool Committed = false);
+    bool Committed = false, NativeOriginProposal? UpdatedSourceProposal = null);
 
 public static class NativeOriginCantripReplacementPlanner
 {
@@ -96,7 +96,11 @@ public static class NativeOriginCantripReplacementPlanner
             catalog, before, after, character, savedLedger, expectedLedgerRevision, grantId);
         if (recovered.Status != "resolved" || recovered.State is null)
             return Fail(recovered.Reason ?? "cantrip-replacement-ledger-unresolved");
-        return new("resolved", null, after, recovered.State, grantId, selected[0], replacementSpellId);
+        // Return the proof-free source proposal separately from the evaluated
+        // result. Persisting only the latter would replay transient evidence on
+        // the next rest instead of independently deriving it again.
+        return new("resolved", null, after, recovered.State, grantId, selected[0], replacementSpellId,
+            UpdatedSourceProposal: proposed);
     }
 
     private static bool Equal<T>(T left, T right) =>
