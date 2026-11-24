@@ -9,7 +9,7 @@ namespace RulesCore.Host;
 /// as the source of a previously authorized profile, grant, Rite, or DM decision.
 /// Persisted updates require an independent character-scoped server operation.
 /// </summary>
-public static class NativeOriginApiEndpoints
+public static partial class NativeOriginApiEndpoints
 {
     public sealed record PreviewRequest(
         string RulesetId, string? Fingerprint, NativeOriginProposal Proposal,
@@ -410,7 +410,7 @@ public static class NativeOriginApiEndpoints
             : null;
 
     // Shared stateless ingress guard: never accept claimed persisted authority.
-    private static bool HasUntrustedOriginState(NativeOriginProposal proposal) =>
+    private static bool HasClaimedOriginBaseline(NativeOriginProposal proposal) =>
         proposal.Intent == NativeOriginIntent.Transformation ||
         proposal.ExistingConfiguration is not null ||
         proposal.ExistingEffectiveConfiguration is not null ||
@@ -419,13 +419,21 @@ public static class NativeOriginApiEndpoints
         (proposal.OtherActiveTemporaryTransformations?.Count ?? 0) != 0 ||
         proposal.TemporaryTransformationPrecedence is not null ||
         (proposal.History?.Count ?? 0) != 0 ||
-        (proposal.TableDecisions?.Count ?? 0) != 0 ||
-        // These are trusted inputs only after the actual contributor's
-        // saved manifested state and acquisition have been verified.
         proposal.Contributors.Any(contributor =>
-            contributor.Source.Kind == NativeOriginSourceKind.ManifestedProfile ||
             contributor.ManifestedProfile is not null ||
-            (contributor.HistoricalSourceIds?.Count ?? 0) != 0) ||
+            (contributor.HistoricalSourceIds?.Count ?? 0) != 0);
+
+    // The verified biological route can accept a reference to a stored parent,
+    // but never a submitted copy of that parent's grants or history.
+    private static bool HasUntrustedOriginState(NativeOriginProposal proposal,
+        bool allowVerifiedContributorReferences = false) =>
+        HasClaimedOriginBaseline(proposal) ||
+        (proposal.TableDecisions?.Count ?? 0) != 0 ||
+        (!allowVerifiedContributorReferences && proposal.Contributors.Any(contributor =>
+            contributor.Source.Kind == NativeOriginSourceKind.ManifestedProfile)) ||
+        (proposal.BiologicalTransmission?.LatentConfigurations?.Any(configuration =>
+            configuration?.Choices?.Any(choice => choice is null ||
+                choice.CatalogEligibilityEvidenceId is not null) == true) ?? false) ||
         // A scoped table decision cannot be smuggled in through a
         // candidate, resolution, requirement or manifestation.
         proposal.Candidates.Any(candidate =>
@@ -485,6 +493,15 @@ public static class NativeOriginApiEndpoints
         (proposal.Constraints?.Count ?? 0) > 128 ||
         (proposal.InputRequirements?.Count ?? 0) > 128 ||
         (proposal.TableDecisions?.Count ?? 0) > 128 ||
+        (proposal.BiologicalTransmission?.CandidateIds?.Count ?? 0) > 256 ||
+        (proposal.BiologicalTransmission?.LatentConfigurations?.Count ?? 0) > 256 ||
+        (proposal.BiologicalTransmission?.Combinations?.Count ?? 0) > 128 ||
+        (proposal.BiologicalTransmission?.LatentConfigurations?.Any(configuration =>
+            (configuration?.Choices?.Count ?? 0) > 32 ||
+            (configuration?.Choices?.Any(choice =>
+                (choice?.SelectedOptionIds?.Count ?? 0) > 32) ?? false)) ?? false) ||
+        (proposal.BiologicalTransmission?.Combinations?.Any(combination =>
+            (combination?.CandidateIds?.Count ?? 0) > 256) ?? false) ||
         (proposal.Candidates?.Any(candidate => candidate is not null &&
             ((candidate.RequiredChoices?.Count ?? 0) > 32 ||
              (candidate.UnresolvedEvidence?.Count ?? 0) > 128 ||

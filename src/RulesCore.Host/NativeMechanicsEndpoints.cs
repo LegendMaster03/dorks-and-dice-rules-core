@@ -54,6 +54,8 @@ public static class NativeMechanicsEndpoints
             group.MapVerifiedManifestationPlans();
             group.MapVerifiedManifestationReads();
             group.MapNativeOriginVerifiedUnderlying();
+            group.MapVerifiedBiologicalOriginPreview();
+            group.MapVerifiedPermanentOriginReconstruction();
             group.MapVerifiedSupernaturalOwnershipPlans();
             group.MapVerifiedInfluenceOverlapPlans();
         }
@@ -84,6 +86,9 @@ public static class NativeMechanicsEndpoints
                     constructOriginPreview = "stateless-native-assembly",
                     biologicalAllocationPreview = NativeOriginFirstPartyBiologicalPricing.Revision,
                     originPersistence = false, originDmAdjudication = false,
+                    verifiedBiologicalPreview = privateTunnel ? "unavailable" : "host-authority-required",
+                    permanentOriginReconstruction = privateTunnel ? "unavailable" : "host-authority-required",
+                    supernaturalPlanning = privateTunnel ? "unavailable" : "host-authority-required",
                     innateSpellLedgerBootstrap = privateTunnel ? "unavailable" : "source-matched-preview",
                     startingEquipmentResolution = "authored-grants-only",
                     equipmentQualifications = "authored-scopes-only",

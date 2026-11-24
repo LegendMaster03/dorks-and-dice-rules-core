@@ -44,7 +44,9 @@ public sealed class NativeMechanicsApiTests
         public HttpClient Client { get; private set; } = null!;
         public async Task StartAsync(string surface, string source, bool ordinary = false,
             bool realNativeContent = false, bool dm = false,
-            INativeSupernaturalHostAuthorityProvider? supernaturalAuthority = null)
+            INativeSupernaturalHostAuthorityProvider? supernaturalAuthority = null,
+            INativeOriginHostBiologicalAuthorityProvider? biologicalAuthority = null,
+            INativeOriginHostReconstructionAuthorityProvider? reconstructionAuthority = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -151,6 +153,10 @@ public sealed class NativeMechanicsApiTests
                     .ConfigurePrimaryHttpMessageHandler(() => new SiteHandler(source, ordinary, dm));
                 if (supernaturalAuthority is not null)
                     services.AddSingleton(supernaturalAuthority);
+                if (biologicalAuthority is not null)
+                    services.AddSingleton(biologicalAuthority);
+                if (reconstructionAuthority is not null)
+                    services.AddSingleton(reconstructionAuthority);
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -771,6 +777,194 @@ public sealed class NativeMechanicsApiTests
             Assert.Equal(JsonValueKind.Null,
                 view.GetProperty("trance").ValueKind);
         }
+    }
+
+    // Test authority reads a fixture-owned record, not the submitted snapshot.
+    private sealed class VerifiedBiologicalTestAuthority : INativeOriginHostBiologicalAuthorityProvider
+    {
+        public NativeOriginProfile? Parent { get; set; }
+        public Task<IReadOnlyList<NativeOriginVerifiedManifestedContributor>?> VerifyAsync(
+            Guid actorId, Guid characterId, IReadOnlyList<NativeOriginSourceReference> sources,
+            string rulesetId, string fingerprint, CancellationToken cancellationToken)
+        {
+            IReadOnlyList<NativeOriginVerifiedManifestedContributor>? records =
+                actorId == SupernaturalActor && characterId == SupernaturalCharacter &&
+                Parent is not null && sources.Count == 1 &&
+                sources[0].Id == Parent.Id && sources[0].Version == "revision-1"
+                ? [new(Parent, "revision-1")] : null;
+            return Task.FromResult(records);
+        }
+    }
+
+    [Fact]
+    public async Task VerifiedBiologicalHttpCanExpressPreviouslyLatentGene()
+    {
+        await using var fixture = new Fixture();
+        var provider = new VerifiedBiologicalTestAuthority();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true, dm: true, biologicalAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var method = new NativeOriginMethodReference("rule.creature-origination", "biological");
+        NativeOriginManifestation Express(NativeOriginCandidate candidate, int index) =>
+            new("express-" + index, candidate.Id,
+                SelectedValue: candidate.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic
+                    ? candidate.OfferedValue : null);
+        var parentDraft = new NativeOriginProposal("http-parent", NativeOriginIntent.Mixed, method,
+            [
+                new("p1", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.orc")),
+                new("p2", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.orc"))
+            ], [], []);
+        var engine = new NativeOriginConstructionEngine(catalog);
+        var offers = engine.Evaluate(new(parentDraft, AutoManifestDirectDefaults: false))
+            .EvaluatedProposal.Candidates;
+        var foundation = offers.Where(x => x.ContributorId == "p1" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet").ToArray();
+        var powers = offers.Where(x => x.Identity.MechanicalDefinitionId == "trait.powerful-build")
+            .OrderBy(x => x.ContributorId).ToArray();
+        Assert.Equal(3, foundation.Length);
+        Assert.Equal(2, powers.Length);
+        var parent = engine.Evaluate(new(parentDraft with
+        {
+            Manifestations = foundation.Append(powers[1]).Select(Express).ToArray(),
+            BiologicalTransmission = new(foundation.Concat(powers).Select(x => x.Id).ToArray())
+        }, AutoManifestDirectDefaults: false));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, parent.Status);
+        provider.Parent = parent.Profile!;
+        var latent = Assert.Single(provider.Parent.Underlying.BiologicalGenes!,
+            gene => gene.SourceCandidateId == powers[0].Id);
+        var child = new NativeOriginProposal("http-descendant", NativeOriginIntent.Mixed, method,
+            [new("carrier", new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.ManifestedProfile, provider.Parent.Id, "revision-1"))], [], []);
+        const string endpoint = "/api/mechanics/v1/origins/biological/verified-preview";
+        async Task<(HttpStatusCode, JsonElement)> Send(NativeOriginProposal proposal,
+            Guid characterId, string fingerprint)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { characterId, rulesetId = catalog.RulesetId, fingerprint, proposal }));
+            using var response = await fixture.Client.SendAsync(request);
+            return (response.StatusCode, await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+
+        var (discoveryStatus, discovery) = await Send(child, SupernaturalCharacter, catalog.Fingerprint);
+        Assert.Equal(HttpStatusCode.OK, discoveryStatus);
+        var candidates = discovery.GetProperty("result").GetProperty("evaluatedProposal")
+            .GetProperty("candidates").Deserialize<NativeOriginCandidate[]>(
+                new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+        var inherited = Assert.Single(candidates, x => x.Id == "nested:carrier:gene:" + latent.Id);
+        var selected = candidates.Where(x => x.Identity.IntrinsicSlotId is
+            "creatureType" or "size" or "walkingSpeedFeet").Append(inherited).ToArray();
+        var (status, body) = await Send(child with
+        {
+            Manifestations = selected.Select(Express).ToArray(),
+            BiologicalTransmission = new(selected.Select(x => x.Id).ToArray())
+        }, SupernaturalCharacter, catalog.Fingerprint);
+        Assert.Equal(HttpStatusCode.OK, status);
+        Assert.False(body.GetProperty("committed").GetBoolean());
+        var result = body.GetProperty("result");
+        Assert.Equal((int)NativeOriginConstructionStatus.Authorized, result.GetProperty("status").GetInt32());
+        Assert.Equal("within-allowance", result.GetProperty("creationAllocation").GetProperty("status").GetString());
+        var profile = result.GetProperty("profile").Deserialize<NativeOriginProfile>(
+            new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+        var gene = Assert.Single(profile.Underlying.BiologicalGenes!, x => x.SourceCandidateId == inherited.Id);
+        Assert.Equal(provider.Parent.Id, gene.InheritedFrom!.ContributorProfileId);
+        Assert.Equal("revision-1", gene.InheritedFrom.ContributorRevision);
+        Assert.False(gene.InheritedFrom.SourceWasGrant);
+
+        Assert.Equal(HttpStatusCode.Conflict,
+            (await Send(child, SupernaturalCharacter, "stale")).Item1);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity,
+            (await Send(child, Guid.NewGuid(), catalog.Fingerprint)).Item1);
+        var stale = child with { Contributors = [child.Contributors[0] with
+            { Source = child.Contributors[0].Source with { Version = "revision-0" } }] };
+        Assert.Equal(HttpStatusCode.UnprocessableEntity,
+            (await Send(stale, SupernaturalCharacter, catalog.Fingerprint)).Item1);
+        var forged = child with { Contributors = [child.Contributors[0] with
+            { ManifestedProfile = provider.Parent.Underlying }] };
+        Assert.Equal(HttpStatusCode.BadRequest,
+            (await Send(forged, SupernaturalCharacter, catalog.Fingerprint)).Item1);
+    }
+
+    private sealed class VerifiedReconstructionTestAuthority : INativeOriginHostReconstructionAuthorityProvider,
+        INativeOriginAuthority
+    {
+        public NativeOriginProfile? Existing { get; set; }
+        public NativeTableRuleDecision? Decision { get; set; }
+        private static readonly NativeTableDecisionScope Scope = new("character",
+            SupernaturalCharacter.ToString("D"));
+
+        public Task<VerifiedPermanentOriginAuthorization?> VerifyAsync(Guid actorId,
+            NativeOriginApiEndpoints.VerifiedReconstructionRequest request, CancellationToken cancellationToken)
+        {
+            VerifiedPermanentOriginAuthorization? result =
+                actorId == SupernaturalActor && request.CharacterId == SupernaturalCharacter &&
+                request.OriginRevision == 1 && Existing is not null &&
+                request.CompletionId == "rite.fixture" && Decision is not null
+                ? new(Existing, 1, Scope, this) : null;
+            return Task.FromResult(result);
+        }
+
+        public bool Authorizes(NativeTableRuleDecision decision, NativeTableDecisionScope scope) =>
+            scope == Scope && Decision is not null &&
+            JsonElement.DeepEquals(JsonSerializer.SerializeToElement(decision),
+                JsonSerializer.SerializeToElement(Decision));
+        public bool AuthorizesCatalogChoice(string catalogId, string optionId, string evidenceId) => false;
+    }
+
+    [Fact]
+    public async Task VerifiedReconstructionHttpPlansReplacementAgainstStoredOrigin()
+    {
+        await using var fixture = new Fixture();
+        var provider = new VerifiedReconstructionTestAuthority();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true, dm: true, reconstructionAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var prior = new NativeOriginConstructionEngine(catalog).Evaluate(new(
+            new NativeOriginProposal("http-prior", NativeOriginIntent.Direct,
+                new("rule.creature-origination", "biological"), [], [], [], SelectedSpeciesId: "species.orc")));
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, prior.Status);
+        provider.Existing = prior.Profile!;
+        provider.Decision = new("verified-rite", new(SupernaturalActor.ToString("D"), "fixture-rite-proof"),
+            new("character", SupernaturalCharacter.ToString("D")), new("rite", "rite.fixture"),
+            JsonSerializer.SerializeToElement(new
+            {
+                allow = true, targetSpeciesId = "species.dragonborn",
+                targetAncestryId = "ancestry.dragonborn.red"
+            }));
+        var target = new NativeOriginProposal("http-rebirth", NativeOriginIntent.Direct,
+            new("rule.creature-origination", "rite-of-rebirth"), [], [], [],
+            SelectedSpeciesId: "species.dragonborn", SelectedAncestryId: "ancestry.dragonborn.red",
+            TableDecisions: [provider.Decision]);
+        const string endpoint = "/api/mechanics/v1/origins/reconstruction/plan";
+        async Task<(HttpStatusCode, JsonElement)> Send(NativeOriginProposal proposal, long revision)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new
+                {
+                    characterId = SupernaturalCharacter, originRevision = revision,
+                    rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint,
+                    completionId = "rite.fixture", targetProposal = proposal
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            return (response.StatusCode, await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+
+        var (status, body) = await Send(target, 1);
+        Assert.True(status == HttpStatusCode.OK, body.GetRawText());
+        Assert.False(body.GetProperty("committed").GetBoolean());
+        var profile = body.GetProperty("result").GetProperty("resultingProfile")
+            .Deserialize<NativeOriginProfile>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+        Assert.Equal(provider.Existing.Id, profile.Id);
+        Assert.Equal("species.dragonborn", profile.Underlying.SpeciesId);
+        Assert.Equal("ancestry.dragonborn.red", profile.Underlying.AncestryId);
+        Assert.Equal("species.orc", provider.Existing.Underlying.SpeciesId);
+        Assert.Contains(profile.History, item => item.Id == "rite:http-rebirth");
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, (await Send(target, 2)).Item1);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity,
+            (await Send(target with { TableDecisions = [] }, 1)).Item1);
+        Assert.Equal(HttpStatusCode.BadRequest,
+            (await Send(target with { ExistingConfiguration = provider.Existing.Underlying }, 1)).Item1);
     }
 
     [Fact]

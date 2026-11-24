@@ -52,11 +52,15 @@ These endpoints are on the ordinary Character Sheet-delegated public mechanics s
 | Method | Path | Purpose |
 | --- | --- | --- |
 | POST | `/origins/underlying/verify` | Verify an existing underlying Origin through independent host authority |
+| POST | `/origins/biological/verified-preview` | Resolve exact saved parent revisions and validate descendant creation under the native allocation gate |
+| POST | `/origins/reconstruction/plan` | Plan a verified permanent replacement against the latest stored Origin |
 | POST | `/characters/effective-state-baseline` | Project the supported baseline character state |
 | POST | `/characters/effective-state` | Read verified effective character and manifestation state |
 | POST | `/characters/manifestations/plan` | Plan a revision-checked manifestation transition |
 | POST | `/characters/supernatural/ownership/plan` | Plan supernatural acquisition, advancement, or expression |
 | POST | `/characters/supernatural/overlaps/plan` | Plan an exact, source-authorized overlap decision |
+
+Verified biological requests supply a target character ID, fingerprint, and proposal with revision-pinned manifested-profile references (not embedded parent data). The host biological provider loads the current parent records after checking access. The shared construction engine validates inherited/expressed instances and enforces the first-party initial allocation gate. Reconstruction requests supply the target character ID, current Origin revision, completion ID, fingerprint and target proposal. The host reconstruction provider independently loads the existing profile and verifies completion/decision authority; the existing permanent reconstruction engine returns a replacement proposal, never a committed write.
 
 Site delegation alone does not establish character ownership, source entitlement, event evidence, or current storage revision. The independently verified provider interfaces in the host must be supplied by an authoritative application integration. The routes fail closed without that authority; successful plans do not commit state. Existing synthetic fixtures demonstrate the contracts, not production authorization or approved supernatural content. No first-party lycanthropy or vampirism rules are introduced by this infrastructure integration.
 
