@@ -1,0 +1,544 @@
+[
+  {
+    "id": "spell.true-strike",
+    "kind": "spell",
+    "name": "True Strike",
+    "level": 0,
+    "school": "D",
+    "officialTextLayout": "True Strike\nDivination cantrip\nCasting Time: 1 action\nRange: 30 feet\nComponents: S\nDuration: Concentration, up to 1 round\nYou extend your hand and point a finger at a target\nin range. Your magic grants you a brief insight into\nthe target’s defenses. On your next turn, you gain\nadvantage on your first attack roll against the target,\nprovided that this spell hasn’t ended.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "S",
+      "Duration": "Concentration, up to 1 round"
+    },
+    "catalogReferences": [
+      "rulebook.page-189"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        189
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.unseen-servant",
+    "kind": "spell",
+    "name": "Unseen Servant",
+    "level": 1,
+    "school": "C",
+    "officialTextLayout": "Unseen Servant\n1st---level conjuration (ritual)\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S, M (a piece of string and a bit of\n  wood)\nDuration: 1 hour\nThis spell creates an invisible, mindless, shapeless\nforce that performs simple tasks at your command\nuntil the spell ends. The servant springs into\nexistence in an unoccupied space on the ground\nwithin range. It has AC 10, 1 hit point, and a Strength\nof 2, and it can’t attack. If it drops to 0 hit points, the\nspell ends.\n  Once on each of your turns as a bonus action, you\ncan mentally command the servant to move up to 15\nfeet and interact with an object. The servant can\nperform simple tasks that a human servant could do,\nsuch as fetching things, cleaning, mending, folding\nclothes, lighting fires, serving food, and pouring wine.\nOnce you give the command, the servant performs\nthe task to the best of its ability until it completes the\ntask, then waits for your next command.\n  If you command the servant to perform a task that\nwould move it more than 60 feet away from you, the\nspell ends.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S, M (a piece of string and a bit of",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-189"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        189
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.vampiric-touch",
+    "kind": "spell",
+    "name": "Vampiric Touch",
+    "level": 3,
+    "school": "N",
+    "officialTextLayout": "Vampiric Touch\n3rd---level necromancy\nCasting Time: 1 action\nRange: Self\nComponents: V, S\nDuration: Concentration, up to 1 minute\nThe touch of your shadow---wreathed hand can\nsiphon life force from others to heal your wounds.\nMake a melee spell attack against a creature within\nyour reach. On a hit, the target takes 3d6 necrotic\ndamage, and you regain hit points equal to half the\namount of necrotic damage dealt. Until the spell\nends, you can make the attack again on each of your\nturns as an action.\n  At Higher Levels. When you cast this spell using a\nspell slot of 4th level or higher, the damage increases\nby 1d6 for each slot level above 3rd.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-189"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        189
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.vicious-mockery",
+    "kind": "spell",
+    "name": "Vicious Mockery",
+    "level": 0,
+    "school": "E",
+    "officialTextLayout": "Vicious Mockery\nEnchantment cantrip\nCasting Time: 1 action\nRange: 60 feet\nComponents: V\n\n\n\n\n\nDuration: Instantaneous\nYou unleash a string of insults laced with subtle\nenchantments at a creature you can see within range.\nIf the target can hear you (though it need not\nunderstand you), it must succeed on a Wisdom\nsaving throw or take 1d4 psychic damage and have\ndisadvantage on the next attack roll it makes before\nthe end of its next turn.\n  This spell's damage increases by 1d4 when you\nreach 5th level (2d4), 11th level (3d4), and 17th\nlevel (4d4).",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-189",
+      "rulebook.page-190"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        189,
+        190
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.wall-of-fire",
+    "kind": "spell",
+    "name": "Wall of Fire",
+    "level": 4,
+    "school": "V",
+    "officialTextLayout": "Wall of Fire\n4th---level evocation\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S, M (a small piece of phosphorus)\nDuration: Concentration, up to 1 minute\nYou create a wall of fire on a solid surface within\nrange. You can make the wall up to 60 feet long, 20\nfeet high, and 1 foot thick, or a ringed wall up to 20\nfeet in diameter, 20 feet high, and 1 foot thick. The\nwall is opaque and lasts for the duration.\n  When the wall appears, each creature within its\narea must make a Dexterity saving throw. On a failed\nsave, a creature takes 5d8 fire damage, or half as\nmuch damage on a successful save.\n  One side of the wall, selected by you when you\ncast this spell, deals 5d8 fire damage to each\ncreature that ends its turn within 10 feet of that side\nor inside the wall. A creature takes the same damage\nwhen it enters the wall for the first time on a turn or\nends its turn there. The other side of the wall deals\nno damage.\n  At Higher Levels. When you cast this spell using a\nspell slot of 5th level or higher, the damage increases\nby 1d8 for each slot level above 4th.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "120 feet",
+      "Components": "V, S, M (a small piece of phosphorus)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-190"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        190
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.wall-of-force",
+    "kind": "spell",
+    "name": "Wall of Force",
+    "level": 5,
+    "school": "V",
+    "officialTextLayout": "Wall of Force\n5th---level evocation\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S, M (a pinch of powder made by\n  crushing a clear gemstone)\nDuration: Concentration, up to 10 minutes\nAn invisible wall of force springs into existence at a\npoint you choose within range. The wall appears in\nany orientation you choose, as a horizontal or\nvertical barrier or at an angle. It can be free floating\nor resting on a solid surface. You can form it into a\nhemispherical dome or a sphere with a radius of up\n\nto 10 feet, or you can shape a flat surface made up of\nten 10---foot---by---10---foot panels. Each panel must be\ncontiguous with another panel. In any form, the wall\nis 1/4 inch thick. It lasts for the duration. If the wall\ncuts through a creature’s space when it appears, the\ncreature is pushed to one side of the wall (your\nchoice which side).\n  Nothing can physically pass through the wall. It is\nimmune to all damage and can’t be dispelled by\ndispel magic. A disintegrate spell destroys the wall\ninstantly, however. The wall also extends into the\nEthereal Plane, blocking ethereal travel through the\nwall.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "120 feet",
+      "Components": "V, S, M (a pinch of powder made by",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-190"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        190
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.wall-of-ice",
+    "kind": "spell",
+    "name": "Wall of Ice",
+    "level": 6,
+    "school": "V",
+    "officialTextLayout": "Wall of Ice\n6th---level evocation\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S, M (a small piece of quartz)\nDuration: Concentration, up to 10 minutes\nYou create a wall of ice on a solid surface within\nrange. You can form it into a hemispherical dome or\na sphere with a radius of up to 10 feet, or you can\nshape a flat surface made up of ten 10---foot---square\npanels. Each panel must be contiguous with another\npanel. In any form, the wall is 1 foot thick and lasts\nfor the duration.\n  If the wall cuts through a creature’s space when it\nappears, the creature within its area is pushed to\none side of the wall and must make a Dexterity\nsaving throw. On a failed save, the creature takes\n10d6 cold damage, or half as much damage on a\nsuccessful save.\n  The wall is an object that can be damaged and thus\nbreached. It has AC 12 and 30 hit points per 10---foot\nsection, and it is vulnerable to fire damage. Reducing\na 10---foot section of wall to 0 hit points destroys it\nand leaves behind a sheet of frigid air in the space\nthe wall occupied. A creature moving through the\nsheet of frigid air for the first time on a turn must\nmake a Constitution saving throw. That creature\ntakes 5d6 cold damage on a failed save, or half as\nmuch damage on a successful one.\n  At Higher Levels. When you cast this spell using a\nspell slot of 7th level or higher, the damage the wall\ndeals when it appears increases by 2d6, and the\ndamage from passing through the sheet of frigid air\nincreases by 1d6, for each slot level above 6th.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "120 feet",
+      "Components": "V, S, M (a small piece of quartz)",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-190"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        190
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.wall-of-stone",
+    "kind": "spell",
+    "name": "Wall of Stone",
+    "level": 5,
+    "school": "V",
+    "officialTextLayout": "Wall of Stone\n5th---level evocation\nCasting Time: 1 action\n\n\n\n\n\nRange: 120 feet\nComponents: V, S, M (a small block of granite)\nDuration: Concentration, up to 10 minutes\nA nonmagical wall of solid stone springs into\nexistence at a point you choose within range. The\nwall is 6 inches thick and is composed of ten 10---foot---\nby---10---foot panels. Each panel must be contiguous\nwith at least one other panel. Alternatively, you can\ncreate 10---foot---by---20---foot panels that are only 3\ninches thick.\n  If the wall cuts through a creature’s space when it\nappears, the creature is pushed to one side of the\nwall (your choice). If a creature would be\nsurrounded on all sides by the wall (or the wall and\nanother solid surface), that creature can make a\nDexterity saving throw. On a success, it can use its\nreaction to move up to its speed so that it is no\nlonger enclosed by the wall.\n  The wall can have any shape you desire, though it\ncan’t occupy the same space as a creature or object.\nThe wall doesn’t need to be vertical or rest on any\nfirm foundation. It must, however, merge with and\nbe solidly supported by existing stone. Thus, you can\nuse this spell to bridge a chasm or create a ramp.\n  If you create a span greater than 20 feet in length,\nyou must halve the size of each panel to create\nsupports. You can crudely shape the wall to create\ncrenellations, battlements, and so on.\n  The wall is an object made of stone that can be\ndamaged and thus breached. Each panel has AC 15\nand 30 hit points per inch of thickness. Reducing a\npanel to 0 hit points destroys it and might cause\nconnected panels to collapse at the GM’s discretion.\n  If you maintain your concentration on this spell\nfor its whole duration, the wall becomes permanent\nand can’t be dispelled. Otherwise, the wall\ndisappears when the spell ends.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "120 feet",
+      "Components": "V, S, M (a small block of granite)",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-190",
+      "rulebook.page-191"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        190,
+        191
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.wall-of-thorns",
+    "kind": "spell",
+    "name": "Wall of Thorns",
+    "level": 6,
+    "school": "C",
+    "officialTextLayout": "Wall of Thorns\n6th---level conjuration\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S, M (a handful of thorns)\nDuration: Concentration, up to 10 minutes\nYou create a wall of tough, pliable, tangled brush\nbristling with needle---sharp thorns. The wall appears\nwithin range on a solid surface and lasts for the\nduration. You choose to make the wall up to 60 feet\nlong, 10 feet high, and 5 feet thick or a circle that has\na 20---foot diameter and is up to 20 feet high and 5\nfeet thick. The wall blocks line of sight.\n\n  When the wall appears, each creature within its\narea must make a Dexterity saving throw. On a failed\nsave, a creature takes 7d8 piercing damage, or half\nas much damage on a successful save.\n  A creature can move through the wall, albeit\nslowly and painfully. For every 1 foot a creature\nmoves through the wall, it must spend 4 feet of\nmovement. Furthermore, the first time a creature\nenters the wall on a turn or ends its turn there, the\ncreature must make a Dexterity saving throw. It\ntakes 7d8 slashing damage on a failed save, or half as\nmuch damage on a successful one.\n  At Higher Levels. When you cast this spell using a\nspell slot of 7th level or higher, both types of damage\nincrease by 1d8 for each slot level above 6th.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "120 feet",
+      "Components": "V, S, M (a handful of thorns)",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-191"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        191
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.warding-bond",
+    "kind": "spell",
+    "name": "Warding Bond",
+    "level": 2,
+    "school": "A",
+    "officialTextLayout": "Warding Bond\n2nd---level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (a pair of platinum rings worth\n  at least 50 gp each, which you and the target must\n  wear for the duration)\nDuration: 1 hour\nThis spell wards a willing creature you touch and\ncreates a mystic connection between you and the\ntarget until the spell ends. While the target is within\n60 feet of you, it gains a +1 bonus to AC and saving\nthrows, and it has resistance to all damage. Also,\neach time it takes damage, you take the same\namount of damage.\n  The spell ends if you drop to 0 hit points or if you\nand the target become separated by more than 60\nfeet. It also ends if the spell is cast again on either of\nthe connected creatures. You can also dismiss the\nspell as an action.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S, M (a pair of platinum rings worth",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-191"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        191
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.water-breathing",
+    "kind": "spell",
+    "name": "Water Breathing",
+    "level": 3,
+    "school": "T",
+    "officialTextLayout": "Water Breathing\n3rd---level transmutation (ritual)\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a short reed or piece of straw)\nDuration: 24 hours\nThis spell grants up to ten willing creatures you can\nsee within range the ability to breathe underwater\nuntil the spell ends. Affected creatures also retain\ntheir normal mode of respiration.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a short reed or piece of straw)",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-191"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        191
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.water-walk",
+    "kind": "spell",
+    "name": "Water Walk",
+    "level": 3,
+    "school": "T",
+    "officialTextLayout": "Water Walk\n3rd---level transmutation (ritual)\nCasting Time: 1 action\n\n\n\n\n\nRange: 30 feet\nComponents: V, S, M (a piece of cork)\nDuration: 1 hour\nThis spell grants the ability to move across any\nliquid surface—such as water, acid, mud, snow,\nquicksand, or lava—as if it were harmless solid\nground (creatures crossing molten lava can still take\ndamage from the heat). Up to ten willing creatures\nyou can see within range gain this ability for the\nduration.\n  If you target a creature submerged in a liquid, the\nspell carries the target to the surface of the liquid at\na rate of 60 feet per round.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a piece of cork)",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-191",
+      "rulebook.page-192"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        191,
+        192
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.web",
+    "kind": "spell",
+    "name": "Web",
+    "level": 2,
+    "school": "C",
+    "officialTextLayout": "Web\n2nd---level conjuration\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S, M (a bit of spiderweb)\nDuration: Concentration, up to 1 hour\nYou conjure a mass of thick, sticky webbing at a\npoint of your choice within range. The webs fill a 20---\nfoot cube from that point for the duration. The webs\nare difficult terrain and lightly obscure their area.\n  If the webs aren’t anchored between two solid\nmasses (such as walls or trees) or layered across a\nfloor, wall, or ceiling, the conjured web collapses on\nitself, and the spell ends at the start of your next turn.\nWebs layered over a flat surface have a depth of 5\nfeet.\n  Each creature that starts its turn in the webs or\nthat enters them during its turn must make a\nDexterity saving throw. On a failed save, the creature\nis restrained as long as it remains in the webs or\nuntil it breaks free.\n  A creature restrained by the webs can use its\naction to make a Strength check against your spell\nsave DC. If it succeeds, it is no longer restrained.\n  The webs are flammable. Any 5---foot cube of webs\nexposed to fire burns away in 1 round, dealing 2d4\nfire damage to any creature that starts its turn in the\nfire.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S, M (a bit of spiderweb)",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-192"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        192
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.weird",
+    "kind": "spell",
+    "name": "Weird",
+    "level": 9,
+    "school": "I",
+    "officialTextLayout": "Weird\n9th---level illusion\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S\nDuration: Concentration, up to one minute\nDrawing on the deepest fears of a group of creatures,\nyou create illusory creatures in their minds, visible\n\nonly to them. Each creature in a 30---foot---radius\nsphere centered on a point of your choice within\nrange must make a Wisdom saving throw. On a\nfailed save, a creature becomes frightened for the\nduration. The illusion calls on the creature’s deepest\nfears, manifesting its worst nightmares as an\nimplacable threat. At the end of each of the\nfrightened creature’s turns, it must succeed on a\nWisdom saving throw or take 4d10 psychic damage.\nOn a successful save, the spell ends for that creature.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "120 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to one minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-192"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        192
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.wind-walk",
+    "kind": "spell",
+    "name": "Wind Walk",
+    "level": 6,
+    "school": "T",
+    "officialTextLayout": "Wind Walk\n6th---level transmutation\nCasting Time: 1 minute\nRange: 30 feet\nComponents: V, S, M (fire and holy water)\nDuration: 8 hours\nYou and up to ten willing creatures you can see\nwithin range assume a gaseous form for the duration,\nappearing as wisps of cloud. While in this cloud form,\na creature has a flying speed of 300 feet and has\nresistance to damage from nonmagical weapons. The\nonly actions a creature can take in this form are the\nDash action or to revert to its normal form.\nReverting takes 1 minute, during which time a\ncreature is incapacitated and can’t move. Until the\nspell ends, a creature can revert to cloud form, which\nalso requires the 1---minute transformation.\n  If a creature is in cloud form and flying when the\neffect ends, the creature descends 60 feet per round\nfor 1 minute until it lands, which it does safely. If it\ncan’t land after 1 minute, the creature falls the\nremaining distance.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "30 feet",
+      "Components": "V, S, M (fire and holy water)",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-192"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        192
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.wind-wall",
+    "kind": "spell",
+    "name": "Wind Wall",
+    "level": 3,
+    "school": "V",
+    "officialTextLayout": "Wind Wall\n3rd---level evocation\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S, M (a tiny fan and a feather of\n  exotic origin)\nDuration: Concentration, up to 1 minute\nA wall of strong wind rises from the ground at a\npoint you choose within range. You can make the\nwall up to 50 feet long, 15 feet high, and 1 foot thick.\nYou can shape the wall in any way you choose so\nlong as it makes one continuous path along the\nground. The wall lasts for the duration.\n  When the wall appears, each creature within its\narea must make a Strength saving throw. A creature\ntakes 3d8 bludgeoning damage on a failed save, or\nhalf as much damage on a successful one.\n\n\n\n\n\n  The strong wind keeps fog, smoke, and other gases\nat bay. Small or smaller flying creatures or objects\ncan’t pass through the wall. Loose, lightweight\nmaterials brought into the wall fly upward. Arrows,\nbolts, and other ordinary projectiles launched at\ntargets behind the wall are deflected upward and\nautomatically miss. (Boulders hurled by giants or\nsiege engines, and similar projectiles, are\nunaffected.) Creatures in gaseous form can’t pass\nthrough it.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "120 feet",
+      "Components": "V, S, M (a tiny fan and a feather of",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-192",
+      "rulebook.page-193"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        192,
+        193
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.wish",
+    "kind": "spell",
+    "name": "Wish",
+    "level": 9,
+    "school": "C",
+    "officialTextLayout": "Wish\n9th---level conjuration\nCasting Time: 1 action\nRange: Self\nComponents: V\nDuration: Instantaneous\nWish is the mightiest spell a mortal creature can cast.\nBy simply speaking aloud, you can alter the very\nfoundations of reality in accord with your desires.\n  The basic use of this spell is to duplicate any other\nspell of 8th level or lower. You don’t need to meet\nany requirements in that spell, including costly\ncomponents. The spell simply takes effect.\n  Alternatively, you can create one of the following\neffects of your choice:\n• You create one object of up to 25,000 gp in value\n  that isn’t a magic item. The object can be no more\n  than 300 feet in any dimension, and it appears in\n  an unoccupied space you can see on the ground.\n• You allow up to twenty creatures that you can see\n  to regain all hit points, and you end all effects on\n  them described in the greater restoration spell.\n• You grant up to ten creatures that you can see\n  resistance to a damage type you choose.\n• You grant up to ten creatures you can see\n  immunity to a single spell or other magical effect\n  for 8 hours. For instance, you could make yourself\n  and all your companions immune to a lich’s life\n  drain attack.\n• You undo a single recent event by forcing a reroll\n  of any roll made within the last round (including\n  your last turn). Reality reshapes itself to\n  accommodate the new result. For example, a wish\n  spell could undo an opponent’s successful save, a\n  foe’s critical hit, or a friend’s failed save. You can\n  force the reroll to be made with advantage or\n  disadvantage, and you can choose whether to use\n  the reroll or the original roll.\nYou might be able to achieve something beyond the\nscope of the above examples. State your wish to the\n\nGM as precisely as possible. The GM has great\nlatitude in ruling what occurs in such an instance;\nthe greater the wish, the greater the likelihood that\nsomething goes wrong. This spell might simply fail,\nthe effect you desire might only be partly achieved,\nor you might suffer some unforeseen consequence as\na result of how you worded the wish. For example,\nwishing that a villain were dead might propel you\nforward in time to a period when that villain is no\nlonger alive, effectively removing you from the game.\nSimilarly, wishing for a legendary magic item or\nartifact might instantly transport you to the\npresence of the item’s current owner.\n  The stress of casting this spell to produce any\neffect other than duplicating another spell weakens\nyou. After enduring that stress, each time you cast a\nspell until you finish a long rest, you take 1d10\nnecrotic damage per level of that spell. This damage\ncan’t be reduced or prevented in any way. In\naddition, your Strength drops to 3, if it isn’t 3 or\nlower already, for 2d4 days. For each of those days\nthat you spend resting and doing nothing more than\nlight activity, your remaining recovery time\ndecreases by 2 days. Finally, there is a 33 percent\nchance that you are unable to cast wish ever again if\nyou suffer this stress.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-193"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        193
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.word-of-recall",
+    "kind": "spell",
+    "name": "Word of Recall",
+    "level": 6,
+    "school": "C",
+    "officialTextLayout": "Word of Recall\n6th---level conjuration\nCasting Time: 1 action\nRange: 5 feet\nComponents: V\nDuration: Instantaneous\nYou and up to five willing creatures within 5 feet of\nyou instantly teleport to a previously designated\nsanctuary. You and any creatures that teleport with\nyou appear in the nearest unoccupied space to the\nspot you designated when you prepared your\nsanctuary (see below). If you cast this spell without\nfirst preparing a sanctuary, the spell has no effect.\n  You must designate a sanctuary by casting this\nspell within a location, such as a temple, dedicated to\nor strongly linked to your deity. If you attempt to\ncast the spell in this manner in an area that isn’t\ndedicated to your deity, the spell has no effect.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "5 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-193"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        193
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.zone-of-truth",
+    "kind": "spell",
+    "name": "Zone of Truth",
+    "level": 2,
+    "school": "E",
+    "officialTextLayout": "Zone of Truth\n2nd---level enchantment\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: 10 minutes\n\n\n\n\n\nYou create a magical zone that guards against\ndeception in a 15---foot---radius sphere centered on a\npoint of your choice within range. Until the spell\nends, a creature that enters the spell’s area for the\nfirst time on a turn or starts its turn there must\nmake a Charisma saving throw. On a failed save, a\ncreature can’t speak a deliberate lie while in the\nradius. You know whether each creature succeeds or\nfails on its saving throw.\n  An affected creature is aware of the spell and can\nthus avoid answering questions to which it would\nnormally respond with a lie. Such a creature can be\nevasive in its answers as long as it remains within\nthe boundaries of the truth.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-193",
+      "rulebook.page-194"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        193,
+        194
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  }
+]

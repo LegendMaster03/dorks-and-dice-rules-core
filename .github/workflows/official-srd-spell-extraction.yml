@@ -4,6 +4,9 @@ on:
     branches: [main]
     paths:
       - 'tools/import_official_srd_spells.py'
+      - 'data/rulesets/dnd-5e/native/spells/**'
+      - 'data/rulesets/dnd-5-5e/native/spells/**'
+      - 'data/reference/srd/structured/spells/spells-srd*.json'
       - '.github/workflows/official-srd-spell-extraction.yml'
   workflow_dispatch:
 permissions:
@@ -30,7 +33,7 @@ jobs:
       - name: Extract named spell definitions
         env:
           EDITION: ${{ matrix.edition }}
-        run: python3 tools/import_official_srd_spells.py "$EDITION" /tmp/official-srd.pdf --output build/official-spells --emit-transfer
+        run: python3 tools/import_official_srd_spells.py "$EDITION" /tmp/official-srd.pdf --output build/official-spells --check
       - uses: actions/upload-artifact@v4
         with:
           name: official-spells-${{ matrix.edition }}

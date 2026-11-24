@@ -1,0 +1,712 @@
+[
+  {
+    "id": "spell.guardian-of-faith",
+    "kind": "spell",
+    "name": "Guardian of Faith",
+    "level": 4,
+    "school": "C",
+    "officialTextLayout": "Guardian of Faith\nLevel 4 Conjuration (Cleric)\nCasting Time: Action\nRange: 30 feet\nComponents: V\nDuration: 8 hours\nA Large spectral guardian appears and hovers for\nthe duration in an unoccupied space that you can\nsee within range. The guardian occupies that space\nand is invulnerable, and it appears in a form appro-\npriate for your deity or pantheon.\n  Any enemy that moves to a space within 10 feet of\nthe guardian for the first time on a turn or starts its\nturn there makes a Dexterity saving throw, taking\n20 Radiant damage on a failed save or half as much\ndamage on a successful one. The guardian vanishes\nwhen it has dealt a total of 60 damage.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-137"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        137
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.guards-and-wards",
+    "kind": "spell",
+    "name": "Guards and Wards",
+    "level": 6,
+    "school": "A",
+    "officialTextLayout": "Guards and Wards\nLevel 6 Abjuration (Bard, Wizard)\nCasting Time: 1 hour\nRange: Touch\nComponents: V, S, M (a silver rod worth 10+ GP)\nDuration: 24 hours\nYou create a ward that protects up to 2,500 square\nfeet of floor space. The warded area can be up to\n20 feet tall, and you shape it as one 50-foot square,\none hundred 5-foot squares that are contiguous, or\ntwenty-five 10-foot squares that are contiguous.\n  When you cast this spell, you can specify individu-\nals that are unaffected by the spell’s effects. You can\nalso specify a password that, when spoken aloud\nwithin 5 feet of the warded area, makes the speaker\nimmune to its effects.\n\n  The spell creates the effects below within the\nwarded area. Dispel Magic has no effect on Guards\nand Wards itself, but each of the following effects\ncan be dispelled. If all four are dispelled, Guards and\nWards ends. If you cast the spell every day for 365\ndays on the same area, the spell thereafter lasts un-\ntil all its effects are dispelled.\n  Corridors. Fog fills all the warded corridors,\nmaking them Heavily Obscured. In addition, at each\nintersection or branching passage offering a choice\nof direction, there is a 50 percent chance that a\ncreature other than you believes it is going in the\nopposite direction from the one it chooses.\n  Doors. All doors in the warded area are magically\nlocked, as if sealed by the Arcane Lock spell. In addi-\ntion, you can cover up to ten doors with an illusion\nto make them appear as plain sections of wall.\n  Stairs. Webs fill all stairs in the warded area from\ntop to bottom, as in the Web spell. These strands\nregrow in 10 minutes if they are destroyed while\nGuards and Wards lasts.\n  Other Spell Effect. Place one of the following mag-\nical effects within the warded area:\n• Dancing Lights in four corridors, with a simple\n  program that the lights repeat as long as Guards\n  and Wards lasts\n• Magic Mouth in two locations\n• Stinking Cloud in two locations (the vapors return\n  within 10 minutes if dispersed while Guards and\n  Wards lasts)\n• Gust of Wind in one corridor or room (the wind\n  blows continuously while the spell lasts)\n• Suggestion in one 5-foot square; any creature\n  that enters that square receives the suggestion\n  mentally",
+    "header": {
+      "Casting Time": "1 hour",
+      "Range": "Touch",
+      "Components": "V, S, M (a silver rod worth 10+ GP)",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-137",
+      "rulebook.page-138"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        137,
+        138
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.guidance",
+    "kind": "spell",
+    "name": "Guidance",
+    "level": 0,
+    "school": "D",
+    "officialTextLayout": "Guidance\nDivination Cantrip (Cleric, Druid)\nCasting Time: Action\nRange: Touch\nComponent: V, S\nDuration: Concentration, up to 1 minute\nYou touch a willing creature and choose a skill. Until\nthe spell ends, the creature adds 1d4 to any ability\ncheck using the chosen skill.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-138"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        138
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.guiding-bolt",
+    "kind": "spell",
+    "name": "Guiding Bolt",
+    "level": 1,
+    "school": "V",
+    "officialTextLayout": "Guiding Bolt\nLevel 1 Evocation (Cleric)\nCasting Time: Action\nRange: 120 feet\nComponents: V, S\nDuration: 1 round\nYou hurl a bolt of light toward a creature within\nrange. Make a ranged spell attack against the tar-\nget. On a hit, it takes 4d6 Radiant damage, and the\n\nnext attack roll made against it before the end of\nyour next turn has Advantage.\n  Using a Higher-Level Spell Slot. The damage in-\ncreases by 1d6 for each spell slot level above 1.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "V, S",
+      "Duration": "1 round"
+    },
+    "catalogReferences": [
+      "rulebook.page-138"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        138
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.gust-of-wind",
+    "kind": "spell",
+    "name": "Gust of Wind",
+    "level": 2,
+    "school": "V",
+    "officialTextLayout": "Gust of Wind\nLevel 2 Evocation (Druid, Ranger, Sorcerer, Wizard)\nCasting Time: Action\nRange: Self\nComponents: V, S, M (a legume seed)\nDuration: Concentration, up to 1 minute\nA Line of strong wind 60 feet long and 10 feet wide\nblasts from you in a direction you choose for the\nduration. Each creature in the Line must succeed on\na Strength saving throw or be pushed 15 feet away\nfrom you in a direction following the Line. A crea-\nture that ends its turn in the Line must make the\nsame save.\n  Any creature in the Line must spend 2 feet of\nmovement for every 1 foot it moves when moving\ncloser to you.\n  The gust disperses gas or vapor, and it extin-\nguishes candles and similar unprotected flames in\nthe area. It causes protected flames, such as those\nof lanterns, to dance wildly and has a 50 percent\nchance to extinguish them.\n  As a Bonus Action on your later turns, you can\nchange the direction in which the Line blasts from\nyou.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S, M (a legume seed)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-138"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        138
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.hallow",
+    "kind": "spell",
+    "name": "Hallow",
+    "level": 5,
+    "school": "A",
+    "officialTextLayout": "Hallow\nLevel 5 Abjuration (Cleric)\nCasting Time: 24 hours\nRange: Touch\nComponents: V, S, M (incense worth 1,000+ GP, which\n the spell consumes)\nDuration: Until dispelled\nYou touch a point and infuse an area around it with\nholy or unholy power. The area can have a radius up\nto 60 feet, and the spell fails if the radius includes\nan area already under the effect of Hallow. The af-\nfected area has the following effects.\n  Hallowed Ward. Choose any of these creature\ntypes: Aberration, Celestial, Elemental, Fey, Fiend,\nor Undead. Creatures of the chosen types can’t\nwillingly enter the area, and any creature that is\npossessed by or that has the Charmed or Fright-\nened condition from such creatures isn’t possessed,\nCharmed, or Frightened by them while in the area.\n  Extra Effect. You bind an extra effect to the area\nfrom the list below:\nCourage. Creatures of any types you choose can’t\n gain the Frightened condition while in the area.\nDarkness. Darkness fills the area. Normal light, as\n well as magical light created by spells of a level\n lower than this spell, can’t illuminate the area.\n\nDaylight. Bright light fills the area. Magical Dark-\n  ness created by spells of a level lower than this\n  spell can’t extinguish the light.\nPeaceful Rest. Dead bodies interred in the area\n  can’t be turned into Undead.\nExtradimensional Interference. Creatures of any\n  types you choose can’t enter or exit the area using\n  teleportation or interplanar travel.\nFear. Creatures of any types you choose have the\n  Frightened condition while in the area.\nResistance. Creatures of any types you choose have\n  Resistance to one damage type of your choice\n  while in the area.\nSilence. No sound can emanate from within the\n  area, and no sound can reach into it.\nTongues. Creatures of any types you choose can\n  communicate with any other creature in the area\n  even if they don’t share a common language.\nVulnerability. Creatures of any types you choose\n  have Vulnerability to one damage type of your\n  choice while in the area.",
+    "header": {
+      "Casting Time": "24 hours",
+      "Range": "Touch",
+      "Components": "V, S, M (incense worth 1,000+ GP, which",
+      "Duration": "Until dispelled"
+    },
+    "catalogReferences": [
+      "rulebook.page-138",
+      "rulebook.page-139"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        138,
+        139
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.hallucinatory-terrain",
+    "kind": "spell",
+    "name": "Hallucinatory Terrain",
+    "level": 4,
+    "school": "I",
+    "officialTextLayout": "Hallucinatory Terrain\nLevel 4 Illusion (Bard, Druid, Warlock, Wizard)\nCasting Time: 10 minutes\nRange: 300 feet\nComponents: V, S, M (a mushroom)\nDuration: 24 hours\nYou make natural terrain in a 150-foot Cube in\nrange look, sound, and smell like another sort of\nnatural terrain. Thus, open fields or a road can be\nmade to resemble a swamp, hill, crevasse, or some\nother difficult or impassable terrain. A pond can be\nmade to seem like a grassy meadow, a precipice like\na gentle slope, or a rock-strewn gully like a wide and\nsmooth road. Manufactured structures, equipment,\nand creatures within the area aren’t changed.\n   The tactile characteristics of the terrain are un-\nchanged, so creatures entering the area are likely\nto notice the illusion. If the difference isn’t obvious\nby touch, a creature examining the illusion can take\nthe Study action to make an Intelligence (Investiga-\ntion) check against your spell save DC to disbelieve\nit. If a creature discerns that the terrain is illusory,\nthe creature sees a vague image superimposed on\nthe real terrain.",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "300 feet",
+      "Components": "V, S, M (a mushroom)",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-139"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        139
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.harm",
+    "kind": "spell",
+    "name": "Harm",
+    "level": 6,
+    "school": "N",
+    "officialTextLayout": "Harm\nLevel 6 Necromancy (Cleric)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nYou unleash virulent magic on a creature you can\nsee within range. The target makes a Constitu-\ntion saving throw. On a failed save, it takes 14d6\n\nNecrotic damage, and its Hit Point maximum is re-\nduced by an amount equal to the Necrotic damage\nit took. On a successful save, it takes half as much\ndamage only. This spell can’t reduce a target’s Hit\nPoint maximum below 1.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-139"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        139
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.haste",
+    "kind": "spell",
+    "name": "Haste",
+    "level": 3,
+    "school": "T",
+    "officialTextLayout": "Haste\nLevel 3 Transmutation (Sorcerer, Wizard)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S, M (a shaving of licorice root)\nDuration: Concentration, up to 1 minute\nChoose a willing creature that you can see within\nrange. Until the spell ends, the target’s Speed is\ndoubled, it gains a +2 bonus to Armor Class, it has\nAdvantage on Dexterity saving throws, and it gains\nan additional action on each of its turns. That ac-\ntion can be used to take only the Attack (one attack\nonly), Dash, Disengage, Hide, or Utilize action.\n  When the spell ends, the target is Incapacitated\nand has a Speed of 0 until the end of its next turn, as\na wave of lethargy washes over it.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a shaving of licorice root)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-139"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        139
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.heal",
+    "kind": "spell",
+    "name": "Heal",
+    "level": 6,
+    "school": "A",
+    "officialTextLayout": "Heal\nLevel 6 Abjuration (Cleric, Druid)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nChoose a creature that you can see within range.\nPositive energy washes through the target, restor-\ning 70 Hit Points. This spell also ends the Blinded,\nDeafened, and Poisoned conditions on the target.\n  Using a Higher-Level Spell Slot. The healing in-\ncreases by 10 for each spell slot level above 6.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-139"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        139
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.healing-word",
+    "kind": "spell",
+    "name": "Healing Word",
+    "level": 1,
+    "school": "A",
+    "officialTextLayout": "Healing Word\nLevel 1 Abjuration (Bard, Cleric, Druid)\nCasting Time: Bonus Action\nRange: 60 feet\nComponents: V\nDuration: Instantaneous\nA creature of your choice that you can see within\nrange regains Hit Points equal to 2d4 plus your\nspellcasting ability modifier.\n  Using a Higher-Level Spell Slot. The healing in-\ncreases by 2d4 for each spell slot level above 1.",
+    "header": {
+      "Casting Time": "Bonus Action",
+      "Range": "60 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-139"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        139
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.heat-metal",
+    "kind": "spell",
+    "name": "Heat Metal",
+    "level": 2,
+    "school": "T",
+    "officialTextLayout": "Heat Metal\nLevel 2 Transmutation (Bard, Druid)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S, M (a piece of iron and a flame)\nDuration: Concentration, up to 1 minute\n\nChoose a manufactured metal object, such as a\nmetal weapon or a suit of Heavy or Medium metal\narmor, that you can see within range. You cause\nthe object to glow red-hot. Any creature in physical\ncontact with the object takes 2d8 Fire damage when\nyou cast the spell. Until the spell ends, you can take\na Bonus Action on each of your later turns to deal\nthis damage again if the object is within range.\n  If a creature is holding or wearing the object and\ntakes the damage from it, the creature must suc-\nceed on a Constitution saving throw or drop the\nobject if it can. If it doesn’t drop the object, it has\nDisadvantage on attack rolls and ability checks un-\ntil the start of your next turn.\n  Using a Higher-Level Spell Slot. The damage in-\ncreases by 1d8 for each spell slot level above 2.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S, M (a piece of iron and a flame)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-139",
+      "rulebook.page-140"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        139,
+        140
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.hellish-rebuke",
+    "kind": "spell",
+    "name": "Hellish Rebuke",
+    "level": 1,
+    "school": "V",
+    "officialTextLayout": "Hellish Rebuke\nLevel 1 Evocation (Warlock)\nCasting Time: Reaction, which you take in response to\n taking damage from a creature that you can see within\n 60 feet of yourself\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nThe creature that damaged you is momentarily sur-\nrounded by green flames. It makes a Dexterity sav-\ning throw, taking 2d10 Fire damage on a failed save\nor half as much damage on a successful one.\n  Using a Higher-Level Spell Slot. The damage in-\ncreases by 1d10 for each spell slot level above 1.",
+    "header": {
+      "Casting Time": "Reaction, which you take in response to",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-140"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        140
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.heroes-feast",
+    "kind": "spell",
+    "name": "Heroes' Feast",
+    "level": 6,
+    "school": "C",
+    "officialTextLayout": "Heroes’ Feast\nLevel 6 Conjuration (Bard, Cleric, Druid)\nCasting Time: 10 minutes\nRange: Self\nComponents: V, S, M (a gem-encrusted bowl worth\n 1,000+ GP, which the spell consumes)\nDuration: Instantaneous\nYou conjure a feast that appears on a surface in\nan unoccupied 10-foot Cube next to you. The feast\ntakes 1 hour to consume and disappears at the end\nof that time, and the beneficial effects don’t set in\nuntil this hour is over. Up to twelve creatures can\npartake of the feast.\n  A creature that partakes gains several benefits,\nwhich last for 24 hours. The creature has Resis-\ntance to Poison damage, and it has Immunity to the\nFrightened and Poisoned conditions. Its Hit Point\nmaximum also increases by 2d10, and it gains the\nsame number of Hit Points.",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "Self",
+      "Components": "V, S, M (a gem-encrusted bowl worth",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-140"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        140
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.heroism",
+    "kind": "spell",
+    "name": "Heroism",
+    "level": 1,
+    "school": "E",
+    "officialTextLayout": "Heroism\nLevel 1 Enchantment (Bard, Paladin)\nCasting Time: Action\nRange: Touch\n\nComponents: V, S\nDuration: Concentration, up to 1 minute\nA willing creature you touch is imbued with brav-\nery. Until the spell ends, the creature is immune to\nthe Frightened condition and gains Temporary Hit\nPoints equal to your spellcasting ability modifier at\nthe start of each of its turns.\n  Using a Higher-Level Spell Slot. You can target\none additional creature for each spell slot level\nabove 1.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-140"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        140
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.hex",
+    "kind": "spell",
+    "name": "Hex",
+    "level": 1,
+    "school": "E",
+    "officialTextLayout": "Hex\nLevel 1 Enchantment (Warlock)\nCasting Time: Bonus Action\nRange: 90 feet\nComponents: V, S, M (the petrified eye of a newt)\nDuration: Concentration, up to 1 hour\nYou place a curse on a creature that you can see\nwithin range. Until the spell ends, you deal an extra\n1d6 Necrotic damage to the target whenever you hit\nit with an attack roll. Also, choose one ability when\nyou cast the spell. The target has Disadvantage on\nability checks made with the chosen ability.\n   If the target drops to 0 Hit Points before this spell\nends, you can take a Bonus Action on a later turn to\ncurse a new creature.\n   Using a Higher-Level Spell Slot. Your Concentra-\ntion can last longer with a spell slot of level 2 (up to\n4 hours), 3–4 (up to 8 hours), or 5+ (24 hours).",
+    "header": {
+      "Casting Time": "Bonus Action",
+      "Range": "90 feet",
+      "Components": "V, S, M (the petrified eye of a newt)",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-140"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        140
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.hideous-laughter",
+    "kind": "spell",
+    "name": "Hideous Laughter",
+    "level": 1,
+    "school": "E",
+    "officialTextLayout": "Hideous Laughter\nLevel 1 Enchantment (Bard, Warlock, Wizard)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S, M (a tart and a feather)\nDuration: Concentration, up to 1 minute\nOne creature of your choice that you can see within\nrange makes a Wisdom saving throw. On a failed\nsave, it has the Prone and Incapacitated conditions\nfor the duration. During that time, it laughs uncon-\ntrollably if it’s capable of laughter, and it can’t end\nthe Prone condition on itself.\n  At the end of each of its turns and each time it\ntakes damage, it makes another Wisdom saving\nthrow. The target has Advantage on the save if the\nsave is triggered by damage. On a successful save,\nthe spell ends.\n  Using a Higher-Level Spell Slot. You can target\none additional creature for each spell slot level\nabove 1.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a tart and a feather)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-140"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        140
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.hold-monster",
+    "kind": "spell",
+    "name": "Hold Monster",
+    "level": 5,
+    "school": "E",
+    "officialTextLayout": "Hold Monster\nLevel 5 Enchantment (Bard, Sorcerer, Warlock,\nWizard)\nCasting Time: Action\nRange: 90 feet\n\nComponents: V, S, M (a straight piece of iron)\nDuration: Concentration, up to 1 minute\nChoose a creature that you can see within range.\nThe target must succeed on a Wisdom saving throw\nor have the Paralyzed condition for the duration. At\nthe end of each of its turns, the target repeats the\nsave, ending the spell on itself on a success.\n  Using a Higher-Level Spell Slot. You can target\none additional creature for each spell slot level\nabove 5.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "90 feet",
+      "Components": "V, S, M (a straight piece of iron)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-140",
+      "rulebook.page-141"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        140,
+        141
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.hold-person",
+    "kind": "spell",
+    "name": "Hold Person",
+    "level": 2,
+    "school": "E",
+    "officialTextLayout": "Hold Person\nLevel 2 Enchantment (Bard, Cleric, Druid, Sorcerer,\nWarlock, Wizard)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S, M (a straight piece of iron)\nDuration: Concentration, up to 1 minute\nChoose a Humanoid that you can see within range.\nThe target must succeed on a Wisdom saving throw\nor have the Paralyzed condition for the duration. At\nthe end of each of its turns, the target repeats the\nsave, ending the spell on itself on a success.\n  Using a Higher-Level Spell Slot. You can target\none additional Humanoid for each spell slot level\nabove 2.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S, M (a straight piece of iron)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-141"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        141
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.holy-aura",
+    "kind": "spell",
+    "name": "Holy Aura",
+    "level": 8,
+    "school": "A",
+    "officialTextLayout": "Holy Aura\nLevel 8 Abjuration (Cleric)\nCasting Time: Action\nRange: Self\nComponents: V, S, M (a reliquary worth 1,000+ GP)\nDuration: Concentration, up to 1 minute\nFor the duration, you emit an aura in a 30-foot Em-\nanation. While in the aura, creatures of your choice\nhave Advantage on all saving throws, and other\ncreatures have Disadvantage on attack rolls against\nthem. In addition, when a Fiend or an Undead hits\nan affected creature with a melee attack roll, the at-\ntacker must succeed on a Constitution saving throw\nor have the Blinded condition until the end of its\nnext turn.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S, M (a reliquary worth 1,000+ GP)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-141"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        141
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.hunter-s-mark",
+    "kind": "spell",
+    "name": "Hunter's Mark",
+    "level": 1,
+    "school": "D",
+    "officialTextLayout": "Hunter’s Mark\nLevel 1 Divination (Ranger)\nCasting Time: Bonus Action\nRange: 90 feet\nComponents: V\nDuration: Concentration, up to 1 hour\nYou magically mark one creature you can see within\nrange as your quarry. Until the spell ends, you deal\nan extra 1d6 Force damage to the target whenever\nyou hit it with an attack roll. You also have Advan-\ntage on any Wisdom (Perception or Survival) check\nyou make to find it.\n\n  If the target drops to 0 Hit Points before this spell\nends, you can take a Bonus Action to move the mark\nto a new creature you can see within range.\n  Using a Higher-Level Spell Slot. Your Concentra-\ntion can last longer with a spell slot of level 3–4 (up\nto 8 hours) or 5+ (up to 24 hours).",
+    "header": {
+      "Casting Time": "Bonus Action",
+      "Range": "90 feet",
+      "Components": "V",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-141"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        141
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.hypnotic-pattern",
+    "kind": "spell",
+    "name": "Hypnotic Pattern",
+    "level": 3,
+    "school": "I",
+    "officialTextLayout": "Hypnotic Pattern\nLevel 3 Illusion (Bard, Sorcerer, Warlock, Wizard)\nCasting Time: Action\nRange: 120 feet\nComponents: S, M (a pinch of confetti)\nDuration: Concentration, up to 1 minute\nYou create a twisting pattern of colors in a 30-foot\nCube within range. The pattern appears for a mo-\nment and vanishes. Each creature in the area who\ncan see the pattern must succeed on a Wisdom\nsaving throw or have the Charmed condition for the\nduration. While Charmed, the creature has the Inca-\npacitated condition and a Speed of 0.\n  The spell ends for an affected creature if it takes\nany damage or if someone else uses an action to\nshake the creature out of its stupor.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "S, M (a pinch of confetti)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-141"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        141
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.ice-knife",
+    "kind": "spell",
+    "name": "Ice Knife",
+    "level": 1,
+    "school": "C",
+    "officialTextLayout": "Ice Knife\nLevel 1 Conjuration (Druid, Sorcerer, Wizard)\nCasting Time: Action\nRange: 60 feet\nComponents: S, M (a drop of water or a piece of ice)\nDuration: Instantaneous\nYou create a shard of ice and fling it at one creature\nwithin range. Make a ranged spell attack against\nthe target. On a hit, the target takes 1d10 Piercing\ndamage. Hit or miss, the shard then explodes. The\ntarget and each creature within 5 feet of it must\nsucceed on a Dexterity saving throw or take 2d6\nCold damage.\n  Using a Higher-Level Spell Slot. The Cold damage\nincreases by 1d6 for each spell slot level above 1.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "S, M (a drop of water or a piece of ice)",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-141"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        141
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.ice-storm",
+    "kind": "spell",
+    "name": "Ice Storm",
+    "level": 4,
+    "school": "V",
+    "officialTextLayout": "Ice Storm\nLevel 4 Evocation (Druid, Sorcerer, Wizard)\nCasting Time: Action\nRange: 300 feet\nComponents: V, S, M (a mitten)\nDuration: Instantaneous\nHail falls in a 20-foot-radius, 40-foot-high Cylinder\ncentered on a point within range. Each creature\nin the Cylinder makes a Dexterity saving throw. A\ncreature takes 2d10 Bludgeoning damage and 4d6\nCold damage on a failed save or half as much dam-\nage on a successful one.\n  Hailstones turn ground in the Cylinder into Diffi-\ncult Terrain until the end of your next turn.\n\n  Using a Higher-Level Spell Slot. The Bludgeoning\ndamage increases by 1d10 for each spell slot level\nabove 4.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "300 feet",
+      "Components": "V, S, M (a mitten)",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-141",
+      "rulebook.page-142"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        141,
+        142
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.identify",
+    "kind": "spell",
+    "name": "Identify",
+    "level": 1,
+    "school": "D",
+    "officialTextLayout": "Identify\nLevel 1 Divination (Bard, Wizard)\nCasting Time: 1 minute or Ritual\nRange: Touch\nComponents: V, S, M (a pearl worth 100+ GP)\nDuration: Instantaneous\nYou touch an object throughout the spell’s casting.\nIf the object is a magic item or some other magi-\ncal object, you learn its properties and how to use\nthem, whether it requires Attunement, and how\nmany charges it has, if any. You learn whether any\nongoing spells are affecting the item and what they\nare. If the item was created by a spell, you learn that\nspell’s name.\n   If you instead touch a creature throughout the\ncasting, you learn which ongoing spells, if any, are\ncurrently affecting it.",
+    "header": {
+      "Casting Time": "1 minute or Ritual",
+      "Range": "Touch",
+      "Components": "V, S, M (a pearl worth 100+ GP)",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-142"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        142
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  }
+]

@@ -81,6 +81,8 @@ public sealed class NativeCatalogRegistryTests
         Assert.NotEqual(a!.Definition.GetRawText(), b!.Definition.GetRawText());
         Assert.Equal(401, old.CountByCategory("rulebook-page"));
         Assert.Equal(360, modern.CountByCategory("rulebook-page"));
+        Assert.Equal(319, old.CountByCategory("spell"));
+        Assert.Equal(339, modern.CountByCategory("spell"));
         foreach (var catalog in new[] { old, modern })
         {
             Assert.Equal(18, catalog.CountByCategory("skill"));

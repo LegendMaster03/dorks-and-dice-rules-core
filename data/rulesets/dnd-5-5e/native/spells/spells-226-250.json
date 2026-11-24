@@ -1,0 +1,712 @@
+[
+  {
+    "id": "spell.phantasmal-force",
+    "kind": "spell",
+    "name": "Phantasmal Force",
+    "level": 2,
+    "school": "I",
+    "officialTextLayout": "Phantasmal Force\nLevel 2 Illusion (Bard, Sorcerer, Wizard)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S, M (a bit of fleece)\nDuration: Concentration, up to 1 minute\nYou attempt to craft an illusion in the mind of a\ncreature you can see within range. The target\nmakes an Intelligence saving throw. On a failed\nsave, you create a phantasmal object, creature, or\nother phenomenon that is no larger than a 10-foot\nCube and that is perceivable only to the target for\nthe duration. The phantasm includes sound, tem-\nperature, and other stimuli.\n  The target can take a Study action to examine the\nphantasm with an Intelligence (Investigation) check\nagainst your spell save DC. If the check succeeds,\n\nthe target realizes that the phantasm is an illusion,\nand the spell ends.\n  While affected by the spell, the target treats the\nphantasm as if it were real and rationalizes any il-\nlogical outcomes from interacting with it. For exam-\nple, if the target steps through a phantasmal bridge\nand survives the fall, it believes the bridge exists\nand something else caused it to fall.\n  An affected target can even take damage from\nthe illusion if the phantasm represents a dangerous\ncreature or hazard. On each of your turns, such a\nphantasm can deal 2d8 Psychic damage to the tar-\nget if it is in the phantasm’s area or within 5 feet of\nthe phantasm. The target perceives the damage as a\ntype appropriate to the illusion.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S, M (a bit of fleece)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-151",
+      "rulebook.page-152"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        151,
+        152
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.phantasmal-killer",
+    "kind": "spell",
+    "name": "Phantasmal Killer",
+    "level": 4,
+    "school": "I",
+    "officialTextLayout": "Phantasmal Killer\nLevel 4 Illusion (Bard, Wizard)\nCasting Time: Action\nRange: 120 feet\nComponents: V, S\nDuration: Concentration, up to 1 minute\nYou tap into the nightmares of a creature you can\nsee within range and create an illusion of its deep-\nest fears, visible only to that creature. The target\nmakes a Wisdom saving throw. On a failed save, the\ntarget takes 4d10 Psychic damage and has Disad-\nvantage on ability checks and attack rolls for the\nduration. On a successful save, the target takes half\nas much damage, and the spell ends.\n  For the duration, the target makes a Wisdom sav-\ning throw at the end of each of its turns. On a failed\nsave, it takes the Psychic damage again. On a suc-\ncessful save, the spell ends.\n  Using a Higher-Level Spell Slot. The damage in-\ncreases by 1d10 for each spell slot level above 4.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-152"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        152
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.phantom-steed",
+    "kind": "spell",
+    "name": "Phantom Steed",
+    "level": 3,
+    "school": "I",
+    "officialTextLayout": "Phantom Steed\nLevel 3 Illusion (Wizard)\nCasting Time: 1 minute or Ritual\nRange: 30 feet\nComponents: V, S\nDuration: 1 hour\nA Large, quasi-real, horselike creature appears on\nthe ground in an unoccupied space of your choice\nwithin range. You decide the creature’s appearance,\nand it is equipped with a saddle, bit, and bridle. Any\nof the equipment created by the spell vanishes in a\npuff of smoke if it is carried more than 10 feet away\nfrom the steed.\n  For the duration, you or a creature you choose\ncan ride the steed. The steed uses the Riding Horse\nstat block (see “Monsters”), except it has a Speed of\n100 feet and can travel 13 miles in an hour. When\nthe spell ends, the steed gradually fades, giving the\nrider 1 minute to dismount. The spell ends early if\nthe steed takes any damage.",
+    "header": {
+      "Casting Time": "1 minute or Ritual",
+      "Range": "30 feet",
+      "Components": "V, S",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-152"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        152
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.planar-ally",
+    "kind": "spell",
+    "name": "Planar Ally",
+    "level": 6,
+    "school": "C",
+    "officialTextLayout": "Planar Ally\nLevel 6 Conjuration (Cleric)\nCasting Time: 10 minutes\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nYou beseech an otherworldly entity for aid. The be-\ning must be known to you: a god, a demon prince, or\nsome other being of cosmic power. That entity sends\na Celestial, an Elemental, or a Fiend loyal to it to aid\nyou, making the creature appear in an unoccupied\nspace within range. If you know a specific creature’s\nname, you can speak that name when you cast this\nspell to request that creature, though you might get\na different creature anyway (GM’s choice).\n   When the creature appears, it is under no com-\npulsion to behave a particular way. You can ask it\nto perform a service in exchange for payment, but\nit isn’t obliged to do so. The requested task could\nrange from simple (fly us across the chasm, or help\nus fight a battle) to complex (spy on our enemies, or\nprotect us during our foray into the dungeon). You\nmust be able to communicate with the creature to\nbargain for its services.\n   Payment can take a variety of forms. A Celestial\nmight require a sizable donation of gold or magic\nitems to an allied temple, while a Fiend might de-\nmand a living sacrifice or a gift of treasure. Some\ncreatures might exchange their service for a quest\nundertaken by you.\n   A task that can be measured in minutes requires a\npayment worth 100 GP per minute. A task measured\nin hours requires 1,000 GP per hour. And a task\nmeasured in days (up to 10 days) requires 10,000\nGP per day. The GM can adjust these payments\nbased on the circumstances under which you cast\nthe spell. If the task is aligned with the creature’s\nethos, the payment might be halved or even waived.\nNonhazardous tasks typically require only half the\nsuggested payment, while especially dangerous\ntasks might require a greater gift. Creatures rarely\naccept tasks that seem suicidal.\n   After the creature completes the task, or when the\nagreed-upon duration of service expires, the crea-\nture returns to its home plane after reporting back\nto you if possible. If you are unable to agree on a\nprice for the creature’s service, the creature imme-\ndiately returns to its home plane.",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-152"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        152
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.planar-binding",
+    "kind": "spell",
+    "name": "Planar Binding",
+    "level": 5,
+    "school": "A",
+    "officialTextLayout": "Planar Binding\nLevel 5 Abjuration (Bard, Cleric, Druid, Warlock,\nWizard)\nCasting Time: 1 hour\nRange: 60 feet\nComponents: V, S, M (a jewel worth 1,000+ GP, which\n the spell consumes)\nDuration: 24 hours\n\nYou attempt to bind a Celestial, an Elemental, a\nFey, or a Fiend to your service. The creature must\nbe within range for the entire casting of the spell.\n(Typically, the creature is first summoned into the\ncenter of the inverted version of the Magic Circle\nspell to trap it while this spell is cast.) At the com-\npletion of the casting, the target must succeed on\na Charisma saving throw or be bound to serve you\nfor the duration. If the creature was summoned or\ncreated by another spell, that spell’s duration is ex-\ntended to match the duration of this spell.\n  A bound creature must follow your commands\nto the best of its ability. You might command the\ncreature to accompany you on an adventure, to\nguard a location, or to deliver a message. If the\ncreature is Hostile, it strives to twist your com-\nmands to achieve its own objectives. If the creature\ncarries out your commands completely before the\nspell ends, it travels to you to report this fact if you\nare on the same plane of existence. If you are on a\ndifferent plane, it returns to the place where you\nbound it and remains there until the spell ends.\n  Using a Higher-Level Spell Slot. The duration\nincreases with a spell slot of level 6 (10 days), 7 (30\ndays), 8 (180 days), and 9 (366 days).",
+    "header": {
+      "Casting Time": "1 hour",
+      "Range": "60 feet",
+      "Components": "V, S, M (a jewel worth 1,000+ GP, which",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-152",
+      "rulebook.page-153"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        152,
+        153
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.plane-shift",
+    "kind": "spell",
+    "name": "Plane Shift",
+    "level": 7,
+    "school": "C",
+    "officialTextLayout": "Plane Shift\nLevel 7 Conjuration (Cleric, Druid, Sorcerer, Warlock,\nWizard)\nCasting Time: Action\nRange: Touch\nComponents: V, S, M (a forked, metal rod worth 250+\n GP and attuned to a plane of existence)\nDuration: Instantaneous\nYou and up to eight willing creatures who link\nhands in a circle are transported to a different plane\nof existence. You can specify a target destination in\ngeneral terms, such as a specific city on the Elemen-\ntal Plane of Fire or palace on the second level of the\nNine Hells, and you appear in or near that destina-\ntion, as determined by the GM.\n  Alternatively, if you know the sigil sequence of a\nteleportation circle on another plane of existence,\nthis spell can take you to that circle. If the teleporta-\ntion circle is too small to hold all the creatures you\ntransported, they appear in the closest unoccupied\nspaces next to the circle.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S, M (a forked, metal rod worth 250+",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-153"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        153
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.plant-growth",
+    "kind": "spell",
+    "name": "Plant Growth",
+    "level": 3,
+    "school": "T",
+    "officialTextLayout": "Plant Growth\nLevel 3 Transmutation (Bard, Druid, Ranger)\nCasting Time: Action (Overgrowth) or\n 8 hours (Enrichment)\nRange: 150 feet\nComponents: V, S\nDuration: Instantaneous\n\nThis spell channels vitality into plants. The casting\ntime you use determines whether the spell has the\nOvergrowth or the Enrichment effect below.\n  Overgrowth. Choose a point within range. All\nnormal plants in a 100-foot-radius Sphere centered\non that point become thick and overgrown. A crea-\nture moving through that area must spend 4 feet of\nmovement for every 1 foot it moves. You can exclude\none or more areas of any size within the spell’s area\nfrom being affected.\n  Enrichment. All plants in a half-mile radius cen-\ntered on a point within range become enriched for\n365 days. The plants yield twice the normal amount\nof food when harvested. They can benefit from only\none Plant Growth per year.",
+    "header": {
+      "Casting Time": "Action (Overgrowth) or",
+      "Range": "150 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-153"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        153
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.poison-spray",
+    "kind": "spell",
+    "name": "Poison Spray",
+    "level": 0,
+    "school": "N",
+    "officialTextLayout": "Poison Spray\nNecromancy Cantrip (Druid, Sorcerer, Warlock,\nWizard)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S\nDuration: Instantaneous\nYou spray toxic mist at a creature within range.\nMake a ranged spell attack against the target. On a\nhit, the target takes 1d12 Poison damage.\n  Cantrip Upgrade. The damage increases by 1d12\nwhen you reach levels 5 (2d12), 11 (3d12), and 17\n(4d12).",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-153"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        153
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.polymorph",
+    "kind": "spell",
+    "name": "Polymorph",
+    "level": 4,
+    "school": "T",
+    "officialTextLayout": "Polymorph\nLevel 4 Transmutation (Bard, Druid, Sorcerer, Wizard)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S, M (a caterpillar cocoon)\nDuration: Concentration, up to 1 hour\nYou attempt to transform a creature that you can\nsee within range into a Beast. The target must suc-\nceed on a Wisdom saving throw or shape-shift into\na Beast form for the duration. That form can be any\nBeast you choose that has a Challenge Rating equal\nto or less than the target’s (or the target’s level if\nit doesn’t have a Challenge Rating). The target’s\ngame statistics are replaced by the stat block of the\nchosen Beast, but the target retains its alignment,\npersonality, creature type, Hit Points, and Hit Point\nDice. See the “Animals” section of “Monsters” for a\nsample of Beast stat blocks.\n   The target gains a number of Temporary Hit\nPoints equal to the Hit Points of the Beast form.\nThese Temporary Hit Points vanish if any remain\nwhen the spell ends. The spell ends early on the tar-\nget if it has no Temporary Hit Points left.\n   The target is limited in the actions it can perform\nby the anatomy of its new form, and it can’t speak or\ncast spells.\n\n  The target’s gear melds into the new form. The\ncreature can’t use or otherwise benefit from any of\nthat equipment.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S, M (a caterpillar cocoon)",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-153",
+      "rulebook.page-154"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        153,
+        154
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.power-word-heal",
+    "kind": "spell",
+    "name": "Power Word Heal",
+    "level": 9,
+    "school": "E",
+    "officialTextLayout": "Power Word Heal\nLevel 9 Enchantment (Bard, Cleric)\nCasting Time: Action\nRange: 60 feet\nComponent: V\nDuration: Instantaneous\nA wave of healing energy washes over one creature\nyou can see within range. The target regains all its\nHit Points. If the creature has the Charmed, Fright-\nened, Paralyzed, Poisoned, or Stunned condition,\nthe condition ends. If the creature has the Prone\ncondition, it can use its Reaction to stand up.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-154"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        154
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.power-word-kill",
+    "kind": "spell",
+    "name": "Power Word Kill",
+    "level": 9,
+    "school": "E",
+    "officialTextLayout": "Power Word Kill\nLevel 9 Enchantment (Bard, Sorcerer, Warlock,\nWizard)\nCasting Time: Action\nRange: 60 feet\nComponent: V\nDuration: Instantaneous\nYou compel one creature you can see within range\nto die. If the target has 100 Hit Points or fewer, it\ndies. Otherwise, it takes 12d12 Psychic damage.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-154"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        154
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.power-word-stun",
+    "kind": "spell",
+    "name": "Power Word Stun",
+    "level": 8,
+    "school": "E",
+    "officialTextLayout": "Power Word Stun\nLevel 8 Enchantment (Bard, Sorcerer, Warlock,\nWizard)\nCasting Time: Action\nRange: 60 feet\nComponents: V\nDuration: Instantaneous\nYou overwhelm the mind of one creature you can\nsee within range. If the target has 150 Hit Points or\nfewer, it has the Stunned condition. Otherwise, its\nSpeed is 0 until the start of your next turn.\n  The Stunned target makes a Constitution saving\nthrow at the end of each of its turns, ending the con-\ndition on itself on a success.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-154"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        154
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.prayer-of-healing",
+    "kind": "spell",
+    "name": "Prayer of Healing",
+    "level": 2,
+    "school": "A",
+    "officialTextLayout": "Prayer of Healing\nLevel 2 Abjuration (Cleric, Paladin)\nCasting Time: 10 minutes\nRange: 30 feet\nComponents: V\nDuration: Instantaneous\nUp to five creatures of your choice who remain\nwithin range for the spell’s entire casting gain the\nbenefits of a Short Rest and also regain 2d8 Hit\nPoints. A creature can’t be affected by this spell\nagain until that creature finishes a Long Rest.\n\n  Using a Higher-Level Spell Slot. The healing in-\ncreases by 1d8 for each spell slot level above 2.",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "30 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-154"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        154
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.prestidigitation",
+    "kind": "spell",
+    "name": "Prestidigitation",
+    "level": 0,
+    "school": "T",
+    "officialTextLayout": "Prestidigitation\nTransmutation Cantrip (Bard, Sorcerer, Warlock,\nWizard)\nCasting Time: Action\nRange: 10 feet\nComponents: V, S\nDuration: Up to 1 hour\nYou create a magical effect within range. Choose\nthe effect from the options below. If you cast this\nspell multiple times, you can have up to three of its\nnon-instantaneous effects active at a time.\n  Sensory Effect. You create an instantaneous,\nharmless sensory effect, such as a shower of sparks,\na puff of wind, faint musical notes, or an odd odor.\n  Fire Play. You instantaneously light or snuff out a\ncandle, a torch, or a small campfire.\n  Clean or Soil. You instantaneously clean or soil an\nobject no larger than 1 cubic foot.\n  Minor Sensation. You chill, warm, or flavor up to\n1 cubic foot of nonliving material for 1 hour.\n  Magic Mark. You make a color, a small mark, or a\nsymbol appear on an object or a surface for 1 hour.\n  Minor Creation. You create a nonmagical trinket\nor an illusory image that can fit in your hand. It\nlasts until the end of your next turn. A trinket can\ndeal no damage and has no monetary worth.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "10 feet",
+      "Components": "V, S",
+      "Duration": "Up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-154"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        154
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.prismatic-spray",
+    "kind": "spell",
+    "name": "Prismatic Spray",
+    "level": 7,
+    "school": "V",
+    "officialTextLayout": "Prismatic Spray\nLevel 7 Evocation (Bard, Sorcerer, Wizard)\nCasting Time: Action\nRange: Self\nComponents: V, S\nDuration: Instantaneous\nEight rays of light flash from you in a 60-foot Cone.\nEach creature in the Cone makes a Dexterity saving\nthrow. For each target, roll 1d8 to determine which\ncolor ray affects it, consulting the Prismatic Rays\ntable.\n\nPrismatic Rays\n 1d8 Ray\n  1   Red. Failed Save: 12d6 Fire damage. Successful\n      Save: Half as much damage.\n  2   Orange. Failed Save: 12d6 Acid damage. Successful\n      Save: Half as much damage.\n  3   Yellow. Failed Save: 12d6 Lightning damage. Suc-\n      cessful Save: Half as much damage.\n  4   Green. Failed Save: 12d6 Poison damage. Success-\n      ful Save: Half as much damage.\n\n 1d8 Ray\n  5   Blue. Failed Save: 12d6 Cold damage. Successful\n      Save: Half as much damage.\n  6   Indigo. Failed Save: The target has the Restrained\n      condition and makes a Constitution saving throw\n      at the end of each of its turns. If it successfully\n      saves three times, the condition ends. If it fails\n      three times, it has the Petrified condition until it\n      is freed by an effect like the Greater Restoration\n      spell. The successes and failures needn’t be con-\n      secutive; keep track of both until the target col-\n      lects three of a kind.\n  7   Violet. Failed Save: The target has the Blinded\n      condition and makes a Wisdom saving throw at\n      the start of your next turn. On a successful save,\n      the condition ends. On a failed save, the condi-\n      tion ends, and the creature teleports to another\n      plane of existence (GM’s choice).\n  8   Special. The target is struck by two rays. Roll\n      twice, rerolling any 8.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-154",
+      "rulebook.page-155"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        154,
+        155
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.prismatic-wall",
+    "kind": "spell",
+    "name": "Prismatic Wall",
+    "level": 9,
+    "school": "A",
+    "officialTextLayout": "Prismatic Wall\nLevel 9 Abjuration (Bard, Wizard)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S\nDuration: 10 minutes\nA shimmering, multicolored plane of light forms\na vertical opaque wall—up to 90 feet long, 30 feet\nhigh, and 1 inch thick—centered on a point within\nrange. Alternatively, you shape the wall into a globe\nup to 30 feet in diameter centered on a point within\nrange. The wall lasts for the duration. If you posi-\ntion the wall in a space occupied by a creature, the\nspell ends instantly without effect.\n  The wall sheds Bright Light within 100 feet and\nDim Light for an additional 100 feet. You and crea-\ntures you designate when you cast the spell can\npass through and be near the wall without harm. If\nanother creature that can see the wall moves within\n20 feet of it or starts its turn there, the creature\nmust succeed on a Constitution saving throw or\nhave the Blinded condition for 1 minute.\n  The wall consists of seven layers, each with a\ndifferent color. When a creature reaches into or\npasses through the wall, it does so one layer at a\ntime through all the layers. Each layer forces the\ncreature to make a Dexterity saving throw or be af-\nfected by that layer’s properties as described in the\nPrismatic Layers table.\n  The wall, which has AC 10, can be destroyed one\nlayer at a time, in order from red to violet, by means\n\nspecific to each layer. If a layer is destroyed, it is\ngone for the duration. Antimagic Field has no effect\non the wall, and Dispel Magic can affect only the vio-\nlet layer.\n\nPrismatic Layers\n Order   Effects\n   1     Red. Failed Save: 12d6 Fire damage. Successful\n         Save: Half as much damage. Additional Effects:\n         Nonmagical ranged attacks can’t pass through\n         this layer, which is destroyed if it takes at\n         least 25 Cold damage.\n   2     Orange. Failed Save: 12d6 Acid damage. Suc-\n         cessful Save: Half as much damage. Additional\n         Effects: Magical ranged attacks can’t pass\n         through this layer, which is destroyed by a\n         strong wind (such as the one created by Gust\n         of Wind).\n   3     Yellow. Failed Save: 12d6 Lightning damage.\n         Successful Save: Half as much damage. Addi-\n         tional Effects: The layer is destroyed if it takes\n         at least 60 Force damage.\n   4     Green. Failed Save: 12d6 Poison damage. Suc-\n         cessful Save: Half as much damage. Additional\n         Effects: A Passwall spell, or another spell of\n         equal or greater level that can open a portal\n         on a solid surface, destroys this layer.\n   5     Blue. Failed Save: 12d6 Cold damage. Success-\n         ful Save: Half as much damage. Additional Ef-\n         fects: The layer is destroyed if it takes at least\n         25 Fire damage.\n   6     Indigo. Failed Save: The target has the Re-\n         strained condition and makes a Constitution\n         saving throw at the end of each of its turns. If\n         it successfully saves three times, the condition\n         ends. If it fails three times, it has the Petrified\n         condition until it is freed by an effect like the\n         Greater Restoration spell. The successes and\n         failures needn’t be consecutive; keep track of\n         both until the target collects three of a kind.\n         Additional Effects: Spells can’t be cast through\n         this layer, which is destroyed by Bright Light\n         shed by the Daylight spell.\n   7     Violet. Failed Save: The target has the Blinded\n         condition and makes a Wisdom saving throw\n         at the start of your next turn. On a successful\n         save, the condition ends. On a failed save, the\n         condition ends, and the creature teleports\n         to another plane of existence (GM’s choice).\n         Additional Effects: This layer is destroyed by\n         Dispel Magic.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-155"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        155
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.private-sanctum",
+    "kind": "spell",
+    "name": "Private Sanctum",
+    "level": 4,
+    "school": "A",
+    "officialTextLayout": "Private Sanctum\nLevel 4 Abjuration (Wizard)\nCasting Time: 10 minutes\nRange: 120 feet\nComponents: V, S, M (a thin sheet of lead)\nDuration: 24 hours\nYou make an area within range magically secure.\nThe area is a Cube that can be as small as 5 feet to\nas large as 100 feet on each side. The spell lasts for\nthe duration.\n  When you cast the spell, you decide what sort of\nsecurity the spell provides, choosing any of the fol-\nlowing properties:\n• Sound can’t pass through the barrier at the edge\n  of the warded area.\n• The barrier of the warded area appears dark and\n  foggy, preventing vision (including Darkvision)\n  through it.\n• Sensors created by Divination spells can’t appear\n  inside the protected area or pass through the bar-\n  rier at its perimeter.\n• Creatures in the area can’t be targeted by Divina-\n  tion spells.\n• Nothing can teleport into or out of the warded\n  area.\n• Planar travel is blocked within the warded area.\n  Casting this spell on the same spot every day for\n365 days makes the spell last until dispelled.\n  Using a Higher-Level Spell Slot. You can increase\nthe size of the Cube by 100 feet for each spell slot\nlevel above 4.",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "120 feet",
+      "Components": "V, S, M (a thin sheet of lead)",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-156"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        156
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.produce-flame",
+    "kind": "spell",
+    "name": "Produce Flame",
+    "level": 0,
+    "school": "C",
+    "officialTextLayout": "Produce Flame\nConjuration Cantrip (Druid)\nCasting Time: Bonus Action\nRange: Self\nComponents: V, S\nDuration: 10 minutes\nA flickering flame appears in your hand and re-\nmains there for the duration. While there, the flame\nemits no heat and ignites nothing, and it sheds\nBright Light in a 20-foot radius and Dim Light for an\nadditional 20 feet. The spell ends if you cast it again.\n  Until the spell ends, you can take a Magic action to\nhurl fire at a creature or an object within 60 feet of\nyou. Make a ranged spell attack. On a hit, the target\ntakes 1d8 Fire damage.\n  Cantrip Upgrade. The damage increases by 1d8\nwhen you reach levels 5 (2d8), 11 (3d8), and 17\n(4d8).",
+    "header": {
+      "Casting Time": "Bonus Action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-156"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        156
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.programmed-illusion",
+    "kind": "spell",
+    "name": "Programmed Illusion",
+    "level": 6,
+    "school": "I",
+    "officialTextLayout": "Programmed Illusion\nLevel 6 Illusion (Bard, Wizard)\nCasting Time: Action\nRange: 120 feet\n\nComponents: V, S, M (jade dust worth 25+ GP)\nDuration: Until dispelled\nYou create an illusion of an object, a creature, or\nsome other visible phenomenon within range that\nactivates when a specific trigger occurs. The illu-\nsion is imperceptible until then. It must be no larger\nthan a 30-foot Cube, and you decide when you cast\nthe spell how the illusion behaves and what sounds\nit makes. This scripted performance can last up to 5\nminutes.\n   When the trigger you specify occurs, the illusion\nsprings into existence and performs in the manner\nyou described. Once the illusion finishes perform-\ning, it disappears and remains dormant for 10 min-\nutes, after which the illusion can be activated again.\n   The trigger can be as general or as detailed as you\nlike, though it must be based on visual or audible\nphenomena that occur within 30 feet of the area.\nFor example, you could create an illusion of yourself\nto appear and warn off others who attempt to open\na trapped door.\n   Physical interaction with the image reveals it\nto be illusory, since things can pass through it. A\ncreature that takes the Study action to examine\nthe image can determine that it is an illusion with a\nsuccessful Intelligence (Investigation) check against\nyour spell save DC. If a creature discerns the illu-\nsion for what it is, the creature can see through the\nimage, and any noise it makes sounds hollow to the\ncreature.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "V, S, M (jade dust worth 25+ GP)",
+      "Duration": "Until dispelled"
+    },
+    "catalogReferences": [
+      "rulebook.page-156"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        156
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.project-image",
+    "kind": "spell",
+    "name": "Project Image",
+    "level": 7,
+    "school": "I",
+    "officialTextLayout": "Project Image\nLevel 7 Illusion (Bard, Wizard)\nCasting Time: Action\nRange: 500 miles\nComponents: V, S, M (a statuette of yourself worth\n 5+ GP)\nDuration: Concentration, up to 1 day\nYou create an illusory copy of yourself that lasts for\nthe duration. The copy can appear at any location\nwithin range that you have seen before, regardless\nof intervening obstacles. The illusion looks and\nsounds like you, but it is intangible. If the illusion\ntakes any damage, it disappears, and the spell ends.\n  You can see through the illusion’s eyes and hear\nthrough its ears as if you were in its space. As a\nMagic action, you can move it up to 60 feet and\nmake it gesture, speak, and behave in whatever way\nyou choose. It mimics your mannerisms perfectly.\n  Physical interaction with the image reveals it\nto be illusory, since things can pass through it. A\ncreature that takes the Study action to examine\nthe image can determine that it is an illusion with a\nsuccessful Intelligence (Investigation) check against\nyour spell save DC. If a creature discerns the illu-\nsion for what it is, the creature can see through the\n\nimage, and any noise it makes sounds hollow to the\ncreature.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "500 miles",
+      "Components": "V, S, M (a statuette of yourself worth",
+      "Duration": "Concentration, up to 1 day"
+    },
+    "catalogReferences": [
+      "rulebook.page-156",
+      "rulebook.page-157"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        156,
+        157
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.protection-from-energy",
+    "kind": "spell",
+    "name": "Protection from Energy",
+    "level": 3,
+    "school": "A",
+    "officialTextLayout": "Protection from Energy\nLevel 3 Abjuration (Cleric, Druid, Ranger, Sorcerer,\nWizard)\nCasting Time: Action\nRange: Touch\nComponents: V, S\nDuration: Concentration, up to 1 hour\nFor the duration, the willing creature you touch has\nResistance to one damage type of your choice: Acid,\nCold, Fire, Lightning, or Thunder.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-157"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        157
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.protection-from-evil-and-good",
+    "kind": "spell",
+    "name": "Protection from Evil and Good",
+    "level": 1,
+    "school": "A",
+    "officialTextLayout": "Protection from Evil and Good\nLevel 1 Abjuration (Cleric, Druid, Paladin, Warlock,\nWizard)\nCasting Time: Action\nRange: Touch\nComponents: V, S, M (a flask of Holy Water worth 25+\n GP, which the spell consumes)\nDuration: Concentration up to 10 minutes\nUntil the spell ends, one willing creature you touch\nis protected against creatures that are Aberrations,\nCelestials, Elementals, Fey, Fiends, or Undead.\nThe protection grants several benefits. Creatures\nof those types have Disadvantage on attack rolls\nagainst the target. The target also can’t be pos-\nsessed by or gain the Charmed or Frightened condi-\ntions from them. If the target is already possessed,\nCharmed, or Frightened by such a creature, the tar-\nget has Advantage on any new saving throw against\nthe relevant effect.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S, M (a flask of Holy Water worth 25+",
+      "Duration": "Concentration up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-157"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        157
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.protection-from-poison",
+    "kind": "spell",
+    "name": "Protection from Poison",
+    "level": 2,
+    "school": "A",
+    "officialTextLayout": "Protection from Poison\nLevel 2 Abjuration (Cleric, Druid, Paladin, Ranger)\nCasting Time: Action\nRange: Touch\nComponents: V, S\nDuration: 1 hour\nYou touch a creature and end the Poisoned condi-\ntion on it. For the duration, the target has Advan-\ntage on saving throws to avoid or end the Poisoned\ncondition, and it has Resistance to Poison damage.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-157"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        157
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.purify-food-and-drink",
+    "kind": "spell",
+    "name": "Purify Food and Drink",
+    "level": 1,
+    "school": "T",
+    "officialTextLayout": "Purify Food and Drink\nLevel 1 Transmutation (Cleric, Druid, Paladin)\nCasting Time: Action or Ritual\nRange: 10 feet\nComponents: V, S\nDuration: Instantaneous\nYou remove poison and rot from nonmagical food\nand drink in a 5-foot-radius Sphere centered on a\npoint within range.",
+    "header": {
+      "Casting Time": "Action or Ritual",
+      "Range": "10 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-157"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        157
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.raise-dead",
+    "kind": "spell",
+    "name": "Raise Dead",
+    "level": 5,
+    "school": "N",
+    "officialTextLayout": "Raise Dead\nLevel 5 Necromancy (Bard, Cleric, Paladin)\nCasting Time: 1 hour\nRange: Touch\nComponents: V, S, M (a diamond worth 500+ GP, which\n the spell consumes)\nDuration: Instantaneous\nWith a touch, you revive a dead creature if it has\nbeen dead no longer than 10 days and it wasn’t Un-\ndead when it died.\n  The creature returns to life with 1 Hit Point. This\nspell also neutralizes any poisons that affected the\ncreature at the time of death.\n  This spell closes all mortal wounds, but it doesn’t\nrestore missing body parts. If the creature is lack-\ning body parts or organs integral for its survival—\nits head, for instance—the spell automatically fails.\n  Coming back from the dead is an ordeal. The tar-\nget takes a −4 penalty to D20 Tests. Every time the\ntarget finishes a Long Rest, the penalty is reduced\nby 1 until it becomes 0.",
+    "header": {
+      "Casting Time": "1 hour",
+      "Range": "Touch",
+      "Components": "V, S, M (a diamond worth 500+ GP, which",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-157"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        157
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  }
+]

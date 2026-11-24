@@ -1,0 +1,708 @@
+[
+  {
+    "id": "spell.darkvision",
+    "kind": "spell",
+    "name": "Darkvision",
+    "level": 2,
+    "school": "T",
+    "officialTextLayout": "Darkvision\nLevel 2 Transmutation (Druid, Ranger, Sorcerer,\nWizard)\nCasting Time: Action\nRange: Touch\nComponents: V, S, M (a dried carrot)\nDuration: 8 hours\nFor the duration, a willing creature you touch has\nDarkvision with a range of 150 feet.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S, M (a dried carrot)",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-122"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        122
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.daylight",
+    "kind": "spell",
+    "name": "Daylight",
+    "level": 3,
+    "school": "V",
+    "officialTextLayout": "Daylight\nLevel 3 Evocation (Cleric, Druid, Paladin, Ranger,\nSorcerer)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S\nDuration: 1 hour\nFor the duration, sunlight spreads from a point\nwithin range and fills a 60-foot-radius Sphere. The\nsunlight’s area is Bright Light and sheds Dim Light\nfor an additional 60 feet.\n  Alternatively, you cast the spell on an object that\nisn’t being worn or carried, causing the sunlight\nto fill a 60-foot Emanation originating from that\n\nobject. Covering that object with something opaque,\nsuch as a bowl or helm, blocks the sunlight.\n  If any of this spell’s area overlaps with an area of\nDarkness created by a spell of level 3 or lower, that\nother spell is dispelled.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-122"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        122
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.death-ward",
+    "kind": "spell",
+    "name": "Death Ward",
+    "level": 4,
+    "school": "A",
+    "officialTextLayout": "Death Ward\nLevel 4 Abjuration (Cleric, Paladin)\nCasting Time: Action\nRange: Touch\nComponents: V, S\nDuration: 8 hours\nYou touch a creature and grant it a measure of pro-\ntection from death. The first time the target would\ndrop to 0 Hit Points before the spell ends, the target\ninstead drops to 1 Hit Point, and the spell ends.\n  If the spell is still in effect when the target is sub-\njected to an effect that would kill it instantly with-\nout dealing damage, that effect is negated against\nthe target, and the spell ends.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-122"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        122
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.delayed-blast-fireball",
+    "kind": "spell",
+    "name": "Delayed Blast Fireball",
+    "level": 7,
+    "school": "V",
+    "officialTextLayout": "Delayed Blast Fireball\nLevel 7 Evocation (Sorcerer, Wizard)\nCasting Time: Action\nRange: 150 feet\nComponents: V, S, M (a ball of bat guano and sulfur)\nDuration: Concentration, up to 1 minute\nA beam of yellow light flashes from you, then con-\ndenses at a chosen point within range as a glowing\nbead for the duration. When the spell ends, the bead\nexplodes, and each creature in a 20-foot-radius\nSphere centered on that point makes a Dexterity\nsaving throw. A creature takes Fire damage equal\nto the total accumulated damage on a failed save or\nhalf as much damage on a successful one.\n  The spell’s base damage is 12d6, and the damage\nincreases by 1d6 whenever your turn ends and the\nspell hasn’t ended.\n  If a creature touches the glowing bead before the\nspell ends, that creature makes a Dexterity saving\nthrow. On a failed save, the spell ends, causing the\nbead to explode. On a successful save, the creature\ncan throw the bead up to 40 feet. If the thrown bead\nenters a creature’s space or collides with a solid ob-\nject, the spell ends, and the bead explodes.\n  When the bead explodes, flammable objects in the\nexplosion that aren’t being worn or carried start\nburning.\n  Using a Higher-Level Spell Slot. The base damage\nincreases by 1d6 for each spell slot level above 7.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "150 feet",
+      "Components": "V, S, M (a ball of bat guano and sulfur)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-122"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        122
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.demiplane",
+    "kind": "spell",
+    "name": "Demiplane",
+    "level": 8,
+    "school": "C",
+    "officialTextLayout": "Demiplane\nLevel 8 Conjuration (Sorcerer, Warlock, Wizard)\nCasting Time: Action\nRange: 60 feet\nComponents: S\nDuration: 1 hour\n\nYou create a shadowy Medium door on a flat solid\nsurface that you can see within range. This door can\nbe opened and closed, and it leads to a demiplane\nthat is an empty room 30 feet in each dimension,\nmade of wood or stone (your choice).\n  When the spell ends, the door vanishes, and any\nobjects inside the demiplane remain there. Any\ncreatures inside also remain unless they opt to be\nshunted through the door as it vanishes, landing\nwith the Prone condition in the unoccupied spaces\nclosest to the door’s former space.\n  Each time you cast this spell, you can create a\nnew demiplane or connect the shadowy door to a\ndemiplane you created with a previous casting of\nthis spell. Additionally, if you know the nature and\ncontents of a demiplane created by a casting of this\nspell by another creature, you can connect the shad-\nowy door to that demiplane instead.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "S",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-122",
+      "rulebook.page-123"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        122,
+        123
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.detect-evil-and-good",
+    "kind": "spell",
+    "name": "Detect Evil and Good",
+    "level": 1,
+    "school": "D",
+    "officialTextLayout": "Detect Evil and Good\nLevel 1 Divination (Cleric, Paladin)\nCasting Time: Action\nRange: Self\nComponents: V, S\nDuration: Concentration, up to 10 minutes\nFor the duration, you sense the location of any Ab-\nerration, Celestial, Elemental, Fey, Fiend, or Undead\nwithin 30 feet of yourself. You also sense whether\nthe Hallow spell is active there and, if so, where.\n  The spell is blocked by 1 foot of stone, dirt, or\nwood; 1 inch of metal; or a thin sheet of lead.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-123"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        123
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.detect-magic",
+    "kind": "spell",
+    "name": "Detect Magic",
+    "level": 1,
+    "school": "D",
+    "officialTextLayout": "Detect Magic\nLevel 1 Divination (Bard, Cleric, Druid, Paladin,\nRanger, Sorcerer, Warlock, Wizard)\nCasting Time: Action or Ritual\nRange: Self\nComponents: V, S\nDuration: Concentration, up to 10 minutes\nFor the duration, you sense the presence of magical\neffects within 30 feet of yourself. If you sense such\neffects, you can take the Magic action to see a faint\naura around any visible creature or object in the\narea that bears the magic, and if an effect was cre-\nated by a spell, you learn the spell’s school of magic.\n  The spell is blocked by 1 foot of stone, dirt, or\nwood; 1 inch of metal; or a thin sheet of lead.",
+    "header": {
+      "Casting Time": "Action or Ritual",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-123"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        123
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.detect-poison-and-disease",
+    "kind": "spell",
+    "name": "Detect Poison and Disease",
+    "level": 1,
+    "school": "D",
+    "officialTextLayout": "Detect Poison and Disease\nLevel 1 Divination (Cleric, Druid, Paladin, Ranger)\nCasting Time: Action or Ritual\nRange: Self\nComponents: V, S, M (a yew leaf)\nDuration: Concentration, up to 10 minutes\nFor the duration, you sense the location of poisons,\npoisonous or venomous creatures, and magical\n\ncontagions within 30 feet of yourself. You sense the\nkind of poison, creature, or contagion in each case.\n  The spell is blocked by 1 foot of stone, dirt, or\nwood; 1 inch of metal; or a thin sheet of lead.",
+    "header": {
+      "Casting Time": "Action or Ritual",
+      "Range": "Self",
+      "Components": "V, S, M (a yew leaf)",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-123"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        123
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.detect-thoughts",
+    "kind": "spell",
+    "name": "Detect Thoughts",
+    "level": 2,
+    "school": "D",
+    "officialTextLayout": "Detect Thoughts\nLevel 2 Divination (Bard, Sorcerer, Wizard)\nCasting Time: Action\nRange: Self\nComponents: V, S, M (1 Copper Piece)\nDuration: Concentration, up to 1 minute\nYou activate one of the effects below. Until the spell\nends, you can activate either effect as a Magic action\non your later turns.\n  Sense Thoughts. You sense the presence of\nthoughts within 30 feet of yourself that belong to\ncreatures that know languages or are telepathic.\nYou don’t read the thoughts, but you know that a\nthinking creature is present.\n  The spell is blocked by 1 foot of stone, dirt, or\nwood; 1 inch of metal; or a thin sheet of lead.\n  Read Thoughts. Target one creature you can see\nwithin 30 feet of yourself or one creature within\n30 feet of yourself that you detected with the Sense\nThoughts option. You learn what is most on the tar-\nget’s mind right now. If the target doesn’t know any\nlanguages and isn’t telepathic, you learn nothing.\n  As a Magic action on your next turn, you can try\nto probe deeper into the target’s mind. If you probe\ndeeper, the target makes a Wisdom saving throw.\nOn a failed save, you discern the target’s reasoning,\nemotions, and something that looms large in its\nmind (such as a worry, love, or hate). On a successful\nsave, the spell ends. Either way, the target knows\nthat you are probing into its mind, and until you\nshift your attention away from the target’s mind,\nthe target can take an action on its turn to make an\nIntelligence (Arcana) check against your spell save\nDC, ending the spell on a success.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S, M (1 Copper Piece)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-123"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        123
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.dimension-door",
+    "kind": "spell",
+    "name": "Dimension Door",
+    "level": 4,
+    "school": "C",
+    "officialTextLayout": "Dimension Door\nLevel 4 Conjuration (Bard, Sorcerer, Warlock, Wizard)\nCasting Time: Action\nRange: 500 feet\nComponents: V\nDuration: Instantaneous\nYou teleport to a location within range. You arrive\nat exactly the spot desired. It can be a place you can\nsee, one you can visualize, or one you can describe\nby stating distance and direction, such as “200 feet\nstraight downward” or “300 feet upward to the\nnorthwest at a 45-degree angle.”\n  You can also teleport one willing creature. The\ncreature must be within 5 feet of you when you tele-\nport, and it teleports to a space within 5 feet of your\ndestination space.\n\n  If you, the other creature, or both would arrive in\na space occupied by a creature or completely filled\nby one or more objects, you and any creature trav-\neling with you each take 4d6 Force damage, and the\nteleportation fails.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "500 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-123",
+      "rulebook.page-124"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        123,
+        124
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.disguise-self",
+    "kind": "spell",
+    "name": "Disguise Self",
+    "level": 1,
+    "school": "I",
+    "officialTextLayout": "Disguise Self\nLevel 1 Illusion (Bard, Sorcerer, Wizard)\nCasting Time: Action\nRange: Self\nComponents: V, S\nDuration: 1 hour\nYou make yourself—including your clothing, armor,\nweapons, and other belongings on your person—\nlook different until the spell ends. You can seem\n1 foot shorter or taller and can appear heavier or\nlighter. You must adopt a form that has the same\nbasic arrangement of limbs as you have. Otherwise,\nthe extent of the illusion is up to you.\n  The changes wrought by this spell fail to hold\nup to physical inspection. For example, if you use\nthis spell to add a hat to your outfit, objects pass\nthrough the hat, and anyone who touches it would\nfeel nothing.\n  To discern that you are disguised, a creature must\ntake the Study action to inspect your appearance\nand succeed on an Intelligence (Investigation) check\nagainst your spell save DC.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-124"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        124
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.disintegrate",
+    "kind": "spell",
+    "name": "Disintegrate",
+    "level": 6,
+    "school": "T",
+    "officialTextLayout": "Disintegrate\nLevel 6 Transmutation (Sorcerer, Wizard)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S, M (a lodestone and dust)\nDuration: Instantaneous\nYou launch a green ray at a target you can see\nwithin range. The target can be a creature, a non-\nmagical object, or a creation of magical force, such\nas the wall created by Wall of Force.\n  A creature targeted by this spell makes a Dexter-\nity saving throw. On a failed save, the target takes\n10d6 + 40 Force damage. If this damage reduces it\nto 0 Hit Points, it and everything nonmagical it is\nwearing and carrying are disintegrated into gray\ndust. The target can be revived only by a True Res-\nurrection or a Wish spell.\n  This spell automatically disintegrates a Large or\nsmaller nonmagical object or a creation of magical\nforce. If such a target is Huge or larger, this spell\ndisintegrates a 10-foot-Cube portion of it.\n  Using a Higher-Level Spell Slot. The damage in-\ncreases by 3d6 for each spell slot level above 6.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S, M (a lodestone and dust)",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-124"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        124
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.dispel-evil-and-good",
+    "kind": "spell",
+    "name": "Dispel Evil and Good",
+    "level": 5,
+    "school": "A",
+    "officialTextLayout": "Dispel Evil and Good\nLevel 5 Abjuration (Cleric, Paladin)\nCasting Time: Action\nRange: Self\n\nComponents: V, S, M (powdered silver and iron)\nDuration: Concentration, up to 1 minute\nFor the duration, Celestials, Elementals, Fey, Fiends,\nand Undead have Disadvantage on attack rolls\nagainst you. You can end the spell early by using ei-\nther of the following special functions.\n  Break Enchantment. As a Magic action, you touch\na creature that is possessed by or has the Charmed\nor Frightened condition from one or more creatures\nof the types above. The target is no longer pos-\nsessed, Charmed, or Frightened by such creatures.\n  Dismissal. As a Magic action, you target one crea-\nture you can see within 5 feet of you that has one of\nthe creature types above. The target must succeed\non a Charisma saving throw or be sent back to its\nhome plane if it isn’t there already. If they aren’t on\ntheir home plane, Undead are sent to the Shadow-\nfell, and Fey are sent to the Feywild.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S, M (powdered silver and iron)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-124"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        124
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.dispel-magic",
+    "kind": "spell",
+    "name": "Dispel Magic",
+    "level": 3,
+    "school": "A",
+    "officialTextLayout": "Dispel Magic\nLevel 3 Abjuration (Bard, Cleric, Druid, Paladin,\nRanger, Sorcerer, Warlock, Wizard)\nCasting Time: Action\nRange: 120 feet\nComponents: V, S\nDuration: Instantaneous\nChoose one creature, object, or magical effect\nwithin range. Any ongoing spell of level 3 or lower\non the target ends. For each ongoing spell of level 4\nor higher on the target, make an ability check using\nyour spellcasting ability (DC 10 plus that spell’s\nlevel). On a successful check, the spell ends.\n  Using a Higher-Level Spell Slot. You automati-\ncally end a spell on the target if the spell’s level is\nequal to or less than the level of the spell slot you\nuse.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-124"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        124
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.dissonant-whispers",
+    "kind": "spell",
+    "name": "Dissonant Whispers",
+    "level": 1,
+    "school": "E",
+    "officialTextLayout": "Dissonant Whispers\nLevel 1 Enchantment (Bard)\nCasting Time: Action\nRange: 60 feet\nComponents: V\nDuration: Instantaneous\nOne creature of your choice that you can see within\nrange hears a discordant melody in its mind. The\ntarget makes a Wisdom saving throw. On a failed\nsave, it takes 3d6 Psychic damage and must imme-\ndiately use its Reaction, if available, to move as far\naway from you as it can, using the safest route. On a\nsuccessful save, the target takes half as much dam-\nage only.\n  Using a Higher-Level Spell Slot. The damage in-\ncreases by 1d6 for each spell slot level above 1.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-124"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        124
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.divination",
+    "kind": "spell",
+    "name": "Divination",
+    "level": 4,
+    "school": "D",
+    "officialTextLayout": "Divination\nLevel 4 Divination (Cleric, Druid, Wizard)\nCasting Time: Action or Ritual\nRange: Self\nComponents: V, S, M (incense worth 25+ GP, which the\n spell consumes)\nDuration: Instantaneous\nThis spell puts you in contact with a god or a god’s\nservants. You ask one question about a specific goal,\nevent, or activity to occur within 7 days. The GM of-\nfers a truthful reply, which might be a short phrase\nor cryptic rhyme. The spell doesn’t account for cir-\ncumstances that might change the answer, such as\nthe casting of other spells.\n  If you cast the spell more than once before finish-\ning a Long Rest, there is a cumulative 25 percent\nchance for each casting after the first that you get\nno answer.",
+    "header": {
+      "Casting Time": "Action or Ritual",
+      "Range": "Self",
+      "Components": "V, S, M (incense worth 25+ GP, which the",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-125"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        125
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.divine-favor",
+    "kind": "spell",
+    "name": "Divine Favor",
+    "level": 1,
+    "school": "T",
+    "officialTextLayout": "Divine Favor\nLevel 1 Transmutation (Paladin)\nCasting Time: Bonus Action\nRange: Self\nComponents: V, S\nDuration: 1 minute\nUntil the spell ends, your attacks with weapons deal\nan extra 1d4 Radiant damage on a hit.",
+    "header": {
+      "Casting Time": "Bonus Action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-125"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        125
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.divine-smite",
+    "kind": "spell",
+    "name": "Divine Smite",
+    "level": 1,
+    "school": "V",
+    "officialTextLayout": "Divine Smite\nLevel 1 Evocation (Paladin)\nCasting Time: Bonus Action, which you take immedi-\n ately after hitting a target with a Melee weapon or an\n Unarmed Strike\nRange: Self\nComponent: V\nDuration: Instantaneous\nThe target takes an extra 2d8 Radiant damage from\nthe attack. The damage increases by 1d8 if the tar-\nget is a Fiend or an Undead.\n  Using a Higher-Level Spell Slot. The damage in-\ncreases by 1d8 for each spell slot level above 1.",
+    "header": {
+      "Casting Time": "Bonus Action, which you take immedi-",
+      "Range": "Self",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-125"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        125
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.divine-word",
+    "kind": "spell",
+    "name": "Divine Word",
+    "level": 7,
+    "school": "V",
+    "officialTextLayout": "Divine Word\nLevel 7 Evocation (Cleric)\nCasting Time: Bonus Action\nRange: 30 feet\nComponents: V\nDuration: Instantaneous\nYou utter a word imbued with power from the Up-\nper Planes. Each creature of your choice in range\nmakes a Charisma saving throw. On a failed save,\na target that has 50 Hit Points or fewer suffers an\neffect based on its current Hit Points, as shown in\nthe Divine Word Effects table. Regardless of its Hit\nPoints, a Celestial, an Elemental, a Fey, or a Fiend\n\ntarget that fails its save is forced back to its plane of\norigin (if it isn’t there already) and can’t return to\nthe current plane for 24 hours by any means short\nof a Wish spell.\n\nDivine Word Effects\n Hit Points Effect\n   0–20      The target dies.\n   21–30     The target has the Blinded, Deafened, and\n             Stunned conditions for 1 hour.\n   31–40     The target has the Blinded and Deafened\n             conditions for 10 minutes.\n   41–50     The target has the Deafened condition for\n             1 minute.",
+    "header": {
+      "Casting Time": "Bonus Action",
+      "Range": "30 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-125"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        125
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.dominate-beast",
+    "kind": "spell",
+    "name": "Dominate Beast",
+    "level": 4,
+    "school": "E",
+    "officialTextLayout": "Dominate Beast\nLevel 4 Enchantment (Druid, Ranger, Sorcerer)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S\nDuration: Concentration, up to 1 minute\nOne Beast you can see within range must succeed\non a Wisdom saving throw or have the Charmed\ncondition for the duration. The target has Advan-\ntage on the save if you or your allies are fighting it.\nWhenever the target takes damage, it repeats the\nsave, ending the spell on itself on a success.\n  You have a telepathic link with the Charmed tar-\nget while the two of you are on the same plane of\nexistence. On your turn, you can use this link to\nissue commands to the target (no action required),\nsuch as “Attack that creature,” “Move over there,” or\n“Fetch that object.” The target does its best to obey\non its turn. If it completes an order and doesn’t re-\nceive further direction from you, it acts and moves\nas it likes, focusing on protecting itself.\n  You can command the target to take a Reaction\nbut must take your own Reaction to do so.\n  Using a Higher-Level Spell Slot. Your Concentra-\ntion can last longer with a spell slot of level 5 (up to\n10 minutes), 6 (up to 1 hour), or 7+ (up to 8 hours).",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-125"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        125
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.dominate-monster",
+    "kind": "spell",
+    "name": "Dominate Monster",
+    "level": 8,
+    "school": "E",
+    "officialTextLayout": "Dominate Monster\nLevel 8 Enchantment (Bard, Sorcerer, Warlock,\nWizard)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S\nDuration: Concentration, up to 1 hour\nOne creature you can see within range must\nsucceed on a Wisdom saving throw or have the\nCharmed condition for the duration. The target has\nAdvantage on the save if you or your allies are fight-\ning it. Whenever the target takes damage, it repeats\nthe save, ending the spell on itself on a success.\n\n  You have a telepathic link with the Charmed tar-\nget while the two of you are on the same plane of\nexistence. On your turn, you can use this link to\nissue commands to the target (no action required),\nsuch as “Attack that creature,” “Move over there,” or\n“Fetch that object.” The target does its best to obey\non its turn. If it completes an order and doesn’t re-\nceive further direction from you, it acts and moves\nas it likes, focusing on protecting itself.\n  You can command the target to take a Reaction\nbut must take your own Reaction to do so.\n  Using a Higher-Level Spell Slot. Your Concentra-\ntion can last longer with a level 9 spell slot (up to 8\nhours).",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-125",
+      "rulebook.page-126"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        125,
+        126
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.dominate-person",
+    "kind": "spell",
+    "name": "Dominate Person",
+    "level": 5,
+    "school": "E",
+    "officialTextLayout": "Dominate Person\nLevel 5 Enchantment (Bard, Sorcerer, Wizard)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S\nDuration: Concentration, up to 1 minute\nOne Humanoid you can see within range must\nsucceed on a Wisdom saving throw or have the\nCharmed condition for the duration. The target has\nAdvantage on the save if you or your allies are fight-\ning it. Whenever the target takes damage, it repeats\nthe save, ending the spell on itself on a success.\n  You have a telepathic link with the Charmed tar-\nget while the two of you are on the same plane of\nexistence. On your turn, you can use this link to\nissue commands to the target (no action required),\nsuch as “Attack that creature,” “Move over there,” or\n“Fetch that object.” The target does its best to obey\non its turn. If it completes an order and doesn’t re-\nceive further direction from you, it acts and moves\nas it likes, focusing on protecting itself.\n  You can command the target to take a Reaction\nbut must take your own Reaction to do so.\n  Using a Higher-Level Spell Slot. Your Concentra-\ntion can last longer with a spell slot of level 6 (up to\n10 minutes), 7 (up to 1 hour), or 8+ (up to 8 hours).",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-126"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        126
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.dragon-s-breath",
+    "kind": "spell",
+    "name": "Dragon's Breath",
+    "level": 2,
+    "school": "T",
+    "officialTextLayout": "Dragon’s Breath\nLevel 2 Transmutation (Sorcerer, Wizard)\nCasting Time: Bonus Action\nRange: Touch\nComponents: V, S, M (a hot pepper)\nDuration: Concentration, up to 1 minute\nYou touch one willing creature, and choose Acid,\nCold, Fire, Lightning, or Poison. Until the spell\nends, the target can take a Magic action to exhale\na 15-foot Cone. Each creature in that area makes a\nDexterity saving throw, taking 3d6 damage of the\nchosen type on a failed save or half as much damage\non a successful one.\n\n  Using a Higher-Level Spell Slot. The damage in-\ncreases by 1d6 for each spell slot level above 2.",
+    "header": {
+      "Casting Time": "Bonus Action",
+      "Range": "Touch",
+      "Components": "V, S, M (a hot pepper)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-126"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        126
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.dream",
+    "kind": "spell",
+    "name": "Dream",
+    "level": 5,
+    "school": "I",
+    "officialTextLayout": "Dream\nLevel 5 Illusion (Bard, Warlock, Wizard)\nCasting Time: 1 minute\nRange: Special\nComponents: V, S, M (a handful of sand)\nDuration: 8 hours\nYou target a creature you know on the same plane\nof existence. You or a willing creature you touch\nenters a trance state to act as a dream messenger.\nWhile in the trance, the messenger is Incapacitated\nand has a Speed of 0.\n  If the target is asleep, the messenger appears in\nthe target’s dreams and can converse with the tar-\nget as long as it remains asleep, through the spell’s\nduration. The messenger can also shape the dream’s\nenvironment, creating landscapes, objects, and\nother images. The messenger can emerge from the\ntrance at any time, ending the spell. The target re-\ncalls the dream perfectly upon waking.\n  If the target is awake when you cast the spell, the\nmessenger knows it and can either end the trance\n(and the spell) or wait for the target to sleep, at\nwhich point the messenger enters its dreams.\n  You can make the messenger terrifying to the tar-\nget. If you do so, the messenger can deliver a mes-\nsage of no more than ten words, and then the target\nmakes a Wisdom saving throw. On a failed save, the\ntarget gains no benefit from its rest, and it takes\n3d6 Psychic damage when it wakes up.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "Special",
+      "Components": "V, S, M (a handful of sand)",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-126"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        126
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.druidcraft",
+    "kind": "spell",
+    "name": "Druidcraft",
+    "level": 0,
+    "school": "T",
+    "officialTextLayout": "Druidcraft\nTransmutation Cantrip (Druid)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S\nDuration: Instantaneous\nWhispering to the spirits of nature, you create one\nof the following effects within range.\n  Weather Sensor. You create a Tiny, harmless sen-\nsory effect that predicts what the weather will be at\nyour location for the next 24 hours. The effect might\nmanifest as a golden orb for clear skies, a cloud for\nrain, falling snowflakes for snow, and so on. This\neffect persists for 1 round.\n  Bloom. You instantly make a flower blossom, a\nseed pod open, or a leaf bud bloom.\n  Sensory Effect. You create a harmless sensory ef-\nfect, such as falling leaves, spectral dancing fairies,\na gentle breeze, the sound of an animal, or the faint\nodor of skunk. The effect must fit in a 5-foot Cube.\n  Fire Play. You light or snuff out a candle, a torch,\nor a campfire.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-126"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        126
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  }
+]

@@ -6,7 +6,7 @@
   "workingRoot": "working/",
   "runtimeContentRoot": "native/",
   "name": "D&D SRD 5.2.1",
-  "coverageStatus": "official-pdf-page-reference; reviewed skills and conditions; partial remaining structured entities",
+  "coverageStatus": "official-pdf-page-reference; reviewed skills and conditions; publisher-extracted named spells; remaining structured categories incomplete",
   "license": "CC-BY-4.0",
   "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
   "officialPageImport": {
@@ -16,5 +16,16 @@
     "firstGameplayPage": 5,
     "pageRecords": 360,
     "representation": "pdf-layout-extract"
+  },
+  "officialSpellImport": {
+    "release": "srd-5.2.1",
+    "spellRecords": 339,
+    "representation": "publisher-column-layout",
+    "structuredFields": [
+      "name",
+      "level",
+      "school"
+    ],
+    "headerRepresentation": "first line per casting field; full text in officialTextLayout"
   }
 }

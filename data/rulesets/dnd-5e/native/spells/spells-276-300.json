@@ -1,0 +1,714 @@
+[
+  {
+    "id": "spell.spike-growth",
+    "kind": "spell",
+    "name": "Spike Growth",
+    "level": 2,
+    "school": "T",
+    "officialTextLayout": "Spike Growth\n2nd---level transmutation\nCasting Time: 1 action\nRange: 150 feet\nComponents: V, S, M (seven sharp thorns or seven\n  small twigs, each sharpened to a point)\nDuration: Concentration, up to 10 minutes\nThe ground in a 20---foot radius centered on a point\nwithin range twists and sprouts hard spikes and\nthorns. The area becomes difficult terrain for the\nduration. When a creature moves into or within the\narea, it takes 2d4 piercing damage for every 5 feet it\ntravels.\n  The transformation of the ground is camouflaged\nto look natural. Any creature that can’t see the area\nat the time the spell is cast must make a Wisdom\n(Perception) check against your spell save DC to\nrecognize the terrain as hazardous before entering it.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "150 feet",
+      "Components": "V, S, M (seven sharp thorns or seven",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-182"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        182
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.spirit-guardians",
+    "kind": "spell",
+    "name": "Spirit Guardians",
+    "level": 3,
+    "school": "C",
+    "officialTextLayout": "Spirit Guardians\n3rd---level conjuration\nCasting Time: 1 action\nRange: Self (15---foot radius)\nComponents: V, S, M (a holy symbol)\nDuration: Concentration, up to 10 minutes\nYou call forth spirits to protect you. They flit around\nyou to a distance of 15 feet for the duration. If you\nare good or neutral, their spectral form appears\nangelic or fey (your choice). If you are evil, they\nappear fiendish.\n  When you cast this spell, you can designate any\nnumber of creatures you can see to be unaffected by\nit. An affected creature’s speed is halved in the area,\nand when the creature enters the area for the first\ntime on a turn or starts its turn there, it must make a\nWisdom saving throw. On a failed save, the creature\ntakes 3d8 radiant damage (if you are good or\n\nneutral) or 3d8 necrotic damage (if you are evil). On\na successful save, the creature takes half as much\ndamage.\n  At Higher Levels. When you cast this spell using a\nspell slot of 4th level or higher, the damage increases\nby 1d8 for each slot level above 3rd.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self (15---foot radius)",
+      "Components": "V, S, M (a holy symbol)",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-182"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        182
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.spiritual-weapon",
+    "kind": "spell",
+    "name": "Spiritual Weapon",
+    "level": 2,
+    "school": "V",
+    "officialTextLayout": "Spiritual Weapon\n2nd---level evocation\nCasting Time: 1 bonus action\nRange: 60 feet\nComponents: V, S\nDuration: 1 minute\nYou create a floating, spectral weapon within range\nthat lasts for the duration or until you cast this spell\nagain. When you cast the spell, you can make a melee\nspell attack against a creature within 5 feet of the\nweapon. On a hit, the target takes force damage\nequal to 1d8 + your spellcasting ability modifier.\n  As a bonus action on your turn, you can move the\nweapon up to 20 feet and repeat the attack against a\ncreature within 5 feet of it.\n  The weapon can take whatever form you choose.\nClerics of deities who are associated with a\nparticular weapon (as St. Cuthbert is known for his\nmace and Thor for his hammer) make this spell’s\neffect resemble that weapon.\n  At Higher Levels. When you cast this spell using a\nspell slot of 3rd level or higher, the damage\nincreases by 1d8 for every two slot levels above 2nd.",
+    "header": {
+      "Casting Time": "1 bonus action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-182"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        182
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.stinking-cloud",
+    "kind": "spell",
+    "name": "Stinking Cloud",
+    "level": 3,
+    "school": "C",
+    "officialTextLayout": "Stinking Cloud\n3rd---level conjuration\nCasting Time: 1 action\nRange: 90 feet\nComponents: V, S, M (a rotten egg or several skunk\n  cabbage leaves)\nDuration: Concentration, up to 1 minute\nYou create a 20---foot---radius sphere of yellow,\nnauseating gas centered on a point within range. The\ncloud spreads around corners, and its area is heavily\nobscured. The cloud lingers in the air for the\nduration.\n  Each creature that is completely within the cloud\nat the start of its turn must make a Constitution\nsaving throw against poison. On a failed save, the\ncreature spends its action that turn retching and\nreeling. Creatures that don’t need to breathe or are\nimmune to poison automatically succeed on this\nsaving throw.\n\n\n\n\n\n  A moderate wind (at least 10 miles per hour)\ndisperses the cloud after 4 rounds. A strong wind (at\nleast 20 miles per hour) disperses it after 1 round.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "90 feet",
+      "Components": "V, S, M (a rotten egg or several skunk",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-182",
+      "rulebook.page-183"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        182,
+        183
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.stone-shape",
+    "kind": "spell",
+    "name": "Stone Shape",
+    "level": 4,
+    "school": "T",
+    "officialTextLayout": "Stone Shape\n4th---level transmutation\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (soft clay, which must be\n  worked into roughly the desired shape of the\n  stone object)\nDuration: Instantaneous\nYou touch a stone object of Medium size or smaller\nor a section of stone no more than 5 feet in any\ndimension and form it into any shape that suits your\npurpose. So, for example, you could shape a large\nrock into a weapon, idol, or coffer, or make a small\npassage through a wall, as long as the wall is less\nthan 5 feet thick. You could also shape a stone door\nor its frame to seal the door shut. The object you\ncreate can have up to two hinges and a latch, but\nfiner mechanical detail isn’t possible.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S, M (soft clay, which must be",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-183"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        183
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.stoneskin",
+    "kind": "spell",
+    "name": "Stoneskin",
+    "level": 4,
+    "school": "A",
+    "officialTextLayout": "Stoneskin\n4th---level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (diamond dust worth 100 gp,\n  which the spell consumes)\nDuration: Concentration, up to 1 hour\nThis spell turns the flesh of a willing creature you\ntouch as hard as stone. Until the spell ends, the\ntarget has resistance to nonmagical bludgeoning,\npiercing, and slashing damage.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S, M (diamond dust worth 100 gp,",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-183"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        183
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.storm-of-vengeance",
+    "kind": "spell",
+    "name": "Storm of Vengeance",
+    "level": 9,
+    "school": "C",
+    "officialTextLayout": "Storm of Vengeance\n9th---level conjuration\nCasting Time: 1 action\nRange: Sight\nComponents: V, S\nDuration: Concentration, up to 1 minute\nA churning storm cloud forms, centered on a point\nyou can see and spreading to a radius of 360 feet.\nLightning flashes in the area, thunder booms, and\nstrong winds roar. Each creature under the cloud\n(no more than 5,000 feet beneath the cloud) when it\nappears must make a Constitution saving throw. On\na failed save, a creature takes 2d6 thunder damage\nand becomes deafened for 5 minutes.\n\n  Each round you maintain concentration on this\nspell, the storm produces additional effects on your\nturn.\n  Round 2. Acidic rain falls from the cloud. Each\ncreature and object under the cloud takes 1d6 acid\ndamage.\n  Round 3. You call six bolts of lightning from the\ncloud to strike six creatures or objects of your choice\nbeneath the cloud. A given creature or object can’t be\nstruck by more than one bolt. A struck creature must\nmake a Dexterity saving throw. The creature takes\n10d6 lightning damage on a failed save, or half as\nmuch damage on a successful one.\n  Round 4. Hailstones rain down from the cloud.\nEach creature under the cloud takes 2d6\nbludgeoning damage.\n  Round 5–10. Gusts and freezing rain assail the\narea under the cloud. The area becomes difficult\nterrain and is heavily obscured. Each creature there\ntakes 1d6 cold damage. Ranged weapon attacks in\nthe area are impossible. The wind and rain count as\na severe distraction for the purposes of maintaining\nconcentration on spells. Finally, gusts of strong wind\n(ranging from 20 to 50 miles per hour)\nautomatically disperse fog, mists, and similar\nphenomena in the area, whether mundane or\nmagical.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Sight",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-183"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        183
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.suggestion",
+    "kind": "spell",
+    "name": "Suggestion",
+    "level": 2,
+    "school": "E",
+    "officialTextLayout": "Suggestion\n2nd---level enchantment\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, M (a snake’s tongue and either a bit\n  of honeycomb or a drop of sweet oil)\nDuration: Concentration, up to 8 hours\nYou suggest a course of activity (limited to a\nsentence or two) and magically influence a creature\nyou can see within range that can hear and\nunderstand you. Creatures that can’t be charmed are\nimmune to this effect. The suggestion must be\nworded in such a manner as to make the course of\naction sound reasonable. Asking the creature to stab\nitself, throw itself onto a spear, immolate itself, or do\nsome other obviously harmful act ends the spell.\n  The target must make a Wisdom saving throw. On\na failed save, it pursues the course of action you\ndescribed to the best of its ability. The suggested\ncourse of action can continue for the entire duration.\nIf the suggested activity can be completed in a\nshorter time, the spell ends when the subject\nfinishes what it was asked to do.\n\n\n\n\n\n  You can also specify conditions that will trigger a\nspecial activity during the duration. For example,\nyou might suggest that a knight give her warhorse to\nthe first beggar she meets. If the condition isn’t met\nbefore the spell expires, the activity isn’t performed.\n  If you or any of your companions damage the\ntarget, the spell ends.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "V, M (a snake’s tongue and either a bit",
+      "Duration": "Concentration, up to 8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-183",
+      "rulebook.page-184"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        183,
+        184
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.sunbeam",
+    "kind": "spell",
+    "name": "Sunbeam",
+    "level": 6,
+    "school": "V",
+    "officialTextLayout": "Sunbeam\n6th---level evocation\nCasting Time: 1 action\nRange: Self (60---foot line)\nComponents: V, S, M (a magnifying glass)\nDuration: Concentration, up to 1 minute\nA beam of brilliant light flashes out from your hand\nin a 5---foot---wide, 60---foot---long line. Each creature in\nthe line must make a Constitution saving throw. On a\nfailed save, a creature takes 6d8 radiant damage and\nis blinded until your next turn. On a successful save,\nit takes half as much damage and isn’t blinded by\nthis spell. Undead and oozes have disadvantage on\nthis saving throw.\n  You can create a new line of radiance as your\naction on any turn until the spell ends.\n  For the duration, a mote of brilliant radiance\nshines in your hand. It sheds bright light in a 30---foot\nradius and dim light for an additional 30 feet. This\nlight is sunlight.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self (60---foot line)",
+      "Components": "V, S, M (a magnifying glass)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-184"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        184
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.sunburst",
+    "kind": "spell",
+    "name": "Sunburst",
+    "level": 8,
+    "school": "V",
+    "officialTextLayout": "Sunburst\n8th---level evocation\nCasting Time: 1 action\nRange: 150 feet\nComponents: V, S, M (fire and a piece of sunstone)\nDuration: Instantaneous\nBrilliant sunlight flashes in a 60---foot radius centered\non a point you choose within range. Each creature in\nthat light must make a Constitution saving throw. On\na failed save, a creature takes 12d6 radiant damage\nand is blinded for 1 minute. On a successful save, it\ntakes half as much damage and isn’t blinded by this\nspell. Undead and oozes have disadvantage on this\nsaving throw.\n  A creature blinded by this spell makes another\nConstitution saving throw at the end of each of its\nturns. On a successful save, it is no longer blinded.\n  This spell dispels any darkness in its area that was\ncreated by a spell.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "150 feet",
+      "Components": "V, S, M (fire and a piece of sunstone)",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-184"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        184
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.symbol",
+    "kind": "spell",
+    "name": "Symbol",
+    "level": 7,
+    "school": "A",
+    "officialTextLayout": "Symbol\n7th---level abjuration\nCasting Time: 1 minute\nRange: Touch\nComponents: V, S, M (mercury, phosphorus, and\n  powdered diamond and opal with a total value of\n  at least 1,000 gp, which the spell consumes)\nDuration: Until dispelled or triggered\nWhen you cast this spell, you inscribe a harmful\nglyph either on a surface (such as a section of floor, a\nwall, or a table) or within an object that can be\nclosed to conceal the glyph (such as a book, a scroll,\nor a treasure chest). If you choose a surface, the\nglyph can cover an area of the surface no larger than\n10 feet in diameter. If you choose an object, that\nobject must remain in its place; if the object is\nmoved more than 10 feet from where you cast this\nspell, the glyph is broken, and the spell ends without\nbeing triggered.\n  The glyph is nearly invisible, requiring an\nIntelligence (Investigation) check against your spell\nsave DC to find it.\n  You decide what triggers the glyph when you cast\nthe spell. For glyphs inscribed on a surface, the most\ntypical triggers include touching or stepping on the\nglyph, removing another object covering it,\napproaching within a certain distance of it, or\nmanipulating the object that holds it. For glyphs\ninscribed within an object, the most common\ntriggers are opening the object, approaching within a\ncertain distance of it, or seeing or reading the glyph.\n  You can further refine the trigger so the spell is\nactivated only under certain circumstances or\naccording to a creature’s physical characteristics\n(such as height or weight), or physical kind (for\nexample, the ward could be set to affect hags or\nshapechangers). You can also specify creatures that\ndon’t trigger the glyph, such as those who say a\ncertain password.\n  When you inscribe the glyph, choose one of the\noptions below for its effect. Once triggered, the glyph\nglows, filling a 60---foot---radius sphere with dim light\nfor 10 minutes, after which time the spell ends. Each\ncreature in the sphere when the glyph activates is\ntargeted by its effect, as is a creature that enters the\nsphere for the first time on a turn or ends its turn\nthere.\n  Death. Each target must make a Constitution\nsaving throw, taking 10d10 necrotic damage on a\nfailed save, or half as much damage on a successful\nsave.\n\n\n\n\n\n  Discord. Each target must make a Constitution\nsaving throw. On a failed save, a target bickers and\nargues with other creatures for 1 minute. During this\ntime, it is incapable of meaningful communication\nand has disadvantage on attack rolls and ability\nchecks.\n  Fear. Each target must make a Wisdom saving\nthrow and becomes frightened for 1 minute on a\nfailed save. While frightened, the target drops\nwhatever it is holding and must move at least 30 feet\naway from the glyph on each of its turns, if able.\n  Hopelessness. Each target must make a Charisma\nsaving throw. On a failed save, the target is\noverwhelmed with despair for 1 minute. During this\ntime, it can’t attack or target any creature with\nharmful abilities, spells, or other magical effects.\n  Insanity. Each target must make an Intelligence\nsaving throw. On a failed save, the target is driven\ninsane for 1 minute. An insane creature can’t take\nactions, can’t understand what other creatures say,\ncan’t read, and speaks only in gibberish. The GM\ncontrols its movement, which is erratic.\n  Pain. Each target must make a Constitution saving\nthrow and becomes incapacitated with excruciating\npain for 1 minute on a failed save.\n  Sleep. Each target must make a Wisdom saving\nthrow and falls unconscious for 10 minutes on a\nfailed save. A creature awakens if it takes damage or\nif someone uses an action to shake or slap it awake.\n  Stunning. Each target must make a Wisdom\nsaving throw and becomes stunned for 1 minute on\na failed save.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "Touch",
+      "Components": "V, S, M (mercury, phosphorus, and",
+      "Duration": "Until dispelled or triggered"
+    },
+    "catalogReferences": [
+      "rulebook.page-184",
+      "rulebook.page-185"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        184,
+        185
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.telekinesis",
+    "kind": "spell",
+    "name": "Telekinesis",
+    "level": 5,
+    "school": "T",
+    "officialTextLayout": "Telekinesis\n5th---level transmutation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Concentration, up to 10 minutes\nYou gain the ability to move or manipulate creatures\nor objects by thought. When you cast the spell, and\nas your action each round for the duration, you can\nexert your will on one creature or object that you\ncan see within range, causing the appropriate effect\nbelow. You can affect the same target round after\nround, or choose a new one at any time. If you switch\ntargets, the prior target is no longer affected by the\nspell.\n  Creature. You can try to move a Huge or smaller\ncreature. Make an ability check with your\nspellcasting ability contested by the creature’s\nStrength check. If you win the contest, you move the\n\ncreature up to 30 feet in any direction, including\nupward but not beyond the range of this spell. Until\nthe end of your next turn, the creature is restrained\nin your telekinetic grip. A creature lifted upward is\nsuspended in mid---air.\n  On subsequent rounds, you can use your action to\nattempt to maintain your telekinetic grip on the\ncreature by repeating the contest.\n  Object. You can try to move an object that weighs\nup to 1,000 pounds. If the object isn’t being worn or\ncarried, you automatically move it up to 30 feet in\nany direction, but not beyond the range of this spell.\n  If the object is worn or carried by a creature, you\nmust make an ability check with your spellcasting\nability contested by that creature’s Strength check. If\nyou succeed, you pull the object away from that\ncreature and can move it up to 30 feet in any\ndirection but not beyond the range of this spell.\n  You can exert fine control on objects with your\ntelekinetic grip, such as manipulating a simple tool,\nopening a door or a container, stowing or retrieving\nan item from an open container, or pouring the\ncontents from a vial.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-185"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        185
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.telepathic-bond",
+    "kind": "spell",
+    "name": "Telepathic Bond",
+    "level": 5,
+    "school": "D",
+    "officialTextLayout": "Telepathic Bond\n5th---level divination (ritual)\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (pieces of eggshell from two\n  different kinds of creatures)\nDuration: 1 hour\nYou forge a telepathic link among up to eight willing\ncreatures of your choice within range, psychically\nlinking each creature to all the others for the\nduration. Creatures with Intelligence scores of 2 or\nless aren’t affected by this spell.\n  Until the spell ends, the targets can communicate\ntelepathically through the bond whether or not they\nhave a common language. The communication is\npossible over any distance, though it can’t extend to\nother planes of existence.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "V, S, M (pieces of eggshell from two",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-185"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        185
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.teleport",
+    "kind": "spell",
+    "name": "Teleport",
+    "level": 7,
+    "school": "C",
+    "officialTextLayout": "Teleport\n7th---level conjuration\nCasting Time: 1 action\nRange: 10 feet\nComponents: V\nDuration: Instantaneous\nThis spell instantly transports you and up to eight\nwilling creatures of your choice that you can see\nwithin range, or a single object that you can see\n\n\n\n\n\nwithin range, to a destination you select. If you\ntarget an object, it must be able to fit entirely inside\na 10---foot cube, and it can’t be held or carried by an\nunwilling creature.\n  The destination you choose must be known to you,\nand it must be on the same plane of existence as you.\nYour familiarity with the destination determines\nwhether you arrive there successfully. The GM rolls\nd100 and consults the table.\n                                            Similar          Off            On\nFamiliarity            Mishap          Area           Target        Target\nPermanent                —              —               —           01–100\ncircle\nAssociated                 —              —              —          01–100\nobject\nVery familiar        01–05         06–13            14–24        25–100\nSeen casually        01–33         34–43            44–53        54–100\nViewed once          01–43         44–53            54–73        74–100\nDescription             01–43         44–53            54–73        74–100\nFalse                   01–50         51–100             —            —\ndestination\n\n  Familiarity. “Permanent circle” means a\npermanent teleportation circle whose sigil sequence\nyou know. “Associated object” means that you\npossess an object taken from the desired destination\nwithin the last six months, such as a book from a\nwizard’s library, bed linen from a royal suite, or a\nchunk of marble from a lich’s secret tomb.\n  “Very familiar” is a place you have been very often,\na place you have carefully studied, or a place you can\nsee when you cast the spell. “Seen casually” is\nsomeplace you have seen more than once but with\nwhich you aren’t very familiar. “Viewed once” is a\nplace you have seen once, possibly using magic.\n“Description” is a place whose location and\nappearance you know through someone else’s\ndescription, perhaps from a map.\n  “False destination” is a place that doesn’t exist.\nPerhaps you tried to scry an enemy’s sanctum but\ninstead viewed an illusion, or you are attempting to\nteleport to a familiar location that no longer exists.\n  On Target. You and your group (or the target\nobject) appear where you want to.\n  Off Target. You and your group (or the target\nobject) appear a random distance away from the\ndestination in a random direction. Distance off target\nis 1d10 × 1d10 percent of the distance that was to be\ntraveled. For example, if you tried to travel 120\nmiles, landed off target, and rolled a 5 and 3 on the\ntwo d10s, then you would be off target by 15 percent,\nor 18 miles. The GM determines the direction off\ntarget randomly by rolling a d8 and designating 1 as\n\nnorth, 2 as northeast, 3 as east, and so on around the\npoints of the compass. If you were teleporting to a\ncoastal city and wound up 18 miles out at sea, you\ncould be in trouble.\n  Similar Area. You and your group (or the target\nobject) wind up in a different area that’s visually or\nthematically similar to the target area. If you are\nheading for your home laboratory, for example, you\nmight wind up in another wizard’s laboratory or in\nan alchemical supply shop that has many of the same\ntools and implements as your laboratory. Generally,\nyou appear in the closest similar place, but since the\nspell has no range limit, you could conceivably wind\nup anywhere on the plane.\n  Mishap. The spell’s unpredictable magic results in\na difficult journey. Each teleporting creature (or the\ntarget object) takes 3d10 force damage, and the GM\nrerolls on the table to see where you wind up\n(multiple mishaps can occur, dealing damage each\ntime).",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "10 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-185",
+      "rulebook.page-186"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        185,
+        186
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.teleportation-circle",
+    "kind": "spell",
+    "name": "Teleportation Circle",
+    "level": 5,
+    "school": "C",
+    "officialTextLayout": "Teleportation Circle\n5th---level conjuration\nCasting Time: 1 minute\nRange: 10 feet\nComponents: V, M (rare chalks and inks infused\n  with precious gems with 50 gp, which the spell\n  consumes)\nDuration: 1 round\nAs you cast the spell, you draw a 10---foot---diameter\ncircle on the ground inscribed with sigils that link\nyour location to a permanent teleportation circle of\nyour choice whose sigil sequence you know and that\nis on the same plane of existence as you. A\nshimmering portal opens within the circle you drew\nand remains open until the end of your next turn.\nAny creature that enters the portal instantly appears\nwithin 5 feet of the destination circle or in the\nnearest unoccupied space if that space is occupied.\n  Many major temples, guilds, and other important\nplaces have permanent teleportation circles\ninscribed somewhere within their confines. Each\nsuch circle includes a unique sigil sequence—a\nstring of magical runes arranged in a particular\npattern. When you first gain the ability to cast this\nspell, you learn the sigil sequences for two\ndestinations on the Material Plane, determined by\nthe GM. You can learn additional sigil sequences\nduring your adventures. You can commit a new sigil\nsequence to memory after studying it for 1 minute.\n  You can create a permanent teleportation circle by\ncasting this spell in the same location every day for\n\n\n\n\n\none year. You need not use the circle to teleport\nwhen you cast the spell in this way.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "10 feet",
+      "Components": "V, M (rare chalks and inks infused",
+      "Duration": "1 round"
+    },
+    "catalogReferences": [
+      "rulebook.page-186",
+      "rulebook.page-187"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        186,
+        187
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.thaumaturgy",
+    "kind": "spell",
+    "name": "Thaumaturgy",
+    "level": 0,
+    "school": "T",
+    "officialTextLayout": "Thaumaturgy\nTransmutation cantrip\nCasting Time: 1 action\nRange: 30 feet\nComponents: V\nDuration: Up to 1 minute\nYou manifest a minor wonder, a sign of supernatural\npower, within range. You create one of the following\nmagical effects within range:\n• Your voice booms up to three times as loud as\n  normal for 1 minute.\n• You cause flames to flicker, brighten, dim, or\n  change color for 1 minute.\n• You cause harmless tremors in the ground for 1\n  minute.\n• You create an instantaneous sound that originates\n  from a point of your choice within range, such as a\n  rumble of thunder, the cry of a raven, or ominous\n  whispers.\n• You instantaneously cause an unlocked door or\n  window to fly open or slam shut.\n• You alter the appearance of your eyes for 1 minute.\nIf you cast this spell multiple times, you can have up\nto three of its 1---minute effects active at a time, and\nyou can dismiss such an effect as an action.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "V",
+      "Duration": "Up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-187"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        187
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.thunderwave",
+    "kind": "spell",
+    "name": "Thunderwave",
+    "level": 1,
+    "school": "V",
+    "officialTextLayout": "Thunderwave\n1st---level evocation\nCasting Time: 1 action\nRange: Self (15---foot cube)\nComponents: V, S\nDuration: Instantaneous\nA wave of thunderous force sweeps out from you.\nEach creature in a 15---foot cube originating from you\nmust make a Constitution saving throw. On a failed\nsave, a creature takes 2d8 thunder damage and is\npushed 10 feet away from you. On a successful save,\nthe creature takes half as much damage and isn’t\npushed.\n     In addition, unsecured objects that are completely\nwithin the area of effect are automatically pushed 10\nfeet away from you by the spell’s effect, and the spell\nemits a thunderous boom audible out to 300 feet.\n     At Higher Levels. When you cast this spell using a\nspell slot of 2nd level or higher, the damage\nincreases by 1d8 for each slot level above 1st.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self (15---foot cube)",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-187"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        187
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.time-stop",
+    "kind": "spell",
+    "name": "Time Stop",
+    "level": 9,
+    "school": "T",
+    "officialTextLayout": "Time Stop\n9th---level transmutation\nCasting Time: 1 action\nRange: Self\nComponents: V\nDuration: Instantaneous\nYou briefly stop the flow of time for everyone but\nyourself. No time passes for other creatures, while\nyou take 1d4 + 1 turns in a row, during which you\ncan use actions and move as normal.\n  This spell ends if one of the actions you use during\nthis period, or any effects that you create during this\nperiod, affects a creature other than you or an object\nbeing worn or carried by someone other than you. In\naddition, the spell ends if you move to a place more\nthan 1,000 feet from the location where you cast it.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-187"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        187
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.tiny-hut",
+    "kind": "spell",
+    "name": "Tiny Hut",
+    "level": 3,
+    "school": "V",
+    "officialTextLayout": "Tiny Hut\n3rd---level evocation (ritual)\nCasting Time: 1 minute\nRange: Self (10---foot---radius hemisphere)\nComponents: V, S, M (a small crystal bead)\nDuration: 8 hours\nA 10---foot---radius immobile dome of force springs\ninto existence around and above you and remains\nstationary for the duration. The spell ends if you leave\nits area.\n  Nine creatures of Medium size or smaller can fit\ninside the dome with you. The spell fails if its area\nincludes a larger creature or more than nine\ncreatures. Creatures and objects within the dome\nwhen you cast this spell can move through it freely.\nAll other creatures and objects are barred from\npassing through it. Spells and other magical effects\ncan’t extend through the dome or be cast through it.\nThe atmosphere inside the space is comfortable and\ndry, regardless of the weather outside.\n  Until the spell ends, you can command the interior\nto become dimly lit or dark. The dome is opaque\nfrom the outside, of any color you choose, but it is\ntransparent from the inside.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "Self (10---foot---radius hemisphere)",
+      "Components": "V, S, M (a small crystal bead)",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-187"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        187
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.tongues",
+    "kind": "spell",
+    "name": "Tongues",
+    "level": 3,
+    "school": "D",
+    "officialTextLayout": "Tongues\n3rd---level divination\nCasting Time: 1 action\nRange: Touch\nComponents: V, M (a small clay model of a ziggurat)\nDuration: 1 hour\nThis spell grants the creature you touch the ability to\nunderstand any spoken language it hears. Moreover,\n\n\n\n\n\nwhen the target speaks, any creature that knows at\nleast one language and can hear the target\nunderstands what it says.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, M (a small clay model of a ziggurat)",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-187",
+      "rulebook.page-188"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        187,
+        188
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.transport-via-plants",
+    "kind": "spell",
+    "name": "Transport via Plants",
+    "level": 6,
+    "school": "C",
+    "officialTextLayout": "Transport via Plants\n6th---level conjuration\nCasting Time: 1 action\nRange: 10 feet\nComponents: V, S\nDuration: 1 round\nThis spell creates a magical link between a Large or\nlarger inanimate plant within range and another\nplant, at any distance, on the same plane of existence.\nYou must have seen or touched the destination plant\nat least once before. For the duration, any creature\ncan step into the target plant and exit from the\ndestination plant by using 5 feet of movement.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "10 feet",
+      "Components": "V, S",
+      "Duration": "1 round"
+    },
+    "catalogReferences": [
+      "rulebook.page-188"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        188
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.tree-stride",
+    "kind": "spell",
+    "name": "Tree Stride",
+    "level": 5,
+    "school": "C",
+    "officialTextLayout": "Tree Stride\n5th---level conjuration\nCasting Time: 1 action\nRange: Self\nComponents: V, S\nDuration: Concentration, up to 1 minute\nYou gain the ability to enter a tree and move from\ninside it to inside another tree of the same kind\nwithin 500 feet. Both trees must be living and at\nleast the same size as you. You must use 5 feet of\nmovement to enter a tree. You instantly know the\nlocation of all other trees of the same kind within\n500 feet and, as part of the move used to enter the\ntree, can either pass into one of those trees or step\nout of the tree you’re in. You appear in a spot of your\nchoice within 5 feet of the destination tree, using\nanother 5 feet of movement. If you have no\nmovement left, you appear within 5 feet of the tree\nyou entered.\n  You can use this transportation ability once per\nround for the duration. You must end each turn\noutside a tree.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-188"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        188
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.true-polymorph",
+    "kind": "spell",
+    "name": "True Polymorph",
+    "level": 9,
+    "school": "T",
+    "officialTextLayout": "True Polymorph\n9th---level transmutation\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a drop of mercury, a dollop of\n  gum arabic, and a wisp of smoke)\nDuration: Concentration, up to 1 hour\nChoose one creature or nonmagical object that you\ncan see within range. You transform the creature\n\ninto a different creature, the creature into an object,\nor the object into a creature (the object must be\nneither worn nor carried by another creature). The\ntransformation lasts for the duration, or until the\ntarget drops to 0 hit points or dies. If you\nconcentrate on this spell for the full duration, the\ntransformation lasts until it is dispelled.\n  This spell has no effect on a shapechanger or a\ncreature with 0 hit points. An unwilling creature can\nmake a Wisdom saving throw, and if it succeeds, it\nisn’t affected by this spell.\n  Creature into Creature. If you turn a creature into\nanother kind of creature, the new form can be any\nkind you choose whose challenge rating is equal to\nor less than the target’s (or its level, if the target\ndoesn’t have a challenge rating). The target’s game\nstatistics, including mental ability scores, are\nreplaced by the statistics of the new form. It retains\nits alignment and personality.\n  The target assumes the hit points of its new form,\nand when it reverts to its normal form, the creature\nreturns to the number of hit points it had before it\ntransformed. If it reverts as a result of dropping to 0\nhit points, any excess damage carries over to its\nnormal form. As long as the excess damage doesn’t\nreduce the creature’s normal form to 0 hit points, it\nisn’t knocked unconscious.\n  The creature is limited in the actions it can\nperform by the nature of its new form, and it can’t\nspeak, cast spells, or take any other action that\nrequires hands or speech, unless its new form is\ncapable of such actions.\n  The target’s gear melds into the new form. The\ncreature can’t activate, use, wield, or otherwise\nbenefit from any of its equipment.\n  Object into Creature. You can turn an object into\nany kind of creature, as long as the creature’s size is\nno larger than the object’s size and the creature’s\nchallenge rating is 9 or lower. The creature is\nfriendly to you and your companions. It acts on each\nof your turns. You decide what action it takes and\nhow it moves. The GM has the creature’s statistics\nand resolves all of its actions and movement.\n  If the spell becomes permanent, you no longer\ncontrol the creature. It might remain friendly to you,\ndepending on how you have treated it.\n  Creature into Object. If you turn a creature into\nan object, it transforms along with whatever it is\nwearing and carrying into that form. The creature’s\nstatistics become those of the object, and the\ncreature has no memory of time spent in this form,\nafter the spell ends and it returns to its normal form.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a drop of mercury, a dollop of",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-188"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        188
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.true-resurrection",
+    "kind": "spell",
+    "name": "True Resurrection",
+    "level": 9,
+    "school": "N",
+    "officialTextLayout": "True Resurrection\n9th---level necromancy\nCasting Time: 1 hour\nRange: Touch\nComponents: V, S, M (a sprinkle of holy water and\n  diamonds worth at least 25,000 gp, which the spell\n  consumes)\nDuration: Instantaneous\nYou touch a creature that has been dead for no\nlonger than 200 years and that died for any reason\nexcept old age. If the creature’s soul is free and\nwilling, the creature is restored to life with all its hit\npoints.\n  This spell closes all wounds, neutralizes any\npoison, cures all diseases, and lifts any curses\naffecting the creature when it died. The spell\nreplaces damaged or missing organs and limbs.\n  The spell can even provide a new body if the\noriginal no longer exists, in which case you must\nspeak the creature’s name. The creature then\nappears in an unoccupied space you choose within\n10 feet of you.",
+    "header": {
+      "Casting Time": "1 hour",
+      "Range": "Touch",
+      "Components": "V, S, M (a sprinkle of holy water and",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-189"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        189
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  },
+  {
+    "id": "spell.true-seeing",
+    "kind": "spell",
+    "name": "True Seeing",
+    "level": 6,
+    "school": "D",
+    "officialTextLayout": "True Seeing\n6th---level divination\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (an ointment for the eyes that\n  costs 25 gp; is made from mushroom powder,\n  saffron, and fat; and is consumed by the spell)\nDuration: 1 hour\nThis spell gives the willing creature you touch the\nability to see things as they actually are. For the\nduration, the creature has truesight, notices secret\ndoors hidden by magic, and can see into the Ethereal\nPlane, all out to a range of 120 feet.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S, M (an ointment for the eyes that",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-189"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        189
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics"
+    }
+  }
+]

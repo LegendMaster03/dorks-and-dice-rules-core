@@ -160,13 +160,22 @@ if __name__ == "__main__":
     parser.add_argument("edition", choices=SPECS)
     parser.add_argument("pdf", type=Path)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--emit-transfer", action="store_true")
+    parser.add_argument("--check", action="store_true", help="Compare all extracted spells to committed native records")
     args = parser.parse_args()
     rows, report = build(args.edition, args.pdf)
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
     (args.output / "spells.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n")
+    if any(report[key] for key in ("missingCandidateNames", "additionalOfficialNames",
+                                   "levelOrSchoolDifferences", "malformedHeaders")):
+        raise SystemExit("Spell inventory or header discrepancies: " + json.dumps(report))
+    if args.check:
+        package = SPECS[args.edition][0]
+        directory = ROOT / "data/rulesets" / package / "native/spells"
+        committed = []
+        for path in sorted(directory.glob("spells-*.json")):
+            committed.extend(json.loads(path.read_text(encoding="utf-8")))
+        if committed != rows:
+            raise SystemExit("Native spell records differ from pinned publisher extraction")
+        report["nativeSpellParity"] = True
     print("SPELL_IMPORT_REPORT " + json.dumps(report))
-    if args.emit_transfer:
-        for row in rows:
-            print("SPELL_IMPORT_RECORD " + json.dumps(row, ensure_ascii=False, separators=(",", ":")))
