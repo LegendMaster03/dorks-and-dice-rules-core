@@ -1,3 +1,5 @@
+> **Historical analysis, superseded November 21, 2026.** Rock Gnome and Dwarf now share the canonical activated `trait.stonebound-tremorsense`. The earlier 15-foot passive Earthbound comparison and its source-coverage conclusions below are not current mechanical rules. The optional historical ancestry hypothesis remains narrative-only.
+
 # Pillar 2 — Gnome + Dwarf compared with Rock Gnome
 
 **Date:** 2026-11-11  

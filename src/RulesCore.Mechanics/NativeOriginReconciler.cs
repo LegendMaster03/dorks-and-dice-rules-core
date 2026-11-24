@@ -285,10 +285,9 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                 "do not infer speed or terrain combinations.");
         }
 
-        // Two distinct canonical, passive traits can reference the SAME
-        // executable native rule (Elf and Tiefling Low-Light Vision currently do).
-        // Their different definitions do not represent two independently
-        // stackable benefits. They may be retained by a scoped explicit
+        // Two distinct canonical passive traits can reference the SAME
+        // executable native rule. A shared rule identity does not make the
+        // two definitions independently stackable. They may be retained by a scoped explicit
         // disposition, but no dominant source or automatic union is inferred.
         foreach (var group in active.Values
             .Where(x => !ignored.Contains(x.Candidate.Id))
@@ -561,8 +560,8 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
     /// shape. Keep event-scoped defenses out of this overlap classification:
     /// Cloudy Escape's reaction resistance is not an inherited permanent pool.
     /// Direct "poison": 50 legacy maps and authored percent/damageType records
-    /// are both recognized. Source-bound Dragonborn type is read only from an
-    /// already authorized, actually manifested parameter.
+    /// are both recognized. Source-bound resistance type is read only from a verified
+    /// lineage parameter, not inferred from the canonical gene name.
     /// </summary>
     private IReadOnlyList<string> NativeResistanceKeys(NativeOriginSelectedGrant selected)
     {
@@ -601,7 +600,7 @@ internal sealed class NativeOriginReconciler(NativeCatalogSnapshot catalog)
                 bindings.ValueKind == JsonValueKind.Object &&
                 bindings.TryGetProperty("damageType", out var binding) &&
                 binding.ValueKind == JsonValueKind.Object &&
-                JsonString(binding, "lookup") == "leaf" &&
+                JsonString(binding, "lookup") is "leaf" or "nearest" &&
                 JsonString(binding, "sourceField") == "damageType")
                 return [bound.GetString()!];
             return [];

@@ -3,48 +3,234 @@
     "id": "construct-material.steel",
     "kind": "construct-material",
     "name": "Steel",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "provisional retained-material mass per recipe unit; no finalized density/encumbrance rule",
+    "description": "Dense, stiff structural metal; strong under suitable loads but adds substantial mass.",
+    "physicalProfile": {
+      "relativeMassCategory": "dense",
+      "rigidity": "rigid",
+      "combustibility": "noncombustible"
+    },
+    "massPoundsPerUnit": 7
   },
   {
     "id": "construct-material.darkwood",
     "kind": "construct-material",
     "name": "Darkwood",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "provisional retained-material mass per recipe unit; no finalized density/encumbrance rule",
+    "description": "A comparatively lightweight magical timber; actual toughness and special properties require a separate authorized material rule.",
+    "physicalProfile": {
+      "relativeMassCategory": "light",
+      "rigidity": "rigid",
+      "combustibility": "material-dependent"
+    },
+    "massPoundsPerUnit": 2
   },
   {
     "id": "construct-material.stone",
     "kind": "construct-material",
     "name": "Stone",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "provisional retained-material mass per recipe unit; no finalized density/encumbrance rule",
+    "description": "Dense and brittle when improperly supported; suitable for armor or structure when appropriately shaped.",
+    "physicalProfile": {
+      "relativeMassCategory": "heavy",
+      "rigidity": "rigid",
+      "combustibility": "noncombustible"
+    },
+    "massPoundsPerUnit": 9
   },
   {
     "id": "construct-material.crystal",
     "kind": "construct-material",
     "name": "Crystal",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "provisional retained-material mass per recipe unit; no finalized density/encumbrance rule",
+    "description": "Rigid mineral with optical and magical applications; impact response depends on its particular composition.",
+    "physicalProfile": {
+      "relativeMassCategory": "heavy",
+      "rigidity": "rigid",
+      "combustibility": "noncombustible"
+    },
+    "massPoundsPerUnit": 5
   },
   {
     "id": "construct-material.alchemical-fiber",
     "kind": "construct-material",
     "name": "Alchemical fibers",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "provisional retained-material mass per recipe unit; no finalized density/encumbrance rule",
+    "description": "Fibrous composite suitable for lines or flexible assemblies; strength depends on its fabrication.",
+    "physicalProfile": {
+      "relativeMassCategory": "light",
+      "rigidity": "flexible",
+      "combustibility": "material-dependent"
+    },
+    "massPoundsPerUnit": 1
   },
   {
     "id": "construct-material.wood",
     "kind": "construct-material",
     "name": "Wood",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "provisional retained-material mass per recipe unit; no finalized density/encumbrance rule",
+    "description": "Relatively lightweight workable timber; combustible unless protected.",
+    "physicalProfile": {
+      "relativeMassCategory": "light",
+      "rigidity": "rigid",
+      "combustibility": "combustible"
+    },
+    "massPoundsPerUnit": 2
   },
   {
     "id": "construct-material.cloth",
     "kind": "construct-material",
     "name": "Cloth",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "provisional retained-material mass per recipe unit; no finalized density/encumbrance rule",
+    "description": "Flexible woven fabric; suitable for coverings but not automatically load-bearing.",
+    "physicalProfile": {
+      "relativeMassCategory": "very-light",
+      "rigidity": "flexible",
+      "combustibility": "combustible"
+    },
+    "massPoundsPerUnit": 1
   },
   {
     "id": "construct-material.iron",
     "kind": "construct-material",
     "name": "Iron",
-    "rulesStatus": "reference-material; effects-unbalanced"
+    "rulesStatus": "provisional retained-material mass per recipe unit; no finalized density/encumbrance rule",
+    "description": "Dense workable ferrous metal, prone to corrosion without treatment.",
+    "physicalProfile": {
+      "relativeMassCategory": "dense",
+      "rigidity": "rigid",
+      "combustibility": "noncombustible"
+    },
+    "massPoundsPerUnit": 7
+  },
+  {
+    "id": "construct-material.clay",
+    "kind": "construct-material",
+    "name": "Clay",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
+    "description": "Moldable mineral material for shaped or fired constructs; mechanical strength depends on processing and moisture.",
+    "physicalProfile": {
+      "relativeMassCategory": "medium",
+      "rigidity": "condition-dependent",
+      "combustibility": "noncombustible"
+    },
+    "massPoundsPerUnit": 5
+  },
+  {
+    "id": "construct-material.terracotta",
+    "kind": "construct-material",
+    "name": "Terracotta",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
+    "description": "Fired clay body for plates, frames, and statues; can crack or fracture under unsuitable loading.",
+    "physicalProfile": {
+      "relativeMassCategory": "medium",
+      "rigidity": "brittle",
+      "combustibility": "noncombustible"
+    },
+    "massPoundsPerUnit": 6
+  },
+  {
+    "id": "construct-material.ceramic",
+    "kind": "construct-material",
+    "name": "Ceramic",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
+    "description": "Manufactured rigid inorganic material for casings and precision parts; toughness depends on composition and firing.",
+    "physicalProfile": {
+      "relativeMassCategory": "medium",
+      "rigidity": "brittle",
+      "combustibility": "noncombustible"
+    },
+    "massPoundsPerUnit": 5
+  },
+  {
+    "id": "construct-material.glass",
+    "kind": "construct-material",
+    "name": "Glass",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
+    "description": "Transparent or translucent rigid material for optics, shells, or structures; impact performance depends on treatment.",
+    "physicalProfile": {
+      "relativeMassCategory": "medium",
+      "rigidity": "brittle",
+      "combustibility": "noncombustible"
+    },
+    "massPoundsPerUnit": 5
+  },
+  {
+    "id": "construct-material.bone",
+    "kind": "construct-material",
+    "name": "Bone",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
+    "description": "Hard biological structural material suitable for mechanical elements, subject to material grading and processing.",
+    "physicalProfile": {
+      "relativeMassCategory": "light",
+      "rigidity": "rigid",
+      "combustibility": "material-dependent"
+    },
+    "massPoundsPerUnit": 3
+  },
+  {
+    "id": "construct-material.preserved-tissue",
+    "kind": "construct-material",
+    "name": "Preserved tissue",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
+    "description": "Processed biological tissue that may support organic-style construction; viability, degradation, and preservation are separately authored.",
+    "physicalProfile": {
+      "relativeMassCategory": "light",
+      "rigidity": "condition-dependent",
+      "combustibility": "material-dependent"
+    },
+    "massPoundsPerUnit": 2
+  },
+  {
+    "id": "construct-material.amber",
+    "kind": "construct-material",
+    "name": "Amber",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
+    "description": "Hardened resin that may serve as a molded casing or optical material; its suitability depends on working conditions.",
+    "physicalProfile": {
+      "relativeMassCategory": "light",
+      "rigidity": "rigid",
+      "combustibility": "combustible"
+    },
+    "massPoundsPerUnit": 3
+  },
+  {
+    "id": "construct-material.wax",
+    "kind": "construct-material",
+    "name": "Wax",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
+    "description": "A moldable organic material suitable for housings and flexible forms under compatible temperatures.",
+    "physicalProfile": {
+      "relativeMassCategory": "light",
+      "rigidity": "condition-dependent",
+      "combustibility": "combustible"
+    },
+    "massPoundsPerUnit": 2
+  },
+  {
+    "id": "construct-material.paper",
+    "kind": "construct-material",
+    "name": "Paper",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
+    "description": "Thin flexible fibrous sheet material; not automatically suitable for load-bearing structures.",
+    "physicalProfile": {
+      "relativeMassCategory": "very-light",
+      "rigidity": "flexible",
+      "combustibility": "combustible"
+    },
+    "massPoundsPerUnit": 1
+  },
+  {
+    "id": "construct-material.wicker",
+    "kind": "construct-material",
+    "name": "Wicker",
+    "rulesStatus": "provisional starting-playtest material price and retained unit mass; strength and environment require integrated balance review",
+    "description": "Woven rods or fibers shaped into flexible or semi-rigid structures; construction quality governs its strength.",
+    "physicalProfile": {
+      "relativeMassCategory": "light",
+      "rigidity": "flexible",
+      "combustibility": "combustible"
+    },
+    "massPoundsPerUnit": 2
   }
 ]

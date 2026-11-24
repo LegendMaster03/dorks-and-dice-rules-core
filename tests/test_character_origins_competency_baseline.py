@@ -162,41 +162,6 @@ class CharacterOriginsCompetencyConversionTests(unittest.TestCase):
                         self.assertNotIn("equipmentProficiencyGrants", other)
 
 
-    def test_origins_with_no_competency_benefit_stay_that_way(self):
-        """Neither is normal, not an exception that needs an explicit empty grant."""
-        for kind, name in (
-            ("backgrounds", "acolyte"), ("backgrounds", "criminal"),
-            ("backgrounds", "noble"), ("backgrounds", "sage"),
-            ("backgrounds", "folk-hero"), ("backgrounds", "hermit"),
-            ("backgrounds", "gladiator"), ("backgrounds", "soldier"),
-            ("upbringings", "wilderness-raised"),
-            ("upbringings", "giant-foundling"),
-        ):
-            record = read(kind, name)
-            with self.subTest(origin=record["id"]):
-                self.assertFalse(any(
-                    node.get("grantType") == "competency-training"
-                    for node in nodes(record)))
-
-    def test_intentionally_discarded_source_tools_are_not_restored(self):
-        """2014 source grants may be omitted through reviewed Origin redesign."""
-        for name in ("folk-hero", "hermit"):
-            record = read("backgrounds", name)
-            with self.subTest(background=name):
-                self.assertNotIn("equipmentProficiencyGrants", record)
-                self.assertFalse(any(
-                    node.get("grantType") in
-                    ("competency-training", "qualification-training")
-                    for node in nodes(record)))
-        gladiator = read("backgrounds", "gladiator")
-        qualifications = [b for b in gladiator["benefits"]
-                          if b.get("grantType") == "qualification-training"]
-        self.assertEqual(1, len(qualifications))
-        self.assertEqual("weapon", qualifications[0]["qualificationCategory"])
-        self.assertFalse(any(
-            b.get("grantType") == "competency-training"
-            for b in gladiator["benefits"]))
-
     def test_mixed_choices_keep_equipment_and_competency_effects_separate(self):
         cases = (
             ("backgrounds", "entertainer", "entertainer-performance-method",

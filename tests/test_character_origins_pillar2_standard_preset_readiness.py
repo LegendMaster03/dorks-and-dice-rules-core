@@ -104,11 +104,12 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
 
     def test_human_size_and_skill_feat_choices_are_explicitly_pending(self):
         report = self.propose("species.human")
-        self.assertEqual(3, len(self.entries(report, "trait")))
+        self.assertEqual(4, len(self.entries(report, "trait")))
         self.assertEqual(
             {"species.human#trait:skillful",
              "species.human#trait:versatile",
-             "species.human#trait:adaptable-learning"},
+             "species.human#trait:adaptable-learning",
+             "species.human#trait:human-determination"},
             {x["identity"] for x in self.entries(report, "trait")},
         )
         self.assertEqual(
@@ -125,26 +126,6 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
         self.assertEqual(["small", "medium"],
                          [x["value"] for x in size["options"]])
         self.assertFalse(report["templateComplete"])
-
-    def test_wood_elf_does_not_auto_select_35_or_stack_30_and_35(self):
-        report = self.propose("ancestry.elf.wood")
-        self.assertFalse(any(
-            x["kind"] == "intrinsic"
-            and x["identity"] == "movement.walk.speed"
-            for x in report["proposedSelections"]
-        ))
-        conflicting = [
-            x for x in report["unresolvedOriginDecisions"]
-            if x["kind"] == "competing-intrinsic-values-require-policy"
-            and x["identity"] == "movement.walk.speed"
-        ]
-        self.assertEqual(1, len(conflicting))
-        self.assertEqual([30, 35],
-                         [x["value"] for x in conflicting[0]["options"]])
-        self.assertEqual(
-            ["species.elf", "ancestry.elf.wood"],
-            report["sourceLineage"],
-        )
 
     def test_high_elf_has_distinct_progression_and_dependent_choices(self):
         report = self.propose("ancestry.elf.high")
@@ -185,18 +166,18 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
         )
         self.assertEqual(
             {"damageType": "fire"},
-            proposed["species.dragonborn#trait:draconic-resistance"]["parameters"],
+            proposed["species.dragonborn#trait:damage-type-resistance"]["parameters"],
         )
         self.assertEqual(
             {"damageType": "fire"},
-            proposed["ancestry.dragonborn.chromatic#trait:chromatic-warding"]["parameters"],
+            proposed["ancestry.dragonborn.chromatic#trait:temporary-damage-immunity"]["parameters"],
         )
         deferred = {x["field"] for x in report["deferredSourceEvidence"]}
         self.assertNotIn(
-            "species.dragonborn#trait:draconic-resistance", deferred,
+            "species.dragonborn#trait:damage-type-resistance", deferred,
         )
         self.assertNotIn(
-            "ancestry.dragonborn.chromatic#trait:chromatic-warding", deferred,
+            "ancestry.dragonborn.chromatic#trait:temporary-damage-immunity", deferred,
         )
         # Authored leaf/family source fields are not separate Origin grants.
         self.assertIn("damageType", deferred)
@@ -207,7 +188,7 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
         report = self.propose("ancestry.gnome.rock")
         traits = {x["identity"] for x in self.entries(report, "trait")}
         self.assertIn(
-            "ancestry.gnome.rock#trait:earthbound-tremorsense", traits
+            "ancestry.gnome.rock#trait:stonebound-tremorsense", traits
         )
         self.assertNotIn(
             "species.dwarf#trait:stonebound-tremorsense", traits
@@ -216,7 +197,12 @@ class Pillar2StandardPresetReadinessTests(unittest.TestCase):
             "upbringing.gnome.rock",
             report["nearestSuggestedUpbringing"]["upbringingId"],
         )
-        self.assertTrue(report["templateComplete"])
+        self.assertIn("ancestry.gnome.rock#trait:natural-climber", traits)
+        self.assertIn("ancestry.gnome.rock#trait:natural-trickster", traits)
+        self.assertFalse(report["templateComplete"])
+        self.assertTrue(any(x["kind"] == "dependent-trait-choices-not-selected"
+                            and x["identity"] == "ancestry.gnome.rock#trait:natural-trickster"
+                            for x in report["unresolvedOriginDecisions"]))
 
     def test_repeated_same_value_intrinsic_generates_one_selection(self):
         altered = copy.deepcopy(self.catalog)

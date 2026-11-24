@@ -1,0 +1,13 @@
+{
+  "name": "Tether reel",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "description": "An optional mechanism for deploying and retracting a tether; integration and operating-state rules remain subject to authoring.",
+  "provides": [
+    "tether-handling"
+  ],
+  "materialSlots": [
+    "line"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.tether-reel",
+  "powerDemand": 1
+}

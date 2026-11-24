@@ -117,7 +117,7 @@ class GoliathUpbringingTests(unittest.TestCase):
             self.assertNotIn("sizeChange", record)
             for benefit in record["benefits"]:
                 self.assertNotIn(benefit["id"], {
-                    "strike-of-the-giants", "rune-shaper", "giant-ancestry-aptitude"
+                    "strike-of-the-giants", "rune-shaper", "ancestral-aptitude"
                 })
                 self.assertNotIn("grantsFeat", benefit)
                 self.assertNotIn("giantAncestry", benefit)

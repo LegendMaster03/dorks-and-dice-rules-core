@@ -1,0 +1,238 @@
+{
+  "_meta": {
+    "status": "candidate values for quantitative assembly comparisons; first-party origin remains unplayable without approved allowance, verified size, and remaining canonical traits",
+    "scope": "Construct Assembly recipe-input resource prices, not mechanical power or economic market prices",
+    "unchangedRules": "No per-component purchase cost and no post-creation allowance ceiling",
+    "massStatus": "The three illustrative builds currently have partial, lower-bound retained mass even though selected first-party component recipes have provisional complete-mass certificates.",
+    "sampleMethod": "Preliminary arithmetic from recipe-input material quantities, selected materials and selected power-source recipes, with all cost values provisional; sample assembly links, functional dependencies and physical envelopes require authoring.",
+    "balancingStatus": "Ten native recipe-based sensitivity comparisons recorded in docs/rewrite/character-origins/pillar2-construct-quantitative-sensitivity-20261120.md. No approval of 220-point allowance, movement, DR stacking, fuel availability or first-party character authorization. After boundary cleanup, nominal drive support and hypothetical layer DR are research-only values in this reference file, not native effects."
+  },
+  "candidateStartingAllowance": 220,
+  "candidateResourceUnitCosts": {
+    "construct-material.steel": 4,
+    "construct-material.darkwood": 7,
+    "construct-material.stone": 2,
+    "construct-material.crystal": 6,
+    "construct-material.alchemical-fiber": 5,
+    "construct-material.wood": 2,
+    "construct-material.cloth": 1,
+    "construct-material.iron": 3,
+    "crafting-material.alchemical-reagent": 5,
+    "crafting-material.fine-mechanisms": 6,
+    "crafting-material.optical-elements": 5,
+    "crafting-material.arcane-catalyst": 12,
+    "crafting-material.sealing-compound": 5,
+    "crafting-material.soul-essence": 20,
+    "crafting-material.infernal-reagent": 18
+  },
+  "illustrativeConfigurations": [
+    {
+      "id": "mechanical-medium-like",
+      "description": "Articulated steel-and-wood construct with mechanical power, sensory and manipulatory subsystems. Its creature size must be derived from the completed body before authorization.",
+      "components": [
+        [
+          "frame",
+          "structural-frame",
+          "steel",
+          null
+        ],
+        [
+          "housing",
+          "power-source-housing",
+          "steel",
+          "mechanical-engine"
+        ],
+        [
+          "control",
+          "control-module",
+          "wood",
+          null
+        ],
+        [
+          "circulation",
+          "alchemical-circulation",
+          "steel",
+          null
+        ],
+        [
+          "actuator",
+          "alchemical-actuator",
+          "steel",
+          null
+        ],
+        [
+          "hand",
+          "manipulator",
+          "steel",
+          null
+        ],
+        [
+          "mobility",
+          "locomotion-unit",
+          "steel",
+          null
+        ],
+        [
+          "eye",
+          "crystal-eye",
+          "crystal",
+          null
+        ]
+      ],
+      "notes": "The mechanical engine has nominal output 4 while all installed active systems request 7. Installed parts can remain physically present, but this configuration cannot run all powered capabilities simultaneously even before fuel, dependency or power-network constraints are applied. Selected body size derives from the Medium frame.",
+      "bodyConstructionVariants": {
+        "frame": "medium"
+      },
+      "provisionalIngredientCost": 173,
+      "provisionalKnownRetainedMassPounds": 223
+    },
+    {
+      "id": "all-steel-overbuilt",
+      "description": "Excessive steel plating and extra locomotion; materials remain installed even if inactive.",
+      "components": [
+        [
+          "frame",
+          "structural-frame",
+          "steel",
+          null
+        ],
+        [
+          "housing",
+          "power-source-housing",
+          "steel",
+          "mechanical-engine"
+        ],
+        [
+          "control",
+          "control-module",
+          "steel",
+          null
+        ],
+        [
+          "locomotion-1",
+          "locomotion-unit",
+          "steel",
+          null
+        ],
+        [
+          "locomotion-2",
+          "locomotion-unit",
+          "steel",
+          null
+        ],
+        [
+          "locomotion-3",
+          "locomotion-unit",
+          "steel",
+          null
+        ],
+        [
+          "plate-1",
+          "protective-plating",
+          "steel",
+          null
+        ],
+        [
+          "plate-2",
+          "protective-plating",
+          "steel",
+          null
+        ],
+        [
+          "plate-3",
+          "protective-plating",
+          "steel",
+          null
+        ],
+        [
+          "plate-4",
+          "protective-plating",
+          "steel",
+          null
+        ],
+        [
+          "plate-5",
+          "protective-plating",
+          "steel",
+          null
+        ],
+        [
+          "plate-6",
+          "protective-plating",
+          "steel",
+          null
+        ]
+      ],
+      "notes": "This deliberately excessive steel build exceeds the candidate 220-point initial allowance, but gameplay modification has no such ceiling. Three drives could jointly support up to 900 lb at nominal operating capacity, subject to connectivity and power allocation. Region coverage and the candidate DR sum are not an authorized defense.",
+      "bodyConstructionVariants": {
+        "frame": "medium"
+      },
+      "provisionalIngredientCost": 297,
+      "provisionalKnownRetainedMassPounds": 474
+    },
+    {
+      "id": "minimal-nonhumanoid",
+      "description": "Compact non-humanoid assembly with housing, control, sensory interface and separate locomotion; no forced limb count or fixed frame role.",
+      "components": [
+        [
+          "body",
+          "external-casing",
+          "wood",
+          null
+        ],
+        [
+          "housing",
+          "power-source-housing",
+          "wood",
+          "solar-crystal"
+        ],
+        [
+          "control",
+          "control-module",
+          "wood",
+          null
+        ],
+        [
+          "sensor",
+          "sensory-array",
+          "crystal",
+          null
+        ],
+        [
+          "locomotion",
+          "locomotion-unit",
+          "wood",
+          null
+        ]
+      ],
+      "notes": "A Small external casing defines body size without requiring a structural frame. The solar source is included in the ingredient quote. Senses and actual movement depend on separately verified operating constraints; nominal output alone does not prove a playable character.",
+      "bodyConstructionVariants": {
+        "body": "small"
+      },
+      "provisionalIngredientCost": 95,
+      "provisionalKnownRetainedMassPounds": 58
+    }
+  ],
+  "balanceComparisons": [
+    "Evaluate resource cost separately from movement, survivability, offense, senses, weight and actions.",
+    "Test unpowered hardware as installed mass rather than free usable traits.",
+    "Check the same assembly under different material choices rather than assuming price equals capability.",
+    "Require a general mass/encumbrance mechanical consequence before claiming the overbuild is self-balancing.",
+    "Compare known retained steel mass across repeated physical components, and with material substitutions; test actual mobility only after universal carrying/encumbrance mechanics are integrated.",
+    "Body self-mass cannot be treated as ordinary carried inventory. A future universal physical load and locomotion capacity rule must reconcile self-mass, payload, drive output, terrain and movement without assuming fixed anatomy."
+  ],
+  "candidateResearchOnlyPhysicalAssumptions": {
+    "hypotheticalGrossLoadSupportPerDrivePounds": 300,
+    "hypotheticalFlatDamageReductionPerProtectiveLayer": {
+      "construct-material.steel": 2,
+      "construct-material.darkwood": 1,
+      "construct-material.stone": 2,
+      "construct-material.crystal": 1,
+      "construct-material.alchemical-fiber": 0,
+      "construct-material.wood": 0,
+      "construct-material.cloth": 0,
+      "construct-material.iron": 1
+    },
+    "note": "Withdrawn from native executable component/material definitions. These numbers exist only for historical sensitivity comparisons; they do not define capacity, movement, coverage or damage reduction."
+  }
+}

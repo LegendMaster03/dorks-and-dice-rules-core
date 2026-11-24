@@ -13,6 +13,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
     private readonly NativeOriginSourceDeconstructor _deconstructor = new(catalog);
     private readonly NativeOriginNativeLinkedSelectionEvaluator _nativeLinks = new(catalog);
     private readonly NativeOriginBiologicalTransmissionEvaluator _biological = new(catalog);
+    private readonly NativeOriginBiologicalInheritanceEvaluator _inheritance = new(catalog);
     private readonly NativeOriginReconciler _reconciler = new(catalog);
     private readonly NativeOriginConstraintEvaluator _constraints = new(catalog);
     private readonly NativeOriginSynergyEvaluator _synergies = new(catalog);
@@ -55,8 +56,9 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         var (trustedProposal, verifiedManifested, verificationIssues) =
             NativeOriginManifestedContributorVerifier.Resolve(request.Proposal,
                 request.TrustedScope, manifestedContributorAuthority);
-        var (sourceOffers, discoveryIssues) = _deconstructor.Deconstruct(
-            trustedProposal, trustedNativeOffers);
+        var (sourceOffers, discoveryIssues) = trustedNativeOffers is null
+            ? _deconstructor.Deconstruct(trustedProposal)
+            : _deconstructor.Deconstruct(trustedProposal, trustedNativeOffers);
         var trustedNativeOfferIds = (trustedNativeOffers ?? [])
             .Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
         // Biology is one origination procedure, not a property of every
@@ -84,6 +86,21 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             .GroupBy(x => x.CandidateId, StringComparer.Ordinal)
             .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
         issues.AddRange(nativeLinkIssues);
+        // Only trusted snapshots can supply a carried, previously unexpressed
+        // gene. An older direct profile still exposes its effective grants.
+        var parentGeneOffers = trustedProposal.Contributors
+            .Where(x => x is not null && verifiedManifested.Contains(x.Id) &&
+                x.ManifestedProfile?.BiologicalGenes is not null)
+            .SelectMany(x => x.ManifestedProfile!.BiologicalGenes!.Select(gene => new
+            {
+                CandidateId = "nested:" + x.Id + ":gene:" + gene.Id,
+                ProfileId = x.Source.Id,
+                ProfileRevision = x.Source.Version!,
+                ContributorId = x.Id,
+                Gene = gene
+            }))
+            .GroupBy(x => x.CandidateId, StringComparer.Ordinal)
+            .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
         var candidates = discovered.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var manifests = (discovered.Manifestations ?? []).ToList();
         var selected = new HashSet<string>(manifests.Select(x => x.CandidateId),
@@ -167,11 +184,18 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 Verified("source", candidate.Identity.Occurrence.Source.Id);
             return d is not null &&
                 JsonString(d.EffectiveOutcome, "eligibility") == "eligible" &&
-                selected.Contains(candidate.Id)
+                (selected.Contains(candidate.Id) ||
+                 proposal.BiologicalTransmission?.CandidateIds?.Contains(candidate.Id,
+                     StringComparer.Ordinal) == true)
                 ? candidate with { SelectionBasis = new(NativeOriginEligibility.DmAuthorized,
                     TableDecisionId: d.Id) } : candidate;
         }).ToArray() };
         candidates = proposal.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
+        // Transmission is a distinct player decision from manifestation.
+        // Validate against catalog-discovered, table-authenticated candidate
+        // eligibility; a proposal never self-authorizes heredity.
+        var transmission = NativeOriginBiologicalTransmissionValidator.Review(proposal, Verified);
+        issues.AddRange(transmission.Issues);
         var structural = _validator.ReviewProposal(proposal);
         issues.AddRange(structural.Issues.Where(x => !UnselectedOfferIssue(x, selected)));
         var nativeMethod = _validator.FindMethod(proposal.Method);
@@ -328,6 +352,20 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 continue;
             }
             if (!candidates.TryGetValue(manifest.CandidateId, out var candidate)) continue;
+            // When explicit transmission was requested, a manifestation
+            // cannot grant a gene that was never selected from the donor pool.
+            // A null plan continues to use the existing legacy selections.
+            if (transmission.Explicit &&
+                proposal.Intent == NativeOriginIntent.Mixed &&
+                proposal.Method.MethodId == "biological" &&
+                proposal.Method.RuleId == "rule.creature-origination" &&
+                !transmission.CandidateIds.Contains(candidate.Id))
+            {
+                Add("biological-expression-without-transmission", manifest.CandidateId,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "An expressed biological characteristic must first be selected for transmission.");
+                continue;
+            }
             var source = candidate.Identity.Occurrence.Source;
             var nativeSource = source.Kind == NativeOriginSourceKind.Native &&
                 catalog.TryGetById(source.Id, out var native) && native is not null;
@@ -495,9 +533,58 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                         ? candidate.SelectionBasis.RuleReference : source.Id)
                 : new NativeOriginDecisionBasis(NativeOriginAdjudication.DmAuthorized,
                     TableDecisionId: attribution.Id);
+            var effectiveParameters = manifest.SelectedParameters ?? candidate.OfferedParameters;
+            // Materialize a selected ancestral biome from its trusted finite
+            // source offer. The menu is provenance, not an effective gene value;
+            // never let an unselected biomeChoices array enter a character grant.
+            var biomeSelections = requirements.Where(x =>
+                x.ParameterKey == "subTrait.biome").ToArray();
+            if (biomeSelections.Length > 0)
+            {
+                if (biomeSelections.Length != 1 || manifest.SelectedParameters is not null ||
+                    effectiveParameters is null ||
+                    !effectiveParameters.TryGetValue("subTrait", out var subTrait) ||
+                    subTrait.ValueKind != JsonValueKind.Object ||
+                    !subTrait.TryGetProperty("biomeChoices", out var offeredBiomes) ||
+                    offeredBiomes.ValueKind != JsonValueKind.Array)
+                {
+                    Add("subtrait-biome-binding-invalid", candidate.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Configured biological biome must come from its native finite source offer.");
+                    continue;
+                }
+                var selection = choices.Single(x =>
+                    x.RequirementId == biomeSelections[0].Id).SelectedOptionIds.Single();
+                if (!offeredBiomes.EnumerateArray().Any(x =>
+                    x.ValueKind == JsonValueKind.String && x.GetString() == selection))
+                {
+                    Add("subtrait-biome-binding-invalid", candidate.Id,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Chosen biome is not a verified ancestral offer.");
+                    continue;
+                }
+                var selectedSubTrait = JsonSerializer.SerializeToElement(
+                    new { biome = selection });
+                var boundParameters = effectiveParameters.ToDictionary(
+                    x => x.Key, x => x.Value.Clone(), StringComparer.Ordinal);
+                boundParameters["subTrait"] = selectedSubTrait;
+                effectiveParameters = boundParameters;
+            }
+
             var grant = new NativeOriginEffectiveGrant("grant:" + manifest.Id, manifest.Id,
                 candidate.Identity, [candidate.Id], value,
-                manifest.SelectedParameters ?? candidate.OfferedParameters, choices, basis);
+                effectiveParameters, choices, basis);
+            if (parentGeneOffers.TryGetValue(candidate.Id, out var previousGene))
+            {
+                // The inherited instance may have been latent in its parent.
+                // Previously configured finite choices travel unchanged.
+                grant = grant with
+                {
+                    ResolvedChoices = previousGene.Gene.ResolvedChoices,
+                    ParameterSources = previousGene.Gene.Parameters?.Keys.ToDictionary(
+                        key => key, _ => candidate.Id, StringComparer.Ordinal)
+                };
+            }
             if (inheritedOffers.TryGetValue(candidate.Id, out var prior))
             {
                 // The original choices and configured mechanics are inherited as
@@ -518,6 +605,31 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                     ]
                 };
             }
+            if ((parentGeneOffers.ContainsKey(candidate.Id) || inheritedOffers.ContainsKey(candidate.Id)) &&
+                !NativeOriginChoiceCatalog.ValidInheritedOpenChoice(catalog, candidate, grant.ResolvedChoices))
+            {
+                Add("inherited-open-choice-unresolved", candidate.Id,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The inherited persistent choice is not valid in the current native catalog.");
+                continue;
+            }
+            if ((parentGeneOffers.ContainsKey(candidate.Id) || inheritedOffers.ContainsKey(candidate.Id)) &&
+                candidate.Identity.MechanicalDefinitionId is { } inheritedDefinitionId &&
+                catalog.TryGetById(inheritedDefinitionId, out var inheritedDefinition) &&
+                inheritedDefinition?.Category == "origin-trait" &&
+                inheritedDefinition.Definition.TryGetProperty("trait", out var inheritedTrait) &&
+                inheritedTrait.TryGetProperty("grantType", out var grantType) &&
+                grantType.ValueKind == JsonValueKind.String && grantType.GetString() == "feat-choice" &&
+                (grant.ResolvedChoices is not { Count: 1 } inheritedChoices ||
+                    inheritedChoices[0].SelectedOptionIds is not { Count: 1 } inheritedOption ||
+                    request.TrustedScope is null ||
+                    authority?.AuthorizesInheritedFeat(candidate, inheritedOption[0]) != true))
+            {
+                Add("inherited-feat-eligibility-unresolved", candidate.Id,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "The inherited feat selection requires independent eligibility verification for this character.");
+                continue;
+            }
             accepted.Add(new(candidate, manifest, grant));
         }
 
@@ -536,43 +648,12 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                      ReadBool(decision.EffectiveOutcome, "enforce") == true))
                     verifiedDmDecisionIds.Add(decision.Id);
             }
-        var (resolved, reconciliationIssues, reconciliationDm) =
+        var (reconciled, reconciliationIssues, reconciliationDm) =
             _reconciler.Reconcile(proposal, constrained, Verified);
         issues.AddRange(reconciliationIssues);
         usedDm |= reconciliationDm;
-        // Every binder is monotonic: it can suppress an unsupported dependent,
-        // but never create a new grant. A general requirement may remove an
-        // otherwise valid resource/choice owner after its dependent was bound.
-        // Rerun the canonical binders to a fixed point so a dependent cannot
-        // retain a stale owner ID or source choice in the final profile.
-        IReadOnlyList<NativeOriginEffectiveGrant> effective = resolved;
-        while (true)
-        {
-            // Rebind from immutable reconciled input, not the previous pass's
-            // derived Parameters. Otherwise an auto-bound intrinsic parameter
-            // can appear inherited when its actual owner was just suppressed.
-            // Only grant IDs surviving the last pass may be reconsidered.
-            var survivingIds = effective.Select(x => x.Id)
-                .ToHashSet(StringComparer.Ordinal);
-            var inputs = resolved.Where(x => survivingIds.Contains(x.Id)).ToArray();
-            var previousCount = inputs.Length;
-            var (bound, bindingIssues) =
-                NativeOriginDependentBinder.Bind(catalog, proposal, inputs);
-            issues.AddRange(bindingIssues);
-            var (resourceBound, resourceIssues) =
-                NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
-            issues.AddRange(resourceIssues);
-            var (linkedGrants, linkedIssues) =
-                _nativeLinks.VerifyEffectiveLinks(proposal, resourceBound, Verified);
-            issues.AddRange(linkedIssues);
-            var (closedGrants, closureIssues) =
-                _constraints.VerifyEffectiveRequirements(proposal, linkedGrants, Verified);
-            issues.AddRange(closureIssues);
-            effective = closedGrants;
-            if (effective.Count == previousCount)
-                break;
-        }
-        resolved = effective;
+        var suppressedSynergies = new HashSet<string>(StringComparer.Ordinal);
+        var resolved = CloseEffective(reconciled);
         // Derive only from the final, already reconciled and dependency-closed
         // effective set. Derived results are rebuilt, not copied from old state.
         // Table-authored definitions use the same grammar as native rules, but
@@ -611,17 +692,62 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             }
             verifiedTableSynergies.Add(decision);
         }
-        var (derived, synergyIssues) = _synergies.Evaluate(proposal, resolved,
-            verifiedTableSynergies);
+        // Finalize the genotype before issuing any derived phenotype. A latent
+        // inherited gene is not an effective input to ordinary synergies.
+        var (inheritedGenes, geneIssues, _, maxExpressed) = _inheritance.Evaluate(
+            proposal, transmission, resolved, verifiedManifested,
+            request.TrustedScope is null ? null : authority, Verified);
+        issues.AddRange(geneIssues);
+        IReadOnlyList<NativeOriginEffectiveGrant> combined = [];
+        IReadOnlySet<string> consumedGenes = new HashSet<string>(StringComparer.Ordinal);
+        if (proposal.BiologicalTransmission?.Combinations is { Count: > 0 })
+        {
+            if (transmission.Issues.Count > 0 || geneIssues.Count > 0 ||
+                maxExpressed is null)
+                Add("inherited-combination-inputs-unresolved",
+                    "biologicalTransmission.combinations", NativeOriginIssueSeverity.Unresolved,
+                    "Inherited expressions require a fully authenticated, valid genotype.");
+            else
+            {
+                var (expressions, consumed, combinationIssues) =
+                    _synergies.EvaluateInherited(proposal, inheritedGenes, resolved,
+                        maxExpressed.Value, verifiedTableSynergies);
+                combined = expressions;
+                consumedGenes = consumed;
+                issues.AddRange(combinationIssues);
+            }
+        }
+
+        if (consumedGenes.Count > 0)
+        {
+            // Replace ordinary expressions of the consumed gene instances, not
+            // the genotype itself. Re-close downstream dependencies and resource
+            // links against the remaining effective grants before any synergy pass.
+            resolved = resolved.Where(grant => grant.Synergy is not null ||
+                !grant.SourceCandidateIds.Any(consumedGenes.Contains)).ToArray();
+        }
+
+        // Validate the actual combined result before any ordinary synergy can
+        // use it. The inherited instances are provenance for the result.
+        if (combined.Count > 0)
+            resolved = CloseEffective(UnboundInputs(resolved).Concat(combined).ToArray());
+        var (derived, synergyIssues) = _synergies.Evaluate(proposal,
+            resolved, verifiedTableSynergies);
         issues.AddRange(synergyIssues);
-        foreach (var grant in derived.Where(x =>
+        if (derived.Count > 0)
+            resolved = CloseEffective(UnboundInputs(resolved).Concat(derived).ToArray());
+        foreach (var grant in resolved.Where(x => x.Synergy is not null &&
             x.Authorization?.Adjudication == NativeOriginAdjudication.DmAuthorized &&
             x.Authorization.TableDecisionId is not null))
         {
             usedDm = true;
             verifiedDmDecisionIds.Add(grant.Authorization!.TableDecisionId!);
         }
-        resolved = resolved.Concat(derived).ToArray();
+        if (Verified("biological-inheritance", proposal.Id) is { } capacityDecision)
+        {
+            usedDm = true;
+            verifiedDmDecisionIds.Add(capacityDecision.Id);
+        }
         // A partial set of inherited biological traits is a useful design
         // preview, but it is not a complete playable character. Require one
         // selected, reconciled value in each universal physical foundation slot
@@ -662,13 +788,13 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
             proposal.SelectedAncestryId : null;
         if (configure is not null)
         {
-            var outcome = configure.EffectiveOutcome;
-            if (outcome.ValueKind == JsonValueKind.Object &&
-                (outcome.TryGetProperty("speciesId", out _) ||
-                 outcome.TryGetProperty("ancestryId", out _)))
+            var configuredOutcome = configure.EffectiveOutcome;
+            if (configuredOutcome.ValueKind == JsonValueKind.Object &&
+                (configuredOutcome.TryGetProperty("speciesId", out _) ||
+                 configuredOutcome.TryGetProperty("ancestryId", out _)))
             {
-                configuredSpecies = JsonString(outcome, "speciesId");
-                configuredAncestry = JsonString(outcome, "ancestryId");
+                configuredSpecies = JsonString(configuredOutcome, "speciesId");
+                configuredAncestry = JsonString(configuredOutcome, "ancestryId");
                 usedDm = true;
                 verifiedDmDecisionIds.Add(configure.Id);
             }
@@ -677,7 +803,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         var profileId = "origin:" + proposal.Id;
         var underlying = proposal.ExistingConfiguration ??
             new NativeOriginCurrentConfiguration(configuredSpecies, configuredAncestry,
-                resolved, profileId);
+                resolved, profileId, transmission.Explicit ? inheritedGenes : null);
         var current = proposal.ExistingEffectiveConfiguration ?? underlying;
         var history = (proposal.History ?? []).ToList();
         var addedConstructionEvent = !history.Any(x => x.Id == "construction:" + proposal.Id);
@@ -723,19 +849,170 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         // Do not demand that their original manifestations appear in this proposal.
         var profileReview = _validator.ReviewProfileVerified(profile,
             proposal.ExistingConfiguration is null ? proposal : null,
-            verifiedTableSynergies);
+            verifiedTableSynergies, maxExpressed, suppressedSynergies);
         issues.AddRange(profileReview.Issues.Where(x =>
             x.Code is not ("profile-outcome-unresolved" or "profile-outcome-conflict")));
+
+        // Initial creation may be subject to a host-configured allocation
+        // policy. This is deliberately separate from transmission capacities:
+        // genotype records are free, but their expressed effective grants are
+        // priced with the same complete-grant ledger as conventional presets.
+        // A missing or partial required price schedule cannot be treated as a
+        // zero-cost allowance. Existing baselines and post-origination changes
+        // do not retroactively consume a creation budget.
+        NativeOriginAllocationAssessment? creationAllocation = null;
+        var isInitialBiologicalCreation = !reconstructionTarget &&
+            proposal.ExistingConfiguration is null &&
+            (proposal.Intent is NativeOriginIntent.Direct or NativeOriginIntent.Mixed or
+                NativeOriginIntent.Custom) &&
+            proposal.Method.RuleId == "rule.creature-origination" &&
+            proposal.Method.MethodId == "biological";
+        if (isInitialBiologicalCreation &&
+            (request.RequireCreationAllocation ||
+             request.CreationAllocationPolicy is not null))
+        {
+            var allocationRuling = Verified("creation-allocation", proposal.Id);
+            var effectivePolicy = request.CreationAllocationPolicy;
+            var waived = false;
+            if (allocationRuling is not null)
+            {
+                var allocationOutcome = allocationRuling.EffectiveOutcome;
+                if (ReadBool(allocationOutcome, "waive") == true)
+                    waived = true;
+                else if (allocationOutcome.ValueKind == JsonValueKind.Object &&
+                    allocationOutcome.TryGetProperty("allowance", out var allowance) &&
+                    allowance.ValueKind == JsonValueKind.Number &&
+                    allowance.TryGetInt32(out var revisedAllowance) &&
+                    revisedAllowance >= 0 && effectivePolicy is not null)
+                    effectivePolicy = effectivePolicy with
+                    {
+                        Allowance = revisedAllowance
+                    };
+                else
+                    Add("creation-allocation-ruling-invalid", "creationAllocation",
+                        NativeOriginIssueSeverity.Invalid,
+                        "An authorized creation allocation ruling needs waive=true or a nonnegative allowance for a configured policy.");
+                usedDm = true;
+                verifiedDmDecisionIds.Add(allocationRuling.Id);
+            }
+            if (waived)
+            {
+                creationAllocation = new NativeOriginAllocationAssessment(
+                    "dm-waived", effectivePolicy?.Revision,
+                    effectivePolicy?.Allowance, null, [], [], [], PreviewOnly: false);
+            }
+            else
+            {
+                // Check construction independently of the budget: the shared
+                // assessor must not report that an incomplete Origin is valid
+                // merely because the present subset is inexpensive.
+                var beforeAllocation = new NativeOriginConstructionResult(
+                    Status(), proposal, profile, issues);
+                creationAllocation = NativeOriginAllocationPreview.AssessCreation(
+                    catalog, beforeAllocation, effectivePolicy);
+                switch (creationAllocation.Status)
+                {
+                    case "within-allowance":
+                        break;
+                    case "over-allowance":
+                        Add("creation-allocation-exceeded", "creationAllocation",
+                            NativeOriginIssueSeverity.Conflict,
+                            "The complete expressed Origin exceeds the configured creation budget.");
+                        break;
+                    case "invalid-policy":
+                        Add("creation-allocation-policy-invalid", "creationAllocation",
+                            NativeOriginIssueSeverity.Invalid,
+                            "The host-provided creation allocation price schedule is malformed.");
+                        break;
+                    case "not-configured":
+                        Add("creation-allocation-unconfigured", "creationAllocation",
+                            NativeOriginIssueSeverity.Unresolved,
+                            "Initial biological creation requires an approved complete budget and price schedule.");
+                        break;
+                    default:
+                        Add("creation-allocation-unresolved", "creationAllocation",
+                            NativeOriginIssueSeverity.Unresolved,
+                            "The complete expressed Origin could not be valued using the configured creation policy.");
+                        break;
+                }
+            }
+        }
+
         var status = Status();
+        // The profile is a nonplayable preview if the creation budget fails,
+        // even when all individual traits were otherwise authenticated.
+        if (status != preliminary || usedDm)
+            profile = profile with
+            {
+                Adjudication = status == NativeOriginConstructionStatus.Authorized
+                    ? new NativeOriginDecisionBasis(
+                        usedDm ? NativeOriginAdjudication.DmAuthorized :
+                            NativeOriginAdjudication.Supported,
+                        usedDm ? null : proposal.Method.RuleId,
+                        usedDm ? verifiedDmDecisionIds.FirstOrDefault() : null)
+                    : new NativeOriginDecisionBasis(
+                        status == NativeOriginConstructionStatus.Conflicting
+                            ? NativeOriginAdjudication.Conflict :
+                                NativeOriginAdjudication.Unresolved)
+            };
         // An evaluation preview must not claim an Origin event already happened.
         // Only an authorized result promotes this evaluation's event to completed.
         if (addedConstructionEvent && status == NativeOriginConstructionStatus.Authorized)
             profile = profile with { History = history.Select(x =>
                 x.Id == "construction:" + proposal.Id
                     ? x with { Stage = NativeOriginEventStage.Completed } : x).ToArray() };
-        return new(status, proposal, status == NativeOriginConstructionStatus.Invalid ? null : profile,
+        var outcome = new NativeOriginConstructionResult(status, proposal,
+            status == NativeOriginConstructionStatus.Invalid ? null : profile,
             issues.OrderBy(x => x.Path, StringComparer.Ordinal)
                 .ThenBy(x => x.Code, StringComparer.Ordinal).Distinct().ToArray());
+        return outcome with
+        {
+            BiologicalCombination = NativeOriginBiologicalCombinationProjector.Build(outcome),
+            CreationAllocation = creationAllocation
+        };
+
+        IEnumerable<NativeOriginEffectiveGrant> UnboundInputs(
+            IReadOnlyList<NativeOriginEffectiveGrant> effective)
+        {
+            var ids = effective.Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
+            return reconciled.Where(x => ids.Contains(x.Id))
+                .Concat(effective.Where(x => x.Synergy is not null));
+        }
+
+        IReadOnlyList<NativeOriginEffectiveGrant> CloseEffective(
+            IReadOnlyList<NativeOriginEffectiveGrant> initial)
+        {
+            IReadOnlyList<NativeOriginEffectiveGrant> surviving = initial;
+            while (true)
+            {
+                // Rebind from immutable phase input so a suppressed owner can
+                // never leave behind cached binding values or resource IDs.
+                var ids = surviving.Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
+                var inputs = initial.Where(g => ids.Contains(g.Id) &&
+                    (g.Synergy is null || g.Synergy.Inputs.All(x => ids.Contains(x.GrantId))))
+                    .ToArray();
+                var (bound, bindingIssues) =
+                    NativeOriginDependentBinder.Bind(catalog, proposal, inputs);
+                var (resourceBound, resourceIssues) =
+                    NativeOriginResourceDependencyBinder.Bind(catalog, proposal, bound);
+                var (linked, linkIssues) =
+                    _nativeLinks.VerifyEffectiveLinks(proposal, resourceBound, Verified);
+                var (closed, effectiveConstraintIssues) =
+                    _constraints.VerifyEffectiveConstraints(proposal, linked, Verified);
+                issues.AddRange(bindingIssues);
+                issues.AddRange(resourceIssues);
+                issues.AddRange(linkIssues);
+                issues.AddRange(effectiveConstraintIssues);
+                if (closed.Count == surviving.Count)
+                {
+                    var retained = closed.Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
+                    suppressedSynergies.UnionWith(initial.Where(x =>
+                        x.Synergy is not null && !retained.Contains(x.Id)).Select(x => x.Id));
+                    return closed;
+                }
+                surviving = closed;
+            }
+        }
 
         void Add(string code, string path, NativeOriginIssueSeverity severity, string detail) =>
             issues.Add(new(code, path, severity, detail));

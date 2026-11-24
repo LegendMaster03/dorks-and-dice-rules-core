@@ -1,0 +1,22 @@
+{
+  "id": "trait.mountain-leap",
+  "name": "Mountain Leap",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "mountain-leap",
+    "name": "Mountain Leap",
+    "description": "You can make standing Long Jumps and standing High Jumps using the distances and heights that would apply if you had completed the normal running approach. Each jump still expends movement, and all other jump, landing, and obstacle rules continue to apply.",
+    "standingJumpAsRunning": [
+      "long-jump",
+      "high-jump"
+    ],
+    "ignoresRunningApproachRequirement": true,
+    "movementCost": "normal-jump-movement-cost",
+    "doesNotGrant": [
+      "additional-movement",
+      "flight",
+      "automatic-landing-success",
+      "immunity-to-falling-damage"
+    ]
+  }
+}

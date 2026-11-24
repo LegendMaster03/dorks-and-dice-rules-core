@@ -7,7 +7,7 @@
   "parent": "species.dwarf",
   "traits": [
     {
-      "traitId": "trait.dwarf.hill.stability"
+      "traitId": "trait.stability"
     }
   ],
   "reviewNotes": [

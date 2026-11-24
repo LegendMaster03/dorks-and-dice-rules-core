@@ -5,7 +5,13 @@ namespace RulesCore.Mechanics;
 /// recipe units, not inferred gold values; inventory changes belong to the
 /// character workflow only after a successful procedure.
 /// </summary>
-public sealed record NativeCraftingMaterialQuantity(string MaterialId, int Amount);
+public sealed record NativeCraftingMaterialQuantity(string MaterialId, int Amount)
+{
+    // A recipe may document the part of its input retained in the manufactured
+    // product. This describes physical contents; it does not change inventory
+    // consumption, costs, or the shared process stage validator.
+    public bool RetainedInProduct { get; init; }
+}
 
 /// <summary>
 /// One refining, alloying, assembly, enchanting, or other manufacturing stage.

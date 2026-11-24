@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using RulesCore.Content;
 
 namespace RulesCore.Mechanics;
@@ -14,9 +15,11 @@ public static class NativeOriginInnateSpellProgressionProjector
     public sealed record Spell(
         string GrantId, string TraitId, string SourceId, string SpellId,
         string Availability, int UnlockCharacterLevel,
-        string? SpellcastingAbility, bool AtWill, bool AlwaysPrepared,
+        string? SpellcastingAbility, bool AtWill,
         bool SlotCasting, int? FreeUsesPerRecharge, string? FreeUsesFormula,
-        string? Recharge, int? FreeCastSpellLevel);
+        string? Recharge, int? FreeCastSpellLevel,
+        [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        string? AnimalHabitat = null);
 
     public sealed record View(
         string Status, int? CharacterLevel, IReadOnlyList<Spell> Spells,
@@ -72,10 +75,12 @@ public static class NativeOriginInnateSpellProgressionProjector
                 definition.Definition.TryGetProperty("trait", out var canonical) &&
                 canonical.ValueKind == JsonValueKind.Object &&
                 (canonical.TryGetProperty("spell", out _) ||
-                 canonical.TryGetProperty("spellList", out _));
+                 canonical.TryGetProperty("spellList", out _) ||
+                 canonical.TryGetProperty("spellChoices", out _));
             var hasEffective = grant.EffectiveValue is { ValueKind: JsonValueKind.Object } value &&
                 (value.TryGetProperty("spell", out _) ||
-                 value.TryGetProperty("spellList", out _));
+                 value.TryGetProperty("spellList", out _) ||
+                 value.TryGetProperty("spellChoices", out _));
             if (!hasCanonical && !hasEffective) continue;
             if (!hasCanonical || id is null ||
                 grant.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
@@ -91,27 +96,73 @@ public static class NativeOriginInnateSpellProgressionProjector
                 continue;
             }
 
-            // A selected open spell-list choice needs a separately validated
-            // selected spell identity and replacement policy before execution.
-            if (!Text(authored, "spell", out var spellId))
+            // Finite authored spell choices are fixed at creation. The
+            // open Wizard cantrip must be a verified native level-zero member.
+            var fixedSpell = Text(authored, "spell", out var spellId);
+            var openCantrip = false;
+            if (authored.TryGetProperty("spellChoices", out var menu))
             {
-                reasons.Add("spell-list-projection-deferred:" + grant.Id);
-                continue;
+                if (fixedSpell || authored.TryGetProperty("spellList", out _) ||
+                    !VerifiedFiniteSpellChoice(origin, grant, menu, out spellId))
+                {
+                    reasons.Add("spell-choice-unverified:" + grant.Id);
+                    continue;
+                }
             }
-            if (authored.TryGetProperty("spellList", out _))
+            else if (!fixedSpell)
+            {
+                if (TextValue(authored, "spellList") != "wizard" ||
+                    TextValue(authored, "replacement") != "after-long-rest" ||
+                    !VerifiedOpenCantrip(catalog, origin, grant, out spellId))
+                {
+                    reasons.Add("spell-list-projection-deferred:" + grant.Id);
+                    continue;
+                }
+                openCantrip = true;
+            }
+            else if (authored.TryGetProperty("spellList", out _))
             {
                 reasons.Add("spell-definition-ambiguous:" + grant.Id);
                 continue;
             }
-            var unlock = 1; // A native creation-time spell without a level is level 1.
-            if (authored.TryGetProperty("level", out var level) &&
-                (!level.TryGetInt32(out unlock) || unlock is < 1 or > 1000))
+            if (NativeOriginUnlockLevel.Read(authored) is not int unlock)
             {
                 reasons.Add("spell-level-invalid:" + grant.Id);
                 continue;
             }
             var ability = default(string);
-            if (authored.TryGetProperty("originBindings", out var bindings))
+            string? animalHabitat = null;
+            // Habitat-limited communication is a source configuration, not a
+            // spellcasting-ability choice or permission to speak to all animals.
+            if (authored.TryGetProperty("animalCommunication", out var communication))
+            {
+                if (spellId != "speak-with-animals" ||
+                    TextValue(communication, "habitatParameter") != "subTrait.animalHabitat" ||
+                    TextValue(communication, "eligibleAnimals") != "ordinary-animals-native-to-configured-habitat" ||
+                    TextValue(communication, "conveys") != "basic-ideas-and-observations" ||
+                    !communication.TryGetProperty("compelsCooperation", out var compels) ||
+                    compels.ValueKind != JsonValueKind.False ||
+                    !authored.TryGetProperty("originBindings", out var habitatBindings) ||
+                    habitatBindings.ValueKind != JsonValueKind.Object ||
+                    habitatBindings.EnumerateObject().Count() != 1 ||
+                    !habitatBindings.TryGetProperty("subTrait", out var habitatBinding) ||
+                    TextValue(habitatBinding, "lookup") != "nearest" ||
+                    TextValue(habitatBinding, "sourceField") != "animalCommunicationSubTrait" ||
+                    grant.Parameters?.TryGetValue("subTrait", out var habitat) != true ||
+                    !source.Definition.TryGetProperty("animalCommunicationSubTrait", out var sourceHabitat) ||
+                    !JsonElement.DeepEquals(habitat, sourceHabitat) ||
+                    !Text(habitat, "animalHabitat", out animalHabitat) ||
+                    !grant.SourceCandidateIds.All(candidateId =>
+                        origin.EvaluatedProposal.Candidates.Any(candidate =>
+                            candidate.Id == candidateId &&
+                            candidate.OfferedParameters?.TryGetValue("subTrait", out var offeredHabitat) == true &&
+                            JsonElement.DeepEquals(offeredHabitat, habitat))))
+                {
+                    reasons.Add("spell-animal-habitat-unverified:" + grant.Id);
+                    continue;
+                }
+            }
+            else if (authored.TryGetProperty("originBindings", out var bindings))
             {
                 if (bindings.ValueKind != JsonValueKind.Object ||
                     bindings.EnumerateObject().Count() != 1 ||
@@ -130,13 +181,12 @@ public static class NativeOriginInnateSpellProgressionProjector
                 }
             }
 
-            var atWill = True(authored, "atWill");
-            var prepared = True(authored, "alwaysPrepared");
+            // A selected level-zero cantrip has no leveled-slot or free-use
+            // pool. The authored level on this trait is CHARACTER unlock level.
+            var atWill = openCantrip || True(authored, "atWill");
             var slots = True(authored, "slotCasting");
             if (authored.TryGetProperty("atWill", out var atWillField) &&
                 atWillField.ValueKind is not (JsonValueKind.True or JsonValueKind.False) ||
-                authored.TryGetProperty("alwaysPrepared", out var prepField) &&
-                prepField.ValueKind is not (JsonValueKind.True or JsonValueKind.False) ||
                 authored.TryGetProperty("slotCasting", out var slotField) &&
                 slotField.ValueKind is not (JsonValueKind.True or JsonValueKind.False))
             {
@@ -164,7 +214,7 @@ public static class NativeOriginInnateSpellProgressionProjector
             {
                 recharge = recovery.ValueKind == JsonValueKind.String
                     ? recovery.GetString() : null;
-                if (recharge is not "long-rest")
+                if (recharge is not ("long-rest" or "short-or-long-rest"))
                 {
                     reasons.Add("spell-recharge-unsupported:" + grant.Id);
                     continue;
@@ -196,8 +246,8 @@ public static class NativeOriginInnateSpellProgressionProjector
             }
             spells.Add(new(grant.Id, id, grant.Identity.Occurrence.Source.Id,
                 spellId!, characterLevel >= unlock ? "available" : "locked",
-                unlock, ability, atWill, prepared, slots,
-                freeUses, formula, recharge, freeLevel));
+                unlock, ability, atWill, slots,
+                freeUses, formula, recharge, freeLevel, animalHabitat));
         }
 
         // Validate derived intrinsic parameters from the actual construction
@@ -278,6 +328,113 @@ public static class NativeOriginInnateSpellProgressionProjector
             JsonElement.DeepEquals(offered, grant.EffectiveValue!.Value) &&
             origin.EvaluatedProposal.Manifestations.Count(m =>
                 m.CandidateId == candidateId) == 1);
+    }
+
+    private static bool VerifiedOpenCantrip(NativeCatalogSnapshot catalog,
+        NativeOriginConstructionResult origin, NativeOriginEffectiveGrant grant, out string? spellId)
+    {
+        spellId = null;
+        if (grant.SourceCandidateIds is not { Count: 1 } ||
+            grant.ResolvedChoices is not { Count: 1 } choices ||
+            choices[0] is null || choices[0].RequirementId != "selection" ||
+            choices[0].SelectedOptionIds is not { Count: 1 } selected ||
+            !NativeOriginChoiceCatalog.IsMember(catalog, "spell:wizard", selected[0]))
+            return false;
+        var proof = "native-catalog:" + catalog.RulesetId + ":" + catalog.Fingerprint;
+        if (string.IsNullOrWhiteSpace(choices[0].CatalogEligibilityEvidenceId)) return false;
+        var candidateId = grant.SourceCandidateIds[0];
+        var candidates = origin.EvaluatedProposal.Candidates.Where(x => x.Id == candidateId).ToArray();
+        var manifestations = origin.EvaluatedProposal.Manifestations.Where(x => x.CandidateId == candidateId).ToArray();
+        if (candidates.Length != 1 || manifestations.Length != 1) return false;
+        if (origin.EvaluatedProposal.Intent == NativeOriginIntent.Mixed &&
+            (candidates[0].RequiredChoices?.Count ?? 0) == 0)
+        {
+            if ((manifestations[0].Choices?.Count ?? 0) != 0 ||
+                !NativeOriginChoiceCatalog.MatchesInheritedChoice(origin, candidates[0], choices[0]))
+                return false;
+        }
+        else if (choices[0].CatalogEligibilityEvidenceId != proof ||
+            candidates[0].RequiredChoices is not { Count: 1 } requirements ||
+            requirements[0].Id != "selection" || requirements[0].OptionCatalogId != "spell:wizard" ||
+            requirements[0].Minimum != 1 || requirements[0].Maximum != 1 ||
+            requirements[0].Timing != NativeOriginChoiceTiming.Creation ||
+            manifestations[0].Choices is not { Count: 1 } submitted ||
+            submitted[0].RequirementId != "selection" ||
+            submitted[0].CatalogEligibilityEvidenceId != proof ||
+            submitted[0].SelectedOptionIds is not { Count: 1 } submittedIds ||
+            submittedIds[0] != selected[0]) return false;
+        // Existing spell course/ledger identities use bare spell slugs.
+        // Normalize the verified canonical spell ID once at this boundary.
+        spellId = selected[0]["spell.".Length..];
+        return true;
+    }
+
+    private static bool VerifiedFiniteSpellChoice(NativeOriginConstructionResult origin,
+        NativeOriginEffectiveGrant grant, JsonElement menu, out string? spellId)
+    {
+        spellId = null;
+        if (menu.ValueKind != JsonValueKind.Array || menu.GetArrayLength() == 0 ||
+            menu.EnumerateArray().Any(x => x.ValueKind != JsonValueKind.String ||
+                string.IsNullOrWhiteSpace(x.GetString())))
+            return false;
+        var options = menu.EnumerateArray().Select(x => x.GetString()!).ToArray();
+        if (options.Distinct(StringComparer.Ordinal).Count() != options.Length ||
+            grant.ResolvedChoices is not { Count: 1 } choices ||
+            choices[0] is null || choices[0].RequirementId != "spell" ||
+            choices[0].SelectedOptionIds is not { Count: 1 } selected ||
+            !options.Contains(selected[0], StringComparer.Ordinal))
+            return false;
+        var chosen = selected[0];
+        foreach (var candidateId in grant.SourceCandidateIds)
+        {
+            var offeredCandidates = origin.EvaluatedProposal.Candidates
+                .Where(x => x.Id == candidateId).ToArray();
+            var manifestations = origin.EvaluatedProposal.Manifestations
+                .Where(x => x.CandidateId == candidateId).ToArray();
+            if (offeredCandidates.Length != 1 || manifestations.Length != 1)
+                return false;
+            var candidate = offeredCandidates[0];
+            var manifestation = manifestations[0];
+            if (candidate.RequiredChoices is { Count: > 0 } requirements)
+            {
+                if (requirements.Count != 1 || requirements[0] is null ||
+                    requirements[0].Id != "spell" ||
+                    requirements[0].Timing != NativeOriginChoiceTiming.Creation ||
+                    requirements[0].Minimum != 1 || requirements[0].Maximum != 1 ||
+                    requirements[0].FiniteOptions is not { } offered ||
+                    !options.SequenceEqual(offered, StringComparer.Ordinal) ||
+                    !Matches(manifestation.Choices))
+                    return false;
+            }
+            else
+            {
+                // An authenticated manifested parent carries its committed choice;
+                // a descendant must not reopen that parent's spell menu.
+                var parents = origin.EvaluatedProposal.Contributors.Where(x =>
+                    x.Id == candidate.ContributorId &&
+                    x.Source.Kind == NativeOriginSourceKind.ManifestedProfile).ToArray();
+                if (parents.Length != 1 || parents[0].ManifestedProfile is not { } snapshot ||
+                    (manifestation.Choices?.Count ?? 0) != 0)
+                    return false;
+                var parent = parents[0];
+                var matchingGenes = (snapshot.BiologicalGenes ?? []).Where(g =>
+                    candidateId == "nested:" + parent.Id + ":gene:" + g.Id &&
+                    g.Identity == candidate.Identity && Matches(g.ResolvedChoices)).Count();
+                var matchingGrants = snapshot.InherentGrants.Count(g =>
+                    candidateId == "nested:" + parent.Id + ":" + g.Id &&
+                    g.Identity == candidate.Identity && Matches(g.ResolvedChoices));
+                if (matchingGenes + matchingGrants != 1)
+                    return false;
+            }
+        }
+        spellId = chosen;
+        return true;
+
+        bool Matches(IReadOnlyList<NativeOriginChoiceSelection>? evidence) =>
+            evidence is { Count: 1 } && evidence[0] is not null &&
+            evidence[0].RequirementId == "spell" &&
+            evidence[0].SelectedOptionIds is { Count: 1 } selectedEvidence &&
+            selectedEvidence[0] == chosen;
     }
 
     private static bool Text(JsonElement source, string key, out string? value)

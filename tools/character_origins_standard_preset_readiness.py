@@ -52,6 +52,13 @@ def _choice_observations(trait):
                 if key in trait
             },
         })
+    if "spellChoices" in trait:
+        observations.append({
+            "kind": "finite-spell-choice",
+            "authoredFields": {
+                "spellChoices": copy.deepcopy(trait["spellChoices"]),
+            },
+        })
     if trait.get("allocation") == "player-choice":
         observations.append({
             "kind": "player-allocation-choice",

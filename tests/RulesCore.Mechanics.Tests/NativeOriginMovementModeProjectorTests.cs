@@ -71,8 +71,11 @@ public sealed class NativeOriginMovementModeProjectorTests
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         Assert.Equal(3, foundation.Length);
-        var traits = selectedTraitIds.Select(id =>
-            Assert.Single(offers, x => x.Identity.MechanicalDefinitionId == id)).ToArray();
+        // Each requested trait belongs to the corresponding contributor.
+        // Two contributors may now offer the same canonical gene ID.
+        var traits = selectedTraitIds.Select((id, i) =>
+            Assert.Single(offers, x => x.ContributorId == "source-" + i &&
+                x.Identity.MechanicalDefinitionId == id)).ToArray();
         Assert.All(traits, x =>
             Assert.Equal(NativeOriginEligibility.Eligible, x.SelectionBasis.Eligibility));
 
@@ -112,11 +115,11 @@ public sealed class NativeOriginMovementModeProjectorTests
 
     [Theory]
     [InlineData("ancestry.dragonborn.copper",
-        "trait.dragonborn.copper.natural-climber", "climb")]
+        "trait.natural-climber", "climb")]
     [InlineData("ancestry.dragonborn.white",
-        "trait.dragonborn.white.coldwater-swimmer", "swim")]
+        "trait.coldwater-swimmer", "swim")]
     [InlineData("ancestry.dragonborn.brass",
-        "trait.dragonborn.brass.sand-burrower", "burrow")]
+        "trait.sand-burrower", "burrow")]
     public void ConventionalAncestryProjectsOnlyItsActualNativeMovementMode(
         string ancestry, string traitId, string expectedMode)
     {
@@ -171,9 +174,9 @@ public sealed class NativeOriginMovementModeProjectorTests
                 "ancestry.dragonborn.brass"
             ],
             [
-                "trait.dragonborn.red.natural-climber",
-                "trait.dragonborn.white.coldwater-swimmer",
-                "trait.dragonborn.brass.sand-burrower"
+                "trait.natural-climber",
+                "trait.coldwater-swimmer",
+                "trait.sand-burrower"
             ]);
         Assert.True(result.Status == NativeOriginConstructionStatus.Authorized,
             string.Join("; ", result.Issues.Select(x => x.Code)));
@@ -203,8 +206,8 @@ public sealed class NativeOriginMovementModeProjectorTests
         var result = Mixed(
             ["ancestry.dragonborn.red", "ancestry.dragonborn.copper"],
             [
-                "trait.dragonborn.red.natural-climber",
-                "trait.dragonborn.copper.natural-climber"
+                "trait.natural-climber",
+                "trait.natural-climber"
             ], retainBothClimbs: true);
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         var view = NativeOriginMovementModeProjector.ProjectApprovedMixed(
@@ -218,7 +221,8 @@ public sealed class NativeOriginMovementModeProjectorTests
             Assert.Single(result.Profile!.Underlying.InherentGrants.Where(y =>
                 y.Id == x.GrantId));
         });
-        Assert.Equal(2, view.Modes.Select(x => x.DefinitionId).Distinct().Count());
+        Assert.Single(view.Modes.Select(x => x.DefinitionId).Distinct());
+        Assert.Equal(2, view.Modes.Select(x => x.SourceId).Distinct().Count());
     }
 
     [Fact]
@@ -229,7 +233,7 @@ public sealed class NativeOriginMovementModeProjectorTests
         var profile = original.Profile!;
         var grant = Assert.Single(profile.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.dragonborn.copper.natural-climber");
+                "trait.natural-climber");
         var modified = JsonNode.Parse(grant.EffectiveValue!.Value.GetRawText())!;
         modified["speedFeet"] = 10000;
         var altered = grant with

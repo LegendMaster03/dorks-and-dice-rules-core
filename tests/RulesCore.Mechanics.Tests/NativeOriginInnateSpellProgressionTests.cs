@@ -139,20 +139,23 @@ public sealed class NativeOriginInnateSpellProgressionTests
     }
 
     [Fact]
-    public void WoodElfSpeedOverlapMustBeReconciledBeforeAnySpellProjection()
+    public void WoodElfAuthoredSpeedOverrideAllowsCompleteSpellProjection()
     {
         var catalog = Catalog();
         var origin = Direct(catalog, "ancestry.elf.wood");
-        // Species Elf has 30-foot walking speed and Wood Elf has 35 feet.
-        // A spell projector may not adjudicate that unresolved foundation
-        // conflict or silently select the faster Ancestry speed.
-        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, origin.Status);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, origin.Status);
+        var speed = Assert.Single(origin.Profile!.Underlying.InherentGrants,
+            x => x.Identity.IntrinsicSlotId == "walkingSpeedFeet");
+        Assert.Equal("ancestry.elf.wood", speed.Identity.Occurrence.Source.Id);
+        Assert.Equal(35, speed.EffectiveValue!.Value.GetInt32());
         var projected = NativeOriginInnateSpellProgressionProjector.Project(
             catalog, origin, 5);
-        Assert.Equal("unresolved", projected.Status);
-        Assert.Empty(projected.Spells);
-        Assert.Contains("origin-not-authorized-current-baseline",
-            projected.UnresolvedReasons);
+        Assert.Equal("resolved", projected.Status);
+        Assert.Equal(new[] { "druidcraft", "longstrider", "pass-without-trace" },
+            projected.Spells.Select(x => x.SpellId).OrderBy(x => x).ToArray());
+        var druidcraft = Assert.Single(projected.Spells, x => x.SpellId == "druidcraft");
+        Assert.True(druidcraft.AtWill);
+        Assert.Null(druidcraft.FreeUsesPerRecharge);
     }
 
     [Fact]
@@ -165,9 +168,9 @@ public sealed class NativeOriginInnateSpellProgressionTests
         Assert.Equal("resolved", raw.Status);
         var animal = Assert.Single(raw.Spells, x =>
             x.SpellId == "speak-with-animals");
+        Assert.Equal("woodland", animal.AnimalHabitat);
         Assert.Equal("proficiency-bonus", animal.FreeUsesFormula);
         Assert.Null(animal.FreeUsesPerRecharge);
-        Assert.True(animal.AlwaysPrepared);
         Assert.Equal("long-rest", animal.Recharge);
         Assert.True(animal.SlotCasting);
         Assert.Equal(1, animal.UnlockCharacterLevel);
@@ -213,7 +216,7 @@ public sealed class NativeOriginInnateSpellProgressionTests
                 catalog, origin, 1001).Status);
         var original = Assert.Single(origin.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.tiefling.infernal.hellish-rebuke");
+                "trait.hellish-rebuke");
         foreach (var altered in new[]
         {
             JsonSerializer.SerializeToElement(new
@@ -251,7 +254,7 @@ public sealed class NativeOriginInnateSpellProgressionTests
         var origin = Direct(catalog, "ancestry.tiefling.infernal");
         var original = Assert.Single(origin.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId ==
-                "trait.tiefling.otherworldly-presence");
+                "trait.otherworldly-presence");
         var changed = original.Parameters!.ToDictionary(x => x.Key, x => x.Value,
             StringComparer.Ordinal);
         changed["spellcastingAbility"] =

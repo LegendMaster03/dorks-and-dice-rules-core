@@ -1,0 +1,13 @@
+{
+  "name": "External control interface",
+  "description": "Accepts commands or direct operation from an external controller or operator. Interface presence does not create consciousness, control privileges, remote range, or extra turns.",
+  "rulesStatus": "provisional first-party playable construction candidate; advanced effect binding and balance still required",
+  "provides": [
+    "external-control-interface"
+  ],
+  "materialSlots": [
+    "interface"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.external-control-interface",
+  "powerDemand": 1
+}

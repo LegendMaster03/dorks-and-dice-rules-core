@@ -45,6 +45,33 @@ public static class NativeMechanicsEndpoints
         // Origin preview inherits the same authenticated ingress as other mechanics.
         // No persisted state or table-authority claims are accepted by this route.
         group.MapNativeOriginPreview();
+        group.MapNativeConstructPreview();
+        group.MapNativeOriginDiscovery();
+        group.MapNativeLifeExperiencePreview();
+        // Character-owned supernatural routes have independent host-side
+        // verifiers; delegation is not proof of source entitlement.
+        if (!privateTunnel)
+        {
+            group.MapVerifiedPrimaryState();
+            group.MapVerifiedManifestationPlans();
+            group.MapVerifiedManifestationReads();
+            group.MapNativeOriginVerifiedUnderlying();
+            group.MapVerifiedBiologicalOriginPreview();
+            group.MapVerifiedPermanentOriginReconstruction();
+            group.MapVerifiedConstructOperatingPlan();
+            group.MapVerifiedConstructSolarIntervalPlan();
+            group.MapVerifiedConstructContextualPower();
+            group.MapVerifiedConstructSoulCustodyPlan();
+            group.MapVerifiedConstructSustenancePlan();
+            group.MapVerifiedConstructModificationPlan();
+            group.MapVerifiedLifeExperiencePlan();
+            group.MapVerifiedCharacterTraining();
+            group.MapVerifiedScopedSkillCheck();
+            group.MapVerifiedOriginDirectChoices();
+            group.MapVerifiedOriginCantripRest();
+            group.MapVerifiedSupernaturalOwnershipPlans();
+            group.MapVerifiedInfluenceOverlapPlans();
+        }
         // Separate trusted DM-reviewed evaluation. The caller must still
         // commit any authorized result through Character Sheet's store.
         if (!privateTunnel)
@@ -69,7 +96,27 @@ public static class NativeMechanicsEndpoints
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
                     originPreview = "stateless-first-party",
+                    constructOriginPreview = "stateless-native-assembly",
+                    verifiedConstructOperatingPlanning = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedConstructSolarIntervalPlanning = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedConstructContextualPower = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedConstructSoulCustodyPlanning = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedConstructSustenancePlanning = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedConstructModificationPlanning = privateTunnel ? "unavailable" : "host-authority-required",
+                    originMethodDiscovery = true, originPresetDiscovery = true,
+                    originChoiceCatalogDiscovery = true,
+                    verifiedDirectOriginChoices = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedCantripReplacement = privateTunnel ? "unavailable" : "host-authority-required",
+                    constructConfigurationDiscovery = true,
+                    lifeExperiencePreview = "source-qualified-selection",
+                    verifiedLifeExperiencePlanning = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedCharacterTraining = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedScopedSkillChecks = privateTunnel ? "unavailable" : "host-authority-required",
+                    biologicalAllocationPreview = NativeOriginFirstPartyBiologicalPricing.Revision,
                     originPersistence = false, originDmAdjudication = false,
+                    verifiedBiologicalPreview = privateTunnel ? "unavailable" : "host-authority-required",
+                    permanentOriginReconstruction = privateTunnel ? "unavailable" : "host-authority-required",
+                    supernaturalPlanning = privateTunnel ? "unavailable" : "host-authority-required",
                     innateSpellLedgerBootstrap = privateTunnel ? "unavailable" : "source-matched-preview",
                     startingEquipmentResolution = "authored-grants-only",
                     equipmentQualifications = "authored-scopes-only",
@@ -98,7 +145,10 @@ public static class NativeMechanicsEndpoints
                 category is not ("species" or "ancestry" or "class" or "subclass" or "patron" or "pact" or
                     "invocation" or "condition" or "leveled-condition" or
                     "skill" or "competency" or "monster" or "item" or
-                    "feat" or "spell") ||
+                    "feat" or "spell" or "origin-trait" or "construct-component" or
+                    "construct-power-source" or "construct-material" or
+                    "construct-design" or "construct-enhancement" or
+                    "upbringing" or "background") ||
                 (query?.Length ?? 0) > 200 ||
                 !PageNumber(limitText, 50, 1, 100, out var limit) ||
                 !PageNumber(offsetText, 0, 0, 1_000_000, out var offset))

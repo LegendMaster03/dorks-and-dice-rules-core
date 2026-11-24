@@ -1,0 +1,21 @@
+{
+  "id": "trait.misty-step",
+  "name": "Misty Step",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "misty-step",
+    "originBindings": {
+      "spellcastingAbility": {
+        "lookup": "manifested-intrinsic",
+        "intrinsicSlot": "spellcastingAbility",
+        "scope": "source"
+      }
+    },
+    "description": "At character level 5, know Misty Step; cast it once without using a spell slot per Short or Long Rest, and also with appropriate spell slots. This extends Fey Teleportation without granting a second Misty Step entitlement.",
+    "spell": "misty-step",
+    "level": 5,
+    "freeUses": 1,
+    "recharge": "short-or-long-rest",
+    "slotCasting": true
+  }
+}

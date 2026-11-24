@@ -1,0 +1,35 @@
+name: Pillar 4 Workstream A isolated validation
+
+on:
+  push:
+    branches:
+      - feature/pillar4-acquisition-progression-20261119
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  supernatural-progression:
+    name: .NET 10 and structural regressions
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore and build Rules Core
+        run: |
+          dotnet restore RulesCore.slnx
+          dotnet build RulesCore.slnx -c Release --no-restore
+      - name: Workstream A synthetic tests
+        run: dotnet test tests/RulesCore.Mechanics.Tests/RulesCore.Mechanics.Tests.csproj -c Release --no-build --filter FullyQualifiedName~NativeSupernaturalProgressionPlannerTests
+      - name: Entire Rules Core test solution
+        run: dotnet test RulesCore.slnx -c Release --no-build
+      - name: Structural validations
+        run: |
+          python3 tools/validate_ruleset_split.py
+          python3 tools/audit_native_baseline.py --native data/rulesets/first-party-001/native --strict
+      - name: Character Origins Python regression suite
+        run: python3 -m unittest discover -s tests -p 'test_character_origins_*.py' -v

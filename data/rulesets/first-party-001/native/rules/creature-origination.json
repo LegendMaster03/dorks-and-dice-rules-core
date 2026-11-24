@@ -18,7 +18,40 @@
     {
       "id": "construct-assembly",
       "name": "Construct assembly",
-      "description": "Materials, design, assembly, and any animating force may play different input roles; creator Species traits are not inherited automatically."
+      "description": "Construct Assembly evaluates installed physical components and their ordinary crafting recipes. The starting allowance purchases authorized ingredients, not finished component prices. Magical Animation and other supernatural origination processes remain distinct.",
+      "initialConstructionCostModel": "recipe-inputs",
+      "costPolicyStatus": "provisional 200-point starting playtest allowance; ingredient valuations and advanced content remain unbalanced",
+      "constructIntrinsics": {
+        "creatureType": "construct"
+      },
+      "startingResourceUnitCosts": {
+        "construct-material.steel": 4,
+        "construct-material.darkwood": 7,
+        "construct-material.stone": 2,
+        "construct-material.crystal": 6,
+        "construct-material.alchemical-fiber": 5,
+        "construct-material.wood": 2,
+        "construct-material.cloth": 1,
+        "construct-material.iron": 3,
+        "crafting-material.alchemical-reagent": 5,
+        "crafting-material.fine-mechanisms": 6,
+        "crafting-material.optical-elements": 5,
+        "crafting-material.arcane-catalyst": 12,
+        "crafting-material.sealing-compound": 5,
+        "crafting-material.soul-essence": 20,
+        "crafting-material.infernal-reagent": 18,
+        "construct-material.clay": 2,
+        "construct-material.terracotta": 3,
+        "construct-material.ceramic": 4,
+        "construct-material.glass": 4,
+        "construct-material.bone": 3,
+        "construct-material.preserved-tissue": 3,
+        "construct-material.amber": 5,
+        "construct-material.wax": 2,
+        "construct-material.paper": 1,
+        "construct-material.wicker": 2
+      },
+      "initialConstructionAllowance": 200
     },
     {
       "id": "elemental-manifestation",
@@ -160,6 +193,8 @@
     }
   },
   "biologicalTransmission": {
+    "maxInheritedInstancesPerKind": 2,
+    "maxExpressedInstancesPerKind": 1,
     "heritableIntrinsicSlots": [
       "creatureType",
       "size",
@@ -168,6 +203,13 @@
     "selection": "player-directed",
     "absentTraitEligibility": "unresolved-without-authored-or-verified-table-permission",
     "scope": "Only mixed biological Origination with valid selectable native or authenticated manifested biological contributors. Canonical origin-trait definitions authored under native/origination/biological/genes/ are available as candidate genes, not automatic grants. Actual manifestation, source provenance, authored dependencies, choices, reconciliation, and table authority still apply; nonbiological methods do not inherit these genes by their location.",
-    "note": "Gene classification follows the biological directory rather than a per-trait inheritanceMethods whitelist. This does not establish latent inheritance, independent transmission contrary to authored relationships, final allocation costs, or complete gameplay projection for every gene."
+    "note": "Biological instance capacity applies per canonical gene identity (or heritable intrinsic slot), not as a global latent-gene quota. Latency is derived: an inherited instance that contributes to no effective grant is unexpressed. Neither instance presence nor latency confers a mechanical effect. Gene classification follows the biological directory; this does not establish dominance, recessiveness, final allocation costs, or independent transmission contrary to authored relationships."
+  },
+  "darkvisionSensitivity": {
+    "innateRangeThresholdFeet": 60,
+    "drawbackTraitId": "trait.sunlight-sensitivity",
+    "appliesTo": "total-innate-darkvision",
+    "temporaryMagicalVision": "excluded",
+    "note": "When the effective innate Darkvision range exceeds the campaign threshold, the canonical Sunlight Sensitivity condition applies. Include native range extensions unlocked at the current level. The result is one limitation, not an additional genetic grant or a source of allocation refunds. Temporary magical vision is not part of this calculation. The default threshold is provisional for playtesting."
   }
 }

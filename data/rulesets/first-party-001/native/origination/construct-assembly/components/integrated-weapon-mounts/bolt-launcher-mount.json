@@ -1,0 +1,14 @@
+{
+  "name": "Bolt launcher mount",
+  "description": "Integrated projectile mounting for authored ranged equipment.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "equipment-mount",
+    "projectile-interface"
+  ],
+  "materialSlots": [
+    "mount"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.bolt-launcher-mount",
+  "powerDemand": 0
+}

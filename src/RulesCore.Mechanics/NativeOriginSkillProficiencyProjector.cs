@@ -135,12 +135,7 @@ public static class NativeOriginSkillProficiencyProjector
                     candidate.SelectionBasis.Eligibility != NativeOriginEligibility.Eligible)) ||
                 candidate.OfferedValue is not { } offered ||
                 grant.EffectiveValue is not { } actual ||
-                !JsonElement.DeepEquals(offered, actual) ||
-                candidate.RequiredChoices is not { Count: 1 } requirements ||
-                requirements[0].Id != "selection" ||
-                requirements[0].Timing != NativeOriginChoiceTiming.Creation ||
-                requirements[0].OptionCatalogId != "any-native-skill" ||
-                requirements[0].Minimum != 1 || requirements[0].Maximum != 1))
+                !JsonElement.DeepEquals(offered, actual)))
             return false;
 
         if (grant.ResolvedChoices is not { Count: 1 } effective ||
@@ -154,7 +149,19 @@ public static class NativeOriginSkillProficiencyProjector
         {
             var manifestations = result.EvaluatedProposal.Manifestations
                 .Where(x => x.CandidateId == candidate.Id).ToArray();
-            if (manifestations.Length != 1 ||
+            if (manifestations.Length != 1) return false;
+            if (mixed && (candidate.RequiredChoices?.Count ?? 0) == 0)
+            {
+                if ((manifestations[0].Choices?.Count ?? 0) != 0 ||
+                    !NativeOriginChoiceCatalog.MatchesInheritedChoice(result, candidate, effective[0]))
+                    return false;
+                continue;
+            }
+            if (candidate.RequiredChoices is not { Count: 1 } requirements ||
+                requirements[0].Id != "selection" ||
+                requirements[0].Timing != NativeOriginChoiceTiming.Creation ||
+                requirements[0].OptionCatalogId != "any-native-skill" ||
+                requirements[0].Minimum != 1 || requirements[0].Maximum != 1 ||
                 manifestations[0].Choices is not { Count: 1 } chosen ||
                 chosen[0].RequirementId != effective[0].RequirementId ||
                 chosen[0].SelectedOptionIds is not { Count: 1 } selected ||

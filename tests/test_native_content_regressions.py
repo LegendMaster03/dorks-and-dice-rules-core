@@ -8,6 +8,8 @@ from collections import Counter
 from pathlib import Path
 import unittest
 
+from tools.audit_native_baseline import top_level_records
+
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "data/rulesets/first-party-001"
 NATIVE = PACKAGE / "native"
@@ -22,22 +24,13 @@ def read(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def records(document):
-    if isinstance(document, list):
-        return document
-    if isinstance(document, dict) and "id" in document:
-        return [document]
-    return [entry for name, group in document.items() if not name.startswith("_")
-            for entry in group]
-
-
 class NativeContentRegressionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.catalog = {}
         cls.counts = Counter()
         for path in sorted(NATIVE.rglob("*.json")):
-            for entry in records(read(path)):
+            for entry in top_level_records(read(path), path=path, native_root=NATIVE):
                 identity = entry["id"]
                 if identity in cls.catalog:
                     raise AssertionError(f"Duplicate native identity: {identity}")

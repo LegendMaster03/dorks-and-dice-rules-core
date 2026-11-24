@@ -8,9 +8,19 @@ namespace RulesCore.Mechanics;
 /// an assembled component must first have an authored mapping to a canonical
 /// characteristic before the universal Origin engine can manifest it.
 /// </summary>
-public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catalog)
+public sealed partial class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catalog)
 {
-    public NativeConstructAssemblyResult Evaluate(NativeConstructAssemblyRequest request)
+    public NativeConstructAssemblyResult Evaluate(NativeConstructAssemblyRequest request) =>
+        EvaluateWithSourceOutputOverrides(request, null);
+
+    /// <summary>
+    /// Internal-only runtime capacity overrides for already-installed,
+    /// source-authored mechanisms. Values are constrained by the native
+    /// mechanism; public assembly requests cannot assert runtime output.
+    /// </summary>
+    internal NativeConstructAssemblyResult EvaluateWithSourceOutputOverrides(
+        NativeConstructAssemblyRequest request,
+        IReadOnlyDictionary<string, int>? trustedSourceOutputs)
     {
         ArgumentNullException.ThrowIfNull(request);
         var issues = new List<NativeOriginContractIssue>();
@@ -31,6 +41,36 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         var parts = new Dictionary<string, Part>(StringComparer.Ordinal);
         var unavailableSources = (request.UnavailablePowerSourceInstanceIds ?? [])
             .ToHashSet(StringComparer.Ordinal);
+        var overriddenSourceIds = new HashSet<string>(StringComparer.Ordinal);
+
+        // Native opt-in: reuse crafting recipes and resource-unit prices instead
+        // of charging arbitrary finished-part prices. Older fixture content
+        // retains the original direct-cost contract unchanged.
+        JsonElement? recipeCostMethod = null;
+        if (catalog.TryGetById("rule.creature-origination", out var originationRule) &&
+            originationRule?.Definition.TryGetProperty("methodDefinitions",
+                out var methods) == true && methods.ValueKind == JsonValueKind.Array)
+        {
+            foreach (var method in methods.EnumerateArray())
+            {
+                if (method.ValueKind != JsonValueKind.Object ||
+                    !method.TryGetProperty("id", out var methodId) ||
+                    methodId.ValueKind != JsonValueKind.String ||
+                    methodId.GetString() != "construct-assembly" ||
+                    !method.TryGetProperty("initialConstructionCostModel", out var mode))
+                    continue;
+                if (mode.ValueKind == JsonValueKind.String &&
+                    mode.GetString() == "recipe-inputs")
+                    recipeCostMethod = method;
+                else if (mode.ValueKind != JsonValueKind.String ||
+                    mode.GetString() != "direct")
+                    Issue("construct-cost-model-invalid", "method.initialConstructionCostModel",
+                        NativeOriginIssueSeverity.Invalid,
+                        "Unsupported native starting-construction cost model.");
+                break;
+            }
+        }
+        var recipeSelections = new List<NativeCraftingQuotedSelection>();
         long knownMaterialCost = 0;
         long knownModificationCost = 0;
         foreach (var instance in request.Components)
@@ -60,7 +100,15 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 continue;
             }
             var raw = definition.Definition;
-            var cost = Number(raw, "constructionCost", path, Issue);
+            if (instance.ConstructionVariantId is not null && !recipeCostMethod.HasValue)
+                Issue("construct-variant-needs-recipe-cost-model", path,
+                    NativeOriginIssueSeverity.Unresolved,
+                    "A manufacturing variant needs an authored recipe-input construction method.");
+            if (recipeCostMethod.HasValue)
+                recipeSelections.Add(new(definition.Id, instance.Materials,
+                    instance.ConstructionVariantId));
+            var cost = recipeCostMethod.HasValue ? 0 :
+                Number(raw, "constructionCost", path, Issue);
             var baseDemand = Number(raw, "powerDemand", path, Issue);
             var baseOutput = Number(raw, "powerOutput", path, Issue) ?? 0;
             var outputKnown = true;
@@ -113,21 +161,25 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 var optionPath = path + "." + field;
                 var compatible = Texts(option.Definition,
                     "compatibleComponentCapabilities", optionPath, Issue);
-                if (compatible.Length == 0 ||
-                    !compatible.Any(cap => baseProvides.Contains(cap, StringComparer.Ordinal)))
+                if (!OptionCompatible(compatible, baseProvides))
                 {
                     Issue("construct-option-incompatible", optionPath,
                         NativeOriginIssueSeverity.Invalid,
                         "The authored option does not support this component's base capabilities.");
                     return;
                 }
-                var optionCost = Number(option.Definition, "constructionCost",
-                    optionPath, Issue);
-                if (optionCost is int priced) knownModificationCost += priced;
-                else if (request.InitialConstruction)
-                    Issue("construct-option-cost-unresolved", optionPath,
-                        NativeOriginIssueSeverity.Unresolved,
-                        "The option has no authored construction cost.");
+                if (recipeCostMethod.HasValue)
+                    recipeSelections.Add(new(option.Id, instance.Materials));
+                else
+                {
+                    var optionCost = Number(option.Definition, "constructionCost",
+                        optionPath, Issue);
+                    if (optionCost is int priced) knownModificationCost += priced;
+                    else if (request.InitialConstruction)
+                        Issue("construct-option-cost-unresolved", optionPath,
+                            NativeOriginIssueSeverity.Unresolved,
+                            "The option has no authored construction cost.");
+                }
                 // Option powerDemand is incremental, unlike a selected operating
                 // mode which replaces the component's general demand.
                 extraDemand += Number(option.Definition, "powerDemand",
@@ -194,18 +246,22 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     var sourcePath = path + ".powerSourceId";
                     var compatible = Texts(source.Definition,
                         "compatibleComponentCapabilities", sourcePath, Issue);
-                    if (compatible.Length == 0 ||
-                        !compatible.Any(cap => baseProvides.Contains(cap, StringComparer.Ordinal)))
+                    if (!OptionCompatible(compatible, baseProvides))
                         Issue("construct-power-source-incompatible", sourcePath,
                             NativeOriginIssueSeverity.Invalid,
                             "The selected source is not compatible with this housing.");
-                    var sourceCost = Number(source.Definition,
-                        "constructionCost", sourcePath, Issue);
-                    if (sourceCost is int priced) knownModificationCost += priced;
-                    else if (request.InitialConstruction)
-                        Issue("construct-power-source-cost-unresolved", sourcePath,
-                            NativeOriginIssueSeverity.Unresolved,
-                            "The selected source's construction cost has not been authored.");
+                    if (recipeCostMethod.HasValue)
+                        recipeSelections.Add(new(source.Id, instance.Materials));
+                    else
+                    {
+                        var sourceCost = Number(source.Definition,
+                            "constructionCost", sourcePath, Issue);
+                        if (sourceCost is int priced) knownModificationCost += priced;
+                        else if (request.InitialConstruction)
+                            Issue("construct-power-source-cost-unresolved", sourcePath,
+                                NativeOriginIssueSeverity.Unresolved,
+                                "The selected source's construction cost has not been authored.");
+                    }
                     var sourceOutput = Number(source.Definition,
                         "powerOutput", sourcePath, Issue);
                     if (sourceOutput is int authoredOutput)
@@ -235,6 +291,62 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             // A source sets the housing's baseline output. An explicitly
             // authored operating mode may override that output.
             output = selectedMode?.PowerOutput ?? baseOutput;
+            if (trustedSourceOutputs is not null &&
+                trustedSourceOutputs.TryGetValue(instance.InstanceId, out var solarOutput))
+            {
+                overriddenSourceIds.Add(instance.InstanceId);
+                // A trusted operating preview may apply only a value
+                // permitted by the installed source's native operating model.
+                // Solar output can vary with collection and battery. Soul
+                // energy has no numerical consumption formula: the DM must
+                // confirm either unavailable (0), normal, or Overdrive output.
+                // Infernal output stays at its normal baseline even when the
+                // long-rest fuel payment is missing; its separate penalty
+                // must be applied by the authenticated host.
+                var sourceDefinition = default(JsonElement);
+                var sourceValid = false;
+                if (instance.PowerSourceId is not null &&
+                    catalog.TryGetById(instance.PowerSourceId, out var mechanism) &&
+                    mechanism?.Category == "construct-power-source")
+                {
+                    sourceValid = true;
+                    sourceDefinition = mechanism.Definition;
+                }
+                var kind = sourceValid &&
+                    sourceDefinition.TryGetProperty("operatingPrinciple",
+                        out var principle) &&
+                    principle.ValueKind == JsonValueKind.String
+                    ? principle.GetString() : null;
+                var maxOutput = 0;
+                var hasMaximum = sourceValid &&
+                    sourceDefinition.TryGetProperty("overdrivePowerOutput",
+                        out var ceiling) &&
+                    ceiling.ValueKind == JsonValueKind.Number &&
+                    ceiling.TryGetInt32(out maxOutput);
+                var normalOutput = 0;
+                var hasNormal = sourceValid &&
+                    sourceDefinition.TryGetProperty("powerOutput",
+                        out var normalValue) &&
+                    normalValue.ValueKind == JsonValueKind.Number &&
+                    normalValue.TryGetInt32(out normalOutput);
+                // Infernal Empowerment changes no general power capacity.
+                // Solar and soul sources retain separate 50% Overdrive rules.
+                var validOutput = solarOutput >= 0 && (kind switch
+                {
+                    "solar-recharge" => hasMaximum && solarOutput <= maxOutput,
+                    "soul-energy" => hasNormal && hasMaximum &&
+                        (solarOutput == 0 || solarOutput == normalOutput ||
+                         solarOutput == maxOutput),
+                    "infernal" => hasNormal && solarOutput == normalOutput,
+                    _ => false
+                });
+                if (!validOutput)
+                    Issue("construct-power-source-runtime-output-invalid",
+                        path + ".powerSourceId", NativeOriginIssueSeverity.Invalid,
+                        "Runtime output must be verified against this installed source's native capacity and operating states.");
+                else
+                    output = solarOutput;
+            }
             // An exhausted mechanism cannot create output through a mode.
             // The housing remains physically present and separately costed.
             if (instance.PowerSourceId is not null && !sourceAvailable)
@@ -277,14 +389,19 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 }
                 addedOperationalTraits.AddRange(Texts(material.Definition,
                     "operationalOriginTraitIds", path + ".materials." + slot, Issue));
-                var materialCost = Number(material.Definition, "constructionCost",
-                    path + ".materials." + slot, Issue);
-                if (materialCost is int authoredCost)
-                    knownMaterialCost += authoredCost;
-                else if (request.InitialConstruction)
-                    Issue("construct-material-cost-unresolved",
-                        path + ".materials." + slot, NativeOriginIssueSeverity.Unresolved,
-                        "The selected material has no authorized construction cost.");
+                // Recipe material slots bind an ingredient identity and amount.
+                // Charging the material's old per-slot price here would double-count it.
+                if (!recipeCostMethod.HasValue)
+                {
+                    var materialCost = Number(material.Definition, "constructionCost",
+                        path + ".materials." + slot, Issue);
+                    if (materialCost is int authoredCost)
+                        knownMaterialCost += authoredCost;
+                    else if (request.InitialConstruction)
+                        Issue("construct-material-cost-unresolved",
+                            path + ".materials." + slot, NativeOriginIssueSeverity.Unresolved,
+                            "The selected material has no authorized construction cost.");
+                }
             }
             foreach (var extra in instance.Materials?.Keys ?? [])
                 if (!slots.Contains(extra, StringComparer.Ordinal))
@@ -485,6 +602,13 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
             powerNetworks = ConnectedNetworks(powerLinks);
         }
 
+        if (trustedSourceOutputs is not null)
+            foreach (var id in trustedSourceOutputs.Keys)
+                if (!overriddenSourceIds.Contains(id))
+                    Issue("construct-solar-source-instance-invalid",
+                        "solarOutputOverrides", NativeOriginIssueSeverity.Invalid,
+                        "Runtime solar output may only refer to an installed native solar source.");
+
         var online = new HashSet<string>(StringComparer.Ordinal);
         // Fixed-point activation permits provider chains but cannot bootstrap
         // mutually dependent components without an independent provider.
@@ -534,15 +658,37 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 "Requested simultaneous demand exceeds output in this connected power network.");
         }
 
+        var derivedSize = NativeConstructBodySizeResolver.Resolve(
+            catalog, request.Components, Issue);
         long knownCost = knownMaterialCost + knownModificationCost;
+        IReadOnlyDictionary<string, long>? requiredIngredients = null;
+        long? retainedMaterialMass = null;
+        bool massComplete = false;
+        IReadOnlyList<string>? missingMassMaterials = null;
+        IReadOnlyList<string>? uncertifiedMassProducts = null;
+        if (recipeCostMethod is JsonElement costMethod)
+        {
+            var quote = NativeCraftingResourceQuoter.Evaluate(
+                catalog, costMethod, recipeSelections);
+            knownCost = quote.KnownCost;
+            requiredIngredients = quote.RequiredResources;
+            retainedMaterialMass = quote.KnownRetainedMaterialMassPounds;
+            massComplete = quote.IsPhysicalMassComplete;
+            missingMassMaterials = quote.UnresolvedRetainedMassMaterials;
+            uncertifiedMassProducts = quote.ProductsWithUncertifiedMass;
+            issues.AddRange(quote.Issues);
+        }
         foreach (var part in parts.Values)
         {
-            if (part.ConstructionCost is int cost) knownCost += cost;
-            else if (request.InitialConstruction)
-                Issue("construct-cost-unresolved",
-                    "components." + part.Instance.InstanceId,
-                    NativeOriginIssueSeverity.Unresolved,
-                    "An initial construction cost has not been authored for this component.");
+            if (!recipeCostMethod.HasValue)
+            {
+                if (part.ConstructionCost is int cost) knownCost += cost;
+                else if (request.InitialConstruction)
+                    Issue("construct-cost-unresolved",
+                        "components." + part.Instance.InstanceId,
+                        NativeOriginIssueSeverity.Unresolved,
+                        "An initial construction cost has not been authored for this component.");
+            }
             if (part.PowerDemand is null)
                 Issue("construct-power-demand-unresolved",
                     "components." + part.Instance.InstanceId,
@@ -639,6 +785,81 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 unknownDemand, unknownOutput);
         }).OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
 
+        // Physical mass and protective surfaces remain visible even when
+        // their components are powered down. Only verified operating
+        // locomotion providers contribute usable load support.
+        var loadSupports = new List<NativePhysicalLoadSupport>();
+        var surfaces = new List<NativePhysicalSurface>();
+        foreach (var part in parts.Values.OrderBy(x => x.Instance.InstanceId,
+            StringComparer.Ordinal))
+        {
+            if (!catalog.TryGetById(part.Instance.DefinitionId, out var source) ||
+                source is null) continue;
+            var definition = source.Definition;
+            var instanceId = part.Instance.InstanceId;
+            if (part.Provides.Contains("locomotion-interface", StringComparer.Ordinal))
+            {
+                var capacity = Number(definition, "maximumGrossLoadPounds",
+                    "components." + instanceId, Issue);
+                var shares = definition.TryGetProperty("sharesLoadSupport", out var sharing) &&
+                    sharing.ValueKind == JsonValueKind.True;
+                if (definition.TryGetProperty("sharesLoadSupport", out sharing) &&
+                    sharing.ValueKind is not (JsonValueKind.True or JsonValueKind.False))
+                    Issue("construct-load-sharing-invalid", "components." + instanceId,
+                        NativeOriginIssueSeverity.Invalid,
+                        "Physical load-support sharing must be an authored boolean.");
+                var operating = activeIds.Contains(instanceId);
+                loadSupports.Add(new(instanceId, capacity, operating, shares));
+            }
+            var role = part.Provides.Contains("protective-surface", StringComparer.Ordinal)
+                ? "protective-surface"
+                : part.Provides.Contains("enclosure", StringComparer.Ordinal)
+                    ? "enclosure" : null;
+            var protectedRegion = part.Instance.ProtectedRegionId;
+            if (protectedRegion is not null &&
+                (role != "protective-surface" ||
+                 protectedRegion.Length is < 1 or > 96 ||
+                 protectedRegion.Any(c => !(char.IsAsciiLetterOrDigit(c) ||
+                     c is '-' or '_' or '.'))))
+            {
+                Issue("construct-protection-region-invalid",
+                    "components." + instanceId + ".protectedRegionId",
+                    NativeOriginIssueSeverity.Invalid,
+                    "Only an installed protective surface may specify a path-safe protected region.");
+                protectedRegion = null;
+            }
+            if (role is null || part.Instance.Materials is null) continue;
+            foreach (var slot in part.Instance.Materials.OrderBy(x => x.Key,
+                StringComparer.Ordinal))
+            {
+                if (!catalog.TryGetById(slot.Value, out var material) ||
+                    material?.Category != "construct-material") continue;
+                var profile = material.Definition.TryGetProperty("physicalProfile",
+                    out var rawProfile) && rawProfile.ValueKind == JsonValueKind.Object
+                    ? rawProfile : default;
+                surfaces.Add(new(instanceId, source.Id, slot.Key, material.Id, role,
+                    profile.ValueKind == JsonValueKind.Object
+                        ? Text(profile, "rigidity") : null,
+                    profile.ValueKind == JsonValueKind.Object
+                        ? Text(profile, "combustibility") : null,
+                    activeIds.Contains(instanceId),
+                    protectedRegion));
+            }
+        }
+        // Support capacity is a property of the active hardware; a separate
+        // island cannot silently carry the mass of another island. This
+        // assessment remains read-only and never prohibits installation.
+        NativePhysicalLoadAssessment? physicalLoad = null;
+        if (retainedMaterialMass is long mass)
+        {
+            physicalLoad = networks.Count == 1
+                ? NativePhysicalLoadEvaluator.Evaluate(mass, bodyMassComplete: massComplete,
+                    carriedPayloadMassPounds: null, loadSupports)
+                : new NativePhysicalLoadAssessment("unresolved", mass, null, null,
+                    null, false, "connected-body-load-sharing-unresolved");
+        }
+
+
         var status = issues.Any(x => x.Severity == NativeOriginIssueSeverity.Invalid)
             ? NativeOriginConstructionStatus.Invalid
             : issues.Any(x => x.Severity == NativeOriginIssueSeverity.Conflict)
@@ -648,7 +869,20 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     : issues.Any(x => x.Severity == NativeOriginIssueSeverity.Incomplete)
                         ? NativeOriginConstructionStatus.Incomplete
                         : NativeOriginConstructionStatus.Authorized;
-        return new(status, knownCost, states, failures, issues, powerStates);
+        return new(status, knownCost, states, failures, issues, powerStates)
+        {
+            RequiredConstructionResources = requiredIngredients,
+            DerivedCreatureSize = derivedSize?.Size,
+            KnownRetainedMaterialMassPounds = retainedMaterialMass,
+            UnresolvedRetainedMassMaterials = missingMassMaterials,
+            IsBodyMassComplete = massComplete,
+            ProductsWithUncertifiedMass = uncertifiedMassProducts,
+            PhysicalLoad = physicalLoad,
+            // The caller can evaluate a trusted inventory snapshot separately.
+            // Merely supplying a hypothetical payload cannot authorize Origin.
+            PhysicalLoadSupports = loadSupports.ToArray(),
+            PhysicalSurfaces = surfaces.ToArray()
+        };
     }
 
     private sealed record Part(NativeConstructComponentInstance Instance, int? ConstructionCost,
@@ -735,6 +969,10 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         return selected;
     }
 
+    // Discovery and evaluation share this exact base-capability predicate.
+    private static bool OptionCompatible(IEnumerable<string> required, IReadOnlyList<string> provided) =>
+        required.Any(cap => provided.Contains(cap, StringComparer.Ordinal));
+
     private static string? Text(JsonElement definition, string key) =>
         definition.TryGetProperty(key, out var field) &&
         field.ValueKind == JsonValueKind.String ? field.GetString() : null;
@@ -799,7 +1037,9 @@ public sealed record NativeConstructComponentInstance(
     bool Enabled = true, string? ModeId = null,
     string? DesignId = null, IReadOnlyList<string>? EnhancementIds = null,
     string? PowerSourceId = null,
-    string? ParentInstanceId = null, string? MountInterfaceId = null);
+    string? ParentInstanceId = null, string? MountInterfaceId = null,
+    string? ConstructionVariantId = null,
+    string? ProtectedRegionId = null);
 
 /// <summary>
 /// A passive, undirected power path between directly connected components.
@@ -841,5 +1081,23 @@ public sealed record NativeConstructAssemblyResult(
     IReadOnlyList<NativeOriginContractIssue> Issues,
     IReadOnlyList<NativeConstructPowerNetworkState>? PowerNetworks = null)
 {
+    // Native recipe-input quotation exposes the sourced ingredient bill.
+    // It is advisory for initial creation, not an inventory withdrawal.
+    public IReadOnlyDictionary<string, long>? RequiredConstructionResources { get; init; }
+    // A verified body-defining construction variant, not independent player size.
+    public string? DerivedCreatureSize { get; init; }
+    // Partial material evidence only. Retained unpriced/unquantified material
+    // and component masses must be reconciled before computing encumbrance.
+    public long? KnownRetainedMaterialMassPounds { get; init; }
+    public IReadOnlyList<string>? UnresolvedRetainedMassMaterials { get; init; }
+    public bool IsBodyMassComplete { get; init; }
+    public IReadOnlyList<string>? ProductsWithUncertifiedMass { get; init; }
+    // Neither the load assessment nor the material surfaces grant a speed,
+    // AC, resistance or damage reduction. They retain source-aware evidence
+    // needed to apply those universal rules after balance authoring.
+    public NativePhysicalLoadAssessment? PhysicalLoad { get; init; }
+    public IReadOnlyList<NativePhysicalLoadSupport> PhysicalLoadSupports { get; init; } = [];
+    // Candidate source-bound movement only; not a persisted Origin speed grant.
+    public IReadOnlyList<NativePhysicalSurface> PhysicalSurfaces { get; init; } = [];
     public bool IsAuthorized => Status == NativeOriginConstructionStatus.Authorized;
 }

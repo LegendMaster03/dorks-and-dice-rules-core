@@ -1,0 +1,22 @@
+{
+  "id": "trait.darkness",
+  "name": "Darkness",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "darkness",
+    "originBindings": {
+      "spellcastingAbility": {
+        "lookup": "manifested-intrinsic",
+        "intrinsicSlot": "spellcastingAbility",
+        "scope": "source"
+      }
+    },
+    "description": "At character level 5, gain Darkness. Cast it once without a spell slot per Long Rest, or with an appropriate spell slot. This does not grant the ability to see through magical Darkness.",
+    "spell": "darkness",
+    "level": 5,
+    "freeUses": 1,
+    "recharge": "long-rest",
+    "slotCasting": true,
+    "name": "Darkness"
+  }
+}

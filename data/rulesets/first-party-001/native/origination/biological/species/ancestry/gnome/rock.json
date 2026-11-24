@@ -7,8 +7,30 @@
   "parent": "species.gnome",
   "traits": [
     {
-      "traitId": "trait.gnome.rock.earthbound-tremorsense"
+      "traitId": "trait.stonebound-tremorsense"
+    },
+    {
+      "traitId": "trait.natural-climber"
+    },
+    {
+      "traitId": "trait.natural-trickster"
     }
   ],
-  "defaultUpbringing": "upbringing.gnome.rock"
+  "defaultUpbringing": "upbringing.gnome.rock",
+  "tremorsenseSubTrait": {
+    "rangeFeet": 60,
+    "contactMaterials": [
+      "earth",
+      "stone"
+    ]
+  },
+  "spellcastingAbilityChoice": [
+    "intelligence",
+    "wisdom",
+    "charisma"
+  ],
+  "reviewNotes": [
+    "Approved final Rock Gnome biological package: shared Tremorsense configured for earth or stone, Natural Climber (15-foot Climb Speed), and one permanent Natural Trickster spell choice with one free casting per Long Rest.",
+    "Trial allocation: shared Gnome 9, configured Tremorsense 4, Natural Climber 2, Natural Trickster 2, source-bound spellcasting Ability 1; total 18/18. The same 60-foot range and use schedule are preserved for Dwarves and Rock Gnomes."
+  ]
 }

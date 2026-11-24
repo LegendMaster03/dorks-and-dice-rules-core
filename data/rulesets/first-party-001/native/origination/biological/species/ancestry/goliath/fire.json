@@ -7,13 +7,13 @@
   "parent": "species.goliath",
   "traits": [
     {
-      "traitId": "trait.goliath.fire.fires-burn"
+      "traitId": "trait.fires-burn"
     },
     {
-      "traitId": "trait.goliath.fire.born-of-flame"
+      "traitId": "trait.born-of-flame"
     },
     {
-      "traitId": "trait.goliath.fire.searing-ignition"
+      "traitId": "trait.searing-ignition"
     }
   ],
   "reviewNotes": [

@@ -7,13 +7,13 @@
   "parent": "species.goliath",
   "traits": [
     {
-      "traitId": "trait.goliath.hill.hills-tumble"
+      "traitId": "trait.hills-tumble"
     },
     {
-      "traitId": "trait.goliath.hill.bulwark"
+      "traitId": "trait.bulwark"
     },
     {
-      "traitId": "trait.goliath.hill.iron-stomach"
+      "traitId": "trait.iron-stomach"
     }
   ],
   "reviewNotes": [

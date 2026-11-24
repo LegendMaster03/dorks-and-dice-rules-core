@@ -1,0 +1,16 @@
+{
+  "name": "Excavation drive",
+  "description": "A cutting or displacement mechanism for burrowing through permitted substances. Does not permit tunneling through any material by default, create permanent passages, or avoid suffocation.",
+  "rulesStatus": "provisional first-party playable construction candidate; advanced effect binding and balance still required",
+  "provides": [
+    "excavation-interface"
+  ],
+  "materialSlots": [
+    "cutting-head"
+  ],
+  "operationalOriginTraitIds": [
+    "trait.construct.burrowing-movement"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.excavation-drive",
+  "powerDemand": 2
+}

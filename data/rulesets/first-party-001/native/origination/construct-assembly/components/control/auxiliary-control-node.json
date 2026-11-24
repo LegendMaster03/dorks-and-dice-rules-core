@@ -1,0 +1,13 @@
+{
+  "name": "Auxiliary control node",
+  "description": "A supporting control node for distributed systems.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "control-support"
+  ],
+  "materialSlots": [
+    "node"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.auxiliary-control-node",
+  "powerDemand": 1
+}

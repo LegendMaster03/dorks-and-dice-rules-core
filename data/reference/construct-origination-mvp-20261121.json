@@ -1,0 +1,66 @@
+{
+  "id": "construct-origination-mvp-20261121",
+  "status": "provisional-character-origins-tester-release",
+  "procedureId": "construct-assembly",
+  "sourceRuleId": "rule.creature-origination",
+  "startingAllocationPoints": 200,
+  "primarySourceId": "construct-power-source.mechanical-engine",
+  "examples": [
+    {
+      "file": "construct-basic-starting-build-20261120.json",
+      "purpose": "ordinary Medium Construct with working sight, communication, manipulation, and nominal walking",
+      "expectedConstructionPoints": 163
+    },
+    {
+      "file": "construct-small-starting-build-20261121.json",
+      "purpose": "recipe-bound Small body size changes the reconstructed Origin intrinsic without a standalone size toggle",
+      "expectedConstructionPoints": 147
+    },
+    {
+      "file": "construct-lightweight-starting-build-20261121.json",
+      "purpose": "material substitution changes recipe cost and known retained mass without unapproved bonus",
+      "expectedConstructionPoints": 187
+    },
+    {
+      "file": "construct-armored-starting-build-20261121.json",
+      "purpose": "additional passive protective surface changes recipe cost and physical evidence without automatic armor",
+      "expectedConstructionPoints": 187
+    }
+  ],
+  "requiredOriginTraitIds": [
+    "trait.construct.ordinary-optical-sight",
+    "trait.construct.physical-manipulation",
+    "trait.construct.ordinary-communication",
+    "trait.construct.ordinary-ground-movement"
+  ],
+  "requiredDemoBehaviors": [
+    "reconstruct-source-verified-origin-grants",
+    "size-is-derived-from-source-verified-structural-recipe-variant",
+    "walking-speed-projected-from-trusted-enabled-locomotion",
+    "disable-locomotion-removes-current-walking-availability",
+    "recipe-ingredient-cost-within-provisional-starting-allocation",
+    "power-allocation-and-network-limits",
+    "retained-material-mass-and-protection-region-as-evidence-not-invented-bonuses",
+    "invalid-assembly-and-unsupported-mechanics-report-issues"
+  ],
+  "optionalGuidedPowerSources": [
+    {
+      "sourceId": "construct-power-source.solar-crystal",
+      "scope": "DM-validates sunlight, stored energy and exhaustion shortfall"
+    },
+    {
+      "sourceId": "construct-power-source.soul-gem",
+      "scope": "DM-adjudicates usable soul energy and extraordinary custody"
+    },
+    {
+      "sourceId": "construct-power-source.infernal-engine",
+      "scope": "DM-validates fuel/empowerment; numeric fire benefit and instability unresolved"
+    }
+  ],
+  "excludedFromUnguidedMvp": [
+    "advanced-component-abilities-without-authored-operating-effects",
+    "unapproved-flat-DR-or-armor-stacking",
+    "unapproved-gross-load-capacity-and-movement-penalty-tiers"
+  ],
+  "authorizationBoundary": "This is a reference/test manifest, not an authorization token, a new native rule, or a substitute for gameplay host state."
+}

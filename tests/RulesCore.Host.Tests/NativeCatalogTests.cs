@@ -33,24 +33,70 @@ public sealed class NativeCatalogTests
     }
 
     [Fact]
+    public void ConstructComponentPathSuppliesStableCatalogIdentity()
+    {
+        using var f = new Fixture();
+        f.Native("origination/construct-assembly/components/control/control-module.json",
+            """{"name":"Control module","powerDemand":1,"provides":["control"]}""");
+        var catalog = f.Load();
+        Assert.Single(catalog.Search(category: "construct-component").Items);
+        Assert.True(catalog.TryGetById("construct-component.control-module", out var component));
+        Assert.Equal("construct-component", component!.Category);
+        Assert.Equal("Control module", component.Name);
+        Assert.Equal("native/origination/construct-assembly/components/control/control-module.json",
+            component.SourcePath);
+        Assert.Equal("construct-component.control-module",
+            component.Definition.GetProperty("id").GetString());
+        Assert.Equal("construct-component",
+            component.Definition.GetProperty("kind").GetString());
+        Assert.Equal("control",
+            component.Definition.GetProperty("componentCategory").GetString());
+        Assert.Equal(1, component.Definition.GetProperty("powerDemand").GetInt32());
+    }
+
+    [Fact]
+    public void ConstructComponentPathRejectsConflictingOrInvalidAuthoredMetadata()
+    {
+        using var mismatch = new Fixture();
+        mismatch.Native("origination/construct-assembly/components/control/eye.json",
+            """{"id":"construct-component.other","name":"Eye"}""");
+        Assert.Equal("invalid_native_json", Failure(mismatch).ReasonCode);
+
+        using var categoryMismatch = new Fixture();
+        categoryMismatch.Native("origination/construct-assembly/components/sensing/eye.json",
+            """{"name":"Eye","componentCategory":"control"}""");
+        Assert.Equal("invalid_native_json", Failure(categoryMismatch).ReasonCode);
+
+        using var malformed = new Fixture();
+        malformed.Native("origination/construct-assembly/components/control/BadName.json",
+            """{"name":"Invalid path"}""");
+        Assert.Equal("invalid_native_json", Failure(malformed).ReasonCode);
+
+        using var wrongShape = new Fixture();
+        wrongShape.Native("origination/construct-assembly/components/control/eye.json",
+            """[{"name":"Eye"}]""");
+        Assert.Equal("invalid_native_json", Failure(wrongShape).ReasonCode);
+    }
+
+    [Fact]
     public void NormalizedOriginTraitsPreserveCatalogProjectionAndCanonicalIdentity()
     {
         var catalog = NativeCatalogLoader.Load(RepositoryLocation());
         Assert.True(catalog.CountByCategory("origin-trait") > 0);
-        Assert.True(catalog.TryGetById("trait.shared.low-light-vision", out var shared));
+        Assert.True(catalog.TryGetById("trait.low-light-vision", out var shared));
         Assert.Equal("origin-trait", shared!.Category);
         foreach (var sourceId in new[] { "species.dragonborn", "species.elf",
             "species.gnome", "species.orc" })
         {
             Assert.True(catalog.TryGetById(sourceId, out var source));
-            Assert.Equal("trait.shared.low-light-vision",
+            Assert.Equal("trait.low-light-vision",
                 catalog.OriginTraitDefinitionId(sourceId, 0));
             Assert.True(JsonElement.DeepEquals(shared.Definition.GetProperty("trait"),
                 source!.Definition.GetProperty("traits")[0]));
         }
-        Assert.Equal("trait.human.skillful",
+        Assert.Equal("trait.skillful",
             catalog.OriginTraitDefinitionId("species.human", 0));
-        Assert.Equal("trait.elf.high.arcane-cantrip",
+        Assert.Equal("trait.arcane-cantrip",
             catalog.OriginTraitDefinitionId("ancestry.elf.high", 0));
         Assert.True(catalog.TryGetById("ancestry.elf.high", out var highElf));
         Assert.Equal("manifested-intrinsic",
@@ -437,7 +483,13 @@ public sealed class NativeCatalogTests
                 }
             }
 
-            if (root.ValueKind == JsonValueKind.Array)
+            var rel = Path.GetRelativePath(nativeDirectory, path).Replace('\\', '/');
+            if (rel.StartsWith("origination/construct-assembly/components/", StringComparison.Ordinal))
+            {
+                var name = Path.GetFileNameWithoutExtension(path);
+                inventory.Add(("construct-component." + name, "construct-component"));
+            }
+            else if (root.ValueKind == JsonValueKind.Array)
                 Add(root.EnumerateArray());
             else if (root.TryGetProperty("id", out _))
                 Add(new[] { root });

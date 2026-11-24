@@ -1,0 +1,14 @@
+{
+  "name": "Crew compartment",
+  "description": "A compartment usable for carrying occupants when capacity and access are authored.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "enclosure",
+    "transport-interior"
+  ],
+  "materialSlots": [
+    "housing"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.crew-compartment",
+  "powerDemand": 0
+}

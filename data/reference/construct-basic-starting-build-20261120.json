@@ -1,0 +1,104 @@
+{
+  "description": "Basic Medium Construct: first-party playtest reference only, not a mandatory body plan or final material balance.",
+  "status": "provisional-starting-playtest",
+  "assembly": {
+    "components": [
+      {
+        "instanceId": "frame",
+        "definitionId": "construct-component.structural-frame",
+        "materials": {
+          "frame": "construct-material.steel"
+        },
+        "enabled": true,
+        "constructionVariantId": "medium"
+      },
+      {
+        "instanceId": "generator",
+        "definitionId": "construct-component.power-source-housing",
+        "materials": {
+          "housing": "construct-material.wood"
+        },
+        "enabled": true,
+        "powerSourceId": "construct-power-source.mechanical-engine",
+        "connectedTo": [
+          "frame",
+          "control",
+          "circulation",
+          "actuator",
+          "manipulator",
+          "drive",
+          "eye"
+        ]
+      },
+      {
+        "instanceId": "control",
+        "definitionId": "construct-component.control-module",
+        "materials": {
+          "controller": "construct-material.wood"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "circulation",
+        "definitionId": "construct-component.alchemical-circulation",
+        "materials": {
+          "conduit": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "actuator",
+        "definitionId": "construct-component.alchemical-actuator",
+        "materials": {
+          "actuator": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "manipulator",
+        "definitionId": "construct-component.manipulator",
+        "materials": {
+          "grip": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "drive",
+        "definitionId": "construct-component.locomotion-unit",
+        "materials": {
+          "contact": "construct-material.steel"
+        },
+        "enabled": true
+      },
+      {
+        "instanceId": "eye",
+        "definitionId": "construct-component.crystal-eye",
+        "materials": {
+          "crystal": "construct-material.crystal"
+        },
+        "enabled": true
+      }
+    ],
+    "initialAllowance": 200
+  },
+  "expected": {
+    "ingredientCost": 163,
+    "powerOutput": 8,
+    "requestedPowerDemand": 7,
+    "unusedStartingPoints": 37,
+    "bodySize": "medium",
+    "originTraits": [
+      "trait.construct.ordinary-optical-sight",
+      "trait.construct.physical-manipulation",
+      "trait.construct.ordinary-communication",
+      "trait.construct.ordinary-ground-movement"
+    ]
+  },
+  "limitations": [
+    "The 30-foot locomotion trait still requires general Character Sheet movement binding and physical-support calibration.",
+    "The shared daily-ration evaluator does not authorize inventory expenditure, daily time advancement, or Exhaustion mutations; the host must connect the engine's alternate sustenance resource to ordinary survival.",
+    "Manufactured material mass remains provisional and incomplete; load capacity is not approved.",
+    "Consciousness/animation is a separate origination concern; this hardware does not produce a mind.",
+    "Ordinary language knowledge is granted by existing character-creation rules, not by the communication trait."
+  ]
+}

@@ -471,7 +471,12 @@ public static class NativeCharacterSheetResolver
             PrimaryMechanics = CopyMechanics(state.PrimaryMechanics),
             AlternateSheets = Array.AsReadOnly(state.AlternateSheets.Select(SnapshotSheet).ToArray()),
             PersistentInfluences = state.PersistentInfluences is null ? null :
-                Array.AsReadOnly(state.PersistentInfluences.Select(SnapshotInfluence).ToArray())
+                Array.AsReadOnly(state.PersistentInfluences.Select(SnapshotInfluence).ToArray()),
+            InfluenceOverlapSelections = state.InfluenceOverlapSelections is null ? null :
+                Array.AsReadOnly(state.InfluenceOverlapSelections.Select(decision => decision with
+                {
+                    EffectIds = Array.AsReadOnly(decision.EffectIds.ToArray())
+                }).ToArray())
         };
     }
 

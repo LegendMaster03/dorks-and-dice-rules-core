@@ -1,0 +1,21 @@
+{
+  "id": "trait.adrenaline-rush",
+  "name": "Adrenaline Rush",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "adrenaline-rush",
+    "name": "Adrenaline Rush",
+    "description": "As a Bonus Action, take the Dash action and gain Temporary Hit Points equal to your Proficiency Bonus. You can use this trait a number of times equal to your Proficiency Bonus, regaining all expended uses after a Short Rest or Long Rest.",
+    "activation": {
+      "action": "bonus-action",
+      "grantsAction": "dash"
+    },
+    "temporaryHitPoints": {
+      "value": "proficiency-bonus"
+    },
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "short-or-long-rest"
+    }
+  }
+}

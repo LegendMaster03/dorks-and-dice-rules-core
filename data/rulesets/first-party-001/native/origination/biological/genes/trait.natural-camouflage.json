@@ -1,0 +1,23 @@
+{
+  "id": "trait.natural-camouflage",
+  "name": "Natural Camouflage",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "natural-camouflage",
+    "name": "Natural Camouflage",
+    "description": "While in the biome specified by your source sub-trait, you have advantage on Hide checks and may Hide while lightly obscured by natural vegetation. The permission does not make you invisible and does not prevent unobscured direct observation.",
+    "naturalCamouflage": {
+      "biomeParameter": "subTrait.biome",
+      "skill": "skill.hide",
+      "advantageOnHideChecks": true,
+      "mayHideWhileLightlyObscuredByNaturalVegetation": true,
+      "grantsInvisibility": false
+    },
+    "originBindings": {
+      "subTrait": {
+        "lookup": "nearest",
+        "sourceField": "environmentSubTrait"
+      }
+    }
+  }
+}

@@ -7,10 +7,16 @@
   "parent": "species.gnome",
   "traits": [
     {
-      "traitId": "trait.gnome.forest.forest-illusion"
+      "traitId": "trait.forest-illusion"
     },
     {
-      "traitId": "trait.gnome.forest.animal-speech"
+      "traitId": "trait.animal-speech"
+    },
+    {
+      "traitId": "trait.natural-camouflage"
+    },
+    {
+      "traitId": "trait.trackless-passage"
     }
   ],
   "spellcastingAbilityChoice": [
@@ -18,5 +24,11 @@
     "wisdom",
     "charisma"
   ],
-  "defaultUpbringing": "upbringing.gnome.forest"
+  "defaultUpbringing": "upbringing.gnome.forest",
+  "environmentSubTrait": {
+    "biome": "woodland"
+  },
+  "animalCommunicationSubTrait": {
+    "animalHabitat": "woodland"
+  }
 }

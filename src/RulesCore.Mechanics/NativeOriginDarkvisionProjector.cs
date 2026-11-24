@@ -26,6 +26,13 @@ public static class NativeOriginDarkvisionProjector
         int? BaseRangeFeet = null,
         IReadOnlyList<NativeDarkvisionExtension>? Extensions = null);
 
+    /// <summary>
+    /// A ruleset-derived condition for total innate range above the configured
+    /// threshold. This is not a separate inheritable gene or a refund.
+    /// </summary>
+    public sealed record SunlightSensitivity(
+        string TraitDefinitionId, string ConditionId, string Trigger, string End);
+
     public sealed record View(
         string Status, GrantedDarkvision? Darkvision,
         IReadOnlyList<string> UnresolvedReasons, bool PreviewOnly = true)
@@ -36,6 +43,9 @@ public static class NativeOriginDarkvisionProjector
         /// </summary>
         public IReadOnlyList<NativeDarkvisionExtension> PendingExtensions
         { get; init; } = [];
+
+        public int? InnateSensitivityThresholdFeet { get; init; }
+        public SunlightSensitivity? RequiredSunlightSensitivity { get; init; }
     }
 
     public static View Project(NativeCatalogSnapshot catalog,
@@ -130,9 +140,9 @@ public static class NativeOriginDarkvisionProjector
                 !canonical.TryGetProperty("addToExistingDarkvisionFeet", out var add) ||
                 add.ValueKind != JsonValueKind.Number ||
                 !add.TryGetInt32(out var added) || added is <= 0 or > 1_000_000 ||
-                !canonical.TryGetProperty("requiredCharacterLevel", out var threshold) ||
-                threshold.ValueKind != JsonValueKind.Number ||
-                !threshold.TryGetInt32(out var unlock) || unlock <= 0 ||
+                !canonical.TryGetProperty("requiredCharacterLevel", out var unlockField) ||
+                unlockField.ValueKind != JsonValueKind.Number ||
+                !unlockField.TryGetInt32(out var unlock) || unlock <= 0 ||
                 !canonical.TryGetProperty("stacking", out var stacking) ||
                 stacking.ValueKind != JsonValueKind.String ||
                 stacking.GetString() != "once-per-feature" ||
@@ -160,10 +170,17 @@ public static class NativeOriginDarkvisionProjector
         if (extensions.Count + pendingExtensions.Count > 1)
             return Unresolved("multiple-darkvision-extensions-require-reconciliation");
 
+        // A missing or malformed threshold must not silently make extended
+        // native Darkvision drawback-free. Temporary magical vision never
+        // enters this projector's native-source calculation.
+        if (!TryReadSensitivityRule(catalog, out var threshold, out var drawbackId))
+            return Unresolved("darkvision-sensitivity-policy-unavailable");
+
         if (initialRange == 0 && extensions.Count == 0)
             return new("none", null, [])
             {
-                PendingExtensions = pendingExtensions
+                PendingExtensions = pendingExtensions,
+                InnateSensitivityThresholdFeet = threshold
             };
         var extension = extensions.SingleOrDefault();
         var total = baseGrant is not null
@@ -174,13 +191,22 @@ public static class NativeOriginDarkvisionProjector
 
         var primary = baseGrant ?? profile.Current.InherentGrants
             .Single(x => x.Id == extension!.GrantId);
+        SunlightSensitivity? sensitivity = null;
+        if (total > threshold)
+        {
+            if (!TryReadSunlightSensitivity(catalog, drawbackId, out sensitivity))
+                return Unresolved("darkvision-sunlight-sensitivity-definition-unavailable");
+        }
+
         return new("resolved", new(total, primary.Id,
             primary.Identity.Occurrence.Source.Id,
             primary.Identity.Occurrence.OccurrencePath,
             BaseRangeFeet: initialRange,
             Extensions: extensions), [])
         {
-            PendingExtensions = pendingExtensions
+            PendingExtensions = pendingExtensions,
+            InnateSensitivityThresholdFeet = threshold,
+            RequiredSunlightSensitivity = sensitivity
         };
 
         bool VerifiedGrant(NativeOriginEffectiveGrant grant)
@@ -205,6 +231,57 @@ public static class NativeOriginDarkvisionProjector
                     grant.EffectiveValue is { } effective &&
                     JsonElement.DeepEquals(offered, effective));
         }
+    }
+
+    private static bool TryReadSensitivityRule(
+        NativeCatalogSnapshot catalog, out int threshold, out string drawbackId)
+    {
+        threshold = 0;
+        drawbackId = "";
+        if (!catalog.TryGetById("rule.creature-origination", out var rule) ||
+            rule is null || rule.Category != "rule" ||
+            !rule.Definition.TryGetProperty("darkvisionSensitivity", out var policy) ||
+            policy.ValueKind != JsonValueKind.Object ||
+            !policy.TryGetProperty("innateRangeThresholdFeet", out var limit) ||
+            limit.ValueKind != JsonValueKind.Number ||
+            !limit.TryGetInt32(out threshold) ||
+            threshold is < 0 or > 1_000_000 ||
+            !policy.TryGetProperty("drawbackTraitId", out var drawback) ||
+            drawback.ValueKind != JsonValueKind.String ||
+            string.IsNullOrWhiteSpace(drawback.GetString()) ||
+            !policy.TryGetProperty("appliesTo", out var appliesTo) ||
+            appliesTo.ValueKind != JsonValueKind.String ||
+            appliesTo.GetString() != "total-innate-darkvision" ||
+            !policy.TryGetProperty("temporaryMagicalVision", out var temporary) ||
+            temporary.ValueKind != JsonValueKind.String ||
+            temporary.GetString() != "excluded")
+            return false;
+        drawbackId = drawback.GetString()!;
+        return true;
+    }
+
+    private static bool TryReadSunlightSensitivity(
+        NativeCatalogSnapshot catalog, string traitId,
+        out SunlightSensitivity? sensitivity)
+    {
+        sensitivity = null;
+        if (!catalog.TryGetById(traitId, out var entity) ||
+            entity is null || entity.Category != "origin-trait" ||
+            !entity.Definition.TryGetProperty("trait", out var effect) ||
+            effect.ValueKind != JsonValueKind.Object ||
+            !effect.TryGetProperty("condition", out var condition) ||
+            condition.ValueKind != JsonValueKind.String ||
+            condition.GetString() != "condition.dazzled" ||
+            !effect.TryGetProperty("trigger", out var trigger) ||
+            trigger.ValueKind != JsonValueKind.String ||
+            trigger.GetString() != "direct-unprotected-sunlight" ||
+            !effect.TryGetProperty("end", out var end) ||
+            end.ValueKind != JsonValueKind.String ||
+            end.GetString() != "remove-exposure-or-use-effective-protection")
+            return false;
+        sensitivity = new(traitId, condition.GetString()!,
+            trigger.GetString()!, end.GetString()!);
+        return true;
     }
 
     // The extension marker is distinctive to the reviewed Darkvision upgrade

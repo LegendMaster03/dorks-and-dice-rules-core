@@ -1,0 +1,18 @@
+{
+  "name": "Alchemical actuator",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "description": "An actuating mechanism requiring compatible circulation.",
+  "provides": [
+    "actuation"
+  ],
+  "requiresAnyOf": [
+    [
+      "circulation"
+    ]
+  ],
+  "materialSlots": [
+    "actuator"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.alchemical-actuator",
+  "powerDemand": 2
+}

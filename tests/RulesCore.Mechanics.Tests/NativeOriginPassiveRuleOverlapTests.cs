@@ -6,9 +6,9 @@ using Xunit;
 namespace RulesCore.Mechanics.Tests;
 
 /// <summary>
-/// Actual Elf and Tiefling Low-Light Vision definitions have distinct native
-/// trait identities but reference one passive rule. A shared rule reference
-/// is overlap evidence, never implicit permission to stack or suppress a trait.
+/// Elf and Tiefling can offer one shared Low-Light Vision gene from distinct
+/// native occurrences. A shared definition is not permission to stack duplicate
+/// benefits; a scoped disposition must resolve multiple selected occurrences.
 /// </summary>
 public sealed class NativeOriginPassiveRuleOverlapTests
 {
@@ -68,18 +68,19 @@ public sealed class NativeOriginPassiveRuleOverlapTests
         var available = Evaluate(initial).EvaluatedProposal.Candidates;
         var elf = Assert.Single(available, x =>
             x.ContributorId == "elf" &&
-            x.Identity.MechanicalDefinitionId == "trait.shared.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         var tiefling = Assert.Single(available, x =>
             x.ContributorId == "tiefling" &&
-            x.Identity.MechanicalDefinitionId == "trait.tiefling.low-light-vision");
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
         Assert.Equal(NativeOriginEligibility.Eligible,
             elf.SelectionBasis.Eligibility);
         // The selectable Infernal Ancestry supplies its inherited Species gene
-        // as an offer. Its distinct definition still requires reconciliation.
+        // as an offer. Its distinct source occurrence still requires reconciliation.
         Assert.Equal(NativeOriginEligibility.Eligible,
             tiefling.SelectionBasis.Eligibility);
-        Assert.NotEqual(elf.Identity.MechanicalDefinitionId,
+        Assert.Equal(elf.Identity.MechanicalDefinitionId,
             tiefling.Identity.MechanicalDefinitionId);
+        Assert.NotEqual(elf.Identity.Occurrence, tiefling.Identity.Occurrence);
         Assert.Equal("rule.low-light-vision",
             elf.OfferedValue!.Value.GetProperty("rule").GetString());
         Assert.Equal("rule.low-light-vision",
@@ -105,18 +106,16 @@ public sealed class NativeOriginPassiveRuleOverlapTests
     }
 
     [Fact]
-    public void DistinctTraitsReferencingSamePassiveRuleRequireExplicitDisposition()
+    public void SharedPassiveGeneFromDifferentSourcesRequiresExplicitDisposition()
     {
         var (proposal, _, _, _) = Prepared();
         var result = Evaluate(proposal, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Unresolved, result.Status);
         Assert.Contains(result.Issues, x =>
-            x.Code == "same-passive-native-rule-reconciliation-required" &&
-            x.Path == "rule.low-light-vision");
+            x.Code == "shared-definition-reconciliation-required" &&
+            x.Path == "trait.low-light-vision");
         Assert.DoesNotContain(result.Profile?.Underlying.InherentGrants ?? [],
-            x => x.Identity.MechanicalDefinitionId is
-                "trait.shared.low-light-vision" or
-                "trait.tiefling.low-light-vision");
+            x => x.Identity.MechanicalDefinitionId == "trait.low-light-vision");
     }
 
     [Theory]
@@ -144,8 +143,7 @@ public sealed class NativeOriginPassiveRuleOverlapTests
         var other = keepElf ? tiefling : elf;
         var retained = Assert.Single(result.Profile!.Underlying.InherentGrants, x =>
             x.Identity.MechanicalDefinitionId == expected.Identity.MechanicalDefinitionId);
-        Assert.DoesNotContain(result.Profile.Underlying.InherentGrants, x =>
-            x.Identity.MechanicalDefinitionId == other.Identity.MechanicalDefinitionId);
+        Assert.DoesNotContain(other.Id, retained.SourceCandidateIds);
         Assert.Equal(expected.Id, Assert.Single(retained.SourceCandidateIds));
         Assert.Equal(expected.OfferedValue!.Value.GetRawText(),
             retained.EffectiveValue!.Value.GetRawText());
@@ -212,8 +210,7 @@ public sealed class NativeOriginPassiveRuleOverlapTests
         var result = Evaluate(selected, new TestAuthority());
         Assert.Equal(NativeOriginConstructionStatus.Authorized, result.Status);
         Assert.Equal(2, result.Profile!.Underlying.InherentGrants.Count(x =>
-            x.Identity.MechanicalDefinitionId is
-                "trait.shared.low-light-vision" or "trait.tiefling.low-light-vision"));
+            x.Identity.MechanicalDefinitionId == "trait.low-light-vision"));
         var view = NativeOriginVisionProjector.ProjectApprovedMixed(Catalog(), result);
         Assert.Equal("unresolved", view.Status);
         Assert.Contains("duplicate-low-light-vision", view.UnresolvedReasons);

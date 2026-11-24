@@ -5,7 +5,7 @@ namespace RulesCore.Mechanics;
 
 /// <summary>
 /// A read-only projection of an already authorized, selected intrinsic Origin
-/// trait with a canonical per-character-level maximum-HP effect. It does not
+/// trait with a canonical level-derived maximum-HP effect. It does not
 /// authorize biological inheritance, award Hit Dice, or modify class HP gains.
 /// The result is a preview until the host verifies the saved Origin and character.
 /// </summary>
@@ -48,13 +48,15 @@ public static class NativeOriginHitPointProgressionProjector
         var selected = profile.Underlying.InherentGrants.Where(grant =>
             grant.Identity.Kind == NativeOriginCharacteristicKind.Trait &&
             ((grant.EffectiveValue is { ValueKind: JsonValueKind.Object } value &&
-              value.TryGetProperty("hitPointsPerCharacterLevel", out _)) ||
+              (value.TryGetProperty("hitPointsPerCharacterLevel", out _) ||
+               value.TryGetProperty("hitPointMaximumBonus", out _))) ||
              (grant.Identity.MechanicalDefinitionId is { } id &&
               catalog.TryGetById(id, out var definition) &&
               definition is not null && definition.Category == "origin-trait" &&
               definition.Definition.TryGetProperty("trait", out var trait) &&
               trait.ValueKind == JsonValueKind.Object &&
-              trait.TryGetProperty("hitPointsPerCharacterLevel", out _))))
+              (trait.TryGetProperty("hitPointsPerCharacterLevel", out _) ||
+               trait.TryGetProperty("hitPointMaximumBonus", out _)))))
             .ToArray();
         if (selected.Length == 0)
             return characterLevel is > 0 and <= 1000
@@ -69,8 +71,8 @@ public static class NativeOriginHitPointProgressionProjector
             canonical is null || canonical.Category != "origin-trait" ||
             !canonical.Definition.TryGetProperty("trait", out var authored) ||
             authored.ValueKind != JsonValueKind.Object ||
-            !authored.TryGetProperty("hitPointsPerCharacterLevel", out var rate) ||
-            !rate.TryGetInt32(out var perLevel) || perLevel is <= 0 or > 1_000_000 ||
+            !(authored.TryGetProperty("hitPointsPerCharacterLevel", out _) ||
+              authored.TryGetProperty("hitPointMaximumBonus", out _)) ||
             grant.EffectiveValue is not { ValueKind: JsonValueKind.Object } actual ||
             !JsonElement.DeepEquals(actual, authored) ||
             grant.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
@@ -82,7 +84,26 @@ public static class NativeOriginHitPointProgressionProjector
             return Unresolved("character-level-required");
         if (characterLevel is <= 0 or > 1000)
             return Unresolved("invalid-character-level");
-        var bonus = (long)perLevel * characterLevel.Value;
+        int? perLevel = null;
+        long bonus;
+        if (authored.TryGetProperty("hitPointsPerCharacterLevel", out var rate))
+        {
+            if (!rate.TryGetInt32(out var value) || value is <= 0 or > 1_000_000 ||
+                authored.TryGetProperty("hitPointMaximumBonus", out _))
+                return Unresolved("hp-progressions-not-verified");
+            perLevel = value;
+            bonus = (long)value * characterLevel.Value;
+        }
+        else if (authored.TryGetProperty("hitPointMaximumBonus", out var formula) &&
+                 IsVerifiedHalfLevelBonus(formula))
+        {
+            // UA Abyssal Fortitude is ONE total maximum-HP increment.
+            // It is not an additional half-level gain at each level-up.
+            bonus = Math.Max(1, characterLevel.Value / 2);
+        }
+        else
+            return Unresolved("hp-progressions-not-verified");
+
         if (bonus > int.MaxValue)
             return Unresolved("hp-bonus-overflow");
         return new("resolved", characterLevel, perLevel, (int)bonus,
@@ -115,6 +136,26 @@ public static class NativeOriginHitPointProgressionProjector
         if (sum > int.MaxValue)
             return Unresolved("combined-hp-overflow");
         return projected with { CombinedMaximumHitPoints = (int)sum };
+    }
+
+    private static bool IsVerifiedHalfLevelBonus(JsonElement formula)
+    {
+        if (formula.ValueKind != JsonValueKind.Object ||
+            formula.EnumerateObject().Count() != 4 ||
+            !formula.TryGetProperty("formula", out var kind) ||
+            kind.ValueKind != JsonValueKind.String ||
+            kind.GetString() != "half-level" ||
+            !formula.TryGetProperty("levelBasis", out var basis) ||
+            basis.ValueKind != JsonValueKind.String ||
+            basis.GetString() != "total-character-level" ||
+            !formula.TryGetProperty("rounding", out var rounding) ||
+            rounding.ValueKind != JsonValueKind.String ||
+            rounding.GetString() != "down" ||
+            !formula.TryGetProperty("minimum", out var minimum) ||
+            minimum.ValueKind != JsonValueKind.Number ||
+            !minimum.TryGetInt32(out var floor) || floor != 1)
+            return false;
+        return true;
     }
 
     private static bool HasVerifiedGrant(NativeOriginConstructionResult result,

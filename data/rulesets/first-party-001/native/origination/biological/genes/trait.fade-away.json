@@ -1,0 +1,26 @@
+{
+  "id": "trait.fade-away",
+  "name": "Fade Away",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "fade-away",
+    "name": "Fade Away",
+    "description": "Immediately after you take damage, you can use your Reaction to become Invisible until the end of your next turn. The invisibility ends immediately after you attack, deal damage, or force a creature to make a saving throw. You can use this characteristic once per Short or Long Rest. The triggering damage is not prevented or reduced by this characteristic.",
+    "activation": {
+      "action": "reaction",
+      "trigger": "immediately-after-you-take-damage"
+    },
+    "invisibility": {
+      "endsAt": "end-of-your-next-turn",
+      "alsoEndsImmediatelyAfter": [
+        "you-attack",
+        "you-deal-damage",
+        "you-force-a-creature-to-make-a-saving-throw"
+      ]
+    },
+    "uses": {
+      "value": 1,
+      "recharge": "short-or-long-rest"
+    }
+  }
+}

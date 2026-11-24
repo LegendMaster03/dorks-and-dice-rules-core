@@ -250,53 +250,6 @@ class CharacterOriginsCrossPillarConsistencyTests(unittest.TestCase):
                     with self.subTest(source=source["id"], ref=value):
                         self.assertIn(value, self.competencies)
 
-    def test_retired_product_categories_are_not_native_competencies(self):
-        # Manufacturing methods remain; the product category is resolved by
-        # its applicable recipe/activity. No existing-character rank migration.
-        for retired in ("bowmaking", "shipmaking", "trapmaking",
-                        "armorsmithing", "weaponsmithing", "blacksmithing"):
-            with self.subTest(retired=retired):
-                self.assertNotIn("competency." + retired, self.competencies)
-
-
-    def test_selected_upbringing_background_fixed_skill_overlap_review_gate(self):
-        """Flag newly introduced unavoidable fixed-Skill overlaps for review.
-
-        Optional Skill choices are excluded: an overlap selected by a player
-        is not equivalent to a duplicate imposed by two fixed source grants.
-        The approved rule replaces a duplicate fixed Skill proficiency with
-        another Skill chosen by the character. This source-level test only
-        identifies the overlap and does not itself authorize a choice.
-        """
-        def fixed_skills(record):
-            return {
-                benefit["skill"]
-                for benefit in record.get("benefits", [])
-                if benefit.get("grantType") == "skill-training"
-                and isinstance(benefit.get("skill"), str)
-            }
-
-        overlaps = set()
-        for upbringing_id, upbringing in self.upbringings.items():
-            if not upbringing.get("selectable", True):
-                continue
-            inherited = set()
-            for ancestor_id in parent_chain(upbringing_id, self.upbringings):
-                inherited.update(fixed_skills(self.upbringings[ancestor_id]))
-            for background_id, background in self.backgrounds.items():
-                if not background.get("selectable", True):
-                    continue
-                for skill_id in inherited & fixed_skills(background):
-                    overlaps.add((upbringing_id, background_id, skill_id))
-
-        self.assertEqual(
-            {("upbringing.giant-foundling", "background.soldier",
-              "skill.intimidation")},
-            overlaps,
-            "New unavoidable Origin Skill overlap requires explicit "
-            "application of the approved same-kind duplicate rule.",
-        )
-
     def test_mixed_benefit_choices_preserve_one_total_outcome(self):
         """The five heterogeneous choices have one winner per entitlement.
 

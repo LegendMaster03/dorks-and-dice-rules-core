@@ -1,0 +1,24 @@
+{
+  "name": "Manipulator",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "description": "Provides a manipulatory interface once sufficient movement and control are available.",
+  "provides": [
+    "manipulation"
+  ],
+  "requiresAnyOf": [
+    [
+      "actuation"
+    ],
+    [
+      "control"
+    ]
+  ],
+  "materialSlots": [
+    "grip"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.manipulator",
+  "powerDemand": 1,
+  "operationalOriginTraitIds": [
+    "trait.construct.physical-manipulation"
+  ]
+}

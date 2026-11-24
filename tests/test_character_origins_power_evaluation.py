@@ -19,6 +19,10 @@ class PowerEvaluationTests(unittest.TestCase):
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_text(json.dumps(data), encoding="utf-8")
 
+        def write_genes(*definitions):
+            for definition in definitions:
+                write(f"origination/biological/genes/{definition['id']}.json", definition)
+
         write("origination/biological/species/base/dwarf.json", {
             "id": "species.dwarf", "kind": "species", "name": "Dwarf", "selectable": True,
             "walkingSpeedFeet": 25, "darkvisionFeet": 60,
@@ -54,20 +58,20 @@ class PowerEvaluationTests(unittest.TestCase):
             "id": "ancestry.elf.drow", "kind": "ancestry",
             "parent": "species.elf", "darkvisionFeet": 120,
             "selectable": True, "traits": [{"traitId": "trait.elf.sunlight"}]})
-        write("origination/biological/genes/dwarf/species.dwarf.json", [
+        write_genes(
             {"id": "trait.dwarf.toughness", "kind": "origin-trait",
-             "trait": {"id": "dwarven-toughness", "hitPointsPerCharacterLevel": 1}},
+             "trait": {"id": "level-based-vitality", "hitPointsPerCharacterLevel": 1}},
             {"id": "trait.dwarf.stonebound", "kind": "origin-trait",
              "trait": {"id": "stonebound-tremorsense", "sense": "tremorsense",
                        "rangeFeet": 60, "requiresContact": "stone",
                        "activation": "bonus-action", "durationMinutes": 10,
-                       "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}}}])
-        write("origination/biological/genes/gnome/rock.json", [
+                       "uses": {"value": "proficiency-bonus", "recharge": "long-rest"}}})
+        write_genes(
             {"id": "trait.gnome.earthbound", "kind": "origin-trait",
              "trait": {"id": "earthbound-tremorsense", "sense": "tremorsense",
                        "rangeFeet": 15, "activation": "passive",
-                       "requiresSharedContact": ["earth", "stone"]}}])
-        write("origination/biological/genes/dragonborn/base.json", [
+                       "requiresSharedContact": ["earth", "stone"]}})
+        write_genes(
             {"id": "trait.dragonborn.breath", "kind": "origin-trait",
              "trait": {"id": "breath-weapon", "damage": {"progression": [
                  {"characterLevel": 1, "dice": "1d10"},
@@ -75,11 +79,11 @@ class PowerEvaluationTests(unittest.TestCase):
                  "areaFrom": "selected-dragonborn-family-or-leaf",
                  "activation": {"action": "attack", "replaces": "one-attack"},
                  "uses": {"value": "proficiency-bonus"},
-                 "savingThrow": {"ability": "dexterity", "onSuccess": "half-damage"}}}])
-        write("origination/biological/genes/elf/drow.json", [
+                 "savingThrow": {"ability": "dexterity", "onSuccess": "half-damage"}}})
+        write_genes(
             {"id": "trait.elf.sunlight", "kind": "origin-trait",
              "trait": {"id": "sunlight-sensitivity", "condition": "condition.dazzled",
-                       "trigger": "direct-unprotected-sunlight"}}])
+                       "trigger": "direct-unprotected-sunlight"}})
         write("conditions.json", {"entries": [{"id": "condition.dazzled", "effects": [
             {"type": "roll-modifier", "appliesTo": "attack-roll", "operation": "add", "value": -1},
             {"type": "roll-modifier", "appliesTo": "skill-check", "operation": "add",
@@ -160,8 +164,8 @@ class PowerEvaluationTests(unittest.TestCase):
 
     def test_flight_resource_replay_is_not_permanent_flight(self):
         gem = self.profile("ancestry.dragonborn.red")
-        gem["traits"] = {"trait.test.gem-flight": {
-            "id": "gem-flight", "requiredCharacterLevel": 5,
+        gem["traits"] = {"trait.test.spectral-flight": {
+            "id": "spectral-flight", "requiredCharacterLevel": 5,
             "activation": {"action": "bonus-action"},
             "flyingSpeed": {"equalTo": "current-walking-speed"},
             "canHover": True, "duration": {"minutes": 1},
@@ -675,7 +679,7 @@ class PowerEvaluationTests(unittest.TestCase):
         profile["traits"]["metallic"] = {
             "requiredCharacterLevel": 5,
             "activation": {"action": "attack", "replaces": "one-attack"},
-            "uses": {"value": 1, "recharge": "long-rest", "resource": "metallic-breath-weapon"},
+            "uses": {"value": 1, "recharge": "long-rest", "resource": "control-breath-weapon"},
             "area": {"shape": "cone", "lengthFeet": 15, "affectsAllies": True},
             "choiceTiming": "on-use",
             "options": [
@@ -826,7 +830,7 @@ class PowerEvaluationTests(unittest.TestCase):
         """Minimal faithful field shapes for a diagnostic, not authored data."""
         profile = self.profile("species.dwarf")
         profile["traits"] = {
-            "trait.goliath.hill.hills-tumble": {"id": "hills-tumble", "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
+            "trait.hills-tumble": {"id": "hills-tumble", "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
                      "targetMaximumSize": "large", "applyCondition": "condition.prone",
                      "additionalSavingThrow": False,
                      "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
@@ -836,14 +840,14 @@ class PowerEvaluationTests(unittest.TestCase):
                          "savingThrow": {"ability": "strength"},
                          "applyConditionOnFailedSave": "condition.prone",
                          "sharedUsesFromTrait": "hills-tumble"}},
-            "trait.goliath.stone.stones-endurance": {"id": "stones-endurance", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
+            "trait.stones-endurance": {"id": "stones-endurance", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
                           "activation": {"action": "reaction", "trigger": "when-you-take-damage"},
                           "damageReduction": {"dice": "1d12", "appliesTo": "triggering-damage"}},
-            "trait.goliath.stone.stone-strike": {"id": "stone-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
+            "trait.stone-strike": {"id": "stone-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
                       "oncePerTurn": True, "extraDamage": {"dice": "1d6", "damageType": "force"},
                       "onFailedSave": {"forcedMovementFeet": 10},
                       "sharedUsesFromTrait": "stones-endurance"},
-            "trait.goliath.frost.frosts-chill": {"id": "frosts-chill", "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
+            "trait.frosts-chill": {"id": "frosts-chill", "trigger": "when-you-hit-with-an-attack-roll-and-deal-damage",
                       "extraDamage": {"dice": "1d6", "damageType": "cold"},
                       "speedReduction": {"feet": 10, "endsAt":"start-of-your-next-turn"},
                       "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
@@ -852,9 +856,9 @@ class PowerEvaluationTests(unittest.TestCase):
                           "savingThrow": {"ability": "constitution"},
                           "onFailedSave": {"speedSetFeet": 0, "endsAt":"start-of-your-next-turn"},
                           "sharedUsesFromTrait": "frosts-chill"}},
-            "trait.goliath.storm.storms-thunder": {"id": "storms-thunder", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
+            "trait.storms-thunder": {"id": "storms-thunder", "uses": {"value": "proficiency-bonus", "recharge": "long-rest"},
                         "activation": {"action": "reaction", "trigger": "when-a-creature-within-range-deals-damage-to-you"}},
-            "trait.goliath.storm.storm-strike": {"id": "storm-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
+            "trait.storm-strike": {"id": "storm-strike", "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
                       "oncePerTurn": True, "extraDamage": {"dice": "1d6", "damageType": "lightning"},
                       "savingThrow": {"ability": "constitution"},
                       "onFailedSave": {"attackRollMode": "disadvantage", "endsAt":"start-of-your-next-turn"},
@@ -925,11 +929,11 @@ class PowerEvaluationTests(unittest.TestCase):
         # Replace Storm with Stone; a confirmed hit still qualifies even if
         # the original weapon did no damage (e.g., was resisted).
         e["strikeOpportunities"][0].update(
-            traitId="trait.goliath.stone.stone-strike", dealtDamage=False)
+            traitId="trait.stone-strike", dealtDamage=False)
         stone = power.evaluate(profile, self.catalog, 1, e)
         self.assertEqual("activated", stone["strikeEventTrace"][0]["status"])
         self.assertEqual(3.5, stone["metrics"]["strike_gross_extra_damage_on_confirmed_hits"])
-        e["strikeOpportunities"][0]["traitId"] = "trait.goliath.hill.hills-tumble"
+        e["strikeOpportunities"][0]["traitId"] = "trait.hills-tumble"
         hill = power.evaluate(profile, self.catalog, 1, e)
         self.assertEqual("hit-without-required-damage", hill["strikeEventTrace"][0]["status"])
 
@@ -938,7 +942,7 @@ class PowerEvaluationTests(unittest.TestCase):
         e = copy.deepcopy(next(x["scenario"] for x in self.scenario_suite()["contexts"]
                      if x["id"] == "goliath-storm-disadvantage-window"))
         e["strikeOpportunities"][0].update(
-            traitId="trait.goliath.stone.stone-strike", targetIsCreature=False)
+            traitId="trait.stone-strike", targetIsCreature=False)
         stone = power.evaluate(profile, self.catalog, 1, e)
         self.assertEqual("activated", stone["strikeEventTrace"][0]["status"])
         self.assertNotIn("strike_expected_enemy_forced_movement_feet", stone["metrics"])
@@ -947,12 +951,12 @@ class PowerEvaluationTests(unittest.TestCase):
         profile = self.synthetic_goliath("stone")
         scene = copy.deepcopy(next(x["scenario"] for x in self.scenario_suite()["contexts"]
                      if x["id"] == "goliath-storm-disadvantage-window"))
-        scene["strikeOpportunities"][0]["traitId"] = "trait.goliath.stone.stone-strike"
+        scene["strikeOpportunities"][0]["traitId"] = "trait.stone-strike"
         scene["reactionDamageEvents"] = [{
             "id":"damage", "round":1, "amount":20, "damageType":"slashing",
             "isAttackHit":True, "attackerVisible":True, "reactionAvailable":True}]
         result = power.evaluate(profile, self.catalog, 1, scene)
-        self.assertIn({"traitId": "trait.goliath.stone.stones-endurance",
+        self.assertIn({"traitId": "trait.stones-endurance",
                        "reason": "joint-offense-defense-resource-plan-unresolved"},
                       result["unmodeled"])
 

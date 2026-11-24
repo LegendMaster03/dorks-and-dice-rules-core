@@ -7,7 +7,7 @@
 
 ## Existing native semantics
 
-The playable Tiefling Ancestries are Infernal, Chthonic, and Abyssal. Each leaf separately authors a persistent `spellcastingAbilityChoice` of Intelligence, Wisdom or Charisma, which governs **all of that Ancestry's native spells**. The required base Species `species.tiefling` is nonselectable alone. Its shared `trait.tiefling.otherworldly-presence` grants Thaumaturgy at level 1, at will, and states `spellcastingAbilityFrom: "selected-tiefling-ancestry"`.
+The playable Tiefling Ancestries are Infernal, Chthonic, and Abyssal. Each leaf separately authors a persistent `spellcastingAbilityChoice` of Intelligence, Wisdom or Charisma, which governs **all of that Ancestry's native spells**. The required base Species `species.tiefling` is nonselectable alone. Its shared `trait.otherworldly-presence` grants Thaumaturgy at level 1, at will, and states `spellcastingAbilityFrom: "selected-tiefling-ancestry"`.
 
 Before this increment, the shared base trait described that choice only in text and a non-executable reference. All nine leaf spells also lacked durable `originBindings`, despite their respective selected Ancestry's ability choice. Direct and mixed constructions could therefore retain unbound spell grants without reliable downstream source metadata.
 

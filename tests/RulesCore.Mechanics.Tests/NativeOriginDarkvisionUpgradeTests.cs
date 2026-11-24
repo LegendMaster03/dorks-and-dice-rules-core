@@ -62,7 +62,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
 
         public NativeCatalogSnapshot Snapshot { get; }
 
-        public AlteredCatalog(JsonNode? trait)
+        public AlteredCatalog(JsonNode? trait, int? innateThresholdFeet = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             var native = Path.Combine(package, "native");
@@ -77,11 +77,32 @@ public sealed class NativeOriginDarkvisionUpgradeTests
             if (trait is not null)
                 definitions.Add(new JsonObject
                 {
-                    ["id"] = "trait.goliath.stone.cavernous-sight",
+                    ["id"] = "trait.cavernous-sight",
                     ["kind"] = "origin-trait",
                     ["name"] = "Cavernous Sight",
                     ["trait"] = trait.DeepClone()
                 });
+            if (innateThresholdFeet is { } threshold)
+            {
+                // The native threshold is a ruleset setting, not a property
+                // written into any Darkvision-bearing Species definition.
+                definitions.Add(new JsonObject
+                {
+                    ["id"] = "rule.creature-origination",
+                    ["kind"] = "rule",
+                    ["name"] = "Creature Type Origination Methods and Compatibility",
+                    ["darkvisionSensitivity"] = new JsonObject
+                    {
+                        ["innateRangeThresholdFeet"] = threshold,
+                        ["drawbackTraitId"] = "trait.sunlight-sensitivity",
+                        ["appliesTo"] = "total-innate-darkvision",
+                        ["temporaryMagicalVision"] = "excluded"
+                    }
+                });
+                Assert.True(Catalog().TryGetById(
+                    "trait.sunlight-sensitivity", out var sunlight));
+                definitions.Add(JsonNode.Parse(sunlight!.Definition.GetRawText()));
+            }
             File.WriteAllText(Path.Combine(native, "fixture.json"),
                 definitions.ToJsonString());
             Snapshot = NativeCatalogLoader.Load(
@@ -98,7 +119,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
     private static JsonObject CanonicalCavernousSight()
     {
         Assert.True(Catalog().TryGetById(
-            "trait.goliath.stone.cavernous-sight", out var definition));
+            "trait.cavernous-sight", out var definition));
         return JsonNode.Parse(definition!.Definition.GetProperty("trait")
             .GetRawText())!.AsObject();
     }
@@ -112,7 +133,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         var aptitude = Assert.Single(Evaluate(proposal, defaults: true)
             .EvaluatedProposal.Candidates, x =>
                 x.Identity.MechanicalDefinitionId ==
-                    "trait.goliath.giant-ancestry-aptitude");
+                    "trait.ancestral-aptitude");
         var result = Evaluate(proposal with
         {
             Manifestations =
@@ -170,7 +191,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         // Match both stored and authored effect to reach the actual grammar
         // check, rather than passing solely because the values disagree.
         var origin = AlterSenseGrant(DirectStone(),
-            "trait.goliath.stone.cavernous-sight",
+            "trait.cavernous-sight",
             JsonSerializer.SerializeToElement(canonical));
         var view = NativeOriginDarkvisionProjector.Project(catalog.Snapshot,
             origin, 4);
@@ -192,7 +213,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         Assert.True(canonical.Remove(field));
         using var catalog = new AlteredCatalog(canonical);
         var origin = AlterSenseGrant(DirectStone(),
-            "trait.goliath.stone.cavernous-sight",
+            "trait.cavernous-sight",
             JsonSerializer.SerializeToElement(canonical));
         var view = NativeOriginDarkvisionProjector.Project(catalog.Snapshot,
             origin, 4);
@@ -232,7 +253,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
             id = "cavernous-sight", sense = "tremorsense"
         });
         var forged = AlterSenseGrant(originallySelected,
-            "trait.goliath.stone.cavernous-sight", alteredEffect);
+            "trait.cavernous-sight", alteredEffect);
         var reverse = NativeOriginDarkvisionProjector.Project(Catalog(), forged, 4);
         Assert.Equal("unresolved", reverse.Status);
         Assert.Contains("darkvision-extension-not-verified", reverse.UnresolvedReasons);
@@ -254,7 +275,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         Assert.Equal("none",
             NativeOriginDarkvisionProjector.Project(catalog, directOrc, 4).Status);
         var forged = AlterSenseGrant(directOrc,
-            "trait.orc.relentless-endurance",
+            "trait.relentless-endurance",
             JsonSerializer.SerializeToElement(new
             {
                 id = "relentless-endurance",
@@ -279,9 +300,9 @@ public sealed class NativeOriginDarkvisionUpgradeTests
             [], [], [], SelectedAncestryId: "ancestry.goliath.stone");
         var candidates = Evaluate(proposal, defaults: true).EvaluatedProposal.Candidates;
         var aptitude = Assert.Single(candidates, x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.giant-ancestry-aptitude");
+            x.Identity.MechanicalDefinitionId == "trait.ancestral-aptitude");
         var cavernous = Assert.Single(candidates, x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.cavernous-sight");
+            x.Identity.MechanicalDefinitionId == "trait.cavernous-sight");
         Assert.Equal(NativeOriginEligibility.Eligible, cavernous.SelectionBasis.Eligibility);
         var completed = Evaluate(proposal with
         {
@@ -313,6 +334,8 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         Assert.Empty(level4.PendingExtensions);
         Assert.Equal("resolved", level4.Status);
         Assert.Equal(60, level4.Darkvision!.RangeFeet);
+        Assert.Equal(60, level4.InnateSensitivityThresholdFeet);
+        Assert.Null(level4.RequiredSunlightSensitivity);
         Assert.Equal(0, level4.Darkvision.BaseRangeFeet);
         Assert.Equal("ancestry.goliath.stone", level4.Darkvision.SourceId);
         var source = Assert.Single(level4.Darkvision.Extensions!);
@@ -341,9 +364,9 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         var source = Assert.Single(offered, x => x.ContributorId == "drow" &&
             x.Identity.IntrinsicSlotId == "darkvisionFeet");
         var drawback = Assert.Single(offered, x => x.ContributorId == "drow" &&
-            x.Identity.MechanicalDefinitionId == "trait.elf.drow.sunlight-sensitivity");
+            x.Identity.MechanicalDefinitionId == "trait.sunlight-sensitivity");
         var upgrade = Assert.Single(offered, x => x.ContributorId == "stone" &&
-            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.cavernous-sight");
+            x.Identity.MechanicalDefinitionId == "trait.cavernous-sight");
         var foundation = offered.Where(x => x.ContributorId == "drow" &&
             x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
             .ToArray();
@@ -386,6 +409,8 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         Assert.Empty(at4.PendingExtensions);
         Assert.Equal("resolved", at4.Status);
         Assert.Equal(180, at4.Darkvision!.RangeFeet);
+        Assert.Equal(60, at4.InnateSensitivityThresholdFeet);
+        Assert.Equal("condition.dazzled", at4.RequiredSunlightSensitivity?.ConditionId);
         Assert.Equal(120, at4.Darkvision.BaseRangeFeet);
         Assert.Equal("ancestry.elf.drow", at4.Darkvision.SourceId);
         Assert.Equal("grant:selected-darkvision", at4.Darkvision.GrantId);
@@ -432,6 +457,10 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         var result = NativeOriginDarkvisionProjector.Project(Catalog(), completed);
         Assert.Equal("resolved", result.Status);
         Assert.Equal(120, result.Darkvision!.RangeFeet);
+        Assert.Equal("trait.sunlight-sensitivity",
+            result.RequiredSunlightSensitivity?.TraitDefinitionId);
+        Assert.Equal("direct-unprotected-sunlight",
+            result.RequiredSunlightSensitivity?.Trigger);
         Assert.Equal(120, result.Darkvision.BaseRangeFeet);
         Assert.Empty(result.Darkvision.Extensions!);
     }
@@ -447,7 +476,7 @@ public sealed class NativeOriginDarkvisionUpgradeTests
             ], [], []);
         var evaluated = Evaluate(proposal).EvaluatedProposal;
         var upgrade = Assert.Single(evaluated.Candidates, x =>
-            x.Identity.MechanicalDefinitionId == "trait.goliath.stone.cavernous-sight");
+            x.Identity.MechanicalDefinitionId == "trait.cavernous-sight");
         Assert.Equal(NativeOriginEligibility.Eligible,
             upgrade.SelectionBasis.Eligibility);
         var attempts = evaluated.Candidates.Where(x =>
@@ -470,5 +499,85 @@ public sealed class NativeOriginDarkvisionUpgradeTests
         Assert.Equal(60, atUnlock.Darkvision!.RangeFeet);
         Assert.Equal(0, atUnlock.Darkvision.BaseRangeFeet);
         Assert.Equal(60, Assert.Single(atUnlock.Darkvision.Extensions!).AddedRangeFeet);
+    }
+
+    [Fact]
+    public void OrdinarySixtyFootDarkvisionHasNoThresholdDrawback()
+    {
+        var dwarf = Evaluate(new NativeOriginProposal("direct-dwarf-vision",
+            NativeOriginIntent.Direct,
+            new("rule.creature-origination", "biological"),
+            [], [], [], SelectedSpeciesId: "species.dwarf"), defaults: true);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, dwarf.Status);
+        var view = NativeOriginDarkvisionProjector.Project(Catalog(), dwarf);
+        Assert.Equal("resolved", view.Status);
+        Assert.Equal(60, view.Darkvision!.RangeFeet);
+        Assert.Equal(60, view.InnateSensitivityThresholdFeet);
+        Assert.Null(view.RequiredSunlightSensitivity);
+    }
+
+    [Fact]
+    public void DwarfWithLevelFourCavernousSightCrossesThreshold()
+    {
+        var proposal = new NativeOriginProposal("dwarf-stone-upgrade",
+            NativeOriginIntent.Mixed, new("rule.creature-origination", "biological"),
+            [
+                new("dwarf", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "species.dwarf")),
+                new("stone", new(NativeOriginInputKind.BiologicalParent),
+                    new(NativeOriginSourceKind.Native, "ancestry.goliath.stone"))
+            ], [], []);
+        var offered = Evaluate(proposal).EvaluatedProposal.Candidates;
+        var darkvision = Assert.Single(offered, x => x.ContributorId == "dwarf" &&
+            x.Identity.IntrinsicSlotId == "darkvisionFeet");
+        var upgrade = Assert.Single(offered, x => x.ContributorId == "stone" &&
+            x.Identity.MechanicalDefinitionId == "trait.cavernous-sight");
+        var foundation = offered.Where(x => x.ContributorId == "dwarf" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet")
+            .ToArray();
+        var completed = Evaluate(proposal with
+        {
+            Manifestations = foundation.Select((x, i) =>
+                new NativeOriginManifestation("foundation-" + i, x.Id,
+                    SelectedValue: x.OfferedValue)).Concat(
+            [
+                new("baseline-vision", darkvision.Id,
+                    SelectedValue: darkvision.OfferedValue),
+                new("upgrade", upgrade.Id)
+            ]).ToArray(),
+            TableDecisions =
+            [
+                Decision("permit-vision", "candidate", darkvision.Id,
+                    new { eligibility = "eligible" }),
+                Decision("permit-upgrade", "candidate", upgrade.Id,
+                    new { eligibility = "eligible" })
+            ]
+        }, new TestAuthority());
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, completed.Status);
+        var before = NativeOriginDarkvisionProjector.ProjectApprovedMixed(
+            Catalog(), completed, 3);
+        Assert.Equal(60, before.Darkvision!.RangeFeet);
+        Assert.Null(before.RequiredSunlightSensitivity);
+        var after = NativeOriginDarkvisionProjector.ProjectApprovedMixed(
+            Catalog(), completed, 4);
+        Assert.Equal(120, after.Darkvision!.RangeFeet);
+        Assert.Equal("condition.dazzled", after.RequiredSunlightSensitivity?.ConditionId);
+        Assert.Equal("remove-exposure-or-use-effective-protection",
+            after.RequiredSunlightSensitivity?.End);
+    }
+
+    [Theory]
+    [InlineData(59, true)]
+    [InlineData(60, false)]
+    [InlineData(120, false)]
+    public void RulesetThresholdChangesTheDrawbackWithoutEditingTheNativeTrait(
+        int thresholdFeet, bool expectedSensitive)
+    {
+        using var altered = new AlteredCatalog(CanonicalCavernousSight(), thresholdFeet);
+        var view = NativeOriginDarkvisionProjector.Project(altered.Snapshot, DirectStone(), 4);
+        Assert.Equal("resolved", view.Status);
+        Assert.Equal(60, view.Darkvision!.RangeFeet);
+        Assert.Equal(thresholdFeet, view.InnateSensitivityThresholdFeet);
+        Assert.Equal(expectedSensitive, view.RequiredSunlightSensitivity is not null);
     }
 }

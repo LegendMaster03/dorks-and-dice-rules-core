@@ -9,7 +9,7 @@
   "burrowingSpeedFeet": 15,
   "traits": [
     {
-      "traitId": "trait.dragonborn.brass.sand-burrower"
+      "traitId": "trait.sand-burrower"
     }
   ],
   "reviewNotes": [

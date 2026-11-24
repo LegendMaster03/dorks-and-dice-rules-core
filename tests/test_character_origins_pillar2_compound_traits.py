@@ -131,8 +131,8 @@ class Pillar2CompoundTraitTests(unittest.TestCase):
         red = project_compound_traits(
             "ancestry.dragonborn.red", self.catalog, self.contracts
         )
-        resistance = trait(red, "draconic-resistance")
-        ward = trait(red, "chromatic-warding")
+        resistance = trait(red, "damage-type-resistance")
+        ward = trait(red, "temporary-damage-immunity")
         self.assertEqual(
             "fire",
             bound(resistance, "damageResistance.damageTypeFrom")["resolvedValue"],
@@ -158,7 +158,7 @@ class Pillar2CompoundTraitTests(unittest.TestCase):
             "ancestry.dragonborn.gold", self.catalog, self.contracts
         )
         base = trait(gold, "breath-weapon")
-        metallic = trait(gold, "metallic-breath-weapon")
+        metallic = trait(gold, "control-breath-weapon")
         self.assertEqual(
             {"shape": "cone", "lengthFeet": 15},
             bound(base, "areaFrom")["resolvedValue"],
@@ -309,7 +309,7 @@ class Pillar2CompoundTraitTests(unittest.TestCase):
         p = project_compound_traits(
             "ancestry.dragonborn.red", self.catalog, altered
         )
-        resistance = trait(p, "draconic-resistance")
+        resistance = trait(p, "damage-type-resistance")
         reasons = {ref["reason"] for ref in resistance["parameterBindings"]}
         self.assertEqual(
             {"binding-contract-required", "contract-path-not-found"}, reasons

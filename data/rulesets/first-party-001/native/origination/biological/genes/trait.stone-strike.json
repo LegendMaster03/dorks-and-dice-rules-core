@@ -1,0 +1,37 @@
+{
+  "id": "trait.stone-strike",
+  "name": "Stone Strike",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "stone-strike",
+    "name": "Stone Strike",
+    "requiredCharacterLevel": 1,
+    "description": "Once per turn, when you hit with a melee or thrown-weapon attack, you can spend one use of Stone's Endurance to deal 1d6 additional Force damage. If the target is a creature, it makes a Strength saving throw or is pushed 10 feet directly away from you. This is a different activation of the existing ancestry use pool.",
+    "trigger": "melee-weapon-or-thrown-weapon-attack-hit",
+    "oncePerTurn": true,
+    "extraDamage": {
+      "dice": "1d6",
+      "damageType": "force",
+      "target": "same-target"
+    },
+    "savingThrow": {
+      "ability": "strength",
+      "dc": "8 + proficiency-bonus + chosen-giant-ancestry-ability-modifier",
+      "onSuccess": "no-push"
+    },
+    "onFailedSave": {
+      "forcedMovementFeet": 10,
+      "direction": "directly-away-from-you"
+    },
+    "sharedUsesFromTrait": "stones-endurance",
+    "extraUsesGranted": false,
+    "originBindings": {
+      "giantAncestryAbility": {
+        "lookup": "manifested-trait-choice",
+        "mechanicalDefinitionId": "trait.ancestral-aptitude",
+        "choiceRequirementId": "abilityChoice",
+        "scope": "contributor"
+      }
+    }
+  }
+}

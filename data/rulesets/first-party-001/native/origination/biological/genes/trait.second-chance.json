@@ -1,0 +1,24 @@
+{
+  "id": "trait.second-chance",
+  "name": "Second Chance",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "second-chance",
+    "name": "Second Chance",
+    "description": "When a creature you can see hits you with an attack roll, use your Reaction to require the attacker to reroll that attack, using the new result. Recharge when you roll initiative at the start of combat or finish a Short or Long Rest. This inherent adaptation does not grant an ability-score increase.",
+    "activation": {
+      "action": "reaction",
+      "trigger": "visible-creature-hits-you-with-attack-roll"
+    },
+    "requiresSight": true,
+    "reroll": {
+      "roll": "triggering-attack-roll",
+      "roller": "attacker",
+      "useResult": "new-roll"
+    },
+    "uses": {
+      "value": 1,
+      "recharge": "initiative-or-short-or-long-rest"
+    }
+  }
+}

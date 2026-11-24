@@ -1,0 +1,13 @@
+{
+  "name": "Mechanical transmission",
+  "description": "Delivers motion from a compatible driving mechanism.",
+  "rulesStatus": "candidate physical design; recipe quantities and operating values provisional",
+  "provides": [
+    "mechanical-transmission"
+  ],
+  "materialSlots": [
+    "transmission"
+  ],
+  "craftingRecipeId": "crafting-recipe.construct-component.mechanical-transmission",
+  "powerDemand": 0
+}

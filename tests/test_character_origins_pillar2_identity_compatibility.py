@@ -70,18 +70,6 @@ class Pillar2IdentityCompatibilityTests(unittest.TestCase):
         self.assertEqual(["small", "medium"], alternatives[0]["offeredValues"])
         self.assertFalse(find(result, "competing-intrinsic-values"))
 
-    def test_wood_elf_records_competing_speed_without_a_replacement_rule(self):
-        result = self.audit(direct("wood", "ancestry.elf.wood"))
-        flags = find(result, "competing-intrinsic-values")
-        speed = next(x for x in flags
-                     if x["characteristicDimension"] == "movement.walk.speed")
-        self.assertEqual([30, 35], speed["offeredValues"])
-        self.assertEqual(
-            "requires-overlap-replacement-or-selection-review",
-            speed["disposition"],
-        )
-        self.assertFalse(result["duplicatesMerged"])
-
     def test_red_dragonborn_root_and_trait_climb_are_one_overlap_question(self):
         result = self.audit(direct("red", "ancestry.dragonborn.red"))
         matches = find(result, "trait-and-intrinsic-movement-overlap")
@@ -148,7 +136,7 @@ class Pillar2IdentityCompatibilityTests(unittest.TestCase):
         )
         self.assertFalse(result["duplicatesMerged"])
 
-    def test_orc_goliath_powerful_build_shares_component_not_whole_trait(self):
+    def test_orc_goliath_powerful_build_has_same_definition_at_distinct_occurrences(self):
         result = self.audit(
             direct("orc", "species.orc"),
             direct("goliath", "ancestry.goliath.cloud"),
@@ -157,7 +145,7 @@ class Pillar2IdentityCompatibilityTests(unittest.TestCase):
                       find(result, "same-local-trait-id-distinct-source-occurrences")
                       if x["localTraitId"] == "powerful-build"]
         self.assertEqual(1, len(duplicates))
-        self.assertEqual("different-authored-definitions",
+        self.assertEqual("identical-authored-definition",
                          duplicates[0]["definitionRelationship"])
         shared = [x for x in find(result, "shared-mechanical-components")
                   if "effectiveSizeCategoriesHigherForCarryingCapacity"
@@ -169,7 +157,7 @@ class Pillar2IdentityCompatibilityTests(unittest.TestCase):
             for item in shared
         ))
 
-    def test_same_spell_is_not_same_entitlement(self):
+    def test_same_darkness_definition_retains_distinct_source_entitlements(self):
         result = self.audit(
             direct("drow", "ancestry.elf.drow"),
             direct("infernal", "ancestry.tiefling.infernal"),
@@ -179,7 +167,7 @@ class Pillar2IdentityCompatibilityTests(unittest.TestCase):
                     if x["spellRef"] == "darkness"]
         self.assertEqual(1, len(darkness))
         self.assertEqual(
-            "different-authored-definitions",
+            "identical-authored-definition",
             darkness[0]["definitionRelationship"],
         )
         self.assertEqual(

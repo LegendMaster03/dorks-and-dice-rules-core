@@ -63,9 +63,9 @@ public sealed class NativeOriginSkillProficiencyProjectorTests
         var size = Assert.Single(offers, x =>
             x.Identity.IntrinsicSlotId == "size");
         var skill = Assert.Single(offers, x =>
-            x.Identity.MechanicalDefinitionId == "trait.human.skillful");
+            x.Identity.MechanicalDefinitionId == "trait.skillful");
         var feat = Assert.Single(offers, x =>
-            x.Identity.MechanicalDefinitionId == "trait.human.versatile");
+            x.Identity.MechanicalDefinitionId == "trait.versatile");
         var selected = proposal with
         {
             Manifestations =
@@ -108,7 +108,7 @@ public sealed class NativeOriginSkillProficiencyProjectorTests
             x.Identity.IntrinsicSlotId is
                 "creatureType" or "size" or "walkingSpeedFeet").ToArray();
         var skills = offers.Where(x =>
-            x.Identity.MechanicalDefinitionId == "trait.human.skillful").ToArray();
+            x.Identity.MechanicalDefinitionId == "trait.skillful").ToArray();
         Assert.Equal(3, foundation.Length);
         Assert.Equal(humanDonors, skills.Length);
         Assert.All(skills, x => Assert.Equal(
@@ -143,7 +143,7 @@ public sealed class NativeOriginSkillProficiencyProjectorTests
         Assert.True(view.PreviewOnly);
         var selected = Assert.Single(view.Proficiencies);
         Assert.Equal("skill.intimidation", selected.SkillId);
-        Assert.Equal("trait.human.skillful", selected.DefinitionId);
+        Assert.Equal("trait.skillful", selected.DefinitionId);
         Assert.Equal("species.human", selected.SourceId);
         Assert.Equal("/traits/0", selected.OccurrencePath);
         Assert.Single(selected.SourceCandidateIds);
@@ -153,7 +153,7 @@ public sealed class NativeOriginSkillProficiencyProjectorTests
         Assert.Equal("resolved", rank.Status);
         Assert.Equal(4, rank.TotalEntitledExtraRanks);
         Assert.DoesNotContain(view.Proficiencies, x =>
-            x.SkillId is "feat.test-origin" or "trait.human.adaptable-learning");
+            x.SkillId is "feat.test-origin" or "trait.adaptable-learning");
 
         var restored = JsonSerializer.Deserialize<NativeOriginProfile>(
             JsonSerializer.Serialize(human.Profile));
@@ -195,7 +195,7 @@ public sealed class NativeOriginSkillProficiencyProjectorTests
         var skill = Assert.Single(view.Proficiencies);
         Assert.Equal("skill.stealth", skill.SkillId);
         Assert.Equal("species.human", skill.SourceId);
-        Assert.Equal("trait.human.skillful", skill.DefinitionId);
+        Assert.Equal("trait.skillful", skill.DefinitionId);
         Assert.Equal("unresolved",
             NativeOriginSkillProficiencyProjector.Project(catalog, result).Status);
     }
@@ -233,7 +233,7 @@ public sealed class NativeOriginSkillProficiencyProjectorTests
         var catalog = Catalog();
         var human = Human();
         var original = Assert.Single(human.Profile!.Underlying.InherentGrants,
-            x => x.Identity.MechanicalDefinitionId == "trait.human.skillful");
+            x => x.Identity.MechanicalDefinitionId == "trait.skillful");
         var swapped = original with
         {
             ResolvedChoices =

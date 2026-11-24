@@ -220,7 +220,7 @@ class ProposedChoiceInstancesTests(unittest.TestCase):
         preview, applicable = self.projection(
             [direct("goliath", "ancestry.goliath.cloud")],
             lambda x: x["sourceTraitOrFieldId"] ==
-            "species.goliath#trait:giant-ancestry-aptitude",
+            "species.goliath#trait:ancestral-aptitude",
         )
         item = self.one_item(applicable, "abilityChoice")
         result = self.review(applicable, preview, choice(item, ["strength"]))
@@ -252,7 +252,7 @@ class ProposedChoiceInstancesTests(unittest.TestCase):
         preview, applicable = self.projection(
             [direct("bronze", "ancestry.dragonborn.bronze")],
             lambda x: x["sourceTraitOrFieldId"] ==
-            "ancestry.dragonborn.metallic#trait:metallic-breath-weapon",
+            "ancestry.dragonborn.metallic#trait:control-breath-weapon",
         )
         item = self.one_item(applicable, "options")
         result = self.review(applicable, preview)

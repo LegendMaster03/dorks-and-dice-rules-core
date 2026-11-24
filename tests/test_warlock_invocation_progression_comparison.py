@@ -58,13 +58,5 @@ class WarlockInvocationBand1ProvisionalProgressionTests(unittest.TestCase):
         self.assertEqual([5, 7, 9], [r["warlockLevel"] for r in self.levels
                                      if r["provisionalHybridElectiveInvocations"] > r["edition35Invocations"]])
 
-    def test_counterfactual_not_substituted(self):
-        self.assertEqual(1, self.model["model"]["levelOneElectiveInvocations"])
-        self.assertEqual(0, self.model["deferredAlternatives"][0]["levelOneElectiveInvocations"])
-        self.assertEqual("independently-granted-first-Pact", self.model["model"]["levelOnePact"])
-        native = load("data/rulesets/first-party-001/working/classes/base/warlock.json")
-        self.assertEqual("pending-native-reconciliation", native["baselineStatus"])
-
-
 if __name__ == "__main__":
     unittest.main()

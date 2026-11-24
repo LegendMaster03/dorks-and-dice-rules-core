@@ -7,13 +7,13 @@
   "parent": "species.elf",
   "traits": [
     {
-      "traitId": "trait.elf.high.arcane-cantrip"
+      "traitId": "trait.arcane-cantrip"
     },
     {
-      "traitId": "trait.elf.high.detect-magic"
+      "traitId": "trait.detect-magic"
     },
     {
-      "traitId": "trait.elf.high.misty-step"
+      "traitId": "trait.misty-step"
     }
   ],
   "spellcastingAbilityChoice": [
@@ -21,5 +21,10 @@
     "wisdom",
     "charisma"
   ],
-  "defaultUpbringing": "upbringing.elf.high"
+  "defaultUpbringing": "upbringing.elf.high",
+  "reviewNotes": [
+    "Fey Teleportation enhancement approved: the inherited Misty Step free casting now recharges on a Short or Long Rest. Its level-5 unlock, once-per-recharge limit, independent pool and slot casting remain unchanged.",
+    "No biological language entitlement from Fey Teleportation; Sylvan language belongs to a separately reviewed Upbringing choice. Elven Accuracy is not granted.",
+    "The open Wizard cantrip spell-list selection still requires its separate authorized selection/projection workstream."
+  ]
 }

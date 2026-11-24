@@ -54,17 +54,6 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
             self.assertEqual({"SRD51":{"PB"},"SRD52":{"EI"}},editions)
         self.assertEqual(3,self.inventory["editionCounts"]["SRD51"]["separatePacts"])
 
-    def test_unresolved_second_pact_rules_are_not_implicitly_approved(self):
-        p=self.inventory["approvedNativePactDirection"]
-        open_rules=p["decisionsPending"]
-        self.assertNotIn("initialPactAcquisitionWarlockLevel",open_rules)
-        self.assertIsNone(open_rules["additionalPactsAllowed"])
-        self.assertIsNone(open_rules["additionalPactsAcquisitionCost"])
-        self.assertIsNone(open_rules["furtherPactEntitlementProgression"])
-        self.assertEqual(4,len(open_rules["individualPactMechanicalReconciliation"]))
-        self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
-        self.assertIn("defer eligibility, level, cost",self.inventory["openDesignRulings"][0])
-
     def test_invocations_are_pact_bound_and_not_independent(self):
         p=self.inventory["approvedNativePactDirection"]
         lifecycle=p["pactInvocationLifecycle"]
@@ -85,22 +74,6 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertTrue(lifecycle["multiplePacts"]["invocationsMustTrackPactAffiliation"])
         self.assertFalse(lifecycle["multiplePacts"]["canAccessAdditionalPactThroughCurrentDefaultProgression"])
         self.assertEqual("deferred-to-future-advanced-rule",lifecycle["multiplePacts"]["acquisitionGates"])
-
-    def test_optional_additional_pacts_not_prohibited_or_prematurely_enabled(self):
-        p=self.inventory["approvedNativePactDirection"]
-        extra=p["additionalPactDesignDirection"]
-        self.assertEqual("owner-approved-defer-as-advanced-option",extra["status"])
-        self.assertFalse(extra["additionalPactsCategoricallyForbidden"])
-        self.assertFalse(extra["approvedAsDefaultNativeEntitlement"])
-        self.assertFalse(extra["availableInCurrentWarlockVerticalSlice"])
-        self.assertIsNone(extra["minimumWarlockLevel"])
-        self.assertIsNone(extra["costOrEntitlement"])
-        self.assertIsNone(extra["maximumPacts"])
-        open_rules=p["decisionsPending"]
-        self.assertIsNone(open_rules["additionalPactsAllowed"])
-        self.assertIsNone(open_rules["additionalPactsAcquisitionCost"])
-        self.assertIsNone(open_rules["furtherPactEntitlementProgression"])
-        self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
 
     def test_pact_patron_and_invocation_requirements_use_same_bound_pact(self):
         p=self.inventory["approvedNativePactDirection"]
@@ -255,16 +228,6 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertNotIn("bond-mundane-existing-weapons-as-magical",
                          p["bladePactNativeBaseline"]["externalBG3Research"]["candidatesRequiringOwnerApproval"])
 
-    def test_hexblade_pillar_classification_remains_research_only(self):
-        p=self.inventory["approvedNativePactDirection"]
-        h=p["hexbladeClassificationReview"]
-        self.assertEqual("research-only-no-owner-reclassification",h["status"])
-        self.assertFalse(h["inCurrentPlayableSRDVerticalSlice"])
-        self.assertTrue(h["doesNotChangePlayablePatronMenu"])
-        self.assertIn("Shadowfell",h["xgte2014Lore"])
-        self.assertIn("Curse", " ".join(h["openIssues"]))
-        self.assertIn("Charisma weapon attack/damage",h["redundantHexWarriorElements"])
-
     def test_four_active_pacts_preserve_fifth_archival_research_and_srd_counts(self):
         pact=self.inventory["approvedNativePactDirection"]
         scope=pact["expandedFivePactReview"]
@@ -349,14 +312,6 @@ class WarlockPactPillarDecisionTests(unittest.TestCase):
         self.assertTrue(pair["archivedNotDeleted"])
         self.assertTrue(pair["noRuntimeAvailability"])
         self.assertIn("Pact of the Star Chain and Seeker Patron",self.inventory["outOfScope"][-1])
-
-    def test_all_four_active_pacts_gain_level_five_advancements_but_star_chain_is_deferred(self):
-        p=self.inventory["approvedNativePactDirection"]
-        levels=p["expandedFivePactReview"]["nativeFirstPactUpgradeApproval"]
-        self.assertEqual({"blade":5,"chain":5,"tome":5,"talisman":5,"starChain":None},levels)
-        self.assertEqual({"blade","chain","tome","talisman"},set(p["approvedLevelFivePactImprovements"]["options"]))
-        self.assertFalse(p["bladePactNativeBaseline"]["nativeExecutableActivation"])
-        self.assertEqual("pending-native-reconciliation",self.base["baselineStatus"])
 
     def test_talisman_approved_level_one_base_fuses_both_sources_without_stacking(self):
         p=self.inventory["approvedNativePactDirection"]

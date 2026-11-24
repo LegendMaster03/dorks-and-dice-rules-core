@@ -7,10 +7,10 @@
   "parent": "species.dragonborn",
   "traits": [
     {
-      "traitId": "trait.dragonborn.gem.psionic-mind"
+      "traitId": "trait.psionic-mind"
     },
     {
-      "traitId": "trait.dragonborn.gem.gem-flight"
+      "traitId": "trait.spectral-flight"
     }
   ],
   "reviewNotes": [

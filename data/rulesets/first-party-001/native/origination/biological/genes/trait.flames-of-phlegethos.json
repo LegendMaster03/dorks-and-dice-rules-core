@@ -1,0 +1,32 @@
+{
+  "id": "trait.flames-of-phlegethos",
+  "name": "Flames of Phlegethos",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "flames-of-phlegethos",
+    "name": "Flames of Phlegethos",
+    "description": "When you roll Fire damage for a spell you cast, you may reroll any Fire damage dice that show 1, once per die; you must use each new result even if it is another 1. Whenever you cast a spell that deals Fire damage, you may cause flames to wreathe you until the end of your next turn. The flames harm neither you nor your possessions, shed Bright Light for 30 feet and Dim Light for 30 additional feet, and cause any creature within 5 feet that hits you with a melee attack while the flames are present to take 1d4 Fire damage. This inherited characteristic grants no ability-score increase.",
+    "fireSpellDamageReroll": {
+      "source": "spell-you-cast",
+      "damageType": "fire",
+      "triggerDieResult": 1,
+      "rerollsPerDie": 1,
+      "useNewResult": true
+    },
+    "protectiveFlames": {
+      "trigger": "cast-spell-that-deals-fire-damage",
+      "optional": true,
+      "endsAt": "end-of-your-next-turn",
+      "brightLightFeet": 30,
+      "dimLightAdditionalFeet": 30,
+      "harmsSelfOrPossessions": false,
+      "retaliation": {
+        "trigger": "creature-within-5-feet-hits-you-with-melee-attack-while-flames-active",
+        "rangeFeet": 5,
+        "damageDice": "1d4",
+        "damageType": "fire",
+        "actionCost": "none"
+      }
+    }
+  }
+}

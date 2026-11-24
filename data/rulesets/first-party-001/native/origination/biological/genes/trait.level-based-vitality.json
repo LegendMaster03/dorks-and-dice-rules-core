@@ -1,0 +1,10 @@
+{
+  "id": "trait.level-based-vitality",
+  "name": "Level-Based Vitality",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "level-based-vitality",
+    "description": "Increase maximum hit points by 1 for each character level.",
+    "hitPointsPerCharacterLevel": 1
+  }
+}

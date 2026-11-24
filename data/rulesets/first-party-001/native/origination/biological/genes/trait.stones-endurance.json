@@ -1,0 +1,23 @@
+{
+  "id": "trait.stones-endurance",
+  "name": "Stone's Endurance",
+  "kind": "origin-trait",
+  "trait": {
+    "id": "stones-endurance",
+    "name": "Stone's Endurance",
+    "description": "When you take damage, you can use your Reaction to reduce that damage by 1d12 plus your Constitution modifier. You can do so a number of times equal to your Proficiency Bonus per Long Rest.",
+    "activation": {
+      "action": "reaction",
+      "trigger": "when-you-take-damage"
+    },
+    "damageReduction": {
+      "dice": "1d12",
+      "addAbilityModifier": "constitution",
+      "appliesTo": "triggering-damage"
+    },
+    "uses": {
+      "value": "proficiency-bonus",
+      "recharge": "long-rest"
+    }
+  }
+}

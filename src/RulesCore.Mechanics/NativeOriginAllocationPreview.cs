@@ -4,37 +4,84 @@ using RulesCore.Content;
 namespace RulesCore.Mechanics;
 
 /// <summary>
-/// A hypothetical, read-only allocation policy. It is never part of the
-/// authorization pipeline: passing a policy here neither creates a grant nor
-/// establishes table authority. Its revision must identify an explicit design
-/// candidate, not the ruleset's implicit default.
+/// A complete allocation price schedule. Preview assessments are always
+/// non-authoritative; the construction engine can separately enforce a
+/// host-supplied schedule during initial character creation. A policy does
+/// not grant traits or establish table authority. First-party numerical policy is versioned and opt-in; callers may
+/// supply their own authenticated table policy.
 /// </summary>
 public sealed record NativeOriginAllocationPolicy(
     string Revision, string RuleId, string MethodId, int Allowance,
-    IReadOnlyList<NativeOriginAllocationPrice> Prices);
+    IReadOnlyList<NativeOriginAllocationPrice> Prices,
+    IReadOnlyList<NativeOriginAllocationInteractionPrice>? InteractionPrices = null,
+    IReadOnlyList<NativeOriginAllocationMultiplicityPremium>? MultiplicityPremiums = null);
 
 /// <summary>
-/// Prices a complete characteristic or one inseparable group. MemberKeys use
-/// "intrinsic:slot-id" and "trait:canonical-origin-trait-id" notation.
-/// Whole-progression load covers every authored future unlock, not only the
-/// capabilities available at the current character level. A bundle requires
-/// all members to be selected from a shared contributing lineage.
+/// Optional, order-independent marginal cost of expressing several separately
+/// authorized effective instances of one canonical characteristic. The base
+/// price already applies to every instance; this policy adds a surcharge for
+/// each instance beyond the first, plus optionally for each unordered pair.
+/// This is a configurable pricing function, not biological permission to
+/// exceed the ruleset's current per-gene expression capacity.
+/// </summary>
+public sealed record NativeOriginAllocationMultiplicityPremium(
+    string Id, string MemberKey, int PerAdditionalInstanceLoad,
+    int PerPairLoad = 0);
+
+/// <summary>
+/// An additional cost for a specific coexisting set of effective mechanics.
+/// Interaction costs do not replace ordinary grant charges and can span
+/// different contributors; they apply only when every required key is active.
+/// </summary>
+public sealed record NativeOriginAllocationInteractionPrice(
+    string Id, int Load, IReadOnlyList<string> RequiredKeys);
+
+/// <summary>
+/// A configuration selector reads a complete effective grant, not a contributor
+/// offer. Paths are slash-separated JSON properties rooted at value, parameters,
+/// choices, definition, or resourceOwners. Missing is distinct from JSON null.
+/// </summary>
+public enum NativeOriginAllocationComparison { Equals, Present, Absent }
+
+public sealed record NativeOriginAllocationPriceCondition(
+    string MemberKey, string Path, NativeOriginAllocationComparison Comparison,
+    JsonElement? ExpectedValue = null);
+
+/// <summary>
+/// A configuration replaces the containing price's load; it is not an extra
+/// charge. Highest explicit priority wins, and tied matches fail closed.
+/// </summary>
+public sealed record NativeOriginAllocationPriceConfiguration(
+    string Id, int Load, int Priority,
+    IReadOnlyList<NativeOriginAllocationPriceCondition> Conditions);
+
+/// <summary>
+/// Prices a complete characteristic or one inseparable same-lineage group.
+/// MemberKeys use intrinsic:slot-id and trait:canonical-origin-trait-id.
+/// Whole-progression load covers future unlocks. When Configurations is
+/// supplied, a nonmatching effective configuration is unpriced unless
+/// the author explicitly opts into the base-load fallback.
+/// A null Configurations list retains the existing fixed-price contract.
 /// </summary>
 public sealed record NativeOriginAllocationPrice(
-    string Id, int Load, IReadOnlyList<string> MemberKeys);
+    string Id, int Load, IReadOnlyList<string> MemberKeys,
+    IReadOnlyList<NativeOriginAllocationPriceConfiguration>? Configurations = null,
+    bool AllowUnmatchedConfigurationFallback = false);
 
 public sealed record NativeOriginAllocationComponent(
     string Key, string GrantId, IReadOnlyList<string> SourceCandidateIds,
-    int? UnlockLevel, string? AssignedPriceId = null);
+    int? UnlockLevel, string? AssignedPriceId = null,
+    string? AssignedConfigurationId = null);
 
 public sealed record NativeOriginAllocationCharge(
     string PriceId, int Load, IReadOnlyList<string> GrantIds,
-    IReadOnlyList<string> CharacteristicKeys);
+    IReadOnlyList<string> CharacteristicKeys, string? ConfigurationId = null);
 
 /// <summary>
-/// An allocation assessment never changes the status of its Origin. Even a
-/// within-allowance result is an experimental comparison, not a mechanical
-/// authorization, a power score, or an approved construction budget.
+/// A public preview never changes Origin authorization. The creation gate
+/// reuses the same ledger, marks PreviewOnly=false and explicitly incorporates
+/// the result in construction Status. A passed budget never authorizes an
+/// otherwise unsupported grant or certifies the price schedule as balanced.
 /// </summary>
 public sealed record NativeOriginAllocationAssessment(
     string Status, string? PolicyRevision, int? Allowance, int? CommittedLoad,
@@ -47,7 +94,29 @@ public static class NativeOriginAllocationPreview
 {
     public static NativeOriginAllocationAssessment Assess(
         NativeCatalogSnapshot catalog, NativeOriginConstructionResult result,
-        NativeOriginAllocationPolicy? policy = null)
+        NativeOriginAllocationPolicy? policy = null) =>
+        AssessCore(catalog, result, policy, creationScope: false);
+
+    /// <summary>Assess initial creation without changing the result's authorization.</summary>
+    public static NativeOriginAllocationAssessment AssessInitialPreview(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult result,
+        NativeOriginAllocationPolicy? policy = null) =>
+        AssessCore(catalog, result, policy, creationScope: true) with { PreviewOnly = true };
+
+    /// <summary>
+    /// The creation gate uses the same price ledger as the read-only preview.
+    /// Direct Species presets and mixed/custom biological Origins are assessed
+    /// under one policy; a latent gene has no effective grant to charge.
+    /// Call only from the construction engine after all normal grant validation.
+    /// </summary>
+    internal static NativeOriginAllocationAssessment AssessCreation(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult result,
+        NativeOriginAllocationPolicy? policy) =>
+        AssessCore(catalog, result, policy, creationScope: true);
+
+    private static NativeOriginAllocationAssessment AssessCore(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult result,
+        NativeOriginAllocationPolicy? policy, bool creationScope)
     {
         ArgumentNullException.ThrowIfNull(catalog);
         ArgumentNullException.ThrowIfNull(result);
@@ -59,7 +128,12 @@ public static class NativeOriginAllocationPreview
                     StringComparer.Ordinal).ToArray(), Unlock(catalog, x)))
             .ToArray();
         var issues = new List<string>();
-        if (result.EvaluatedProposal.Intent != NativeOriginIntent.Mixed ||
+        var applicableIntent = creationScope
+            ? result.EvaluatedProposal.Intent is
+                (NativeOriginIntent.Direct or NativeOriginIntent.Mixed or
+                    NativeOriginIntent.Custom)
+            : result.EvaluatedProposal.Intent == NativeOriginIntent.Mixed;
+        if (!applicableIntent ||
             result.EvaluatedProposal.Method is null ||
             result.EvaluatedProposal.Method.RuleId != "rule.creature-origination" ||
             result.EvaluatedProposal.Method.MethodId != "biological")
@@ -67,28 +141,64 @@ public static class NativeOriginAllocationPreview
 
         if (policy is null)
             return Finish("not-configured", null, null, null, [],
-                ["biological-allocation-policy-not-approved"]);
+                [creationScope ? "creation-allocation-policy-not-configured" :
+                    "biological-allocation-policy-not-approved"]);
 
         if (string.IsNullOrWhiteSpace(policy.Revision) ||
             policy.RuleId != result.EvaluatedProposal.Method.RuleId ||
             policy.MethodId != result.EvaluatedProposal.Method.MethodId ||
             policy.Allowance < 0 || policy.Prices is null ||
             policy.Prices.Any(x => x is null ||
-                string.IsNullOrWhiteSpace(x.Id) || x.Load <= 0 ||
+                string.IsNullOrWhiteSpace(x.Id) || x.Load < 0 ||
+                (x.Load == 0 &&
+                 !NativeOriginAllocationPriceResolver.PermitsZero(x.MemberKeys)) ||
                 x.MemberKeys is not { Count: > 0 } ||
                 x.MemberKeys.Any(string.IsNullOrWhiteSpace) ||
-                x.MemberKeys.Distinct(StringComparer.Ordinal).Count() != x.MemberKeys.Count) ||
+                x.MemberKeys.Distinct(StringComparer.Ordinal).Count() != x.MemberKeys.Count ||
+                !NativeOriginAllocationPriceResolver.Valid(x)) ||
             policy.Prices.Select(x => x.Id).Distinct(StringComparer.Ordinal).Count() !=
                 policy.Prices.Count ||
             policy.Prices.SelectMany(x => x.MemberKeys)
                 .Distinct(StringComparer.Ordinal).Count() !=
-                policy.Prices.Sum(x => x.MemberKeys.Count))
+                policy.Prices.Sum(x => x.MemberKeys.Count) ||
+            (policy.InteractionPrices ?? []).Any(x => x is null ||
+                string.IsNullOrWhiteSpace(x.Id) || x.Load <= 0 ||
+                x.RequiredKeys is not { Count: >= 2 } ||
+                x.RequiredKeys.Any(string.IsNullOrWhiteSpace) ||
+                x.RequiredKeys.Distinct(StringComparer.Ordinal).Count() !=
+                    x.RequiredKeys.Count) ||
+            (policy.InteractionPrices ?? []).Select(x => x.Id)
+                .Concat(policy.Prices.Select(x => x.Id))
+                .Distinct(StringComparer.Ordinal).Count() !=
+                (policy.InteractionPrices?.Count ?? 0) + policy.Prices.Count ||
+            (policy.InteractionPrices ?? []).SelectMany(x => x.RequiredKeys)
+                .Any(key => !policy.Prices.SelectMany(x => x.MemberKeys)
+                    .Contains(key, StringComparer.Ordinal)) ||
+            // A multiplicity policy must refer to a separately priced member;
+            // repeated members of a bundle are deliberately unresolved.
+            (policy.MultiplicityPremiums ?? []).Any(x =>
+                x is null ||
+                string.IsNullOrWhiteSpace(x.Id) ||
+                string.IsNullOrWhiteSpace(x.MemberKey) ||
+                x.PerAdditionalInstanceLoad < 0 || x.PerPairLoad < 0 ||
+                x.PerAdditionalInstanceLoad == 0 && x.PerPairLoad == 0 ||
+                !policy.Prices.Any(price =>
+                    price.MemberKeys.Count == 1 &&
+                    price.MemberKeys[0] == x.MemberKey)) ||
+            (policy.MultiplicityPremiums ?? []).Select(x => x.MemberKey)
+                .Distinct(StringComparer.Ordinal).Count() !=
+                (policy.MultiplicityPremiums?.Count ?? 0) ||
+            (policy.MultiplicityPremiums ?? []).Select(x => x.Id)
+                .Concat(policy.InteractionPrices?.Select(x => x.Id) ?? [])
+                .Concat(policy.Prices.Select(x => x.Id))
+                .Distinct(StringComparer.Ordinal).Count() !=
+                (policy.MultiplicityPremiums?.Count ?? 0) +
+                (policy.InteractionPrices?.Count ?? 0) + policy.Prices.Count)
             return Finish("invalid-policy", policy.Revision, policy.Allowance,
                 null, [], ["allocation-policy-malformed-or-overlapping"]);
 
-        // A configured policy may be tried against an incomplete construction
-        // without declaring that missing grants are free. Such a preview is
-        // explicitly incomplete regardless of the hypothetical cost result.
+        // Incomplete construction cannot become affordable by omitting
+        // unresolved grants. This holds for previews and enforced creation.
         if (result.Status != NativeOriginConstructionStatus.Authorized)
             issues.Add("origin-not-authorized-for-allocation");
         // Explicit cost data does not turn a custom or unrecognized payload
@@ -98,12 +208,26 @@ public static class NativeOriginAllocationPreview
             x.UnlockLevel is null || x.Key.StartsWith("unknown:", StringComparison.Ordinal)))
             issues.Add("allocation-definition-unresolved:" + component.Key + ":" +
                 component.GrantId);
+        var unsupported = grants.Where(g => g.Identity.Kind == NativeOriginCharacteristicKind.Trait &&
+                g.Identity.MechanicalDefinitionId is { } id &&
+                catalog.TryGetById(id, out var entity) && entity?.Category == "origin-trait" &&
+                entity.Definition.TryGetProperty("trait", out var canonical) &&
+                (!NativeOriginBiologicalTraitShape.IsRecognized(canonical) ||
+                 creationScope && (g.EffectiveValue is not { } actual ||
+                     !NativeOriginBiologicalTraitShape.IsRecognized(actual))))
+            .Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
+        foreach (var id in unsupported)
+            issues.Add("allocation-mechanic-unsupported:" + id);
 
         var candidates = result.EvaluatedProposal.Candidates
             .GroupBy(x => x.Id, StringComparer.Ordinal)
             .ToDictionary(x => x.Key, x => x.First(), StringComparer.Ordinal);
         var assigned = new Dictionary<string, string>(StringComparer.Ordinal);
+        var selectedConfigurations = new Dictionary<string, string>(
+            StringComparer.Ordinal);
+        var grantsById = grants.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var charges = new List<NativeOriginAllocationCharge>();
+        var ambiguousConfiguration = false;
 
         foreach (var entry in policy.Prices.OrderBy(x => x.Id,
             StringComparer.Ordinal))
@@ -129,10 +253,7 @@ public static class NativeOriginAllocationPreview
                     issues.Add("allocation-bundle-source-mismatch:" + entry.Id);
                     continue;
                 }
-                foreach (var component in members)
-                    assigned.Add(component.GrantId, entry.Id);
-                charges.Add(new(entry.Id, entry.Load,
-                    members.Select(x => x.GrantId).ToArray(), entry.MemberKeys));
+                Price(entry, members);
                 continue;
             }
 
@@ -140,11 +261,38 @@ public static class NativeOriginAllocationPreview
             // trait remain two possible benefits; don't count donor evidence
             // twice, but also don't treat independently kept benefits as free.
             foreach (var component in groups[0])
+                Price(entry, [component]);
+        }
+
+        void Price(NativeOriginAllocationPrice entry,
+            IReadOnlyList<NativeOriginAllocationComponent> members)
+        {
+            if (members.Any(x => unsupported.Contains(x.GrantId)))
+                return;
+            var actual = members.ToDictionary(x => x.Key,
+                x => grantsById[x.GrantId], StringComparer.Ordinal);
+            var chosen = NativeOriginAllocationPriceResolver.Select(
+                catalog, entry, actual);
+            if (chosen.Ambiguous)
             {
-                assigned.Add(component.GrantId, entry.Id);
-                charges.Add(new(entry.Id, entry.Load, [component.GrantId],
-                    [component.Key]));
+                ambiguousConfiguration = true;
+                issues.Add("allocation-configuration-ambiguous:" + entry.Id);
+                return;
             }
+            if (chosen.Load is not int load)
+            {
+                issues.Add("allocation-configuration-unpriced:" + entry.Id + ":" +
+                    string.Join(",", members.Select(x => x.GrantId)));
+                return;
+            }
+            foreach (var member in members)
+            {
+                assigned.Add(member.GrantId, entry.Id);
+                if (chosen.ConfigurationId is not null)
+                    selectedConfigurations.Add(member.GrantId, chosen.ConfigurationId);
+            }
+            charges.Add(new(entry.Id, load, members.Select(x => x.GrantId).ToArray(),
+                members.Select(x => x.Key).ToArray(), chosen.ConfigurationId));
         }
 
         foreach (var component in components.Where(x =>
@@ -152,12 +300,65 @@ public static class NativeOriginAllocationPreview
             issues.Add("allocation-load-unpriced:" + component.Key + ":" +
                 component.GrantId);
 
+        // A multiplicity premium counts *effective grants*, not candidate
+        // offers or latent genes. Each instance has already received its own
+        // configured base charge, and selection order can not change the cost.
+        // For N occurrences: (N-1)*extra + N*(N-1)/2*pairwise.
+        // Pairwise pricing permits increasing marginal costs without a hard
+        // supported-count ceiling or an unbounded preauthored tier table.
+        var multiplicityOverflow = false;
+        foreach (var premium in (policy.MultiplicityPremiums ?? [])
+            .OrderBy(x => x.Id, StringComparer.Ordinal))
+        {
+            var members = components.Where(x => x.Key == premium.MemberKey)
+                .OrderBy(x => x.GrantId, StringComparer.Ordinal).ToArray();
+            if (members.Length < 2 ||
+                members.Any(x => !assigned.ContainsKey(x.GrantId) ||
+                    unsupported.Contains(x.GrantId)))
+                continue;
+            long count = members.Length;
+            long extra = (count - 1) * premium.PerAdditionalInstanceLoad +
+                count * (count - 1) / 2 * premium.PerPairLoad;
+            if (extra > int.MaxValue)
+            {
+                multiplicityOverflow = true;
+                issues.Add("allocation-multiplicity-overflow:" + premium.Id);
+                continue;
+            }
+            if (extra > 0)
+                charges.Add(new(premium.Id, (int)extra,
+                    members.Select(x => x.GrantId).ToArray(), [premium.MemberKey]));
+        }
+
+        // Interaction premiums are additive and explicitly authored. Every
+        // required mechanic must already be present as an effective grant.
+        // The source need not be the same contributor, unlike inseparable
+        // same-lineage bundles. No latent instance triggers an interaction.
+        foreach (var interaction in (policy.InteractionPrices ?? [])
+            .OrderBy(x => x.Id, StringComparer.Ordinal))
+        {
+            var members = interaction.RequiredKeys.Select(key => components
+                .Where(component => component.Key == key &&
+                    !unsupported.Contains(component.GrantId)).ToArray()).ToArray();
+            if (members.Any(group => group.Length == 0))
+                continue;
+            charges.Add(new(interaction.Id, interaction.Load,
+                members.SelectMany(group => group.Select(x => x.GrantId))
+                    .Distinct(StringComparer.Ordinal)
+                    .OrderBy(x => x, StringComparer.Ordinal).ToArray(),
+                interaction.RequiredKeys));
+        }
+
         var checkedComponents = components.Select(x =>
             x with
             {
-                AssignedPriceId = assigned.GetValueOrDefault(x.GrantId)
+                AssignedPriceId = assigned.GetValueOrDefault(x.GrantId),
+                AssignedConfigurationId = selectedConfigurations.GetValueOrDefault(x.GrantId)
             }).ToArray();
 
+        if (ambiguousConfiguration || multiplicityOverflow)
+            return Finish("invalid-policy", policy.Revision, policy.Allowance,
+                null, charges, issues, checkedComponents);
         if (issues.Count > 0)
             return Finish("unresolved", policy.Revision, policy.Allowance,
                 null, charges, issues, checkedComponents);
@@ -179,7 +380,8 @@ public static class NativeOriginAllocationPreview
             IReadOnlyList<string> errors,
             IReadOnlyList<NativeOriginAllocationComponent>? included = null) =>
             new(status, revision, allowance, total, included ?? components,
-                charges, errors.OrderBy(x => x, StringComparer.Ordinal).ToArray());
+                charges, errors.OrderBy(x => x, StringComparer.Ordinal).ToArray(),
+                PreviewOnly: !creationScope);
     }
 
     private static string Key(NativeOriginEffectiveGrant grant) =>
@@ -206,10 +408,7 @@ public static class NativeOriginAllocationPreview
             !trait.Definition.TryGetProperty("trait", out var definition) ||
             definition.ValueKind != JsonValueKind.Object)
             return null;
-        if (!definition.TryGetProperty("requiredCharacterLevel", out var level))
-            return 1;
-        return level.ValueKind == JsonValueKind.Number &&
-            level.TryGetInt32(out var value) && value >= 1 ? value : null;
+        return NativeOriginUnlockLevel.Read(definition);
     }
 
     private static bool SharesContributor(
