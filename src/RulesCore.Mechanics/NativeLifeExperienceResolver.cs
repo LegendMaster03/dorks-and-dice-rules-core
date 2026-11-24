@@ -30,6 +30,9 @@ public sealed record NativeLifeExperienceItemIntent(string Key, string Name, int
     string? VerifiedItemId = null);
 public sealed record NativeLifeExperienceCurrency(string SourceId, string OccurrenceId,
     string Currency, int Quantity);
+public sealed record NativeLifeExperienceEquipmentReplacement(
+    NativeEquipmentQualificationProvenance Provenance, string OriginalQualificationId,
+    string ReplacementQualificationId);
 
 /// <summary>
 /// The host verifies a real ordinary-inventory definition against the complete
@@ -60,6 +63,7 @@ public sealed record NativeLifeExperienceEarnedProjection(
     IReadOnlyList<NativeLifeExperienceGrant> Grants,
     IReadOnlyList<NativeCompetencyTrainingGrant> CompetencyGrants,
     NativeEquipmentQualificationProjection Equipment,
+    IReadOnlyList<NativeLifeExperienceEquipmentReplacement> EquipmentReplacements,
     IReadOnlyList<NativeLifeExperienceItemIntent> StartingItems,
     IReadOnlyList<NativeLifeExperienceCurrency> Currency);
 
@@ -69,6 +73,7 @@ public sealed record NativeLifeExperienceResult(
     IReadOnlyList<NativeLifeExperienceSelectedPath> SelectedPaths,
     IReadOnlyList<NativeLifeExperienceGrant> CandidateGrants,
     NativeEquipmentQualificationProjection? CandidateEquipment,
+    IReadOnlyList<NativeLifeExperienceEquipmentReplacement> EquipmentReplacements,
     IReadOnlyList<NativeLifeExperienceItemIntent> StartingItems,
     IReadOnlyList<NativeLifeExperienceCurrency> Currency,
     IReadOnlyList<NativeIssue> Issues,
@@ -100,6 +105,7 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
         var grants = new List<NativeLifeExperienceGrant>();
         var items = new List<NativeLifeExperienceItemIntent>();
         var currency = new List<NativeLifeExperienceCurrency>();
+        var equipmentReplacements = new List<NativeLifeExperienceEquipmentReplacement>();
         var issues = new List<NativeIssue>();
         var seenChoices = new HashSet<string>(StringComparer.Ordinal);
         var seenItems = new HashSet<string>(StringComparer.Ordinal);
@@ -126,9 +132,10 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
                     grants.Where(grant => grant.Kind == "competency-training")
                         .Select(grant => new NativeCompetencyTrainingGrant(grant.SourceId,
                             CompetencyOccurrence(grant), grant.TargetId, grant.Ranks, grant.Proficient)).ToArray(),
-                    equipment, items.ToArray(), currency.ToArray()) : null;
+                    equipment, equipmentReplacements.ToArray(), items.ToArray(), currency.ToArray()) : null;
             return new(status, sources.ToArray(), choices.ToArray(), selectedPaths.ToArray(),
                 invalid ? [] : grants.ToArray(), invalid ? null : equipment,
+                invalid ? [] : equipmentReplacements.ToArray(),
                 invalid ? [] : items.ToArray(), invalid ? [] : currency.ToArray(),
                 issues.ToArray(), earned);
         }
@@ -256,12 +263,49 @@ public sealed class NativeLifeExperienceResolver(NativeCatalogSnapshot catalog)
                 grants[index] = grant with { TargetId = alternative[0], OriginalTargetId = grant.TargetId };
             }
         }
-        // Do not invent a tool-kind membership policy for duplicate tools.
-        // They stay separate from Competencies and retain source provenance.
-        foreach (var qualification in equipment.Qualifications.Where(q =>
-            q.EquipmentCategory == "tool" && q.Provenance.Count > 1))
-            Unavailable("duplicate-tool-alternative-required", qualification.QualificationId,
-                "Independent duplicate tool proficiency needs an authorized same-kind alternative.");
+        // The approved specific-tool replacement is an Origin selection,
+        // not a change to binary equipment coverage. Ask the common resolver
+        // which canonical individual tool types are not already covered.
+        // Broad/narrow weapon overlap never produces a replacement.
+        if (equipment.Status == "resolved")
+        {
+            var qualifications = equipment.Qualifications.ToDictionary(q => q.QualificationId,
+                q => q, StringComparer.Ordinal);
+            var eligibleTools = All("equipment-type").Where(entity =>
+                Text(entity.Definition, "equipmentCategory") == "tool" &&
+                equipmentResolver.Covers(equipment, entity.Id).Proficient == false)
+                .Select(entity => entity.Id).ToHashSet(StringComparer.Ordinal);
+            foreach (var qualification in equipment.Qualifications.Where(q =>
+                q.EquipmentCategory == "tool" && q.Provenance.Count > 1 &&
+                catalog.TryGetById(q.QualificationId, out var type) && type?.Category == "equipment-type"))
+            {
+                var provenance = qualification.Provenance
+                    .OrderBy(item => item.SourceId, StringComparer.Ordinal)
+                    .ThenBy(item => item.GrantId, StringComparer.Ordinal).ToArray();
+                var retained = new List<NativeEquipmentQualificationProvenance> { provenance[0] };
+                foreach (var extra in provenance.Skip(1))
+                {
+                    var key = extra.SourceId + "/equipment/" + extra.GrantId +
+                        "/duplicate-tool/" + qualification.QualificationId;
+                    var alternative = Select(new(key, "duplicate-tool", 1,
+                        eligibleTools.OrderBy(id => id, StringComparer.Ordinal).ToArray()));
+                    if (alternative is not { Count: 1 })
+                    {
+                        retained.Add(extra);
+                        continue;
+                    }
+                    var target = alternative[0];
+                    eligibleTools.Remove(target);
+                    qualifications.Add(target, new(target, "tool", [extra]));
+                    equipmentReplacements.Add(new(extra, qualification.QualificationId, target));
+                }
+                qualifications[qualification.QualificationId] = qualification with { Provenance = retained.ToArray() };
+            }
+            equipment = equipment with
+            {
+                Qualifications = qualifications.Values.OrderBy(q => q.QualificationId, StringComparer.Ordinal).ToArray()
+            };
+        }
 
         foreach (var source in sources)
         {

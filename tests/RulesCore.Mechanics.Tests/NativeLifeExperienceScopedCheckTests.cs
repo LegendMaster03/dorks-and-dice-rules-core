@@ -99,6 +99,98 @@ public sealed class NativeLifeExperienceScopedCheckTests
     }
 
     [Fact]
+    public void EveryNativeSelectableLifeExperienceCanBeDiscoveredWithoutInventingGrants()
+    {
+        var catalog = Catalog();
+        var resolver = new NativeLifeExperienceResolver(catalog);
+        var backgrounds = catalog.Search(category: "background", offset: 0, limit: 100).Items
+            .Where(entity => entity.Definition.GetProperty("selectable").GetBoolean()).ToArray();
+        var upbringings = catalog.Search(category: "upbringing", offset: 0, limit: 100).Items
+            .Where(entity => entity.Definition.GetProperty("selectable").GetBoolean()).ToArray();
+        Assert.NotEmpty(backgrounds);
+        Assert.NotEmpty(upbringings);
+        // Each source is discovered against the active catalog, without
+        // inventing a completed selection or requiring proof of inventory.
+        foreach (var background in backgrounds)
+        {
+            var result = resolver.Resolve(new("upbringing.elf.wood", background.Id));
+            Assert.NotEqual("invalid", result.Status);
+            Assert.Contains(result.Sources, source => source.SourceId == background.Id);
+            Assert.NotEmpty(result.StartingItems);
+            Assert.Null(result.EarnedProjection);
+        }
+        foreach (var upbringing in upbringings)
+        {
+            var result = resolver.Resolve(new(upbringing.Id, "background.folk-hero"));
+            Assert.NotEqual("invalid", result.Status);
+            Assert.Contains(result.Sources, source => source.SourceId == upbringing.Id && !source.Inherited);
+            Assert.Equal(result.Sources.Count, result.Sources.Select(source => source.SourceId).Distinct().Count());
+            Assert.Null(result.EarnedProjection);
+        }
+    }
+
+    [Fact]
+    public void DuplicateSpecificToolsRetainExactSourceProvenanceAndRequireADistinctTool()
+    {
+        var resolver = new NativeLifeExperienceResolver(Catalog());
+        var selections = new Dictionary<string, IReadOnlyList<string>>
+        {
+            ["upbringing.street-raised/street-raised-formative-skill"] = ["skill.perception"],
+            ["upbringing.street-raised/street-raised-community-competency"] = ["thieves-tools"],
+            ["background.spy/spy-field-skills"] = ["skill.deception", "skill.stealth"],
+            ["background.spy/spy-tradecraft-competency"] = ["thieves-tools"]
+        };
+        var proposal = new NativeLifeExperienceProposal("upbringing.street-raised", "background.spy", selections);
+        var discovery = resolver.Resolve(proposal);
+        var choice = Assert.Single(discovery.Choices, c => c.Kind == "duplicate-tool");
+        Assert.DoesNotContain("equipment.tool.thieves-tools", choice.OptionIds);
+        Assert.Contains("equipment.tool.flute", choice.OptionIds);
+        Assert.DoesNotContain(choice.OptionIds, id => id.StartsWith("equipment.group.", StringComparison.Ordinal));
+        selections[choice.Key] = ["equipment.tool.flute"];
+        var result = resolver.Resolve(proposal);
+        Assert.NotEqual("invalid", result.Status);
+        var replacement = Assert.Single(result.EquipmentReplacements);
+        Assert.Equal("equipment.tool.thieves-tools", replacement.OriginalQualificationId);
+        Assert.Equal("equipment.tool.flute", replacement.ReplacementQualificationId);
+        var qualifications = result.CandidateEquipment!.Qualifications;
+        Assert.Equal(2, qualifications.Count);
+        var original = Assert.Single(qualifications, item => item.QualificationId == "equipment.tool.thieves-tools");
+        Assert.Single(original.Provenance);
+        var alternate = Assert.Single(qualifications, item => item.QualificationId == "equipment.tool.flute");
+        Assert.Equal(replacement.Provenance, Assert.Single(alternate.Provenance));
+        Assert.DoesNotContain(result.CandidateGrants, grant => grant.Kind == "competency-training");
+        Assert.Null(result.EarnedProjection);
+
+        selections[choice.Key] = ["equipment.tool.thieves-tools"];
+        Assert.Equal("invalid", resolver.Resolve(proposal).Status);
+    }
+
+    [Theory]
+    [InlineData("calligraphy", "competency.calligraphy")]
+    [InlineData("painting", "competency.painting")]
+    [InlineData("cooking", "competency.cooking")]
+    public void AristocraticCompetencyBranchesDoNotLeakGamingSetQualification(string selected, string expected)
+    {
+        var resolver = new NativeLifeExperienceResolver(Catalog());
+        var selections = new Dictionary<string, IReadOnlyList<string>>
+        {
+            ["upbringing.aristocratic/aristocratic-formative-skill"] = ["skill.history"],
+            ["upbringing.aristocratic/aristocratic-formative-competency"] = [selected]
+        };
+        var proposal = new NativeLifeExperienceProposal("upbringing.aristocratic", "background.folk-hero", selections);
+        var result = resolver.Resolve(proposal);
+        Assert.NotEqual("invalid", result.Status);
+        Assert.DoesNotContain(result.Choices, choice => choice.Key.EndsWith("/aristocratic-gaming-set"));
+        Assert.Empty(result.CandidateEquipment!.Qualifications);
+        var grant = Assert.Single(result.CandidateGrants, grant => grant.Kind == "competency-training");
+        Assert.Equal(expected, grant.TargetId);
+        Assert.True(grant.Proficient);
+        Assert.Equal(0, grant.Ranks);
+        selections["upbringing.aristocratic/equipment/aristocratic-gaming-set"] = ["equipment.tool.flute"];
+        Assert.Equal("invalid", resolver.Resolve(proposal).Status);
+    }
+
+    [Fact]
     public void LifeExperienceDuplicateSkillChoiceIsSourceQualifiedAndNeverAnExtraRank()
     {
         var resolver = new NativeLifeExperienceResolver(Catalog());
