@@ -52,25 +52,33 @@ public static class NativePublicEndpoints
             return await next(invocation);
         });
 
-        group.MapGet("", (HttpRequest request, NativeCatalogStore store, NativePublicDistributionPolicy policy) =>
+        group.MapGet("", (HttpRequest request, NativeCatalogStore store,
+            NativeCatalogRegistry registry, NativePublicDistributionPolicy policy) =>
         {
-            var snapshot = store.Snapshot;
-            if (snapshot is null) return Unavailable();
+            // Existing Site tickets do not carry per-ruleset entitlements.
+            // Do not extend their default-catalog authority to new packages.
+            var snapshots = authenticated
+                ? new[] { store.Snapshot }.OfType<NativeCatalogSnapshot>().ToArray()
+                : registry.RulesetIds.OrderBy(id => id, StringComparer.Ordinal)
+                    .Select(id => registry.GetStore(id).Snapshot)
+                    .OfType<NativeCatalogSnapshot>().ToArray();
+            if (snapshots.Length == 0) return Unavailable();
             if (request.Query.Count != 0) return Results.BadRequest(new { error = "invalid_query" });
-            PublicRulesetSummary[] visible = (authenticated || policy.Allows(snapshot))
-                ? [new PublicRulesetSummary(snapshot.RulesetId, snapshot.Count, snapshot.Fingerprint,
-                    new PublicRulesetCapabilities(true, false))]
-                : [];
+            var visible = snapshots.Where(snapshot => authenticated || policy.Allows(snapshot))
+                .Select(snapshot => new PublicRulesetSummary(snapshot.RulesetId, snapshot.Count,
+                    snapshot.Fingerprint, new PublicRulesetCapabilities(true, false))).ToArray();
             return Results.Ok(new PublicRulesetsResponse(visible));
         });
 
         group.MapGet("/{rulesetId}/rules",
             (string rulesetId, HttpRequest request, NativeCatalogStore store,
+                NativeCatalogRegistry registry, RulesCoreSettings settings,
                 NativePublicDistributionPolicy policy) =>
         {
-            var snapshot = store.Snapshot;
-            if (snapshot is null) return Unavailable();
             if (!ValidRulesetId(rulesetId)) return InvalidId();
+            var snapshot = SelectSnapshot(rulesetId, authenticated, store, registry);
+            if (snapshot is null)
+                return rulesetId == settings.Ruleset.RulesetId ? Unavailable() : NotFound();
             if (!Matches(snapshot, policy, rulesetId, authenticated)) return NotFound();
 
             if (request.Query.Keys.Any(key => key is not ("q" or "category" or "limit" or "offset")) ||
@@ -92,12 +100,14 @@ public static class NativePublicEndpoints
 
         group.MapGet("/{rulesetId}/rules/{ruleId}",
             (string rulesetId, string ruleId, HttpRequest request, NativeCatalogStore store,
+                NativeCatalogRegistry registry, RulesCoreSettings settings,
                 NativePublicDistributionPolicy policy) =>
         {
-            var snapshot = store.Snapshot;
-            if (snapshot is null) return Unavailable();
             if (!ValidRulesetId(rulesetId) || ruleId.Length > 160 || !SafeRuleId.IsMatch(ruleId))
                 return InvalidId();
+            var snapshot = SelectSnapshot(rulesetId, authenticated, store, registry);
+            if (snapshot is null)
+                return rulesetId == settings.Ruleset.RulesetId ? Unavailable() : NotFound();
             if (!Matches(snapshot, policy, rulesetId, authenticated)) return NotFound();
             if (request.Query.Count != 0) return Results.BadRequest(new { error = "invalid_query" });
             if (!snapshot.TryGetById(ruleId, out var rule) || rule is null)
@@ -105,6 +115,14 @@ public static class NativePublicEndpoints
             return Results.Ok(new PublicRuleResponse(snapshot.RulesetId, snapshot.Fingerprint,
                 new PublicRuleDetail(rule.Id, rule.Name, rule.Category, rule.Definition)));
         });
+    }
+
+    private static NativeCatalogSnapshot? SelectSnapshot(string rulesetId, bool authenticated,
+        NativeCatalogStore defaultStore, NativeCatalogRegistry registry)
+    {
+        if (authenticated)
+            return defaultStore.Snapshot;
+        return registry.TryGetStore(rulesetId, out var store) ? store!.Snapshot : null;
     }
 
     private static bool Matches(NativeCatalogSnapshot snapshot, NativePublicDistributionPolicy policy,
