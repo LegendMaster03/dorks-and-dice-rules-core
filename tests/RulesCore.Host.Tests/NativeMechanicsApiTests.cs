@@ -57,7 +57,8 @@ public sealed class NativeMechanicsApiTests
             INativeConstructHostContextualPowerAuthorityProvider? contextualPowerAuthority = null,
             INativeConstructHostSoulCustodyAuthorityProvider? soulCustodyAuthority = null,
             INativeConstructHostSustenanceAuthorityProvider? sustenanceAuthority = null,
-            INativeConstructHostModificationAuthorityProvider? modificationAuthority = null)
+            INativeConstructHostModificationAuthorityProvider? modificationAuthority = null,
+            INativeCharacterHostTrainingAuthorityProvider? trainingAuthority = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -231,6 +232,8 @@ public sealed class NativeMechanicsApiTests
                     services.AddSingleton(sustenanceAuthority);
                 if (modificationAuthority is not null)
                     services.AddSingleton(modificationAuthority);
+                if (trainingAuthority is not null)
+                    services.AddSingleton(trainingAuthority);
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -2349,6 +2352,83 @@ public sealed class NativeMechanicsApiTests
         };
         using var overCapacity = await Send();
         Assert.Equal(HttpStatusCode.UnprocessableEntity, overCapacity.StatusCode);
+    }
+
+    private sealed class CharacterTrainingTestAuthority : INativeCharacterHostTrainingAuthorityProvider
+    {
+        public VerifiedCharacterTrainingAuthorization? Stored { get; set; }
+        public Task<VerifiedCharacterTrainingAuthorization?> VerifyAsync(Guid actorId,
+            NativeCharacterTrainingEndpoints.Request request, CancellationToken cancellationToken) =>
+            Task.FromResult(actorId == SupernaturalActor ? Stored : null);
+    }
+
+    [Fact]
+    public async Task VerifiedCharacterTrainingCombinesLifeAndIndependentSources()
+    {
+        var provider = new CharacterTrainingTestAuthority();
+        var lifeAuthority = new VerifiedLifeExperienceTestAuthority();
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true, dm: true, trainingAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var proposal = new NativeLifeExperienceProposal("upbringing.elf.wood", "background.entertainer",
+            new Dictionary<string, IReadOnlyList<string>>
+            {
+                ["upbringing.elf.general/cultural-training"] = ["skill.survival"],
+                ["background.entertainer/entertainer-performance-specialty"] = ["skill.acrobatics"],
+                ["background.entertainer/entertainer-performance-method"] = ["disguise-kit"]
+            }, new Dictionary<string, string> { ["background.entertainer/item/0"] = "fixture.disguise-kit" });
+        var life = await lifeAuthority.VerifyAsync(SupernaturalActor,
+            new(SupernaturalCharacter, 1, catalog.RulesetId, catalog.Fingerprint, proposal), default);
+        Assert.NotNull(life);
+        var primary = new NativeCharacterRequest(catalog.RulesetId, catalog.Fingerprint,
+            new Dictionary<string, int> { ["strength"] = 10, ["dexterity"] = 10, ["constitution"] = 10,
+                ["intelligence"] = 10, ["wisdom"] = 10, ["charisma"] = 10 },
+            [new("class.rogue", 1, "class-1")]);
+        const string endpoint = "/api/mechanics/v1/characters/training/resolve";
+        async Task<HttpResponseMessage> Send(long revision = 2)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint, JsonContent.Create(new
+            {
+                characterId = SupernaturalCharacter, originRevision = 1, characterRevision = revision,
+                rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint
+            }));
+            return await fixture.Client.SendAsync(request);
+        }
+        using var missing = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, missing.StatusCode);
+        provider.Stored = new(SupernaturalCharacter, 1, 2, primary, proposal, life!.Authorization,
+            [new("class.rogue", "class-skill-1", "skill.survival")],
+            [new("class.rogue", "class-competency-1", "competency.disguise", Proficient: true)],
+            new Dictionary<string, string>(), new Dictionary<string, string>(),
+            NativeCompetencyDuplicateProficiencyPolicy.AddRank);
+        using var stale = await Send(1);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, stale.StatusCode);
+        using var pending = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, pending.StatusCode);
+        var pendingBody = await pending.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("needs-choices", pendingBody.GetProperty("result").GetProperty("status").GetString());
+        provider.Stored = provider.Stored with
+        {
+            SkillAlternatives = new Dictionary<string, string> { ["class-skill-1"] = "skill.stealth" }
+        };
+        using var completed = await Send();
+        var raw = await completed.Content.ReadAsStringAsync();
+        Assert.True(completed.StatusCode == HttpStatusCode.OK, raw);
+        using var json = JsonDocument.Parse(raw);
+        var result = json.RootElement.GetProperty("result");
+        Assert.Equal("skill.stealth", Assert.Single(result.GetProperty("skillReplacements")
+            .EnumerateArray()).GetProperty("replacementSkillId").GetString());
+        var disguise = result.GetProperty("competencies").GetProperty("training").GetProperty("competency.disguise");
+        Assert.True(disguise.GetProperty("proficient").GetBoolean());
+        Assert.Equal(1, disguise.GetProperty("ranks").GetInt32());
+        Assert.False(json.RootElement.GetProperty("committed").GetBoolean());
+        provider.Stored = provider.Stored with
+        {
+            SkillAlternatives = new Dictionary<string, string> { ["class-skill-1"] = "skill.survival" }
+        };
+        using var duplicate = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, duplicate.StatusCode);
     }
 
     [Fact]

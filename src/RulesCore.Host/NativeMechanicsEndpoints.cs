@@ -65,6 +65,7 @@ public static class NativeMechanicsEndpoints
             group.MapVerifiedConstructSustenancePlan();
             group.MapVerifiedConstructModificationPlan();
             group.MapVerifiedLifeExperiencePlan();
+            group.MapVerifiedCharacterTraining();
             group.MapVerifiedScopedSkillCheck();
             group.MapVerifiedOriginDirectChoices();
             group.MapVerifiedOriginCantripRest();
@@ -109,6 +110,7 @@ public static class NativeMechanicsEndpoints
                     constructConfigurationDiscovery = true,
                     lifeExperiencePreview = "source-qualified-selection",
                     verifiedLifeExperiencePlanning = privateTunnel ? "unavailable" : "host-authority-required",
+                    verifiedCharacterTraining = privateTunnel ? "unavailable" : "host-authority-required",
                     verifiedScopedSkillChecks = privateTunnel ? "unavailable" : "host-authority-required",
                     biologicalAllocationPreview = NativeOriginFirstPartyBiologicalPricing.Revision,
                     originPersistence = false, originDmAdjudication = false,
