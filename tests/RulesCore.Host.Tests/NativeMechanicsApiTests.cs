@@ -48,7 +48,10 @@ public sealed class NativeMechanicsApiTests
             INativeOriginHostBiologicalAuthorityProvider? biologicalAuthority = null,
             INativeOriginHostReconstructionAuthorityProvider? reconstructionAuthority = null,
             INativeLifeExperienceHostAuthorityProvider? lifeExperienceAuthority = null,
-            INativeScopedSkillCheckHostAuthorityProvider? scopedCheckAuthority = null)
+            INativeScopedSkillCheckHostAuthorityProvider? scopedCheckAuthority = null,
+            INativeOriginHostFeatChoiceAuthorityProvider? featChoiceAuthority = null,
+            INativeOriginHostCantripRestAuthorityProvider? cantripRestAuthority = null,
+            bool syntheticOpenChoiceCatalog = false)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -142,11 +145,54 @@ public sealed class NativeMechanicsApiTests
                   {"id":"competency.alchemy","name":"Alchemy","kind":"competency"}
                 ]}
                 """);
+            // Use an isolated copy of the real native package for synthetic
+            // future-catalog tests. No fixture spell or feat enters production.
+            if (syntheticOpenChoiceCatalog)
+            {
+                if (!realNativeContent) throw new InvalidOperationException("Native source fixture required.");
+                var sourceNative = Path.Combine(NativeContentRoot(), "first-party-001", "native");
+                var fixtureNative = Path.Combine(package, "native");
+                Directory.Delete(fixtureNative, recursive: true);
+                foreach (var file in Directory.EnumerateFiles(sourceNative, "*.json", SearchOption.AllDirectories))
+                {
+                    var target = Path.Combine(fixtureNative, Path.GetRelativePath(sourceNative, file));
+                    Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+                    File.Copy(file, target);
+                }
+                File.WriteAllText(Path.Combine(fixtureNative, "synthetic-open-choice-catalog.json"), """
+                    [
+                      {"id":"spell.fixture-cantrip-a","kind":"spell","name":"Fixture Cantrip A",
+                       "level":0,"spellListIds":["wizard"]},
+                      {"id":"spell.fixture-cantrip-b","kind":"spell","name":"Fixture Cantrip B",
+                       "level":0,"spellListIds":["wizard"]},
+                      {"id":"spell.fixture-off-list","kind":"spell","name":"Fixture Off List",
+                       "level":0,"spellListIds":["cleric"]},
+                      {"id":"spell.fixture-leveled","kind":"spell","name":"Fixture Leveled",
+                       "level":1,"spellListIds":["wizard"]},
+                      {"id":"spell.fixture-unlisted","kind":"spell","name":"Fixture Unlisted","level":0},
+                      {"id":"spell.fixture-disabled","kind":"spell","name":"Fixture Disabled",
+                       "level":0,"spellListIds":["wizard"],"selectable":false},
+                      {"id":"spell.prestidigitation","kind":"spell","name":"Fixture Prestidigitation",
+                       "level":0,"spellListIds":["wizard"]},
+                      {"id":"feat.fixture-origin","kind":"feat","name":"Fixture Origin","featCategory":"origin"},
+                      {"id":"feat.fixture-general","kind":"feat","name":"Fixture General","featCategory":"general"},
+                      {"id":"feat.fixture-uncategorized","kind":"feat","name":"Fixture Uncategorized"},
+                      {"id":"feat.fixture-disabled","kind":"feat","name":"Fixture Disabled",
+                       "featCategory":"origin","selectable":false}
+                    ]
+                    """);
+                // Working-only entries are deliberately invisible to native discovery.
+                Directory.CreateDirectory(Path.Combine(package, "working"));
+                File.WriteAllText(Path.Combine(package, "working", "candidate.json"), """
+                    {"id":"spell.fixture-working","kind":"spell","name":"Working-only spell",
+                     "level":0,"spellListIds":["wizard"]}
+                    """);
+            }
             App = RulesCoreApplication.Create([], builder => {
                 builder.WebHost.UseUrls("http://127.0.0.1:0");
                 builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?> {
                     ["RulesCore:ApiSurface"] = surface,
-                    ["Rulesets:ContentRoot"] = realNativeContent ? NativeContentRoot() : _root,
+                    ["Rulesets:ContentRoot"] = realNativeContent && !syntheticOpenChoiceCatalog ? NativeContentRoot() : _root,
                     ["Rulesets:DefaultRuleset"] = "first-party-001",
                     ["ToolHost:BaseUrl"] = "https://site.test"
                 });
@@ -163,6 +209,10 @@ public sealed class NativeMechanicsApiTests
                     services.AddSingleton(lifeExperienceAuthority);
                 if (scopedCheckAuthority is not null)
                     services.AddSingleton(scopedCheckAuthority);
+                if (featChoiceAuthority is not null)
+                    services.AddSingleton(featChoiceAuthority);
+                if (cantripRestAuthority is not null)
+                    services.AddSingleton(cantripRestAuthority);
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -1254,6 +1304,236 @@ public sealed class NativeMechanicsApiTests
         Assert.False(body.GetProperty("committed").GetBoolean());
         Assert.Equal(HttpStatusCode.UnprocessableEntity, (await Send("forged", catalog.Fingerprint)).Item1);
         Assert.Equal(HttpStatusCode.Conflict, (await Send("fixture.stonework", "stale")).Item1);
+    }
+
+    private static NativeOriginProposal OpenChoiceProposal(NativeCatalogSnapshot catalog,
+        string speciesOrAncestry, string selectedOption)
+    {
+        var proposal = new NativeOriginProposal("fixture-open-choice-" + speciesOrAncestry,
+            NativeOriginIntent.Direct, new("rule.creature-origination", "biological"),
+            [], [], [], SelectedSpeciesId: speciesOrAncestry.StartsWith("species.") ? speciesOrAncestry : null,
+            SelectedAncestryId: speciesOrAncestry.StartsWith("ancestry.") ? speciesOrAncestry : null);
+        var candidates = new NativeOriginSourceDeconstructor(catalog).Deconstruct(proposal).Proposal.Candidates;
+        var manifestations = new List<NativeOriginManifestation>();
+        foreach (var candidate in candidates.Where(c => c.SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
+            c.RequiredChoices is { Count: > 0 }))
+        {
+            var selected = candidate.RequiredChoices!.Select(requirement => new NativeOriginChoiceSelection(
+                requirement.Id, [requirement.OptionCatalogId switch
+                {
+                    "any-native-skill" => "skill.intimidation",
+                    "feat:origin" or "spell:wizard" => selectedOption,
+                    _ => requirement.Id == "size" ? "medium" : "wisdom"
+                }])).ToArray();
+            manifestations.Add(new("selected:" + candidate.Id, candidate.Id, Choices: selected));
+        }
+        return proposal with { Manifestations = manifestations };
+    }
+
+    private sealed class OpenChoiceTestFeatAuthority :
+        INativeOriginHostFeatChoiceAuthorityProvider, INativeOriginFeatChoiceAuthority
+    {
+        public bool Eligible { get; set; } = true;
+        public Task<VerifiedOriginFeatChoiceAuthority?> VerifyAsync(Guid actorId,
+            NativeOriginApiEndpoints.VerifiedDirectChoiceRequest request, CancellationToken cancellationToken)
+        {
+            VerifiedOriginFeatChoiceAuthority? result = null;
+            if (actorId == SupernaturalActor && request.CharacterId == SupernaturalCharacter &&
+                request.DraftRevision == 1 && request.Proposal.SelectedSpeciesId == "species.human")
+                result = new(request.CharacterId, request.DraftRevision, this);
+            return Task.FromResult(result);
+        }
+        public bool Authorizes(NativeOriginCandidate candidate, string featId) =>
+            Eligible && featId == "feat.fixture-origin" &&
+            candidate.Identity.MechanicalDefinitionId == "trait.versatile";
+    }
+
+    private sealed class OpenChoiceTestRestAuthority : INativeOriginHostCantripRestAuthorityProvider
+    {
+        public VerifiedOriginCantripRestAuthority? Stored { get; set; }
+        public bool Consumed { get; set; }
+        public Task<VerifiedOriginCantripRestAuthority?> VerifyAsync(Guid actorId,
+            NativeOriginApiEndpoints.CantripRestRequest request, CancellationToken cancellationToken) =>
+            Task.FromResult(actorId == SupernaturalActor && !Consumed && Stored is not null &&
+                request.CharacterId == Stored.CharacterId && request.RestEventId == Stored.RestEventId &&
+                request.OriginRevision == Stored.OriginRevision ? Stored : null);
+    }
+
+    [Fact]
+    public async Task OpenOriginCatalogDiscoveryDistinguishesUnpublishedCatalogsFromAvailableSkills()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true, realNativeContent: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        foreach (var (id, status, authority) in new[]
+        {
+            ("any-native-skill", "available", false),
+            ("spell:wizard", "catalog-unavailable", false),
+            ("feat:origin", "catalog-unavailable", true)
+        })
+        {
+            using var request = fixture.Authenticated(HttpMethod.Get,
+                "/api/mechanics/v1/origins/choice-catalog?fingerprint=" + catalog.Fingerprint +
+                "&catalogId=" + Uri.EscapeDataString(id));
+            using var response = await fixture.Client.SendAsync(request);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+            var choices = body.GetProperty("choices");
+            Assert.Equal(status, choices.GetProperty("status").GetString());
+            Assert.Equal(authority, choices.GetProperty("requiresCharacterAuthority").GetBoolean());
+            if (status == "catalog-unavailable") Assert.Equal(0, choices.GetProperty("options").GetArrayLength());
+        }
+        using var stale = fixture.Authenticated(HttpMethod.Get,
+            "/api/mechanics/v1/origins/choice-catalog?fingerprint=stale&catalogId=spell%3Awizard");
+        Assert.Equal(HttpStatusCode.Conflict, (await fixture.Client.SendAsync(stale)).StatusCode);
+    }
+
+    [Fact]
+    public async Task NativeOpenChoicesRequireExactMembershipAndIndependentFeatEligibility()
+    {
+        await using var fixture = new Fixture();
+        var authority = new OpenChoiceTestFeatAuthority();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true, realNativeContent: true,
+            dm: true, featChoiceAuthority: authority, syntheticOpenChoiceCatalog: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var spellOptions = NativeOriginChoiceCatalog.Discover(catalog, "spell:wizard");
+        Assert.Equal(new[] { "spell.fixture-cantrip-a", "spell.fixture-cantrip-b", "spell.prestidigitation" },
+            spellOptions.Options.Select(option => option.Id).ToArray());
+        Assert.Equal("feat.fixture-origin", Assert.Single(NativeOriginChoiceCatalog.Discover(catalog,
+            "feat:origin").Options).Id);
+        Assert.False(NativeOriginChoiceCatalog.IsMember(catalog, "spell:wizard", "spell.fixture-working"));
+        var human = OpenChoiceProposal(catalog, "species.human", "feat.fixture-origin");
+        var evaluator = new NativeOriginFirstPartyChoiceEvaluator(catalog);
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, evaluator.Evaluate(human).Status);
+
+        async Task<(HttpStatusCode Code, JsonElement Body)> Send(NativeOriginProposal proposal, long revision = 1)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post,
+                "/api/mechanics/v1/origins/direct/verified-preview", JsonContent.Create(new
+                {
+                    characterId = SupernaturalCharacter, draftRevision = revision,
+                    rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint, proposal
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            return (response.StatusCode, await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+        var (code, body) = await Send(human);
+        Assert.Equal(HttpStatusCode.OK, code);
+        var expected = evaluator.Evaluate(human, authority);
+        Assert.True(expected.Status == NativeOriginConstructionStatus.Authorized,
+            string.Join("; ", expected.Issues.Select(issue => issue.Code + ":" + issue.Detail)));
+        var result = body.GetProperty("result");
+        Assert.Empty(result.GetProperty("issues").EnumerateArray());
+        Assert.False(body.GetProperty("committed").GetBoolean());
+        var grant = Assert.Single(expected.Profile!.Underlying.InherentGrants,
+            item => item.Identity.MechanicalDefinitionId == "trait.versatile");
+        Assert.Equal("feat.fixture-origin", Assert.Single(Assert.Single(grant.ResolvedChoices!).SelectedOptionIds));
+        authority.Eligible = false;
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, evaluator.Evaluate(human, authority).Status);
+        authority.Eligible = true;
+        var wrong = OpenChoiceProposal(catalog, "species.human", "feat.fixture-general");
+        Assert.NotEqual(NativeOriginConstructionStatus.Authorized, evaluator.Evaluate(wrong, authority).Status);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, (await Send(human, 2)).Code);
+
+        foreach (var wrongSpell in new[] { "spell.fixture-off-list", "spell.fixture-leveled",
+            "spell.fixture-unlisted", "spell.fixture-disabled", "spell.fixture-working" })
+            Assert.NotEqual(NativeOriginConstructionStatus.Authorized,
+                evaluator.Evaluate(OpenChoiceProposal(catalog, "ancestry.elf.high", wrongSpell)).Status);
+        var elf = evaluator.Evaluate(OpenChoiceProposal(catalog, "ancestry.elf.high", "spell.fixture-cantrip-a"));
+        Assert.True(elf.Status == NativeOriginConstructionStatus.Authorized,
+            string.Join("; ", elf.Issues.Select(issue => issue.Code + ":" + issue.Detail)));
+        var course = NativeOriginInnateSpellProgressionProjector.Project(catalog, elf, 5);
+        Assert.Equal("resolved", course.Status);
+        var cantrip = Assert.Single(course.Spells, item => item.TraitId == "trait.arcane-cantrip");
+        Assert.Equal("fixture-cantrip-a", cantrip.SpellId);
+        Assert.Equal("wisdom", cantrip.SpellcastingAbility);
+        Assert.True(cantrip.AtWill);
+        Assert.False(cantrip.SlotCasting);
+        Assert.Null(cantrip.FreeUsesPerRecharge);
+
+        var learned = new NativeLifeExperienceResolver(catalog).Resolve(new("upbringing.gnome.rock", "background.charlatan",
+            new Dictionary<string, IReadOnlyList<string>> { ["upbringing.gnome.rock/prestidigitation"] = ["charisma"] }));
+        var learnedSpell = Assert.Single(learned.CandidateGrants, item => item.Kind == "learned-cantrip");
+        Assert.Equal("spell.prestidigitation", learnedSpell.TargetId);
+        Assert.Equal("charisma", learnedSpell.AuthoredEffect!.Value.GetProperty("spellcastingAbility").GetString());
+    }
+
+    [Fact]
+    public async Task VerifiedLongRestReplacesOnlyExistingCantripAndRecoversExistingPools()
+    {
+        await using var fixture = new Fixture();
+        var authority = new OpenChoiceTestRestAuthority();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true, realNativeContent: true,
+            dm: true, cantripRestAuthority: authority, syntheticOpenChoiceCatalog: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var proposal = OpenChoiceProposal(catalog, "ancestry.elf.high", "spell.fixture-cantrip-a");
+        var before = new NativeOriginFirstPartyChoiceEvaluator(catalog).Evaluate(proposal);
+        Assert.Equal(NativeOriginConstructionStatus.Authorized, before.Status);
+        var character = new NativeCharacterProjector(catalog).Project(new NativeCharacterRequest(
+            catalog.RulesetId, catalog.Fingerprint, new Dictionary<string, int>
+            {
+                ["strength"] = 10, ["dexterity"] = 12, ["constitution"] = 14,
+                ["intelligence"] = 8, ["wisdom"] = 15, ["charisma"] = 11
+            }, [new("class.warlock", 5, "fixture-warlock")]));
+        var view = NativeOriginInnateSpellProgressionProjector.ForCharacter(catalog, before, character);
+        Assert.Equal("resolved", view.Status);
+        var grantId = Assert.Single(view.Spells, spell => spell.TraitId == "trait.arcane-cantrip").GrantId;
+        var misty = Assert.Single(view.Spells, spell => spell.SpellId == "misty-step");
+        var boot = NativeOriginInnateSpellResourceLedger.Initialize(catalog, before, character);
+        Assert.Equal("resolved", boot.Status);
+        var spent = NativeOriginInnateSpellResourceLedger.Apply(catalog, before, character, boot.State!,
+            new(NativeOriginInnateSpellLedgerActionKind.SpendFreeCast, boot.State!.Revision, misty.GrantId));
+        Assert.Equal("resolved", spent.Status);
+        Assert.Equal(0, spent.State!.RemainingFreeCasts[misty.GrantId]);
+        authority.Stored = new(SupernaturalCharacter, 7, "fixture-long-rest", proposal, before.Profile!, character, spent.State);
+
+        var plan = NativeOriginCantripReplacementPlanner.Plan(catalog, proposal, before.Profile!, character,
+            spent.State, spent.State.Revision, grantId, "spell.fixture-cantrip-b");
+        Assert.True(plan.Status == "resolved", plan.Reason);
+        Assert.Equal(grantId, plan.GrantId);
+        Assert.Equal(1, plan.Ledger!.RemainingFreeCasts[misty.GrantId]);
+        Assert.Equal(spent.State.Revision + 1, plan.Ledger.Revision);
+        Assert.NotEqual(spent.State.ProjectionFingerprint, plan.Ledger.ProjectionFingerprint);
+        var after = NativeOriginInnateSpellProgressionProjector.ForCharacter(catalog, plan.Replacement!, character);
+        var newCantrip = Assert.Single(after.Spells, spell => spell.GrantId == grantId);
+        Assert.Equal("fixture-cantrip-b", newCantrip.SpellId);
+        Assert.Equal("wisdom", newCantrip.SpellcastingAbility);
+        Assert.Equal(misty, Assert.Single(after.Spells, spell => spell.GrantId == misty.GrantId));
+        Assert.Equal("permitted", NativeOriginInnateSpellResourceLedger.Apply(catalog, plan.Replacement!, character,
+            plan.Ledger, new(NativeOriginInnateSpellLedgerActionKind.CheckAtWill, plan.Ledger.Revision, grantId)).Status);
+        Assert.Equal("unresolved", NativeOriginInnateSpellResourceLedger.Apply(catalog, before, character,
+            plan.Ledger, new(NativeOriginInnateSpellLedgerActionKind.CheckAtWill, plan.Ledger.Revision, grantId)).Status);
+
+        async Task<HttpStatusCode> Send(string selected, string eventId = "fixture-long-rest",
+            long revision = 7, long? ledgerRevision = null, string? selectedGrantId = null)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post,
+                "/api/mechanics/v1/origins/innate-spells/cantrip-replacement/plan", JsonContent.Create(new
+                {
+                    characterId = SupernaturalCharacter, originRevision = revision,
+                    ledgerRevision = ledgerRevision ?? spent.State.Revision,
+                    rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint, restEventId = eventId,
+                    grantId = selectedGrantId ?? grantId, replacementSpellId = selected
+                }));
+            using var response = await fixture.Client.SendAsync(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+                Assert.False(body.GetProperty("committed").GetBoolean());
+                Assert.Equal("spell.fixture-cantrip-b", body.GetProperty("plan").GetProperty("newSpellId").GetString());
+            }
+            return response.StatusCode;
+        }
+        Assert.Equal(HttpStatusCode.OK, await Send("spell.fixture-cantrip-b"));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, await Send("spell.fixture-off-list"));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, await Send("spell.fixture-cantrip-a"));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, await Send("spell.fixture-cantrip-b", eventId: "fixture-short-rest"));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, await Send("spell.fixture-cantrip-b", revision: 6));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, await Send("spell.fixture-cantrip-b", ledgerRevision: 0));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, await Send("spell.fixture-cantrip-b", selectedGrantId: misty.GrantId));
+        authority.Consumed = true;
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, await Send("spell.fixture-cantrip-b"));
+        Assert.Equal(0, authority.Stored.Ledger.RemainingFreeCasts[misty.GrantId]);
     }
 
     [Fact]
