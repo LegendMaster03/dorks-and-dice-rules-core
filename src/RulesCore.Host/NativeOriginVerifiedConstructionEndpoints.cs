@@ -5,7 +5,8 @@ namespace RulesCore.Host;
 
 /// <summary>
 /// Verify actor access to the proposed new character and the exact current
-/// revisions of all referenced biological parents. Only an authoritative
+/// revisions of all referenced biological parents (including an empty set for
+/// native-only donors). Even an empty set requires verified creation access. Only an authoritative
 /// application store may provide these records, never submitted profile JSON.
 /// </summary>
 public interface INativeOriginHostBiologicalAuthorityProvider
@@ -13,6 +14,12 @@ public interface INativeOriginHostBiologicalAuthorityProvider
     Task<IReadOnlyList<NativeOriginVerifiedManifestedContributor>?> VerifyAsync(
         Guid actorId, Guid characterId, IReadOnlyList<NativeOriginSourceReference> sources,
         string rulesetId, string fingerprint, CancellationToken cancellationToken);
+
+    // Optional character-specific feat eligibility for this exact creation
+    // draft; catalog membership alone is never sufficient.
+    Task<INativeOriginFeatChoiceAuthority?> VerifyChoicesAsync(Guid actorId,
+        NativeOriginApiEndpoints.VerifiedBiologicalRequest request, CancellationToken cancellationToken) =>
+        Task.FromResult<INativeOriginFeatChoiceAuthority?>(null);
 }
 
 /// <summary>
@@ -79,7 +86,7 @@ public static partial class NativeOriginApiEndpoints
             var sources = proposal.Contributors.Select(c => c.Source)
                 .Where(source => source.Kind == NativeOriginSourceKind.ManifestedProfile)
                 .Distinct().ToArray();
-            if (sources.Length == 0 || sources.Any(source =>
+            if (sources.Any(source =>
                 string.IsNullOrWhiteSpace(source.Version) ||
                 source.Version.Length > 200 || source.Id.Length > 200))
                 return Error(400, "verified_parent_revision_required");
@@ -98,12 +105,14 @@ public static partial class NativeOriginApiEndpoints
                 return Error(422, "biological_parent_unverified");
 
             var scope = new NativeTableDecisionScope("character", request.CharacterId.ToString("D"));
-            var result = new NativeOriginConstructionEngine(catalog).Evaluate(
+            var parentAuthority = new VerifiedParentAuthority(scope, verified);
+            var featAuthority = await provider.VerifyChoicesAsync(actor.UserId, request, context.RequestAborted);
+            var result = new NativeOriginFirstPartyChoiceEvaluator(catalog).EvaluateVerifiedMixed(
                 new NativeOriginConstructionRequest(proposal, scope,
                     AutoManifestDirectDefaults: false,
                     RequireCreationAllocation: true,
                     CreationAllocationPolicy: NativeOriginFirstPartyBiologicalPricing.Create()),
-                manifestedContributorAuthority: new VerifiedParentAuthority(scope, verified));
+                parentAuthority, featAuthority);
 
             return Results.Ok(new
             {

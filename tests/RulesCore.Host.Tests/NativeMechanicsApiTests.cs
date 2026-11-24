@@ -865,7 +865,8 @@ public sealed class NativeMechanicsApiTests
             string rulesetId, string fingerprint, CancellationToken cancellationToken)
         {
             IReadOnlyList<NativeOriginVerifiedManifestedContributor>? records =
-                actorId == SupernaturalActor && characterId == SupernaturalCharacter &&
+                actorId == SupernaturalActor && characterId == SupernaturalCharacter && sources.Count == 0
+                ? [] : actorId == SupernaturalActor && characterId == SupernaturalCharacter &&
                 Parent is not null && sources.Count == 1 &&
                 sources[0].Id == Parent.Id && sources[0].Version == "revision-1"
                 ? [new(Parent, "revision-1")] : null;
@@ -961,6 +962,81 @@ public sealed class NativeMechanicsApiTests
             { ManifestedProfile = provider.Parent.Underlying }] };
         Assert.Equal(HttpStatusCode.BadRequest,
             (await Send(forged, SupernaturalCharacter, catalog.Fingerprint)).Item1);
+    }
+
+    [Fact]
+    public async Task VerifiedMixedBiologicalHttpAuthorizesNativeSkillChoices()
+    {
+        var provider = new VerifiedBiologicalTestAuthority();
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true, dm: true, biologicalAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var draft = new NativeOriginProposal("http-mixed-skill", NativeOriginIntent.Mixed,
+            new("rule.creature-origination", "biological"),
+            [new("orc", new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.Native, "species.orc")),
+             new("human", new(NativeOriginInputKind.BiologicalParent),
+                new(NativeOriginSourceKind.Native, "species.human"))], [], []);
+        const string endpoint = "/api/mechanics/v1/origins/biological/verified-preview";
+        async Task<JsonElement> Send(NativeOriginProposal proposal)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { characterId = SupernaturalCharacter, rulesetId = catalog.RulesetId,
+                    fingerprint = catalog.Fingerprint, proposal }));
+            using var response = await fixture.Client.SendAsync(request);
+            var raw = await response.Content.ReadAsStringAsync();
+            Assert.True(response.StatusCode == HttpStatusCode.OK, raw);
+            using var json = JsonDocument.Parse(raw);
+            return json.RootElement.GetProperty("result").Clone();
+        }
+        var discovery = await Send(draft);
+        var offers = discovery.GetProperty("evaluatedProposal").GetProperty("candidates")
+            .Deserialize<NativeOriginCandidate[]>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+        var foundation = offers.Where(x => x.ContributorId == "orc" &&
+            x.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet").ToArray();
+        Assert.Equal(3, foundation.Length);
+        var skill = Assert.Single(offers, x => x.ContributorId == "human" &&
+            x.RequiredChoices?.Any(c => c.OptionCatalogId == "any-native-skill") == true);
+        var baseSelections = foundation.Select((x, i) =>
+            new NativeOriginManifestation("foundation-" + i, x.Id, SelectedValue: x.OfferedValue)).ToArray();
+        var selected = draft with
+        {
+            Manifestations = [.. baseSelections, new("skill-selection", skill.Id,
+                Choices: [new("selection", ["skill.intimidation"], "browser-assertion")])],
+            BiologicalTransmission = new(foundation.Append(skill).Select(x => x.Id).ToArray())
+        };
+        var result = await Send(selected);
+        var grants = result.GetProperty("profile").GetProperty("underlying").GetProperty("inherentGrants");
+        var grant = Assert.Single(grants.EnumerateArray(), x => x.GetProperty("id").GetString() == "grant:skill-selection");
+        Assert.Equal("skill.intimidation", grant.GetProperty("resolvedChoices")[0].GetProperty("selectedOptionIds")[0].GetString());
+        Assert.Equal("native-catalog:" + catalog.RulesetId + ":" + catalog.Fingerprint,
+            grant.GetProperty("resolvedChoices")[0].GetProperty("catalogEligibilityEvidenceId").GetString());
+
+        // A latent configuration receives the same membership check without
+        // manifesting a Skill grant.
+        var latent = await Send(selected with
+        {
+            Manifestations = baseSelections,
+            BiologicalTransmission = selected.BiologicalTransmission! with
+            {
+                LatentConfigurations = [new(skill.Id, [new("selection", ["skill.intimidation"])])]
+            }
+        });
+        var gene = Assert.Single(latent.GetProperty("profile").GetProperty("underlying")
+            .GetProperty("biologicalGenes").EnumerateArray(), x => x.GetProperty("sourceCandidateId").GetString() == skill.Id);
+        Assert.Equal("skill.intimidation", gene.GetProperty("resolvedChoices")[0].GetProperty("selectedOptionIds")[0].GetString());
+        Assert.DoesNotContain(latent.GetProperty("profile").GetProperty("underlying")
+            .GetProperty("inherentGrants").EnumerateArray(), x => x.GetProperty("id").GetString() == "grant:skill-selection");
+
+        var invalid = await Send(selected with
+        {
+            Manifestations = [.. baseSelections, new("skill-selection", skill.Id,
+                Choices: [new("selection", ["competency.disguise"], "browser-assertion")])]
+        });
+        Assert.NotEqual((int)NativeOriginConstructionStatus.Authorized, invalid.GetProperty("status").GetInt32());
+        Assert.Contains(invalid.GetProperty("issues").EnumerateArray(),
+            x => x.GetProperty("code").GetString() == "choice-authorization-unresolved");
     }
 
     private sealed class VerifiedReconstructionTestAuthority : INativeOriginHostReconstructionAuthorityProvider,

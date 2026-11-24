@@ -24,64 +24,93 @@ public sealed class NativeOriginFirstPartyChoiceEvaluator(NativeCatalogSnapshot 
             return _construction.Evaluate(new(submitted));
 
         var (discovered, _) = _sources.Deconstruct(submitted);
+        return EvaluateChoices(new(submitted,
+            TrustedScope: new("first-party-catalog", catalog.RulesetId)),
+            discovered, featAuthority, null);
+    }
+
+    /// <summary>
+    /// Verified mixed creation uses exactly the same catalog predicates and
+    /// construction engine as direct creation. Discover against independently
+    /// loaded parent revisions before normalizing any new selections. Parent
+    /// snapshots are never taken from the client or reopened as fresh menus.
+    /// </summary>
+    public NativeOriginConstructionResult EvaluateVerifiedMixed(
+        NativeOriginConstructionRequest request,
+        INativeOriginManifestedContributorAuthority manifestedAuthority,
+        INativeOriginFeatChoiceAuthority? featAuthority = null)
+    {
+        ArgumentNullException.ThrowIfNull(manifestedAuthority);
+        if (request.Proposal.Intent != NativeOriginIntent.Mixed || request.TrustedScope is null)
+            throw new ArgumentException("A scoped mixed creation request is required.", nameof(request));
+        var discovery = _construction.Evaluate(request,
+            manifestedContributorAuthority: manifestedAuthority);
+        return EvaluateChoices(request, discovery.EvaluatedProposal, featAuthority, manifestedAuthority);
+    }
+
+    private NativeOriginConstructionResult EvaluateChoices(
+        NativeOriginConstructionRequest request, NativeOriginProposal discovered,
+        INativeOriginFeatChoiceAuthority? featAuthority,
+        INativeOriginManifestedContributorAuthority? manifestedAuthority)
+    {
+        var submitted = request.Proposal;
         var candidates = discovered.Candidates.ToDictionary(x => x.Id, StringComparer.Ordinal);
         var proofId = ProofForCatalog(catalog);
         // Feat proofs are minted only after independently verifying the
         // actual candidate/feat pair. They are scoped to this evaluation.
         var approvedFeatProofs = new Dictionary<string, string>(StringComparer.Ordinal);
-        var normalized = (submitted.Manifestations ?? []).Select(manifest =>
+        IReadOnlyList<NativeOriginChoiceSelection>? Normalize(
+            string candidateId, IReadOnlyList<NativeOriginChoiceSelection>? choices)
         {
-            if (manifest.Choices is null ||
-                // Never derive eligibility from malformed records. Preserve
-                // them unchanged so the construction validator can report
-                // the invalid selection without awarding a source grant.
-                manifest.Choices.Any(choice => choice is null) ||
-                !candidates.TryGetValue(manifest.CandidateId, out var candidate) ||
-                candidate.ContributorId is not null ||
+            if (choices is null || choices.Any(choice => choice is null) ||
+                !candidates.TryGetValue(candidateId, out var candidate) ||
                 candidate.SelectionBasis.Eligibility != NativeOriginEligibility.Eligible ||
-                candidate.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native)
-                return manifest;
+                candidate.Identity.Occurrence.Source.Kind != NativeOriginSourceKind.Native ||
+                (submitted.Intent == NativeOriginIntent.Direct && candidate.ContributorId is not null))
+                return choices;
 
-            var requirements = (candidate.RequiredChoices ?? [])
-                .ToDictionary(x => x.Id, StringComparer.Ordinal);
-            return manifest with
+            var requirements = (candidate.RequiredChoices ?? []).ToDictionary(x => x.Id, StringComparer.Ordinal);
+            return choices.Select(choice =>
             {
-                Choices = manifest.Choices.Select(choice =>
+                if (!requirements.TryGetValue(choice.RequirementId, out var req) ||
+                    req.Timing != NativeOriginChoiceTiming.Creation || req.OptionCatalogId is null)
+                    return choice;
+                if (choice.SelectedOptionIds is null ||
+                    choice.SelectedOptionIds.Count < req.Minimum ||
+                    choice.SelectedOptionIds.Count > req.Maximum ||
+                    choice.SelectedOptionIds.Distinct(StringComparer.Ordinal).Count() != choice.SelectedOptionIds.Count ||
+                    !choice.SelectedOptionIds.All(id => NativeOriginChoiceCatalog.IsMember(catalog, req.OptionCatalogId, id)))
+                    return choice with { CatalogEligibilityEvidenceId = null };
+                if (req.OptionCatalogId == "feat:origin")
                 {
-                    if (!requirements.TryGetValue(choice.RequirementId, out var req) ||
-                        req.Timing != NativeOriginChoiceTiming.Creation ||
-                        req.OptionCatalogId is null ||
-                        choice.SelectedOptionIds is null ||
-                        choice.SelectedOptionIds.Count < req.Minimum ||
-                        choice.SelectedOptionIds.Count > req.Maximum ||
-                        choice.SelectedOptionIds.Distinct(StringComparer.Ordinal).Count() !=
-                            choice.SelectedOptionIds.Count ||
-                        !choice.SelectedOptionIds.All(id =>
-                            NativeOriginChoiceCatalog.IsMember(catalog, req.OptionCatalogId, id)))
+                    if (choice.SelectedOptionIds.Count != 1 ||
+                        featAuthority?.Authorizes(candidate, choice.SelectedOptionIds[0]) != true)
                         return choice with { CatalogEligibilityEvidenceId = null };
-                    if (req.OptionCatalogId == "feat:origin")
-                    {
-                        // The only current native feat-choice grants one feat.
-                        // Do not infer prerequisites or repeatability.
-                        if (choice.SelectedOptionIds.Count != 1 ||
-                            featAuthority?.Authorizes(candidate, choice.SelectedOptionIds[0]) != true)
-                            return choice with { CatalogEligibilityEvidenceId = null };
-                        var featProof = proofId + ":feat:" + candidate.Id;
-                        approvedFeatProofs[featProof] = choice.SelectedOptionIds[0];
-                        return choice with { CatalogEligibilityEvidenceId = featProof };
-                    }
-                    return choice with { CatalogEligibilityEvidenceId = proofId };
-                }).ToArray()
-            };
-        }).ToArray();
+                    var featProof = proofId + ":feat:" + candidate.Id;
+                    approvedFeatProofs[featProof] = choice.SelectedOptionIds[0];
+                    return choice with { CatalogEligibilityEvidenceId = featProof };
+                }
+                return choice with { CatalogEligibilityEvidenceId = proofId };
+            }).ToArray();
+        }
 
-        // The scope is an internal sentinel for a public first-party catalog,
-        // NOT a campaign scope. Authorizes(...) always refuses table decisions.
-        // The stateless ingress must independently reject all table decisions.
-        return _construction.Evaluate(
-            new(submitted with { Manifestations = normalized },
-                TrustedScope: new("first-party-catalog", catalog.RulesetId)),
-            new NativeCatalogOnlyAuthority(catalog, proofId, approvedFeatProofs));
+        var normalized = (submitted.Manifestations ?? []).Select(manifest =>
+            manifest with { Choices = Normalize(manifest.CandidateId, manifest.Choices) }).ToArray();
+        var transmission = submitted.BiologicalTransmission;
+        if (transmission?.LatentConfigurations is { } configurations)
+            transmission = transmission with
+            {
+                LatentConfigurations = configurations.Select(configuration => configuration with
+                { Choices = Normalize(configuration.CandidateId, configuration.Choices) }).ToArray()
+            };
+
+        // The catalog adapter does not authorize table decisions. Keep the
+        // original character scope, allocation gate and independently
+        // verified contributor authority for the actual construction.
+        return _construction.Evaluate(request with
+        {
+            Proposal = submitted with { Manifestations = normalized, BiologicalTransmission = transmission }
+        }, new NativeCatalogOnlyAuthority(catalog, proofId, approvedFeatProofs), manifestedAuthority);
     }
 
     private static string ProofForCatalog(NativeCatalogSnapshot snapshot) =>
