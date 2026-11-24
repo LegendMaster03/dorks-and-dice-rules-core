@@ -39,7 +39,7 @@ public sealed class NativeConstructOperatingSession
                 ConnectedTo = instance.ConnectedTo?.ToArray(),
                 EnhancementIds = instance.EnhancementIds?.ToArray()
             }).ToArray(),
-            approvedAssembly.InitialAllowance, InitialConstruction: true,
+            approvedAssembly.InitialAllowance, InitialConstruction: approvedAssembly.InitialConstruction,
             PowerConnections: approvedAssembly.PowerConnections?.ToArray(),
             UnavailablePowerSourceInstanceIds:
                 approvedAssembly.UnavailablePowerSourceInstanceIds?.ToArray());
@@ -88,6 +88,10 @@ public sealed class NativeConstructOperatingSession
                     .Distinct(StringComparer.Ordinal).ToArray(),
                 StringComparer.Ordinal);
     }
+
+    // Return the immutable installation only to the trusted modification
+    // planner. It compares snapshots; no public operating request may edit it.
+    internal NativeConstructAssemblyRequest Installation => _baseline;
 
     /// <summary>
     /// Apply an enabled/disabled power allocation. Existing callers can use

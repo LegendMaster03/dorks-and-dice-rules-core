@@ -56,7 +56,8 @@ public sealed class NativeMechanicsApiTests
             INativeConstructHostSolarIntervalAuthorityProvider? solarIntervalAuthority = null,
             INativeConstructHostContextualPowerAuthorityProvider? contextualPowerAuthority = null,
             INativeConstructHostSoulCustodyAuthorityProvider? soulCustodyAuthority = null,
-            INativeConstructHostSustenanceAuthorityProvider? sustenanceAuthority = null)
+            INativeConstructHostSustenanceAuthorityProvider? sustenanceAuthority = null,
+            INativeConstructHostModificationAuthorityProvider? modificationAuthority = null)
         {
             var package = Path.Combine(_root, "first-party-001");
             Directory.CreateDirectory(Path.Combine(package, "native"));
@@ -228,6 +229,8 @@ public sealed class NativeMechanicsApiTests
                     services.AddSingleton(soulCustodyAuthority);
                 if (sustenanceAuthority is not null)
                     services.AddSingleton(sustenanceAuthority);
+                if (modificationAuthority is not null)
+                    services.AddSingleton(modificationAuthority);
             });
             await App.StartAsync();
             var server = App.Services.GetRequiredService<IServer>();
@@ -2171,6 +2174,92 @@ public sealed class NativeMechanicsApiTests
         };
         using var forged = await Send();
         Assert.Equal(HttpStatusCode.UnprocessableEntity, forged.StatusCode);
+    }
+
+    private sealed class ConstructModificationTestAuthority : INativeConstructHostModificationAuthorityProvider
+    {
+        public VerifiedConstructModificationAuthorization? Stored { get; set; }
+        public Task<VerifiedConstructModificationAuthorization?> VerifyAsync(Guid actorId,
+            NativeOriginApiEndpoints.VerifiedConstructModificationRequest request,
+            CancellationToken cancellationToken) =>
+            Task.FromResult(actorId == Guid.Parse("d66a7a7b-bc0f-4677-829d-0ccf40470d2f") ? Stored : null);
+    }
+
+    [Fact]
+    public async Task VerifiedConstructModificationReusesNativeConstructionBeyondStartingAllowance()
+    {
+        var provider = new ConstructModificationTestAuthority();
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true,
+            realNativeContent: true, dm: true, modificationAuthority: provider);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var (construction, _) = ContextualConstruct(catalog, "construct-power-source.mechanical-engine");
+        var profile = construction.Origin.Profile!;
+        var folder = new DirectoryInfo(AppContext.BaseDirectory);
+        string? reference = null;
+        while (folder is not null)
+        {
+            var candidate = Path.Combine(folder.FullName, "data", "reference",
+                "construct-small-starting-build-20261121.json");
+            if (File.Exists(candidate)) { reference = candidate; break; }
+            folder = folder.Parent;
+        }
+        Assert.NotNull(reference);
+        using var data = JsonDocument.Parse(File.ReadAllText(reference!));
+        var initial = data.RootElement.GetProperty("assembly").Deserialize<NativeConstructAssemblyRequest>(
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        // Add independently acquired passive armor at distinct regions. Its
+        // material provenance is not an automatic defense grant.
+        var additions = Enumerable.Range(0, 3).Select(i => new NativeConstructComponentInstance(
+            "plating-" + i, "construct-component.protective-plating",
+            new Dictionary<string, string> { ["plating"] = "construct-material.steel" },
+            ProtectedRegionId: "hull-" + i)).ToArray();
+        var target = initial with
+        {
+            InitialConstruction = false, InitialAllowance = null,
+            Components = [.. initial.Components, .. additions]
+        };
+        var targetProposal = construction.Origin.EvaluatedProposal with
+        {
+            Id = "modified-construct", Candidates = []
+        };
+        var characterId = Guid.NewGuid();
+        const string endpoint = "/api/mechanics/v1/origins/construct/modification/plan";
+        async Task<HttpResponseMessage> Send(long inventoryRevision = 7, string eventId = "installation-1")
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { characterId, originRevision = 1, operatingRevision = 2,
+                    inventoryRevision, rulesetId = catalog.RulesetId, fingerprint = catalog.Fingerprint, eventId }));
+            return await fixture.Client.SendAsync(request);
+        }
+        using var missing = await Send();
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, missing.StatusCode);
+        provider.Stored = new(characterId, 1, 2, 7, catalog.RulesetId, catalog.Fingerprint,
+            "installation-1", construction, profile, target, targetProposal);
+        using var stale = await Send(inventoryRevision: 6);
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, stale.StatusCode);
+        using var invalidEvent = await Send(eventId: "unverified");
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, invalidEvent.StatusCode);
+        using var planned = await Send();
+        var raw = await planned.Content.ReadAsStringAsync();
+        Assert.True(planned.StatusCode == HttpStatusCode.OK, raw);
+        using var result = JsonDocument.Parse(raw);
+        var root = result.RootElement;
+        Assert.False(root.GetProperty("committed").GetBoolean());
+        var plan = root.GetProperty("plan");
+        Assert.True(plan.GetProperty("canApply").GetBoolean());
+        Assert.Equal(3, plan.GetProperty("addedInstanceIds").GetArrayLength());
+        var built = plan.GetProperty("target");
+        Assert.True(built.GetProperty("assembly").GetProperty("knownConstructionCost").GetInt64() > 200);
+        var next = built.GetProperty("origin").GetProperty("profile");
+        Assert.Equal(profile.Id, next.GetProperty("id").GetString());
+        Assert.Equal(profile.History.Count + 1, next.GetProperty("history").GetArrayLength());
+        Assert.Equal(profile.History.Count, provider.Stored.ExistingProfile.History.Count);
+        Assert.Equal(profile.Underlying.InherentGrants.Count,
+            next.GetProperty("underlying").GetProperty("inherentGrants").GetArrayLength());
+        // The public construction service still refuses post-creation grant issuance.
+        Assert.False(new NativeConstructOriginConstructionService(catalog)
+            .Evaluate(new(new(targetProposal), target)).IsMechanicallyAuthorized);
     }
 
     [Fact]

@@ -17,7 +17,18 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
     public NativeConstructOriginConstructionResult Evaluate(
         NativeConstructOriginConstructionRequest request,
         INativeOriginAuthority? authority = null,
-        INativeOriginManifestedContributorAuthority? manifestedContributorAuthority = null)
+        INativeOriginManifestedContributorAuthority? manifestedContributorAuthority = null) =>
+        EvaluateCore(request, false, authority, manifestedContributorAuthority);
+
+    // Only the verified modification service may bypass the creation allowance.
+    internal NativeConstructOriginConstructionResult EvaluateModificationTarget(
+        NativeConstructOriginConstructionRequest request) =>
+        EvaluateCore(request, true, null, null);
+
+    private NativeConstructOriginConstructionResult EvaluateCore(
+        NativeConstructOriginConstructionRequest request, bool verifiedModification,
+        INativeOriginAuthority? authority,
+        INativeOriginManifestedContributorAuthority? manifestedContributorAuthority)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.Origin);
@@ -36,7 +47,7 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
         // Gameplay modifications may be previewed without a starting budget,
         // but require separately authenticated acquisition/installation rules
         // before they can permanently change an existing Origin profile.
-        if (!request.Assembly.InitialConstruction)
+        if (!request.Assembly.InitialConstruction && !verifiedModification)
             return Stop(assembly.Status == NativeOriginConstructionStatus.Invalid
                     ? NativeOriginConstructionStatus.Invalid
                     : NativeOriginConstructionStatus.Incomplete,
@@ -57,7 +68,7 @@ public sealed class NativeConstructOriginConstructionService(NativeCatalogSnapsh
                 [new("construct-starting-allowance-unresolved", "method",
                     NativeOriginIssueSeverity.Unresolved,
                     "No native first-party initial construction allowance has been authored.")]);
-        if (request.Assembly.InitialAllowance != permitted)
+        if (!verifiedModification && request.Assembly.InitialAllowance != permitted)
             return Stop(NativeOriginConstructionStatus.Invalid, assembly, proposal,
                 [new("construct-starting-allowance-unverified", "assembly.initialAllowance",
                     NativeOriginIssueSeverity.Invalid,
