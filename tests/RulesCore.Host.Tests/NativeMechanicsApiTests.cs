@@ -1020,6 +1020,68 @@ public sealed class NativeMechanicsApiTests
     }
 
     [Fact]
+    public async Task NativeOriginDiscoveryReturnsAuthoredPresetsMethodsAndConstructConfiguration()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true, realNativeContent: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        const string root = "/api/mechanics/v1/origins";
+        async Task<(HttpStatusCode, JsonElement)> Get(string path, string? fingerprint = null)
+        {
+            var url = root + path + (path.Contains('?') ? "&" : "?") +
+                "fingerprint=" + (fingerprint ?? catalog.Fingerprint);
+            using var request = fixture.Authenticated(HttpMethod.Get, url);
+            using var response = await fixture.Client.SendAsync(request);
+            return (response.StatusCode, await response.Content.ReadFromJsonAsync<JsonElement>());
+        }
+
+        var (methodStatus, methodBody) = await Get("/methods?creatureTypeId=creature-type.construct");
+        Assert.Equal(HttpStatusCode.OK, methodStatus);
+        var methods = methodBody.GetProperty("methods").EnumerateArray().ToArray();
+        var construct = Assert.Single(methods, x =>
+            x.GetProperty("reference").GetProperty("methodId").GetString() == "construct-assembly");
+        Assert.Equal("available", construct.GetProperty("defaultAvailability").GetString());
+        Assert.Equal("assembly-preview", construct.GetProperty("support").GetString());
+        var plant = Assert.Single(methods, x =>
+            x.GetProperty("reference").GetProperty("methodId").GetString() == "plant-reproduction");
+        Assert.Equal("reference-only", plant.GetProperty("support").GetString());
+        Assert.False(construct.TryGetProperty("authoredDefinition", out _));
+
+        var (presetStatus, presetBody) = await Get("/presets");
+        Assert.Equal(HttpStatusCode.OK, presetStatus);
+        var presets = presetBody.GetProperty("presets").EnumerateArray().ToArray();
+        var rock = Assert.Single(presets, x => x.GetProperty("id").GetString() == "ancestry.gnome.rock");
+        Assert.True(rock.GetProperty("selectable").GetBoolean());
+        Assert.Equal("species.gnome", rock.GetProperty("parentId").GetString());
+        Assert.Equal("upbringing.gnome.rock", rock.GetProperty("defaultUpbringingId").GetString());
+        var tiefling = Assert.Single(presets, x => x.GetProperty("id").GetString() == "species.tiefling");
+        Assert.False(tiefling.GetProperty("selectable").GetBoolean());
+        Assert.True(tiefling.GetProperty("ancestrySelectionRequired").GetBoolean());
+
+        var (frameStatus, frameBody) = await Get("/construct/components/construct-component.structural-frame/configuration");
+        Assert.Equal(HttpStatusCode.OK, frameStatus);
+        var frame = frameBody.GetProperty("configuration");
+        Assert.Equal("frame", Assert.Single(frame.GetProperty("materialSlots").EnumerateArray()).GetString());
+        var medium = Assert.Single(frame.GetProperty("constructionVariants").EnumerateArray(),
+            x => x.GetProperty("id").GetString() == "medium");
+        Assert.Equal("medium", medium.GetProperty("bodySize").GetString());
+        Assert.Equal("crafting-recipe.construct-component.structural-frame.medium",
+            medium.GetProperty("recipeId").GetString());
+        Assert.False(frame.GetProperty("powerSourceRequired").GetBoolean());
+        Assert.Empty(frame.GetProperty("powerSources").EnumerateArray());
+
+        var (housingStatus, housingBody) = await Get("/construct/components/construct-component.power-source-housing/configuration");
+        Assert.Equal(HttpStatusCode.OK, housingStatus);
+        var housing = housingBody.GetProperty("configuration");
+        Assert.True(housing.GetProperty("powerSourceRequired").GetBoolean());
+        Assert.Contains(housing.GetProperty("powerSources").EnumerateArray(),
+            x => x.GetProperty("id").GetString() == "construct-power-source.solar-crystal");
+        Assert.Equal(HttpStatusCode.NotFound,
+            (await Get("/construct/components/species.human/configuration")).Item1);
+        Assert.Equal(HttpStatusCode.Conflict, (await Get("/presets", "stale")).Item1);
+    }
+
+    [Fact]
     public async Task RealNativeConstructHttpPreviewUsesSharedAssemblyAndOriginEngine()
     {
         await using var fixture = new Fixture();

@@ -46,6 +46,7 @@ public static class NativeMechanicsEndpoints
         // No persisted state or table-authority claims are accepted by this route.
         group.MapNativeOriginPreview();
         group.MapNativeConstructPreview();
+        group.MapNativeOriginDiscovery();
         // Character-owned supernatural routes have independent host-side
         // verifiers; delegation is not proof of source entitlement.
         if (!privateTunnel)
@@ -84,6 +85,8 @@ public static class NativeMechanicsEndpoints
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
                     originPreview = "stateless-first-party",
                     constructOriginPreview = "stateless-native-assembly",
+                    originMethodDiscovery = true, originPresetDiscovery = true,
+                    constructConfigurationDiscovery = true,
                     biologicalAllocationPreview = NativeOriginFirstPartyBiologicalPricing.Revision,
                     originPersistence = false, originDmAdjudication = false,
                     verifiedBiologicalPreview = privateTunnel ? "unavailable" : "host-authority-required",

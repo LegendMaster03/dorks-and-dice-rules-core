@@ -8,7 +8,7 @@ namespace RulesCore.Mechanics;
 /// an assembled component must first have an authored mapping to a canonical
 /// characteristic before the universal Origin engine can manifest it.
 /// </summary>
-public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catalog)
+public sealed partial class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catalog)
 {
     public NativeConstructAssemblyResult Evaluate(NativeConstructAssemblyRequest request) =>
         EvaluateWithSourceOutputOverrides(request, null);
@@ -161,8 +161,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                 var optionPath = path + "." + field;
                 var compatible = Texts(option.Definition,
                     "compatibleComponentCapabilities", optionPath, Issue);
-                if (compatible.Length == 0 ||
-                    !compatible.Any(cap => baseProvides.Contains(cap, StringComparer.Ordinal)))
+                if (!OptionCompatible(compatible, baseProvides))
                 {
                     Issue("construct-option-incompatible", optionPath,
                         NativeOriginIssueSeverity.Invalid,
@@ -247,8 +246,7 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
                     var sourcePath = path + ".powerSourceId";
                     var compatible = Texts(source.Definition,
                         "compatibleComponentCapabilities", sourcePath, Issue);
-                    if (compatible.Length == 0 ||
-                        !compatible.Any(cap => baseProvides.Contains(cap, StringComparer.Ordinal)))
+                    if (!OptionCompatible(compatible, baseProvides))
                         Issue("construct-power-source-incompatible", sourcePath,
                             NativeOriginIssueSeverity.Invalid,
                             "The selected source is not compatible with this housing.");
@@ -970,6 +968,10 @@ public sealed class NativeConstructAssemblyEvaluator(NativeCatalogSnapshot catal
         }
         return selected;
     }
+
+    // Discovery and evaluation share this exact base-capability predicate.
+    private static bool OptionCompatible(IEnumerable<string> required, IReadOnlyList<string> provided) =>
+        required.Any(cap => provided.Contains(cap, StringComparer.Ordinal));
 
     private static string? Text(JsonElement definition, string key) =>
         definition.TryGetProperty(key, out var field) &&

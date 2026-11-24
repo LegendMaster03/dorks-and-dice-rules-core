@@ -25,6 +25,9 @@ The following paths are relative to the appropriate `/api/**/mechanics/v1` base:
 | POST | `/characters/equipment-training`, `/characters/equipment-training/coverage` | Equipment training and Weapon Mastery eligibility |
 | POST | `/advancements/eligibility` | Native acquisition eligibility |
 | POST | `/characters/project` | Native character mechanics projection |
+| GET | `/origins/methods` | Authored method identities, optional creature-type defaults, executable transport scope |
+| GET | `/origins/presets` | Species/Ancestry hierarchy, selectability and authored acquisition metadata |
+| GET | `/origins/construct/components/{definitionId}/configuration` | Native material slots, variant, operating-mode and compatible option identities |
 | POST | `/origins/preview` | Native initial Origin discovery and selection preview |
 | POST | `/origins/construct/preview` | Recipe quotation, component configuration and shared Origin construction preview |
 | POST | `/origins/evaluate-approved-mixed` | Public delegated, campaign-DM-scoped evaluation |
@@ -36,6 +39,8 @@ The following paths are relative to the appropriate `/api/**/mechanics/v1` base:
 The private mechanics surface additionally maps `GET /catalog/rules` and `POST /catalog/resolve`. Newer or incomplete mechanics must be verified against code and tests rather than inferred from this navigation table.
 
 ## Character Origins preview contracts
+
+The three read-only Origin discovery routes require the current fingerprint. Method discovery optionally accepts `creatureTypeId`; type defaults are not exclusive permissions, and reference-only methods are not executable creation paths. Preset discovery preserves nonselectable Species/Ancestry parent nodes, authored acquisition restrictions and independent default Upbringing references. Construct configuration discovery reuses the assembly evaluator's native compatibility and recipe/mode validation to return bounded choice metadata, not raw private definitions or permission to install an option. Submit the actual selected assembly to the existing preview to calculate costs and operating state.
 
 - Submit `rulesetId`, `fingerprint` and `proposal` to the initial Origin preview. The evaluated proposal returns native candidate IDs and choice requirements; resubmit the selected manifestations, not invented grants. Initial Origin previews continue to report changed fingerprints rather than requiring an exact match; refresh before committing anything.
 - Both direct and DM-scoped mixed previews return source-verified Tremorsense, Darkvision, innate spell, HP progression and passive entitlement views. Supply optional `characterLevel` for level-dependent previews; it is not proof of character advancement. Biological allocation is a read-only assessment under the current native trial pricing revision and allowance; it does not authorize traits or change the existing creation gate.
