@@ -65,6 +65,6 @@ public static class NativeCombatDamageResolver
             AppliedDamageReduction: (int)appliedReduction,
             FinalDamage: final,
             ProposedHitPoints: proposedHp,
-            AtZeroHitPoints: proposedHp == 0 && proposedHp is not null);
+            AtZeroHitPoints: proposedHp.HasValue ? proposedHp.Value == 0 : null);
     }
 }
