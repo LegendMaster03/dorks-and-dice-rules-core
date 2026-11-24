@@ -466,6 +466,9 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal((int)NativeOriginConstructionStatus.Authorized,
             body.GetProperty("result").GetProperty("status").GetInt32());
         Assert.True(body.GetProperty("previewOnly").GetBoolean());
+        Assert.True(body.GetProperty("tremorsense").GetProperty("previewOnly").GetBoolean());
+        Assert.True(body.GetProperty("innateSpells").GetProperty("previewOnly").GetBoolean());
+        Assert.True(body.GetProperty("allocation").GetProperty("previewOnly").GetBoolean());
         var view = body.GetProperty("restSurvival");
         Assert.Equal("resolved", view.GetProperty("status").GetString());
         Assert.True(view.GetProperty("previewOnly").GetBoolean());
@@ -490,6 +493,76 @@ public sealed class NativeMechanicsApiTests
             Assert.Equal(JsonValueKind.Null,
                 view.GetProperty("trance").ValueKind);
         }
+    }
+
+    [Fact]
+    public async Task RealNativeConstructHttpPreviewUsesSharedAssemblyAndOriginEngine()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet",
+            ordinary: true, realNativeContent: true);
+        var catalog = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!;
+        var folder = new DirectoryInfo(AppContext.BaseDirectory);
+        string? reference = null;
+        while (folder is not null)
+        {
+            var candidate = Path.Combine(folder.FullName, "data", "reference",
+                "construct-basic-starting-build-20261120.json");
+            if (File.Exists(candidate)) { reference = candidate; break; }
+            folder = folder.Parent;
+        }
+        Assert.NotNull(reference);
+        using var data = JsonDocument.Parse(File.ReadAllText(reference!));
+        var assembly = data.RootElement.GetProperty("assembly")
+            .Deserialize<NativeConstructAssemblyRequest>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        var proposal = new NativeOriginProposal("http-construct",
+            NativeOriginIntent.Custom, new("rule.creature-origination", "construct-assembly"),
+            [], [], []);
+        const string endpoint = "/api/mechanics/v1/origins/construct/preview";
+
+        async Task<HttpResponseMessage> Send(NativeOriginProposal draft,
+            NativeConstructAssemblyRequest body, string fingerprint)
+        {
+            using var request = fixture.Authenticated(HttpMethod.Post, endpoint,
+                JsonContent.Create(new { rulesetId = catalog.RulesetId, fingerprint,
+                    proposal = draft, assembly = body }));
+            return await fixture.Client.SendAsync(request);
+        }
+
+        using var discovery = await Send(proposal, assembly, catalog.Fingerprint);
+        Assert.Equal(HttpStatusCode.OK, discovery.StatusCode);
+        var first = await discovery.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.True(first.GetProperty("previewOnly").GetBoolean());
+        var offers = first.GetProperty("result").GetProperty("origin")
+            .GetProperty("evaluatedProposal").GetProperty("candidates")
+            .Deserialize<NativeOriginCandidate[]>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+        Assert.NotEmpty(offers);
+        var manifested = proposal with
+        {
+            Manifestations = offers.Select((candidate, i) => new NativeOriginManifestation(
+                "http-selection-" + i, candidate.Id,
+                SelectedValue: candidate.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic
+                    ? candidate.OfferedValue : null)).ToArray()
+        };
+        using var constructed = await Send(manifested, assembly, catalog.Fingerprint);
+        Assert.Equal(HttpStatusCode.OK, constructed.StatusCode);
+        var result = await constructed.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.True(result.GetProperty("result").GetProperty("isMechanicallyAuthorized").GetBoolean());
+        Assert.Equal(163, result.GetProperty("result").GetProperty("assembly")
+            .GetProperty("knownConstructionCost").GetInt64());
+        Assert.Equal("resolved", result.GetProperty("movementModes").GetProperty("status").GetString());
+
+        using var stale = await Send(manifested, assembly, "stale");
+        Assert.Equal(HttpStatusCode.Conflict, stale.StatusCode);
+        using var forgedAllowance = await Send(manifested,
+            assembly with { InitialAllowance = 9999 }, catalog.Fingerprint);
+        var forged = await forgedAllowance.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.False(forged.GetProperty("result").GetProperty("isMechanicallyAuthorized").GetBoolean());
+        using var modification = await Send(manifested,
+            assembly with { InitialConstruction = false, InitialAllowance = null }, catalog.Fingerprint);
+        var modified = await modification.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.False(modified.GetProperty("result").GetProperty("isMechanicallyAuthorized").GetBoolean());
     }
 
     [Fact]

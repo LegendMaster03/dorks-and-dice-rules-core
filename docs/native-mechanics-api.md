@@ -25,11 +25,23 @@ The following paths are relative to the appropriate `/api/**/mechanics/v1` base:
 | POST | `/characters/equipment-training`, `/characters/equipment-training/coverage` | Equipment training and Weapon Mastery eligibility |
 | POST | `/advancements/eligibility` | Native acquisition eligibility |
 | POST | `/characters/project` | Native character mechanics projection |
+| POST | `/origins/preview` | Native initial Origin discovery and selection preview |
+| POST | `/origins/construct/preview` | Recipe quotation, component configuration and shared Origin construction preview |
+| POST | `/origins/evaluate-approved-mixed` | Public delegated, campaign-DM-scoped evaluation |
+| POST | `/origins/innate-spells/ledger/initialize-preview` | Public delegated, source-matched direct Origin ledger bootstrap |
 | POST | `/conditions/roll-mode` | Conditional roll-mode effects |
 | GET | `/creatures/{entityId}` | Supported native creature facts |
 | POST | `/resources/resolve` | Resource expenditure or recovery |
 
 The private mechanics surface additionally maps `GET /catalog/rules` and `POST /catalog/resolve`. Newer or incomplete mechanics must be verified against code and tests rather than inferred from this navigation table.
+
+## Character Origins preview contracts
+
+- Submit `rulesetId`, `fingerprint` and `proposal` to the initial Origin preview. The evaluated proposal returns native candidate IDs and choice requirements; resubmit the selected manifestations, not invented grants. Initial Origin previews continue to report changed fingerprints rather than requiring an exact match; refresh before committing anything.
+- Both direct and DM-scoped mixed previews return source-verified Tremorsense, Darkvision, innate spell and HP progression views. Supply optional `characterLevel` for level-dependent previews; it is not proof of character advancement. Biological allocation is a read-only assessment under the current native trial pricing revision and allowance; it does not authorize traits or change the existing creation gate.
+- Construct previews require the exact fingerprint and an additional `assembly` object matching `NativeConstructAssemblyRequest`. They return the recipe-derived ingredient bill, cost, component operating state, power networks and universal Origin result. Submit a draft first, then select its discovered native candidates. The starting allowance must match the authored native rule. The operating session is not serialized; movement is a read-only projection of the verified assembly. Non-initial assembly requests are modification quotations, not authorization to modify a stored character.
+- Private catalog resolution retains its existing source boundary. Ordinary option lookup returns identities and names only, including native Origin traits and Construct component, power-source and material options.
+- Persisted parent state, character-level authorization, permanent reconstruction, transformation execution, inventory/fuel transactions and migration require authoritative application state. None can be authorized by replaying a browser-authored profile through these stateless previews.
 
 ## Related design
 

@@ -45,6 +45,7 @@ public static class NativeMechanicsEndpoints
         // Origin preview inherits the same authenticated ingress as other mechanics.
         // No persisted state or table-authority claims are accepted by this route.
         group.MapNativeOriginPreview();
+        group.MapNativeConstructPreview();
         // Separate trusted DM-reviewed evaluation. The caller must still
         // commit any authorized result through Character Sheet's store.
         if (!privateTunnel)
@@ -69,6 +70,8 @@ public static class NativeMechanicsEndpoints
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",
                     originPreview = "stateless-first-party",
+                    constructOriginPreview = "stateless-native-assembly",
+                    biologicalAllocationPreview = NativeOriginFirstPartyBiologicalPricing.Revision,
                     originPersistence = false, originDmAdjudication = false,
                     innateSpellLedgerBootstrap = privateTunnel ? "unavailable" : "source-matched-preview",
                     startingEquipmentResolution = "authored-grants-only",
@@ -98,7 +101,8 @@ public static class NativeMechanicsEndpoints
                 category is not ("species" or "ancestry" or "class" or "subclass" or "patron" or "pact" or
                     "invocation" or "condition" or "leveled-condition" or
                     "skill" or "competency" or "monster" or "item" or
-                    "feat" or "spell") ||
+                    "feat" or "spell" or "origin-trait" or "construct-component" or
+                    "construct-power-source" or "construct-material") ||
                 (query?.Length ?? 0) > 200 ||
                 !PageNumber(limitText, 50, 1, 100, out var limit) ||
                 !PageNumber(offsetText, 0, 0, 1_000_000, out var offset))

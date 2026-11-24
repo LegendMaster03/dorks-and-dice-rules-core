@@ -12,7 +12,12 @@ namespace RulesCore.Host;
 public static class NativeOriginApiEndpoints
 {
     public sealed record PreviewRequest(
-        string RulesetId, string? Fingerprint, NativeOriginProposal Proposal);
+        string RulesetId, string? Fingerprint, NativeOriginProposal Proposal,
+        int? CharacterLevel = null);
+
+    public sealed record ConstructPreviewRequest(
+        string RulesetId, string Fingerprint, NativeOriginProposal Proposal,
+        NativeConstructAssemblyRequest Assembly);
 
     /// <summary>
     /// This call is for Character Sheet's *server-side* DM approval operation.
@@ -21,7 +26,8 @@ public static class NativeOriginApiEndpoints
     /// </summary>
     public sealed record ApprovedMixedRequest(
         string RulesetId, string? Fingerprint, Guid CharacterId,
-        Guid CampaignId, string ApprovalEvidenceId, NativeOriginProposal Proposal);
+        Guid CampaignId, string ApprovalEvidenceId, NativeOriginProposal Proposal,
+        int? CharacterLevel = null);
 
     public static void MapNativeOriginApprovedMixedEvaluation(this RouteGroupBuilder group)
     {
@@ -128,6 +134,11 @@ public static class NativeOriginApiEndpoints
                 movementModes = NativeOriginMovementModeProjector.ProjectApprovedMixed(catalog, result),
                 skillProficiencies = NativeOriginSkillProficiencyProjector.ProjectApprovedMixed(catalog, result),
                 restSurvival = NativeOriginRestSurvivalProjector.ProjectApprovedMixed(catalog, result),
+                tremorsense = NativeOriginTremorsenseProjector.ProjectApprovedMixed(catalog, result),
+                darkvision = NativeOriginDarkvisionProjector.ProjectApprovedMixed(catalog, result, request.CharacterLevel),
+                innateSpells = NativeOriginInnateSpellProgressionProjector.Project(catalog, result, request.CharacterLevel),
+                hitPointProgression = NativeOriginHitPointProgressionProjector.Project(catalog, result, request.CharacterLevel),
+                allocation = BiologicalAllocation(catalog, result),
                 result
             });
         });
@@ -288,39 +299,7 @@ public static class NativeOriginApiEndpoints
             // claimed Authorized profile or execute a post-origination Rite.
             // The engine independently discovers and validates native offers.
             var proposal = request.Proposal;
-            if (proposal.Intent == NativeOriginIntent.Transformation ||
-                proposal.ExistingConfiguration is not null ||
-                proposal.ExistingEffectiveConfiguration is not null ||
-                proposal.ExistingEffectiveConfigurationBasis is not null ||
-                proposal.ActiveTemporaryTransformation is not null ||
-                (proposal.OtherActiveTemporaryTransformations?.Count ?? 0) != 0 ||
-                proposal.TemporaryTransformationPrecedence is not null ||
-                (proposal.History?.Count ?? 0) != 0 ||
-                (proposal.TableDecisions?.Count ?? 0) != 0 ||
-                // These are trusted inputs only after the actual contributor's
-                // saved manifested state and acquisition have been verified.
-                proposal.Contributors.Any(contributor =>
-                    contributor.Source.Kind == NativeOriginSourceKind.ManifestedProfile ||
-                    contributor.ManifestedProfile is not null ||
-                    (contributor.HistoricalSourceIds?.Count ?? 0) != 0) ||
-                // A scoped table decision cannot be smuggled in through a
-                // candidate, resolution, requirement or manifestation.
-                proposal.Candidates.Any(candidate =>
-                    candidate.SelectionBasis.Eligibility == NativeOriginEligibility.DmAuthorized ||
-                    !string.IsNullOrWhiteSpace(candidate.SelectionBasis.TableDecisionId)) ||
-                (proposal.Resolutions?.Any(resolution => resolution?.Basis is null ||
-                    resolution.Basis.Adjudication == NativeOriginAdjudication.DmAuthorized ||
-                    !string.IsNullOrWhiteSpace(resolution.Basis.TableDecisionId)) ?? false) ||
-                (proposal.Constraints?.Any(constraint =>
-                    constraint is null ||
-                    !string.IsNullOrWhiteSpace(constraint.TableDecisionId)) ?? false) ||
-                (proposal.InputRequirements?.Any(requirement =>
-                    requirement is null ||
-                    !string.IsNullOrWhiteSpace(requirement.TableDecisionId)) ?? false) ||
-                proposal.Manifestations.Any(manifest =>
-                    !string.IsNullOrWhiteSpace(manifest.TableDecisionId) ||
-                    (manifest.Choices?.Any(choice => choice is null ||
-                        choice.CatalogEligibilityEvidenceId is not null) ?? false)))
+            if (HasUntrustedOriginState(proposal))
                 return Error(400, "trusted_origin_state_required");
 
             // Only native catalog membership proof is supplied internally.
@@ -349,10 +328,120 @@ public static class NativeOriginApiEndpoints
                 movementModes = NativeOriginMovementModeProjector.Project(catalog, result),
                 skillProficiencies = NativeOriginSkillProficiencyProjector.Project(catalog, result),
                 restSurvival = NativeOriginRestSurvivalProjector.Project(catalog, result),
+                tremorsense = NativeOriginTremorsenseProjector.Project(catalog, result),
+                darkvision = NativeOriginDarkvisionProjector.Project(catalog, result, request.CharacterLevel),
+                innateSpells = NativeOriginInnateSpellProgressionProjector.Project(catalog, result, request.CharacterLevel),
+                hitPointProgression = NativeOriginHitPointProgressionProjector.Project(catalog, result, request.CharacterLevel),
+                allocation = BiologicalAllocation(catalog, result),
                 result
             });
         });
     }
+
+    /// <summary>
+    /// Construct previews compile native offers from the proposed assembly;
+    /// no client-supplied authority, persisted state or allocation policy enters
+    /// the shared construction engine. A modification remains a quotation,
+    /// not authorization to change an existing character or debit inventory.
+    /// </summary>
+    public static void MapNativeConstructPreview(this RouteGroupBuilder group)
+    {
+        group.MapPost("/origins/construct/preview", (ConstructPreviewRequest request,
+            NativeCatalogStore store, HttpContext context) =>
+        {
+            context.Response.Headers.CacheControl = "no-store";
+            var catalog = store.Snapshot;
+            if (catalog is null) return Error(503, "native_catalog_unavailable");
+            if (request is null || request.Proposal is null ||
+                request.Proposal.Method is null ||
+                request.Proposal.Contributors is null ||
+                request.Proposal.Candidates is null ||
+                request.Proposal.Manifestations is null ||
+                request.Assembly?.Components is null ||
+                HasMalformedOriginNestedInputs(request.Proposal))
+                return Error(400, "invalid_construct_preview_request");
+            var proposal = request.Proposal;
+            var assembly = request.Assembly;
+            if (ExceedsUntrustedOriginLimits(proposal) ||
+                assembly.Components.Count > 256 ||
+                (assembly.PowerConnections?.Count ?? 0) > 4096 ||
+                (assembly.UnavailablePowerSourceInstanceIds?.Count ?? 0) > 256 ||
+                assembly.Components.Any(c => c is null ||
+                    (c.Materials?.Count ?? 0) > 128 ||
+                    (c.ConnectedTo?.Count ?? 0) > 256 ||
+                    (c.EnhancementIds?.Count ?? 0) > 32 ||
+                    (c.Materials?.Values.Any(string.IsNullOrWhiteSpace) ?? false) ||
+                    (c.ConnectedTo?.Any(string.IsNullOrWhiteSpace) ?? false) ||
+                    (c.EnhancementIds?.Any(string.IsNullOrWhiteSpace) ?? false)) ||
+                (assembly.PowerConnections?.Any(c => c is null ||
+                    string.IsNullOrWhiteSpace(c.FromInstanceId) ||
+                    string.IsNullOrWhiteSpace(c.ToInstanceId)) ?? false) ||
+                (assembly.UnavailablePowerSourceInstanceIds?.Any(string.IsNullOrWhiteSpace) ?? false))
+                return Error(400, "construct_request_limits_or_shape_invalid");
+            if (request.RulesetId != catalog.RulesetId ||
+                request.Fingerprint != catalog.Fingerprint)
+                return Error(409, "ruleset_version_mismatch");
+            if (HasUntrustedOriginState(proposal))
+                return Error(400, "trusted_origin_state_required");
+
+            var result = new NativeConstructOriginConstructionService(catalog)
+                .Evaluate(new(new(proposal), assembly));
+            return Results.Ok(new
+            {
+                contractVersion = 1,
+                rulesetId = catalog.RulesetId,
+                fingerprint = catalog.Fingerprint,
+                previewOnly = true,
+                movementModes = NativeOriginMovementModeProjector.ProjectConstruct(catalog, result),
+                result
+            });
+        });
+    }
+
+    // The provisional first-party schedule is host-owned. This is a read-only
+    // assessment, not a new creation gate for every existing consumer.
+    private static NativeOriginAllocationAssessment? BiologicalAllocation(
+        NativeCatalogSnapshot catalog, NativeOriginConstructionResult result) =>
+        result.EvaluatedProposal.Method is { RuleId: "rule.creature-origination", MethodId: "biological" }
+            ? NativeOriginAllocationPreview.Assess(catalog, result,
+                NativeOriginFirstPartyBiologicalPricing.Create())
+            : null;
+
+    // Shared stateless ingress guard: never accept claimed persisted authority.
+    private static bool HasUntrustedOriginState(NativeOriginProposal proposal) =>
+        proposal.Intent == NativeOriginIntent.Transformation ||
+        proposal.ExistingConfiguration is not null ||
+        proposal.ExistingEffectiveConfiguration is not null ||
+        proposal.ExistingEffectiveConfigurationBasis is not null ||
+        proposal.ActiveTemporaryTransformation is not null ||
+        (proposal.OtherActiveTemporaryTransformations?.Count ?? 0) != 0 ||
+        proposal.TemporaryTransformationPrecedence is not null ||
+        (proposal.History?.Count ?? 0) != 0 ||
+        (proposal.TableDecisions?.Count ?? 0) != 0 ||
+        // These are trusted inputs only after the actual contributor's
+        // saved manifested state and acquisition have been verified.
+        proposal.Contributors.Any(contributor =>
+            contributor.Source.Kind == NativeOriginSourceKind.ManifestedProfile ||
+            contributor.ManifestedProfile is not null ||
+            (contributor.HistoricalSourceIds?.Count ?? 0) != 0) ||
+        // A scoped table decision cannot be smuggled in through a
+        // candidate, resolution, requirement or manifestation.
+        proposal.Candidates.Any(candidate =>
+            candidate.SelectionBasis.Eligibility == NativeOriginEligibility.DmAuthorized ||
+            !string.IsNullOrWhiteSpace(candidate.SelectionBasis.TableDecisionId)) ||
+        (proposal.Resolutions?.Any(resolution => resolution?.Basis is null ||
+            resolution.Basis.Adjudication == NativeOriginAdjudication.DmAuthorized ||
+            !string.IsNullOrWhiteSpace(resolution.Basis.TableDecisionId)) ?? false) ||
+        (proposal.Constraints?.Any(constraint =>
+            constraint is null ||
+            !string.IsNullOrWhiteSpace(constraint.TableDecisionId)) ?? false) ||
+        (proposal.InputRequirements?.Any(requirement =>
+            requirement is null ||
+            !string.IsNullOrWhiteSpace(requirement.TableDecisionId)) ?? false) ||
+        proposal.Manifestations.Any(manifest =>
+            !string.IsNullOrWhiteSpace(manifest.TableDecisionId) ||
+            (manifest.Choices?.Any(choice => choice is null ||
+                choice.CatalogEligibilityEvidenceId is not null) ?? false));
 
     /// <summary>
     /// Validate keys and record members used by discovery and first-party
