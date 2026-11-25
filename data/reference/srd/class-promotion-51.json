@@ -1643,5 +1643,11 @@
       }
     ],
     "status": "Publisher class-list membership reconciled; feature grants, preparation and spell execution are separate."
+  },
+  "literalSpellRelationships": {
+    "grantOccurrences": 87,
+    "prerequisiteOccurrences": 0,
+    "addedCatalogLinks": 74,
+    "unresolvedSelectors": 15
   }
 }

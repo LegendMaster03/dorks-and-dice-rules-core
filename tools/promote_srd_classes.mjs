@@ -2,6 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
+import {linkSpellRelationships} from "./link_srd_spell_relationships.mjs";
 function generateClasses(inputs,manifest,src,pages,tag){
  const edition="SRD"+tag,slug=s=>s.toLowerCase().normalize("NFKC").replace(/[’']/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
  const kinds={class:"class",subclass:"subclass",classFeature:"class-feature",subclassFeature:"subclass-feature"};
@@ -244,6 +245,8 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
   if(new Set(ids).size!==10)throw Error("Incomplete modern Metamagic options");
   option.catalogReferences=[...new Set([...option.catalogReferences,...ids])].sort();
  }
+ const spells=fs.readdirSync(path.join(root,base+"native/spells")).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(base+"native/spells/"+f));
+ report.literalSpellRelationships=linkSpellRelationships(Object.values(groups).flat(),spells,"SRD"+tag);
  const outputs=Object.entries(groups).map(([name,records])=>[base+"native/classes/"+name+".json",json(records)]);
  outputs.push(["data/reference/srd/class-promotion-"+tag+".json",json(report)]);
  for(const [file,body] of outputs){

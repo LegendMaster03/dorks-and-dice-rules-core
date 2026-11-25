@@ -879,6 +879,16 @@
     "catalogReferences": [
       "class.cleric",
       "rulebook.page-040",
+      "spell.aid",
+      "spell.aura-of-life",
+      "spell.bless",
+      "spell.cure-wounds",
+      "spell.death-ward",
+      "spell.greater-restoration",
+      "spell.lesser-restoration",
+      "spell.mass-cure-wounds",
+      "spell.mass-healing-word",
+      "spell.revivify",
       "subclass-feature.cleric.life.blessed-healer.6",
       "subclass-feature.cleric.life.life-domain.3",
       "subclass-feature.cleric.life.supreme-healing.17"

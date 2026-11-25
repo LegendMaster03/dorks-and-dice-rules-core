@@ -3935,5 +3935,11 @@
         "reason": "Class not published in SRD 5.2.1"
       }
     ]
+  },
+  "literalSpellRelationships": {
+    "grantOccurrences": 72,
+    "prerequisiteOccurrences": 0,
+    "addedCatalogLinks": 65,
+    "unresolvedSelectors": 16
   }
 }
