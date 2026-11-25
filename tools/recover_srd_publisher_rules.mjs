@@ -212,7 +212,107 @@ function legacyMonsterProcedures(pageMap,metadata){
  ];
 }
 
-function recoverPublisherRules(manifest,pages,tag,knownIds,items){
+function legacyMonsterReference(pageMap,metadata,combatSizeRows){
+ // Preserve facing-column prose while separately reading the distinct monster
+ // size table and skipping the already projected hit-die and CR/PB tables.
+ const columns=page=>{
+  const left=[],right=[],table=[];
+  for(const line of page.textLayout.split("\n")){
+   if(!line.trim()||line.includes("System Reference Document 5.1"))continue;
+   if(page.page===254){
+    const m=line.match(/^\s*(Tiny|Small|Medium|Large|Huge|Gargantuan)\s{2,}(.+?)\s{2,}(.+?)\s{2,}(\S.*)$/);
+    if(m){table.push(m.slice(1,4));right.push(m[4]);continue;}
+    if(/^Size\s{2,}Space\s{2,}Examples\s{2,}/.test(line)){right.push(line.split(/ {4,}/).at(-1));continue;}
+   }
+   if(page.page===256){
+    if(/^ {50,}/.test(line)){
+     const s=line.trim();if(/^(?:\d+(?:\/\d+)?\s+\+\d+\s+\d+\s+\+\d+|Proficiency\s+Proficiency|Challenge\s+Bonus\s+Challenge\s+Bonus)$/.test(s))continue;
+     right.push(s);continue;
+    }
+    if(/^Monster Size\s+Hit Die\s+Average HP per Die$/.test(line))continue;
+    const hd=line.match(/^\s*(?:Tiny|Small|Medium|Large|Huge|Gargantuan)\s+d\d+\s+[\d½]+(?:\s{2,}(\S.*))?$/);
+    if(hd){if(hd[1])right.push(hd[1]);continue;}
+    const pb=line.match(/^(.*?) {4,}\d+(?:\/\d+)?\s+\+\d+\s+\d+\s+\+\d+\s*$/);
+    if(pb){if(pb[1].trim())left.push(pb[1].trim());continue;}
+    const header=line.match(/^(.*?) {4,}(?:Proficiency\s+Proficiency|Challenge\s+Bonus\s+Challenge\s+Bonus)\s*$/);
+    if(header){if(header[1].trim())left.push(header[1].trim());continue;}
+   }
+   if(/^ {50,}/.test(line)){right.push(line.trim());continue;}
+   const parts=line.trim().split(/ {4,}/);
+   if(parts.length>2)throw Error("Unexpected monster reference columns "+page.page);
+   left.push(parts[0]);if(parts.length===2)right.push(parts[1]);
+  }
+  return {left,right,table};
+ };
+ const clean=lines=>lines.join(" ").replace(/\u00ad/g,"").replace(/[-\u2010\u2011]{2,}/g,"-").replace(/\s+/g," ").trim();
+ const section=(lines,start,end)=>{
+  const i=lines.indexOf(start),j=end===undefined?lines.length:lines.indexOf(end,i+1);
+  if(i<0||j<=i)throw Error("Missing monster reference boundary "+start);
+  return lines.slice(i+1,j);
+ };
+ const paras=(lines,starts=[])=>{
+  const offsets=[0,...starts.map(s=>lines.findIndex(l=>l.startsWith(s))),lines.length];
+  if(offsets.some((v,i)=>i&&v<=offsets[i-1]))throw Error("Unexpected monster reference paragraph boundary "+starts.join(", "));
+  return offsets.slice(0,-1).map((i,j)=>clean(lines.slice(i,offsets[j+1])));
+ };
+ const node=(name,entries)=>({type:"entries",name,entries});
+ const row=(id,name,nums,entries,refs)=>({id,kind:"rule",name,entries,catalogReferences:[...new Set([...nums.map(n=>pageMap.get(n).id),...refs])].sort(),source:metadata(nums)});
+ const p254=columns(pageMap.get(254)),p255=columns(pageMap.get(255)),p256=columns(pageMap.get(256)),p257=columns(pageMap.get(257));
+ if(p254.table.length!==6||JSON.stringify(p254.table.map(r=>r.slice(0,2)))!==JSON.stringify(combatSizeRows))throw Error("Monster size table disagrees with combat size rules");
+ const sizeTable={id:"table.monster-size-categories",kind:"table",name:"Monster Size Categories",colLabels:["Size","Space","Examples"],rows:p254.table,catalogReferences:["rulebook.page-254","table.size-categories"],source:metadata([254])};
+ const overview=[
+  ...paras(section(p254.left,"Monsters","Size")),
+  node("Size",paras(section(p254.left,"Size","Size Categories"))),
+  node("Modifying Creatures",paras(section(p254.left,"Modifying Creatures","Type")))
+ ];
+ const types=paras([...section(p254.left,"Type"),...p254.right,...p255.left.slice(0,p255.left.indexOf("Tags"))],["The game includes","Aberrations are","Beasts are","Celestials are","Constructs are","Dragons are","Elementals are","Fey are","Fiends are","Giants tower","Humanoids are","Monstrosities are","Oozes are","Plants in this context","Undead are"]);
+ const tags=paras([...section(p255.left,"Tags"),...p255.right.slice(0,p255.right.indexOf("Alignment"))]);
+ const alignment=paras(section(p255.right,"Alignment","Armor Class"),["The alignment specified","Some creatures can have","Many creatures of low intelligence"]);
+ const armor=paras(section(p255.right,"Armor Class","Hit Points"));
+ const hp=paras([...section(p255.right,"Hit Points"),...section(p256.left,"Hit Dice by Size","Speed")],["A monster’s hit points","A monster’s size","A monster’s Constitution modifier"]);
+ const speed=[
+  ...paras(section(p256.left,"Speed","Burrow"),["All creatures","Some creatures"]),
+  node("Burrow",paras(section(p256.left,"Burrow","Climb"))),
+  node("Climb",paras(section(p256.left,"Climb","Fly"))),
+  node("Fly",paras(section(p256.left,"Fly","Swim"))),
+  node("Swim",paras(section(p256.left,"Swim")))
+ ];
+ const ability=paras(section(p256.right,"Ability Scores","Saving Throws"));
+ const saves=paras(section(p256.right,"Saving Throws","Proficiency Bonus by Challenge Rating"),["A saving throw bonus"]);
+ const skills=paras([...section(p256.right,"Skills"),...p257.left.slice(0,p257.left.indexOf("Vulnerabilities, Resistances, and"))],["A skill bonus"]);
+ const defenses=paras(section(p257.left,"Immunities","Senses"));
+ const senses=[
+  ...paras(section(p257.left,"Senses","Blindsight")),
+  node("Blindsight",paras(section(p257.left,"Blindsight","Darkvision"),["Creatures without eyes","If a monster is naturally blind"])),
+  node("Darkvision",paras(section(p257.left,"Darkvision","Armor, Weapon, and Tool Proficiencies"))),
+  node("Tremorsense",paras(section(p257.right,"Tremorsense","Truesight"))),
+  node("Truesight",paras(section(p257.right,"Truesight","Languages"),["Furthermore, the monster"]))
+ ];
+ const languages=[
+  ...paras(section(p257.right,"Languages","Telepathy")),
+  node("Telepathy",paras(section(p257.right,"Telepathy"),["A telepathic monster","A creature within the area"]))
+ ];
+ const prof=paras(section(p257.left,"Armor, Weapon, and Tool Proficiencies"),["For example, a hill giant","See the Player’s Handbook"]);
+ if(types.length!==16||!types.at(-1).endsWith("and specters.")||!tags[0].endsWith("demon tag.")||!hp.at(-1).endsWith("(average 11).")||!skills.at(-1).endsWith("heightened expertise.")||!languages.at(-1).entries.at(-1).endsWith("telepathic messages."))throw Error("Incomplete monster reference section");
+ return [
+  sizeTable,
+  row("rule.monsters","Monsters",[254],overview,["table.monster-size-categories","rule.monster-challenge","rule.monster-type"]),
+  row("rule.monster-type","Monster Type",[254,255],[...types,node("Tags",tags)],["rule.appendix-ph-c-the-planes-of-existence"]),
+  row("rule.monster-alignment","Monster Alignment",[255],alignment,["rule.alignment"]),
+  row("rule.monster-armor-class","Monster Armor Class",[255],armor,["rule.armor"]),
+  row("rule.monster-hit-points","Monster Hit Points",[255,256],hp,["table.hit-dice-by-size","rule.damage-and-healing"]),
+  row("rule.monster-speed","Monster Speed",[256],speed,["rule.movement","rule.movement-and-position"]),
+  row("rule.monster-ability-scores","Monster Ability Scores",[256],ability,["rule.ability-scores-and-modifiers"]),
+  row("rule.monster-saving-throws","Monster Saving Throws",[256],saves,["rule.saving-throws","table.proficiency-bonus-by-challenge-rating"]),
+  row("rule.monster-skills","Monster Skills",[256,257],skills,["rule.ability-checks","table.proficiency-bonus-by-challenge-rating","skill.perception","skill.stealth"]),
+  row("rule.monster-defenses","Monster Vulnerabilities, Resistances, and Immunities",[257],defenses,["rule.damage-and-healing","table.damage-types"]),
+  row("rule.monster-senses","Monster Senses",[257],senses,["rule.the-environment","skill.perception"]),
+  row("rule.monster-languages","Monster Languages",[257],languages,["rule.languages","condition.incapacitated","spell.antimagic-field"]),
+  row("rule.monster-equipment-proficiencies","Monster Armor, Weapon, and Tool Proficiencies",[257],prof,["rule.armor","rule.weapons","rule.tools","rule.monster-equipment"])
+ ];
+}
+
+function recoverPublisherRules(manifest,pages,tag,knownIds,items,bookRules){
  const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
  const pageMap=new Map(pages.map(p=>[p.page,p]));
  const metadata=nums=>({release:manifest.officialPageImport.release,url:pageMap.get(nums[0]).source.url,pdfSha256:manifest.officialPageImport.pdfSha256,license:manifest.license,attribution:manifest.attribution,pages:nums,structuredStatus:"Publisher-only definition recovered; no corresponding standalone structured source record."});
@@ -233,6 +333,7 @@ function recoverPublisherRules(manifest,pages,tag,knownIds,items){
   rows.push(...legacyPublisherRules(pageMap,metadata));
   rows.push(legacySentientMagicItems(pageMap,metadata));
   rows.push(...legacyMonsterProcedures(pageMap,metadata));
+  rows.push(...legacyMonsterReference(pageMap,metadata,bookRules.find(r=>r.id==="table.size-categories").rows));
  }else{
   // The expanded upstream candidate matches the complete official glossary entry.
   // Keep its provenance separate from pointers into the original pinned corpus.
@@ -257,7 +358,7 @@ for(const [pack,tag,files] of [["dnd-5e","51",["053-077","178-202","203-227","22
  const pages=files.flatMap(f=>read(native+"rulebook/pages-"+f+".json"));
  const load=dir=>fs.readdirSync(path.join(root,native,dir)).filter(f=>f.endsWith(".json")).flatMap(f=>read(native+dir+"/"+f));
  const items=load("items"),knownIds=[...items,...load("classes"),...load("spells"),...["skills.json","conditions.json","supplementary-rules.json","book-rules-and-tables.json"].flatMap(f=>read(native+f))].map(x=>x.id);
- const rows=recoverPublisherRules(read(base+"manifest.json"),pages,tag,knownIds,items),body=JSON.stringify(rows,null,2)+"\n",target=path.join(root,native+"publisher-recovered-rules.json");
+ const rows=recoverPublisherRules(read(base+"manifest.json"),pages,tag,knownIds,items,read(native+"book-rules-and-tables.json")),body=JSON.stringify(rows,null,2)+"\n",target=path.join(root,native+"publisher-recovered-rules.json");
  if(process.argv.includes("--check")){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale publisher recovery "+pack);}
  else fs.writeFileSync(target,body);
  console.log(pack+": "+rows.length+" publisher-only rule/group recoveries");
