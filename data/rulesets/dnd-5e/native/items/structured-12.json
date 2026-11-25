@@ -1,0 +1,1619 @@
+[
+  {
+    "id": "baseitem.mason-s-tools",
+    "kind": "baseitem",
+    "name": "Mason's Tools",
+    "type": "AT",
+    "rarity": "none",
+    "weight": 8,
+    "value": 1000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/101"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.maul",
+    "kind": "baseitem",
+    "name": "Maul",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 10,
+    "value": 1000,
+    "weaponCategory": "martial",
+    "property": [
+      "H",
+      "2H"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "B",
+    "hammer": true,
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/103"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.morningstar",
+    "kind": "baseitem",
+    "name": "Morningstar",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 4,
+    "value": 1500,
+    "weaponCategory": "martial",
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "mace": true,
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/105"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.net",
+    "kind": "baseitem",
+    "name": "Net",
+    "edition": "classic",
+    "type": "R",
+    "rarity": "none",
+    "weight": 3,
+    "value": 100,
+    "weaponCategory": "martial",
+    "property": [
+      "S",
+      "T"
+    ],
+    "range": "5/15",
+    "net": true,
+    "weapon": true,
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Special",
+        "entries": [
+          "A Large or smaller creature hit by a net is {@condition restrained} until it is freed. A net has no effect on creatures that are formless, or creatures that are Huge or larger. A creature can use its action to make a {@dc 10} Strength check, freeing itself or another creature within its reach on a success. Dealing 5 slashing damage to the net (AC 10) also frees the creature without harming it, ending the effect and destroying the net. When you use an action, bonus action, or reaction to attack with a net, you can make only one attack regardless of the number of attacks you can normally make."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 65,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/111"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.orb",
+    "kind": "baseitem",
+    "name": "Orb",
+    "edition": "classic",
+    "type": "SCF",
+    "scfType": "arcane",
+    "rarity": "none",
+    "weight": 3,
+    "value": 2000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/112"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.padded-armor",
+    "kind": "baseitem",
+    "name": "Padded Armor",
+    "edition": "classic",
+    "type": "LA",
+    "rarity": "none",
+    "weight": 8,
+    "value": 500,
+    "ac": 11,
+    "armor": true,
+    "stealth": true,
+    "entries": [
+      "Padded armor consists of quilted layers of cloth and batting."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 63,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/114"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.painter-s-supplies",
+    "kind": "baseitem",
+    "name": "Painter's Supplies",
+    "type": "AT",
+    "rarity": "none",
+    "weight": 5,
+    "value": 1000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/116"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.pan-flute",
+    "kind": "baseitem",
+    "name": "Pan Flute",
+    "edition": "classic",
+    "type": "INS",
+    "rarity": "none",
+    "weight": 2,
+    "value": 1200,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/118"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.pike",
+    "kind": "baseitem",
+    "name": "Pike",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 18,
+    "value": 500,
+    "weaponCategory": "martial",
+    "property": [
+      "H",
+      "R",
+      "2H"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/120"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.plate-armor",
+    "kind": "baseitem",
+    "name": "Plate Armor",
+    "edition": "classic",
+    "type": "HA",
+    "rarity": "none",
+    "weight": 65,
+    "value": 150000,
+    "ac": 18,
+    "strength": "15",
+    "armor": true,
+    "stealth": true,
+    "entries": [
+      "Plate consists of shaped, interlocking metal plates to cover the entire body. A suit of plate includes gauntlets, heavy leather boots, a visored helmet, and thick layers of padding underneath the armor. Buckles and straps distribute the weight over the body."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 62,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/124"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.potter-s-tools",
+    "kind": "baseitem",
+    "name": "Potter's Tools",
+    "type": "AT",
+    "rarity": "none",
+    "weight": 3,
+    "value": 1000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/126"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.quarterstaff",
+    "kind": "baseitem",
+    "name": "Quarterstaff",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 4,
+    "value": 20,
+    "weaponCategory": "simple",
+    "property": [
+      "V"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/128"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.rapier",
+    "kind": "baseitem",
+    "name": "Rapier",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 2,
+    "value": 2500,
+    "weaponCategory": "martial",
+    "property": [
+      "F"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "rapier": true,
+    "sword": true,
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/130"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.ring-mail",
+    "kind": "baseitem",
+    "name": "Ring Mail",
+    "edition": "classic",
+    "type": "HA",
+    "rarity": "none",
+    "weight": 40,
+    "value": 3000,
+    "ac": 14,
+    "armor": true,
+    "stealth": true,
+    "entries": [
+      "This armor is leather armor with heavy rings sewn into it. The rings help reinforce the armor against blows from swords and axes. Ring mail is inferior to chain mail, and it's usually worn only by those who can't afford better armor."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 63,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/132"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.rod",
+    "kind": "baseitem",
+    "name": "Rod",
+    "edition": "classic",
+    "type": "SCF",
+    "scfType": "arcane",
+    "rarity": "none",
+    "weight": 2,
+    "value": 1000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/134"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.scale-mail",
+    "kind": "baseitem",
+    "name": "Scale Mail",
+    "edition": "classic",
+    "type": "MA",
+    "rarity": "none",
+    "weight": 45,
+    "value": 5000,
+    "ac": 14,
+    "armor": true,
+    "stealth": true,
+    "entries": [
+      "This armor consists of a coat and leggings (and perhaps a separate skirt) of leather covered with overlapping pieces of metal, much like the scales of a fish. The suit includes gauntlets."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 63,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/136"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.scimitar",
+    "kind": "baseitem",
+    "name": "Scimitar",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 3,
+    "value": 2500,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "sword": true,
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/138"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.shawm",
+    "kind": "baseitem",
+    "name": "Shawm",
+    "edition": "classic",
+    "type": "INS",
+    "rarity": "none",
+    "weight": 1,
+    "value": 200,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/140"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.shield",
+    "kind": "baseitem",
+    "name": "Shield",
+    "edition": "classic",
+    "type": "S",
+    "rarity": "none",
+    "weight": 6,
+    "value": 1000,
+    "ac": 2,
+    "entries": [
+      "A shield is made from wood or metal and is carried in one hand. Wielding a shield increases your Armor Class by 2. You can benefit from only one shield at a time."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 62,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/142"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.shortbow",
+    "kind": "baseitem",
+    "name": "Shortbow",
+    "edition": "classic",
+    "type": "R",
+    "rarity": "none",
+    "weight": 2,
+    "value": 2500,
+    "weaponCategory": "simple",
+    "property": [
+      "A",
+      "2H"
+    ],
+    "range": "80/320",
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "bow": true,
+    "weapon": true,
+    "ammoType": "arrow|srd51",
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/144"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.shortsword",
+    "kind": "baseitem",
+    "name": "Shortsword",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 2,
+    "value": 1000,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "sword": true,
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/146"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.sickle",
+    "kind": "baseitem",
+    "name": "Sickle",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 2,
+    "value": 100,
+    "weaponCategory": "simple",
+    "property": [
+      "L"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/148"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.sling",
+    "kind": "baseitem",
+    "name": "Sling",
+    "edition": "classic",
+    "type": "R",
+    "rarity": "none",
+    "value": 10,
+    "weaponCategory": "simple",
+    "property": [
+      "A"
+    ],
+    "range": "30/120",
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "weapon": true,
+    "ammoType": "sling bullet|srd51",
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 64,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/150"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.sling-bullet",
+    "kind": "baseitem",
+    "name": "Sling Bullet",
+    "edition": "classic",
+    "type": "A",
+    "rarity": "none",
+    "weight": 0.075,
+    "value": 0.2,
+    "bulletSling": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/152"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.sling-bullets-20",
+    "kind": "baseitem",
+    "name": "Sling Bullets (20)",
+    "edition": "classic",
+    "type": "A",
+    "rarity": "none",
+    "weight": 1.5,
+    "value": 4,
+    "bulletSling": true,
+    "packContents": [
+      {
+        "item": "sling bullet|srd51",
+        "quantity": 20
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/154"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.smith-s-tools",
+    "kind": "baseitem",
+    "name": "Smith's Tools",
+    "type": "AT",
+    "rarity": "none",
+    "weight": 8,
+    "value": 2000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/156"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.spear",
+    "kind": "baseitem",
+    "name": "Spear",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 3,
+    "value": 100,
+    "weaponCategory": "simple",
+    "property": [
+      "T",
+      "V"
+    ],
+    "range": "20/60",
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "dmg2": "1d8",
+    "spear": true,
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/158"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.splint-armor",
+    "kind": "baseitem",
+    "name": "Splint Armor",
+    "edition": "classic",
+    "type": "HA",
+    "rarity": "none",
+    "weight": 60,
+    "value": 20000,
+    "ac": 17,
+    "strength": "15",
+    "armor": true,
+    "stealth": true,
+    "entries": [
+      "This armor is made of narrow vertical strips of metal riveted to a backing of leather that is worn over cloth padding. Flexible chain mail protects the joints."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 63,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/160"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.staff",
+    "kind": "baseitem",
+    "name": "Staff",
+    "edition": "classic",
+    "type": "SCF",
+    "scfType": "arcane",
+    "rarity": "none",
+    "weight": 4,
+    "value": 500,
+    "weaponCategory": "simple",
+    "property": [
+      "V"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "staff": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/162"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.studded-leather-armor",
+    "kind": "baseitem",
+    "name": "Studded Leather Armor",
+    "edition": "classic",
+    "type": "LA",
+    "rarity": "none",
+    "weight": 13,
+    "value": 4500,
+    "ac": 12,
+    "armor": true,
+    "entries": [
+      "Made from tough but flexible leather, studded leather is reinforced with close-set rivets or spikes."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 63,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/164"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.tinker-s-tools",
+    "kind": "baseitem",
+    "name": "Tinker's Tools",
+    "type": "AT",
+    "rarity": "none",
+    "weight": 10,
+    "value": 5000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/166"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.trident",
+    "kind": "baseitem",
+    "name": "Trident",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 4,
+    "value": 500,
+    "weaponCategory": "martial",
+    "property": [
+      "T",
+      "V"
+    ],
+    "range": "20/60",
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "dmg2": "1d8",
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/168"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.viol",
+    "kind": "baseitem",
+    "name": "Viol",
+    "edition": "classic",
+    "type": "INS",
+    "rarity": "none",
+    "weight": 1,
+    "value": 3000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/170"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.wand",
+    "kind": "baseitem",
+    "name": "Wand",
+    "edition": "classic",
+    "type": "SCF",
+    "scfType": "arcane",
+    "rarity": "none",
+    "weight": 1,
+    "value": 1000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/172"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.war-pick",
+    "kind": "baseitem",
+    "name": "War Pick",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 2,
+    "value": 500,
+    "weaponCategory": "martial",
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/174"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.warhammer",
+    "kind": "baseitem",
+    "name": "Warhammer",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 2,
+    "value": 1500,
+    "weaponCategory": "martial",
+    "property": [
+      "V"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "dmg2": "1d10",
+    "hammer": true,
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/176"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.weaver-s-tools",
+    "kind": "baseitem",
+    "name": "Weaver's Tools",
+    "type": "AT",
+    "rarity": "none",
+    "weight": 5,
+    "value": 100,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/178"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.whip",
+    "kind": "baseitem",
+    "name": "Whip",
+    "edition": "classic",
+    "type": "M",
+    "rarity": "none",
+    "weight": 3,
+    "value": 200,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "R"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/180"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.woodcarver-s-tools",
+    "kind": "baseitem",
+    "name": "Woodcarver's Tools",
+    "type": "AT",
+    "rarity": "none",
+    "weight": 5,
+    "value": 100,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/182"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.wooden-staff",
+    "kind": "baseitem",
+    "name": "Wooden Staff",
+    "edition": "classic",
+    "type": "SCF",
+    "scfType": "druid",
+    "rarity": "none",
+    "weight": 4,
+    "value": 500,
+    "weaponCategory": "simple",
+    "property": [
+      "V"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/184"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.2h",
+    "kind": "item-property",
+    "name": "Two-Handed",
+    "abbreviation": "2H",
+    "template": "{{prop_name_lower}}",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Two-Handed",
+        "entries": [
+          "This weapon requires two hands to use. This property is relevant only when you attack with the weapon, not when you simply hold it."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 147,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/0"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.a",
+    "kind": "item-property",
+    "name": "Ammunition",
+    "abbreviation": "A",
+    "template": "{{prop_name_lower}} ({{item.range}} ft.)",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Ammunition",
+        "entries": [
+          "You can use a weapon that has the ammunition property to make a ranged attack only if you have ammunition to fire from the weapon. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack. Loading a one-handed weapon requires a free hand. At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.",
+          "If you use a weapon that has the ammunition property to make a melee attack, you treat the weapon as an improvised weapon. A sling must be loaded to deal any damage when used in this way."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 146,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/2"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.af",
+    "kind": "item-property",
+    "name": "Ammunition",
+    "abbreviation": "AF",
+    "template": "{{prop_name_lower}} ({{item.range}} ft.)",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Ammunition",
+        "entries": [
+          "You can use a weapon that has the ammunition property to make a ranged attack only if you have ammunition to fire from the weapon. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack. Loading a one-handed weapon requires a free hand. The ammunition of a firearm is destroyed upon use.",
+          "If you use a weapon that has the ammunition property to make a melee attack, you treat the weapon as an improvised weapon. A sling must be loaded to deal any damage when used in this way."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 267,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/4"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.bf",
+    "kind": "item-property",
+    "name": "Burst Fire",
+    "abbreviation": "BF",
+    "template": "{{prop_name_lower}}",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Burst Fire",
+        "entries": [
+          "A weapon that has the burst fire property can make a single-target attack, or it can spray a 10-foot-cube area within normal range with shots. Each creature in the area must succeed on a {@dc 15} Dexterity saving throw or take the weapon's normal damage. This action uses ten pieces of ammunition."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 267,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/6"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.f",
+    "kind": "item-property",
+    "name": "Finesse",
+    "abbreviation": "F",
+    "template": "{{prop_name_lower}}",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Finesse",
+        "entries": [
+          "When making an attack with a finesse weapon, you use your choice of your Strength or Dexterity modifier for the attack and damage rolls. You must use the same modifier for both rolls."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 147,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/8"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.h",
+    "kind": "item-property",
+    "name": "Heavy",
+    "abbreviation": "H",
+    "template": "{{prop_name_lower}}",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Heavy",
+        "entries": [
+          "Creatures that are Small or Tiny have disadvantage on attack rolls with heavy weapons. A heavy weapon's size and bulk make it too large for a Small or Tiny creature to use effectively."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 147,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/10"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.l",
+    "kind": "item-property",
+    "name": "Light",
+    "abbreviation": "L",
+    "template": "{{prop_name_lower}}",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Light",
+        "entries": [
+          "A light weapon is small and easy to handle, making it ideal for use when fighting with two weapons."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 147,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/12"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.ld",
+    "kind": "item-property",
+    "name": "Loading",
+    "abbreviation": "LD",
+    "template": "{{prop_name_lower}}",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Loading",
+        "entries": [
+          "Because of the time required to load this weapon, you can fire only one piece of ammunition from it when you use an action, bonus action, or reaction to fire it, regardless of the number of attacks you can normally make."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 147,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/14"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.r",
+    "kind": "item-property",
+    "name": "Reach",
+    "abbreviation": "R",
+    "template": "{{prop_name_lower}}",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Reach",
+        "entries": [
+          "This weapon adds 5 feet to your reach when you attack with it. This property also determines your reach for opportunity attacks with a reach weapon."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 147,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/16"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.rld",
+    "kind": "item-property",
+    "name": "Reload",
+    "abbreviation": "RLD",
+    "template": "{{prop_name_lower}} ({{item.reload}} shots)",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Reload",
+        "entries": [
+          "A limited number of shots can be made with a weapon that has the reload property. A character must then reload it using an action or a bonus action (the character's choice)."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 267,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/18"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  }
+]

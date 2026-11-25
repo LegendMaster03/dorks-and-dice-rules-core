@@ -1,0 +1,1460 @@
+[
+  {
+    "id": "item-property.s",
+    "kind": "item-property",
+    "name": "special",
+    "abbreviation": "S",
+    "template": "{{prop_name_lower}}",
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 64,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/20"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.t",
+    "kind": "item-property",
+    "name": "Thrown",
+    "abbreviation": "T",
+    "template": "{{prop_name_lower}} ({{item.range}} ft.)",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Thrown",
+        "entries": [
+          "If a weapon has the thrown property, you can throw the weapon to make a ranged attack. If the weapon is a melee weapon, you use the same ability modifier for that attack roll and damage roll that you would use for a melee attack with the weapon. For example, if you throw a handaxe, you use your Strength, but if you throw a dagger, you can use either your Strength or your Dexterity, since the dagger has the finesse property."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 147,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/21"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.v",
+    "kind": "item-property",
+    "name": "Versatile",
+    "abbreviation": "V",
+    "template": "{{prop_name_lower}} ({{item.dmg2}})",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Versatile",
+        "entries": [
+          "This weapon can be used with one or two hands. A damage value in parentheses appears with the property—the damage when the weapon is used with two hands to make a melee attack."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 147,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/23"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.1-ammunition",
+    "kind": "magic-variant",
+    "name": "+1 Ammunition",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "type": "A|SRD51"
+      },
+      {
+        "type": "AF|SRD51"
+      }
+    ],
+    "ammo": true,
+    "inherits": {
+      "namePrefix": "+1 ",
+      "source": "SRD51",
+      "page": 207,
+      "rarity": "uncommon",
+      "bonusWeapon": "+1",
+      "entries": [
+        "You have a {=bonusWeapon} bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 207,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/0"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.1-armor",
+    "kind": "magic-variant",
+    "name": "+1 Armor",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "armor": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "+1 ",
+      "source": "SRD51",
+      "page": 208,
+      "rarity": "rare",
+      "bonusAc": "+1",
+      "entries": [
+        "You have a {=bonusAc} bonus to AC while wearing this armor."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 208,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/1"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.1-shield",
+    "kind": "magic-variant",
+    "name": "+1 Shield",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "type": "S|SRD51"
+      }
+    ],
+    "entries": [
+      "{@note * This generic variant has the same name and source as the item {@item +1 shield}}.",
+      "While holding this shield, you have a +1 bonus to AC. This bonus is in addition to the shield's normal bonus to AC."
+    ],
+    "inherits": {
+      "namePrefix": "+1 ",
+      "source": "SRD51",
+      "page": 242,
+      "rarity": "uncommon",
+      "bonusAc": "+1",
+      "entries": [
+        "While holding this shield, you have a {=bonusAc} bonus to AC. This bonus is in addition to the shield's normal bonus to AC."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 242,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/2"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.1-weapon",
+    "kind": "magic-variant",
+    "name": "+1 Weapon",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "weapon": true
+      }
+    ],
+    "excludes": {
+      "net": true
+    },
+    "inherits": {
+      "namePrefix": "+1 ",
+      "source": "SRD51",
+      "page": 250,
+      "rarity": "uncommon",
+      "bonusWeapon": "+1",
+      "entries": [
+        "You have a {=bonusWeapon} bonus to attack and damage rolls made with this magic weapon."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 250,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/3"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.2-ammunition",
+    "kind": "magic-variant",
+    "name": "+2 Ammunition",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "type": "A|SRD51"
+      },
+      {
+        "type": "AF|SRD51"
+      }
+    ],
+    "ammo": true,
+    "inherits": {
+      "namePrefix": "+2 ",
+      "source": "SRD51",
+      "page": 207,
+      "rarity": "rare",
+      "bonusWeapon": "+2",
+      "entries": [
+        "You have a {=bonusWeapon} bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 207,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/4"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.2-armor",
+    "kind": "magic-variant",
+    "name": "+2 Armor",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "armor": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "+2 ",
+      "source": "SRD51",
+      "page": 208,
+      "rarity": "very rare",
+      "bonusAc": "+2",
+      "entries": [
+        "You have a {=bonusAc} bonus to AC while wearing this armor."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 208,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/5"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.2-shield",
+    "kind": "magic-variant",
+    "name": "+2 Shield",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "type": "S|SRD51"
+      }
+    ],
+    "entries": [
+      "{@note * This generic variant has the same name and source as the item {@item +2 shield}}.",
+      "While holding this shield, you have a +2 bonus to AC. This bonus is in addition to the shield's normal bonus to AC."
+    ],
+    "inherits": {
+      "namePrefix": "+2 ",
+      "source": "SRD51",
+      "page": 242,
+      "rarity": "rare",
+      "bonusAc": "+2",
+      "entries": [
+        "While holding this shield, you have a {=bonusAc} bonus to AC. This bonus is in addition to the shield's normal bonus to AC."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 242,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/6"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.2-weapon",
+    "kind": "magic-variant",
+    "name": "+2 Weapon",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "weapon": true
+      }
+    ],
+    "excludes": {
+      "net": true
+    },
+    "inherits": {
+      "namePrefix": "+2 ",
+      "source": "SRD51",
+      "page": 250,
+      "rarity": "rare",
+      "bonusWeapon": "+2",
+      "entries": [
+        "You have a {=bonusWeapon} bonus to attack and damage rolls made with this magic weapon."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 250,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/7"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.3-ammunition",
+    "kind": "magic-variant",
+    "name": "+3 Ammunition",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "type": "A|SRD51"
+      },
+      {
+        "type": "AF|SRD51"
+      }
+    ],
+    "ammo": true,
+    "inherits": {
+      "namePrefix": "+3 ",
+      "source": "SRD51",
+      "page": 207,
+      "rarity": "very rare",
+      "bonusWeapon": "+3",
+      "entries": [
+        "You have a {=bonusWeapon} bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 207,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/8"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.3-armor",
+    "kind": "magic-variant",
+    "name": "+3 Armor",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "armor": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "+3 ",
+      "source": "SRD51",
+      "page": 208,
+      "rarity": "legendary",
+      "bonusAc": "+3",
+      "entries": [
+        "You have a {=bonusAc} bonus to AC while wearing this armor."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 208,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/9"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.3-shield",
+    "kind": "magic-variant",
+    "name": "+3 Shield",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "type": "S|SRD51"
+      }
+    ],
+    "entries": [
+      "{@note * This generic variant has the same name and source as the item {@item +3 shield}}.",
+      "While holding this shield, you have a +3 bonus to AC. This bonus is in addition to the shield's normal bonus to AC."
+    ],
+    "inherits": {
+      "namePrefix": "+3 ",
+      "source": "SRD51",
+      "page": 242,
+      "rarity": "very rare",
+      "bonusAc": "+3",
+      "entries": [
+        "While holding this shield, you have a {=bonusAc} bonus to AC. This bonus is in addition to the shield's normal bonus to AC."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 242,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/10"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.3-weapon",
+    "kind": "magic-variant",
+    "name": "+3 Weapon",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "weapon": true
+      }
+    ],
+    "excludes": {
+      "net": true
+    },
+    "inherits": {
+      "namePrefix": "+3 ",
+      "source": "SRD51",
+      "page": 250,
+      "rarity": "very rare",
+      "bonusWeapon": "+3",
+      "entries": [
+        "You have a {=bonusWeapon} bonus to attack and damage rolls made with this magic weapon."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 250,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/11"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.adamantine-armor",
+    "kind": "magic-variant",
+    "name": "Adamantine Armor",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "type": "HA|SRD51"
+      },
+      {
+        "type": "MA|SRD51"
+      }
+    ],
+    "excludes": {
+      "name": "Hide Armor"
+    },
+    "inherits": {
+      "namePrefix": "Adamantine ",
+      "source": "SRD51",
+      "page": 207,
+      "rarity": "uncommon",
+      "entries": [
+        "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any critical hit against you becomes a normal hit."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 207,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/12"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.arrow-of-slaying",
+    "kind": "magic-variant",
+    "name": "Arrow of Slaying",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "type": "A|SRD51"
+      },
+      {
+        "type": "AF|SRD51"
+      }
+    ],
+    "ammo": true,
+    "inherits": {
+      "nameSuffix": " of Slaying",
+      "source": "SRD51",
+      "page": 209,
+      "rarity": "very rare",
+      "entries": [
+        "This magic ammunition is meant to slay creatures of a particular type, which the DM chooses or determines randomly by rolling on the table below. If a creature of that type takes damage from the ammunition, the creature makes a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} Force damage on a failed save or half as much extra damage on a successful one.",
+        "After dealing its extra damage to a creature, the ammunition becomes nonmagical.",
+        {
+          "type": "table",
+          "colStyles": [
+            "col-2 text-center",
+            "col-10"
+          ],
+          "colLabels": [
+            "1d100",
+            "Creature Type"
+          ],
+          "rows": [
+            [
+              "01-10",
+              "Aberrations"
+            ],
+            [
+              "11-15",
+              "Beasts"
+            ],
+            [
+              "16-20",
+              "Celestials"
+            ],
+            [
+              "21-25",
+              "Constructs"
+            ],
+            [
+              "26-35",
+              "Dragons"
+            ],
+            [
+              "36-45",
+              "Elementals"
+            ],
+            [
+              "46-50",
+              "Humanoids"
+            ],
+            [
+              "51-60",
+              "Fey"
+            ],
+            [
+              "61-70",
+              "Fiends"
+            ],
+            [
+              "71-75",
+              "Giants"
+            ],
+            [
+              "76-80",
+              "Monstrosities"
+            ],
+            [
+              "81-85",
+              "Oozes"
+            ],
+            [
+              "86-90",
+              "Plants"
+            ],
+            [
+              "91-00",
+              "Undead"
+            ]
+          ]
+        }
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 209,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/13"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.berserker-axe",
+    "kind": "magic-variant",
+    "name": "Berserker Axe",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "axe": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Berserker ",
+      "source": "SRD51",
+      "page": 211,
+      "rarity": "rare",
+      "reqAttune": true,
+      "curse": true,
+      "bonusWeapon": "+1",
+      "entries": [
+        "You gain a +1 bonus to attack and damage rolls made with this magic weapon. In addition, while you are attuned to this weapon, your hit point maximum increases by 1 for each level you have attained.",
+        {
+          "type": "entries",
+          "name": "Curse",
+          "entries": [
+            "This axe is cursed, and becoming attuned to it extends the curse to you. As long as you remain cursed, you are unwilling to part with the axe, keeping it within reach at all times. You also have disadvantage on attack rolls with weapons other than this one, unless no foe is within 60 feet of you that you can see or hear."
+          ]
+        },
+        "Whenever a hostile creature damages you while the axe is in your possession, you must succeed on a {@dc 15} Wisdom saving throw or go berserk. While berserk, you must use your action each round to attack the creature nearest to you with the axe. If you can make extra attacks as part of the {@action Attack} action, you use those extra attacks, moving to attack the next nearest creature after you fell your current target. If you have multiple possible targets, you attack one at random. You are berserk until you start your turn with no creatures within 60 feet of you that you can see or hear."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/14"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.dancing-sword",
+    "kind": "magic-variant",
+    "name": "Dancing Sword",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Dancing ",
+      "source": "SRD51",
+      "page": 215,
+      "rarity": "very rare",
+      "reqAttune": true,
+      "entries": [
+        "You can use a bonus action to toss this magic sword into the air and speak the command word. When you do so, the sword begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of it. The sword uses your attack roll and ability score modifier to damage rolls.",
+        "While the sword hovers, you can use a bonus action to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same bonus action, you can cause the sword to attack one creature within 5 feet of it.",
+        "After the hovering sword attacks for the fourth time, it flies up to 30 feet and tries to return to your hand. If you have no hand free, it falls to the ground at your feet. If the sword has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or move more than 30 feet away from it."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/15"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.defender",
+    "kind": "magic-variant",
+    "name": "Defender",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Defender ",
+      "source": "SRD51",
+      "page": 218,
+      "rarity": "legendary",
+      "reqAttune": true,
+      "bonusWeapon": "+3",
+      "bonusAc": "+1",
+      "entries": [
+        "You gain a +3 bonus to attack and damage rolls made with this magic weapon.",
+        "The first time you attack with the sword on each of your turns, you can transfer some or all of the sword's bonus to your Armor Class, instead of using the bonus on any attacks that turn. For example, you could reduce the bonus to your attack and damage rolls to +1 and gain a +2 bonus to AC. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the sword to gain a bonus to AC from it."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 218,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/16"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.dragon-slayer",
+    "kind": "magic-variant",
+    "name": "Dragon Slayer",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Dragon Slayer ",
+      "source": "SRD51",
+      "page": 219,
+      "rarity": "rare",
+      "bonusWeapon": "+1",
+      "entries": [
+        "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
+        "When you hit a dragon with this weapon, the dragon takes an extra {@damage 3d6} damage of the weapon's type. For the purpose of this weapon, \"dragon\" refers to any creature with the dragon type, including dragon turtles and wyverns."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/17"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.flame-tongue",
+    "kind": "magic-variant",
+    "name": "Flame Tongue",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Flame Tongue ",
+      "source": "SRD51",
+      "page": 223,
+      "rarity": "rare",
+      "reqAttune": true,
+      "entries": [
+        "You can use a bonus action to speak this magic sword's command word, causing flames to erupt from the blade. These flames shed bright light in a 40-foot radius and dim light for an additional 40 feet. While the sword is ablaze, it deals an extra {@damage 2d6} fire damage to any target it hits. The flames last until you use a bonus action to speak the command word again or until you drop or sheathe the sword."
+      ],
+      "light": [
+        {
+          "bright": 40,
+          "dim": 80
+        }
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 223,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/18"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.frost-brand",
+    "kind": "magic-variant",
+    "name": "Frost Brand",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Frost Brand ",
+      "source": "SRD51",
+      "page": 223,
+      "resist": [
+        "fire"
+      ],
+      "rarity": "very rare",
+      "reqAttune": true,
+      "entries": [
+        "When you hit with an attack using this magic sword, the target takes an extra {@damage 1d6} cold damage. In addition, while you hold the sword, you have resistance to fire damage.",
+        "In freezing temperatures, the blade sheds bright light in a 10-foot radius and dim light for an additional 10 feet.",
+        "When you draw this weapon, you can extinguish all nonmagical flames within 30 feet of you. This property can be used no more than once per hour."
+      ],
+      "light": [
+        {
+          "bright": 10,
+          "dim": 20
+        }
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 223,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/19"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.giant-slayer",
+    "kind": "magic-variant",
+    "name": "Giant Slayer",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "axe": true
+      },
+      {
+        "sword": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Giant Slayer ",
+      "source": "SRD51",
+      "page": 224,
+      "rarity": "rare",
+      "bonusWeapon": "+1",
+      "entries": [
+        "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
+        "When you hit a giant with it, the giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or fall {@condition prone}. For the purpose of this weapon, \"giant\" refers to any creature with the giant type, including ettins and trolls."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 224,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/20"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.holy-avenger",
+    "kind": "magic-variant",
+    "name": "Holy Avenger",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Holy Avenger ",
+      "source": "SRD51",
+      "page": 225,
+      "rarity": "legendary",
+      "reqAttune": "by a paladin",
+      "reqAttuneTags": [
+        {
+          "class": "paladin"
+        }
+      ],
+      "bonusWeapon": "+3",
+      "entries": [
+        "You gain a +3 bonus to attack and damage rolls made with this magic weapon. When you hit a fiend or an undead with it, that creature takes an extra {@damage 2d10} radiant damage.",
+        "While you hold the drawn sword, it creates an aura in a 10-foot radius around you. You and all creatures friendly to you in the aura have advantage on saving throws against spells and other magical effects. If you have 17 or more levels in the paladin class, the radius of the aura increases to 30 feet."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 225,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/21"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.luck-blade",
+    "kind": "magic-variant",
+    "name": "Luck Blade",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true
+      }
+    ],
+    "entries": [
+      "You gain a +1 bonus to attack and damage rolls made with this magic weapon. While the sword is on your person, you also gain a +1 bonus to saving throws.",
+      {
+        "type": "entries",
+        "name": "Luck",
+        "entries": [
+          "If the sword is on your person, you can call on its luck (no action required) to reroll one attack roll, ability check, or saving throw you dislike. You must use the second roll. This property can't be used again until the next dawn."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Wish",
+        "entries": [
+          "The sword has {@dice 1d4 - 1} charges. While holding it, you can use an action to expend 1 charge and cast the {@spell wish} spell from it. This property can't be used again until the next dawn. The sword loses this property if it has no charges."
+        ]
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Luck Blade ",
+      "source": "SRD51",
+      "page": 229,
+      "rarity": "legendary",
+      "reqAttune": true,
+      "bonusWeapon": "+1",
+      "bonusSavingThrow": "+1",
+      "charges": "{@dice 1d4 - 1}",
+      "entries": [
+        "You gain a +1 bonus to attack and damage rolls made with this magic weapon. While the sword is on your person, you also gain a +1 bonus to saving throws.",
+        {
+          "type": "entries",
+          "name": "Luck",
+          "entries": [
+            "If the sword is on your person, you can call on its luck (no action required) to reroll one attack roll, ability check, or saving throw you dislike. You must use the second roll. This property can't be used again until the next dawn."
+          ]
+        },
+        {
+          "type": "entries",
+          "name": "Wish",
+          "entries": [
+            "The sword has {@dice 1d4 - 1} charges. While holding it, you can use an action to expend 1 charge and cast the {@spell wish} spell from it. This property can't be used again until the next dawn. The sword loses this property if it has no charges."
+          ]
+        }
+      ],
+      "attachedSpells": {
+        "charges": {
+          "1": [
+            "wish"
+          ]
+        }
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/22"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.mithral-armor",
+    "kind": "magic-variant",
+    "name": "Mithral Armor",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "type": "HA|SRD51"
+      },
+      {
+        "type": "MA|SRD51"
+      }
+    ],
+    "excludes": {
+      "name": "Hide Armor"
+    },
+    "inherits": {
+      "namePrefix": "Mithral ",
+      "source": "SRD51",
+      "page": 231,
+      "rarity": "uncommon",
+      "strength": null,
+      "stealth": false,
+      "entries": [
+        "Mithral is a light, flexible metal. A mithral chain shirt or breastplate can be worn under normal clothes. If the armor normally imposes disadvantage on Dexterity ({@skill Stealth}) checks or has a Strength requirement, the mithral version of the armor doesn't."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 231,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/23"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.nine-lives-stealer",
+    "kind": "magic-variant",
+    "name": "Nine Lives Stealer",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Nine Lives Stealer ",
+      "source": "SRD51",
+      "page": 231,
+      "rarity": "very rare",
+      "reqAttune": true,
+      "bonusWeapon": "+2",
+      "charges": "{@dice 1d8 + 1}",
+      "entries": [
+        "You gain a +2 bonus to attack and damage rolls made with this magic weapon.",
+        "The sword has {@dice 1d8 + 1} charges. If you score a critical hit against a creature that has fewer than 100 hit points, it must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body (a construct or an undead is immune). The sword loses 1 charge if the creature is slain. When the sword has no charges remaining, it loses this property."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 231,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/24"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.sword-of-life-stealing",
+    "kind": "magic-variant",
+    "name": "Sword of Life Stealing",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true
+      }
+    ],
+    "inherits": {
+      "nameSuffix": " of Life Stealing",
+      "source": "SRD51",
+      "page": 246,
+      "rarity": "rare",
+      "reqAttune": true,
+      "entries": [
+        "When you attack a creature with this magic weapon and roll a 20 on the attack roll, that target takes an extra 10 necrotic damage if it isn't a construct or an undead. You also gain 10 temporary hit points.",
+        "{@note Note: According to the SRD, it is an extra {@damage 3d6} necrotic damage, although {@link this is incorrect|https://rpg.stackexchange.com/a/174522/53884}.}"
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 246,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/25"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.sword-of-sharpness",
+    "kind": "magic-variant",
+    "name": "Sword of Sharpness",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true,
+        "dmgType": "S"
+      }
+    ],
+    "inherits": {
+      "nameSuffix": " of Sharpness",
+      "source": "SRD51",
+      "page": 246,
+      "rarity": "very rare",
+      "reqAttune": true,
+      "entries": [
+        "When you attack an object with this magic sword and hit, maximize your weapon damage dice against the target.",
+        "When you attack a creature with this weapon and roll a 20 on the attack roll, that target takes an extra 14 slashing damage. Then roll another {@dice d20}. If you roll a 20, you lop off one of the target's limbs, with the effect of such loss determined by the DM. If the creature has no limb to sever, you lop off a portion of its body instead.",
+        "{@note Note: According to the SRD, it is an extra {@damage 4d6} slashing damage, although {@link this is incorrect|https://rpg.stackexchange.com/a/174522/53884}}.",
+        "In addition, you can speak the sword's command to cause the blade to shed bright light in a 10-foot radius and dim light for an additional 10 feet. Speaking the command word again or sheathing the sword puts out the light."
+      ],
+      "light": [
+        {
+          "bright": 10,
+          "dim": 20
+        }
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 246,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/26"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.sword-of-wounding",
+    "kind": "magic-variant",
+    "name": "Sword of Wounding",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true
+      }
+    ],
+    "inherits": {
+      "nameSuffix": " of Wounding",
+      "source": "SRD51",
+      "page": 246,
+      "rarity": "rare",
+      "reqAttune": true,
+      "entries": [
+        "Hit points lost to this weapon's damage can be regained only through a short or long rest, rather than by regeneration, magic, or any other means.",
+        "Once per turn, when you hit a creature with an attack using this magic weapon, you can wound the target. At the start of each of the wounded creature's turns, it takes {@damage 1d4} necrotic damage for each time you've wounded it, and it can then make a {@dc 15} Constitution saving throw, ending the effect of all such wounds on itself on a success. Alternatively, the wounded creature, or a creature within 5 feet of it, can use an action to make a {@dc 15} Wisdom ({@skill Medicine}) check, ending the effect of such wounds on it on a success."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 246,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/27"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.vicious-weapon",
+    "kind": "magic-variant",
+    "name": "Vicious Weapon",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "weapon": true
+      }
+    ],
+    "excludes": {
+      "net": true
+    },
+    "entries": [
+      "When you roll a 20 with this magic weapon, the target takes an extra 7 damage of the weapon's type.",
+      "{@note Note: According to the SRD, it is an extra {@damage 2d6} damage, although {@link this is incorrect|https://rpg.stackexchange.com/a/174522/53884}.}"
+    ],
+    "inherits": {
+      "namePrefix": "Vicious ",
+      "source": "SRD51",
+      "page": 248,
+      "rarity": "rare",
+      "entries": [
+        "When you roll a 20 with this magic weapon, the target takes an extra 7 {=dmgType} damage.",
+        "{@note Note: According to the SRD, it is an extra {@damage 2d6} {=dmgType} damage, although {@link this is incorrect|https://rpg.stackexchange.com/a/174522/53884}.}"
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 248,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/28"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.vorpal-sword",
+    "kind": "magic-variant",
+    "name": "Vorpal Sword",
+    "type": "GV|SRD51",
+    "requires": [
+      {
+        "sword": true,
+        "dmgType": "S"
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Vorpal ",
+      "source": "SRD51",
+      "page": 248,
+      "rarity": "legendary",
+      "reqAttune": true,
+      "bonusWeapon": "+3",
+      "entries": [
+        "You gain a +3 bonus to attack and damage rolls made with this magic weapon. In addition, the weapon ignores resistance to slashing damage.",
+        "When you attack a creature that has at least one head with this weapon and roll a 20 on the attack roll, you cut off one of the creature's heads. The creature dies if it can't survive without the lost head. A creature is immune to this effect if it is immune to slashing damage, doesn't have or need a head, has legendary actions, or the DM decides that the creature is too big for its head to be cut off with this weapon. Such a creature instead takes an extra {@damage 6d8} slashing damage from the hit."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 248,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/29"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  }
+]

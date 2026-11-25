@@ -1,0 +1,2564 @@
+[
+  {
+    "id": "item.component-pouch",
+    "kind": "item",
+    "name": "Component Pouch",
+    "type": "G",
+    "rarity": "none",
+    "weight": 2,
+    "value": 2500,
+    "entries": [
+      "A component pouch is a small, watertight leather belt pouch that has compartments to hold all the material components and other special items you need to cast your spells, except for those components that have a specific cost (as indicated in a spell's description)."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/190"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.copper",
+    "kind": "item",
+    "name": "Copper",
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 50,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/192"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.copper-dragon-scale-mail",
+    "kind": "item",
+    "name": "Copper Dragon Scale Mail",
+    "type": "MA",
+    "resist": [
+      "acid"
+    ],
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 45,
+    "ac": 14,
+    "bonusAc": "+1",
+    "stealth": true,
+    "entries": [
+      "Dragon scale mail is made of the scales of one kind of dragon. Sometimes dragons collect their cast-off scales and gift them to humanoids. Other times, hunters carefully skin and preserve the hide of a dead dragon. In either case, dragon scale mail is highly valued. While wearing this armor, you gain a +1 bonus to AC, you have advantage on saving throws against the Frightful Presence and breath weapons of dragons, and you have resistance to acid damage.",
+      "Additionally, you can focus your senses as an action to magically discern the distance and direction to the closest copper dragon within 30 miles of you. This special action can't be used again until the next dawn."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/194"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.costume-clothes",
+    "kind": "item",
+    "name": "Costume Clothes",
+    "type": "G",
+    "rarity": "none",
+    "weight": 4,
+    "value": 500,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/197"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cotton-cloth-1-sq-yd",
+    "kind": "item",
+    "name": "Cotton Cloth (1 sq. yd.)",
+    "type": "TG",
+    "rarity": "none",
+    "value": 50,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/198"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cow",
+    "kind": "item",
+    "name": "Cow",
+    "type": "TG",
+    "rarity": "none",
+    "value": 1000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/199"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.crossbow-bolt-case",
+    "kind": "item",
+    "name": "Crossbow Bolt Case",
+    "type": "G",
+    "rarity": "none",
+    "weight": 1,
+    "value": 100,
+    "entries": [
+      "This wooden case can hold up to twenty {@item crossbow bolt|srd51|crossbow bolts}."
+    ],
+    "containerCapacity": {
+      "item": [
+        {
+          "crossbow bolt|srd51": 20
+        }
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/200"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.crowbar",
+    "kind": "item",
+    "name": "Crowbar",
+    "type": "G",
+    "rarity": "none",
+    "weight": 5,
+    "value": 200,
+    "entries": [
+      "Using a crowbar grants advantage to Strength checks where the crowbar's leverage can be applied."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/202"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.crystal-ball",
+    "kind": "item",
+    "name": "Crystal Ball",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 3,
+    "entries": [
+      "This crystal ball is about 6 inches in diameter. While touching it, you can cast the {@spell scrying} spell (save {@dc 17}) with it."
+    ],
+    "attachedSpells": [
+      "scrying"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 214,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/204"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cube-of-force",
+    "kind": "item",
+    "name": "Cube of Force",
+    "rarity": "rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d20}",
+    "charges": 36,
+    "entries": [
+      "This cube is about an inch across. Each face has a distinct marking on it that can be pressed. The cube starts with 36 charges, and it regains {@dice 1d20} expended charges daily at dawn.",
+      "You can use an action to press one of the cube's faces, expending a number of charges based on the chosen face, as shown in the Cube of Force Faces table. Each face has a different effect. If the cube has insufficient charges remaining, nothing happens. Otherwise, a barrier of {@condition invisible} force springs into existence, forming a cube 15 feet on a side. The barrier is centered on you, moves with you, and lasts for 1 minute, until you use an action to press the cube's sixth face, or the cube runs out of charges. You can change the barrier's effect by pressing a different face of the cube and expending the requisite number of charges, resetting the duration. If your movement causes the barrier to come into contact with a solid object that can't pass through the cube, you can't move any closer to that object as long as the barrier remains.",
+      {
+        "type": "table",
+        "caption": "Cube of Force Faces",
+        "colLabels": [
+          "Face",
+          "Charges",
+          "Effect"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-1 text-center",
+          "col-10"
+        ],
+        "rows": [
+          [
+            "1",
+            "1",
+            "Gases, wind, and fog can't pass through the barrier."
+          ],
+          [
+            "2",
+            "2",
+            "Nonliving matter can't pass through the barrier. Walls, floors, and ceilings can pass through at your discretion."
+          ],
+          [
+            "3",
+            "3",
+            "Living matter can't pass through the barrier."
+          ],
+          [
+            "4",
+            "4",
+            "Spell effects can't pass through the barrier."
+          ],
+          [
+            "5",
+            "5",
+            "Nothing can pass through the barrier. Walls, floors, and ceilings can pass through at your discretion."
+          ],
+          [
+            "6",
+            "0",
+            "The barrier deactivates."
+          ]
+        ]
+      },
+      "The cube loses charges when the barrier is targeted by certain spells or comes into contact with certain spell or magic item effects, as shown in the table below.",
+      {
+        "type": "table",
+        "colLabels": [
+          "Spell or item",
+          "Charges Lost"
+        ],
+        "colStyles": [
+          "col-3",
+          "col-9"
+        ],
+        "rows": [
+          [
+            "{@spell Disintegrate}",
+            "{@dice 1d12}"
+          ],
+          [
+            "{@item Horn of blasting}",
+            "{@dice 1d10}"
+          ],
+          [
+            "{@spell Passwall}",
+            "{@dice 1d6}"
+          ],
+          [
+            "{@spell Prismatic spray}",
+            "{@dice 1d20}"
+          ],
+          [
+            "{@spell Wall of fire}",
+            "{@dice 1d4}"
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/209"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cubic-gate",
+    "kind": "item",
+    "name": "Cubic Gate",
+    "rarity": "legendary",
+    "wondrous": true,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "entries": [
+      "This cube is 3 inches across and radiates palpable magical energy. The six sides of the cube are each keyed to a different plane of existence, one of which is the Material Plane. The other sides are linked to planes determined by the DM.",
+      "You can use an action to press one side of the cube to cast the {@spell gate} spell with it, opening a portal to the plane keyed to that side. Alternatively, if you use an action to press one side twice, you can cast the {@spell plane shift} spell (save {@dc 17}) with the cube and transport the targets to the plane keyed to that side.",
+      "The cube has 3 charges. Each use of the cube expends 1 charge. The cube regains {@dice 1d3} expended charges daily at dawn."
+    ],
+    "attachedSpells": [
+      "gate",
+      "plane shift"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/211"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.instant-fortress",
+    "kind": "item",
+    "name": "Instant Fortress",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "You can use an action to place this 1-inch metal cube on the ground and speak its command word. The cube rapidly grows into a fortress that remains until you use an action to speak the command word that dismisses it, which works only if the fortress is empty.",
+      "The fortress is a square tower, 20 feet on a side and 30 feet high, with arrow slits on all sides and a battlement atop it. Its interior is divided into two floors. with a ladder running along one wall to connect them. The ladder ends at a trapdoor leading to the roof. When activated, the tower has a small door on the side facing you. The door opens only at your command, which you can speak as a bonus action. It is immune to the {@spell knock} spell and similar magic, such as that of a {@item chime of opening}.",
+      "Each creature in the area where the fortress appears must make a {@dc 15} Dexterity saving throw, taking {@damage 10d10} bludgeoning damage on a failed save, or half as much damage on a successful one. In either case, the creature is pushed to an unoccupied space outside but next to the fortress. Objects in the area that aren't being worn or carried take this damage and are pushed automatically.",
+      "The tower is made of adamantine, and its magic prevents it from being tipped over. The roof, the door, and the walls each have 100 hit points, immunity to damage from nonmagical weapons excluding siege weapons, and resistance to all other damage. Only a {@spell wish} spell can repair the fortress (this use of the spell counts as replicating a spell of 8th level or lower). Each casting of {@spell wish} causes the roof, the door, or one wall to regain 50 hit points."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 226,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/213"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.dagger-of-venom",
+    "kind": "item",
+    "name": "Dagger of Venom",
+    "baseItem": "dagger|srd51",
+    "type": "M",
+    "rarity": "rare",
+    "weight": 1,
+    "weaponCategory": "simple",
+    "property": [
+      "F",
+      "L",
+      "T"
+    ],
+    "range": "20/60",
+    "dmg1": "1d4",
+    "dmgType": "P",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
+      "You can use an action to cause thick, black poison to coat the blade. The poison remains for 1 minute or until an attack using this weapon hits a creature. That creature must succeed on a {@dc 15} Constitution saving throw or take {@damage 2d10} poison damage and become {@condition poisoned} for 1 minute. The dagger can't be used this way again until the next dawn."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/215"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.decanter-of-endless-water",
+    "kind": "item",
+    "name": "Decanter of Endless Water",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "weight": 2,
+    "entries": [
+      "This stoppered flask sloshes when shaken, as if it contains water. The decanter weighs 2 pounds.",
+      "You can use an action to remove the stopper and speak one of three command words, whereupon an amount of fresh water or salt water (your choice) pours out of the flask. The water stops pouring out at the start of your next turn. Choose from the following options:",
+      {
+        "type": "list",
+        "items": [
+          "\"Stream\" produces 1 gallon of water.",
+          "\"Fountain\" produces 5 gallons of water.",
+          "\"Geyser\" produces 30 gallons of water that gushes forth in a geyser 30 feet long and 1 foot wide. As a bonus action while holding the decanter, you can aim the geyser at a creature you can see within 30 feet of you. The target must succeed on a {@dc 13} Strength saving throw or take {@damage 1d4} bludgeoning damage and fall {@condition prone}. Instead of a creature, you can target an object that isn't being worn or carried and that weighs no more than 200 pounds. The object is either knocked over or pushed up to 15 feet away from you."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 216,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/217"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.deck-of-illusions",
+    "kind": "item",
+    "name": "Deck of Illusions",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "This box contains a set of parchment cards. A full deck has 34 cards. A deck found as treasure is usually missing {@dice 1d20 - 1} cards.",
+      "The magic of the deck functions only if cards are drawn at random (you can use an altered deck of playing cards to simulate the deck). You can use an action to draw a card at random from the deck and throw it to the ground at a point within 30 feet of you.",
+      "An illusion of one or more creatures forms over the thrown card and remains until dispelled. An illusory creature appears real, of the appropriate size, and behaves as if it were a real creature, except that it can do no harm. While you are within 120 feet of the illusory creature and can see it, you can use an action to move it magically anywhere within 30 feet of its card. Any physical interaction with the illusory creature reveals it to be an illusion, because objects pass through it. Someone who uses an action to visually inspect the creature identifies it as illusory with a successful {@dc 15} Intelligence ({@skill Investigation}) check. The creature then appears translucent.",
+      "The illusion lasts until its card is moved or the illusion is dispelled. When the illusion ends, the image on its card disappears, and that card can't be used again.",
+      {
+        "type": "table",
+        "colLabels": [
+          "{@dice 1d34|Playing Card}",
+          "Illusion"
+        ],
+        "colStyles": [
+          "col-3",
+          "col-9"
+        ],
+        "rows": [
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 1
+              },
+              "entry": "Ace of hearts"
+            },
+            "{@creature adult red dragon||Red dragon}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 2
+              },
+              "entry": "King of hearts"
+            },
+            "{@creature Knight} and four {@creature guard||guards}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 3
+              },
+              "entry": "Queen of hearts"
+            },
+            "{@creature Succubus||Succubus/Incubus}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 4
+              },
+              "entry": "Jack of hearts"
+            },
+            "{@creature Druid}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 5
+              },
+              "entry": "Ten of hearts"
+            },
+            "{@creature Cloud giant}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 6
+              },
+              "entry": "Nine of hearts"
+            },
+            "{@creature Ettin}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 7
+              },
+              "entry": "Eight of hearts"
+            },
+            "{@creature Bugbear}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 8
+              },
+              "entry": "Two of hearts"
+            },
+            "{@creature Goblin}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 9
+              },
+              "entry": "Ace of diamonds"
+            },
+            "Beholder"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 10
+              },
+              "entry": "King of diamonds"
+            },
+            "{@creature Archmage} and {@creature mage} apprentice"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 11
+              },
+              "entry": "Queen of diamonds"
+            },
+            "{@creature Night hag}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 12
+              },
+              "entry": "Jack of diamonds"
+            },
+            "{@creature Assassin}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 13
+              },
+              "entry": "Ten of diamonds"
+            },
+            "{@creature Fire giant}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 14
+              },
+              "entry": "Nine of diamonds"
+            },
+            "{@creature oni||Ogre mage}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 15
+              },
+              "entry": "Eight of diamonds"
+            },
+            "{@creature Gnoll}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 16
+              },
+              "entry": "Two of diamonds"
+            },
+            "{@creature Kobold}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 17
+              },
+              "entry": "Ace of spades"
+            },
+            "{@creature Lich}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 18
+              },
+              "entry": "King of spades"
+            },
+            "{@creature Priest} and two {@creature acolyte||acolytes}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 19
+              },
+              "entry": "Queen of spades"
+            },
+            "{@creature Medusa}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 20
+              },
+              "entry": "Jack of spades"
+            },
+            "{@creature Veteran}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 21
+              },
+              "entry": "Ten of spades"
+            },
+            "{@creature Frost giant}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 22
+              },
+              "entry": "Nine of spades"
+            },
+            "{@creature Troll}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 23
+              },
+              "entry": "Eight of spades"
+            },
+            "{@creature Hobgoblin}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 24
+              },
+              "entry": "Two of spades"
+            },
+            "{@creature Goblin}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 25
+              },
+              "entry": "Ace of clubs"
+            },
+            "{@creature Iron golem}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 26
+              },
+              "entry": "King of clubs"
+            },
+            "{@creature Bandit captain} and three {@creature bandit||bandits}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 27
+              },
+              "entry": "Queen of clubs"
+            },
+            "{@creature Erinyes}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 28
+              },
+              "entry": "Jack of clubs"
+            },
+            "{@creature Berserker}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 29
+              },
+              "entry": "Ten of clubs"
+            },
+            "{@creature Hill giant}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 30
+              },
+              "entry": "Nine of clubs"
+            },
+            "{@creature Ogre}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 31
+              },
+              "entry": "Eight of clubs"
+            },
+            "{@creature Orc}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 32
+              },
+              "entry": "Two of clubs"
+            },
+            "{@creature Kobold}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 33,
+                "max": 34
+              },
+              "entry": "jokers (2)"
+            },
+            "You (the deck's owner)"
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 216,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/219"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.deck-of-many-things",
+    "kind": "item",
+    "name": "Deck of Many Things",
+    "rarity": "legendary",
+    "wondrous": true,
+    "ability": {
+      "from": [
+        "str",
+        "dex",
+        "con",
+        "int",
+        "wis",
+        "cha"
+      ],
+      "count": 1,
+      "amount": 2
+    },
+    "grantsProficiency": true,
+    "entries": [
+      "Usually found in a box or pouch, this deck contains a number of cards made of ivory or vellum. Most ({@chance 75}) of these decks have only thirteen cards, but the rest have twenty-two.",
+      "Before you draw a card, you must declare how many cards you intend to draw and then draw them randomly (you can use an altered deck of playing cards to simulate the deck). Any cards drawn in excess of this number have no effect. Otherwise, as soon as you draw a card from the deck, its magic takes effect. You must draw each card no more than 1 hour after the previous draw. If you fail to draw the chosen number, the remaining number of cards fly from the deck on their own and take effect all at once.",
+      "Once a card is drawn, it fades from existence. Unless the card is the {@card Fool|Deck of Many Things} or the {@card Jester|Deck of Many Things}, the card reappears in the deck, making it possible to draw the same card twice.",
+      {
+        "type": "entries",
+        "name": "A Question of Enmity",
+        "entries": [
+          "Two of the cards in a deck of many things can earn a character the enmity of another being. With the Flames card, the enmity is overt. The character should experience the devil's malevolent efforts on multiple occasions. Seeking out the fiend shouldn't be a simple task, and the adventurer should clash with the devil's allies and followers a few times before being able to confront the devil itself.",
+          "In the case of the {@card Rogue|Deck of Many Things} card, the enmity is secret and should come from someone thought to be a friend or an ally. As Dungeon Master, you should wait for a dramatically appropriate moment to reveal this enmity, leaving the adventurer guessing who is likely to become a betrayer."
+        ]
+      },
+      {
+        "type": "table",
+        "colLabels": [
+          "{@dice 1d22|Playing Card}",
+          "Card"
+        ],
+        "colStyles": [
+          "col-6 text-center",
+          "col-6 text-center"
+        ],
+        "rows": [
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 1
+              },
+              "entry": "Ace of diamonds"
+            },
+            "Vizier*"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 2
+              },
+              "entry": "King of diamonds"
+            },
+            "Sun"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 3
+              },
+              "entry": "Queen of diamonds"
+            },
+            "Moon"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 4
+              },
+              "entry": "Jack of diamonds"
+            },
+            "Star"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 5
+              },
+              "entry": "Two of diamonds"
+            },
+            "Comet*"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 6
+              },
+              "entry": "Ace of hearts"
+            },
+            "The Fates*"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 7
+              },
+              "entry": "King of hearts"
+            },
+            "Throne"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 8
+              },
+              "entry": "Queen of hearts"
+            },
+            "Key"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 9
+              },
+              "entry": "Jack of hearts"
+            },
+            "Knight"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 10
+              },
+              "entry": "Two of hearts"
+            },
+            "Gem*"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 11
+              },
+              "entry": "Ace of clubs"
+            },
+            "Talons*"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 12
+              },
+              "entry": "King of clubs"
+            },
+            "The Void"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 13
+              },
+              "entry": "Queen of clubs"
+            },
+            "Flames"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 14
+              },
+              "entry": "Jack of clubs"
+            },
+            "Skull"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 15
+              },
+              "entry": "Two of clubs"
+            },
+            "Idiot*"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 16
+              },
+              "entry": "Ace of spades"
+            },
+            "Donjon*"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 17
+              },
+              "entry": "King of spades"
+            },
+            "Ruin"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 18
+              },
+              "entry": "Queen of spades"
+            },
+            "Euryale"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 19
+              },
+              "entry": "Jack of spades"
+            },
+            "Rogue"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 20
+              },
+              "entry": "Two of spades"
+            },
+            "Balance*"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 21
+              },
+              "entry": "Joker (with TM)"
+            },
+            "Fool*"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 22
+              },
+              "entry": "Joker (without TM)"
+            },
+            "Jester"
+          ]
+        ],
+        "footnotes": [
+          "* Found only in a deck with twenty-two cards"
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Vizier",
+        "entries": [
+          "At any time you choose within one year of drawing this card, you can ask a question in meditation and mentally receive a truthful answer to that question. Besides information, the answer helps you solve a puzzling problem or other dilemma. In other words, the knowledge comes with wisdom on how to apply it."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Sun",
+        "entries": [
+          "You gain 50,000 XP, and a wondrous item (which the DM determines randomly) appears in your hands."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Moon",
+        "entries": [
+          "You are granted the ability to cast the {@spell wish} spell {@dice 1d3} times."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Star",
+        "entries": [
+          "Increase one of your ability scores by 2. The score can exceed 20 but can't exceed 24."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Comet",
+        "entries": [
+          "If you single-handedly defeat the next hostile monster or group of monsters you encounter, you gain experience points enough to gain one level. Otherwise, this card has no effect."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "The Fates",
+        "entries": [
+          "Reality's fabric unravels and spins anew, allowing you to avoid or erase one event as if it never happened. You can use the card's magic as soon as you draw the card or at any other time before you die."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Throne",
+        "entries": [
+          "You gain proficiency in the {@skill Persuasion} skill, and you double your proficiency bonus on checks made with that skill. In addition, you gain rightful ownership of a small keep somewhere in the world. However, the keep is currently in the hands of monsters, which you must clear out before you can claim the keep as yours."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Key",
+        "entries": [
+          "A rare or rarer magic weapon with which you are proficient appears in your hands. The DM chooses the weapon."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Knight",
+        "entries": [
+          "You gain the service of a 4th-level fighter who appears in a space you choose within 30 feet of you. The fighter is of the same race as you and serves you loyally until death, believing the fates have drawn him or her to you. You control this character."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Gem",
+        "entries": [
+          "Twenty-five pieces of jewelry worth 2,000 gp each or fifty gems worth 1,000 gp each appear at your feet."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Talons",
+        "entries": [
+          "Every magic item you wear or carry disintegrates. Artifacts in your possession aren't destroyed but do vanish."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "The Void",
+        "entries": [
+          "This black card spells disaster. Your soul is drawn from your body and contained in an object in a place of the DM's choice. One or more powerful beings guard the place. While your soul is trapped in this way, your body is {@condition incapacitated}. A {@spell wish} spell can't restore your soul, but the spell reveals the location of the object that holds it. You draw no more cards."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Flames",
+        "entries": [
+          "A powerful devil becomes your enemy. The devil seeks your ruin and plagues your life, savoring your suffering before attempting to slay you. This enmity lasts until either you or the devil dies."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Skull",
+        "entries": [
+          "You summon an {@creature avatar of death|SRD51}—a ghostly humanoid skeleton clad in a tattered black robe and carrying a spectral scythe. It appears in a space of the DM's choice within 10 feet of you and attacks you, warning all others that you must win the battle alone. The avatar fights until you die or it drops to 0 hit points, whereupon it disappears. If anyone tries to help you, the helper summons its own {@creature avatar of death|SRD51}. A creature slain by an {@creature avatar of death|SRD51} can't be restored to life."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Idiot",
+        "entries": [
+          "Permanently reduce your Intelligence by {@dice 1d4 + 1} (to a minimum score of 1). You can draw one additional card beyond your declared draws."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Donjon",
+        "entries": [
+          "You disappear and become entombed in a state of suspended animation in an extradimensional sphere. Everything you were wearing and carrying stays behind in the space you occupied when you disappeared. You remain imprisoned until you are found and removed from the sphere. You can't be located by any divination magic, but a {@spell wish} spell can reveal the location of your prison. You draw no more cards."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Ruin",
+        "entries": [
+          "All forms of wealth that you carry or own, other than magic items, are lost to you. Portable property vanishes. Businesses, buildings, and land you own are lost in a way that alters reality the least. Any documentation that proves you should own something lost to this card also disappears."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Euryale",
+        "entries": [
+          "The card's {@creature medusa}-like visage curses you. You take a −2 penalty on saving throws while cursed in this way. Only a god or the magic of {@card The Fates|Deck of Many Things} card can end this curse."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Rogue",
+        "entries": [
+          "A nonplayer character of the DM's choice becomes hostile toward you. The identity of your new enemy isn't known until the NPC or someone else reveals it. Nothing less than a {@spell wish} spell or divine intervention can end the NPC's hostility toward you."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Balance",
+        "entries": [
+          "Your mind suffers a wrenching alteration, causing your alignment to change. Lawful becomes chaotic, good becomes evil, and vice versa. If you are true neutral or unaligned, this card has no effect on you."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Fool",
+        "entries": [
+          "You lose 10,000 XP, discard this card, and draw from the deck again, counting both draws as one of your declared draws. If losing that much XP would cause you to lose a level, you instead lose an amount that leaves you with just enough XP to keep your level."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Jester",
+        "entries": [
+          "You gain 10,000 XP, or you can draw two additional cards beyond your declared draws."
+        ]
+      }
+    ],
+    "attachedSpells": [
+      "wish"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 216,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/221"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.demon-armor",
+    "kind": "item",
+    "name": "Demon Armor",
+    "type": "HA",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "bonusWeapon": "+1",
+    "bonusAc": "+1",
+    "stealth": true,
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to AC, and you can understand and speak Abyssal. In addition, the armor's clawed gauntlets turn unarmed strikes with your hands into magic weapons that deal slashing damage, with a +1 bonus to attack and damage rolls and a damage die of {@dice 1d8}.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by the {@spell remove curse} spell or similar magic. While wearing the armor, you have disadvantage on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 218,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/223"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.dice-set",
+    "kind": "item",
+    "name": "Dice Set",
+    "type": "GS",
+    "rarity": "none",
+    "value": 10,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/224"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.dimensional-shackles",
+    "kind": "item",
+    "name": "Dimensional Shackles",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "You can use an action to place these shackles on an {@condition incapacitated} creature. The shackles adjust to fit a creature of Small to Large size. In addition to serving as mundane manacles, the shackles prevent a creature bound by them from using any method of extradimensional movement, including teleportation or travel to a different plane of existence. They don't prevent the creature from passing-through an interdimensional portal.",
+      "You and any creature you designate when you use the shackles can use an action to remove them. Once every 30 days, the bound creature can make a {@dc 30} Strength ({@skill Athletics}) check. On a success, the creature breaks free and destroys the shackles."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/226"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.diplomat-s-pack",
+    "kind": "item",
+    "name": "Diplomat's Pack",
+    "type": "G",
+    "rarity": "none",
+    "weight": 36,
+    "value": 3900,
+    "entries": [
+      "Includes:",
+      {
+        "type": "list",
+        "items": [
+          "a {@item chest|srd51}",
+          "2 {@item Map or Scroll Case|srd51|cases for maps and scrolls}",
+          "a set of {@item fine clothes|srd51}",
+          "a {@item Ink (1-ounce bottle)|srd51|bottle of ink}",
+          "an {@item ink pen|srd51}",
+          "a {@item lamp|srd51}",
+          "2 {@item Oil (flask)|srd51|flasks of oil}",
+          "5 {@item Paper (one sheet)|srd51|sheets of paper}",
+          "a {@item Perfume (vial)|srd51|vial of perfume}",
+          "{@item sealing wax|srd51}",
+          "{@item soap|srd51}"
+        ]
+      }
+    ],
+    "packContents": [
+      "chest|srd51",
+      {
+        "item": "map or scroll case|srd51",
+        "quantity": 2
+      },
+      "fine clothes|srd51",
+      "ink (1-ounce bottle)|srd51",
+      "ink pen|srd51",
+      "lamp|srd51",
+      {
+        "item": "oil (flask)|srd51",
+        "quantity": 2
+      },
+      {
+        "item": "paper (one sheet)|srd51",
+        "quantity": 5
+      },
+      "perfume (vial)|srd51",
+      "sealing wax|srd51",
+      "soap|srd51"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/228"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.disguise-kit",
+    "kind": "item",
+    "name": "Disguise Kit",
+    "type": "T",
+    "rarity": "none",
+    "weight": 3,
+    "value": 2500,
+    "entries": [
+      "This pouch of cosmetics, hair dye, and small props lets you create disguises that change your physical appearance. Proficiency with this kit lets you add your proficiency bonus to any ability checks you make to create a visual disguise."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/230"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.donkey",
+    "kind": "item",
+    "name": "Donkey",
+    "type": "MNT",
+    "rarity": "none",
+    "value": 800,
+    "carryingCapacity": 420,
+    "speed": 40,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 71,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/232"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.draft-horse",
+    "kind": "item",
+    "name": "Draft Horse",
+    "type": "MNT",
+    "rarity": "none",
+    "value": 5000,
+    "carryingCapacity": 540,
+    "speed": 40,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/233"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.drow-poison",
+    "kind": "item",
+    "name": "Drow Poison",
+    "type": "G",
+    "rarity": "none",
+    "value": 20000,
+    "poison": true,
+    "entries": [
+      "This poison is typically made only by the {@creature drow}, and only in a place far removed from sunlight. A creature subjected to this poison must succeed on a {@dc 13} Constitution saving throw or be {@condition poisoned} for 1 hour. If the saving throw fails by 5 or more, the creature is also {@condition unconscious} while {@condition poisoned} in this way. The creature wakes up if it takes damage or if another creature takes an action to shake it awake."
+    ],
+    "poisonTypes": [
+      "injury"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/236"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.dungeoneer-s-pack",
+    "kind": "item",
+    "name": "Dungeoneer's Pack",
+    "type": "G",
+    "rarity": "none",
+    "weight": 61.5,
+    "value": 1200,
+    "entries": [
+      "Includes:",
+      {
+        "type": "list",
+        "items": [
+          "a {@item backpack|srd51}",
+          "a {@item crowbar|srd51}",
+          "a {@item hammer|srd51}",
+          "10 {@item piton|srd51|pitons}",
+          "10 {@item torch|srd51|torches}",
+          "a {@item tinderbox|srd51}",
+          "10 days of {@item Rations (1 day)|srd51|rations}",
+          "a {@item waterskin|srd51}",
+          "{@item Hempen Rope (50 feet)|srd51|50 feet of hempen rope}"
+        ]
+      }
+    ],
+    "packContents": [
+      "backpack|srd51",
+      "crowbar|srd51",
+      "hammer|srd51",
+      {
+        "item": "piton|srd51",
+        "quantity": 10
+      },
+      {
+        "item": "torch|srd51",
+        "quantity": 10
+      },
+      "tinderbox|srd51",
+      {
+        "item": "rations (1 day)|srd51",
+        "quantity": 10
+      },
+      "waterskin|srd51",
+      "hempen rope (50 feet)|srd51"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/237"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.dust-of-disappearance",
+    "kind": "item",
+    "name": "Dust of Disappearance",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "Found in a small packet, this powder resembles very fine sand. There is enough of it for one use. When you use an action to throw the dust into the air, you and each creature and object within 10 feet of you become {@condition invisible} for {@dice 2d4} minutes. The duration is the same for all subjects, and the dust is consumed when its magic takes effect. If a creature affected by the dust attacks or casts a spell, the invisibility ends for that creature."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/239"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.dust-of-dryness",
+    "kind": "item",
+    "name": "Dust of Dryness",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "This small packet contains {@dice 1d6 + 4} pinches of dust. You can use an action to sprinkle a pinch of it over water. The dust turns a cube of water 15 feet on a side into one marble-sized pellet, which floats or rests near where the dust was sprinkled. The pellet's weight is negligible.",
+      "Someone can use an action to smash the pellet against a hard surface, causing the pellet to shatter and release the water the dust absorbed. Doing so ends that pellet's magic.",
+      "An elemental composed mostly of water that is exposed to a pinch of the dust must make a {@dc 13} Constitution saving throw, taking {@damage 10d6} necrotic damage on a failed save, or half as much damage on a successful one."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/241"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.dust-of-sneezing-and-choking",
+    "kind": "item",
+    "name": "Dust of Sneezing and Choking",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "Found in a small container, this powder resembles very fine sand. It appears to be {@item dust of disappearance}, and an {@spell identify} spell reveals it to be such. There is enough of it for one use.",
+      "When you use an action to throw a handful of the dust into the air, you and each creature that needs to breathe within 30 feet of you must succeed on a {@dc 15} Constitution saving throw or become unable to breathe while sneezing uncontrollably. A creature affected in this way is {@condition incapacitated} and suffocating. As long as it is conscious, a creature can repeat the saving throw at the end of each of its turns, ending the effect on it on a success. The {@spell lesser restoration} spell can also end the effect on a creature."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/243"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.dwarven-plate",
+    "kind": "item",
+    "name": "Dwarven Plate",
+    "baseItem": "plate armor|srd51",
+    "type": "HA",
+    "rarity": "very rare",
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "bonusAc": "+2",
+    "stealth": true,
+    "entries": [
+      "While wearing this armor, you gain a +2 bonus to AC. In addition, if an effect moves you against your will along the ground, you can use your reaction to reduce the distance you are moved by up to 10 feet."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/245"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.dwarven-thrower",
+    "kind": "item",
+    "name": "Dwarven Thrower",
+    "baseItem": "warhammer|srd51",
+    "type": "M",
+    "rarity": "very rare",
+    "reqAttune": "by a dwarf",
+    "reqAttuneTags": [
+      {
+        "race": "dwarf"
+      }
+    ],
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "T",
+      "V"
+    ],
+    "range": "20/60",
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "dmg2": "1d10",
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack and damage rolls made with this magic weapon. It has the thrown property with a normal range of 20 feet and a long range of 60 feet. When you hit with a ranged attack using this weapon, it deals an extra {@damage 1d8} damage or, if the target is a giant, {@damage 2d8} damage. Immediately after the attack, the weapon flies back to your hand."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/246"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.efreeti-bottle",
+    "kind": "item",
+    "name": "Efreeti Bottle",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "This painted brass bottle weighs 1 pound. When you use an action to remove the stopper, a cloud of thick smoke flows out of the bottle. At the end of your turn, the smoke disappears with a flash of harmless fire, and an {@creature efreeti} appears in an unoccupied space within 30 feet of you.",
+      "The first time the bottle is opened, the DM rolls to determine what happens.",
+      {
+        "type": "table",
+        "colLabels": [
+          "{@dice d100}",
+          "Effect"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-11"
+        ],
+        "rows": [
+          [
+            "01-10",
+            "The {@creature efreeti} attacks you. After fighting for 5 rounds, the {@creature efreeti} disappears, and the bottle loses its magic."
+          ],
+          [
+            "11-90",
+            "The {@creature efreeti} serves you for 1 hour, doing as you command. Then the {@creature efreeti} returns to the bottle, and a new stopper contains it. The stopper can't be removed for 24 hours. The next two times the bottle is opened, the same effect occurs. If the bottle is opened a fourth time, the {@creature efreeti} escapes and disappears, and the bottle loses its magic."
+          ],
+          [
+            "91-00",
+            "The {@creature efreeti} can cast the {@spell wish} spell three times for you. It disappears when it grants the final wish or after 1 hour, and the bottle loses its magic."
+          ]
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "limited": {
+        "3": [
+          "wish"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/248"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.elemental-gem-blue-sapphire",
+    "kind": "item",
+    "name": "Elemental Gem, Blue Sapphire",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "This gem contains a mote of elemental energy. When you use an action to break the gem, an {@creature air elemental} is summoned as if you had cast the {@spell conjure elemental} spell, and the gem's magic is lost."
+    ],
+    "attachedSpells": {
+      "limited": {
+        "1": [
+          "conjure elemental"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/250"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.elemental-gem-emerald",
+    "kind": "item",
+    "name": "Elemental Gem, Emerald",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "This gem contains a mote of elemental energy. When you use an action to break the gem, a {@creature water elemental} is summoned as if you had cast the {@spell conjure elemental} spell, and the gem's magic is lost."
+    ],
+    "attachedSpells": {
+      "limited": {
+        "1": [
+          "conjure elemental"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/252"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.elemental-gem-red-corundum",
+    "kind": "item",
+    "name": "Elemental Gem, Red Corundum",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "This gem contains a mote of elemental energy. When you use an action to break the gem, a {@creature fire elemental} is summoned as if you had cast the {@spell conjure elemental} spell, and the gem's magic is lost."
+    ],
+    "attachedSpells": {
+      "limited": {
+        "1": [
+          "conjure elemental"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/254"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.elemental-gem-yellow-diamond",
+    "kind": "item",
+    "name": "Elemental Gem, Yellow Diamond",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "This gem contains a mote of elemental energy. When you use an action to break the gem, an {@creature earth elemental} is summoned as if you had cast the {@spell conjure elemental} spell, and the gem's magic is lost."
+    ],
+    "attachedSpells": {
+      "limited": {
+        "1": [
+          "conjure elemental"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/256"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.elephant",
+    "kind": "item",
+    "name": "Elephant",
+    "type": "MNT",
+    "rarity": "none",
+    "value": 20000,
+    "carryingCapacity": 1320,
+    "speed": 40,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 222,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/258"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.elven-chain",
+    "kind": "item",
+    "name": "Elven Chain",
+    "type": "MA",
+    "rarity": "rare",
+    "weight": 20,
+    "ac": 13,
+    "grantsProficiency": true,
+    "bonusAc": "+1",
+    "entries": [
+      "You gain a +1 bonus to AC while you wear this armor. You are considered proficient with this armor even if you lack proficiency with medium armor."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/261"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.emblem",
+    "kind": "item",
+    "name": "Emblem",
+    "type": "SCF",
+    "scfType": "holy",
+    "rarity": "none",
+    "value": 500,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/262"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.entertainer-s-pack",
+    "kind": "item",
+    "name": "Entertainer's Pack",
+    "type": "G",
+    "rarity": "none",
+    "weight": 38,
+    "value": 4000,
+    "entries": [
+      "Includes:",
+      {
+        "type": "list",
+        "items": [
+          "a {@item backpack|srd51}",
+          "a {@item bedroll|srd51}",
+          "2 {@item Costume Clothes|srd51|costumes}",
+          "5 {@item candle|srd51|candles}",
+          "5 days of {@item Rations (1 day)|srd51|rations}",
+          "a {@item waterskin|srd51}",
+          "a {@item disguise kit|srd51}"
+        ]
+      }
+    ],
+    "packContents": [
+      "backpack|srd51",
+      "bedroll|srd51",
+      {
+        "item": "costume clothes|srd51",
+        "quantity": 2
+      },
+      {
+        "item": "candle|srd51",
+        "quantity": 5
+      },
+      {
+        "item": "rations (1 day)|srd51",
+        "quantity": 5
+      },
+      "waterskin|srd51",
+      "disguise kit|srd51"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/264"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.essence-of-ether",
+    "kind": "item",
+    "name": "Essence of Ether",
+    "type": "G",
+    "rarity": "none",
+    "value": 30000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to this poison must succeed on a {@dc 15} Constitution saving throw or become {@condition poisoned} for 8 hours. The {@condition poisoned} creature is {@condition unconscious}. The creature wakes up if it takes damage or if another creature takes an action to shake it awake."
+    ],
+    "poisonTypes": [
+      "inhaled"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/266"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.eversmoking-bottle",
+    "kind": "item",
+    "name": "Eversmoking Bottle",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "Smoke leaks from the lead-stoppered mouth of this brass bottle, which weighs 1 pound. When you use an action to remove the stopper, a cloud of thick smoke pours out in a 60-foot radius from the bottle. The cloud's area is heavily obscured. Each minute the bottle remains open and within the cloud, the radius increases by 10 feet until it reaches its maximum radius of 120 feet.",
+      "The cloud persists as long as the bottle is open. Closing the bottle requires you to speak its command word as an action. Once the bottle is closed, the cloud disperses after 10 minutes. A moderate wind (11 to 20 miles per hour) can also disperse the smoke after 1 minute, and a strong wind (21 or more miles per hour) can do so after 1 round."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/268"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.exotic-saddle",
+    "kind": "item",
+    "name": "Exotic Saddle",
+    "type": "TAH",
+    "rarity": "none",
+    "weight": 40,
+    "value": 6000,
+    "entries": [
+      "An exotic saddle is required for riding any aquatic or flying mount."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/270"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.explorer-s-pack",
+    "kind": "item",
+    "name": "Explorer's Pack",
+    "type": "G",
+    "rarity": "none",
+    "weight": 59,
+    "value": 1000,
+    "entries": [
+      "Includes:",
+      {
+        "type": "list",
+        "items": [
+          "a {@item backpack|srd51}",
+          "a {@item bedroll|srd51}",
+          "a {@item mess kit|srd51}",
+          "a {@item tinderbox|srd51}",
+          "10 {@item torch|srd51|torches}",
+          "10 days of {@item Rations (1 day)|srd51|rations}",
+          "a {@item waterskin|srd51}",
+          "{@item Hempen Rope (50 feet)|srd51|50 feet of hempen rope}"
+        ]
+      }
+    ],
+    "packContents": [
+      "backpack|srd51",
+      "bedroll|srd51",
+      "mess kit|srd51",
+      "tinderbox|srd51",
+      {
+        "item": "torch|srd51",
+        "quantity": 10
+      },
+      {
+        "item": "rations (1 day)|srd51",
+        "quantity": 10
+      },
+      "waterskin|srd51",
+      "hempen rope (50 feet)|srd51"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/272"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.eyes-of-charming",
+    "kind": "item",
+    "name": "Eyes of Charming",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "recharge": "dawn",
+    "rechargeAmount": 3,
+    "charges": 3,
+    "entries": [
+      "These crystal lenses fit over the eyes. They have 3 charges. While wearing them, you can expend 1 charge as an action to cast the {@spell charm person} spell (save {@dc 13}) on a humanoid within 30 feet of you, provided that you and the target can see each other. The lenses regain all expended charges daily at dawn."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "charm person"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/274"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.eyes-of-minute-seeing",
+    "kind": "item",
+    "name": "Eyes of Minute Seeing",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "These crystal lenses fit over the eyes. While wearing them, you can see much better than normal out to a range of 1 foot. You have advantage on Intelligence ({@skill Investigation}) checks that rely on sight while searching an area or studying an object within that range."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/276"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.eyes-of-the-eagle",
+    "kind": "item",
+    "name": "Eyes of the Eagle",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "entries": [
+      "These crystal lenses fit over the eyes. While wearing them, you have advantage on Wisdom ({@skill Perception}) checks that rely on sight. In conditions of clear visibility, you can make out details of even extremely distant creatures and objects as small as 2 feet across."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/278"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.feed-per-day",
+    "kind": "item",
+    "name": "Feed (per day)",
+    "type": "TAH",
+    "rarity": "none",
+    "weight": 10,
+    "value": 5,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/280"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.figurine-of-wondrous-power-bronze-griffon",
+    "kind": "item",
+    "name": "Figurine of Wondrous Power, Bronze Griffon",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "A figurine of wondrous power is a statuette of a beast small enough to fit in a pocket. If you use an action to speak the command word and throw the figurine to a point on the ground within 60 feet of you, the figurine becomes a living creature. If the space where the creature would appear is occupied by other creatures or objects, or if there isn't enough space for the creature, the figurine doesn't become a creature.",
+      "The creature is friendly to you and your companions. It understands your languages and obeys your spoken commands. If you issue no commands, the creature defends itself but takes no other actions.",
+      "The creature exists for a duration specific to each figurine. At the end of the duration, the creature reverts to its figurine form. It reverts to a figurine early if it drops to 0 hit points or if you use an action to speak the command word again while touching it. When the creature becomes a figurine again, its property can't be used again until a certain amount of time has passed, as specified in the figurine's description.",
+      {
+        "type": "entries",
+        "name": "{@creature griffon||Bronze Griffon}",
+        "entries": [
+          "This bronze statuette is of a {@creature griffon} rampant. It can become a {@creature griffon} for up to 6 hours. Once it has been used, it can't be used again until 5 days have passed."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/282"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.figurine-of-wondrous-power-ebony-fly",
+    "kind": "item",
+    "name": "Figurine of Wondrous Power, Ebony Fly",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "A figurine of wondrous power is a statuette of a beast small enough to fit in a pocket. If you use an action to speak the command word and throw the figurine to a point on the ground within 60 feet of you, the figurine becomes a living creature. If the space where the creature would appear is occupied by other creatures or objects, or if there isn't enough space for the creature, the figurine doesn't become a creature.",
+      "The creature is friendly to you and your companions. It understands your languages and obeys your spoken commands. If you issue no commands, the creature defends itself but takes no other actions.",
+      "The creature exists for a duration specific to each figurine. At the end of the duration, the creature reverts to its figurine form. It reverts to a figurine early if it drops to 0 hit points or if you use an action to speak the command word again while touching it. When the creature becomes a figurine again, its property can't be used again until a certain amount of time has passed, as specified in the figurine's description.",
+      {
+        "type": "entries",
+        "name": "Ebony Fly",
+        "entries": [
+          "This ebony statuette is carved in the likeness of a horsefly. It can become a giant fly for up to 12 hours and can be ridden as a mount. Once it has been used, it can't be used again until 2 days have passed."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/284"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.figurine-of-wondrous-power-golden-lions",
+    "kind": "item",
+    "name": "Figurine of Wondrous Power, Golden Lions",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "A figurine of wondrous power is a statuette of a beast small enough to fit in a pocket. If you use an action to speak the command word and throw the figurine to a point on the ground within 60 feet of you, the figurine becomes a living creature. If the space where the creature would appear is occupied by other creatures or objects, or if there isn't enough space for the creature, the figurine doesn't become a creature.",
+      "The creature is friendly to you and your companions. It understands your languages and obeys your spoken commands. If you issue no commands, the creature defends itself but takes no other actions.",
+      "The creature exists for a duration specific to each figurine. At the end of the duration, the creature reverts to its figurine form. It reverts to a figurine early if it drops to 0 hit points or if you use an action to speak the command word again while touching it. When the creature becomes a figurine again, its property can't be used again until a certain amount of time has passed, as specified in the figurine's description.",
+      {
+        "type": "entries",
+        "name": "{@creature lion||Golden Lions}",
+        "entries": [
+          "These gold statuettes of lions are always created in pairs. You can use one figurine or both simultaneously. Each can become a {@creature lion} for up to 1 hour. Once a {@creature lion} has been used, it can't be used again until 7 days have passed."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/286"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  }
+]

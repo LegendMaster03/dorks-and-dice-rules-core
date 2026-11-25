@@ -1,0 +1,1637 @@
+[
+  {
+    "id": "item.map-or-scroll-case",
+    "kind": "item",
+    "name": "Map or Scroll Case",
+    "type": "G",
+    "rarity": "none",
+    "weight": 1,
+    "value": 100,
+    "entries": [
+      "This cylindrical leather case can hold up to ten rolled-up {@item paper (one sheet)|srd51|sheets of paper} or five rolled-up {@item parchment (one sheet)|srd51|sheets of parchment}."
+    ],
+    "containerCapacity": {
+      "item": [
+        {
+          "parchment (one sheet)|srd51": 5,
+          "paper (one sheet)|srd51": 10
+        }
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/481"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mastiff",
+    "kind": "item",
+    "name": "Mastiff",
+    "type": "MNT",
+    "rarity": "none",
+    "value": 2500,
+    "carryingCapacity": 195,
+    "speed": 40,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/483"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.medallion-of-thoughts",
+    "kind": "item",
+    "name": "Medallion of Thoughts",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "entries": [
+      "The medallion has 3 charges. While wearing it, you can use an action and expend 1 charge to cast the {@spell detect thoughts} spell (save {@dc 13}) from it. The medallion regains {@dice 1d3} expended charges daily at dawn."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "attachedSpells": {
+      "daily": {
+        "1e": [
+          "detect thoughts"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 230,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/485"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.merchant-s-scale",
+    "kind": "item",
+    "name": "Merchant's Scale",
+    "type": "G",
+    "rarity": "none",
+    "weight": 3,
+    "value": 500,
+    "entries": [
+      "A scale includes a small balance, pans, and a suitable assortment of weights up to 2 pounds. With it, you can measure the exact weight of small objects, such as raw precious metals or trade goods, to help determine their worth."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 68,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/487"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mess-kit",
+    "kind": "item",
+    "name": "Mess Kit",
+    "type": "G",
+    "rarity": "none",
+    "weight": 1,
+    "value": 20,
+    "entries": [
+      "This tin box contains a cup and simple cutlery. The box clamps together, and one side can be used as a cooking pan and the other as a plate or shallow bowl."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 68,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/488"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.midnight-tears",
+    "kind": "item",
+    "name": "Midnight Tears",
+    "type": "G",
+    "rarity": "none",
+    "value": 150000,
+    "poison": true,
+    "entries": [
+      "A creature that ingests this poison suffers no effect until the stroke of midnight. If the poison has not been neutralized before then, the creature must succeed on a {@dc 17} Constitution saving throw, taking 31 ({@damage 9d6}) poison damage on a failed save, or half as much damage on a successful one."
+    ],
+    "poisonTypes": [
+      "ingested"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/489"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.military-saddle",
+    "kind": "item",
+    "name": "Military Saddle",
+    "type": "TAH",
+    "rarity": "none",
+    "weight": 30,
+    "value": 2000,
+    "entries": [
+      "A military saddle braces the rider, helping you keep your seat on an active mount in battle. It gives you advantage on any check you make to remain mounted."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/491"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.miner-s-pick",
+    "kind": "item",
+    "name": "Miner's Pick",
+    "type": "G",
+    "rarity": "none",
+    "weight": 10,
+    "value": 200,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 251,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/493"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mirror-of-life-trapping",
+    "kind": "item",
+    "name": "Mirror of Life Trapping",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 50,
+    "entries": [
+      "When this 4-foot-tall mirror is viewed indirectly, its surface shows faint images of creatures. The mirror weighs 50 pounds, and it has AC 11, 10 hit points, and vulnerability to bludgeoning damage. It shatters and is destroyed when reduced to 0 hit points.",
+      "If the mirror is hanging on a vertical surface and you are within 5 feet of it, you can use an action to speak its command word and activate it. It remains activated until you use an action to speak the command word again.",
+      "Any creature other than you that sees its reflection in the activated mirror while within 30 feet of it must succeed on a {@dc 15} Charisma saving throw or be trapped, along with anything it is wearing or carrying, in one of the mirror's twelve extradimensional cells. This saving throw is made with advantage if the creature knows the mirror's nature, and constructs succeed on the saving throw automatically.",
+      "An extradimensional cell is an infinite expanse filled with thick fog that reduces visibility to 10 feet. Creatures trapped in the mirror's cells don't age, and they don't need to eat, drink, or sleep. A creature trapped within a cell can escape using magic that permits planar travel. Otherwise, the creature is confined to the cell until freed.",
+      "If the mirror traps a creature but its twelve extradimensional cells are already occupied, the mirror frees one trapped creature at random to accommodate the new prisoner. A freed creature appears in an unoccupied space within sight of the mirror but facing away from it. If the mirror is shattered, all creatures it contains are freed and appear in unoccupied spaces near it.",
+      "While within 5 feet of the mirror, you can use an action to speak the name of one creature trapped in it or call out a particular cell by number. The creature named or contained in the named cell appears as an image on the mirror's surface. You and the creature can then communicate normally.",
+      "In a similar way, you can use an action to speak a second command word and free one creature trapped in the mirror. The freed creature appears, along with its possessions, in the unoccupied space nearest to the mirror and facing away from it."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 230,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/495"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mule",
+    "kind": "item",
+    "name": "Mule",
+    "type": "MNT",
+    "rarity": "none",
+    "value": 800,
+    "carryingCapacity": 420,
+    "speed": 40,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 71,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/497"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.navigator-s-tools",
+    "kind": "item",
+    "name": "Navigator's Tools",
+    "type": "T",
+    "rarity": "none",
+    "weight": 2,
+    "value": 2500,
+    "entries": [
+      "This set of instruments is used for navigation at sea. Proficiency with navigator's tools lets you chart a ship's course and follow navigation charts. In addition, these tools allow you to add your proficiency bonus to any ability check you make to avoid getting lost at sea."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/499"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.necklace-of-adaptation",
+    "kind": "item",
+    "name": "Necklace of Adaptation",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "While wearing this necklace, you can breathe normally in any environment, and you have advantage on saving throws made against harmful gases and vapors (such as {@spell cloudkill} and {@spell stinking cloud} effects, inhaled poisons, and the breath weapons of some dragons)."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 231,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/501"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.necklace-of-fireballs",
+    "kind": "item",
+    "name": "Necklace of Fireballs",
+    "rarity": "rare",
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "This necklace has {@dice 1d6 + 3} beads hanging from it. You can use an action to detach a bead and throw it up to 60 feet away. When it reaches the end of its trajectory, the bead detonates as a 3rd-level {@spell fireball} spell (save {@dc 15}).",
+      "You can hurl multiple beads, or even the whole necklace, as one action. When you do so, increase the level of the {@spell fireball} by 1 for each bead beyond the first."
+    ],
+    "attachedSpells": {
+      "limited": {
+        "9": [
+          "fireball"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 231,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/503"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.necklace-of-prayer-beads",
+    "kind": "item",
+    "name": "Necklace of Prayer Beads",
+    "rarity": "rare",
+    "reqAttune": "by a cleric, druid, or paladin",
+    "reqAttuneTags": [
+      {
+        "class": "cleric"
+      },
+      {
+        "class": "druid"
+      },
+      {
+        "class": "paladin"
+      }
+    ],
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "This necklace has {@dice 1d4 + 2} magic beads made from aquamarine, black pearl, or topaz. It also has many nonmagical beads made from stones such as amber, bloodstone, citrine, coral, jade, pearl, or quartz. If a magic bead is removed from the necklace, that bead loses its magic.",
+      "Six types of magic beads exist. The DM decides the type of each bead on the necklace or determines it randomly. A necklace can have more than one bead of the same type. To use one, you must be wearing the necklace. Each bead contains a spell that you can cast from it as a bonus action (using your spell save DC if a save is necessary). Once a magic bead's spell is cast, that bead can't be used again until the next dawn.",
+      {
+        "type": "table",
+        "colLabels": [
+          "{@dice d20}",
+          "Bead of...",
+          "Spell"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-2",
+          "col-9"
+        ],
+        "rows": [
+          [
+            "1-6",
+            "Blessing",
+            "{@spell Bless}"
+          ],
+          [
+            "7-12",
+            "Curing",
+            "{@spell Cure wounds} (2nd level) or {@spell lesser restoration}"
+          ],
+          [
+            "13-16",
+            "Favor",
+            "{@spell Greater restoration}"
+          ],
+          [
+            "17-18",
+            "Smiting",
+            "{@spell Branding smite}"
+          ],
+          [
+            "19",
+            "Summons",
+            "{@spell Planar ally}"
+          ],
+          [
+            "20",
+            "Wind walking",
+            "{@spell Wind walk}"
+          ]
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "other": [
+        "bless",
+        "branding smite",
+        "cure wounds",
+        "greater restoration",
+        "lesser restoration",
+        "planar ally",
+        "wind walk"
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 231,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/505"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.marvelous-pigments",
+    "kind": "item",
+    "name": "Marvelous Pigments",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "Typically found in {@dice 1d4} pots inside a fine wooden box with a brush (weighing 1 pound in total), these pigments allow you to create three-dimensional objects by painting them in two dimensions. The paint flows from the brush to form the desired object as you concentrate on its image.",
+      "Each pot of paint is sufficient to cover 1,000 square feet of a surface, which lets you create inanimate objects or terrain features—such as a door, a pit, flowers, trees, cells, rooms, or weapons—that are up to 10,000 cubic feet. It takes 10 minutes to cover 100 square feet.",
+      "When you complete the painting, the object or terrain feature depicted becomes a real, nonmagical object. Thus, painting a door on a wall creates an actual door that can be opened to whatever is beyond. Painting a pit on a floor creates a real pit, and its depth counts against the total area of objects you create.",
+      "Nothing created by the pigments can have a value greater than 25 gp. If you paint an object of greater value (such as a diamond or a pile of gold), the object looks authentic, but close inspection reveals it is made from paste, bone, or some other worthless material.",
+      "If you paint a form of energy such as fire or lightning, the energy appears but dissipates as soon as you complete the painting, doing no harm to anything."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 230,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/508"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.oathbow",
+    "kind": "item",
+    "name": "Oathbow",
+    "baseItem": "longbow|srd51",
+    "type": "R",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "A",
+      "H",
+      "2H"
+    ],
+    "range": "150/600",
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "entries": [
+      "When you nock an arrow on this bow, it whispers in Elvish, \"Swift defeat to my enemies.\" When you use this weapon to make a ranged attack, you can, as a command phrase, say, \"Swift death to you who have wronged me.\" The target of your attack becomes your sworn enemy until it dies or until dawn seven days later. You can have only one such sworn enemy at a time. When your sworn enemy dies, you can choose a new one after the next dawn.",
+      "When you make a ranged attack roll with this weapon against your sworn enemy, you have advantage on the roll. In addition, your target gains no benefit from cover, other than {@quickref Cover||3||total cover}, and you suffer no disadvantage due to long range. If the attack hits, your sworn enemy takes an extra {@damage 3d6} piercing damage.",
+      "While your sworn enemy lives, you have disadvantage on attack rolls with all other weapons."
+    ],
+    "ammoType": "arrow|srd51",
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 231,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/510"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.oil-flask",
+    "kind": "item",
+    "name": "Oil (flask)",
+    "type": "G",
+    "rarity": "none",
+    "weight": 1,
+    "value": 10,
+    "entries": [
+      "Oil usually comes in a clay flask that holds 1 pint. As an action, you can splash the oil in this flask onto a creature within 5 feet of you or throw it up to 20 feet, shattering it on impact. Make a ranged attack against a target creature or object, treating the oil as an improvised weapon. On a hit, the target is covered in oil. If the target takes any fire damage before the oil dries (after 1 minute), the target takes an additional 5 fire damage from the burning oil. You can also pour a flask of oil on the ground to cover a 5-foot-square area, provided that the surface is level. If lit, the oil burns for 2 rounds and deals 5 fire damage to any creature that enters the area or ends its turn in the area. A creature can take this damage only once per turn."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/512"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.oil-of-etherealness",
+    "kind": "item",
+    "name": "Oil of Etherealness",
+    "type": "P",
+    "rarity": "rare",
+    "entries": [
+      "Beads of this cloudy gray oil form on the outside of its container and quickly evaporate. The oil can cover a Medium or smaller creature, along with the equipment it's wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of the {@spell etherealness} spell for 1 hour."
+    ],
+    "attachedSpells": [
+      "etherealness"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 231,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/513"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.oil-of-sharpness",
+    "kind": "item",
+    "name": "Oil of Sharpness",
+    "type": "P",
+    "rarity": "very rare",
+    "bonusWeapon": "+3",
+    "entries": [
+      "This clear, gelatinous oil sparkles with tiny, ultrathin silver shards. The oil can coat one slashing or piercing weapon or up to 5 pieces of slashing or piercing ammunition. Applying the oil takes 1 minute. For 1 hour, the coated item is magical and has a +3 bonus to attack and damage rolls."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 232,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/515"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.oil-of-slipperiness",
+    "kind": "item",
+    "name": "Oil of Slipperiness",
+    "type": "P",
+    "rarity": "uncommon",
+    "entries": [
+      "This sticky black unguent is thick and heavy in the container, but it flows quickly when poured. The oil can cover a Medium or smaller creature, along with the equipment it's wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of a {@spell freedom of movement} spell for 8 hours.",
+      "Alternatively, the oil can be poured on the ground as an action, where it covers a 10-foot square, duplicating the effect of the {@spell grease} spell in that area for 8 hours."
+    ],
+    "attachedSpells": [
+      "freedom of movement"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 232,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/517"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.oil-of-taggit",
+    "kind": "item",
+    "name": "Oil of Taggit",
+    "type": "G",
+    "rarity": "none",
+    "value": 40000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to this poison must succeed on a {@dc 13} Constitution saving throw or become {@condition poisoned} for 24 hours. The {@condition poisoned} creature is {@condition unconscious}. The creature wakes up if it takes damage."
+    ],
+    "poisonTypes": [
+      "contact"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/519"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.orb-of-dragonkind",
+    "kind": "item",
+    "name": "Orb of Dragonkind",
+    "rarity": "artifact",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 3,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4 + 3}",
+    "charges": 7,
+    "entries": [
+      "Ages past, on the world of Krynn, elves and humans waged a terrible war against evil dragons. When the world seemed doomed, the wizards of the Towers of High Sorcery came together and worked their greatest magic, forging five Orbs of Dragonkind (or Dragon Orbs) to help them defeat the dragons. One orb was taken to each of the five towers, and there they were used to speed the war toward a victorious end. The wizards used the orbs to lure dragons to them, then destroyed the dragons with powerful magic.",
+      "As the Towers of High Sorcery fell in later ages, the orbs were destroyed or faded into legend, and only three are thought to survive. Their magic has been warped and twisted over the centuries, so although their primary purpose of calling dragons still functions, they also allow some measure of control over dragons.",
+      "Each orb contains the essence of an evil dragon, a presence that resents any attempt to coax magic from it. Those lacking in force of personality might find themselves enslaved to an orb.",
+      "An orb is an etched crystal globe about 10 inches in diameter. When used, it grows to about 20 inches in diameter, and mist swirls inside it.",
+      "While attuned to an orb, you can use an action to peer into the orb's depths and speak its command word. You must then make a {@dc 15} Charisma check. On a successful check, you control the orb for as long as you remain attuned to it. On a failed check, you become {@condition charmed} by the orb for as long as you remain attuned to it.",
+      "While you are {@condition charmed} by the orb, you can't voluntarily end your attunement to it, and the orb casts {@spell suggestion} on you at will (save {@dc 18}), urging you to work toward the evil ends it desires. The dragon essence within the orb might want many things: the annihilation of a particular people, freedom from the orb, to spread suffering in the world, to advance the worship of Takhisis ({@creature Tiamat|RoT|Tiamat's} name on Krynn), or something else the DM decides.",
+      {
+        "type": "entries",
+        "name": "Random Properties",
+        "entries": [
+          "An Orb of Dragonkind has the following random properties:",
+          {
+            "type": "list",
+            "items": [
+              "2 minor beneficial properties",
+              "1 minor detrimental property",
+              "1 major detrimental property"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spells",
+        "entries": [
+          "The orb has 7 charges and regains {@dice 1d4 + 3} expended charges daily at dawn. If you control the orb, you can use an action and expend 1 or more charges to cast one of the following spells (save {@dc 18}) from it: {@spell cure wounds} (5th-level version, 3 charges), {@spell daylight} (1 charge), {@spell death ward} (2 charges), or {@spell scrying} (3 charges). You can also use an action to cast the {@spell detect magic} spell from the orb without using any charges."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Call Dragons",
+        "entries": [
+          "While you control the orb, you can use an action to cause the artifact to issue a telepathic call that extends in all directions for 40 miles. Evil dragons in range feel compelled to come to the orb as soon as possible by the most direct route. Dragon deities such as {@creature Tiamat|RoT} are unaffected by this call. Dragons drawn to the orb might be hostile toward you for compelling them against their will. Once you have used this property, it can't be used again for 1 hour."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Destroying an Orb",
+        "entries": [
+          "An Orb of Dragonkind appears fragile but is impervious to most damage, including the attacks and breath weapons of dragons. A {@spell disintegrate} spell or one good hit from a +3 magic weapon is sufficient to destroy an orb, however."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "will": [
+        "detect magic"
+      ],
+      "charges": {
+        "1": [
+          "daylight"
+        ],
+        "2": [
+          "death ward"
+        ],
+        "3": [
+          "cure wounds#5",
+          "scrying"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 252,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/521"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ox",
+    "kind": "item",
+    "name": "Ox",
+    "type": "TG",
+    "rarity": "none",
+    "value": 1500,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/523"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.pack-saddle",
+    "kind": "item",
+    "name": "Pack Saddle",
+    "type": "TAH",
+    "rarity": "none",
+    "weight": 15,
+    "value": 500,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/524"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.pale-tincture",
+    "kind": "item",
+    "name": "Pale Tincture",
+    "type": "G",
+    "rarity": "none",
+    "value": 25000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to this poison must succeed on a {@dc 16} Constitution saving throw or take 3 ({@damage 1d6}) poison damage and become {@condition poisoned}. The {@condition poisoned} creature must repeat the saving throw every 24 hours, taking 3 ({@damage 1d6}) poison damage on a failed save. Until this poison ends, the damage the poison deals can't be healed by any means. After seven successful saving throws, the effect ends and the creature can heal normally."
+    ],
+    "poisonTypes": [
+      "ingested"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/525"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.paper-one-sheet",
+    "kind": "item",
+    "name": "Paper (one sheet)",
+    "type": "G",
+    "rarity": "none",
+    "value": 20,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/528"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.parchment-one-sheet",
+    "kind": "item",
+    "name": "Parchment (one sheet)",
+    "type": "G",
+    "rarity": "none",
+    "value": 10,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/530"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.pearl-of-power",
+    "kind": "item",
+    "name": "Pearl of Power",
+    "rarity": "uncommon",
+    "reqAttune": "by a spellcaster",
+    "reqAttuneTags": [
+      {
+        "spellcasting": true
+      }
+    ],
+    "wondrous": true,
+    "entries": [
+      "While this pearl is on your person, you can use an action to speak its command word and regain one expended spell slot. If the expended slot was of 4th level or higher, the new slot is 3rd level. Once you have used the pearl, it can't be used again until the next dawn."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 232,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/531"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.pepper",
+    "kind": "item",
+    "name": "Pepper",
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 200,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/533"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.perfume-vial",
+    "kind": "item",
+    "name": "Perfume (vial)",
+    "type": "G",
+    "rarity": "none",
+    "value": 500,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/535"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.periapt-of-health",
+    "kind": "item",
+    "name": "Periapt of Health",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "You are immune to contracting any disease while you wear this pendant. If you are already infected with a disease, the effects of the disease are suppressed while you wear the pendant."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 232,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/536"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.periapt-of-proof-against-poison",
+    "kind": "item",
+    "name": "Periapt of Proof against Poison",
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "rarity": "rare",
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "This delicate silver chain has a brilliant-cut black gem pendant. While you wear it, poisons have no effect on you. You are immune to the {@condition poisoned} condition and have immunity to poison damage."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 232,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/538"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.periapt-of-wound-closure",
+    "kind": "item",
+    "name": "Periapt of Wound Closure",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "While you wear this pendant, you stabilize whenever you are dying at the start of your turn. In addition, whenever you roll a Hit Die to regain hit points, double the number of hit points it restores."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 232,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/540"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.philter-of-love",
+    "kind": "item",
+    "name": "Philter of Love",
+    "type": "P",
+    "rarity": "uncommon",
+    "entries": [
+      "The next time you see a creature within 10 minutes after drinking this philter, you become {@condition charmed} by that creature for 1 hour. If the creature is of a species and gender you are normally attracted to, you regard it as your true love while you are {@condition charmed}. This potion's rose-hued, effervescent liquid contains one easy-to-miss bubble shaped like a heart."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 232,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/542"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.pig",
+    "kind": "item",
+    "name": "Pig",
+    "type": "TG",
+    "rarity": "none",
+    "value": 300,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/544"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.pipes-of-haunting",
+    "kind": "item",
+    "name": "Pipes of Haunting",
+    "type": "INS",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "weight": 2,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "entries": [
+      "You must be proficient with wind instruments to use these pipes. They have 3 charges. You can use an action to play them and expend 1 charge to create an eerie, spellbinding tune. Each creature within 30 feet of you that hears you play must succeed on a {@dc 15} Wisdom saving throw or become {@condition frightened} of you for 1 minute. If you wish, all creatures in the area that aren't hostile toward you automatically succeed on the saving throw. A creature that fails the saving throw can repeat it at the end of each of its turns, ending the effect on itself on a success. A creature that succeeds on its saving throw is immune to the effect of these pipes for 24 hours. The pipes regain {@dice 1d3} expended charges daily at dawn."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 232,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/545"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.pipes-of-the-sewers",
+    "kind": "item",
+    "name": "Pipes of the Sewers",
+    "type": "INS",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 2,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "entries": [
+      "You must be proficient with wind instruments to use these pipes. While you are attuned to the pipes, ordinary rats and giant rats are indifferent toward you and will not attack you unless you threaten or harm them.",
+      "The pipes have 3 charges. If you play the pipes as an action, you can use a bonus action to expend 1 to 3 charges, calling forth one {@creature swarm of rats} with each expended charge, provided that enough rats are within half a mile of you to be called in this fashion (as determined by the DM). If there aren't enough rats to form a swarm, the charge is wasted. Called swarms move toward the music by the shortest available route but aren't under your control otherwise. The pipes regain {@dice 1d3} expended charges daily at dawn.",
+      "Whenever a {@creature swarm of rats} that isn't under another creature's control comes within 30 feet of you while you are playing the pipes, you can make a Charisma check contested by the swarm's Wisdom check. If you lose the contest, the swarm behaves as it normally would and can't be swayed by the pipes' music for the next 24 hours. If you win the contest, the swarm is swayed by the pipes' music and becomes friendly to you and your companions for as long as you continue to play the pipes each round as an action. A friendly swarm obeys your commands. If you issue no commands to a friendly swarm, it defends itself but otherwise takes no actions. If a friendly swarm starts its turn and can't hear the pipes' music, your control over that swarm ends, and the swarm behaves as it normally would and can't be swayed by the pipes' music for the next 24 hours."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 232,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/547"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.pitcher",
+    "kind": "item",
+    "name": "Pitcher",
+    "type": "G",
+    "rarity": "none",
+    "weight": 4,
+    "value": 2,
+    "entries": [
+      "A pitcher holds 1 gallon of liquid."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/549"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.piton",
+    "kind": "item",
+    "name": "Piton",
+    "type": "G",
+    "rarity": "none",
+    "weight": 0.25,
+    "value": 5,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/550"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.plate-armor-of-etherealness",
+    "kind": "item",
+    "name": "Plate Armor of Etherealness",
+    "baseItem": "plate armor|srd51",
+    "type": "HA",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "entries": [
+      "While you're wearing this armor, you can speak its command word as an action to gain the effect of the {@spell etherealness} spell, which lasts for 10 minutes or until you remove the armor or use an action to speak the command word again. This property of the armor can't be used again until the next dawn."
+    ],
+    "attachedSpells": {
+      "daily": {
+        "1e": [
+          "etherealness"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 233,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/551"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.platinum",
+    "kind": "item",
+    "name": "Platinum",
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 50000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 62,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/552"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.playing-card-set",
+    "kind": "item",
+    "name": "Playing Card Set",
+    "type": "GS",
+    "rarity": "none",
+    "value": 50,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/554"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.poisoner-s-kit",
+    "kind": "item",
+    "name": "Poisoner's Kit",
+    "type": "T",
+    "rarity": "none",
+    "weight": 2,
+    "value": 5000,
+    "entries": [
+      "A poisoner's kit includes the vials, chemicals, and other equipment necessary for the creation of poisons. Proficiency with this kit lets you add your proficiency bonus to any ability checks you make to craft or use poisons.",
+      "Additionally, the {@book Crafting and Harvesting Poison|srd51|8|Crafting and Harvesting Poison} rules require the use of a poisoner's kit."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 70,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/556"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.pole-10-foot",
+    "kind": "item",
+    "name": "Pole (10-foot)",
+    "type": "G",
+    "rarity": "none",
+    "weight": 7,
+    "value": 5,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 239,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/559"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.pony",
+    "kind": "item",
+    "name": "Pony",
+    "type": "MNT",
+    "rarity": "none",
+    "value": 3000,
+    "carryingCapacity": 225,
+    "speed": 40,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/560"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.portable-hole",
+    "kind": "item",
+    "name": "Portable Hole",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "This fine black cloth, soft as silk, is folded up to the dimensions of a handkerchief. It unfolds into a circular sheet 6 feet in diameter.",
+      "You can use an action to unfold a portable hole and place it on or against a solid surface, whereupon the portable hole creates an extradimensional hole 10 feet deep. The cylindrical space within the hole exists on a different plane, so it can't be used to create open passages. Any creature inside an open portable hole can exit the hole by climbing out of it.",
+      "You can use an action to close a portable hole by taking hold of the edges of the cloth and folding it up. Folding the cloth closes the hole, and any creatures or objects within remain in the extradimensional space. No matter what's in it, the hole weighs next to nothing.",
+      "If the hole is folded up, a creature within the hole's extradimensional space can use an action to make a {@dc 10} Strength check. On a successful check, the creature forces its way out and appears within 5 feet of the portable hole or the creature carrying it. A breathing creature within a closed portable hole can survive for up to 10 minutes, after which time it begins to suffocate.",
+      "Placing a portable hole inside an extradimensional space created by a {@item bag of holding}, {@item Heward's handy haversack}, or similar item instantly destroys both items and opens a gate to the Astral Plane. The gate originates where the one item was placed inside the other. Any creature within 10 feet of the gate is sucked through it and deposited in a random location on the Astral Plane. The gate then closes. The gate is one-way only and can't be reopened."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/562"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.portable-ram",
+    "kind": "item",
+    "name": "Portable Ram",
+    "type": "G",
+    "rarity": "none",
+    "weight": 35,
+    "value": 400,
+    "entries": [
+      "You can use a portable ram to break down doors. When doing so, you gain a +4 bonus on the Strength check. One other character can help you use the ram, giving you advantage on this check."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 239,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/564"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.potion-of-acid-resistance",
+    "kind": "item",
+    "name": "Potion of Acid Resistance",
+    "type": "P",
+    "resist": [
+      "acid"
+    ],
+    "rarity": "uncommon",
+    "entries": [
+      "{#itemEntry Potion of Resistance}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 235,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/566"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.potion-of-animal-friendship",
+    "kind": "item",
+    "name": "Potion of Animal Friendship",
+    "type": "P",
+    "rarity": "uncommon",
+    "entries": [
+      "When you drink this potion, you can cast the {@spell animal friendship} spell (save {@dc 13}) for 1 hour at will. Agitating this muddy liquid brings little bits into view: a fish scale, a hummingbird tongue, a cat claw, or a squirrel hair."
+    ],
+    "attachedSpells": [
+      "animal friendship"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 233,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/568"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.potion-of-clairvoyance",
+    "kind": "item",
+    "name": "Potion of Clairvoyance",
+    "type": "P",
+    "rarity": "rare",
+    "entries": [
+      "When you drink this potion, you gain the effect of the {@spell clairvoyance} spell. An eyeball bobs in this yellowish liquid but vanishes when the potion is opened."
+    ],
+    "attachedSpells": [
+      "clairvoyance"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 233,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/570"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  }
+]
