@@ -82,6 +82,58 @@ function generateVariants(candidates,parents){
  if(report.sourceGroups!==4||records.length!==14)throw Error("Unexpected modern variant coverage");
  return {records,report};
 }
+function generateLegacyVariants(candidates,parents,armorRows,pages){
+ const clone=x=>JSON.parse(JSON.stringify(x)),slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+ const byId=new Map(parents.map(x=>[x.id,x])),armors=new Map(armorRows.map(x=>[x.id,x]));
+ const report={edition:"srd-5.1",sourceGroups:0,sourceVersionOccurrences:0,nativeCount:0,variants:[],excluded:[]},records=[];
+ // All seven named configurations from the pinned source are supported by
+ // the general barding rule, rather than separate publisher monster blocks.
+ const barding={"Chain Mail":"Chain Mail","Leather":"Leather Armor","Plate":"Plate Armor","Ring Mail":"Ring Mail","Scale Mail":"Scale Mail","Splint":"Splint Armor","Studded Leather":"Studded Leather Armor"};
+ const locators={"Archmage":[395],"Djinni":[310],"Drider":[304],"Drow":[307],"Efreeti":[310],"Erinyes":[276],"Giant Lizard":[377],"Gray Ooze":[338],"Green Hag":[319],"Mage":[400],"Night Hag":[319],"Sea Hag":[320],"Troll":[351]};
+ const pageIds=new Map(pages.map(x=>[x.page,x.id]));
+ for(const [i,c] of candidates.entries()){
+  if(!c._versions?.length)continue;
+  report.sourceGroups++;report.sourceVersionOccurrences+=c._versions.length;
+  for(const [j,v] of c._versions.entries()){
+   const pointer="/monster/"+i+"/_versions/"+j;
+   if(v.source!=="SRD51")throw Error("Foreign legacy variant");
+   if(c.name!=="Giant Rat"&&c.name!=="Warhorse"){
+    if(!locators[c.name])throw Error("Unreviewed legacy variant group "+c.name);
+    report.excluded.push({name:v.name,parentName:c.name,pointer,reviewedPage:locators[c.name][0],reason:"Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."});continue;
+   }
+   const parent=byId.get("monster."+slug(c.name));
+   if(!parent)throw Error("Missing legacy parent "+c.name);
+   const {source,catalogReferences,...data}=clone(parent);
+   const r={...data,id:"monster."+slug(v.name),name:v.name};
+   r.variantOf=parent.id;
+   const refs=new Set([...catalogReferences,parent.id]),provenancePages=[...source.pages];
+   if(c.name==="Giant Rat"){
+    if(v.name!=="Giant Rat (Diseased)"||!v.action?.length)throw Error("Unreviewed rat variant");
+    r.action=clone(v.action);
+   }else{
+    const label=v.name.match(/^Warhorse \((.+) Barding\)$/)?.[1],armorName=barding[label];
+    if(!armorName)throw Error("Unreviewed barding "+v.name);
+    const armor=armors.get("baseitem."+slug(armorName));
+    if(!armor||!armor.armor||typeof armor.ac!=="number")throw Error("Missing armor definition "+armorName);
+    const armorType=armor.type.split("|")[0],dex=Math.floor((parent.dex-10)/2);
+    const ac=armor.ac+(armorType==="LA"?dex:armorType==="MA"?Math.min(2,dex):0);
+    if(ac!==v.ac[0].ac)throw Error("Barding AC mismatch "+v.name);
+    r.ac=[{ac,from:[armor.name+" barding"]}];
+    r.barding={baseArmorId:armor.id,costMultiplier:4,weightMultiplier:2};
+    refs.add(armor.id);
+    for(const p of [64,71,72]){if(!pageIds.has(p))throw Error("Missing armor/barding page "+p);refs.add(pageIds.get(p));provenancePages.push(p);}
+   }
+   r.catalogReferences=[...refs].sort();
+   r.source={...source,pages:[...new Set(provenancePages)].sort((a,b)=>a-b),variantPointer:pointer,
+    structuredStatus:c.name==="Giant Rat"?"Publisher p.378 explicitly supplies diseased rat variant; base CR retained.":"Derived equipment configuration from official armor and barding rules; not a separate published monster block.",
+    adaptation:"Finite source-backed legacy variant derived from edition-local parent."};
+   records.push(r);report.variants.push({id:r.id,parentId:parent.id,pointer,pages:r.source.pages});
+  }
+ }
+ report.nativeCount=records.length;
+ if(report.sourceVersionOccurrences!==records.length+report.excluded.length||records.length!==8)throw Error("Legacy variant coverage mismatch");
+ return {records,report};
+}
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
 const dir="data/rulesets/dnd-5-5e/native/bestiary/";
@@ -93,3 +145,14 @@ for(const [file,value] of [[dir+"variants.json",records],["data/reference/srd/be
  else fs.writeFileSync(target,body);
 }
 console.log("dnd-5-5e: "+report.nativeCount+" generated spell-summon variants");
+
+const legacyDir="data/rulesets/dnd-5e/native/";
+const legacyParents=fs.readdirSync(path.join(root,legacyDir+"bestiary")).filter(f=>/^structured-\d+\.json$/.test(f)).sort().flatMap(f=>read(legacyDir+"bestiary/"+f));
+const armorRows=fs.readdirSync(path.join(root,legacyDir+"items")).filter(f=>/^structured-\d+\.json$/.test(f)).sort().flatMap(f=>read(legacyDir+"items/"+f));
+const legacy=generateLegacyVariants(read("data/reference/srd/structured/bestiary/bestiary-srd51.json").monster,legacyParents,armorRows,read(legacyDir+"rulebook/pages-053-077.json"));
+for(const [file,value] of [[legacyDir+"bestiary/variants.json",legacy.records],["data/reference/srd/bestiary-variant-promotion-51.json",legacy.report]]){
+ const target=path.join(root,file),body=JSON.stringify(value,null,2)+"\n";
+ if(process.argv.includes("--check")){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale legacy bestiary variants "+file);}
+ else fs.writeFileSync(target,body);
+}
+console.log("dnd-5e: "+legacy.report.nativeCount+" generated creature variants; "+legacy.report.excluded.length+" excluded source additions");

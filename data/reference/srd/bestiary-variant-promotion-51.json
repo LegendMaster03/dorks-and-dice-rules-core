@@ -1,0 +1,214 @@
+{
+  "edition": "srd-5.1",
+  "sourceGroups": 15,
+  "sourceVersionOccurrences": 25,
+  "nativeCount": 8,
+  "variants": [
+    {
+      "id": "monster.giant-rat-diseased",
+      "parentId": "monster.giant-rat",
+      "pointer": "/monster/131/_versions/0",
+      "pages": [
+        378
+      ]
+    },
+    {
+      "id": "monster.warhorse-chain-mail-barding",
+      "parentId": "monster.warhorse",
+      "pointer": "/monster/294/_versions/0",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ]
+    },
+    {
+      "id": "monster.warhorse-leather-barding",
+      "parentId": "monster.warhorse",
+      "pointer": "/monster/294/_versions/1",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ]
+    },
+    {
+      "id": "monster.warhorse-plate-barding",
+      "parentId": "monster.warhorse",
+      "pointer": "/monster/294/_versions/2",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ]
+    },
+    {
+      "id": "monster.warhorse-ring-mail-barding",
+      "parentId": "monster.warhorse",
+      "pointer": "/monster/294/_versions/3",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ]
+    },
+    {
+      "id": "monster.warhorse-scale-mail-barding",
+      "parentId": "monster.warhorse",
+      "pointer": "/monster/294/_versions/4",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ]
+    },
+    {
+      "id": "monster.warhorse-splint-barding",
+      "parentId": "monster.warhorse",
+      "pointer": "/monster/294/_versions/5",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ]
+    },
+    {
+      "id": "monster.warhorse-studded-leather-barding",
+      "parentId": "monster.warhorse",
+      "pointer": "/monster/294/_versions/6",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "name": "Archmage (Familiar)",
+      "parentName": "Archmage",
+      "pointer": "/monster/28/_versions/0",
+      "reviewedPage": 395,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Djinni (Disguises)",
+      "parentName": "Djinni",
+      "pointer": "/monster/82/_versions/0",
+      "reviewedPage": 310,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Djinni (Wishes)",
+      "parentName": "Djinni",
+      "pointer": "/monster/82/_versions/1",
+      "reviewedPage": 310,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Drider Spellcaster",
+      "parentName": "Drider",
+      "pointer": "/monster/87/_versions/0",
+      "reviewedPage": 304,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Drow (Magic Equipment)",
+      "parentName": "Drow",
+      "pointer": "/monster/88/_versions/0",
+      "reviewedPage": 307,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Efreeti (Disguises)",
+      "parentName": "Efreeti",
+      "pointer": "/monster/95/_versions/0",
+      "reviewedPage": 310,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Efreeti (Wishes)",
+      "parentName": "Efreeti",
+      "pointer": "/monster/95/_versions/1",
+      "reviewedPage": 310,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Erinyes (Rope of Entanglement)",
+      "parentName": "Erinyes",
+      "pointer": "/monster/98/_versions/0",
+      "reviewedPage": 276,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Giant Lizard (Hold Breath and Spider Climb)",
+      "parentName": "Giant Lizard",
+      "pointer": "/monster/127/_versions/0",
+      "reviewedPage": 377,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Gray Ooze (Psychic)",
+      "parentName": "Gray Ooze",
+      "pointer": "/monster/149/_versions/0",
+      "reviewedPage": 338,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Green Hag (Coven)",
+      "parentName": "Green Hag",
+      "pointer": "/monster/151/_versions/0",
+      "reviewedPage": 319,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Mage (Familiar)",
+      "parentName": "Mage",
+      "pointer": "/monster/188/_versions/0",
+      "reviewedPage": 400,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Night Hag (Coven)",
+      "parentName": "Night Hag",
+      "pointer": "/monster/205/_versions/0",
+      "reviewedPage": 319,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Sea Hag (Coven)",
+      "parentName": "Sea Hag",
+      "pointer": "/monster/249/_versions/0",
+      "reviewedPage": 320,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Troll (Loathsome Limb; Severed Arm)",
+      "parentName": "Troll",
+      "pointer": "/monster/285/_versions/0",
+      "reviewedPage": 351,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Troll (Loathsome Limb; Severed Head)",
+      "parentName": "Troll",
+      "pointer": "/monster/285/_versions/1",
+      "reviewedPage": 351,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    },
+    {
+      "name": "Troll (Loathsome Limb; Severed Leg)",
+      "parentName": "Troll",
+      "pointer": "/monster/285/_versions/2",
+      "reviewedPage": 351,
+      "reason": "Optional variant mechanics absent from the corresponding publisher stat-block section; do not promote commercial additions based on SRD tag."
+    }
+  ]
+}

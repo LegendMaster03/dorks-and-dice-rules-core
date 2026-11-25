@@ -119,7 +119,7 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal("celestial", owl.GetProperty("rule").GetProperty("definition").GetProperty("type").GetString());
 
         var oldMonsters = await client.GetFromJsonAsync<JsonElement>("/api/rulesets/dnd-5e/rules?category=monster&limit=1");
-        Assert.Equal(323, oldMonsters.GetProperty("total").GetInt32());
+        Assert.Equal(331, oldMonsters.GetProperty("total").GetInt32());
         var dragon = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.adult-black-dragon");
         var dragonDefinition = dragon.GetProperty("rule").GetProperty("definition");
         Assert.Contains("Acid Arrow|SRD52", dragonDefinition.GetProperty("spellcasting").GetRawText());
@@ -132,6 +132,34 @@ public sealed class RulesetResolutionApiTests
 
         // Concrete equipment, generic magic templates and weapon rules remain
         // distinct and edition-scoped; recovered embedded stat blocks are accessible.
+        // Legacy published disease variant and source-listed equipment configurations.
+        var diseasedRat = await client.GetFromJsonAsync<JsonElement>("/api/rulesets/dnd-5e/rules/monster.giant-rat-diseased");
+        var ratDefinition = diseasedRat.GetProperty("rule").GetProperty("definition");
+        Assert.Equal("1/8", ratDefinition.GetProperty("cr").GetString());
+        Assert.Contains("contract a disease", ratDefinition.GetProperty("action").GetRawText());
+        var bardingCases = new[]
+        {
+            ("chain-mail", "chain-mail", 16),
+            ("leather", "leather-armor", 12),
+            ("plate", "plate-armor", 18),
+            ("ring-mail", "ring-mail", 14),
+            ("scale-mail", "scale-mail", 15),
+            ("splint", "splint-armor", 17),
+            ("studded-leather", "studded-leather-armor", 13),
+        };
+        foreach (var (variant, armor, ac) in bardingCases)
+        {
+            var id = "monster.warhorse-" + variant + "-barding";
+            var horse = await client.GetFromJsonAsync<JsonElement>("/api/rulesets/dnd-5e/rules/" + id);
+            var definition = horse.GetProperty("rule").GetProperty("definition");
+            Assert.Equal("monster.warhorse", definition.GetProperty("variantOf").GetString());
+            Assert.Equal(ac, definition.GetProperty("ac")[0].GetProperty("ac").GetInt32());
+            Assert.Equal("baseitem." + armor, definition.GetProperty("barding").GetProperty("baseArmorId").GetString());
+            Assert.Equal(4, definition.GetProperty("barding").GetProperty("costMultiplier").GetInt32());
+            Assert.Equal(2, definition.GetProperty("barding").GetProperty("weightMultiplier").GetInt32());
+            Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(animals + "/" + id)).StatusCode);
+        }
+
         // All finite summon choices preserve their parent and edition, not a fixed cast level.
         var summonCases = new[]
         {

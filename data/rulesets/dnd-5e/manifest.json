@@ -68,5 +68,11 @@
   "structuredDeityImport": {
     "nativeRecords": 67,
     "representation": "Four official fantasy-historical pantheons; complete publisher table row reconciliation."
+  },
+  "structuredBestiaryVariants": {
+    "nativeRecords": 8,
+    "sourceVersionOccurrences": 25,
+    "excluded": 17,
+    "representation": "One explicitly published variant and seven source-listed barding configurations derived from published armor rules."
   }
 }
