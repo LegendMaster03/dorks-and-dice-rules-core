@@ -408,6 +408,17 @@ function legacyMagicItemEntries(name,entries){
  return entries;
 }
 
+function modernMagicItemEntries(name,entries){
+ if(name==="Magic Item Rarity"){
+  const values=entries.find(x=>x?.name==="Magic Item Values by Rarity").entries;
+  const old="such as the City of Brass or Sigil";
+  if(!values[0].includes(old))throw Error("Unexpected rarity location examples");
+  values[0]=values[0].replace(old,"such as a city on another plane of existence");
+  values[1]=values[1].replace("{@item +1 Plate Armor|srd52|+1 Armor (Plate Armor)}","+1 Armor (Plate Armor)");
+ }
+ return entries;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -578,7 +589,13 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["\"The Next Dawn\"","/data/11/entries/5",[206],[]],
   ["Cursed Items","/data/11/entries/6",[206],["glossary.attunement","spell.identify","spell.remove-curse"]],
   ["Magic Item Resilience","/data/11/entries/7",[206],["glossary.resistance"]],
-  ["Crafting Magic Items","/data/11/entries/8",[206,207],["skill.arcana","rule.brewing-potions-of-healing","rule.scribing-spell-scrolls","rule.crafting-nonmagical-items"]]
+  ["Crafting Magic Items","/data/11/entries/8",[206,207],["skill.arcana","rule.brewing-potions-of-healing","rule.scribing-spell-scrolls","rule.crafting-nonmagical-items"]],
+  ["Identifying a Magic Item","/data/6/entries/11/entries/1",[102],["spell.identify","glossary.short-rest","item.ring-of-feather-falling","item.ring-of-swimming"]],
+  ["Attunement","/data/6/entries/11/entries/2",[102,103],["glossary.attunement","glossary.short-rest","item.ring-of-protection","rule.magic-item-rules","rule.cursed-items"]],
+  ["Wearing and Wielding Items","/data/6/entries/11/entries/3",[103],["rule.magic-item-rules","item.boots-of-striding-and-springing","item.boots-of-elvenkind"]],
+  ["Magic Item Categories","/data/11/entries/2",[204,205],["glossary.bonus-action","item-group.arcane-focus","item-group.spell-scroll"]],
+  ["Magic Item Rarity","/data/11/entries/3",[205,206],["item.potion-of-healing","item.dragon-orb","baseitem.plate-armor","rule.scribing-spell-scrolls"]],
+  ["Sentient Magic Items","/data/11/entries/9",[207,208],["condition.charmed","rule.the-next-dawn","rule.attunement"]]
  ];
  const extraCorrections={
   "Attunement":"Restore explicit class membership prerequisite from p.206 and the publisher's spellcasting-class monster exception.",
@@ -608,6 +625,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   };
   let content=project(node.entries);
   if(tag==="51")content=legacyMagicItemEntries(name,content);
+  else content=modernMagicItemEntries(name,content);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");
    content[4]=content[4].replace("advantage on checks related to the character's personality, ideals, or bonds","advantage");
@@ -634,7 +652,8 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   const id="rule."+slug(name);
   rows.push({id,kind:"rule",name,entries:content,catalogReferences:[...local].sort(),source:metadata(pointer,nums)});
   report.rules.push({id,pointer,pages:nums});
-  if(extraCorrections[name])report.corrections.push({id,reason:extraCorrections[name]});
+  if(extraCorrections[name]&&(tag==="51"||!["Attunement","Wearing and Wielding Items","Activating an Item"].includes(name)))report.corrections.push({id,reason:extraCorrections[name]});
+  if(tag==="52"&&name==="Magic Item Rarity")report.corrections.push({id,reason:"Restore the published generic planar city example and +1 plate armor display label from pp.205–206."});
  }
  const ids=new Set(rows.map(r=>r.id));
  if(ids.size!==rows.length||rows.some(r=>known.has(r.id)))throw Error("Book projection identity collision");

@@ -6835,5 +6835,454 @@
       },
       "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
     }
+  },
+  {
+    "id": "rule.identifying-a-magic-item",
+    "kind": "rule",
+    "name": "Identifying a Magic Item",
+    "entries": [
+      "Some magic items are indistinguishable from their nonmagical counterparts, while others are conspicuously magical. Handling a magic item is enough to give you a sense that it is extraordinary, but learning a magic item's properties isn't automatic.",
+      "The {@spell Identify|srd52} spell is the fastest way to reveal an item's properties. Alternatively, you can focus on one magic item during a {@variantrule Short Rest|srd52} while being in physical contact with the item. At the end of the rest, you learn its properties and how to use them (but not any curse the item might bear).",
+      "Sometimes a magic item carries a clue to its properties. The command word to activate a ring might be etched inside the band, or a feathered design might hint that it's a {@item Ring of Feather Falling|srd52}.",
+      "Wearing or experimenting with an item can also offer hints about its properties. In the specific case of Potions, a little taste is enough to tell the taster what a potion does. Other items might require more experimentation. For example, if your character puts on a {@item Ring of Swimming|srd52}, the GM might say, \"Your movement feels strangely fluid.\" Perhaps you then dive into a river to see what happens. The GM would then say you swim unexpectedly well."
+    ],
+    "catalogReferences": [
+      "glossary.short-rest",
+      "item.ring-of-feather-falling",
+      "item.ring-of-swimming",
+      "rulebook.page-102",
+      "spell.identify"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        102
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/11/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.attunement",
+    "kind": "rule",
+    "name": "Attunement",
+    "entries": [
+      "Some magic items require a creature to form a bond—called Attunement—with them before the creature can use an item's magical properties. Without becoming attuned to an item that requires Attunement, you gain only its nonmagical benefits unless its description states otherwise. For example, a magic Shield that requires Attunement provides the benefits of a normal Shield if you aren't attuned to it, but none of its magical properties.",
+      {
+        "type": "entries",
+        "name": "Attune during a Short Rest",
+        "entries": [
+          "Attuning to an item requires you to spend a {@variantrule Short Rest|srd52} focused on only that item while being in physical contact with it (this can't be the same Short Rest used to learn the item's properties). This focus can take the form of weapon practice (for a Weapon), meditation (for a Wand), or some other appropriate activity. If the Short Rest is interrupted, the Attunement attempt fails. Otherwise, at the end of the Short Rest, you're attuned to the magic item and can access its full magical capabilities."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "No More Than Three Items",
+        "entries": [
+          "You can be attuned to no more than three magic items at a time. Any attempt to attune to a fourth item fails; you must end your Attunement to an item first. Additionally, you can't attune to more than one copy of an item. For example, you can't attune to more than one {@item Ring of Protection|srd52} at a time."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Ending Attunement",
+        "entries": [
+          "Your Attunement to an item ends if you no longer satisfy the prerequisites for Attunement, if the item has been more than 100 feet away for at least 24 hours, if you die, or if another creature attunes to the item. You can also voluntarily end Attunement by spending another {@variantrule Short Rest|srd52} focused on the item unless the item is cursed."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "glossary.attunement",
+      "glossary.short-rest",
+      "item.ring-of-protection",
+      "rule.cursed-items",
+      "rule.magic-item-rules",
+      "rulebook.page-102",
+      "rulebook.page-103"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        102,
+        103
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/11/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.wearing-and-wielding-items",
+    "kind": "rule",
+    "name": "Wearing and Wielding Items",
+    "entries": [
+      "Using a magic item's properties might mean wearing or wielding it. A magic item meant to be worn must be donned in the intended fashion: boots go on feet, gloves on hands, hats and helmets on a head, and rings on a finger. Magic armor must be donned, a Shield strapped to the arm, a cloak fastened about the shoulders. A weapon must be held.",
+      "In most cases, a magic item that's meant to be worn can fit a creature regardless of size or build. Magic garments are made to be easily adjustable, or they magically adjust themselves to the wearer.",
+      {
+        "type": "entries",
+        "name": "Multiple Items of the Same Kind",
+        "entries": [
+          "You can't wear more than one of certain magic items. You can't normally wear more than one pair of footwear, one pair of gloves or gauntlets, one pair of bracers, one suit of armor, one item of headwear, or one cloak. The GM might make exceptions."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Paired Items",
+        "entries": [
+          "Items that come in pairs—such as boots, bracers, gauntlets, and gloves—impart their benefits only if both items of the pair are worn. For example, a character wearing a {@item Boots of Striding and Springing|srd52|Boot of Striding and Springing} on one foot and a {@item Boots of Elvenkind|srd52|Boot of Elvenkind} on the other foot gains no benefit from either."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "item.boots-of-elvenkind",
+      "item.boots-of-striding-and-springing",
+      "rule.magic-item-rules",
+      "rulebook.page-103"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        103
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/11/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.magic-item-categories",
+    "kind": "rule",
+    "name": "Magic Item Categories",
+    "entries": [
+      "Every magic item belongs to a category. The Magic Item Categories table lists the nine categories and provides examples. Rules for the categories appear after the table.",
+      "See the Magic Item Categories table.",
+      {
+        "type": "entries",
+        "name": "Armor",
+        "entries": [
+          "An item in the Armor category is typically a magical version of armor from \"Equipment\". Unless an armor's description notes otherwise, the armor must be worn for its magic to function.",
+          "Some suits of magic armor specify the type of armor they are, such as {@item Chain Mail|srd52} or {@item Plate Armor|srd52}. If no type is specified, choose the type or determine it randomly."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Potions",
+        "entries": [
+          "An item in the Potion category might be a magical brew that must be imbibed or an oil that must be applied to a creature or an object. A typical potion consists of 1 ounce of liquid in a vial.",
+          {
+            "type": "entries",
+            "name": "Using a Potion",
+            "entries": [
+              "Potions are consumable items. Drinking a potion or administering it to another creature requires a Bonus Action. Applying an oil might take longer as specified in its description. Once used, a potion takes effect immediately, and it is used up."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Mixing Potions",
+            "entries": [
+              "A character might drink one potion while still under the effects of another or pour several potions into a single container. The strange ingredients used in creating potions can result in unpredictable interactions.",
+              "When a character mixes two potions together, roll on the Potion Miscibility table. If more than two are combined, roll again for each subsequent potion, combining the results. Unless the effects are immediately obvious, reveal them only when they become evident.",
+              "See the Potion Miscibility table."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Rings",
+        "entries": [
+          "For its magic to function, an item in the Ring category must be worn on a finger or a similar digit unless its description notes otherwise."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Rods",
+        "entries": [
+          "An item in the Rod category is a scepter usually made of metal, wood, or bone. A typical rod weighs 2 to 5 pounds.",
+          "Unless its description notes otherwise, a rod can be used as an {@item Arcane Focus|srd52}."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Scrolls",
+        "entries": [
+          "An item in the Scroll category is a roll of paper or parchment, sometimes attached to wooden rods and typically kept safe in a tube of ivory, jade, leather, metal, or wood. The most prevalent scroll is the {@item Spell Scroll|srd52}, a spell stored in written form.",
+          {
+            "type": "entries",
+            "name": "Using a Scroll",
+            "entries": [
+              "Scrolls are consumable items. Unleashing the magic in a scroll requires the user to read the scroll. When its magic has been invoked, the scroll can't be used again. Its words fade, or it crumbles into dust.",
+              "Any creature that can understand a written language can read a scroll and attempt to activate it unless its description notes otherwise."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Staffs",
+        "entries": [
+          "Items in the Staff category vary widely in appearance: some are of nearly equal diameter throughout and smooth, others are gnarled and twisted, some are made of wood, and others are composed of polished metal or crystal. A staff weighs between 2 and 7 pounds and serves well as a walking stick or cane.",
+          "Unless its description notes otherwise, a staff can be used as a nonmagical {@item Quarterstaff|srd52} and an {@item Arcane Focus|srd52}."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Wands",
+        "entries": [
+          "An item in the Wand category is typically 12 to 15 inches long and crafted of metal, bone, or wood. It is tipped with metal, crystal, stone, or some other material.",
+          "Unless its description notes otherwise, a wand can be used as an {@item Arcane Focus|srd52}."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Weapons",
+        "entries": [
+          "A magic weapon is typically a magical version of a weapon from \"Equipment\". Some magic weapons specify the type of weapon they are in their descriptions, such as a {@item Longsword|srd52} or {@item Longbow|srd52}. If no weapon type is specified, you may choose the type or determine it randomly.",
+          {
+            "type": "entries",
+            "name": "Ammunition",
+            "entries": [
+              "If a magic weapon has the {@itemProperty AF|srd52|Ammunition} property, ammunition fired from it is considered magical for the purpose of any rule that cares whether a weapon is magical or not."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Wondrous Items",
+        "entries": [
+          "Wondrous Items include wearable items such as boots, belts, capes, amulets, brooches, and circlets. Bags, carpets, figurines, horns, musical instruments, and more also fall into this category."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "glossary.bonus-action",
+      "item-group.arcane-focus",
+      "item-group.spell-scroll",
+      "rulebook.page-204",
+      "rulebook.page-205",
+      "table.magic-item-categories",
+      "table.potion-miscibility"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        204,
+        205
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.magic-item-rarity",
+    "kind": "rule",
+    "name": "Magic Item Rarity",
+    "entries": [
+      "Every magic item has a rarity, which provides a rough measure of an item's power relative to other magic items. The rarities are shown in the Magic Item Rarities and Values table.",
+      "Common magic items, such as a {@item Potion of Healing|srd52}, are the most plentiful. Artifacts, such as the {@item Dragon Orb|srd52}, are priceless, unique, and difficult to acquire.",
+      {
+        "type": "entries",
+        "name": "Magic Item Values by Rarity",
+        "entries": [
+          "Common magic items can often be bought in a town or city. Uncommon and Rare magic items are usually found only in cities, and rarer magic items might be sold only in wondrous locations, such as a city on another plane of existence. If you allow characters to buy and sell magic items in your campaign, rarity can help you set prices for those items. Gold Piece values are provided in the Magic Item Rarities and Values table, though a seller might ask for a service rather than coin as payment.",
+          "If a magic item incorporates an item that has a purchase cost in \"Equipment\" (such as a weapon or a suit of armor), add that item's cost to the magic item's value. For example, +1 Armor (Plate Armor) has a value of 5,500 GP, which is the sum of a Rare magic item's value (4,000 GP) and the cost of {@item Plate Armor|srd52} (1,500 GP).",
+          "See the Magic Item Rarities and Values table."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "item.dragon-orb",
+      "item.potion-of-healing",
+      "rule.scribing-spell-scrolls",
+      "rulebook.page-205",
+      "rulebook.page-206",
+      "table.magic-item-rarities-and-values"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        205,
+        206
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.sentient-magic-items",
+    "kind": "rule",
+    "name": "Sentient Magic Items",
+    "entries": [
+      "Some magic items have sentience and personality. Such an item might be possessed, haunted by the spirit of a previous owner, or self-aware thanks to the magic used to create it. A sentient item might be a cherished ally to its wielder or a continual thorn in the side.",
+      "Most sentient items are weapons, but other kinds of items can manifest sentience. Single-use items such as potions and scrolls are never sentient.",
+      "The GM controls sentient magic items and their activated properties. A bearer who maintains a good relationship with the item can access those properties. If the relationship is strained, a conflict can ensue (see \"Conflict\" below).",
+      {
+        "type": "entries",
+        "name": "Sentient Magic Item Traits",
+        "entries": [
+          "When you make a sentient magic item, you create the item's persona much as you would create an NPC, with these exceptions.",
+          {
+            "type": "entries",
+            "name": "Abilities",
+            "entries": [
+              "A sentient magic item has Intelligence, Wisdom, and Charisma scores. Choose the item's abilities, or determine them randomly as follows: roll {@dice 4d6} for each one, dropping the lowest roll and totaling the rest."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Alignment",
+            "entries": [
+              "A sentient magic item has an alignment. Its creator or nature might suggest an alignment. Otherwise, pick an alignment or roll on the Sentient Item's Alignment table."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Communication",
+            "entries": [
+              "A sentient item communicates by sharing its emotions, broadcasting its thoughts telepathically, or speaking aloud. You can choose how it communicates or roll on the Sentient Item's Communication table."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Senses",
+            "entries": [
+              "A sentient item can perceive its surroundings out to a limited range. You can choose its senses or roll on the Sentient Item's Senses table."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Special Purpose",
+            "entries": [
+              "You can give a sentient item an objective it pursues, perhaps to the exclusion of all else. As long as the wielder's use of the item aligns with that special purpose, the item remains cooperative. Deviating from this course might cause conflict between the wielder and the item (see \"Conflict\" below). You can pick a special purpose or roll on the Sentient Item's Special Purpose table.",
+              "See the Sentient Item's Alignment table.",
+              "See the Sentient Item's Communication table.",
+              "See the Sentient Item's Senses table.",
+              "See the Sentient Item's Special Purpose table."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Conflict",
+        "entries": [
+          "When the bearer of a sentient item acts in a manner opposed to the item's alignment or purpose, conflict can arise. When such a conflict occurs, the item's bearer makes a Charisma saving throw ({@dc 12} plus the item's Charisma modifier). On a failed save, the item makes one or more of the following demands:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Chase My Dreams",
+                "entry": "The item demands that its bearer pursue the item's goals to the exclusion of all other goals."
+              },
+              {
+                "type": "item",
+                "name": "Get Rid of It",
+                "entry": "The item demands that its bearer dispose of anything the item finds repugnant."
+              },
+              {
+                "type": "item",
+                "name": "It's Time for a Change",
+                "entry": "The item demands to be given to someone else."
+              },
+              {
+                "type": "item",
+                "name": "Keep Me Close",
+                "entry": "The item insists on being carried or worn at all times."
+              }
+            ]
+          },
+          "If its bearer refuses to comply with the item's demands, the item can do any of the following:",
+          {
+            "type": "list",
+            "items": [
+              "Make it impossible for its bearer to attune to it.",
+              "Suppress one or more of its activated properties.",
+              "Attempt to take control of its bearer, whereupon the bearer makes a Charisma saving throw ({@dc 12} plus the item's Charisma modifier). On a failed save, the bearer has the {@condition Charmed|srd52} condition for {@dice 1d12} hours. While Charmed in this way, the bearer must try to follow the item's commands. If the bearer takes damage, it repeats the save, ending the effect on a success. Whether or not the attempt to control its bearer succeeds, the item can't use this power again until the next dawn."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "rule.attunement",
+      "rule.the-next-dawn",
+      "rulebook.page-207",
+      "rulebook.page-208",
+      "table.sentient-item-s-alignment",
+      "table.sentient-item-s-communication",
+      "table.sentient-item-s-senses",
+      "table.sentient-item-s-special-purpose"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        207,
+        208
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/9"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
   }
 ]

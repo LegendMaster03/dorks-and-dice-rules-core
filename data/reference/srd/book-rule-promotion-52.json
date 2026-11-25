@@ -450,6 +450,52 @@
         206,
         207
       ]
+    },
+    {
+      "id": "rule.identifying-a-magic-item",
+      "pointer": "/data/6/entries/11/entries/1",
+      "pages": [
+        102
+      ]
+    },
+    {
+      "id": "rule.attunement",
+      "pointer": "/data/6/entries/11/entries/2",
+      "pages": [
+        102,
+        103
+      ]
+    },
+    {
+      "id": "rule.wearing-and-wielding-items",
+      "pointer": "/data/6/entries/11/entries/3",
+      "pages": [
+        103
+      ]
+    },
+    {
+      "id": "rule.magic-item-categories",
+      "pointer": "/data/11/entries/2",
+      "pages": [
+        204,
+        205
+      ]
+    },
+    {
+      "id": "rule.magic-item-rarity",
+      "pointer": "/data/11/entries/3",
+      "pages": [
+        205,
+        206
+      ]
+    },
+    {
+      "id": "rule.sentient-magic-items",
+      "pointer": "/data/11/entries/9",
+      "pages": [
+        207,
+        208
+      ]
     }
   ],
   "corrections": [
@@ -460,9 +506,13 @@
     {
       "id": "rule.combat-encounters",
       "reason": "Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
+    },
+    {
+      "id": "rule.magic-item-rarity",
+      "reason": "Restore the published generic planar city example and +1 plate armor display label from pp.205–206."
     }
   ],
-  "nativeCount": 69,
+  "nativeCount": 75,
   "tableInventory": {
     "total": 59,
     "counts": {

@@ -471,6 +471,20 @@ public sealed class RulesetResolutionApiTests
         Assert.Contains("initiative count 20", legacyLegendary.GetProperty("entries").GetRawText());
         Assert.Contains("condition.incapacitated", legacyLegendary.GetProperty("catalogReferences").GetRawText());
 
+        // Modern identification, rarity and sentient-item rules reuse canonical references.
+        var modernItemAttunement = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.attunement")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("glossary.short-rest", modernItemAttunement.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("No More Than Three Items", modernItemAttunement.GetProperty("entries").GetRawText());
+        var modernItemCategories = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.magic-item-categories")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("requires a Bonus Action", modernItemCategories.GetProperty("entries").GetRawText());
+        Assert.Contains("table.potion-miscibility", modernItemCategories.GetProperty("catalogReferences").GetRawText());
+        var modernItemRarity = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.magic-item-rarity")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("a city on another plane of existence", modernItemRarity.GetProperty("entries").GetRawText());
+        Assert.Contains("table.magic-item-rarities-and-values", modernItemRarity.GetProperty("catalogReferences").GetRawText());
+        var modernSentientRule = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.sentient-magic-items")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("table.sentient-item-s-communication", modernSentientRule.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("1d12", modernSentientRule.GetProperty("entries").GetRawText());
+
         // Edition-specific magic item procedures and canonical crafting tables.
         var legacyMagicAttunement = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.attunement")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("a creature must be a member of that class", legacyMagicAttunement.GetProperty("entries")[0].GetString());
