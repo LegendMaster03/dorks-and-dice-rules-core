@@ -99,3 +99,14 @@ class NativeReferenceAuditTests(unittest.TestCase):
                           "status.concentration", "table.spell-scroll-costs",
                           "optional-feature.eldritch-mind"], [r["targets"][0] for r in refs[:5]])
         self.assertEqual("foreign-source", refs[5]["status"])
+
+    def test_concrete_item_preferred_over_duplicate_template(self):
+        rows = [
+            {"id": "item.1-longsword", "kind": "item", "name": "+1 Longsword"},
+            {"id": "magic-variant.1-longsword", "kind": "magic-variant", "name": "+1 Longsword"},
+            {"id": "rule.test", "kind": "rule", "name": "Test",
+             "entries": ["{@item +1 Longsword|SRD52}", "{@item +1 Longsword|SRD51}"]},
+        ]
+        refs = audit(rows, "SRD52")["occurrences"]
+        self.assertEqual(["item.1-longsword"], refs[0]["targets"])
+        self.assertEqual("foreign-source", refs[1]["status"])

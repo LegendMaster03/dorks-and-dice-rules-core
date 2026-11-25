@@ -16,6 +16,8 @@ on:
       - 'tools/recover_srd_publisher_rules.mjs'
       - 'data/reference/srd/bestiary-variant-promotion-*.json'
       - 'tools/promote_srd_items.mjs'
+      - 'tools/promote_srd_numbered_item_variants.mjs'
+      - 'data/reference/srd/numbered-item-variant-promotion-*.json'
       - 'tools/promote_srd_origins.mjs'
       - 'tools/promote_srd_classes.mjs'
       - 'tools/promote_srd_features.mjs'
@@ -65,6 +67,8 @@ jobs:
         run: node tools/promote_srd_bestiary_variants.mjs --check
       - name: Verify publisher-only group and rule recovery
         run: node tools/recover_srd_publisher_rules.mjs --check
+      - name: Verify concrete numbered magic item variants
+        run: node tools/promote_srd_numbered_item_variants.mjs --check
       - name: Reconcile native promotion coverage (diagnostic only)
         run: python3 tools/report_srd_promotion.py --output build/srd-review/promotion-coverage.json
       - name: Test semantic reference audit

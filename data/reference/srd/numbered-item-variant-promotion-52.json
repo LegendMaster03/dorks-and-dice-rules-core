@@ -1,0 +1,46 @@
+{
+  "edition": "srd-5.2.1",
+  "templateCount": 12,
+  "counts": {
+    "Ammunition": 12,
+    "Armor": 36,
+    "Shield": 3,
+    "Weapon": 114
+  },
+  "mergedTemplates": [
+    {
+      "id": "item.1-longsword",
+      "templateId": "magic-variant.1-longsword",
+      "reason": "Duplicate generic +1 weapon template occurrence; one concrete Longsword identity."
+    }
+  ],
+  "deferred": [
+    {
+      "name": "Firearm Bullet",
+      "reason": "Publisher permits any ammunition, but pinned base corpus supplies only a ten-piece pack; recover individual base identity before generating variants."
+    }
+  ],
+  "excludedBases": [
+    {
+      "name": "Arrows (20)",
+      "reason": "Ammunition pack; numbered magic item is one piece, not a whole pack."
+    },
+    {
+      "name": "Bolts (20)",
+      "reason": "Ammunition pack; numbered magic item is one piece, not a whole pack."
+    },
+    {
+      "name": "Firearm Bullets (10)",
+      "reason": "Ammunition pack; numbered magic item is one piece, not a whole pack."
+    },
+    {
+      "name": "Needles (50)",
+      "reason": "Ammunition pack; numbered magic item is one piece, not a whole pack."
+    },
+    {
+      "name": "Sling Bullets (20)",
+      "reason": "Ammunition pack; numbered magic item is one piece, not a whole pack."
+    }
+  ],
+  "nativeCount": 165
+}

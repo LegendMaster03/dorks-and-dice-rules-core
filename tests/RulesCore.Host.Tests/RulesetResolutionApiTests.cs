@@ -202,7 +202,35 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal("fire", fireDefinition.GetProperty("variantSelection").GetProperty("sharedResistance").GetString());
 
         var modernItems = await client.GetFromJsonAsync<JsonElement>(animals + "?category=item&limit=1");
-        Assert.Equal(465, modernItems.GetProperty("total").GetInt32());
+        Assert.Equal(630, modernItems.GetProperty("total").GetInt32());
+        // Concrete numbered items retain the original edition-local equipment and template.
+        foreach (var prefix in new[] { "/api/rulesets/dnd-5e/rules", animals })
+        {
+            var blade = await client.GetFromJsonAsync<JsonElement>(prefix + "/item.1-longsword");
+            var bladeDefinition = blade.GetProperty("rule").GetProperty("definition");
+            Assert.Equal("baseitem.longsword", bladeDefinition.GetProperty("baseItemId").GetString());
+            Assert.Equal("magic-variant.1-weapon", bladeDefinition.GetProperty("variantOf").GetString());
+            Assert.Equal("+1", bladeDefinition.GetProperty("bonusWeapon").GetString());
+            Assert.Equal("1d8", bladeDefinition.GetProperty("dmg1").GetString());
+            Assert.DoesNotContain("{=bonusWeapon}", bladeDefinition.GetProperty("entries").GetRawText());
+            Assert.Equal(prefix == animals, bladeDefinition.TryGetProperty("mastery", out _));
+            var plate = await client.GetFromJsonAsync<JsonElement>(prefix + "/item.3-plate-armor");
+            var plateDefinition = plate.GetProperty("rule").GetProperty("definition");
+            Assert.Equal(18, plateDefinition.GetProperty("ac").GetInt32());
+            Assert.Equal("+3", plateDefinition.GetProperty("bonusAc").GetString());
+            Assert.Equal("legendary", plateDefinition.GetProperty("rarity").GetString());
+            var shield = await client.GetFromJsonAsync<JsonElement>(prefix + "/item.2-shield");
+            var shieldDefinition = shield.GetProperty("rule").GetProperty("definition");
+            Assert.Equal(2, shieldDefinition.GetProperty("ac").GetInt32());
+            Assert.Equal("+2", shieldDefinition.GetProperty("bonusAc").GetString());
+            var arrow = await client.GetFromJsonAsync<JsonElement>(prefix + "/item.1-arrow");
+            var arrowDefinition = arrow.GetProperty("rule").GetProperty("definition");
+            Assert.Equal(prefix == animals, arrowDefinition.GetProperty("entries").GetRawText().Contains("equivalent in value to a potion", StringComparison.Ordinal));
+            Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(prefix + "/item.1-arrows-20")).StatusCode);
+            Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(prefix + "/item.1-net")).StatusCode);
+        }
+        Assert.Equal(HttpStatusCode.OK, (await client.GetAsync(animals + "/item.1-musket")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync("/api/rulesets/dnd-5e/rules/item.1-musket")).StatusCode);
         var modernWeapon = await client.GetFromJsonAsync<JsonElement>(animals + "/baseitem.musket");
         Assert.Equal("Slow|SRD52", modernWeapon.GetProperty("rule").GetProperty("definition")
             .GetProperty("mastery")[0].GetString());

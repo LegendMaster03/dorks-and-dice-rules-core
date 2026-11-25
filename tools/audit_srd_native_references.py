@@ -127,6 +127,12 @@ class Index:
         if kind == "variantrule" and self.names["glossary", key]:
             candidates = ("glossary",)
         targets = sorted({i for category in candidates for i in self.names[category, key]})
+        if kind == "item" and len(targets) > 1:
+            # A named concrete item is preferable to a generic template or group
+            # only when there is exactly one concrete candidate in this edition.
+            concrete = [i for i in targets if i.startswith(("item.", "baseitem."))]
+            if len(concrete) == 1:
+                targets = concrete
         if targets:
             return self.result(targets)
         # A compound table label may contain the publisher heading plus an alias.

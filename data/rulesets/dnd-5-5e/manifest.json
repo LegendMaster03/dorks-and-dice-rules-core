@@ -78,5 +78,10 @@
   "publisherRecoveredRules": {
     "nativeRecords": 1,
     "representation": "Publisher-only structured equipment group or rules section with local catalog references."
+  },
+  "numberedItemVariantImport": {
+    "nativeRecords": 165,
+    "templateCount": 12,
+    "representation": "Derived edition-local numbered armor, shield, weapon and individual ammunition enhancements; parent template and base item references."
   }
 }

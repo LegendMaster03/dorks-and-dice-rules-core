@@ -1,0 +1,2277 @@
+[
+  {
+    "id": "item.1-shortbow",
+    "kind": "item",
+    "name": "+1 Shortbow",
+    "baseItem": "Shortbow|SRD52",
+    "baseItemId": "baseitem.shortbow",
+    "variantOf": "magic-variant.1-weapon",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "80/320",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.shortbow",
+      "magic-variant.1-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/34"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/145"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-shortsword",
+    "kind": "item",
+    "name": "+1 Shortsword",
+    "baseItem": "Shortsword|SRD52",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.1-weapon",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "magic-variant.1-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/34"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/147"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-sickle",
+    "kind": "item",
+    "name": "+1 Sickle",
+    "baseItem": "Sickle|SRD52",
+    "baseItemId": "baseitem.sickle",
+    "variantOf": "magic-variant.1-weapon",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.sickle",
+      "magic-variant.1-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/34"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/149"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-sling",
+    "kind": "item",
+    "name": "+1 Sling",
+    "baseItem": "Sling|SRD52",
+    "baseItemId": "baseitem.sling",
+    "variantOf": "magic-variant.1-weapon",
+    "type": "R|SRD52",
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "range": "30/120",
+    "weapon": true,
+    "ammoType": "sling bullet|srd52",
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.sling",
+      "magic-variant.1-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/34"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/151"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-spear",
+    "kind": "item",
+    "name": "+1 Spear",
+    "baseItem": "Spear|SRD52",
+    "baseItemId": "baseitem.spear",
+    "variantOf": "magic-variant.1-weapon",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmg2": "1d8",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.spear",
+      "magic-variant.1-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/34"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/159"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-trident",
+    "kind": "item",
+    "name": "+1 Trident",
+    "baseItem": "Trident|SRD52",
+    "baseItemId": "baseitem.trident",
+    "variantOf": "magic-variant.1-weapon",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.trident",
+      "magic-variant.1-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/34"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/169"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-war-pick",
+    "kind": "item",
+    "name": "+1 War Pick",
+    "baseItem": "War Pick|SRD52",
+    "baseItemId": "baseitem.war-pick",
+    "variantOf": "magic-variant.1-weapon",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.war-pick",
+      "magic-variant.1-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/34"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/175"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-warhammer",
+    "kind": "item",
+    "name": "+1 Warhammer",
+    "baseItem": "Warhammer|SRD52",
+    "baseItemId": "baseitem.warhammer",
+    "variantOf": "magic-variant.1-weapon",
+    "type": "M|SRD52",
+    "weight": 5,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.warhammer",
+      "magic-variant.1-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/34"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/177"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-whip",
+    "kind": "item",
+    "name": "+1 Whip",
+    "baseItem": "Whip|SRD52",
+    "baseItemId": "baseitem.whip",
+    "variantOf": "magic-variant.1-weapon",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "R|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.whip",
+      "magic-variant.1-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/34"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/181"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-battleaxe",
+    "kind": "item",
+    "name": "+2 Battleaxe",
+    "baseItem": "Battleaxe|SRD52",
+    "baseItemId": "baseitem.battleaxe",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.battleaxe",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/9"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-blowgun",
+    "kind": "item",
+    "name": "+2 Blowgun",
+    "baseItem": "Blowgun|SRD52",
+    "baseItemId": "baseitem.blowgun",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "R|SRD52",
+    "weight": 1,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1",
+    "dmgType": "P",
+    "range": "25/100",
+    "weapon": true,
+    "ammoType": "needle|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.blowgun",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/11"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-club",
+    "kind": "item",
+    "name": "+2 Club",
+    "baseItem": "Club|SRD52",
+    "baseItemId": "baseitem.club",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.club",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/31"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-dagger",
+    "kind": "item",
+    "name": "+2 Dagger",
+    "baseItem": "Dagger|SRD52",
+    "baseItemId": "baseitem.dagger",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 1,
+    "weaponCategory": "simple",
+    "property": [
+      "F|SRD52",
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.dagger",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/41"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-dart",
+    "kind": "item",
+    "name": "+2 Dart",
+    "baseItem": "Dart|SRD52",
+    "baseItemId": "baseitem.dart",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "R|SRD52",
+    "weight": 0.25,
+    "weaponCategory": "simple",
+    "property": [
+      "F|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.dart",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/43"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-flail",
+    "kind": "item",
+    "name": "+2 Flail",
+    "baseItem": "Flail|SRD52",
+    "baseItemId": "baseitem.flail",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.flail",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/50"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-glaive",
+    "kind": "item",
+    "name": "+2 Glaive",
+    "baseItem": "Glaive|SRD52",
+    "baseItemId": "baseitem.glaive",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.glaive",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/54"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-greataxe",
+    "kind": "item",
+    "name": "+2 Greataxe",
+    "baseItem": "Greataxe|SRD52",
+    "baseItemId": "baseitem.greataxe",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 7,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.greataxe",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/58"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-greatclub",
+    "kind": "item",
+    "name": "+2 Greatclub",
+    "baseItem": "Greatclub|SRD52",
+    "baseItemId": "baseitem.greatclub",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "simple",
+    "property": [
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.greatclub",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/60"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-greatsword",
+    "kind": "item",
+    "name": "+2 Greatsword",
+    "baseItem": "Greatsword|SRD52",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/62"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-halberd",
+    "kind": "item",
+    "name": "+2 Halberd",
+    "baseItem": "Halberd|SRD52",
+    "baseItemId": "baseitem.halberd",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.halberd",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/64"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-hand-crossbow",
+    "kind": "item",
+    "name": "+2 Hand Crossbow",
+    "baseItem": "Hand Crossbow|SRD52",
+    "baseItemId": "baseitem.hand-crossbow",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "R|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "L|SRD52",
+      "LD|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "30/120",
+    "weapon": true,
+    "ammoType": "bolt|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.hand-crossbow",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/68"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-handaxe",
+    "kind": "item",
+    "name": "+2 Handaxe",
+    "baseItem": "Handaxe|SRD52",
+    "baseItemId": "baseitem.handaxe",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "range": "20/60",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.handaxe",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/70"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-heavy-crossbow",
+    "kind": "item",
+    "name": "+2 Heavy Crossbow",
+    "baseItem": "Heavy Crossbow|SRD52",
+    "baseItemId": "baseitem.heavy-crossbow",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "R|SRD52",
+    "weight": 18,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "H|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "range": "100/400",
+    "weapon": true,
+    "ammoType": "bolt|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.heavy-crossbow",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/72"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-javelin",
+    "kind": "item",
+    "name": "+2 Javelin",
+    "baseItem": "Javelin|SRD52",
+    "baseItemId": "baseitem.javelin",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "30/120",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.javelin",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/78"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-lance",
+    "kind": "item",
+    "name": "+2 Lance",
+    "baseItem": "Lance|SRD52",
+    "baseItemId": "baseitem.lance",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      {
+        "uid": "2H|SRD52",
+        "note": "unless mounted"
+      }
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.lance",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/82"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-light-crossbow",
+    "kind": "item",
+    "name": "+2 Light Crossbow",
+    "baseItem": "Light Crossbow|SRD52",
+    "baseItemId": "baseitem.light-crossbow",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "R|SRD52",
+    "weight": 5,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "range": "80/320",
+    "weapon": true,
+    "ammoType": "bolt|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.light-crossbow",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/88"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-light-hammer",
+    "kind": "item",
+    "name": "+2 Light Hammer",
+    "baseItem": "Light Hammer|SRD52",
+    "baseItemId": "baseitem.light-hammer",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.light-hammer",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/90"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-longbow",
+    "kind": "item",
+    "name": "+2 Longbow",
+    "baseItem": "Longbow|SRD52",
+    "baseItemId": "baseitem.longbow",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "range": "150/600",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.longbow",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/92"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-longsword",
+    "kind": "item",
+    "name": "+2 Longsword",
+    "baseItem": "Longsword|SRD52",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/94"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-mace",
+    "kind": "item",
+    "name": "+2 Mace",
+    "baseItem": "Mace|SRD52",
+    "baseItemId": "baseitem.mace",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.mace",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/100"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-maul",
+    "kind": "item",
+    "name": "+2 Maul",
+    "baseItem": "Maul|SRD52",
+    "baseItemId": "baseitem.maul",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.maul",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/104"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-morningstar",
+    "kind": "item",
+    "name": "+2 Morningstar",
+    "baseItem": "Morningstar|SRD52",
+    "baseItemId": "baseitem.morningstar",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.morningstar",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/106"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-musket",
+    "kind": "item",
+    "name": "+2 Musket",
+    "baseItem": "Musket|SRD52",
+    "baseItemId": "baseitem.musket",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "R|SRD52",
+    "weight": 10,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "P",
+    "range": "40/120",
+    "weapon": true,
+    "ammoType": "firearm bullet|srd52",
+    "firearm": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.musket",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/108"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-pike",
+    "kind": "item",
+    "name": "+2 Pike",
+    "baseItem": "Pike|SRD52",
+    "baseItemId": "baseitem.pike",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 18,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.pike",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/121"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-pistol",
+    "kind": "item",
+    "name": "+2 Pistol",
+    "baseItem": "Pistol|SRD52",
+    "baseItemId": "baseitem.pistol",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "R|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "range": "30/90",
+    "weapon": true,
+    "ammoType": "firearm bullet|srd52",
+    "firearm": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.pistol",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/123"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-quarterstaff",
+    "kind": "item",
+    "name": "+2 Quarterstaff",
+    "baseItem": "Quarterstaff|SRD52",
+    "baseItemId": "baseitem.quarterstaff",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmg2": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.quarterstaff",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/129"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-rapier",
+    "kind": "item",
+    "name": "+2 Rapier",
+    "baseItem": "Rapier|SRD52",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/131"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-scimitar",
+    "kind": "item",
+    "name": "+2 Scimitar",
+    "baseItem": "Scimitar|SRD52",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/139"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-shortbow",
+    "kind": "item",
+    "name": "+2 Shortbow",
+    "baseItem": "Shortbow|SRD52",
+    "baseItemId": "baseitem.shortbow",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "80/320",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.shortbow",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/145"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-shortsword",
+    "kind": "item",
+    "name": "+2 Shortsword",
+    "baseItem": "Shortsword|SRD52",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.2-weapon",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this magic weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "magic-variant.2-weapon",
+      "rulebook.page-253"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        253
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/38"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/147"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  }
+]
