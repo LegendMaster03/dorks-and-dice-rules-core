@@ -201,7 +201,15 @@
       "class-feature.fighter.second-wind.1",
       "item.dungeoneer-s-pack",
       "item.explorer-s-pack",
-      "rulebook.page-024"
+      "rulebook.page-024",
+      "skill.acrobatics",
+      "skill.animal-handling",
+      "skill.athletics",
+      "skill.history",
+      "skill.insight",
+      "skill.intimidation",
+      "skill.perception",
+      "skill.survival"
     ],
     "source": {
       "release": "srd-5.1",

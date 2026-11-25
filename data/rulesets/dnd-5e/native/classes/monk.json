@@ -517,7 +517,13 @@
       "class-feature.monk.unarmored-movement.2",
       "item.dungeoneer-s-pack",
       "item.explorer-s-pack",
-      "rulebook.page-026"
+      "rulebook.page-026",
+      "skill.acrobatics",
+      "skill.athletics",
+      "skill.history",
+      "skill.insight",
+      "skill.religion",
+      "skill.stealth"
     ],
     "source": {
       "release": "srd-5.1",

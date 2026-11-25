@@ -335,7 +335,13 @@
       "class-feature.barbarian.unarmored-defense.1",
       "class-feature.barbarian.weapon-mastery.1",
       "item.explorer-s-pack",
-      "rulebook.page-028"
+      "rulebook.page-028",
+      "skill.animal-handling",
+      "skill.athletics",
+      "skill.intimidation",
+      "skill.nature",
+      "skill.perception",
+      "skill.survival"
     ],
     "source": {
       "release": "srd-5.2.1",

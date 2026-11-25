@@ -317,7 +317,16 @@
       "class-feature.fighter.weapon-mastery.1",
       "item.dungeoneer-s-pack",
       "item.quiver",
-      "rulebook.page-047"
+      "rulebook.page-047",
+      "skill.acrobatics",
+      "skill.animal-handling",
+      "skill.athletics",
+      "skill.history",
+      "skill.insight",
+      "skill.intimidation",
+      "skill.perception",
+      "skill.persuasion",
+      "skill.survival"
     ],
     "source": {
       "release": "srd-5.2.1",

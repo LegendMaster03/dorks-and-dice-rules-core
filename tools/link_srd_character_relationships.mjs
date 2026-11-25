@@ -75,6 +75,17 @@ export function linkCharacterRelationships(rows,catalog,edition){
      for(const grant of value)for(const [name,flag] of Object.entries(grant))if(name!=="anyFromCategory"&&flag===true)link("feat",name);
     }else if(Object.hasOwn(proficiencyFields,key)&&Array.isArray(value)){
      for(const grant of value)proficiency(grant,proficiencyFields[key]);
+    }else if(["startingProficiencies","proficienciesGained"].includes(key)&&value&&typeof value==="object"){
+     // The class short fields are authoritative only when no structured
+     // long-form equivalent exists. Literal choice members are dependencies,
+     // not unconditional proficiency grants.
+     if(!Object.hasOwn(value,"skillProficiencies"))for(const grant of value.skills??[])proficiency(grant,"skill");
+     if(!Object.hasOwn(value,"weaponProficiencies"))for(const member of value.weapons??[]){
+      if(typeof member!=="string")continue;
+      const match=member.match(/^\{@item ([^|{}]+)(?:\|([^|{}]*))?(?:\|[^{}]+)?\}$/);
+      if(match)link("item",match[1]+(match[2]?"|"+match[2]:""));
+     }
+     visit(value);
     }else if(key==="type"&&value==="refOptionalfeature")link("optionalfeature",v.optionalfeature);
     else visit(value);
    }

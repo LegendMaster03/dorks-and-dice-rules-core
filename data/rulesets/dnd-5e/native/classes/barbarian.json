@@ -310,7 +310,13 @@
       "class-feature.barbarian.relentless-rage.11",
       "class-feature.barbarian.unarmored-defense.1",
       "item.explorer-s-pack",
-      "rulebook.page-008"
+      "rulebook.page-008",
+      "skill.animal-handling",
+      "skill.athletics",
+      "skill.intimidation",
+      "skill.nature",
+      "skill.perception",
+      "skill.survival"
     ],
     "source": {
       "release": "srd-5.1",

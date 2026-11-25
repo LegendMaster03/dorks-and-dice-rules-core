@@ -178,6 +178,7 @@ class StructuredRelationshipsTests(unittest.TestCase):
             {"id": "feat.alert", "kind": "feat", "name": "Alert", "category": "O"},
             {"id": "feat.grappler", "kind": "feat", "name": "Grappler", "category": "G"},
             {"id": "class.rogue", "kind": "class", "name": "Rogue",
+             "catalogReferences": ["skill.arcana", "skill.history"],
              "startingProficiencies": {"skills": [{"choose": {"from": ["arcana", "history"], "count": 1}}],
                 "armor": ["light"], "weapons": ["ignored display"],
                 "weaponProficiencies": [{"simple": True, "all": {"fromFilter": "type=martial weapon|property=light;finesse"}}]},
@@ -254,3 +255,19 @@ class StructuredRelationshipsTests(unittest.TestCase):
         next(r for r in rows if r["id"] == "spell.true-strike")["officialTextLayout"] = "Changed source"
         self.assertEqual({"cantrip-evidence-mismatch": 3}, audit(rows, "SRD52")["spellPrerequisiteCounts"])
         self.assertEqual({"unreviewed-prerequisite-selector": 3}, audit(rows, "SRD51")["spellPrerequisiteCounts"])
+
+    def test_class_short_proficiency_literals_require_local_links(self):
+        rows = [
+            {"id": "skill.arcana", "kind": "skill", "name": "Arcana"},
+            {"id": "baseitem.rapier", "kind": "baseitem", "name": "Rapier"},
+            {"id": "class.bard", "kind": "class", "name": "Bard",
+             "startingProficiencies": {"skills": [{"choose": {"from": ["arcana"]}}],
+                                      "weapons": ["{@item rapier|SRD51|rapiers}"]},
+             "multiclassing": {"proficienciesGained": {"skills": [{"choose": {"from": ["arcana"]}}]}}}
+        ]
+        self.assertEqual(3, audit(rows, "SRD51")["unlinkedLiteralOccurrences"])
+        rows[2]["catalogReferences"] = ["skill.arcana", "baseitem.rapier"]
+        report = audit(rows, "SRD51")
+        self.assertEqual(0, report["unlinkedLiteralOccurrences"])
+        self.assertEqual(3, report["explicitLiteralLinks"])
+        self.assertEqual(1, audit(rows, "SRD52")["unlinkedLiteralOccurrences"])

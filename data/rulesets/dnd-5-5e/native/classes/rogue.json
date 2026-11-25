@@ -475,7 +475,17 @@
       "item.burglar-s-pack",
       "item.quiver",
       "item.thieves-tools",
-      "rulebook.page-061"
+      "rulebook.page-061",
+      "skill.acrobatics",
+      "skill.athletics",
+      "skill.deception",
+      "skill.insight",
+      "skill.intimidation",
+      "skill.investigation",
+      "skill.perception",
+      "skill.persuasion",
+      "skill.sleight-of-hand",
+      "skill.stealth"
     ],
     "source": {
       "release": "srd-5.2.1",

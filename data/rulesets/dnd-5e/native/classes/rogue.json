@@ -428,7 +428,9 @@
     "catalogReferences": [
       "baseitem.arrows-20",
       "baseitem.dagger",
+      "baseitem.hand-crossbow",
       "baseitem.leather-armor",
+      "baseitem.longsword",
       "baseitem.rapier",
       "baseitem.shortbow",
       "baseitem.shortsword",
@@ -458,7 +460,18 @@
       "item.dungeoneer-s-pack",
       "item.explorer-s-pack",
       "item.thieves-tools",
-      "rulebook.page-039"
+      "rulebook.page-039",
+      "skill.acrobatics",
+      "skill.athletics",
+      "skill.deception",
+      "skill.insight",
+      "skill.intimidation",
+      "skill.investigation",
+      "skill.perception",
+      "skill.performance",
+      "skill.persuasion",
+      "skill.sleight-of-hand",
+      "skill.stealth"
     ],
     "source": {
       "release": "srd-5.1",

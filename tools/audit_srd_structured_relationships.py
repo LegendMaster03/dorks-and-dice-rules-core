@@ -417,7 +417,7 @@ def audit(rows, tag):
                 for _, child, child_path in children(value, path):
                     equipment(child, child_path)
 
-        def proficiency(value, path, kind, field, *, literal_members=True):
+        def proficiency(value, path, kind, field):
             if not isinstance(value, dict):
                 emit(path, "proficiency", value, "unreviewed-shape", proficiencyKind=kind)
                 return
@@ -425,9 +425,8 @@ def audit(rows, tag):
                 if key == "choose" and isinstance(child, dict):
                     emit(child_path, "proficiency-selector", child, "selector-review", proficiencyKind=kind,
                          **character_selectors.proficiency({key: child}, field))
-                    if literal_members:
-                        for i, target in enumerate(child.get("from", [])):
-                            literal(child_path + "/from/" + str(i), "proficiency-choice-member", kind, target)
+                    for i, target in enumerate(child.get("from", [])):
+                        literal(child_path + "/from/" + str(i), "proficiency-choice-member", kind, target)
                 elif key == "all" and isinstance(child, dict) and isinstance(child.get("fromFilter"), str):
                     emit(child_path, "proficiency-selector", {key: child}, "selector-review", proficiencyKind=kind,
                          **character_selectors.proficiency({key: child}, field))
@@ -435,11 +434,7 @@ def audit(rows, tag):
                     emit(child_path, "proficiency-selector", {key: child}, "selector-review", proficiencyKind=kind,
                          **character_selectors.proficiency({key: child}, field))
                 elif child is True:
-                    if literal_members:
-                        literal(child_path, "proficiency", kind, key)
-                    else:
-                        emit(child_path, "class-proficiency-member", key, "selector-review",
-                             proficiencyKind=kind, **character_selectors.literal_candidates(kind, [key]))
+                    literal(child_path, "proficiency", kind, key)
                 else:
                     emit(child_path, "proficiency", {key: child}, "unreviewed-shape", proficiencyKind=kind)
 
@@ -535,10 +530,15 @@ def audit(rows, tag):
                         for i, member in enumerate(values):
                             member_path = child_path + "/" + alias + "/" + str(i)
                             if field == "skill":
-                                proficiency(member, member_path, "skill", field, literal_members=False)
+                                proficiency(member, member_path, "skill", field)
                             else:
-                                emit(member_path, "class-proficiency-member", member, "selector-review",
-                                     proficiencyKind=field, **character_selectors.class_member(member, field))
+                                match = re.fullmatch(r"\{@item ([^|{}]+)(?:\|([^|{}]*))?(?:\|[^{}]+)?\}", member) if isinstance(member, str) else None
+                                if field == "weapon" and match:
+                                    raw = match.group(1) + ("|" + match.group(2) if match.group(2) else "")
+                                    literal(member_path, "class-proficiency-member", "item", raw)
+                                else:
+                                    emit(member_path, "class-proficiency-member", member, "selector-review",
+                                         proficiencyKind=field, **character_selectors.class_member(member, field))
                     visit(child, child_path)
                 elif key == "optionalfeatureProgression":
                     emit(child_path, "optional-feature-progression", child, "selector-review")
