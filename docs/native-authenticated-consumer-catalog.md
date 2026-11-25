@@ -1,4 +1,4 @@
-# Live native catalog for authenticated first-party tools
+# Live native catalogs for authenticated tools
 
 The authoritative native ruleset is continuously edited and is served to authorized Site users without a per-content-update approval.
 
@@ -12,7 +12,9 @@ The Site gateway already issues a user-scoped, short-lived target ticket for aut
 
 `GET /api/consumer/v1/rulesets`, `GET /api/consumer/v1/rulesets/{id}/rules`, and `GET /api/consumer/v1/rulesets/{id}/rules/{ruleId}` use the same search, validation, pagination, and data DTOs as the native read-only public catalog, but require the authenticated Site ticket instead of anonymous distribution authorization. They serve only the authoritative `native/` snapshot; `working/`, `reference/`, and `conversions/` are not loaded.
 
-The public anonymous `/api/rulesets` endpoints retain the independent explicit distribution gate. Internal access does not imply public redistribution rights.
+The same package-level reference policy applies to the separate private Wiki reference endpoints after their own Site ticket validation. First-party access is preserved. `RulesCore:AuthenticatedReferenceAccess:AdditionalRulesetsCsv` explicitly grants additional package IDs to authenticated reference users, independently of catalog registration and fingerprint changes. The shipped Compose configuration sets `RULES_CORE_AUTHENTICATED_REFERENCE_RULESETS` to `dnd-5e,dnd-5-5e,fate-condensed`; set it to an empty string to retain first-party-only grants. Unknown, unregistered or unavailable packages are not served. Future registered packages without a reference grant remain denied unless separately approved for public distribution.
+
+The public anonymous `/api/rulesets` endpoints retain the independent explicit distribution gate. Publicly approved packages remain readable through authenticated routes. Internal reference access does not imply public API redistribution approval, mechanics authorization or account-specific entitlements.
 
 ## Fingerprints
 
@@ -22,6 +24,6 @@ Clients loading ordinary monster and condition references should accept the curr
 
 ## Scope and rollout
 
-This change makes native monster and condition reference lookup work for authenticated Block Initiative users through an existing Site route. It does not authorize anonymous publication or change the authentication model for the Character Sheet mechanics API, the private Wiki API, or campaign writes.
+This change makes native monster and condition reference lookup work for authenticated Block Initiative users through an existing Site route. It does not authorize anonymous publication or change Site ticket authentication, mechanics authorization, or campaign writes.
 
 Rollout order: Rules Core first, then Block Initiative. Verify a signed-in tool gateway request, an anonymous denied request, a current native monster and a condition, and a lookup after a content-only update. No Site database migration is required.

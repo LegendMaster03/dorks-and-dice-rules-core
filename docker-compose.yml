@@ -9,6 +9,8 @@ services:
       RulesCore__ApiSurface: PublicOnly
       Rulesets__ContentRoot: /app/data/rulesets
       Rulesets__AdditionalRulesetsCsv: ${RULES_CORE_ADDITIONAL_RULESETS-dnd-5e,dnd-5-5e,fate-condensed}
+      # Reference access is separate from registration and anonymous distribution.
+      RulesCore__AuthenticatedReferenceAccess__AdditionalRulesetsCsv: ${RULES_CORE_AUTHENTICATED_REFERENCE_RULESETS-dnd-5e,dnd-5-5e,fate-condensed}
       # Ordinary Character Sheet delegation redeems tickets through Site too.
       ToolHost__BaseUrl: ${TOOL_HOST_BASE_URL:-http://dorks-and-dice-site:8080}
     networks:

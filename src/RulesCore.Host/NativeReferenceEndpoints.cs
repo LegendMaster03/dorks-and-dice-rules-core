@@ -26,14 +26,14 @@ public static class NativeReferenceEndpoints
             return await next(invocation);
         });
 
-        group.MapGet("", (NativeCatalogRegistry registry, NativePublicDistributionPolicy policy) =>
+        group.MapGet("", (NativeCatalogRegistry registry, NativePublicDistributionPolicy policy, NativeReferenceAccessPolicy referenceAccess) =>
         {
             var snapshots = registry.RulesetIds.OrderBy(id => id, StringComparer.Ordinal)
                 .Select(id => registry.GetStore(id).Snapshot)
                 .OfType<NativeCatalogSnapshot>().ToArray();
             return snapshots.Length == 0 ? Unavailable() : Results.Ok(new
             {
-                rulesets = snapshots.Where(snapshot => NativePublicEndpoints.MayRead(snapshot, policy, true))
+                rulesets = snapshots.Where(snapshot => NativePublicEndpoints.MayRead(snapshot, policy, referenceAccess, true))
                     .Select(snapshot => new
                     {
                         id = snapshot.RulesetId,
@@ -46,11 +46,11 @@ public static class NativeReferenceEndpoints
         });
 
         group.MapGet("/{rulesetId}/rules", (string rulesetId, HttpRequest request, NativeCatalogRegistry registry,
-            NativePublicDistributionPolicy policy) =>
+            NativePublicDistributionPolicy policy, NativeReferenceAccessPolicy referenceAccess) =>
         {
             var snapshot = Select(rulesetId, registry);
             if (snapshot is null && rulesetId == "first-party-001") return Unavailable();
-            if (snapshot is null || !NativePublicEndpoints.MayRead(snapshot, policy, true))
+            if (snapshot is null || !NativePublicEndpoints.MayRead(snapshot, policy, referenceAccess, true))
                 return Results.NotFound(new { error = "ruleset_not_found" });
 
             if (request.Query.Keys.Any(key => key is not ("q" or "category" or "limit" or "offset")) ||
@@ -78,11 +78,11 @@ public static class NativeReferenceEndpoints
 
         group.MapGet("/{rulesetId}/rules/{ruleId}",
             (string rulesetId, string ruleId, NativeCatalogRegistry registry,
-                NativePublicDistributionPolicy policy) =>
+                NativePublicDistributionPolicy policy, NativeReferenceAccessPolicy referenceAccess) =>
         {
             var snapshot = Select(rulesetId, registry);
             if (snapshot is null && rulesetId == "first-party-001") return Unavailable();
-            if (snapshot is null || !NativePublicEndpoints.MayRead(snapshot, policy, true))
+            if (snapshot is null || !NativePublicEndpoints.MayRead(snapshot, policy, referenceAccess, true))
                 return Results.NotFound(new { error = "ruleset_not_found" });
             if (ruleId.Length > 160 || !SafeRuleId.IsMatch(ruleId))
                 return Results.BadRequest(new { error = "invalid_rule_id" });

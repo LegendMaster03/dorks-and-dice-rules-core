@@ -35,7 +35,7 @@ The paths above are the established production deployment layout; verify the env
 
 Site private-tunnel approval and Docker network isolation are independent requirements. The allowed Rules Wiki → Rules Core pair is configured at the Site control plane (`ToolHosting__PrivateTunnels__rules-wiki__0=rules-core`). Rules Core redeems Site-issued, target-scoped tickets through `/tool-host/registrations/rules-core/api/introspect`. The private reference validator requires `rules-wiki` as the private source Tool and the `dorks-and-dice` Site mode. An ordinary Tool delegation ticket is insufficient.
 
-The private HTTP API is at `/api/private/rulesets`, with additional authenticated `/api/private/mechanics/v1` operations. Public catalog distribution remains separately gated. See [architecture](architecture.md) and [native mechanics](native-mechanics-api.md).
+The private HTTP API is at `/api/private/rulesets`, with additional authenticated `/api/private/mechanics/v1` operations. Authenticated reference access uses `RulesCore:AuthenticatedReferenceAccess:AdditionalRulesetsCsv` (Compose: `RULES_CORE_AUTHENTICATED_REFERENCE_RULESETS`, default `dnd-5e,dnd-5-5e,fate-condensed`) in addition to existing first-party access. Registration alone grants no reference access. Public catalog distribution remains separately gated; existing publicly approved packages remain readable. Mechanics authorization is unchanged. See [architecture](architecture.md) and [native mechanics](native-mechanics-api.md).
 
 ## Deployment and verification
 
