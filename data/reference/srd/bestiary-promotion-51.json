@@ -411,6 +411,41 @@
       "id": "monster.lich",
       "from": "Melf's acid arrow",
       "to": "acid arrow"
+    },
+    {
+      "id": "monster.werebear",
+      "reason": "Publisher uses plain lycanthropy curse wording; the referenced player-character variant rule is absent from SRD 5.1.",
+      "pages": [
+        327
+      ]
+    },
+    {
+      "id": "monster.wereboar",
+      "reason": "Publisher uses plain lycanthropy curse wording; the referenced player-character variant rule is absent from SRD 5.1.",
+      "pages": [
+        327
+      ]
+    },
+    {
+      "id": "monster.wererat",
+      "reason": "Publisher uses plain lycanthropy curse wording; the referenced player-character variant rule is absent from SRD 5.1.",
+      "pages": [
+        328
+      ]
+    },
+    {
+      "id": "monster.weretiger",
+      "reason": "Publisher uses plain lycanthropy curse wording; the referenced player-character variant rule is absent from SRD 5.1.",
+      "pages": [
+        328
+      ]
+    },
+    {
+      "id": "monster.werewolf",
+      "reason": "Publisher uses plain lycanthropy curse wording; the referenced player-character variant rule is absent from SRD 5.1.",
+      "pages": [
+        329
+      ]
     }
   ],
   "unmatchedPublisherLocators": [],

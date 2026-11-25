@@ -53,3 +53,7 @@ These findings do not resolve the full chapter/paragraph audit, complete table-c
 - S51-003 — Twinned Spell: official p.44 uses Ray of Frost as the only eligible example; remove Chromatic Orb from the illustrative prose.
 
 The pinned source remains unchanged; these corrections are reproduced by class and feature projection generators.
+
+## Legacy unresolved inline target adjudication
+
+At the prior exact-head audit, all 13 missing SRD 5.1 inline targets were confined to five lycanthrope curse links, seven Life Domain deity links, and one poison creature link. The official page extraction confirms p.327–329 uses plain lycanthropy curse wording and the complete PDF extraction contains no Player Characters as Lycanthropes variant rule. All five stat blocks retain their published curse and save, without an invented player-character rule. P.17 contains all seven deity names in its examples, even though the SRD does not publish separate entries for them; keep the literal names and links to the eligible pantheon entries, not the unsupported commercial deity references. P.204 says crawler, not Carrion Crawler; the poison's condition and saving-throw rules are retained. These are source corrections to the existing generators and report records, not broader source-body certification. No imported identities or mechanics were changed.

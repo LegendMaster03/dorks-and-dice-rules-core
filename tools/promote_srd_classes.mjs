@@ -36,6 +36,15 @@ function generateClasses(inputs,manifest,src,pages,tag){
      record.entries=JSON.parse(corrected);report.corrections.push({id,reason:"S52-019: publisher Pact Magic example uses Charm Person, not Witch Bolt.",pages:[71]});
      if(!selected.includes(71))selected.push(71);
     }
+    if(tag==="51"&&id==="subclass-feature.cleric.life.life-domain.1"){
+     const names=["Chauntea","Arawai","Lathander","Pelor","Ilmater","Mishakal","Boldrei"];
+     let count=0;
+     record.entries[0]=record.entries[0].replace(/\{@deity ([^}|]+)(?:\|[^}]+)?\}/g,(whole,name)=>{
+      if(!names.includes(name))return whole;count++;return name;
+     });
+     if(count!==7)throw Error("Expected seven publisher deity examples");
+     report.corrections.push({id,reason:"Preserve seven deity examples printed on official SRD 5.1 p.17 as plain text; the SRD does not publish standalone entries for them.",pages:[17]});
+    }
     if(tag==="51"&&id==="class-feature.warlock.pact-magic.1"){
      const original=JSON.stringify(record.entries),corrected=original.replace("{@spell witch bolt}","{@spell thunderwave}");
      if(original===corrected)throw Error("Missing legacy Pact Magic discrepancy");

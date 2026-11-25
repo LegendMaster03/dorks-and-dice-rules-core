@@ -359,6 +359,10 @@
       "reason": "Use official Handy Haversack name"
     },
     {
+      "id": "item.crawler-mucus-contact",
+      "reason": "Official SRD 5.1 p.204 uses crawler, not Carrion Crawler; retain incapacitated condition and remove the unsupported creature link."
+    },
+    {
       "id": "item.orb-of-dragonkind",
       "reason": "Remove non-SRD setting names and foreign creature link; retain official artifact mechanics"
     },
@@ -396,15 +400,8 @@
     }
   ],
   "publisherOnly": [],
-  "unresolvedReferences": [
-    {
-      "id": "item.crawler-mucus-contact",
-      "kind": "creature",
-      "raw": "carrion crawler",
-      "reason": "missing-or-ambiguous"
-    }
-  ],
-  "resolvedReferenceCount": 730,
+  "unresolvedReferences": [],
+  "resolvedReferenceCount": 731,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",

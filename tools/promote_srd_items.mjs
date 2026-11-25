@@ -98,6 +98,12 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
                     const corrected=serialized.replace(/Heward's Handy Haversack/gi,match=>match[0]==="h"?"handy haversack":"Handy Haversack");
                     if(serialized!==corrected){Object.assign(row,JSON.parse(corrected));addCorrection(id,"Use official Handy Haversack name");}
                 }
+                if(tag==="51"&&kind==="item"&&name==="Crawler Mucus (Contact)"){
+                    const before=row.entries[0];
+                    row.entries[0]=before.replace("{@creature carrion crawler}","crawler");
+                    if(before===row.entries[0])throw Error("Expected crawler link");
+                    pages=[204];addCorrection(id,"Official SRD 5.1 p.204 uses crawler, not Carrion Crawler; retain incapacitated condition and remove the unsupported creature link.");
+                }
                 if(tag==="51"&&kind==="itemGroup"&&name==="Gaming Set"){
                     row.items=row.items.filter(item=>/^(Dice Set|Playing Card Set)\|SRD51$/.test(item));
                     pages=[70,71];addCorrection(id,"Remove gaming set variants absent from the 5.1 tools table");

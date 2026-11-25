@@ -65,6 +65,14 @@ function generate(candidates, spells, conditions, skills, pages, existing, sourc
             Object.assign(row,JSON.parse(serialized.split(fix[0]).join(fix[1])));
             report.corrections.push({id,from:fix[0],to:fix[1]});
         }
+        // The official 5.1 curse wording is present, but the commercial player-character variant is not.
+        const lycanthropePages={"Werebear":327,"Wereboar":327,"Wererat":328,"Weretiger":328,"Werewolf":329};
+        if(tag==="51"&&Object.hasOwn(lycanthropePages,candidate.name)){
+            const before=JSON.stringify(row.action),after=before.replace("{@variantrule Player Characters as Lycanthropes|SRD51|lycanthropy}","lycanthropy");
+            if(before===after)throw Error("Expected lycanthropy reference absent: "+id);
+            row.action=JSON.parse(after);
+            report.corrections.push({id,reason:"Publisher uses plain lycanthropy curse wording; the referenced player-character variant rule is absent from SRD 5.1.",pages:[lycanthropePages[candidate.name]]});
+        }
         // Official SRD 5.2.1 p.109 supplies immunities omitted by the structured source.
         if(tag==="52"&&candidate.name==="Animated Object"){
             row.immune=["poison","psychic"];
