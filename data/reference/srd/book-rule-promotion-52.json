@@ -735,6 +735,43 @@
         256,
         257
       ]
+    },
+    {
+      "id": "rule.weapons",
+      "pointer": "/data/6/entries/2",
+      "pages": [
+        89,
+        90,
+        91
+      ]
+    },
+    {
+      "id": "rule.armor",
+      "pointer": "/data/6/entries/3",
+      "pages": [
+        92
+      ]
+    },
+    {
+      "id": "rule.tools",
+      "pointer": "/data/6/entries/4",
+      "pages": [
+        93,
+        94
+      ]
+    },
+    {
+      "id": "rule.adventuring-gear",
+      "pointer": "/data/6/entries/5",
+      "pages": [
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100
+      ]
     }
   ],
   "corrections": [
@@ -845,9 +882,25 @@
     {
       "id": "rule.parts-of-a-stat-block",
       "reason": "Restore published creature-type examples and preserve monster stat-block guidance and tables (pp.254–257)."
+    },
+    {
+      "id": "rule.weapons",
+      "reason": "Reference existing nine weapon properties and eight masteries; preserve separate range and improvised-weapon rules (pp.89–91)."
+    },
+    {
+      "id": "rule.armor",
+      "reason": "Restore malformed AC label and retain training, strength, stealth and shield rules (p.92)."
+    },
+    {
+      "id": "rule.tools",
+      "reason": "Index all seventeen artisan tools and eight other tool entries; retain group guidance for gaming sets and musical instruments (pp.93–94)."
+    },
+    {
+      "id": "rule.adventuring-gear",
+      "reason": "Index the eighty-one gear headings and retain ammunition, focus group and equipment-specific scroll instructions (pp.94–100)."
     }
   ],
-  "nativeCount": 105,
+  "nativeCount": 109,
   "tableInventory": {
     "total": 59,
     "counts": {

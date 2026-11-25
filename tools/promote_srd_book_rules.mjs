@@ -757,6 +757,54 @@ function modernToolboxMonsterEntries(name,entries,existing,local){
  return entries;
 }
 
+function modernEquipmentEntries(name,entries,existing,local){
+ if(!["Weapons","Armor","Tools","Adventuring Gear"].includes(name))return entries;
+ const known=new Set(existing.map(x=>x.id));
+ const add=id=>{if(!known.has(id))throw Error("Missing modern equipment reference "+id);local.add(id);return id;};
+ const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+ const label=s=>s.replace(/\s+\([^)]*\)$/,"");
+ const index=(n,id)=>{add(id);return {type:"entries",name:n.name,entries:["See "+label(n.name)+"."]};};
+ if(name==="Weapons"){
+  const properties=entries.find(x=>x.name==="Properties"),mastery=entries.find(x=>x.name==="Mastery Properties");
+  const codes={"Ammunition":"a","Finesse":"f","Heavy":"h","Light":"l","Loading":"ld","Reach":"r","Thrown":"t","Two-Handed":"2h","Versatile":"v"};
+  if(properties.entries.length!==11||mastery.entries.length!==9)throw Error("Unexpected modern weapon property inventory");
+  const inset=properties.entries.find(x=>x.name==="Heavy").entries.find(x=>x.type==="inset");if(!inset)throw Error("Missing improvised weapons inset");
+  properties.entries=properties.entries.map(x=>codes[x.name]?index(x,"item-property."+codes[x.name]):x);
+  properties.entries.push(inset);
+  for(const x of mastery.entries.slice(1))add("item-mastery."+slug(x.name));
+  mastery.entries=[mastery.entries[0].replace("The properties are defined below.","See Mastery Properties."),"See the canonical Mastery Properties rule and individual mastery definitions."];
+ }
+ if(name==="Armor"){
+  const ac=entries.findIndex(x=>typeof x==="string"&&x.startsWith("{@b Armor Class (AC})"));if(ac<0)throw Error("Missing armor AC label");
+  entries[ac]=entries[ac].replace("{@b Armor Class (AC}).","{@b Armor Class (AC)}.");
+ }
+ if(name==="Tools"){
+  const artisan=entries.find(x=>x.name==="Artisan's Tools"),other=entries.find(x=>x.name==="Other Tools");
+  if(artisan.entries.length!==18||other.entries.length!==9)throw Error("Unexpected tool inventory");
+  add("item-group.artisan-s-tools");
+  artisan.entries=[artisan.entries[0],...artisan.entries.slice(1).map(x=>index(x,"baseitem."+slug(label(x.name))))];
+  other.entries=other.entries.map(x=>{
+   if(typeof x==="string")return x;
+   const title=label(x.name);
+   if(title==="Gaming Set"||title==="Musical Instrument"){add("item-group."+slug(title));return x;}
+   return index(x,"item."+(title==="Thieves' Tools"?"thieves-tools":slug(title)));
+  });
+ }
+ if(name==="Adventuring Gear"){
+  const group=entries[2];if(!group||group.entries.length!==81)throw Error("Unexpected modern gear inventory");
+  const aliases={"Bottle, Glass":"glass-bottle","Case, Crossbow Bolt":"crossbow-bolt-case","Case, Map or Scroll":"map-or-scroll-case","Clothes, Fine":"fine-clothes","Clothes, Traveler's":"traveler-s-clothes","Lantern, Bullseye":"bullseye-lantern","Lantern, Hooded":"hooded-lantern","Poison, Basic":"basic-poison","Pot, Iron":"iron-pot","Ram, Portable":"portable-ram","Spikes, Iron":"iron-spikes"};
+  group.entries=group.entries.map(x=>{
+   const title=label(x.name);
+   if(title==="Ammunition")return x;
+   if(["Arcane Focus","Druidic Focus","Holy Symbol"].includes(title)){add("item-group."+slug(title));return x;}
+   // Equipment-specific low-level scroll use is distinct from the general magic-item rule.
+   if(title==="Spell Scroll"){add("item.spell-scroll-cantrip");add("item.spell-scroll-level-1");return x;}
+   return index(x,"item."+(aliases[title]??slug(title)));
+  });
+ }
+ return entries;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -991,9 +1039,17 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Poison","/data/10/entries/5",[197,198],["condition.poisoned","glossary.bonus-action"]],
   ["Traps","/data/10/entries/6",[199,200,201],["rule.exploration","action.search","action.study"]],
   ["Stat Block Overview","/data/13/entries/0",[254],["rule.parts-of-a-stat-block","glossary.stat-block"]],
-  ["Parts of a Stat Block","/data/13/entries/1",[254,255,256,257],["rule.stat-block-overview","rule.combat","rule.combat-encounters","rule.damage-and-healing","rule.attunement","rule.casting-spells","glossary.creature-type","glossary.alignment","glossary.telepathy","glossary.bonus-action","glossary.reaction"]]
+  ["Parts of a Stat Block","/data/13/entries/1",[254,255,256,257],["rule.stat-block-overview","rule.combat","rule.combat-encounters","rule.damage-and-healing","rule.attunement","rule.casting-spells","glossary.creature-type","glossary.alignment","glossary.telepathy","glossary.bonus-action","glossary.reaction"]],
+  ["Weapons","/data/6/entries/2",[89,90,91],["rule.weapon-mastery-properties","glossary.improvised-weapons","glossary.disadvantage","glossary.proficiency","action.attack","glossary.bonus-action","reaction-option.opportunity-attack"]],
+  ["Armor","/data/6/entries/3",[92],["glossary.armor-class","glossary.armor-training","glossary.d20-test","glossary.disadvantage","skill.stealth","equipment-option.don-or-doff-a-shield"]],
+  ["Tools","/data/6/entries/4",[93,94],["rule.proficiency","rule.crafting-nonmagical-items","rule.brewing-potions-of-healing","rule.scribing-spell-scrolls","action.utilize","glossary.advantage"]],
+  ["Adventuring Gear","/data/6/entries/5",[94,95,96,97,98,99,100],["rule.casting-spells","glossary.spellcasting-focus","action.utilize","glossary.bonus-action","item-group.spell-scroll","item-property.a"]]
  ];
  const modernGameplayCorrections={
+"Weapons":"Reference existing nine weapon properties and eight masteries; preserve separate range and improvised-weapon rules (pp.89–91).",
+"Armor":"Restore malformed AC label and retain training, strength, stealth and shield rules (p.92).",
+"Tools":"Index all seventeen artisan tools and eight other tool entries; retain group guidance for gaming sets and musical instruments (pp.93–94).",
+"Adventuring Gear":"Index the eighty-one gear headings and retain ammunition, focus group and equipment-specific scroll instructions (pp.94–100).",
 "Curses and Magical Contagions":"Restore publisher curse introduction and link canonical contagions and spells (pp.193–194).",
 "Environmental Effects":"Index nine existing environmental effects rather than duplicating their descriptions (p.195).",
 "Fear and Mental Stress":"Preserve publisher discretionary effects and use the canonical example tables (p.196).",
@@ -1073,7 +1129,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   if(entryRange&&(entryRange[0]!==0||entryRange[1]>node.entries.length||node.entries.slice(...entryRange).some(x=>typeof x!=="string"&&x.type!=="table")))throw Error("Unexpected chapter introduction "+name);
   let content=project(entryRange?node.entries.slice(...entryRange):node.entries);
   if(tag==="51")content=legacyEquipmentEntries(name,legacyEconomyEntries(name,legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local)),existing,local);
-  else content=modernToolboxMonsterEntries(name,modernCharacterEconomySpellEntries(name,modernGameplayEntries(name,modernMagicItemEntries(name,content),existing,local),existing,local),existing,local);
+  else content=modernEquipmentEntries(name,modernToolboxMonsterEntries(name,modernCharacterEconomySpellEntries(name,modernGameplayEntries(name,modernMagicItemEntries(name,content),existing,local),existing,local),existing,local),existing,local);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");
    content[4]=content[4].replace("advantage on checks related to the character's personality, ideals, or bonds","advantage");

@@ -11500,5 +11500,1335 @@
       },
       "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
     }
+  },
+  {
+    "id": "rule.weapons",
+    "kind": "rule",
+    "name": "Weapons",
+    "entries": [
+      "The Weapons table in this section shows the game's main weapons. The table lists the cost and weight of each weapon, as well as the following details:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Category",
+            "entry": "Every weapon falls into a category: Simple or Martial. Weapon proficiencies are usually tied to one of these categories. For example, you might have proficiency with Simple weapons."
+          },
+          {
+            "type": "item",
+            "name": "Melee or Ranged",
+            "entry": "A weapon is classified as either Melee or Ranged. A Melee weapon is used to attack a target within 5 feet, whereas a Ranged weapon is used to attack at a greater distance."
+          },
+          {
+            "type": "item",
+            "name": "Damage",
+            "entry": "The table lists the amount of damage a weapon deals when an attacker hits with it as well as the type of that damage."
+          },
+          {
+            "type": "item",
+            "name": "Properties",
+            "entry": "Any properties a weapon has are listed in the Properties column. Each property is defined in the \"Properties\" section."
+          },
+          {
+            "type": "item",
+            "name": "Mastery",
+            "entry": "Each weapon has a mastery property, which is defined in the \"Mastery Properties\" section. To use that property, you must have a feature that lets you use it."
+          }
+        ]
+      },
+      "See the Weapons table.",
+      {
+        "type": "entries",
+        "name": "Weapon Proficiency",
+        "entries": [
+          "Anyone can wield a weapon, but you must have proficiency with it to add your Proficiency Bonus to an attack roll you make with it. A player character's features can provide weapon proficiencies. A monster is proficient with any weapon in its stat block."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Properties",
+        "entries": [
+          "Here are definitions of the properties in the Properties column of the Weapons table.",
+          {
+            "type": "entries",
+            "name": "Ammunition",
+            "entries": [
+              "See Ammunition."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Finesse",
+            "entries": [
+              "See Finesse."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Heavy",
+            "entries": [
+              "See Heavy."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Light",
+            "entries": [
+              "See Light."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Loading",
+            "entries": [
+              "See Loading."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Range",
+            "entries": [
+              "A Range weapon has a range in parentheses after the {@itemProperty A|srd52|Ammunition} or {@itemProperty T|srd52|Thrown} property. The range lists two numbers. The first is the weapon's normal range in feet, and the second is the weapon's long range. When attacking a target beyond normal range, you have {@variantrule Disadvantage|srd52} on the attack roll. You can't attack a target beyond the long range."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Reach",
+            "entries": [
+              "See Reach."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Thrown",
+            "entries": [
+              "See Thrown."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Two-Handed",
+            "entries": [
+              "See Two-Handed."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Versatile",
+            "entries": [
+              "See Versatile."
+            ]
+          },
+          {
+            "type": "inset",
+            "name": "Improvised Weapons",
+            "entries": [
+              "If you use an object—such as a table leg, frying pan, or bottle—as a makeshift weapon, see \"{@variantrule Improvised Weapons|srd52}\" in the rules glossary. Also see those rules if you wield a weapon in an unusual way, such as using a Ranged weapon to make a melee attack."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Mastery Properties",
+        "entries": [
+          "Each weapon has a mastery property, which is usable only by a character who has a feature, such as Weapon Mastery, that unlocks the property for the character. See Mastery Properties.",
+          "See the canonical Mastery Properties rule and individual mastery definitions."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "action.attack",
+      "glossary.bonus-action",
+      "glossary.disadvantage",
+      "glossary.improvised-weapons",
+      "glossary.proficiency",
+      "item-mastery.cleave",
+      "item-mastery.graze",
+      "item-mastery.nick",
+      "item-mastery.push",
+      "item-mastery.sap",
+      "item-mastery.slow",
+      "item-mastery.topple",
+      "item-mastery.vex",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.f",
+      "item-property.h",
+      "item-property.l",
+      "item-property.ld",
+      "item-property.r",
+      "item-property.t",
+      "item-property.v",
+      "reaction-option.opportunity-attack",
+      "rule.weapon-mastery-properties",
+      "rulebook.page-089",
+      "rulebook.page-090",
+      "rulebook.page-091",
+      "table.weapons"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        89,
+        90,
+        91
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.armor",
+    "kind": "rule",
+    "name": "Armor",
+    "entries": [
+      "The Armor table lists the game's main armor. The table includes the cost and weight of armor, as well as the following details:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Category",
+            "entry": "Every type of armor falls into a category: Light, Medium, or Heavy. The category determines how long it takes to don or doff the armor (as shown in the table)."
+          }
+        ]
+      },
+      "{@b Armor Class (AC)}. The table's Armor Class column tells you what your base AC is when you wear a type of armor. For example, if you wear Leather Armor, your base AC is 11 plus your Dexterity modifier, whereas your AC is 16 in Chain Mail.",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Strength",
+            "entry": "If the table shows a Strength score in the Strength column for an armor type, that armor reduces the wearer's speed by 10 feet unless the wearer has a Strength score equal to or higher than the listed score."
+          },
+          {
+            "type": "item",
+            "name": "Stealth",
+            "entry": "If the table shows \"Disadvantage\" in the Stealth column for an armor type, the wearer has {@variantrule Disadvantage|srd52} on Dexterity ({@skill Stealth|srd52}) checks."
+          }
+        ]
+      },
+      "See the Armor table.",
+      {
+        "type": "entries",
+        "name": "Armor Training",
+        "entries": [
+          "Anyone can don armor or hold a Shield, but only those with training can use them effectively, as explained below. A character's class and other features determine the character's armor training. A monster has training with any armor in its stat block.",
+          {
+            "type": "entries",
+            "name": "Light, Medium, or Heavy Armor",
+            "entries": [
+              "If you wear Light, Medium, or Heavy armor and lack training with it, you have {@variantrule Disadvantage|srd52} on any {@variantrule D20 Test|srd52} that involves Strength or Dexterity, and you can't cast spells."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Shield",
+            "entries": [
+              "You gain the Armor Class benefit of a Shield only if you have training with it."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "One at a Time",
+        "entries": [
+          "A creature can wear only one suit of armor at a time and wield only one Shield at a time."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "equipment-option.don-or-doff-a-shield",
+      "glossary.armor-class",
+      "glossary.armor-training",
+      "glossary.d20-test",
+      "glossary.disadvantage",
+      "rulebook.page-092",
+      "skill.stealth",
+      "table.armor"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        92
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.tools",
+    "kind": "rule",
+    "name": "Tools",
+    "entries": [
+      "A tool helps you make specialized ability checks, craft certain items, or both. A tool's description includes the tool's cost and weight, as well as the following entries:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Ability",
+            "entry": "This entry lists the ability to use when making an ability check with the tool."
+          },
+          {
+            "type": "item",
+            "name": "Utilize",
+            "entry": "This entry lists things you can do with the tool when you take the {@action Utilize|srd52} action. You can do one of those things each time you take the action. This entry also provides the DC for the action."
+          },
+          {
+            "type": "item",
+            "name": "Craft",
+            "entry": "This entry lists what, if anything, you can craft with the tool. For crafting rules, see \"Crafting Nonmagical Items,\" \"Brewing Potions of Healing,\" and \"Scribing Spell Scrolls\" later in \"Equipment\"."
+          },
+          {
+            "type": "item",
+            "name": "Variants",
+            "entry": "This entry appears if the tool has variants, which are listed. Each requires a separate proficiency."
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Tool Proficiency",
+        "entries": [
+          "If you have proficiency with a tool, add your Proficiency Bonus to any ability check you make that uses the tool. If you have proficiency in a skill that's used with that check, you have {@variantrule Advantage|srd52} on the check too.",
+          "Your features might give you proficiency with a tool. A monster has proficiency with any tool in its stat block."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Artisan's Tools",
+        "entries": [
+          "Artisan's Tools are each focused on crafting items and pursuing a trade. Each of these tools requires a separate proficiency.",
+          {
+            "type": "entries",
+            "name": "Alchemist's Supplies (50 GP)",
+            "entries": [
+              "See Alchemist's Supplies."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Brewer's Supplies (20 GP)",
+            "entries": [
+              "See Brewer's Supplies."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Calligrapher's Supplies (10 GP)",
+            "entries": [
+              "See Calligrapher's Supplies."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Carpenter's Tools (8 GP)",
+            "entries": [
+              "See Carpenter's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Cartographer's Tools (15 GP)",
+            "entries": [
+              "See Cartographer's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Cobbler's Tools (5 GP)",
+            "entries": [
+              "See Cobbler's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Cook's Utensils (1 GP)",
+            "entries": [
+              "See Cook's Utensils."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Glassblower's Tools (30 GP)",
+            "entries": [
+              "See Glassblower's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Jeweler's Tools (25 GP)",
+            "entries": [
+              "See Jeweler's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Leatherworker's Tools (5 GP)",
+            "entries": [
+              "See Leatherworker's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Mason's Tools (10 GP)",
+            "entries": [
+              "See Mason's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Painter's Supplies (10 GP)",
+            "entries": [
+              "See Painter's Supplies."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Potter's Tools (10 GP)",
+            "entries": [
+              "See Potter's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Smith's Tools (20 GP)",
+            "entries": [
+              "See Smith's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Tinker's Tools (50 GP)",
+            "entries": [
+              "See Tinker's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Weaver's Tools (1 GP)",
+            "entries": [
+              "See Weaver's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Woodcarver's Tools (1 GP)",
+            "entries": [
+              "See Woodcarver's Tools."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Other Tools",
+        "entries": [
+          "These tools support adventure and other pursuits.",
+          {
+            "type": "entries",
+            "name": "Disguise Kit (25 GP)",
+            "entries": [
+              "See Disguise Kit."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Forgery Kit (15 GP)",
+            "entries": [
+              "See Forgery Kit."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Gaming Set (Varies)",
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Ability:",
+                    "entry": "Wisdom"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Weight:",
+                    "entry": "—"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Utilize:",
+                    "entry": "Discern whether someone is cheating ({@dc 10}), or win the game ({@dc 20})"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Variants:",
+                    "entry": "{@item Dice Set|srd52|Dice} (1 SP), {@item Dragonchess Set|srd52|dragonchess} (1 GP), {@item playing cards|srd52} (5 SP), {@item Three-Dragon Ante Set|srd52|three-dragon ante} (1 GP)"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Herbalism Kit (5 GP)",
+            "entries": [
+              "See Herbalism Kit."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Musical Instrument (Varies)",
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Ability:",
+                    "entry": "Charisma"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Weight:",
+                    "entry": "Varies"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Utilize:",
+                    "entry": "Play a known tune ({@dc 10}), or improvise a song ({@dc 15})"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Variants:",
+                    "entry": "{@item Bagpipes|srd52} (30 GP, 6 lb.), {@item drum|srd52} (6 GP, 3 lb.), {@item dulcimer|srd52} (25 GP, 10 lb.), {@item flute|srd52} (2 GP, 1 lb.), horn (3 GP, 2 lb.), {@item lute|srd52} (35 GP, 2 lb.), {@item lyre|srd52} (30 GP, 2 lb.), {@item pan flute|srd52} (12 GP, 2 lb.), {@item shawm|srd52} (2 GP, 1 lb.), {@item viol|srd52} (30 GP, 1 lb.)"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Navigator's Tools (25 GP)",
+            "entries": [
+              "See Navigator's Tools."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Poisoner's Kit (50 GP)",
+            "entries": [
+              "See Poisoner's Kit."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Thieves' Tools (25 GP)",
+            "entries": [
+              "See Thieves' Tools."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "action.utilize",
+      "baseitem.alchemist-s-supplies",
+      "baseitem.brewer-s-supplies",
+      "baseitem.calligrapher-s-supplies",
+      "baseitem.carpenter-s-tools",
+      "baseitem.cartographer-s-tools",
+      "baseitem.cobbler-s-tools",
+      "baseitem.cook-s-utensils",
+      "baseitem.glassblower-s-tools",
+      "baseitem.jeweler-s-tools",
+      "baseitem.leatherworker-s-tools",
+      "baseitem.mason-s-tools",
+      "baseitem.painter-s-supplies",
+      "baseitem.potter-s-tools",
+      "baseitem.smith-s-tools",
+      "baseitem.tinker-s-tools",
+      "baseitem.weaver-s-tools",
+      "baseitem.woodcarver-s-tools",
+      "glossary.advantage",
+      "item-group.artisan-s-tools",
+      "item-group.gaming-set",
+      "item-group.musical-instrument",
+      "item.disguise-kit",
+      "item.forgery-kit",
+      "item.herbalism-kit",
+      "item.navigator-s-tools",
+      "item.poisoner-s-kit",
+      "item.thieves-tools",
+      "rule.brewing-potions-of-healing",
+      "rule.crafting-nonmagical-items",
+      "rule.proficiency",
+      "rule.scribing-spell-scrolls",
+      "rulebook.page-093",
+      "rulebook.page-094"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        93,
+        94
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.adventuring-gear",
+    "kind": "rule",
+    "name": "Adventuring Gear",
+    "entries": [
+      "The Adventuring Gear table in this section includes gear that adventurers often find useful. These items are described here in alphabetical order, with an item's price appearing after its name.",
+      "See the Adventuring Gear table.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Acid (25 GP)",
+            "entries": [
+              "See Acid."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Alchemist's Fire (50 GP)",
+            "entries": [
+              "See Alchemist's Fire."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Ammunition (Varies)",
+            "entries": [
+              "Ammunition is required by a weapon that has the {@itemProperty A|srd52|Ammunition} property. A weapon's description specifies the type of ammunition used by the weapon. The Ammunition table lists the different types and the amount you get when you buy them. The table also lists the item that is typically used to store each type; storage must be bought separately.",
+              "See the Ammunition table."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Antitoxin (50 GP)",
+            "entries": [
+              "See Antitoxin."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Arcane Focus (Varies)",
+            "entries": [
+              "An Arcane Focus takes one of the forms in the Arcane Focuses table and is bejeweled or carved to channel arcane magic. A Sorcerer, Warlock, or Wizard can use such an item as a {@variantrule Spellcasting Focus|srd52}.",
+              "See the Arcane Focuses table."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Backpack (2 GP)",
+            "entries": [
+              "See Backpack."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Ball Bearings (1 GP)",
+            "entries": [
+              "See Ball Bearings."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Barrel (2 GP)",
+            "entries": [
+              "See Barrel."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Basket (4 SP)",
+            "entries": [
+              "See Basket."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Bedroll (1 GP)",
+            "entries": [
+              "See Bedroll."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Bell (1 GP)",
+            "entries": [
+              "See Bell."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Blanket (5 SP)",
+            "entries": [
+              "See Blanket."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Block and Tackle (1 GP)",
+            "entries": [
+              "See Block and Tackle."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Book (25 GP)",
+            "entries": [
+              "See Book."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Bottle, Glass (2 GP)",
+            "entries": [
+              "See Bottle, Glass."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Bucket (5 CP)",
+            "entries": [
+              "See Bucket."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Burglar's Pack (16 GP)",
+            "entries": [
+              "See Burglar's Pack."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Caltrops (1 GP)",
+            "entries": [
+              "See Caltrops."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Candle (1 CP)",
+            "entries": [
+              "See Candle."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Case, Crossbow Bolt (1 GP)",
+            "entries": [
+              "See Case, Crossbow Bolt."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Case, Map or Scroll (1 GP)",
+            "entries": [
+              "See Case, Map or Scroll."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Chain (5 GP)",
+            "entries": [
+              "See Chain."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Chest (5 GP)",
+            "entries": [
+              "See Chest."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Climber's Kit (25 GP)",
+            "entries": [
+              "See Climber's Kit."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Clothes, Fine (15 GP)",
+            "entries": [
+              "See Clothes, Fine."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Clothes, Traveler's (2 GP)",
+            "entries": [
+              "See Clothes, Traveler's."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Component Pouch (25 GP)",
+            "entries": [
+              "See Component Pouch."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Costume (5 GP)",
+            "entries": [
+              "See Costume."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Crowbar (2 GP)",
+            "entries": [
+              "See Crowbar."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Diplomat's Pack (39 GP)",
+            "entries": [
+              "See Diplomat's Pack."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Druidic Focus (Varies)",
+            "entries": [
+              "A Druidic Focus takes one of the forms in the Druidic Focuses table and is carved, tied with ribbon, or painted to channel primal magic. A Druid or Ranger can use such an object as a {@variantrule Spellcasting Focus|srd52}.",
+              "See the Druidic Focuses table."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Dungeoneer's Pack (12 GP)",
+            "entries": [
+              "See Dungeoneer's Pack."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Entertainer's Pack (40 GP)",
+            "entries": [
+              "See Entertainer's Pack."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Explorer's Pack (10 GP)",
+            "entries": [
+              "See Explorer's Pack."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Flask (2 CP)",
+            "entries": [
+              "See Flask."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Grappling Hook (2 GP)",
+            "entries": [
+              "See Grappling Hook."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Healer's Kit (5 GP)",
+            "entries": [
+              "See Healer's Kit."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Holy Symbol (Varies)",
+            "entries": [
+              "A Holy Symbol takes one of the forms in the Holy Symbol table and is bejeweled or painted to channel divine magic. A Cleric or Paladin can use a Holy Symbol as a {@variantrule Spellcasting Focus|srd52}.",
+              "The table indicates whether a Holy Symbol needs to be held, worn, or borne on fabric (such as a tabard or banner) or a Shield.",
+              "See the Holy Symbols table."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Holy Water (25 GP)",
+            "entries": [
+              "See Holy Water."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Hunting Trap (5 GP)",
+            "entries": [
+              "See Hunting Trap."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Ink (10 GP)",
+            "entries": [
+              "See Ink."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Ink Pen (2 CP)",
+            "entries": [
+              "See Ink Pen."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Jug (2 CP)",
+            "entries": [
+              "See Jug."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Ladder (1 SP)",
+            "entries": [
+              "See Ladder."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Lamp (5 SP)",
+            "entries": [
+              "See Lamp."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Lantern, Bullseye (10 GP)",
+            "entries": [
+              "See Lantern, Bullseye."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Lantern, Hooded (5 GP)",
+            "entries": [
+              "See Lantern, Hooded."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Lock (10 GP)",
+            "entries": [
+              "See Lock."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Magnifying Glass (100 GP)",
+            "entries": [
+              "See Magnifying Glass."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Manacles (2 GP)",
+            "entries": [
+              "See Manacles."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Map (1 GP)",
+            "entries": [
+              "See Map."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Mirror (5 GP)",
+            "entries": [
+              "See Mirror."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Net (1 GP)",
+            "entries": [
+              "See Net."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Oil (1 SP)",
+            "entries": [
+              "See Oil."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Paper (2 SP)",
+            "entries": [
+              "See Paper."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Parchment (1 SP)",
+            "entries": [
+              "See Parchment."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Perfume (5 GP)",
+            "entries": [
+              "See Perfume."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Poison, Basic (100 GP)",
+            "entries": [
+              "See Poison, Basic."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Pole (5 CP)",
+            "entries": [
+              "See Pole."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Pot, Iron (2 GP)",
+            "entries": [
+              "See Pot, Iron."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Potion of Healing (50 GP)",
+            "entries": [
+              "See Potion of Healing."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Pouch (5 SP)",
+            "entries": [
+              "See Pouch."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Priest's Pack (33 GP)",
+            "entries": [
+              "See Priest's Pack."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Quiver (1 GP)",
+            "entries": [
+              "See Quiver."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Ram, Portable (4 GP)",
+            "entries": [
+              "See Ram, Portable."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Rations (5 SP)",
+            "entries": [
+              "See Rations."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Robe (1 GP)",
+            "entries": [
+              "See Robe."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Rope (1 GP)",
+            "entries": [
+              "See Rope."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Sack (1 CP)",
+            "entries": [
+              "See Sack."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Scholar's Pack (40 GP)",
+            "entries": [
+              "See Scholar's Pack."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Shovel (2 GP)",
+            "entries": [
+              "See Shovel."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Signal Whistle (5 CP)",
+            "entries": [
+              "See Signal Whistle."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spell Scroll (Cantrip, 30 GP Level 1, 50 GP)",
+            "entries": [
+              "A {@i Spell Scroll} (Cantrip) or {@i Spell Scroll} (Level 1) is a magic item that bears the words of a cantrip or level 1 spell, respectively, determined by the scroll's creator. If the spell is on your class's spell list, you can read the scroll and cast the spell using its normal casting time and without providing any Material components.",
+              "If the spell requires a saving throw or an attack roll, the spell save DC is 13, and the attack bonus is +5. The scroll disintegrates when the casting is completed."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spikes, Iron (1 GP)",
+            "entries": [
+              "See Spikes, Iron."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spyglass (1,000 GP)",
+            "entries": [
+              "See Spyglass."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "String (1 SP)",
+            "entries": [
+              "See String."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Tent (2 GP)",
+            "entries": [
+              "See Tent."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Tinderbox (5 SP)",
+            "entries": [
+              "See Tinderbox."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Torch (1 CP)",
+            "entries": [
+              "See Torch."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Vial (1 GP)",
+            "entries": [
+              "See Vial."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Waterskin (2 SP)",
+            "entries": [
+              "See Waterskin."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "action.utilize",
+      "glossary.bonus-action",
+      "glossary.spellcasting-focus",
+      "item-group.arcane-focus",
+      "item-group.druidic-focus",
+      "item-group.holy-symbol",
+      "item-group.spell-scroll",
+      "item-property.a",
+      "item.acid",
+      "item.alchemist-s-fire",
+      "item.antitoxin",
+      "item.backpack",
+      "item.ball-bearings",
+      "item.barrel",
+      "item.basic-poison",
+      "item.basket",
+      "item.bedroll",
+      "item.bell",
+      "item.blanket",
+      "item.block-and-tackle",
+      "item.book",
+      "item.bucket",
+      "item.bullseye-lantern",
+      "item.burglar-s-pack",
+      "item.caltrops",
+      "item.candle",
+      "item.chain",
+      "item.chest",
+      "item.climber-s-kit",
+      "item.component-pouch",
+      "item.costume",
+      "item.crossbow-bolt-case",
+      "item.crowbar",
+      "item.diplomat-s-pack",
+      "item.dungeoneer-s-pack",
+      "item.entertainer-s-pack",
+      "item.explorer-s-pack",
+      "item.fine-clothes",
+      "item.flask",
+      "item.glass-bottle",
+      "item.grappling-hook",
+      "item.healer-s-kit",
+      "item.holy-water",
+      "item.hooded-lantern",
+      "item.hunting-trap",
+      "item.ink",
+      "item.ink-pen",
+      "item.iron-pot",
+      "item.iron-spikes",
+      "item.jug",
+      "item.ladder",
+      "item.lamp",
+      "item.lock",
+      "item.magnifying-glass",
+      "item.manacles",
+      "item.map",
+      "item.map-or-scroll-case",
+      "item.mirror",
+      "item.net",
+      "item.oil",
+      "item.paper",
+      "item.parchment",
+      "item.perfume",
+      "item.pole",
+      "item.portable-ram",
+      "item.potion-of-healing",
+      "item.pouch",
+      "item.priest-s-pack",
+      "item.quiver",
+      "item.rations",
+      "item.robe",
+      "item.rope",
+      "item.sack",
+      "item.scholar-s-pack",
+      "item.shovel",
+      "item.signal-whistle",
+      "item.spell-scroll-cantrip",
+      "item.spell-scroll-level-1",
+      "item.spyglass",
+      "item.string",
+      "item.tent",
+      "item.tinderbox",
+      "item.torch",
+      "item.traveler-s-clothes",
+      "item.vial",
+      "item.waterskin",
+      "rule.casting-spells",
+      "rulebook.page-094",
+      "rulebook.page-095",
+      "rulebook.page-096",
+      "rulebook.page-097",
+      "rulebook.page-098",
+      "rulebook.page-099",
+      "rulebook.page-100",
+      "table.adventuring-gear",
+      "table.ammunition",
+      "table.arcane-focuses",
+      "table.druidic-focuses",
+      "table.holy-symbols"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/5"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
   }
 ]
