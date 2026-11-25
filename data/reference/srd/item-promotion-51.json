@@ -4,7 +4,7 @@
     "item": 493,
     "itemGroup": 6,
     "baseitem": 91,
-    "itemProperty": 13,
+    "itemProperty": 10,
     "magicvariant": 30
   },
   "excluded": [
@@ -151,6 +151,21 @@
       "pointer": "/baseitem/182",
       "field": "additionalEntries",
       "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/4",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/6",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/18",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
     },
     {
       "path": "items-base.json",
@@ -340,5 +355,44 @@
   ],
   "corrections": [],
   "publisherOnly": [],
-  "nativeCount": 633
+  "unresolvedReferences": [
+    {
+      "id": "item.bag-of-holding",
+      "kind": "item",
+      "raw": "Heward's handy haversack",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "item.crawler-mucus-contact",
+      "kind": "creature",
+      "raw": "carrion crawler",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "item.orb-of-dragonkind",
+      "kind": "creature",
+      "raw": "Tiamat|RoT",
+      "reason": "foreign-source"
+    },
+    {
+      "id": "item.portable-hole",
+      "kind": "item",
+      "raw": "Heward's handy haversack",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "item-group.gaming-set",
+      "kind": "item",
+      "raw": "Dragonchess Set|SRD51",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "item-group.gaming-set",
+      "kind": "item",
+      "raw": "Three-Dragon Ante Set|SRD51",
+      "reason": "missing-or-ambiguous"
+    }
+  ],
+  "resolvedReferenceCount": 718,
+  "nativeCount": 630
 }

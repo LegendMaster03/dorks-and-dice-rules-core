@@ -345,7 +345,9 @@
     "attachedSpells": [
       "plane shift"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.plane-shift"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -375,7 +377,9 @@
     "entries": [
       "While holding this shield, you can speak its command word as a bonus action to cause it to animate. The shield leaps into the air and hovers in your space to protect you as if you were wielding it, leaving your hands free. The shield remains animated for 1 minute, until you use a bonus action to end this effect, or until you are {@condition incapacitated} or die, at which point the shield falls to the ground or into your hand if you have one free."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -533,7 +537,10 @@
         "dim": 60
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.grappled",
+      "skill.investigation"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -566,7 +573,9 @@
     "entries": [
       "You have resistance to nonmagical damage while you wear this armor. Additionally, you can use an action to make yourself immune to nonmagical damage for 10 minutes or until you are no longer wearing the armor. Once this special action is used, it can't be used again until the next dawn."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.plate-armor"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -614,7 +623,11 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -662,7 +675,11 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -710,7 +727,11 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -773,7 +794,9 @@
     "poisonTypes": [
       "ingested"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -898,7 +921,14 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned",
+      "monster.bulette",
+      "monster.cloud-giant",
+      "monster.mummy-lord",
+      "monster.shrieker",
+      "monster.treant"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -929,7 +959,9 @@
       "Inanimate objects can be stored in the bag, which can hold a cubic foot of such material. However, once each day, the bag swallows any objects inside it and spits them out into another plane of existence. The DM determines the time and plane.",
       "If the bag is pierced or torn, it is destroyed, and anything contained within it is transported to a random location on the Astral Plane."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.bag-of-holding"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -968,7 +1000,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.portable-hole"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1045,7 +1079,16 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.badger",
+      "monster.boar",
+      "monster.dire-wolf",
+      "monster.giant-badger",
+      "monster.giant-elk",
+      "monster.giant-rat",
+      "monster.panther",
+      "monster.weasel"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1122,7 +1165,16 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.brown-bear",
+      "monster.giant-boar",
+      "monster.giant-goat",
+      "monster.goat",
+      "monster.lion",
+      "monster.mastiff",
+      "monster.owl",
+      "monster.rat"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1199,7 +1251,16 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.ape",
+      "monster.axe-beak",
+      "monster.baboon",
+      "monster.black-bear",
+      "monster.giant-hyena",
+      "monster.giant-weasel",
+      "monster.jackal",
+      "monster.tiger"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1228,7 +1289,9 @@
     "entries": [
       "Most commonly found inside a {@item Ball Bearings (Bag of 1,000)|srd51|bag of ball bearings}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.ball-bearings-bag-of-1-000"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1264,7 +1327,10 @@
       }
     ],
     "atomicPackContents": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.prone",
+      "item.ball-bearing"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1522,7 +1588,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.persuasion"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1872,7 +1940,9 @@
     "entries": [
       "A book might contain poetry, historical accounts, information pertaining to a particular field of lore, diagrams and notes on gnomish contraptions, or just about anything else that can be represented using text or pictures. A book of spells is a {@item spellbook|srd51}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.spellbook"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1902,7 +1972,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.stealth"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",

@@ -184,7 +184,9 @@
         }
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.crossbow-bolt"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -245,7 +247,9 @@
     "attachedSpells": [
       "scrying"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.scrying"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -357,7 +361,14 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.invisible",
+      "item.horn-of-blasting",
+      "spell.disintegrate",
+      "spell.passwall",
+      "spell.prismatic-spray",
+      "spell.wall-of-fire"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -393,7 +404,10 @@
       "gate",
       "plane shift"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.gate",
+      "spell.plane-shift"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -423,7 +437,11 @@
       "Each creature in the area where the fortress appears must make a {@dc 15} Dexterity saving throw, taking {@damage 10d10} bludgeoning damage on a failed save, or half as much damage on a successful one. In either case, the creature is pushed to an unoccupied space outside but next to the fortress. Objects in the area that aren't being worn or carried take this damage and are pushed automatically.",
       "The tower is made of adamantine, and its magic prevents it from being tipped over. The roof, the door, and the walls each have 100 hit points, immunity to damage from nonmagical weapons excluding siege weapons, and resistance to all other damage. Only a {@spell wish} spell can repair the fortress (this use of the spell counts as replicating a spell of 8th level or lower). Each casting of {@spell wish} causes the roof, the door, or one wall to regain 50 hit points."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.chime-of-opening",
+      "spell.knock",
+      "spell.wish"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -463,7 +481,13 @@
       "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
       "You can use an action to cause thick, black poison to coat the blade. The poison remains for 1 minute or until an attack using this weapon hits a creature. That creature must succeed on a {@dc 15} Constitution saving throw or take {@damage 2d10} poison damage and become {@condition poisoned} for 1 minute. The dagger can't be used this way again until the next dawn."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.dagger",
+      "condition.poisoned",
+      "item-property.f",
+      "item-property.l",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -500,7 +524,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.prone"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -874,7 +900,42 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.acolyte",
+      "monster.adult-red-dragon",
+      "monster.archmage",
+      "monster.assassin",
+      "monster.bandit",
+      "monster.bandit-captain",
+      "monster.berserker",
+      "monster.bugbear",
+      "monster.cloud-giant",
+      "monster.druid",
+      "monster.erinyes",
+      "monster.ettin",
+      "monster.fire-giant",
+      "monster.frost-giant",
+      "monster.gnoll",
+      "monster.goblin",
+      "monster.guard",
+      "monster.hill-giant",
+      "monster.hobgoblin",
+      "monster.iron-golem",
+      "monster.knight",
+      "monster.kobold",
+      "monster.lich",
+      "monster.mage",
+      "monster.medusa",
+      "monster.night-hag",
+      "monster.ogre",
+      "monster.oni",
+      "monster.orc",
+      "monster.priest",
+      "monster.succubus",
+      "monster.troll",
+      "monster.veteran",
+      "skill.investigation"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1317,7 +1378,13 @@
     "attachedSpells": [
       "wish"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "monster.avatar-of-death",
+      "monster.medusa",
+      "skill.persuasion",
+      "spell.wish"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1359,7 +1426,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.remove-curse"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1415,7 +1484,10 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1482,7 +1554,19 @@
       "sealing wax|srd51",
       "soap|srd51"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.chest",
+      "item.fine-clothes",
+      "item.ink-1-ounce-bottle",
+      "item.ink-pen",
+      "item.lamp",
+      "item.map-or-scroll-case",
+      "item.oil-flask",
+      "item.paper-one-sheet",
+      "item.perfume-vial",
+      "item.sealing-wax",
+      "item.soap"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1597,7 +1681,11 @@
     "poisonTypes": [
       "injury"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned",
+      "condition.unconscious",
+      "monster.drow"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1660,7 +1748,17 @@
       "waterskin|srd51",
       "hempen rope (50 feet)|srd51"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.backpack",
+      "item.crowbar",
+      "item.hammer",
+      "item.hempen-rope-50-feet",
+      "item.piton",
+      "item.rations-1-day",
+      "item.tinderbox",
+      "item.torch",
+      "item.waterskin"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1687,7 +1785,9 @@
     "entries": [
       "Found in a small packet, this powder resembles very fine sand. There is enough of it for one use. When you use an action to throw the dust into the air, you and each creature and object within 10 feet of you become {@condition invisible} for {@dice 2d4} minutes. The duration is the same for all subjects, and the dust is consumed when its magic takes effect. If a creature affected by the dust attacks or casts a spell, the invisibility ends for that creature."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1744,7 +1844,12 @@
       "Found in a small container, this powder resembles very fine sand. It appears to be {@item dust of disappearance}, and an {@spell identify} spell reveals it to be such. There is enough of it for one use.",
       "When you use an action to throw a handful of the dust into the air, you and each creature that needs to breathe within 30 feet of you must succeed on a {@dc 15} Constitution saving throw or become unable to breathe while sneezing uncontrollably. A creature affected in this way is {@condition incapacitated} and suffocating. As long as it is conscious, a creature can repeat the saving throw at the end of each of its turns, ending the effect on it on a success. The {@spell lesser restoration} spell can also end the effect on a creature."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "item.dust-of-disappearance",
+      "spell.identify",
+      "spell.lesser-restoration"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1777,7 +1882,9 @@
     "entries": [
       "While wearing this armor, you gain a +2 bonus to AC. In addition, if an effect moves you against your will along the ground, you can use your reaction to reduce the distance you are moved by up to 10 feet."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.plate-armor"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1822,7 +1929,11 @@
     "entries": [
       "You gain a +3 bonus to attack and damage rolls made with this magic weapon. It has the thrown property with a normal range of 20 feet and a long range of 60 feet. When you hit with a ranged attack using this weapon, it deals an extra {@damage 1d8} damage or, if the target is a giant, {@damage 2d8} damage. Immediately after the attack, the weapon flies back to your hand."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.warhammer",
+      "item-property.t",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1883,7 +1994,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.efreeti",
+      "spell.wish"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1917,7 +2031,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.air-elemental",
+      "spell.conjure-elemental"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1951,7 +2068,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.water-elemental",
+      "spell.conjure-elemental"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1985,7 +2105,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.fire-elemental",
+      "spell.conjure-elemental"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -2019,7 +2142,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.earth-elemental",
+      "spell.conjure-elemental"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -2162,7 +2288,15 @@
       "waterskin|srd51",
       "disguise kit|srd51"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.backpack",
+      "item.bedroll",
+      "item.candle",
+      "item.costume-clothes",
+      "item.disguise-kit",
+      "item.rations-1-day",
+      "item.waterskin"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -2194,7 +2328,10 @@
     "poisonTypes": [
       "inhaled"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned",
+      "condition.unconscious"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -2310,7 +2447,16 @@
       "waterskin|srd51",
       "hempen rope (50 feet)|srd51"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.backpack",
+      "item.bedroll",
+      "item.hempen-rope-50-feet",
+      "item.mess-kit",
+      "item.rations-1-day",
+      "item.tinderbox",
+      "item.torch",
+      "item.waterskin"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -2351,7 +2497,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.charm-person"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -2378,7 +2526,9 @@
     "entries": [
       "These crystal lenses fit over the eyes. While wearing them, you can see much better than normal out to a range of 1 foot. You have advantage on Intelligence ({@skill Investigation}) checks that rely on sight while searching an area or studying an object within that range."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.investigation"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -2409,7 +2559,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.perception"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -2471,7 +2623,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.griffon"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -2543,7 +2697,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.lion"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",

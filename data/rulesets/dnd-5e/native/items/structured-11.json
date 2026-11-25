@@ -43,7 +43,9 @@
         "quantity": 20
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.arrow"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -106,7 +108,9 @@
     "dmg2": "1d10",
     "axe": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -143,7 +147,11 @@
     "dmgType": "P",
     "weapon": true,
     "ammoType": "blowgun needle|srd51",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.blowgun-needle",
+      "item-property.a",
+      "item-property.ld"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -205,7 +213,9 @@
         "quantity": 50
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.blowgun-needle"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -442,7 +452,9 @@
     "dmgType": "B",
     "club": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.l"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -556,7 +568,9 @@
         "quantity": 20
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.crossbow-bolt"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -622,7 +636,11 @@
     "dmgType": "P",
     "dagger": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.f",
+      "item-property.l",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -658,7 +676,10 @@
     "dmg1": "1d4",
     "dmgType": "P",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.f",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -807,7 +828,11 @@
     "dmgType": "S",
     "polearm": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -869,7 +894,10 @@
     "dmgType": "S",
     "axe": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.2h",
+      "item-property.h"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -904,7 +932,9 @@
     "dmgType": "B",
     "club": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.2h"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -940,7 +970,10 @@
     "dmgType": "S",
     "sword": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.2h",
+      "item-property.h"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -977,7 +1010,11 @@
     "dmgType": "S",
     "polearm": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1049,7 +1086,12 @@
     "crossbow": true,
     "weapon": true,
     "ammoType": "crossbow bolt|srd51",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.crossbow-bolt",
+      "item-property.a",
+      "item-property.l",
+      "item-property.ld"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1086,7 +1128,10 @@
     "dmgType": "S",
     "axe": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.l",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1126,7 +1171,13 @@
     "crossbow": true,
     "weapon": true,
     "ammoType": "crossbow bolt|srd51",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.crossbow-bolt",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h",
+      "item-property.ld"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1221,7 +1272,9 @@
     "dmgType": "P",
     "spear": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1292,7 +1345,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.r",
+      "item-property.s"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1389,7 +1445,12 @@
     "crossbow": true,
     "weapon": true,
     "ammoType": "crossbow bolt|srd51",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.crossbow-bolt",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.ld"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1426,7 +1487,10 @@
     "dmgType": "B",
     "hammer": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.l",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1465,7 +1529,12 @@
     "bow": true,
     "weapon": true,
     "ammoType": "arrow|srd51",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1501,7 +1570,9 @@
     "dmg2": "1d10",
     "sword": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",

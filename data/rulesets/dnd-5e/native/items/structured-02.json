@@ -17,7 +17,9 @@
         "levitate"
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.levitate"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -168,7 +170,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.water-elemental",
+      "spell.conjure-elemental"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -201,7 +206,10 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.longbow",
+      "baseitem.shortbow"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -233,7 +241,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.shield"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -305,7 +315,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.fire-elemental",
+      "spell.conjure-elemental"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -375,7 +388,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.magic-missile"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -547,7 +562,21 @@
       "waterskin|srd51",
       "hempen rope (50 feet)|srd51"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.backpack",
+      "item.ball-bearings-bag-of-1-000",
+      "item.bell",
+      "item.candle",
+      "item.crowbar",
+      "item.hammer",
+      "item.hempen-rope-50-feet",
+      "item.hooded-lantern",
+      "item.oil-flask",
+      "item.piton",
+      "item.rations-1-day",
+      "item.tinderbox",
+      "item.waterskin"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -644,7 +673,9 @@
       }
     ],
     "atomicPackContents": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.caltrop"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -797,7 +828,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.detect-evil-and-good",
+      "spell.gate"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -857,7 +891,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.dimension-door"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1027,7 +1063,11 @@
     "poisonTypes": [
       "contact"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.paralyzed",
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1089,7 +1129,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.air-elemental",
+      "spell.conjure-elemental"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1342,7 +1385,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.scorching-ray"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1424,7 +1469,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.web"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1452,7 +1499,10 @@
     "entries": [
       "While you wear this cloak, it projects an illusion that makes you appear to be standing in a place near your actual location, causing any creature to have disadvantage on attack rolls against you. If you take damage, the property ceases to function until the start of your next turn. This property is suppressed while you are {@condition incapacitated}, {@condition restrained}, or otherwise unable to move."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.restrained"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1483,7 +1533,10 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.perception",
+      "skill.stealth"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1555,7 +1608,11 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.bat",
+      "skill.stealth",
+      "spell.polymorph"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",

@@ -13,7 +13,9 @@
     "entries": [
       "When you drink this potion, you gain a climbing speed equal to your walking speed for 1 hour. During this time, you have advantage on Strength ({@skill Athletics}) checks you make to climb. The potion is separated into brown, silver, and gray layers resembling bands of stone. Shaking the bottle fails to mix the colors."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -46,7 +48,9 @@
       "When you drink this potion, your Strength score changes to 27 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score.",
       "This potion's transparent liquid has floating in it a sliver of fingernail from a {@creature cloud giant}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.cloud-giant"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -106,7 +110,9 @@
     "attachedSpells": [
       "enlarge/reduce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.enlarge-reduce"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -139,7 +145,9 @@
       "When you drink this potion, your Strength score changes to 25 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score.",
       "This potion's transparent liquid has floating in it a sliver of fingernail from a {@creature fire giant}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.fire-giant"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -264,7 +272,9 @@
       "When you drink this potion, your Strength score changes to 23 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score.",
       "This potion's transparent liquid has floating in it a sliver of fingernail from a {@creature frost giant}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.frost-giant"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -294,7 +304,9 @@
     "attachedSpells": [
       "gaseous form"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.gaseous-form"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -351,7 +363,9 @@
     "attachedSpells": [
       "enlarge/reduce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.enlarge-reduce"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -410,7 +424,9 @@
     "attachedSpells": [
       "bless"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.bless"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -443,7 +459,9 @@
       "When you drink this potion, your Strength score changes to 21 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score.",
       "This potion's transparent liquid has floating in it a sliver of fingernail from a {@creature hill giant}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.hill-giant"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -470,7 +488,9 @@
     "entries": [
       "This potion's container looks empty but feels as though it holds liquid. When you drink it, you become {@condition invisible} for 1 hour. Anything you wear or carry is {@condition invisible} with you. The effect ends early if you attack or cast a spell."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -530,7 +550,9 @@
     "attachedSpells": [
       "detect thoughts"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.detect-thoughts"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -588,7 +610,11 @@
       "This concoction looks, smells, and tastes like a {@item potion of healing} or other beneficial potion. However, it is actually poison masked by illusion magic. An {@spell identify} spell reveals its true nature.",
       "If you drink it, you take {@damage 3d6} poison damage, and you must succeed on a {@dc 13} Constitution saving throw or be {@condition poisoned}. At the start of each of your turns while you are {@condition poisoned} in this way, you take {@damage 3d6} poison damage. At the end of each of your turns, you can repeat the saving throw. On a successful save, the poison damage you take on your subsequent turns decreases by {@dice 1d6}. The poison ends when the damage decreases to 0."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned",
+      "item.potion-of-healing",
+      "spell.identify"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -708,7 +734,9 @@
     "attachedSpells": [
       "haste"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.haste"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -741,7 +769,9 @@
       "When you drink this potion, your Strength score changes to 23 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score.",
       "This potion's transparent liquid has floating in it a sliver of fingernail from a {@creature stone giant}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.stone-giant"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -774,7 +804,9 @@
       "When you drink this potion, your Strength score changes to 29 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score.",
       "This potion's transparent liquid has floating in it a sliver of fingernail from a {@creature storm giant}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.storm-giant"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -925,7 +957,11 @@
         }
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.blowgun-needle",
+      "baseitem.sling-bullet",
+      "item.component-pouch"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -996,7 +1032,14 @@
         "special": "vestments"
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.backpack",
+      "item.blanket",
+      "item.candle",
+      "item.rations-1-day",
+      "item.tinderbox",
+      "item.waterskin"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1028,7 +1071,10 @@
     "poisonTypes": [
       "injury"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "monster.purple-worm"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1096,7 +1142,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.roc"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1233,7 +1281,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1269,7 +1319,9 @@
         }
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.arrow"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1317,7 +1369,13 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.crossbow-bolt",
+      "baseitem.javelin",
+      "baseitem.quarterstaff",
+      "baseitem.spear"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1558,7 +1616,13 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.air-elemental",
+      "spell.chain-lightning",
+      "spell.dominate-monster",
+      "spell.gust-of-wind",
+      "spell.wind-wall"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1605,7 +1669,11 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.animal-friendship",
+      "spell.fear",
+      "spell.speak-with-animals"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",

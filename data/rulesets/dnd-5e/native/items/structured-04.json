@@ -26,7 +26,11 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.frightened",
+      "monster.giant-goat",
+      "monster.riding-horse"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -62,7 +66,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.elephant"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -99,7 +105,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.nightmare"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -135,7 +143,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.invisible",
+      "monster.mastiff"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -171,7 +182,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.giant-owl"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -210,7 +223,10 @@
     "attachedSpells": [
       "animal messenger"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.raven",
+      "spell.animal-messenger"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -517,7 +533,9 @@
         "dim": 60
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.blinded"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -700,7 +718,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -956,7 +976,13 @@
       },
       "The hammer also has 5 charges. While attuned to it, you can expend 1 charge and make a ranged weapon attack with the hammer, hurling it as if it had the thrown property with a normal range of 20 feet and a long range of 60 feet. If the attack hits, the hammer unleashes a thunderclap audible out to 300 feet. The target and every creature within 30 feet of it must succeed on a {@dc 17} Constitution saving throw or be {@condition stunned} until the end of your next turn. The hammer regains {@dice 1d4 + 1} expended charges daily at dawn."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.maul",
+      "condition.stunned",
+      "item-property.2h",
+      "item-property.h",
+      "item.gauntlets-of-ogre-power"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -992,7 +1018,9 @@
         "disguise self"
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.disguise-self"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1057,7 +1085,9 @@
     "entries": [
       "This kit is a leather pouch containing bandages, salves, and splints. The kit has ten uses. As an action, you can expend one use of the kit to stabilize a creature that has 0 hit points, without needing to make a Wisdom ({@skill Medicine}) check."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.medicine"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1124,7 +1154,12 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.daylight",
+      "spell.fireball",
+      "spell.prismatic-spray",
+      "spell.wall-of-fire"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1156,7 +1191,9 @@
         "comprehend languages"
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.comprehend-languages"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1198,7 +1235,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.detect-thoughts",
+      "spell.suggestion"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1236,7 +1276,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.teleport"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1333,7 +1375,10 @@
       ],
       "weightless": true
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.bag-of-holding",
+      "item.portable-hole"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1435,7 +1480,10 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.horn",
+      "condition.deafened"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1467,7 +1515,10 @@
       "A brass horn summons {@dice 3d4 + 3} {@creature berserker||berserkers}. To use the brass horn, you must be proficient with all simple weapons.",
       "If you blow the horn without meeting its requirement, the summoned {@creature berserker||berserkers} attack you. If you meet the requirement, they are friendly to you and your companions and follow your commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.horn",
+      "monster.berserker"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1499,7 +1550,10 @@
       "A bronze horn summons {@dice 4d4 + 4} {@creature berserker||berserkers}. To use the bronze horn, you must be proficient with medium armor.",
       "If you blow the horn without meeting its requirement, the summoned {@creature berserker||berserkers} attack you. If you meet the requirement, they are friendly to you and your companions and follow your commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.horn",
+      "monster.berserker"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1531,7 +1585,10 @@
       "The iron horn summons {@dice 5d4 + 5} {@creature berserker||berserkers}. To use the iron horn, you must be proficient with all martial weapons.",
       "If you blow the horn without meeting its requirement, the summoned {@creature berserker||berserkers} attack you. If you meet the requirement, they are friendly to you and your companions and follow your commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.horn",
+      "monster.berserker"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1563,7 +1620,10 @@
       "The silver horn summons {@dice 2d4 + 2} {@creature berserker||berserkers}.",
       "The {@creature berserker||berserkers} are friendly to you and your companions and follow your commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.horn",
+      "monster.berserker"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1590,7 +1650,9 @@
     "entries": [
       "These iron horseshoes come in a set of four. While all four shoes are affixed to the hooves of a horse or similar creature, they allow the creature to move normally while floating 4 inches above the ground. This effect means the creature can cross or stand above nonsolid or unstable surfaces, such as water or lava. The creature leaves no tracks and ignores {@quickref difficult terrain||3}. In addition, the creature can move at normal speed for up to 12 hours a day without suffering {@condition exhaustion} from a forced march."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.exhaustion"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",

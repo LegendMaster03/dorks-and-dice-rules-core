@@ -43,7 +43,10 @@
     "dmgType": "B",
     "hammer": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.2h",
+      "item-property.h"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -119,7 +122,11 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.restrained",
+      "item-property.s",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -269,7 +276,11 @@
     "dmg1": "1d10",
     "dmgType": "P",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -364,7 +375,9 @@
     "dmgType": "B",
     "dmg2": "1d8",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -400,7 +413,9 @@
     "rapier": true,
     "sword": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.f"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -530,7 +545,10 @@
     "dmgType": "S",
     "sword": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.f",
+      "item-property.l"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -626,7 +644,11 @@
     "bow": true,
     "weapon": true,
     "ammoType": "arrow|srd51",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "item-property.2h",
+      "item-property.a"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -662,7 +684,10 @@
     "dmgType": "P",
     "sword": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.f",
+      "item-property.l"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -696,7 +721,9 @@
     "dmg1": "1d4",
     "dmgType": "S",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.l"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -731,7 +758,10 @@
     "dmgType": "B",
     "weapon": true,
     "ammoType": "sling bullet|srd51",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.sling-bullet",
+      "item-property.a"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -793,7 +823,9 @@
         "quantity": 20
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.sling-bullet"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -857,7 +889,10 @@
     "dmg2": "1d8",
     "spear": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.t",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -927,7 +962,9 @@
     "dmgType": "B",
     "dmg2": "1d8",
     "staff": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1022,7 +1059,10 @@
     "dmgType": "P",
     "dmg2": "1d8",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.t",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1144,7 +1184,9 @@
     "dmg2": "1d10",
     "hammer": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1205,7 +1247,10 @@
     "dmg1": "1d4",
     "dmgType": "S",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.f",
+      "item-property.r"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1266,7 +1311,9 @@
     "dmg1": "1d6",
     "dmgType": "B",
     "dmg2": "1d8",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1347,73 +1394,6 @@
         "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
         "path": "items-base.json",
         "pointer": "/itemProperty/2"
-      },
-      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
-    }
-  },
-  {
-    "id": "item-property.af",
-    "kind": "item-property",
-    "name": "Ammunition",
-    "abbreviation": "AF",
-    "template": "{{prop_name_lower}} ({{item.range}} ft.)",
-    "entries": [
-      {
-        "type": "entries",
-        "name": "Ammunition",
-        "entries": [
-          "You can use a weapon that has the ammunition property to make a ranged attack only if you have ammunition to fire from the weapon. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack. Loading a one-handed weapon requires a free hand. The ammunition of a firearm is destroyed upon use.",
-          "If you use a weapon that has the ammunition property to make a melee attack, you treat the weapon as an improvised weapon. A sling must be loaded to deal any damage when used in this way."
-        ]
-      }
-    ],
-    "catalogReferences": [],
-    "source": {
-      "release": "srd-5.1",
-      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
-      "license": "CC-BY-4.0",
-      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
-      "candidatePage": 267,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "items-base.json",
-        "pointer": "/itemProperty/4"
-      },
-      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
-    }
-  },
-  {
-    "id": "item-property.bf",
-    "kind": "item-property",
-    "name": "Burst Fire",
-    "abbreviation": "BF",
-    "template": "{{prop_name_lower}}",
-    "entries": [
-      {
-        "type": "entries",
-        "name": "Burst Fire",
-        "entries": [
-          "A weapon that has the burst fire property can make a single-target attack, or it can spray a 10-foot-cube area within normal range with shots. Each creature in the area must succeed on a {@dc 15} Dexterity saving throw or take the weapon's normal damage. This action uses ten pieces of ammunition."
-        ]
-      }
-    ],
-    "catalogReferences": [],
-    "source": {
-      "release": "srd-5.1",
-      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
-      "license": "CC-BY-4.0",
-      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
-      "candidatePage": 267,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "items-base.json",
-        "pointer": "/itemProperty/6"
       },
       "structuredStatus": "source-tagged structured item; official body and inventory review pending"
     }
@@ -1584,17 +1564,41 @@
     }
   },
   {
-    "id": "item-property.rld",
+    "id": "item-property.s",
     "kind": "item-property",
-    "name": "Reload",
-    "abbreviation": "RLD",
-    "template": "{{prop_name_lower}} ({{item.reload}} shots)",
+    "name": "special",
+    "abbreviation": "S",
+    "template": "{{prop_name_lower}}",
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 64,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/20"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.t",
+    "kind": "item-property",
+    "name": "Thrown",
+    "abbreviation": "T",
+    "template": "{{prop_name_lower}} ({{item.range}} ft.)",
     "entries": [
       {
         "type": "entries",
-        "name": "Reload",
+        "name": "Thrown",
         "entries": [
-          "A limited number of shots can be made with a weapon that has the reload property. A character must then reload it using an action or a bonus action (the character's choice)."
+          "If a weapon has the thrown property, you can throw the weapon to make a ranged attack. If the weapon is a melee weapon, you use the same ability modifier for that attack roll and damage roll that you would use for a melee attack with the weapon. For example, if you throw a handaxe, you use your Strength, but if you throw a dagger, you can use either your Strength or your Dexterity, since the dagger has the finesse property."
         ]
       }
     ],
@@ -1606,12 +1610,45 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [],
-      "candidatePage": 267,
+      "candidatePage": 147,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
         "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
         "path": "items-base.json",
-        "pointer": "/itemProperty/18"
+        "pointer": "/itemProperty/21"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-property.v",
+    "kind": "item-property",
+    "name": "Versatile",
+    "abbreviation": "V",
+    "template": "{{prop_name_lower}} ({{item.dmg2}})",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Versatile",
+        "entries": [
+          "This weapon can be used with one or two hands. A damage value in parentheses appears with the property—the damage when the weapon is used with two hands to make a melee attack."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 147,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemProperty/23"
       },
       "structuredStatus": "source-tagged structured item; official body and inventory review pending"
     }

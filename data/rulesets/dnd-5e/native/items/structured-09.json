@@ -35,7 +35,13 @@
         "special": "small knife"
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.backpack",
+      "item.book",
+      "item.ink-1-ounce-bottle",
+      "item.ink-pen",
+      "item.parchment-one-sheet"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -73,7 +79,11 @@
     "entries": [
       "You gain a +2 bonus to attack and damage rolls made with this magic weapon. In addition, you can make one attack with it as a bonus action on each of your turns."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-property.f",
+      "item-property.l"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -130,7 +140,10 @@
     "poisonTypes": [
       "injury"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "monster.giant-poisonous-snake"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -193,7 +206,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.remove-curse"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -526,7 +541,12 @@
       "This viscous, milky-white substance can form a permanent adhesive bond between any two objects. It must be stored in a jar or flask that has been coated inside with {@item oil of slipperiness}. When found, a container contains {@dice 1d6 + 1} ounces.",
       "One ounce of the glue can cover a 1-foot square surface. The glue takes 1 minute to set. Once it has done so, the bond it creates can be broken only by the application of {@item universal solvent} or {@item oil of etherealness}, or with a {@spell wish} spell."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.oil-of-etherealness",
+      "item.oil-of-slipperiness",
+      "item.universal-solvent",
+      "spell.wish"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -558,7 +578,9 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 11} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 1,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -590,7 +612,9 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 12} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 2,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -622,7 +646,9 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 13} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 3,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -654,7 +680,9 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 14} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 4,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -686,7 +714,9 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 15} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 5,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -718,7 +748,9 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 16} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 6,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -750,7 +782,9 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 17} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 7,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -782,7 +816,9 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 18} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 8,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -814,7 +850,9 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 19} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 9,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -960,7 +998,11 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.portable-hole",
+      "skill.arcana",
+      "spell.gate"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1107,7 +1149,12 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v",
+      "spell.charm-person",
+      "spell.command",
+      "spell.comprehend-languages"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1178,7 +1225,12 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v",
+      "spell.burning-hands",
+      "spell.fireball",
+      "spell.wall-of-fire"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1250,7 +1302,13 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v",
+      "spell.cone-of-cold",
+      "spell.fog-cloud",
+      "spell.ice-storm",
+      "spell.wall-of-ice"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1314,7 +1372,12 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v",
+      "spell.cure-wounds",
+      "spell.lesser-restoration",
+      "spell.mass-cure-wounds"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1437,7 +1500,18 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v",
+      "spell.cone-of-cold",
+      "spell.fireball",
+      "spell.globe-of-invulnerability",
+      "spell.hold-monster",
+      "spell.levitate",
+      "spell.lightning-bolt",
+      "spell.magic-missile",
+      "spell.ray-of-enfeeblement",
+      "spell.wall-of-force"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1478,7 +1552,9 @@
       "This staff can be wielded as a magic quarterstaff that grants a +3 bonus to attack and damage rolls made with it.",
       "The staff has 10 charges. When you hit with a melee attack using it, you can expend up to 3 of its charges. For each charge you expend, the target takes an extra {@damage 1d6} force damage. The staff regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll a {@dice d20}. On a 1, the staff becomes a nonmagical quarterstaff."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1561,7 +1637,12 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v",
+      "monster.swarm-of-insects",
+      "spell.giant-insect",
+      "spell.insect-plague"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1697,7 +1778,28 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v",
+      "spell.arcane-lock",
+      "spell.conjure-elemental",
+      "spell.detect-magic",
+      "spell.dispel-magic",
+      "spell.enlarge-reduce",
+      "spell.fireball",
+      "spell.flaming-sphere",
+      "spell.ice-storm",
+      "spell.invisibility",
+      "spell.knock",
+      "spell.light",
+      "spell.lightning-bolt",
+      "spell.mage-hand",
+      "spell.passwall",
+      "spell.plane-shift",
+      "spell.protection-from-evil-and-good",
+      "spell.telekinesis",
+      "spell.wall-of-fire",
+      "spell.web"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1746,7 +1848,11 @@
       "On your turn, you can mentally command the snake if it is within 60 feet of you and you aren't {@condition incapacitated}. You decide what action the snake takes and where it moves during its next turn, or you can issue it a general command, such as to attack your enemies or guard a location.",
       "If the snake is reduced to 0 hit points, it dies and reverts to its staff form. The staff then shatters and is destroyed. If the snake reverts to staff form before losing all its hit points, it regains all of them."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "item-property.v",
+      "monster.giant-constrictor-snake"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1832,7 +1938,18 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v",
+      "spell.animal-friendship",
+      "spell.awaken",
+      "spell.barkskin",
+      "spell.detect-magic",
+      "spell.locate-animals-or-plants",
+      "spell.pass-without-trace",
+      "spell.speak-with-animals",
+      "spell.speak-with-plants",
+      "spell.wall-of-thorns"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1904,7 +2021,11 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.deafened",
+      "condition.stunned",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1955,7 +2076,9 @@
       "This staff has 3 charges and regains {@dice 1d3} expended charges daily at dawn.",
       "The staff can be wielded as a magic quarterstaff. On a hit, it deals damage as a normal quarterstaff, and you can expend 1 charge to deal an extra {@damage 2d10} necrotic damage to the target. In addition, the target must succeed on a {@dc 15} Constitution saving throw or have disadvantage for 1 hour on any ability check or saving throw that uses Strength or Constitution."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -2016,7 +2139,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.earth-elemental",
+      "spell.conjure-elemental"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -2093,7 +2219,12 @@
         "dim": 30
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "baseitem.shortsword",
+      "item-property.f",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",

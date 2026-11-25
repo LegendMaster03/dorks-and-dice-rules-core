@@ -50,7 +50,10 @@
     "entries": [
       "When you make an Intelligence ({@skill Arcana}) check to control a {@item sphere of annihilation} while you are holding this talisman, you double your proficiency bonus on the check. In addition, when you start your turn with control over a {@item sphere of annihilation}, you can use an action to levitate it 10 feet plus a number of additional feet equal to 10 × your Intelligence modifier."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.sphere-of-annihilation",
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -337,7 +340,10 @@
     "poisonTypes": [
       "ingested"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -438,7 +444,12 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.trident",
+      "item-property.t",
+      "item-property.v",
+      "spell.dominate-beast"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -473,7 +484,10 @@
     "attachedSpells": [
       "zone of truth"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned",
+      "spell.zone-of-truth"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -529,7 +543,9 @@
     "entries": [
       "This tube holds milky liquid with a strong alcohol smell. You can use an action to pour the contents of the tube onto a surface within reach. The liquid instantly dissolves up to 1 square foot of adhesive it touches, including {@item sovereign glue}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.sovereign-glue"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -644,7 +660,12 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.paralyzed",
+      "condition.restrained",
+      "spell.hold-monster",
+      "spell.hold-person"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -677,7 +698,9 @@
       "This wand has 7 charges. While holding it, you can use an action and expend 1 charge to speak its command word. For the next minute, you know the direction of the nearest creature hostile to you within 60 feet, but not its distance from you. The wand can sense the presence of hostile creatures that are ethereal, {@condition invisible}, disguised, or hidden, as well as those in plain sight. The effect ends if you stop holding the wand.",
       "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll a {@dice d20}. On a 1, the wand crumbles into ashes and is destroyed."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -730,7 +753,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.frightened",
+      "spell.command"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -775,7 +801,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.fireball"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -820,7 +848,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.lightning-bolt"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -861,7 +891,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.detect-magic"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -900,7 +932,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.magic-missile"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -938,7 +972,9 @@
       "This wand has 7 charges. While holding it, you can use an action to expend 1 of its charges to cause a thin blue ray to streak from the tip toward a creature you can see within 60 feet of you. The target must succeed on a {@dc 15} Constitution saving throw or be {@condition paralyzed} for 1 minute. At the end of each of the target's turns, it can repeat the saving throw, ending the effect on itself on a success.",
       "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll a {@dice d20}. On a 1, the wand crumbles into ashes and is destroyed."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.paralyzed"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -983,7 +1019,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.polymorph"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1062,7 +1100,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.web"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1225,7 +1265,26 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.petrified",
+      "condition.restrained",
+      "condition.stunned",
+      "monster.elephant",
+      "monster.rat",
+      "monster.rhinoceros",
+      "spell.darkness",
+      "spell.detect-thoughts",
+      "spell.enlarge-reduce",
+      "spell.faerie-fire",
+      "spell.fireball",
+      "spell.greater-restoration",
+      "spell.gust-of-wind",
+      "spell.invisibility",
+      "spell.lightning-bolt",
+      "spell.slow",
+      "spell.stinking-cloud"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1464,7 +1523,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.gust-of-wind"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1566,7 +1627,10 @@
     "poisonTypes": [
       "injury"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "monster.wyvern"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1636,7 +1700,25 @@
       "Weaver's Tools|SRD51",
       "Woodcarver's Tools|SRD51"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.alchemist-s-supplies",
+      "baseitem.brewer-s-supplies",
+      "baseitem.calligrapher-s-supplies",
+      "baseitem.carpenter-s-tools",
+      "baseitem.cartographer-s-tools",
+      "baseitem.cobbler-s-tools",
+      "baseitem.cook-s-utensils",
+      "baseitem.glassblower-s-tools",
+      "baseitem.jeweler-s-tools",
+      "baseitem.leatherworker-s-tools",
+      "baseitem.mason-s-tools",
+      "baseitem.painter-s-supplies",
+      "baseitem.potter-s-tools",
+      "baseitem.smith-s-tools",
+      "baseitem.tinker-s-tools",
+      "baseitem.weaver-s-tools",
+      "baseitem.woodcarver-s-tools"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1677,7 +1759,18 @@
       "Silver Dragon Scale Mail",
       "White Dragon Scale Mail"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.black-dragon-scale-mail",
+      "item.blue-dragon-scale-mail",
+      "item.brass-dragon-scale-mail",
+      "item.bronze-dragon-scale-mail",
+      "item.copper-dragon-scale-mail",
+      "item.gold-dragon-scale-mail",
+      "item.green-dragon-scale-mail",
+      "item.red-dragon-scale-mail",
+      "item.silver-dragon-scale-mail",
+      "item.white-dragon-scale-mail"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1707,7 +1800,10 @@
       "Playing Card Set|SRD51",
       "Three-Dragon Ante Set|SRD51"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.dice-set",
+      "item.playing-card-set"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1743,7 +1839,18 @@
       "Shawm|SRD51",
       "Viol|SRD51"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.bagpipes",
+      "baseitem.drum",
+      "baseitem.dulcimer",
+      "baseitem.flute",
+      "baseitem.horn",
+      "baseitem.lute",
+      "baseitem.lyre",
+      "baseitem.pan-flute",
+      "baseitem.shawm",
+      "baseitem.viol"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1776,7 +1883,12 @@
       "Potion of Superior Healing",
       "Potion of Supreme Healing"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.potion-of-greater-healing",
+      "item.potion-of-healing",
+      "item.potion-of-superior-healing",
+      "item.potion-of-supreme-healing"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1812,7 +1924,11 @@
       "+2 Wand of the War Mage",
       "+3 Wand of the War Mage"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.1-wand-of-the-war-mage",
+      "item.2-wand-of-the-war-mage",
+      "item.3-wand-of-the-war-mage"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",

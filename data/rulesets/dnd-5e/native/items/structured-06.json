@@ -18,7 +18,10 @@
         }
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.paper-one-sheet",
+      "item.parchment-one-sheet"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -87,7 +90,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.detect-thoughts"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -354,7 +359,10 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.cloudkill",
+      "spell.stinking-cloud"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -390,7 +398,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.fireball"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -487,7 +497,15 @@
         "wind walk"
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.bless",
+      "spell.branding-smite",
+      "spell.cure-wounds",
+      "spell.greater-restoration",
+      "spell.lesser-restoration",
+      "spell.planar-ally",
+      "spell.wind-walk"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -561,7 +579,13 @@
       "While your sworn enemy lives, you have disadvantage on attack rolls with all other weapons."
     ],
     "ammoType": "arrow|srd51",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.longbow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -620,7 +644,9 @@
     "attachedSpells": [
       "etherealness"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.etherealness"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -679,7 +705,10 @@
     "attachedSpells": [
       "freedom of movement"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.freedom-of-movement",
+      "spell.grease"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -711,7 +740,10 @@
     "poisonTypes": [
       "contact"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned",
+      "condition.unconscious"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -801,7 +833,16 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.charmed",
+      "spell.cure-wounds",
+      "spell.daylight",
+      "spell.death-ward",
+      "spell.detect-magic",
+      "spell.disintegrate",
+      "spell.scrying",
+      "spell.suggestion"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -884,7 +925,9 @@
     "poisonTypes": [
       "ingested"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1080,7 +1123,9 @@
     "entries": [
       "This delicate silver chain has a brilliant-cut black gem pendant. While you wear it, poisons have no effect on you. You are immune to the {@condition poisoned} condition and have immunity to poison damage."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1139,7 +1184,9 @@
     "entries": [
       "The next time you see a creature within 10 minutes after drinking this philter, you become {@condition charmed} by that creature for 1 hour. If the creature is of a species and gender you are normally attracted to, you regard it as your true love while you are {@condition charmed}. This potion's rose-hued, effervescent liquid contains one easy-to-miss bubble shaped like a heart."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.charmed"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1199,7 +1246,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.frightened"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1237,7 +1286,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.swarm-of-rats"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1332,7 +1383,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "spell.etherealness"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1497,7 +1551,9 @@
       "If the hole is folded up, a creature within the hole's extradimensional space can use an action to make a {@dc 10} Strength check. On a successful check, the creature forces its way out and appears within 5 feet of the portable hole or the creature carrying it. A breathing creature within a closed portable hole can survive for up to 10 minutes, after which time it begins to suffocate.",
       "Placing a portable hole inside an extradimensional space created by a {@item bag of holding}, {@item Heward's handy haversack}, or similar item instantly destroys both items and opens a gate to the Astral Plane. The gate originates where the one item was placed inside the other. Any creature within 10 feet of the gate is sucked through it and deposited in a random location on the Astral Plane. The gate then closes. The gate is one-way only and can't be reopened."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.bag-of-holding"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1586,7 +1642,9 @@
     "attachedSpells": [
       "animal friendship"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.animal-friendship"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
@@ -1616,7 +1674,9 @@
     "attachedSpells": [
       "clairvoyance"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.clairvoyance"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
