@@ -41,9 +41,11 @@
     "representation": "pinned edition-specific 5e.tools-shaped stat blocks; full body review pending"
   },
   "structuredItemImport": {
-    "nativeRecords": 630,
-    "representation": "pinned edition-specific concrete items, base equipment, groups, templates and weapon rules; full fidelity review pending",
-    "publisherOnly": []
+    "nativeRecords": 761,
+    "representation": "Pinned edition-specific concrete items, base equipment, groups, templates and weapon rules; publisher-verified expanded Armor of Resistance templates and configurations; remaining full fidelity review pending",
+    "publisherOnly": [
+      "item-group.armor-of-resistance"
+    ]
   },
   "structuredOriginsImport": {
     "nativeRecords": 14,

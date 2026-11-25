@@ -295,6 +295,10 @@
     {
       "id": "item.apparatus-of-the-crab",
       "reason": "Reconcile publisher Apparatus of the Crab name and typed vehicle statistics; preserve one canonical item identity, omit unverified terrain metadata."
+    },
+    {
+      "id": "item-group.armor-of-resistance",
+      "reason": "Recover the published ten damage choices, link the ten generic templates and derive 120 eligible armor configurations; retain conditional resistance and attunement."
     }
   ],
   "publisherOnly": [
@@ -314,7 +318,7 @@
       "reason": "missing-or-ambiguous"
     }
   ],
-  "resolvedReferenceCount": 1115,
+  "resolvedReferenceCount": 1627,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",
@@ -323,5 +327,15 @@
       "reason": "Verified vehicle profile integrated with canonical magic item; duplicate prose not separately imported."
     }
   ],
-  "nativeCount": 642
+  "nativeCount": 772,
+  "expandedArmorResistance": {
+    "groups": 0,
+    "templates": 10,
+    "concrete": 120,
+    "nativeCount": 130,
+    "groupId": "item-group.armor-of-resistance",
+    "pages": [
+      210
+    ]
+  }
 }

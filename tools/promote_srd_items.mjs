@@ -152,6 +152,61 @@ function reviewDeckTable(row,tag,publisherPages){
     return spec;
 }
 
+function recoverArmorResistance(records,report,manifest,tag,publisherPages,input){
+ const edition="SRD"+tag,modern=tag==="52",damage=["Acid","Cold","Fire","Force","Lightning","Necrotic","Poison","Psychic","Radiant","Thunder"];
+ const pages=modern?[210]:[208,209],pageIds=pages.map(p=>"rulebook.page-"+String(p).padStart(3,"0")),selected=publisherPages.filter(p=>pages.includes(p.page));
+ const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+ if(selected.length!==pages.length||input.provider!=="5etools-mirror-3/5etools-src"||input.commit!=="2512db75eb48ef06f6190b086a82430887906dca")throw Error("Unexpected Armor of Resistance source");
+ const layout=selected.map(p=>p.textLayout).join("\n"),norm=s=>s.replace(/\s+/g," ").trim();
+ const clauses=modern?["You have Resistance to one type of damage while","you wear this armor. The GM chooses the type or","determines it randomly by rolling on the following","table."]:["You have resistance to one type of damage while you","wear this armor. The GM chooses the type or","determines it randomly from the options below."];
+ if(!layout.includes("Armor of Resistance")||clauses.some(s=>!norm(layout).includes(s)))throw Error("Publisher Armor of Resistance body mismatch");
+ for(let i=0;i<5;i++)if(!new RegExp("\\b"+(i+1)+"\\s+"+damage[i]+"\\s+"+(i+6)+"\\s+"+damage[i+5]+"\\b").test(layout))throw Error("Publisher resistance table mismatch");
+ const baseFields=["type","weaponCategory","rarity","weight","value","dmg1","dmg2","dmgType","property","mastery","range","ac","strength","stealth","armor","weapon","ammoType","sword","axe","arrow","bolt","bulletFirearm","firearm"];
+ const bases=records.filter(b=>b.kind==="baseitem"&&b.armor===true&&["LA","MA","HA"].includes(b.type?.split("|")[0]));
+ if(bases.length!==12||new Set(bases.map(b=>b.id)).size!==12)throw Error("Unexpected resistance armor base inventory");
+ const provenance={release:manifest.officialPageImport.release,url:selected[0].source.url,pdfSha256:manifest.officialPageImport.pdfSha256,license:manifest.license,attribution:manifest.attribution,pages};
+ const groupBody=modern?"You have {@variantrule Resistance|SRD52} to one type of damage while you wear this armor. The GM chooses the type or determines it randomly by rolling on the following table.":"You have resistance to one type of damage while you wear this armor. The GM chooses the type or determines it randomly from the options below.";
+ const table={type:"table",colStyles:["col-2 text-center","col-10"],colLabels:[modern?"1d10":"d10","Damage Type"],rows:damage.map((d,i)=>[String(i+1),d])};
+ const localRefs=modern?[...pageIds,"glossary.resistance"].sort():pageIds,variants=[],concrete=[];
+ if(input.records[tag].length!==10)throw Error("Unexpected expanded resistance variant count");
+ for(let i=0;i<damage.length;i++){
+  const {path,pointer,record:c}=input.records[tag][i],d=damage[i],lower=d.toLowerCase(),inh=c.inherits,expectedReq=modern?[{type:"LA|XPHB"},{type:"MA|XPHB"},{type:"HA|XPHB"}]:[{armor:true}];
+  if(c.name!=="Armor of "+d+" Resistance"||inh?.source!==(modern?"XDMG":"DMG")||inh[modern?"srd52":"srd"]!==true||inh.rarity!=="rare"||inh.reqAttune!==true||JSON.stringify(inh.resist)!==JSON.stringify([lower])||inh.nameSuffix!==" of "+d+" Resistance"||JSON.stringify(c.requires)!==JSON.stringify(expectedReq))throw Error("Unexpected upstream resistance variant "+d);
+  const expandedStructuredSource={provider:input.provider,commit:input.commit,path,pointer};
+  const body=modern?`You have {@variantrule Resistance|SRD52} to ${d} damage while you wear this armor.`:`You have resistance to ${lower} damage while you wear this armor.`;
+  const t={id:"magic-variant."+slug(c.name),kind:"magic-variant",name:c.name,type:"GV|"+edition,requires:modern?["LA","MA","HA"].map(type=>({type:type+"|"+edition})):[{armor:true}],inherits:{nameSuffix:inh.nameSuffix,source:edition,page:pages[0],rarity:"rare",reqAttune:true,resist:[lower],entries:[body]},catalogReferences:localRefs,source:{...provenance,structuredStatus:"Expanded upstream damage-type template; published resistance group and damage table verified. Conditional effect is descriptive.",expandedStructuredSource}};
+  variants.push(t);
+  for(const b of bases){
+   const name=b.name+inh.nameSuffix,row={id:"item."+slug(name),kind:"item",name,baseItem:b.name+"|"+edition,baseItemId:b.id,variantOf:t.id};
+   for(const key of baseFields)if(Object.hasOwn(b,key))row[key]=JSON.parse(JSON.stringify(b[key]));
+   row.rarity="rare";row.reqAttune=true;row.resist=[lower];row.entries=[body];
+   row.catalogReferences=[...new Set([b.id,t.id,...localRefs,...(b.catalogReferences??[])])].sort();
+   row.source={...provenance,additionalStructuredSources:[b.source.structuredSource],structuredStatus:"Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",expandedStructuredSource};
+   concrete.push(row);
+  }
+ }
+ const groupId="item-group.armor-of-resistance";let group=records.find(r=>r.id===groupId),newGroup=[];
+ if(modern){
+  if(!group||group.items.length!==0)throw Error("Expected incomplete modern resistance group");
+  group.entries=[groupBody,table];
+  group.source.pages=pages;
+  group.source.structuredStatus="Published armor eligibility, body and damage table verified; finite damage templates recovered from expanded source.";
+ }else{
+  if(group)throw Error("Unexpected legacy resistance group");
+  group={id:groupId,kind:"item-group",name:"Armor of Resistance",type:"GV|"+edition,rarity:"rare",reqAttune:true,entries:[groupBody,table],items:[],itemsHidden:true,catalogReferences:[],source:{...provenance,structuredStatus:"Publisher-only armor resistance group recovered from SRD 5.1 pp.208–209."}};
+  newGroup=[group];report.publisherOnly.push(groupId);
+ }
+ group.items=variants.map(t=>t.name+"|"+edition);
+ group.catalogReferences=[...new Set([...localRefs,...variants.map(t=>t.id)])].sort();
+ const extra=[...newGroup,...variants,...concrete],known=new Set(records.map(r=>r.id));
+ for(const row of extra){if(known.has(row.id))throw Error("Resistance identity collision "+row.id);known.add(row.id);}
+ report.expandedArmorResistance={groups:newGroup.length,templates:variants.length,concrete:concrete.length,nativeCount:extra.length,groupId,pages};
+ report.resolvedReferenceCount+=group.catalogReferences.length+extra.filter(x=>x.id!==groupId).reduce((n,x)=>n+x.catalogReferences.length,0);
+ report.nativeCount+=extra.length;
+ report.corrections.push({id:groupId,reason:"Recover the published ten damage choices, link the ten generic templates and derive 120 eligible armor configurations; retain conditional resistance and attunement."});
+ return extra;
+}
+
 function generate(files, sourceManifest, packageManifest, tag, officialUrl, externalIds, vehicles, supplement, publisherPages) {
     const records=[], report={edition:packageManifest.officialPageImport.release, counts:{}, excluded:[], corrections:[], publisherOnly:[]};
     const source="SRD"+tag;
@@ -358,7 +413,9 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
     externalIds.push(...read(native+"skills.json").map(row=>row.id),...read(native+"conditions.json").map(row=>row.id));
     const publisherPages=(tag==="51"?["203-227"]:["205-229","230-254"]).flatMap(n=>read(native+"rulebook/pages-"+n+".json"));
     const {records,report}=generate(inputs,sourceManifest,manifest,tag,officialUrl,externalIds,read("data/reference/srd/structured/vehicles.json"),read("data/reference/srd/upstream-firearm-bullet-52.json"),publisherPages);
+    const resistance=recoverArmorResistance(records,report,manifest,tag,publisherPages,read("data/reference/srd/upstream-armor-resistance.json"));
     const outputs=new Map();
+    outputs.set(dir+"armor-resistance.json",json(resistance));
     for(let i=0;i<records.length;i+=50)outputs.set(dir+"structured-"+String(i/50+1).padStart(2,"0")+".json",json(records.slice(i,i+50)));
     outputs.set("data/reference/srd/item-promotion-"+tag+".json",json(report));
     for(const [file,body] of outputs){

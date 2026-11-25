@@ -356,6 +356,19 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal("O", magicDefinition.GetProperty("category").GetString());
         Assert.Equal(3, magicDefinition.GetProperty("additionalSpells").GetArrayLength());
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/feat.magic-initiate")).StatusCode);
+        foreach (var prefix in new[] { oldRules, animals })
+        {
+            var resistanceGroup = (await client.GetFromJsonAsync<JsonElement>(prefix + "/item-group.armor-of-resistance")).GetProperty("rule").GetProperty("definition");
+            Assert.Equal(10, resistanceGroup.GetProperty("items").GetArrayLength());
+            var resistanceTemplate = (await client.GetFromJsonAsync<JsonElement>(prefix + "/magic-variant.armor-of-acid-resistance")).GetProperty("rule").GetProperty("definition");
+            Assert.Equal("acid", Assert.Single(resistanceTemplate.GetProperty("inherits").GetProperty("resist").EnumerateArray()).GetString());
+            var resistanceArmor = (await client.GetFromJsonAsync<JsonElement>(prefix + "/item.plate-armor-of-acid-resistance")).GetProperty("rule").GetProperty("definition");
+            Assert.Equal("baseitem.plate-armor", resistanceArmor.GetProperty("baseItemId").GetString());
+            Assert.Equal("magic-variant.armor-of-acid-resistance", resistanceArmor.GetProperty("variantOf").GetString());
+            Assert.True(resistanceArmor.GetProperty("reqAttune").GetBoolean());
+            Assert.Equal("acid", Assert.Single(resistanceArmor.GetProperty("resist").EnumerateArray()).GetString());
+            Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(prefix + "/item.shield-of-acid-resistance")).StatusCode);
+        }
         var legacyIllusions = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/item.deck-of-illusions")).GetProperty("rule").GetProperty("definition");
         var modernIllusions = (await client.GetFromJsonAsync<JsonElement>(animals + "/item.deck-of-illusions")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("Beholder", legacyIllusions.GetProperty("entries").GetRawText());

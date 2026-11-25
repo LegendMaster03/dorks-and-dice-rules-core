@@ -1,0 +1,692 @@
+{
+  "provider": "5etools-mirror-3/5etools-src",
+  "commit": "2512db75eb48ef06f6190b086a82430887906dca",
+  "records": {
+    "51": [
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/38",
+        "record": {
+          "name": "Armor of Acid Resistance",
+          "edition": "classic",
+          "type": "GV|DMG",
+          "requires": [
+            {
+              "armor": true
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Acid Resistance",
+            "source": "DMG",
+            "page": 152,
+            "srd": true,
+            "reprintedAs": [
+              "Armor of Acid Resistance|XDMG"
+            ],
+            "resist": [
+              "acid"
+            ],
+            "tier": "major",
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/40",
+        "record": {
+          "name": "Armor of Cold Resistance",
+          "edition": "classic",
+          "type": "GV|DMG",
+          "requires": [
+            {
+              "armor": true
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Cold Resistance",
+            "source": "DMG",
+            "page": 152,
+            "srd": true,
+            "reprintedAs": [
+              "Armor of Cold Resistance|XDMG"
+            ],
+            "resist": [
+              "cold"
+            ],
+            "tier": "major",
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance}"
+            ]
+          },
+          "hasFluffImages": true
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/42",
+        "record": {
+          "name": "Armor of Fire Resistance",
+          "edition": "classic",
+          "type": "GV|DMG",
+          "requires": [
+            {
+              "armor": true
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Fire Resistance",
+            "source": "DMG",
+            "page": 152,
+            "srd": true,
+            "reprintedAs": [
+              "Armor of Fire Resistance|XDMG"
+            ],
+            "resist": [
+              "fire"
+            ],
+            "tier": "major",
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/44",
+        "record": {
+          "name": "Armor of Force Resistance",
+          "edition": "classic",
+          "type": "GV|DMG",
+          "requires": [
+            {
+              "armor": true
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Force Resistance",
+            "source": "DMG",
+            "page": 152,
+            "srd": true,
+            "reprintedAs": [
+              "Armor of Force Resistance|XDMG"
+            ],
+            "resist": [
+              "force"
+            ],
+            "tier": "major",
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/49",
+        "record": {
+          "name": "Armor of Lightning Resistance",
+          "edition": "classic",
+          "type": "GV|DMG",
+          "requires": [
+            {
+              "armor": true
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Lightning Resistance",
+            "source": "DMG",
+            "page": 152,
+            "srd": true,
+            "reprintedAs": [
+              "Armor of Lightning Resistance|XDMG"
+            ],
+            "resist": [
+              "lightning"
+            ],
+            "tier": "major",
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/51",
+        "record": {
+          "name": "Armor of Necrotic Resistance",
+          "edition": "classic",
+          "type": "GV|DMG",
+          "requires": [
+            {
+              "armor": true
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Necrotic Resistance",
+            "source": "DMG",
+            "page": 152,
+            "srd": true,
+            "reprintedAs": [
+              "Armor of Necrotic Resistance|XDMG"
+            ],
+            "resist": [
+              "necrotic"
+            ],
+            "tier": "major",
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/53",
+        "record": {
+          "name": "Armor of Poison Resistance",
+          "edition": "classic",
+          "type": "GV|DMG",
+          "requires": [
+            {
+              "armor": true
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Poison Resistance",
+            "source": "DMG",
+            "page": 152,
+            "srd": true,
+            "reprintedAs": [
+              "Armor of Poison Resistance|XDMG"
+            ],
+            "resist": [
+              "poison"
+            ],
+            "tier": "major",
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/55",
+        "record": {
+          "name": "Armor of Psychic Resistance",
+          "edition": "classic",
+          "type": "GV|DMG",
+          "requires": [
+            {
+              "armor": true
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Psychic Resistance",
+            "source": "DMG",
+            "page": 152,
+            "srd": true,
+            "reprintedAs": [
+              "Armor of Psychic Resistance|XDMG"
+            ],
+            "resist": [
+              "psychic"
+            ],
+            "tier": "major",
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/57",
+        "record": {
+          "name": "Armor of Radiant Resistance",
+          "edition": "classic",
+          "type": "GV|DMG",
+          "requires": [
+            {
+              "armor": true
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Radiant Resistance",
+            "source": "DMG",
+            "page": 152,
+            "srd": true,
+            "reprintedAs": [
+              "Armor of Radiant Resistance|XDMG"
+            ],
+            "resist": [
+              "radiant"
+            ],
+            "tier": "major",
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/61",
+        "record": {
+          "name": "Armor of Thunder Resistance",
+          "edition": "classic",
+          "type": "GV|DMG",
+          "requires": [
+            {
+              "armor": true
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Thunder Resistance",
+            "source": "DMG",
+            "page": 152,
+            "srd": true,
+            "reprintedAs": [
+              "Armor of Thunder Resistance|XDMG"
+            ],
+            "resist": [
+              "thunder"
+            ],
+            "tier": "major",
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance}"
+            ]
+          }
+        }
+      }
+    ],
+    "52": [
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/39",
+        "record": {
+          "name": "Armor of Acid Resistance",
+          "type": "GV|XDMG",
+          "requires": [
+            {
+              "type": "LA|XPHB"
+            },
+            {
+              "type": "MA|XPHB"
+            },
+            {
+              "type": "HA|XPHB"
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Acid Resistance",
+            "source": "XDMG",
+            "page": 231,
+            "srd52": true,
+            "basicRules2024": true,
+            "resist": [
+              "acid"
+            ],
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance|XDMG}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/41",
+        "record": {
+          "name": "Armor of Cold Resistance",
+          "type": "GV|XDMG",
+          "requires": [
+            {
+              "type": "LA|XPHB"
+            },
+            {
+              "type": "MA|XPHB"
+            },
+            {
+              "type": "HA|XPHB"
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Cold Resistance",
+            "source": "XDMG",
+            "page": 231,
+            "srd52": true,
+            "basicRules2024": true,
+            "resist": [
+              "cold"
+            ],
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance|XDMG}"
+            ]
+          },
+          "hasFluffImages": true
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/43",
+        "record": {
+          "name": "Armor of Fire Resistance",
+          "type": "GV|XDMG",
+          "requires": [
+            {
+              "type": "LA|XPHB"
+            },
+            {
+              "type": "MA|XPHB"
+            },
+            {
+              "type": "HA|XPHB"
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Fire Resistance",
+            "source": "XDMG",
+            "page": 231,
+            "srd52": true,
+            "basicRules2024": true,
+            "resist": [
+              "fire"
+            ],
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance|XDMG}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/45",
+        "record": {
+          "name": "Armor of Force Resistance",
+          "type": "GV|XDMG",
+          "requires": [
+            {
+              "type": "LA|XPHB"
+            },
+            {
+              "type": "MA|XPHB"
+            },
+            {
+              "type": "HA|XPHB"
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Force Resistance",
+            "source": "XDMG",
+            "page": 231,
+            "srd52": true,
+            "basicRules2024": true,
+            "resist": [
+              "force"
+            ],
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance|XDMG}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/50",
+        "record": {
+          "name": "Armor of Lightning Resistance",
+          "type": "GV|XDMG",
+          "requires": [
+            {
+              "type": "LA|XPHB"
+            },
+            {
+              "type": "MA|XPHB"
+            },
+            {
+              "type": "HA|XPHB"
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Lightning Resistance",
+            "source": "XDMG",
+            "page": 231,
+            "srd52": true,
+            "basicRules2024": true,
+            "resist": [
+              "lightning"
+            ],
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance|XDMG}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/52",
+        "record": {
+          "name": "Armor of Necrotic Resistance",
+          "type": "GV|XDMG",
+          "requires": [
+            {
+              "type": "LA|XPHB"
+            },
+            {
+              "type": "MA|XPHB"
+            },
+            {
+              "type": "HA|XPHB"
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Necrotic Resistance",
+            "source": "XDMG",
+            "page": 231,
+            "srd52": true,
+            "basicRules2024": true,
+            "resist": [
+              "necrotic"
+            ],
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance|XDMG}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/54",
+        "record": {
+          "name": "Armor of Poison Resistance",
+          "type": "GV|XDMG",
+          "requires": [
+            {
+              "type": "LA|XPHB"
+            },
+            {
+              "type": "MA|XPHB"
+            },
+            {
+              "type": "HA|XPHB"
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Poison Resistance",
+            "source": "XDMG",
+            "page": 231,
+            "srd52": true,
+            "basicRules2024": true,
+            "resist": [
+              "poison"
+            ],
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance|XDMG}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/56",
+        "record": {
+          "name": "Armor of Psychic Resistance",
+          "type": "GV|XDMG",
+          "requires": [
+            {
+              "type": "LA|XPHB"
+            },
+            {
+              "type": "MA|XPHB"
+            },
+            {
+              "type": "HA|XPHB"
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Psychic Resistance",
+            "source": "XDMG",
+            "page": 231,
+            "srd52": true,
+            "basicRules2024": true,
+            "resist": [
+              "psychic"
+            ],
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance|XDMG}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/58",
+        "record": {
+          "name": "Armor of Radiant Resistance",
+          "type": "GV|XDMG",
+          "requires": [
+            {
+              "type": "LA|XPHB"
+            },
+            {
+              "type": "MA|XPHB"
+            },
+            {
+              "type": "HA|XPHB"
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Radiant Resistance",
+            "source": "XDMG",
+            "page": 231,
+            "srd52": true,
+            "basicRules2024": true,
+            "resist": [
+              "radiant"
+            ],
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance|XDMG}"
+            ]
+          }
+        }
+      },
+      {
+        "path": "data/magicvariants.json",
+        "pointer": "/magicvariant/62",
+        "record": {
+          "name": "Armor of Thunder Resistance",
+          "type": "GV|XDMG",
+          "requires": [
+            {
+              "type": "LA|XPHB"
+            },
+            {
+              "type": "MA|XPHB"
+            },
+            {
+              "type": "HA|XPHB"
+            }
+          ],
+          "inherits": {
+            "nameSuffix": " of Thunder Resistance",
+            "source": "XDMG",
+            "page": 231,
+            "srd52": true,
+            "basicRules2024": true,
+            "resist": [
+              "thunder"
+            ],
+            "rarity": "rare",
+            "reqAttune": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Armor of Resistance|XDMG}"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
