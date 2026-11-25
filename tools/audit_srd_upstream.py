@@ -162,6 +162,44 @@ def compare_candidate(edition, kind, record, value, indexes, native_names, dispo
     return result
 
 
+# These statuses establish a bounded representation or an explicit publisher
+# scope decision, not full text equivalence or redistribution approval.
+CROSSWALK_DISPOSITIONS = {
+    "expanded-source-pointer", "merged-unnamed-subrace",
+    "canonical-deck-parent", "native-table-title-match",
+    "nested-card-effect-heading", "nested-card-table-row",
+    "nested-table-title-match", "normalized-collection",
+    "not-published-as-table", "publisher-different-table-context",
+    "publisher-narrower-table", "publisher-verified-normalized-collection",
+    "publisher-different-table-structure", "reviewed-related-native-identity",
+}
+
+
+def coverage_issues(occurrences, native_ids):
+    """Detect unclassified source occurrences and stale edition-local targets."""
+    issues = []
+    for row in occurrences:
+        reasons = []
+        if row["rulesSourceDisposition"]["status"] in {"ambiguous-rules-sources", "metadata-only"}:
+            reasons.append("unresolved-rules-source")
+        if row["status"] in {"not-in-pinned-corpus", "no-identity"}:
+            crosswalk = row.get("nativeCrosswalk", {})
+            status = crosswalk.get("status")
+            targets = crosswalk.get("nativeIds", [])
+            if status not in CROSSWALK_DISPOSITIONS:
+                reasons.append("unclassified-crosswalk")
+            elif status != "not-published-as-table" and not targets:
+                reasons.append("missing-crosswalk-target")
+            elif status == "not-published-as-table" and targets:
+                reasons.append("excluded-table-has-target")
+            if set(targets) - native_ids[row["edition"]]:
+                reasons.append("unknown-edition-local-crosswalk-target")
+        if reasons:
+            issues.append({k: row[k] for k in ("edition", "path", "pointer", "kind", "name")}
+                          | {"reasons": reasons})
+    return issues
+
+
 def audit(checkout):
     candidates = build()
     indexes = {edition: defaultdict(list) for edition in PACKAGES}
@@ -230,6 +268,8 @@ def audit(checkout):
             "rulesSourceCounts": {edition: dict(sorted(counts.items())) for edition, counts in rules_totals.items()},
             "unmatchedUnlinkedByKind": {edition: dict(sorted(counts.items())) for edition, counts in gap_kinds.items()},
             "nativeCrosswalkCounts": {edition: dict(sorted(counts.items())) for edition, counts in crosswalk_totals.items()},
+            "coverageIssues": coverage_issues(occurrences, {
+                edition: set(crosswalk.rows) for edition, crosswalk in crosswalks.items()}),
             "occurrences": occurrences}
 
 
@@ -237,6 +277,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkout", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--require-classified-coverage", action="store_true",
+                        help="Fail on unresolved rules sources or crosswalk dispositions/targets")
     args = parser.parse_args()
     output = args.output.resolve()
     if REPO.resolve() in output.parents and (REPO / "build" / "srd-review").resolve() not in output.parents:
@@ -247,7 +289,10 @@ def main():
     print(json.dumps({"fileCount": result["fileCount"], "identityCounts": result["identityCounts"],
                       "rulesSourceCounts": result["rulesSourceCounts"],
                       "unmatchedUnlinkedByKind": result["unmatchedUnlinkedByKind"],
-                      "nativeCrosswalkCounts": result["nativeCrosswalkCounts"]}, indent=2))
+                      "nativeCrosswalkCounts": result["nativeCrosswalkCounts"],
+                      "coverageIssues": result["coverageIssues"]}, indent=2))
+    if args.require_classified_coverage and result["coverageIssues"]:
+        raise SystemExit("Unresolved upstream source coverage; see report")
 
 
 if __name__ == "__main__":

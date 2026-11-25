@@ -5,7 +5,7 @@ from collections import defaultdict
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from srd_upstream_crosswalk import Crosswalk, LEGACY, MODERN
-from audit_srd_upstream import candidate_flags, classify_rules_matches, compare_candidate, key, upstream_occurrences
+from audit_srd_upstream import candidate_flags, classify_rules_matches, compare_candidate, coverage_issues, key, upstream_occurrences
 
 
 class UpstreamComparisonTests(unittest.TestCase):
@@ -66,6 +66,32 @@ class UpstreamComparisonTests(unittest.TestCase):
         dispositions["duplicate"]["status"] = "unreviewed"
         self.assertEqual("ambiguous-rules-sources", classify_rules_matches(rows, dispositions)["status"])
         self.assertEqual("metadata-only", classify_rules_matches(rows[1:2], dispositions)["status"])
+
+    def test_coverage_gate_distinguishes_dispositions_from_unresolved_candidates(self):
+        base = {"edition": LEGACY, "path": "data/items.json", "pointer": "/item/0",
+                "kind": "item", "name": "Example", "status": "not-in-pinned-corpus",
+                "rulesSourceDisposition": {"status": "no-rules-source"}}
+        native_ids = {LEGACY: {"item.example"}, MODERN: {"item.modern-only"}}
+        cases = [
+            ("reviewed-related-native-identity", ["item.example"], []),
+            ("not-published-as-table", [], []),
+            ("unresolved-occurrence", [], ["unclassified-crosswalk"]),
+            ("publisher-scope-review", ["item.example"], ["unclassified-crosswalk"]),
+            ("reviewed-related-native-identity", [], ["missing-crosswalk-target"]),
+            ("reviewed-related-native-identity", ["item.modern-only"],
+             ["unknown-edition-local-crosswalk-target"]),
+            ("not-published-as-table", ["item.example"], ["excluded-table-has-target"]),
+        ]
+        for status, ids, expected in cases:
+            with self.subTest(status=status, ids=ids):
+                row = dict(base, nativeCrosswalk={"status": status, "nativeIds": ids})
+                self.assertEqual([issue["reasons"] for issue in coverage_issues([row], native_ids)],
+                                 [expected] if expected else [])
+        for status in ("ambiguous-rules-sources", "metadata-only"):
+            row = dict(base, status="ambiguous-pinned-identity",
+                       rulesSourceDisposition={"status": status})
+            self.assertEqual(["unresolved-rules-source"],
+                             coverage_issues([row], native_ids)[0]["reasons"])
 
     def test_crosswalk_table_titles_scope_and_nested_identity(self):
         rows = [
