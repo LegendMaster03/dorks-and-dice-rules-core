@@ -19,11 +19,7 @@ function legacyPublisherTables(pageMap,metadata,items){
   ["Proficiency Bonus by Challenge Rating",256,"Proficiency Bonus",String.raw`\+\d+`],
   ["Experience Points by Challenge Rating",258,"XP",String.raw`(?:0 or 10|[\d,]+)`]
  ]){
-  const pattern=new RegExp(String.raw`(?:^|\s{2,})(\d+(?:/\d+)?)\s+(`+valuePattern+String.raw`)\s{2,}(\d+(?:/\d+)?)\s+(`+valuePattern+String.raw`)(?:\s{2,}.*)?\s*// Recover publisher-only definitions where the pinned structured corpus lacks a standalone record.
-import fs from "node:fs";
-import path from "node:path";
-import {fileURLToPath} from "node:url";
-);
+  const pattern=new RegExp(String.raw`(?:^|\s{2,})(\d+(?:/\d+)?)\s+(`+valuePattern+String.raw`)\s{2,}(\d+(?:/\d+)?)\s+(`+valuePattern+String.raw`)(?:\s{2,}.*)?\s*$`);
   const matches=page(n).split("\n").map(l=>l.match(pattern)).filter(Boolean);
   if(matches.length!==17)throw Error("Unexpected challenge table length "+name+" "+matches.length);
   const rr=[...matches.map(m=>[m[1],m[2]]),...matches.map(m=>[m[3],m[4]])];
