@@ -112,7 +112,7 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
     const pages=fs.readdirSync(path.join(root,native,"rulebook")).filter(f=>/^pages-\d+-\d+\.json$/.test(f)).sort().flatMap(f=>read(native+"rulebook/"+f));
     const directory=native+"bestiary/";
     const existing=fs.readdirSync(path.join(root,directory)).filter(f=>f==="reviewed-initial.json"||/^animals-\d+\.json$/.test(f)).sort().flatMap(f=>read(directory+f));
-    const {rows,report}=generate(candidates,spells,read(native+"conditions.json"),read(native+"skills.json"),pages,existing,sourceManifest,read(base+"manifest.json"),pages[0].source.url);
+    const {rows,report}=generate(candidates,spells,read(native+"conditions.json"),read(native+"skills.json"),pages,existing,sourceManifest,read(base+"manifest.json"),tag,pages[0].source.url);
     const outputs=new Map();
     for(let i=0;i<rows.length;i+=25)outputs.set(directory+"structured-"+String(i/25+1).padStart(2,"0")+".json",json(rows.slice(i,i+25)));
     outputs.set("data/reference/srd/bestiary-promotion-"+tag+".json",json(report));
