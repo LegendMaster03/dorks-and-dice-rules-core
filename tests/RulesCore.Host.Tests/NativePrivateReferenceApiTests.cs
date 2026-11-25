@@ -130,6 +130,75 @@ public sealed class NativePrivateReferenceApiTests
         }
     }
 
+
+    [Fact]
+    public async Task OriginReferenceReadsUseActualExpandedSnapshotAndExactFingerprint()
+    {
+        await using var host = await TestHost.StartAsync(new SiteHandler(_ => Identity()), foreign: true);
+        var root = new DirectoryInfo(AppContext.BaseDirectory);
+        while (root is not null && !File.Exists(Path.Combine(root.FullName, "RulesCore.slnx")))
+            root = root.Parent;
+        Assert.NotNull(root);
+        var catalog = NativeCatalogLoader.Load(NativeRulesetLayout.Resolve(
+            Path.Combine(root!.FullName, "data", "rulesets"), "first-party-001"));
+        host.App.Services.GetRequiredService<NativeCatalogRegistry>().GetStore("first-party-001").Publish(catalog);
+        const string prefix = "/api/private/rulesets/first-party-001/origins/";
+        async Task<JsonElement> Read(string path)
+        {
+            using var response = await host.Client.SendAsync(host.TicketRequest(
+                prefix + path + "?fingerprint=" + Uri.EscapeDataString(catalog.Fingerprint)));
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var body = await response.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.Equal(catalog.Fingerprint, body.GetProperty("fingerprint").GetString());
+            Assert.Equal("first-party-001", body.GetProperty("rulesetId").GetString());
+            Assert.Equal(1, body.GetProperty("contractVersion").GetInt32());
+            return body;
+        }
+        var tree = await Read("hierarchy/biological");
+        Assert.True(tree.GetProperty("complete").GetBoolean());
+        var dragonborn = tree.GetProperty("rows").EnumerateArray().Single(
+            row => row.GetProperty("id").GetString() == "species.dragonborn");
+        Assert.False(dragonborn.GetProperty("selectable").GetBoolean());
+        var lineage = (await Read("source/ancestry.dragonborn.chromatic.red")).GetProperty("lineage");
+        Assert.Equal(new[] { "species.dragonborn", "ancestry.dragonborn.chromatic",
+            "ancestry.dragonborn.chromatic.red" },
+            lineage.EnumerateArray().Select(x => x.GetProperty("id").GetString()).ToArray());
+        var occurrence = lineage[0].GetProperty("traitOccurrences")[2];
+        Assert.Equal("trait.breath-weapon", occurrence.GetProperty("canonicalTraitId").GetString());
+        Assert.Equal("/traits/2", occurrence.GetProperty("path").GetString());
+        Assert.Equal("leaf", occurrence.GetProperty("trait").GetProperty("originBindings")
+            .GetProperty("damageType").GetProperty("lookup").GetString());
+        var wood = await Read("source/ancestry.elf.wood");
+        Assert.False(wood.GetProperty("effectiveProjectionAvailable").GetBoolean());
+        Assert.Equal(30, wood.GetProperty("lineage")[0].GetProperty("definition").GetProperty("walkingSpeedFeet").GetInt32());
+        Assert.Equal(35, wood.GetProperty("lineage")[1].GetProperty("definition").GetProperty("walkingSpeedFeet").GetInt32());
+        Assert.True(wood.GetProperty("lineage")[1].GetProperty("definition").GetProperty("overridesAncestorWalkingSpeed").GetBoolean());
+        var culture = (await Read("source/upbringing.elf.wood")).GetProperty("lineage");
+        Assert.Equal("upbringing.elf.general", culture[0].GetProperty("id").GetString());
+        Assert.False(culture[0].GetProperty("definition").GetProperty("selectable").GetBoolean());
+        var reverse = await Read("trait-sources/trait.low-light-vision");
+        Assert.Contains(reverse.GetProperty("sources").EnumerateArray(),
+            x => x.GetProperty("sourceId").GetString() == "species.elf" &&
+                x.GetProperty("path").GetString() == "/traits/0");
+        var component = await Read("component/construct-component.locomotion-unit");
+        Assert.Equal("locomotion", component.GetProperty("componentCategory").GetString());
+        Assert.Contains(component.GetProperty("recipes").EnumerateArray(),
+            x => x.GetProperty("id").GetString() == "crafting-recipe.construct-component.locomotion-unit");
+        Assert.Contains((await Read("trait-sources/trait.construct.ordinary-ground-movement"))
+            .GetProperty("sources").EnumerateArray(), x =>
+                x.GetProperty("sourceId").GetString() == "construct-component.locomotion-unit" &&
+                x.GetProperty("relation").GetString() == "construct-operational-reference");
+        using var stale = await host.Client.SendAsync(host.TicketRequest(prefix + "hierarchy/biological?fingerprint=stale"));
+        Assert.Equal(HttpStatusCode.Conflict, stale.StatusCode);
+        using var missing = await host.Client.SendAsync(host.TicketRequest(prefix + "source/species.missing?fingerprint=" + catalog.Fingerprint));
+        Assert.Equal(HttpStatusCode.NotFound, missing.StatusCode);
+        using var foreign = await host.Client.SendAsync(host.TicketRequest(
+            "/api/private/rulesets/dnd-5e/origins/hierarchy/biological?fingerprint=" + catalog.Fingerprint));
+        Assert.Equal(HttpStatusCode.NotFound, foreign.StatusCode);
+        Assert.Equal(HttpStatusCode.Unauthorized,
+            (await host.Client.GetAsync(prefix + "hierarchy/biological?fingerprint=" + catalog.Fingerprint)).StatusCode);
+    }
+
     [Fact]
     public async Task PrivateReadsUseRedeemedIdentityAndOnlyNativeSnapshot()
     {
