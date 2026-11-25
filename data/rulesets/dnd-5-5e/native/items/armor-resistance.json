@@ -35,19 +35,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "structuredStatus": "Expanded upstream damage-type template; published resistance group and damage table verified. Conditional effect is descriptive.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -86,19 +78,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "structuredStatus": "Expanded upstream damage-type template; published resistance group and damage table verified. Conditional effect is descriptive.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -137,19 +121,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "structuredStatus": "Expanded upstream damage-type template; published resistance group and damage table verified. Conditional effect is descriptive.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -188,19 +164,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "structuredStatus": "Expanded upstream damage-type template; published resistance group and damage table verified. Conditional effect is descriptive.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -239,19 +207,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "structuredStatus": "Expanded upstream damage-type template; published resistance group and damage table verified. Conditional effect is descriptive.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -290,19 +250,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "structuredStatus": "Expanded upstream damage-type template; published resistance group and damage table verified. Conditional effect is descriptive.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -341,19 +293,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "structuredStatus": "Expanded upstream damage-type template; published resistance group and damage table verified. Conditional effect is descriptive.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -392,19 +336,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "structuredStatus": "Expanded upstream damage-type template; published resistance group and damage table verified. Conditional effect is descriptive.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -443,19 +379,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "structuredStatus": "Expanded upstream damage-type template; published resistance group and damage table verified. Conditional effect is descriptive.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -494,19 +422,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "structuredStatus": "Expanded upstream damage-type template; published resistance group and damage table verified. Conditional effect is descriptive.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -538,27 +458,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/17"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -592,27 +496,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/27"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -644,27 +532,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/29"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -697,27 +569,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/66"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -749,27 +605,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/74"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -801,27 +641,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/84"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -854,27 +678,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/115"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -908,27 +716,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/125"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -961,27 +753,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/133"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -1014,27 +790,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/137"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -1068,27 +828,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/161"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -1120,27 +864,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/165"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/39"
-      }
+      ]
     }
   },
   {
@@ -1172,27 +900,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/17"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1226,27 +938,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/27"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1278,27 +974,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/29"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1331,27 +1011,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/66"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1383,27 +1047,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/74"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1435,27 +1083,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/84"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1488,27 +1120,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/115"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1542,27 +1158,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/125"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1595,27 +1195,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/133"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1648,27 +1232,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/137"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1702,27 +1270,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/161"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1754,27 +1306,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/165"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/41"
-      }
+      ]
     }
   },
   {
@@ -1806,27 +1342,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/17"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -1860,27 +1380,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/27"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -1912,27 +1416,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/29"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -1965,27 +1453,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/66"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -2017,27 +1489,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/74"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -2069,27 +1525,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/84"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -2122,27 +1562,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/115"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -2176,27 +1600,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/125"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -2229,27 +1637,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/133"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -2282,27 +1674,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/137"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -2336,27 +1712,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/161"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -2388,27 +1748,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/165"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/43"
-      }
+      ]
     }
   },
   {
@@ -2440,27 +1784,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/17"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -2494,27 +1822,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/27"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -2546,27 +1858,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/29"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -2599,27 +1895,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/66"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -2651,27 +1931,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/74"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -2703,27 +1967,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/84"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -2756,27 +2004,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/115"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -2810,27 +2042,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/125"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -2863,27 +2079,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/133"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -2916,27 +2116,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/137"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -2970,27 +2154,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/161"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -3022,27 +2190,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/165"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/45"
-      }
+      ]
     }
   },
   {
@@ -3074,27 +2226,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/17"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3128,27 +2264,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/27"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3180,27 +2300,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/29"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3233,27 +2337,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/66"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3285,27 +2373,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/74"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3337,27 +2409,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/84"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3390,27 +2446,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/115"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3444,27 +2484,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/125"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3497,27 +2521,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/133"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3550,27 +2558,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/137"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3604,27 +2596,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/161"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3656,27 +2632,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/165"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/50"
-      }
+      ]
     }
   },
   {
@@ -3708,27 +2668,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/17"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -3762,27 +2706,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/27"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -3814,27 +2742,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/29"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -3867,27 +2779,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/66"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -3919,27 +2815,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/74"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -3971,27 +2851,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/84"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -4024,27 +2888,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/115"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -4078,27 +2926,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/125"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -4131,27 +2963,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/133"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -4184,27 +3000,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/137"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -4238,27 +3038,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/161"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -4290,27 +3074,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/165"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/52"
-      }
+      ]
     }
   },
   {
@@ -4342,27 +3110,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/17"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4396,27 +3148,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/27"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4448,27 +3184,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/29"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4501,27 +3221,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/66"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4553,27 +3257,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/74"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4605,27 +3293,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/84"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4658,27 +3330,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/115"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4712,27 +3368,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/125"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4765,27 +3405,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/133"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4818,27 +3442,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/137"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4872,27 +3480,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/161"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4924,27 +3516,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/165"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/54"
-      }
+      ]
     }
   },
   {
@@ -4976,27 +3552,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/17"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5030,27 +3590,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/27"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5082,27 +3626,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/29"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5135,27 +3663,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/66"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5187,27 +3699,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/74"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5239,27 +3735,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/84"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5292,27 +3772,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/115"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5346,27 +3810,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/125"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5399,27 +3847,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/133"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5452,27 +3884,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/137"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5506,27 +3922,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/161"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5558,27 +3958,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/165"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/56"
-      }
+      ]
     }
   },
   {
@@ -5610,27 +3994,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/17"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -5664,27 +4032,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/27"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -5716,27 +4068,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/29"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -5769,27 +4105,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/66"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -5821,27 +4141,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/74"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -5873,27 +4177,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/84"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -5926,27 +4214,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/115"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -5980,27 +4252,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/125"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -6033,27 +4289,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/133"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -6086,27 +4326,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/137"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -6140,27 +4364,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/161"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -6192,27 +4400,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/165"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/58"
-      }
+      ]
     }
   },
   {
@@ -6244,27 +4436,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/17"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -6298,27 +4474,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/27"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -6350,27 +4510,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/29"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -6403,27 +4547,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/66"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -6455,27 +4583,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/74"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -6507,27 +4619,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/84"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -6560,27 +4656,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/115"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -6614,27 +4694,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/125"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -6667,27 +4731,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/133"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -6720,27 +4768,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/137"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -6774,27 +4806,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/161"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   },
   {
@@ -6826,27 +4842,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         210
-      ],
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/165"
-        }
-      ],
-      "structuredStatus": "Derived named armor configuration; eligible base and published damage choice verified. Conditional effect is descriptive, not executed.",
-      "expandedStructuredSource": {
-        "provider": "5etools-mirror-3/5etools-src",
-        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
-        "path": "data/magicvariants.json",
-        "pointer": "/magicvariant/62"
-      }
+      ]
     }
   }
 ]

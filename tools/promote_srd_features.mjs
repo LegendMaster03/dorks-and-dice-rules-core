@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Promote edition-specific feats and optional features, excluding legacy duplicates.
 import fs from "node:fs";
 import path from "node:path";
@@ -169,7 +170,7 @@ function reconcileOptionalFeatureMetadata(records,report,pages,tag){
  }
 }
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
-const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const { read, write } = srdImportFiles(root);
 const json=x=>JSON.stringify(x,null,2)+"\n";
 const feats=read("data/reference/srd/structured/feats.json"),optional=read("data/reference/srd/structured/optionalfeatures.json"),src=read("data/reference/srd/structured-manifest.json");
 const check=process.argv.includes("--check");
@@ -187,9 +188,8 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  report.literalSpellRelationships=linkSpellRelationships(records,spells,"SRD"+tag);
  report.literalCharacterRelationships=linkCharacterRelationships(records,characterRelationshipCatalog(root,base,read,records),"SRD"+tag);
  for(const [file,body] of [[base+"native/feats-and-optional-features.json",json(records)],["data/reference/srd/feature-promotion-"+tag+".json",json(report)]]){
-  const target=path.join(root,file);
-  if(check){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale feat promotion "+file);}
-  else fs.writeFileSync(target,body);
+
+  write(file, body, check);
  }
  console.log(pack+": "+report.nativeCount+" feat and optional feature records");
 }

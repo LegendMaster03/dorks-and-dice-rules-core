@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Promote core action, language and sense definitions independently by edition.
 import fs from "node:fs";
 import path from "node:path";
@@ -30,7 +31,7 @@ function generate(input,manifest,src,pages,tag){
  report.nativeCount=records.length;return {records,report};
 }
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
-const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const { read, write } = srdImportFiles(root);
 const json=x=>JSON.stringify(x,null,2)+"\n";
 const input=Object.fromEntries(["actions","languages","senses"].map(n=>[n,read("data/reference/srd/structured/"+n+".json")]));
 const src=read("data/reference/srd/structured-manifest.json"),check=process.argv.includes("--check");
@@ -38,9 +39,8 @@ for(const [pack,tag,files] of [["dnd-5e","51",["053-077","078-102","253-277"]],[
  const base="data/rulesets/"+pack+"/",manifest=read(base+"manifest.json"),pages=files.flatMap(f=>read(base+"native/rulebook/pages-"+f+".json")).sort((a,b)=>a.page-b.page);
  const {records,report}=generate(input,manifest,src,pages,tag);
  for(const [file,body] of [[base+"native/general-rules.json",json(records)],["data/reference/srd/general-promotion-"+tag+".json",json(report)]]){
- const target=path.join(root,file);
- if(check){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale general promotion "+file);}
- else fs.writeFileSync(target,body);
+
+ write(file, body, check);
  }
  console.log(pack+": "+report.nativeCount+" core actions, languages and senses");
 }

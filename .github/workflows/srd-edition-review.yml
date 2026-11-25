@@ -3,6 +3,8 @@ on:
   pull_request:
     branches: [main]
     paths:
+      - 'tools/srd_import_sources.*'
+      - 'data/reference/srd/dnd-*-import-sources.json'
       - 'tools/stage_srd_editions.py'
       - 'tools/build_srd_loader_fixtures.py'
       - 'tests/NativeCatalogFingerprint/**'

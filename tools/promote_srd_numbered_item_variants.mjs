@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Materialize numbered magic equipment only from the reviewed publisher eligibility categories.
 import fs from "node:fs";
 import path from "node:path";
@@ -167,7 +168,7 @@ function generateNamedVariants(items,tag,known){
 }
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
-const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const { read, write } = srdImportFiles(root);
 const json=x=>JSON.stringify(x,null,2)+"\n";
 const base=read("data/reference/srd/structured/items-base.json"),templates=read("data/reference/srd/structured/magicvariants.json"),src=read("data/reference/srd/structured-manifest.json");
 for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
@@ -184,9 +185,8 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  for(let i=0;i<named.records.length;i+=40)outputs.set(dir+"items/named-variants-"+String(i/40+1).padStart(2,"0")+".json",json(named.records.slice(i,i+40)));
  outputs.set("data/reference/srd/named-item-variant-promotion-"+tag+".json",json(named.report));
  for(const [file,body] of outputs){
-  const target=path.join(root,file);
-  if(process.argv.includes("--check")){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale numbered item variants "+file);}
-  else fs.writeFileSync(target,body);
+
+  write(file, body, process.argv.includes("--check"));
  }
  for(const f of fs.readdirSync(path.join(root,dir,"items")).filter(f=>/^(numbered|named)-variants-\d+\.json$/.test(f)))if(!outputs.has(dir+"items/"+f))throw Error("Stale numbered variant file "+f);
  console.log(pack+": "+report.nativeCount+" derived numbered and "+named.report.nativeCount+" derived named item variants");

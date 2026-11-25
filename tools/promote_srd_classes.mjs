@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Preserve pinned class structures and resolve contextual feature UIDs within each edition.
 import fs from "node:fs";
 import path from "node:path";
@@ -353,7 +354,7 @@ function reconcileModernFightingStyles(groups,report,pages,features){
  report.fightingStyleChoices={features:specs.length,featIds,alternatives:specs.filter(s=>s.name).map(s=>s.name)};
 }
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
-const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const { read, write } = srdImportFiles(root);
 const json=x=>JSON.stringify(x,null,2)+"\n";
 const src=read("data/reference/srd/structured-manifest.json");
 const names=["barbarian","bard","cleric","druid","fighter","monk","paladin","ranger","rogue","sorcerer","warlock","wizard"];
@@ -386,9 +387,8 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  const outputs=Object.entries(groups).map(([name,records])=>[base+"native/classes/"+name+".json",json(records)]);
  outputs.push(["data/reference/srd/class-promotion-"+tag+".json",json(report)]);
  for(const [file,body] of outputs){
-  const target=path.join(root,file);
-  if(check){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale class promotion "+file);}
-  else {fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,body);}
+
+  write(file, body, check);
  }
  for(const file of fs.readdirSync(path.join(root,base,"native/classes")).filter(f=>f.endsWith(".json")))if(!names.includes(file.slice(0,-5)))throw Error("Stale generated class file "+file);
  console.log(pack+": "+report.nativeCount+" class/subclass/feature records; "+report.resolvedProgressionReferences+" explicit progression links");

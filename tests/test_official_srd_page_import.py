@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import unittest
+from tools.srd_import_sources import read_native_shards
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -14,9 +15,7 @@ class OfficialSrdPageImportTests(unittest.TestCase):
             with self.subTest(edition=source["edition"]):
                 package = ROOT / "data/rulesets" / source["package"]
                 manifest = json.loads((package / "manifest.json").read_text(encoding="utf-8"))
-                records = []
-                for path in sorted((package / "native/rulebook").glob("pages-*.json")):
-                    records.extend(json.loads(path.read_text(encoding="utf-8")))
+                records = read_native_shards(package / "native", "rulebook/pages-*.json")
                 self.assertEqual(source["recordCount"], len(records))
                 self.assertEqual(list(range(source["firstGameplayPage"], source["pdfPages"] + 1)),
                                  [record["page"] for record in records])

@@ -12,11 +12,14 @@ from pathlib import Path
 
 from stage_srd_editions import PACKAGES, build, slug
 from inventory_srd_editions import ROOT
+from srd_import_sources import read_index, with_import_source
 
 REPO = ROOT.parents[2]
 
 
 def native_rows(root):
+    package = root.parent.name
+    index = read_index(package) if package in PACKAGES.values() else {}
     for path in sorted(root.rglob("*.json")):
         value = json.loads(path.read_text(encoding="utf-8"))
         if isinstance(value, list):
@@ -26,9 +29,10 @@ def native_rows(root):
         else:
             rows = [item for key, collection in value.items()
                     if not key.startswith("_") for item in collection]
+        evidence = index.get(path.relative_to(root).as_posix(), {})
         for row in rows:
             if row.get("kind") != "metadata":
-                yield row
+                yield with_import_source(row, evidence)
 
 
 def is_foundry_metadata(path):

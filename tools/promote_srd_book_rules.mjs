@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Project individually selected book tables and rules, never whole commercial chapters.
 // The pinned book's top-level occurrence participates in the existing coverage audit;
 // entryPointer records the exact nested node used by this projection.
@@ -1246,7 +1247,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
 }
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
-const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const { read, write } = srdImportFiles(root);
 const src=read("data/reference/srd/structured-manifest.json");
 const readNative=(dir)=>fs.readdirSync(path.join(root,dir),{withFileTypes:true}).flatMap(e=>{
  const p=dir+"/"+e.name;
@@ -1262,9 +1263,8 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  const known=new Set(existing.map(r=>r.id));
  const {rows,report}=generateBookRules(read("data/reference/srd/structured/book/book-srd"+tag+".json"),read(dir+"manifest.json"),src,pages,tag,known,existing);
  for(const [file,value] of [[native+"/book-rules-and-tables.json",rows],["data/reference/srd/book-rule-promotion-"+tag+".json",report]]){
-  const target=path.join(root,file),body=JSON.stringify(value,null,2)+"\n";
-  if(process.argv.includes("--check")){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale book projection "+file);}
-  else fs.writeFileSync(target,body);
+  const body=JSON.stringify(value,null,2)+"\n";
+  write(file, body, process.argv.includes("--check"));
  }
  console.log(pack+": "+report.tables.length+" book tables, "+report.rules.length+" book rules");
 }

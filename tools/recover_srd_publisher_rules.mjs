@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Recover publisher-only definitions where the pinned structured corpus lacks a standalone record.
 import fs from "node:fs";
 import path from "node:path";
@@ -352,14 +353,13 @@ function recoverPublisherRules(manifest,pages,tag,knownIds,items,bookRules){
  return rows;
 }
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
-const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const { read, write } = srdImportFiles(root);
 for(const [pack,tag,files] of [["dnd-5e","51",["053-077","178-202","203-227","228-252","253-277"]],["dnd-5-5e","52",["080-104","180-204"]]]){
  const base="data/rulesets/"+pack+"/",native=base+"native/";
  const pages=files.flatMap(f=>read(native+"rulebook/pages-"+f+".json"));
  const load=dir=>fs.readdirSync(path.join(root,native,dir)).filter(f=>f.endsWith(".json")).flatMap(f=>read(native+dir+"/"+f));
  const items=load("items"),knownIds=[...items,...load("classes"),...load("spells"),...["skills.json","conditions.json","supplementary-rules.json","book-rules-and-tables.json"].flatMap(f=>read(native+f))].map(x=>x.id);
- const rows=recoverPublisherRules(read(base+"manifest.json"),pages,tag,knownIds,items,read(native+"book-rules-and-tables.json")),body=JSON.stringify(rows,null,2)+"\n",target=path.join(root,native+"publisher-recovered-rules.json");
- if(process.argv.includes("--check")){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale publisher recovery "+pack);}
- else fs.writeFileSync(target,body);
+ const rows=recoverPublisherRules(read(base+"manifest.json"),pages,tag,knownIds,items,read(native+"book-rules-and-tables.json")),body=JSON.stringify(rows,null,2)+"\n";
+ write(base+"native/publisher-recovered-rules.json", body, process.argv.includes("--check"));
  console.log(pack+": "+rows.length+" publisher-only rule/group recoveries");
 }

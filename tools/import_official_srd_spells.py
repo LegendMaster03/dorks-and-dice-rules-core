@@ -12,6 +12,11 @@ import re
 import subprocess
 import unicodedata
 
+if __package__:
+    from .srd_import_sources import read_native_shards
+else:
+    from srd_import_sources import read_native_shards
+
 ROOT = Path(__file__).resolve().parents[1]
 SCHOOLS = {"abjuration": "A", "conjuration": "C", "divination": "D",
            "enchantment": "E", "evocation": "V", "illusion": "I",
@@ -171,10 +176,8 @@ if __name__ == "__main__":
         raise SystemExit("Spell inventory or header discrepancies: " + json.dumps(report))
     if args.check:
         package = SPECS[args.edition][0]
-        directory = ROOT / "data/rulesets" / package / "native/spells"
-        committed = []
-        for path in sorted(directory.glob("spells-*.json")):
-            committed.extend(json.loads(path.read_text(encoding="utf-8")))
+        native = ROOT / "data/rulesets" / package / "native"
+        committed = read_native_shards(native, "spells/spells-*.json")
         # Compare publisher evidence only; structured entries come from the
         # separately checked pinned JSON promotion.
         projection = []

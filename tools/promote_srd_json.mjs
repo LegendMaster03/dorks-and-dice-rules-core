@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Promote existing 5e.tools-shaped SRD data, retaining publisher evidence.
 // The official PDF workflow verifies the publisher projection independently.
 // Do not interpret source tags or successful generation as publication approval.
@@ -470,7 +471,7 @@ function promote(rows, candidates, manifest, tag, kind) {
     });
 }
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const read = p => JSON.parse(fs.readFileSync(path.join(root, p), "utf8"));
+const { read, write } = srdImportFiles(root);
 const json = value => JSON.stringify(value, null, 2) + "\n";
 const manifest = read("data/reference/srd/structured-manifest.json");
 const check = process.argv.includes("--check");
@@ -494,7 +495,8 @@ for (const [pack, tag] of [["dnd-5e", "51"], ["dnd-5-5e", "52"]]) {
                         ? Object.fromEntries(Object.entries(item).sort(([a], [b]) => a.localeCompare(b))) : item;
                 });
                 if (canonical(current) !== canonical(result)) throw Error("Stale structured promotion " + p);
-            } else fs.writeFileSync(path.join(root, p), json(result));
+            }
+            write(p, json(result), check);
             count += result.length;
         }
         if (count !== (kind === "spell" ? candidates.length : 95))
