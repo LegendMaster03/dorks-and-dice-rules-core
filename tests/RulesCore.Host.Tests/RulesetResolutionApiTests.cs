@@ -239,8 +239,8 @@ public sealed class RulesetResolutionApiTests
         // Derived named configurations inherit reviewed templates without adding executable effects.
         foreach (var prefix in new[] { "/api/rulesets/dnd-5e/rules", animals })
         {
-            var dancing = await client.GetFromJsonAsync<JsonElement>(prefix + "/item.dancing-longsword");
-            var definition = dancing.GetProperty("rule").GetProperty("definition");
+            var dancingLongsword = await client.GetFromJsonAsync<JsonElement>(prefix + "/item.dancing-longsword");
+            var definition = dancingLongsword.GetProperty("rule").GetProperty("definition");
             Assert.Equal("magic-variant.dancing-sword", definition.GetProperty("variantOf").GetString());
             Assert.Equal("baseitem.longsword", definition.GetProperty("baseItemId").GetString());
             Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(prefix + "/item.dancing-glaive")).StatusCode);
