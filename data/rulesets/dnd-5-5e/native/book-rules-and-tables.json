@@ -7069,7 +7069,7 @@
             "type": "entries",
             "name": "Ammunition",
             "entries": [
-              "If a magic weapon has the {@itemProperty AF|srd52|Ammunition} property, ammunition fired from it is considered magical for the purpose of any rule that cares whether a weapon is magical or not."
+              "If a magic weapon has the {@itemProperty A|srd52|Ammunition} property, ammunition fired from it is considered magical for the purpose of any rule that cares whether a weapon is magical or not."
             ]
           }
         ]
@@ -7086,6 +7086,7 @@
       "glossary.bonus-action",
       "item-group.arcane-focus",
       "item-group.spell-scroll",
+      "item-property.a",
       "rulebook.page-204",
       "rulebook.page-205",
       "table.magic-item-categories",
@@ -10770,7 +10771,7 @@
             "items": [
               "{@item Assassin's Blood|srd52}",
               "{@item Burnt Othur Fumes|srd52}",
-              "{@item Crawler Mucus|srd52}",
+              "{@item Crawler Mucus (Contact)|srd52|Crawler Mucus}",
               "{@item Essence of Ether|srd52}",
               "{@item Spider's Sting|srd52}",
               "{@item Malice|srd52}",

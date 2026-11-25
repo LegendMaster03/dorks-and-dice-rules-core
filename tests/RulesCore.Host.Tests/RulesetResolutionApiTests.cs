@@ -356,6 +356,11 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal("O", magicDefinition.GetProperty("category").GetString());
         Assert.Equal(3, magicDefinition.GetProperty("additionalSpells").GetArrayLength());
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/feat.magic-initiate")).StatusCode);
+        var itemCategories = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.magic-item-categories")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("item-property.a", itemCategories.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("{@itemProperty A|srd52|Ammunition}", itemCategories.GetProperty("entries").GetRawText());
+        var poisonIndex = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.poison")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("{@item Crawler Mucus (Contact)|srd52|Crawler Mucus}", poisonIndex.GetProperty("entries").GetRawText());
         var metamagicOptions = await client.GetFromJsonAsync<JsonElement>(animals + "/class-feature.sorcerer.metamagic-options.2");
         var optionRefs = metamagicOptions.GetProperty("rule").GetProperty("definition").GetProperty("catalogReferences").EnumerateArray().Select(x => x.GetString()).ToArray();
         Assert.Equal(10, optionRefs.Count(x => x!.StartsWith("optional-feature.")));

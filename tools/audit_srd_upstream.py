@@ -104,6 +104,31 @@ def checkout_files(checkout):
         yield path, file
 
 
+def is_foundry_metadata(path):
+    # Foundry sidecars carry renderer metadata, not independent rule bodies.
+    return Path(path).name == "foundry.json" or Path(path).name.startswith("foundry-")
+
+
+def classify_rules_matches(matches, dispositions):
+    rules = [row for row in matches if not is_foundry_metadata(row["source"].get("path", ""))]
+    metadata = len(matches) - len(rules)
+    # Preserve raw identity collisions while separating rules sources from
+    # renderer sidecars. A reviewed exclusion is not a promoted definition.
+    active = [row for row in rules if dispositions[row["candidateId"]]["status"] != "documented-not-promoted"]
+    if len(rules) == 1:
+        status = "unique-rules-source"
+    elif len(rules) > 1 and len(active) == 1 and dispositions[active[0]["candidateId"]]["nativeIds"]:
+        status = "one-promoted-with-reviewed-exclusions"
+    elif len(rules) > 1:
+        status = "ambiguous-rules-sources"
+    elif metadata:
+        status = "metadata-only"
+    else:
+        status = "no-rules-source"
+    return {"status": status, "rulesSourceCount": len(rules), "metadataCount": metadata,
+            "activeRulesSourceCount": len(active)}
+
+
 def compare_candidate(edition, kind, record, value, indexes, native_names, dispositions):
     original = name_of(record)
     name = value if isinstance(value, str) else original
@@ -117,6 +142,7 @@ def compare_candidate(edition, kind, record, value, indexes, native_names, dispo
         "publication": record.get("source") or (
             record.get("inherits", {}).get("source") if isinstance(record.get("inherits"), dict) else None),
         "nativeNameHints": sorted(native_names[edition].get(norm(name), [])) if name else [],
+        "rulesSourceDisposition": classify_rules_matches(matches, dispositions[edition]),
         "pinnedMatches": [
             {"source": row["source"],
              "promotionStatus": dispositions[edition][row["candidateId"]]["status"],
@@ -162,6 +188,8 @@ def audit(checkout):
 
     files, occurrences = [], []
     totals = {edition: Counter() for edition in PACKAGES}
+    rules_totals = {edition: Counter() for edition in PACKAGES}
+    gap_kinds = {edition: Counter() for edition in PACKAGES}
     for path, file in checkout_files(checkout):
         entry = {"path": path, "bytes": file.stat().st_size}
         files.append(entry)
@@ -179,6 +207,9 @@ def audit(checkout):
                             "expandedSourceNativeIds": sorted(expanded_links[edition].pop((path, pointer), []))})
                 occurrences.append(row)
                 totals[edition][row["status"]] += 1
+                rules_totals[edition][row["rulesSourceDisposition"]["status"]] += 1
+                if row["status"] == "not-in-pinned-corpus" and not row["expandedSourceNativeIds"]:
+                    gap_kinds[edition][kind] += 1
                 represented_flags[flag.rsplit("/", 1)[-1]] += 1
         all_flags = Counter(flagged_nested(document))
         entry["topLevelObjectCounts"] = dict(sorted(groups.items()))
@@ -189,6 +220,8 @@ def audit(checkout):
             "upstreamRepository": "5etools-mirror-3/5etools-src", "upstreamCommit": UPSTREAM_COMMIT,
             "fileCount": len(files), "files": files,
             "identityCounts": {edition: dict(sorted(counts.items())) for edition, counts in totals.items()},
+            "rulesSourceCounts": {edition: dict(sorted(counts.items())) for edition, counts in rules_totals.items()},
+            "unmatchedUnlinkedByKind": {edition: dict(sorted(counts.items())) for edition, counts in gap_kinds.items()},
             "occurrences": occurrences}
 
 
@@ -203,7 +236,9 @@ def main():
     result = audit(args.checkout.resolve())
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(json.dumps({"fileCount": result["fileCount"], "identityCounts": result["identityCounts"]}, indent=2))
+    print(json.dumps({"fileCount": result["fileCount"], "identityCounts": result["identityCounts"],
+                      "rulesSourceCounts": result["rulesSourceCounts"],
+                      "unmatchedUnlinkedByKind": result["unmatchedUnlinkedByKind"]}, indent=2))
 
 
 if __name__ == "__main__":

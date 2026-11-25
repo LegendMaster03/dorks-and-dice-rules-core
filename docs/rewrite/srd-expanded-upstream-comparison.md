@@ -62,3 +62,9 @@ upstream scripts are executed; the checkout is not a runtime data source.
 ## Expanded Metamagic recovery
 
 Seeking Spell and Transmuted Spell are absent from the original pinned optional-feature corpus but are both present in SRD 5.2.1 p.67. The selected upstream records (pointers /optionalfeature/190 and /optionalfeature/213) are retained in a small reviewed source input, not the wholesale upstream file. Their bodies match the printed options, and both explicitly consume one Sorcery Point. The modern Sorcerer finite Metamagic choice now resolves all ten options to local catalog IDs. No legacy options or executable mechanics were added.
+
+## Discrepancy triage and inline reference corrections
+
+The exact-head artifact at run 45612501427 contained 574 raw identity collisions; 565 had exactly one rules-source candidate plus Foundry sidecars. The other nine were deity, superseded modern feat and firearm equipment collisions. The diagnostic now preserves all raw matches while reporting rules-source disposition and reviewed exclusions separately. Neither source identity nor exclusion status constitutes semantic certification. Unmatched candidates already linked to a native expanded source pointer are removed from the remaining unmatched-by-kind summary.
+
+Corrected two modern inline references: Magic Item Categories uses the canonical A ammunition property rather than the excluded AF metadata code, and the Poison index uses the canonical Crawler Mucus (Contact) identity while retaining the publisher's Crawler Mucus display name. The existing explicit poison link remains intact; the ammunition property link is added. No new records or mechanics are inferred from aliases.

@@ -4,7 +4,7 @@ from pathlib import Path
 from collections import defaultdict
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from audit_srd_upstream import candidate_flags, compare_candidate, key, upstream_occurrences
+from audit_srd_upstream import candidate_flags, classify_rules_matches, compare_candidate, key, upstream_occurrences
 
 
 class UpstreamComparisonTests(unittest.TestCase):
@@ -52,3 +52,16 @@ class UpstreamComparisonTests(unittest.TestCase):
     def test_pointer_escaping_and_non_objects(self):
         self.assertEqual(list(upstream_occurrences({"a/b~c": [0, {"name": "A"}]})),
                          [("a/b~c", "/a~1b~0c/1", {"name": "A"})])
+
+    def test_rules_source_collision_classification(self):
+        rows = [{"candidateId": "rules", "source": {"path": "items.json"}},
+                {"candidateId": "sidecar", "source": {"path": "foundry-items.json"}},
+                {"candidateId": "duplicate", "source": {"path": "items.json"}}]
+        dispositions = {"rules": {"status": "explicit-source-pointer", "nativeIds": ["item.example"]},
+                        "sidecar": {"status": "unreviewed", "nativeIds": []},
+                        "duplicate": {"status": "documented-not-promoted", "nativeIds": []}}
+        self.assertEqual("unique-rules-source", classify_rules_matches(rows[:2], dispositions)["status"])
+        self.assertEqual("one-promoted-with-reviewed-exclusions", classify_rules_matches(rows, dispositions)["status"])
+        dispositions["duplicate"]["status"] = "unreviewed"
+        self.assertEqual("ambiguous-rules-sources", classify_rules_matches(rows, dispositions)["status"])
+        self.assertEqual("metadata-only", classify_rules_matches(rows[1:2], dispositions)["status"])

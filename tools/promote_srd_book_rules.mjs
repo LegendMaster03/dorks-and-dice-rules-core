@@ -409,6 +409,11 @@ function legacyMagicItemEntries(name,entries){
 }
 
 function modernMagicItemEntries(name,entries){
+ if(name==="Magic Item Categories"){
+  const raw=JSON.stringify(entries),updated=raw.replace("{@itemProperty AF|srd52|Ammunition}","{@itemProperty A|srd52|Ammunition}");
+  if(raw===updated)throw Error("Expected obsolete ammunition property reference");
+  entries=JSON.parse(updated);
+ }
  if(name==="Magic Item Rarity"){
   const values=entries.find(x=>x?.name==="Magic Item Values by Rarity").entries;
   const old="such as the City of Brass or Sigil";
@@ -734,7 +739,7 @@ function modernToolboxMonsterEntries(name,entries,existing,local){
  if(name==="Curses and Magical Contagions")find(entries,"Curses").entries[0]="A curse typically takes one of the forms detailed below.";
  if(name==="Poison"){
   const sample=find(entries,"Sample Poisons");
-  sample.entries[1].items=sample.entries[1].items.map(x=>x.replace("Carrion Crawler Mucus","Crawler Mucus").replace("Lolth's Sting","Spider's Sting"));
+  sample.entries[1].items=sample.entries[1].items.map(x=>x.replace("Carrion Crawler Mucus","Crawler Mucus (Contact)").replace("{@item Crawler Mucus (Contact)|srd52}","{@item Crawler Mucus (Contact)|srd52|Crawler Mucus}").replace("Lolth's Sting","Spider's Sting"));
  }
  if(name==="Stat Block Overview"){
   entries[0]="A monster has a stat block that contains the rules necessary to use it in the game. Stat blocks are divided into the following parts:";
@@ -748,7 +753,7 @@ function modernToolboxMonsterEntries(name,entries,existing,local){
  }
  const slug=s=>s.toLowerCase().normalize("NFKC").replace(/[’']/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
  const known=new Set(existing.map(x=>x.id)),types={variantrule:"glossary",action:"action",condition:"condition",skill:"skill",spell:"spell",status:"status",disease:"magical-contagion",trap:"trap",hazard:"environmental-effect",item:"item"};
- const aliases={"Poisoner's Kit":"item.poisoner-s-kit","Assassin's Blood":"item.assassin-s-blood","Crawler Mucus":"item.crawler-mucus-contact","Spider's Sting":"item.spider-s-sting"};
+ const aliases={"Poisoner's Kit":"item.poisoner-s-kit","Assassin's Blood":"item.assassin-s-blood","Crawler Mucus (Contact)":"item.crawler-mucus-contact","Spider's Sting":"item.spider-s-sting"};
  for(const match of JSON.stringify(entries).matchAll(/\{@(variantrule|action|condition|skill|spell|status|disease|trap|hazard|item) ([^}|]+)(?:\|[^}]+)?\}/g)){
   const [,kind,raw]=match,id=kind==="item"&&aliases[raw]?aliases[raw]:types[kind]+"."+slug(raw);
   if(!known.has(id))throw Error("Unresolved modern toolbox reference "+kind+":"+raw+" -> "+id);
@@ -1007,7 +1012,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Identifying a Magic Item","/data/6/entries/11/entries/1",[102],["spell.identify","glossary.short-rest","item.ring-of-feather-falling","item.ring-of-swimming"]],
   ["Attunement","/data/6/entries/11/entries/2",[102,103],["glossary.attunement","glossary.short-rest","item.ring-of-protection","rule.magic-item-rules","rule.cursed-items"]],
   ["Wearing and Wielding Items","/data/6/entries/11/entries/3",[103],["rule.magic-item-rules","item.boots-of-striding-and-springing","item.boots-of-elvenkind"]],
-  ["Magic Item Categories","/data/11/entries/2",[204,205],["glossary.bonus-action","item-group.arcane-focus","item-group.spell-scroll"]],
+  ["Magic Item Categories","/data/11/entries/2",[204,205],["glossary.bonus-action","item-group.arcane-focus","item-group.spell-scroll","item-property.a"]],
   ["Magic Item Rarity","/data/11/entries/3",[205,206],["item.potion-of-healing","item.dragon-orb","baseitem.plate-armor","rule.scribing-spell-scrolls"]],
   ["Sentient Magic Items","/data/11/entries/9",[207,208],["condition.charmed","rule.the-next-dawn","rule.attunement"]],
   ["Rhythm of Play","/data/1/entries/0",[5],[]],
