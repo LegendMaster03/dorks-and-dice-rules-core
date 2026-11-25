@@ -385,7 +385,6 @@
     }
   ],
   "resolvedReferenceCount": 725,
-  "nativeCount": 630,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",
@@ -393,5 +392,6 @@
       "pointer": "/vehicle/0",
       "reason": "Verified vehicle profile integrated with canonical magic item; duplicate prose not separately imported."
     }
-  ]
+  ],
+  "nativeCount": 630
 }
