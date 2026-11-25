@@ -3699,6 +3699,798 @@
     }
   },
   {
+    "id": "table.ammunition",
+    "kind": "table",
+    "name": "Ammunition",
+    "colLabels": [
+      "Type",
+      "Amount",
+      "Storage",
+      "Weight",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "{@item Arrows (20)|srd52|Arrows}",
+        "20",
+        "{@item Quiver|srd52}",
+        "1 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Bolts (20)|srd52|Bolts}",
+        "20",
+        "{@item Crossbow Bolt Case|srd52|Case}",
+        "1½ lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Firearm Bullets (10)|srd52|Bullets, Firearm}",
+        "10",
+        "{@item Pouch|srd52}",
+        "2 lb.",
+        "3 GP"
+      ],
+      [
+        "{@item Sling Bullets (20)|srd52|Bullets, Sling}",
+        "20",
+        "{@item Pouch|srd52}",
+        "1½ lb.",
+        "4 CP"
+      ],
+      [
+        "{@item Needles (50)|srd52|Needles}",
+        "50",
+        "{@item Pouch|srd52}",
+        "1 lb.",
+        "1 GP"
+      ]
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.arrows-20",
+      "baseitem.bolt",
+      "baseitem.bolts-20",
+      "baseitem.firearm-bullet",
+      "baseitem.firearm-bullets-10",
+      "baseitem.needle",
+      "baseitem.needles-50",
+      "baseitem.sling-bullet",
+      "baseitem.sling-bullets-20",
+      "item.crossbow-bolt-case",
+      "item.pouch",
+      "item.quiver",
+      "rulebook.page-096"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        96
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/5/entries/2/entries/2/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.arcane-focuses",
+    "kind": "table",
+    "name": "Arcane Focuses",
+    "colLabels": [
+      "Focus",
+      "Weight",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "{@item Crystal|srd52}",
+        "1 lb.",
+        "10 GP"
+      ],
+      [
+        "{@item Orb|srd52}",
+        "3 lb.",
+        "20 GP"
+      ],
+      [
+        "{@item Rod|srd52}",
+        "2 lb.",
+        "10 GP"
+      ],
+      [
+        "{@item Staff|srd52} (also a {@item Quarterstaff|srd52})",
+        "4 lb.",
+        "5 GP"
+      ],
+      [
+        "{@item Wand|srd52}",
+        "1 lb.",
+        "10 GP"
+      ]
+    ],
+    "catalogReferences": [
+      "baseitem.crystal",
+      "baseitem.orb",
+      "baseitem.quarterstaff",
+      "baseitem.rod",
+      "baseitem.staff",
+      "baseitem.wand",
+      "item-group.arcane-focus",
+      "rulebook.page-096"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        96
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/5/entries/2/entries/4/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.druidic-focuses",
+    "kind": "table",
+    "name": "Druidic Focuses",
+    "colLabels": [
+      "Focus",
+      "Weight",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "{@item Sprig of mistletoe|srd52}",
+        "—",
+        "1 GP"
+      ],
+      [
+        "{@item Wooden staff|srd52} (also a {@item Quarterstaff|srd52})",
+        "4 lb.",
+        "5 GP"
+      ],
+      [
+        "{@item Yew wand|srd52}",
+        "1 lb.",
+        "10 GP"
+      ]
+    ],
+    "catalogReferences": [
+      "baseitem.quarterstaff",
+      "baseitem.wooden-staff",
+      "item-group.druidic-focus",
+      "item.sprig-of-mistletoe",
+      "item.yew-wand",
+      "rulebook.page-097"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        97
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/5/entries/2/entries/30/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.holy-symbols",
+    "kind": "table",
+    "name": "Holy Symbols",
+    "colLabels": [
+      "Symbol",
+      "Weight",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "{@item Amulet|srd52} (worn or held)",
+        "1 lb.",
+        "5 GP"
+      ],
+      [
+        "{@item Emblem|srd52} (borne on fabric or a Shield)",
+        "—",
+        "5 GP"
+      ],
+      [
+        "{@item Reliquary|srd52} (held)",
+        "2 lb.",
+        "5 GP"
+      ]
+    ],
+    "catalogReferences": [
+      "item-group.holy-symbol",
+      "item.amulet",
+      "item.emblem",
+      "item.reliquary",
+      "rulebook.page-097"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        97
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/5/entries/2/entries/37/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.mounts-and-other-animals",
+    "kind": "table",
+    "name": "Mounts and Other Animals",
+    "colLabels": [
+      "Item",
+      "Carrying Capacity",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "{@item Camel|srd52}",
+        "450 lb.",
+        "50 GP"
+      ],
+      [
+        "{@item Elephant|srd52}",
+        "1,320 lb.",
+        "200 GP"
+      ],
+      [
+        "{@item Draft Horse|srd52|Horse, Draft}",
+        "540 lb.",
+        "50 GP"
+      ],
+      [
+        "{@item Riding Horse|srd52|Horse, Riding}",
+        "480 lb.",
+        "75 GP"
+      ],
+      [
+        "{@item Mastiff|srd52}",
+        "195 lb.",
+        "25 GP"
+      ],
+      [
+        "{@item Mule|srd52}",
+        "420 lb.",
+        "8 GP"
+      ],
+      [
+        "{@item Pony|srd52}",
+        "225 lb.",
+        "30 GP"
+      ],
+      [
+        "{@item Warhorse|srd52}",
+        "540 lb.",
+        "400 GP"
+      ]
+    ],
+    "catalogReferences": [
+      "item.camel",
+      "item.draft-horse",
+      "item.elephant",
+      "item.mastiff",
+      "item.mule",
+      "item.pony",
+      "item.riding-horse",
+      "item.warhorse",
+      "rulebook.page-100"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        100
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/6/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.tack-harness-and-drawn-vehicles",
+    "kind": "table",
+    "name": "Tack, Harness, and Drawn Vehicles",
+    "colLabels": [
+      "Item",
+      "Weight",
+      "Cost"
+    ],
+    "rows": [
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Carriage|srd52}",
+          "600 lb.",
+          "100 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Cart|srd52}",
+          "200 lb.",
+          "15 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Chariot|srd52}",
+          "100 lb.",
+          "250 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Feed (per day)|srd52|Feed per day}",
+          "10 lb.",
+          "5 CP"
+        ]
+      },
+      [
+        {
+          "type": "cell",
+          "width": 3,
+          "entry": "{@i Saddle}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Exotic Saddle|srd52|Exotic}",
+          "40 lb.",
+          "60 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Military Saddle|srd52|Military}",
+          "30 lb.",
+          "20 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Riding Saddle|srd52|Riding}",
+          "25 lb.",
+          "10 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Sled|srd52}",
+          "300 lb.",
+          "20 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Stabling per day",
+          "—",
+          "5 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Wagon|srd52}",
+          "400 lb.",
+          "35 GP"
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "item.carriage",
+      "item.cart",
+      "item.chariot",
+      "item.exotic-saddle",
+      "item.feed-per-day",
+      "item.military-saddle",
+      "item.riding-saddle",
+      "item.sled",
+      "item.wagon",
+      "rulebook.page-100"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        100
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/6/entries/5"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.airborne-and-waterborne-vehicles",
+    "kind": "table",
+    "name": "Airborne and Waterborne Vehicles",
+    "colLabels": [
+      "Ship",
+      "Speed",
+      "Crew",
+      "Passengers",
+      "Cargo (Tons)",
+      "AC",
+      "HP",
+      "Damage Threshold",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "{@item Airship|srd52}",
+        "8 mph",
+        "10",
+        "20",
+        "1",
+        "13",
+        "300",
+        "—",
+        "40,000 GP"
+      ],
+      [
+        "{@item Galley|srd52}",
+        "4 mph",
+        "80",
+        "—",
+        "150",
+        "15",
+        "500",
+        "20",
+        "30,000 GP"
+      ],
+      [
+        "{@item Keelboat|srd52}",
+        "1 mph",
+        "1",
+        "6",
+        "1/2",
+        "15",
+        "100",
+        "10",
+        "3,000 GP"
+      ],
+      [
+        "{@item Longship|srd52}",
+        "3 mph",
+        "40",
+        "150",
+        "10",
+        "15",
+        "300",
+        "15",
+        "10,000 GP"
+      ],
+      [
+        "{@item Rowboat|srd52}",
+        "1½ mph",
+        "1",
+        "3",
+        "—",
+        "11",
+        "50",
+        "—",
+        "50 GP"
+      ],
+      [
+        "{@item Sailing Ship|srd52}",
+        "2 mph",
+        "20",
+        "20",
+        "100",
+        "15",
+        "300",
+        "15",
+        "10,000 GP"
+      ],
+      [
+        "{@item Warship|srd52}",
+        "2½ mph",
+        "60",
+        "60",
+        "200",
+        "15",
+        "500",
+        "20",
+        "25,000 GP"
+      ]
+    ],
+    "catalogReferences": [
+      "item.airship",
+      "item.galley",
+      "item.keelboat",
+      "item.longship",
+      "item.rowboat",
+      "item.sailing-ship",
+      "item.warship",
+      "rulebook.page-101"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        101
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/6/entries/6/entries/6"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.food-drink-and-lodging",
+    "kind": "table",
+    "name": "Food, Drink, and Lodging",
+    "colLabels": [
+      "Item",
+      "Cost"
+    ],
+    "rows": [
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Ale (mug)|srd52}",
+          "4 CP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Bread (loaf)|srd52}",
+          "2 CP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Cheese (wedge)|srd52}",
+          "1 SP"
+        ]
+      },
+      [
+        {
+          "type": "cell",
+          "width": 2,
+          "entry": "{@i Inn Stay per Day}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Squalid",
+          "7 CP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Poor",
+          "1 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Modest",
+          "5 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Comfortable",
+          "8 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Wealthy",
+          "2 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Aristocratic",
+          "4 GP"
+        ]
+      },
+      [
+        {
+          "type": "cell",
+          "width": 2,
+          "entry": "{@i Meal}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Squalid",
+          "1 CP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Poor",
+          "2 CP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Modest",
+          "1 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Comfortable",
+          "2 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Wealthy",
+          "3 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Aristocratic",
+          "6 SP"
+        ]
+      },
+      [
+        {
+          "type": "cell",
+          "width": 2,
+          "entry": "{@i Wine (bottle)}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Common Wine (bottle)|srd52|Common}",
+          "2 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Fine Wine (bottle)|srd52|Fine}",
+          "10 GP"
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "item.ale-mug",
+      "item.bread-loaf",
+      "item.cheese-wedge",
+      "item.common-wine-bottle",
+      "item.fine-wine-bottle",
+      "rulebook.page-101",
+      "rulebook.page-102"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        101,
+        102
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/8/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
     "id": "rule.multiclassing",
     "kind": "rule",
     "name": "Multiclassing",

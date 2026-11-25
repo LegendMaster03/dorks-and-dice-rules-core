@@ -282,6 +282,58 @@
       "pointer": "/data/11/entries/8/entries/4/entries/3/entries/2",
       "page": 207,
       "rowCount": 5
+    },
+    {
+      "id": "table.ammunition",
+      "pointer": "/data/6/entries/5/entries/2/entries/2/entries/1",
+      "page": 96,
+      "rowCount": 5
+    },
+    {
+      "id": "table.arcane-focuses",
+      "pointer": "/data/6/entries/5/entries/2/entries/4/entries/1",
+      "page": 96,
+      "rowCount": 5
+    },
+    {
+      "id": "table.druidic-focuses",
+      "pointer": "/data/6/entries/5/entries/2/entries/30/entries/1",
+      "page": 97,
+      "rowCount": 3
+    },
+    {
+      "id": "table.holy-symbols",
+      "pointer": "/data/6/entries/5/entries/2/entries/37/entries/2",
+      "page": 97,
+      "rowCount": 3
+    },
+    {
+      "id": "table.mounts-and-other-animals",
+      "pointer": "/data/6/entries/6/entries/4",
+      "page": 100,
+      "rowCount": 8
+    },
+    {
+      "id": "table.tack-harness-and-drawn-vehicles",
+      "pointer": "/data/6/entries/6/entries/5",
+      "page": 100,
+      "rowCount": 11
+    },
+    {
+      "id": "table.airborne-and-waterborne-vehicles",
+      "pointer": "/data/6/entries/6/entries/6/entries/6",
+      "page": 101,
+      "rowCount": 7
+    },
+    {
+      "id": "table.food-drink-and-lodging",
+      "pointer": "/data/6/entries/8/entries/1",
+      "page": 101,
+      "rowCount": 20,
+      "pages": [
+        101,
+        102
+      ]
     }
   ],
   "rules": [
@@ -349,13 +401,13 @@
       "reason": "Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
     }
   ],
-  "nativeCount": 52,
+  "nativeCount": 60,
   "tableInventory": {
     "total": 59,
     "counts": {
-      "projected": 45,
+      "projected": 53,
       "existing-catalog-representation": 3,
-      "pending-review": 11
+      "pending-review": 3
     },
     "occurrences": [
       {
@@ -592,56 +644,64 @@
         "caption": "Ammunition",
         "context": "Ammunition (Varies)",
         "rows": 5,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.ammunition"
       },
       {
         "pointer": "/data/6/entries/5/entries/2/entries/4/entries/1",
         "caption": "Arcane Focuses",
         "context": "Arcane Focus (Varies)",
         "rows": 5,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.arcane-focuses"
       },
       {
         "pointer": "/data/6/entries/5/entries/2/entries/30/entries/1",
         "caption": "Druidic Focuses",
         "context": "Druidic Focus (Varies)",
         "rows": 3,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.druidic-focuses"
       },
       {
         "pointer": "/data/6/entries/5/entries/2/entries/37/entries/2",
         "caption": "Holy Symbols",
         "context": "Holy Symbol (Varies)",
         "rows": 3,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.holy-symbols"
       },
       {
         "pointer": "/data/6/entries/6/entries/4",
         "caption": "Mounts and Other Animals",
         "context": "Mounts and Vehicles",
         "rows": 8,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.mounts-and-other-animals"
       },
       {
         "pointer": "/data/6/entries/6/entries/5",
         "caption": "Tack, Harness, and Drawn Vehicles",
         "context": "Mounts and Vehicles",
         "rows": 11,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.tack-harness-and-drawn-vehicles"
       },
       {
         "pointer": "/data/6/entries/6/entries/6/entries/6",
         "caption": "Airborne and Waterborne Vehicles",
         "context": "Large Vehicles",
         "rows": 7,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.airborne-and-waterborne-vehicles"
       },
       {
         "pointer": "/data/6/entries/8/entries/1",
         "caption": "Food, Drink, and Lodging",
         "context": "Food, Drink, and Lodging",
         "rows": 20,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.food-drink-and-lodging"
       },
       {
         "pointer": "/data/6/entries/9/entries/1",

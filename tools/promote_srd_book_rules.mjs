@@ -113,7 +113,89 @@ function inventoryBookTables(book,report,tag){
  return {total:result.length,counts,occurrences:result};
 }
 
-function generateBookRules(book,manifest,src,pages,tag,known){
+function projectModernEquipmentTables(book,existing,pages,metadata,rows,report){
+ const selections=[
+ ["Ammunition","/data/6/entries/5/entries/2/entries/2/entries/1",[96],5],
+ ["Arcane Focuses","/data/6/entries/5/entries/2/entries/4/entries/1",[96],5,"item-group.arcane-focus"],
+ ["Druidic Focuses","/data/6/entries/5/entries/2/entries/30/entries/1",[97],3,"item-group.druidic-focus"],
+ ["Holy Symbols","/data/6/entries/5/entries/2/entries/37/entries/2",[97],3,"item-group.holy-symbol"],
+ ["Mounts and Other Animals","/data/6/entries/6/entries/4",[100],8],
+ ["Tack, Harness, and Drawn Vehicles","/data/6/entries/6/entries/5",[100],11],
+ ["Airborne and Waterborne Vehicles","/data/6/entries/6/entries/6/entries/6",[101],7],
+ ["Food, Drink, and Lodging","/data/6/entries/8/entries/1",[101,102],20]
+ ];
+ const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+ const itemKinds=new Set(["item","baseitem","item-group"]);
+ const items=existing.filter(x=>itemKinds.has(x.kind));
+ const byId=new Map(items.map(x=>[x.id,x]));
+ const nameMap=new Map();
+ for(const r of items){const key=slug(r.name);nameMap.set(key,[...(nameMap.get(key)??[]),r]);}
+ const resolve=(raw)=>{const [name,source]=raw.split("|");if(source.toLowerCase()!=="srd52")throw Error("Foreign equipment "+raw);const hits=nameMap.get(slug(name))??[];if(hits.length!==1)throw Error("Nonunique equipment "+raw+" "+hits.map(x=>x.id));return hits[0];};
+ const equal=(actual,expected,where)=>{if(typeof expected==="number"?typeof actual!=="number"||Math.abs(actual-expected)>1e-8:actual!==expected)throw Error(where+": "+actual+" != "+expected);};
+ const number=s=>{s=s.replaceAll(",","").replace(/ (lb\.|mph)$/,"").trim();if(s==="—")return 0;if(s==="1/2")return .5;const m=s.match(/^(\d+(?:\.\d+)?)?\s*([½¼¾])?$/);if(!m||!m[1]&&!m[2])throw Error("Unparsed numeric cell "+s);return Number(m[1]??0)+({"½":.5,"¼":.25,"¾":.75}[m[2]]??0);};
+ const money=s=>{const m=s.match(/^([\d,]+) (CP|SP|GP)$/);if(!m)throw Error("Unparsed price "+s);return Number(m[1].replaceAll(",",""))*({CP:1,SP:10,GP:100}[m[2]]);};
+ const display=s=>s.replace(/\{@item ([^}|]+)\|[^}|]+(?:\|([^}]+))?\}/g,(_,name,label)=>label??name).replace(/\{@i ([^}]+)\}/g,"$1");
+ const norm=s=>s.toLowerCase().replace(/[’‘]/g,"'").replaceAll("½","1/2").replaceAll("¼","1/4").replaceAll("¾","3/4").replace(/\s/g,"");
+ const ammoUnitIds=["baseitem.arrow","baseitem.bolt","baseitem.firearm-bullet","baseitem.sling-bullet","baseitem.needle"];
+ for(const [name,pointer,nums,count,groupId] of selections){
+  const node=pointer.split("/").slice(1).reduce((o,k)=>o[k],book), id="table."+slug(name);
+  if(node.type!=="table"||node.caption!==name||node.rows.length!==count)throw Error("Equipment table identity "+name);
+  const publisher=pages.filter(p=>nums.includes(p.page)).map(p=>p.textLayout);
+  if(publisher.length!==nums.length||!publisher.some(p=>norm(p).includes(norm(name))))throw Error("Publisher table heading "+name);
+  const refs=new Set(nums.map(p=>"rulebook.page-"+String(p).padStart(3,"0"))), members=new Set();
+  const tableRows=JSON.parse(JSON.stringify(node.rows));let itemCount=0;
+  for(let i=0;i<tableRows.length;i++){
+   const raw=tableRows[i], row=Array.isArray(raw)?raw:raw.row;
+   if(!Array.isArray(row))throw Error("Invalid equipment row "+name);
+   if(row.length===1&&row[0]?.type==="cell"){
+    if(row[0].width!==node.colLabels.length||!publisher.some(p=>norm(p).includes(norm(display(row[0].entry)))))throw Error("Invalid group heading "+name);
+    continue;
+   }
+   if(row.length!==node.colLabels.length||row.some(x=>typeof x!=="string"))throw Error("Invalid equipment cells "+name);
+   // Match the visible published row, not commercial tags or a guessed identity.
+   const visible=row.map(display);
+   if(!publisher.some(p=>norm(p).includes(norm(visible.join(" ")))))throw Error("Publisher row mismatch "+name+" "+JSON.stringify(visible));
+   // Sling bullets are sold in twenty-piece packs, not as twenty units of a single catalog record.
+   if(name==="Ammunition"&&i===3)row[0]="{@item Sling Bullets (20)|srd52|Bullets, Sling}";
+   const links=[...row.join(" ").matchAll(/\{@item ([^}]+)\}/g)].map(m=>resolve(m[1]));
+   for(const link of links)refs.add(link.id);
+   if(!links.length){
+    if(name==="Tack, Harness, and Drawn Vehicles"&&row[0]==="Stabling per day"||name==="Food, Drink, and Lodging")continue;
+    throw Error("Unexpected unlinked equipment row "+name+" "+row[0]);
+   }
+   const item=links[0];members.add(item.id);itemCount++;
+   for(let c=1;c<row.length;c++){
+    const label=node.colLabels[c],v=row[c],context=id+" "+item.id+" "+label;
+    if(label==="Cost")equal(item.value,money(v),context);
+    else if(label==="Weight")equal(item.weight??0,number(v),context);
+    else if(label==="Carrying Capacity")equal(item.carryingCapacity,number(v),context);
+    else if(label==="Speed")equal(item.vehSpeed,number(v),context);
+    else if(label==="Crew")equal(item.crew,number(v),context);
+    else if(label==="Passengers")equal(item.capPassenger??0,number(v),context);
+    else if(label==="Cargo (Tons)")equal(item.capCargo??0,number(v),context);
+    else if(label==="AC")equal(item.vehAc,number(v),context);
+    else if(label==="HP")equal(item.vehHp,number(v),context);
+    else if(label==="Damage Threshold")equal(item.vehDmgThresh??0,number(v),context);
+    else if(label==="Amount"){
+     const unit=byId.get(ammoUnitIds[i]),quantity=number(v),pack=item.packContents;
+     if(!unit||pack?.length!==1||pack[0].quantity!==quantity||resolve(pack[0].item).id!==unit.id)throw Error("Ammunition pack identity "+item.id);
+     equal(unit.value*quantity,item.value,context+" price");equal(unit.weight*quantity,item.weight,context+" weight");refs.add(unit.id);
+    }else if(label==="Storage"){
+     const storage=links[1],unit=byId.get(ammoUnitIds[i]),quantity=number(row[1]);
+     if(!storage?.containerCapacity?.item?.some(x=>Object.entries(x).some(([key,value])=>resolve(key).id===unit.id&&value===quantity)))throw Error("Ammunition storage capacity "+item.id);
+    }else throw Error("Unreviewed equipment field "+label);
+   }
+  }
+  if(groupId){
+   const group=byId.get(groupId);if(!group||group.items.length!==members.size||group.items.some(x=>!members.has(resolve(x).id)))throw Error("Focus group membership "+groupId);
+   refs.add(groupId);
+  }
+  rows.push({id,kind:"table",name,colLabels:JSON.parse(JSON.stringify(node.colLabels)),rows:tableRows,catalogReferences:[...refs].sort(),source:metadata(pointer,nums)});
+  report.tables.push({id,pointer,page:nums[0],rowCount:count,...(nums.length>1?{pages:nums}:{})});
+ }
+}
+
+function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
  const get=p=>p.split("/").slice(1).reduce((o,k)=>o[k],book);
@@ -203,6 +285,7 @@ function generateBookRules(book,manifest,src,pages,tag,known){
   r.source=metadata(pointer,sourcePages);
   rows.push(r);report.tables.push({id,pointer,page,rowCount:count,...(sourcePages.length>1?{pages:sourcePages}:{})});
  }
+ if(tag==="52")projectModernEquipmentTables(book,existing,pages,metadata,rows,report);
  // Keep source prose and its nested rule structure, but point at the canonical
  // table identities rather than duplicating data or inventing a renderer tag.
  const multiPointer=tag==="51"?"/data/3/entries/6":"/data/2/entries/4";
@@ -347,7 +430,7 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  const existing=readNative(native);
  const pages=existing.filter(r=>r.kind==="rulebook-page"||r.id?.startsWith("rulebook.page-"));
  const known=new Set(existing.map(r=>r.id));
- const {rows,report}=generateBookRules(read("data/reference/srd/structured/book/book-srd"+tag+".json"),read(dir+"manifest.json"),src,pages,tag,known);
+ const {rows,report}=generateBookRules(read("data/reference/srd/structured/book/book-srd"+tag+".json"),read(dir+"manifest.json"),src,pages,tag,known,existing);
  for(const [file,value] of [[native+"/book-rules-and-tables.json",rows],["data/reference/srd/book-rule-promotion-"+tag+".json",report]]){
   const target=path.join(root,file),body=JSON.stringify(value,null,2)+"\n";
   if(process.argv.includes("--check")){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale book projection "+file);}
