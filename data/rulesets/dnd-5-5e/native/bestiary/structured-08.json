@@ -1,0 +1,2942 @@
+[
+  {
+    "id": "monster.shield-guardian",
+    "kind": "monster",
+    "name": "Shield Guardian",
+    "size": [
+      "L"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 142,
+      "formula": "15d10 + 60"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 18,
+    "dex": 8,
+    "con": 18,
+    "int": 7,
+    "wis": 10,
+    "cha": 3,
+    "senses": [
+      "Blindsight 10 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "understands commands given in any language but can't speak"
+    ],
+    "cr": "7",
+    "trait": [
+      {
+        "name": "Bound",
+        "entries": [
+          "The guardian is magically bound to an amulet. While the guardian and its amulet are on the same plane of existence, the amulet's wearer can telepathically call the guardian to travel to it, and the guardian knows the distance and direction to the amulet. If the guardian is within 60 feet of the amulet's wearer, half of any damage the wearer takes (round up) is transferred to the guardian."
+        ]
+      },
+      {
+        "name": "Regeneration",
+        "entries": [
+          "The guardian regains 10 {@variantrule Hit Points|SRD52} at the start of each of its turns if it has at least 1 {@variantrule Hit Points|SRD52|Hit Point}."
+        ]
+      },
+      {
+        "name": "Spell Storing",
+        "entries": [
+          "A spellcaster who wears the guardian's amulet can cause the guardian to store one spell of level 4 or lower. To do so, the wearer must cast the spell on the guardian while within 5 feet of it. The spell has no effect but is stored within the guardian. Any previously stored spell is lost when a new spell is stored. The guardian can cast the spell stored with any parameters set by the original caster, requiring no spell components and using the caster's spellcasting ability. The stored spell is then lost."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The guardian makes two Fist attacks."
+        ]
+      },
+      {
+        "name": "Fist",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Bludgeoning damage plus 7 ({@damage 2d6}) Force damage."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Protection",
+        "entries": [
+          "{@actTrigger} An attack roll hits the wearer of the guardian's amulet while the wearer is within 5 feet of the guardian. {@actResponse} The wearer gains a +5 bonus to AC, including against the triggering attack and possibly causing it to miss, until the start of the guardian's next turn."
+        ]
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "rulebook.page-323"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        323
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/256"
+      },
+      "candidatePage": 323,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.shrieker-fungus",
+    "kind": "monster",
+    "name": "Shrieker Fungus",
+    "size": [
+      "M"
+    ],
+    "type": "plant",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      5
+    ],
+    "hp": {
+      "average": 13,
+      "formula": "3d8"
+    },
+    "speed": {
+      "walk": 5
+    },
+    "str": 1,
+    "dex": 1,
+    "con": 10,
+    "int": 1,
+    "wis": 3,
+    "cha": 1,
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 6,
+    "cr": {
+      "cr": "0",
+      "xp": 0
+    },
+    "reaction": [
+      {
+        "name": "Shriek",
+        "entries": [
+          "{@actTrigger} A creature or a source of {@variantrule Bright Light|SRD52} moves within 30 feet of the shrieker. {@actResponse} The shrieker emits a shriek audible within 300 feet of itself for 1 minute or until the shrieker dies."
+        ]
+      }
+    ],
+    "conditionImmune": [
+      "blinded",
+      "charmed",
+      "deafened",
+      "frightened"
+    ],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.charmed",
+      "condition.deafened",
+      "condition.frightened",
+      "rulebook.page-286"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        286
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/257"
+      },
+      "candidatePage": 286,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.silver-dragon-wyrmling",
+    "kind": "monster",
+    "name": "Silver Dragon Wyrmling",
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 45,
+      "formula": "6d8 + 18"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 19,
+    "dex": 10,
+    "con": 17,
+    "int": 12,
+    "wis": 11,
+    "cha": 15,
+    "save": {
+      "dex": "+2",
+      "wis": "+2"
+    },
+    "skill": {
+      "perception": "+4",
+      "stealth": "+2"
+    },
+    "senses": [
+      "Blindsight 10 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "languages": [
+      "Draconic"
+    ],
+    "cr": "2",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes two Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}9 ({@damage 1d10 + 4}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 13}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 18 ({@damage 4d8}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Paralyzing Breath",
+        "entries": [
+          "{@actSave con} {@dc 13}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail 1} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, when it repeats the save. {@actSaveFail 2} The target has the {@condition Paralyzed|SRD52} condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      }
+    ],
+    "immune": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.paralyzed",
+      "rulebook.page-324"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        324
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/258"
+      },
+      "candidatePage": 324,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.skeleton",
+    "kind": "monster",
+    "name": "Skeleton",
+    "size": [
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 13,
+      "formula": "2d8 + 4"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 10,
+    "dex": 16,
+    "con": 15,
+    "int": 6,
+    "wis": 8,
+    "cha": 5,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 9,
+    "languages": [
+      "understands Common plus one other language but can't speak"
+    ],
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Shortsword",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Shortbow",
+        "entries": [
+          "{@atkr r} {@hit 5}, range 80/320 ft. {@h}6 ({@damage 1d6 + 3}) Piercing damage."
+        ]
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "vulnerable": [
+      "bludgeoning"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "gear": [
+      "shortbow|srd52",
+      "shortsword|srd52"
+    ],
+    "catalogReferences": [
+      "condition.exhaustion",
+      "condition.poisoned",
+      "rulebook.page-325"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        325
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/259"
+      },
+      "candidatePage": 325,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.solar",
+    "kind": "monster",
+    "name": "Solar",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "celestial",
+      "tags": [
+        "angel"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      21
+    ],
+    "hp": {
+      "average": 297,
+      "formula": "22d10 + 176"
+    },
+    "speed": {
+      "walk": 50,
+      "fly": {
+        "number": 150,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 26,
+    "dex": 22,
+    "con": 26,
+    "int": 25,
+    "wis": 25,
+    "cha": 30,
+    "skill": {
+      "perception": "+14"
+    },
+    "senses": [
+      "Truesight 120 ft."
+    ],
+    "passive": 24,
+    "languages": [
+      "all; telepathy 120 ft."
+    ],
+    "cr": "21",
+    "trait": [
+      {
+        "name": "Divine Awareness",
+        "entries": [
+          "The solar knows if it hears a lie."
+        ]
+      },
+      {
+        "name": "Exalted Restoration",
+        "entries": [
+          "If the solar dies outside Mount Celestia, its body disappears, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in Mount Celestia."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (4/Day)",
+        "entries": [
+          "If the solar fails a saving throw, it can choose to succeed instead."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The solar has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The solar makes two Flying Sword attacks. It can replace one attack with a use of Slaying Bow."
+        ]
+      },
+      {
+        "name": "Flying Sword",
+        "entries": [
+          "{@atkr m,r} {@hit 15}, reach 10 ft. or range 120 ft. {@h}22 ({@damage 4d6 + 8}) Slashing damage plus 36 ({@damage 8d8}) Radiant damage. {@hom}The sword magically returns to the solar's hand or hovers within 5 feet of the solar immediately after a ranged attack."
+        ]
+      },
+      {
+        "name": "Slaying Bow",
+        "entries": [
+          "{@actSave dex} {@dc 21}, one creature the solar can see within 600 feet. {@actSaveFail} If the creature has 100 {@variantrule Hit Points|SRD52} or fewer, it dies. It otherwise takes 24 ({@damage 4d8 + 6}) Piercing damage plus 36 ({@damage 8d8}) Radiant damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Blinding Gaze",
+        "entries": [
+          "{@actSave con} {@dc 25}, one creature the solar can see within 120 feet. {@actSaveFail} The target has the {@condition Blinded|SRD52} condition for 1 minute. {@actSaveSuccessOrFail} The solar can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Radiant Teleport",
+        "entries": [
+          "The solar teleports up to 60 feet to an unoccupied space it can see. {@actSave dex} {@dc 25}, each creature in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the solar at its destination space. {@actSaveFail} 11 ({@damage 2d10}) Radiant damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The solar casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 25}):"
+        ],
+        "will": [
+          "{@spell Detect Evil and Good|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Commune|SRD52}",
+            "{@spell Control Weather|SRD52}",
+            "{@spell Dispel Evil and Good|SRD52}",
+            "{@spell Resurrection|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      },
+      {
+        "name": "Divine Aid (3/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The solar casts {@spell Cure Wounds|SRD52} (level 2 version), {@spell Lesser Restoration|SRD52}, or {@spell Remove Curse|SRD52}, using the same spellcasting ability as Spellcasting."
+        ],
+        "daily": {
+          "3": [
+            "{@spell Cure Wounds|SRD52} (level 2 version)",
+            "{@spell Lesser Restoration|SRD52}",
+            "{@spell Remove Curse|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "bonus",
+        "hidden": [
+          "daily"
+        ]
+      }
+    ],
+    "immune": [
+      "poison",
+      "radiant"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.poisoned",
+      "rulebook.page-326",
+      "spell.commune",
+      "spell.control-weather",
+      "spell.cure-wounds",
+      "spell.detect-evil-and-good",
+      "spell.dispel-evil-and-good",
+      "spell.lesser-restoration",
+      "spell.remove-curse",
+      "spell.resurrection"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        326
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/260"
+      },
+      "candidatePage": 326,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.specter",
+    "kind": "monster",
+    "name": "Specter",
+    "size": [
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 22,
+      "formula": "5d8"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": {
+        "number": 50,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "str": 1,
+    "dex": 14,
+    "con": 11,
+    "int": 10,
+    "wis": 10,
+    "cha": 11,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "understands Common plus one other language but can't speak"
+    ],
+    "cr": "1",
+    "trait": [
+      {
+        "name": "Incorporeal Movement",
+        "entries": [
+          "The specter can move through other creatures and objects as if they were {@variantrule Difficult Terrain|SRD52}. It takes 5 ({@damage 1d10}) Force damage if it ends its turn inside an object."
+        ]
+      },
+      {
+        "name": "Sunlight Sensitivity",
+        "entries": [
+          "While in sunlight, the specter has {@variantrule Disadvantage|SRD52} on ability checks and attack rolls."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Life Drain",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}7 ({@damage 2d6}) Necrotic damage. If the target is a creature, its {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the damage taken."
+        ]
+      }
+    ],
+    "immune": [
+      "necrotic",
+      "poison"
+    ],
+    "resist": [
+      "acid",
+      "bludgeoning",
+      "cold",
+      "fire",
+      "lightning",
+      "piercing",
+      "slashing",
+      "thunder"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "prone",
+      "restrained",
+      "unconscious"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.grappled",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "condition.prone",
+      "condition.restrained",
+      "condition.unconscious",
+      "rulebook.page-327"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        327
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/261"
+      },
+      "candidatePage": 327,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.sphinx-of-lore",
+    "kind": "monster",
+    "name": "Sphinx of Lore",
+    "size": [
+      "L"
+    ],
+    "type": "celestial",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 170,
+      "formula": "20d10 + 60"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 60
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 18,
+    "dex": 15,
+    "con": 16,
+    "int": 18,
+    "wis": 18,
+    "cha": 18,
+    "skill": {
+      "arcana": "+12",
+      "history": "+12",
+      "perception": "+8",
+      "religion": "+12"
+    },
+    "senses": [
+      "Truesight 120 ft."
+    ],
+    "passive": 18,
+    "languages": [
+      "Celestial",
+      "Common"
+    ],
+    "cr": {
+      "cr": "11",
+      "xpLair": 8400
+    },
+    "trait": [
+      {
+        "name": "Inscrutable",
+        "entries": [
+          "No magic can observe the sphinx remotely or detect its thoughts without its permission. Wisdom ({@skill Insight|SRD52}) checks made to ascertain its intentions or sincerity are made with {@variantrule Disadvantage|SRD52}."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the sphinx fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The sphinx makes three Claw attacks."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 5 ft. {@h}14 ({@damage 3d6 + 4}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Mind-Rending Roar {@recharge 5}",
+        "entries": [
+          "{@actSave wis} {@dc 16}, each enemy in a 300-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the sphinx. {@actSaveFail} 35 ({@damage 10d6}) Psychic damage, and the target has the {@condition Incapacitated|SRD52} condition until the start of the sphinx's next turn."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Arcane Prowl",
+        "entries": [
+          "The sphinx can teleport up to 30 feet to an unoccupied space it can see, and it makes one Claw attack."
+        ]
+      },
+      {
+        "name": "Weight of Years",
+        "entries": [
+          "{@actSave con} {@dc 16}, one creature the sphinx can see within 120 feet. {@actSaveFail} The target gains 1 {@condition Exhaustion|SRD52} level. While the target has any {@condition Exhaustion|SRD52} levels, it appears {@dice 3d10} years older. {@actSaveSuccessOrFail} The sphinx can't take this action again until the start of its next turn."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The sphinx casts one of the following spells, requiring no Material components and using Intelligence as the spellcasting ability (spell save {@dc 16}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Identify|SRD52}",
+          "{@spell Mage Hand|SRD52}",
+          "{@spell Minor Illusion|SRD52}",
+          "{@spell Prestidigitation|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Dispel Magic|SRD52}",
+            "{@spell Legend Lore|SRD52}",
+            "{@spell Locate Object|SRD52}",
+            "{@spell Plane Shift|SRD52}",
+            "{@spell Remove Curse|SRD52}",
+            "{@spell Tongues|SRD52}"
+          ]
+        },
+        "ability": "int",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "psychic"
+    ],
+    "resist": [
+      "necrotic",
+      "radiant"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.incapacitated",
+      "rulebook.page-327",
+      "skill.insight",
+      "spell.detect-magic",
+      "spell.dispel-magic",
+      "spell.identify",
+      "spell.legend-lore",
+      "spell.locate-object",
+      "spell.mage-hand",
+      "spell.minor-illusion",
+      "spell.plane-shift",
+      "spell.prestidigitation",
+      "spell.remove-curse",
+      "spell.tongues"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        327
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/262"
+      },
+      "candidatePage": 327,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.sphinx-of-valor",
+    "kind": "monster",
+    "name": "Sphinx of Valor",
+    "size": [
+      "L"
+    ],
+    "type": "celestial",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 199,
+      "formula": "19d10 + 95"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 60
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 22,
+    "dex": 10,
+    "con": 20,
+    "int": 16,
+    "wis": 23,
+    "cha": 18,
+    "save": {
+      "dex": "+6",
+      "con": "+11",
+      "int": "+9",
+      "wis": "+12"
+    },
+    "skill": {
+      "arcana": "+9",
+      "perception": "+12",
+      "religion": "+15"
+    },
+    "senses": [
+      "Truesight 120 ft."
+    ],
+    "passive": 22,
+    "languages": [
+      "Celestial",
+      "Common"
+    ],
+    "cr": {
+      "cr": "17",
+      "xpLair": 20000
+    },
+    "trait": [
+      {
+        "name": "Inscrutable",
+        "entries": [
+          "No magic can observe the sphinx remotely or detect its thoughts without its permission. Wisdom ({@skill Insight|SRD52}) checks made to ascertain its intentions or sincerity are made with {@variantrule Disadvantage|SRD52}."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the sphinx fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The sphinx makes two Claw attacks and uses Roar."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 12}, reach 5 ft. {@h}20 ({@damage 4d6 + 6}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Roar (3/Day)",
+        "entries": [
+          "The sphinx emits a magical roar. Whenever it roars, the roar has a different effect, as detailed below (the sequence resets when it takes a {@variantrule Long Rest|SRD52}):",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "First Roar",
+                "entries": [
+                  "{@actSave wis} {@dc 20}, each enemy in a 500-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the sphinx. {@actSaveFail} The target has the {@condition Frightened|SRD52} condition for 1 minute."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Second Roar",
+                "entries": [
+                  "{@actSave wis} {@dc 20}, each enemy in a 500-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the sphinx. {@actSaveFail} The target has the {@condition Paralyzed|SRD52} condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Third Roar",
+                "entries": [
+                  "{@actSave con} {@dc 20}, each enemy in a 500-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the sphinx. {@actSaveFail} 44 ({@damage 8d10}) Thunder damage, and the target has the {@condition Prone|SRD52} condition. {@actSaveSuccess} Half damage only."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Arcane Prowl",
+        "entries": [
+          "The sphinx can teleport up to 30 feet to an unoccupied space it can see, and it makes one Claw attack."
+        ]
+      },
+      {
+        "name": "Weight of Years",
+        "entries": [
+          "{@actSave con} {@dc 16}, one creature the sphinx can see within 120 feet. {@actSaveFail} The target gains 1 {@condition Exhaustion|SRD52} level. While the target has any {@condition Exhaustion|SRD52} levels, it appears {@dice 3d10} years older. {@actSaveSuccessOrFail} The sphinx can't take this action again until the start of its next turn."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The sphinx casts one of the following spells, requiring no Material components and using Wisdom as the spellcasting ability (spell save {@dc 20}):"
+        ],
+        "will": [
+          "{@spell Detect Evil and Good|SRD52}",
+          "{@spell Thaumaturgy|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Detect Magic|SRD52}",
+            "{@spell Dispel Magic|SRD52}",
+            "{@spell Greater Restoration|SRD52}",
+            "{@spell Heroes' Feast|SRD52}",
+            "{@spell Zone of Truth|SRD52}"
+          ]
+        },
+        "ability": "wis",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "psychic"
+    ],
+    "resist": [
+      "necrotic",
+      "radiant"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.prone",
+      "rulebook.page-328",
+      "skill.insight",
+      "spell.detect-evil-and-good",
+      "spell.detect-magic",
+      "spell.dispel-magic",
+      "spell.greater-restoration",
+      "spell.heroes-feast",
+      "spell.thaumaturgy",
+      "spell.zone-of-truth"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        328
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/263"
+      },
+      "candidatePage": 328,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.sphinx-of-wonder",
+    "kind": "monster",
+    "name": "Sphinx of Wonder",
+    "size": [
+      "T"
+    ],
+    "type": "celestial",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 24,
+      "formula": "7d4 + 7"
+    },
+    "speed": {
+      "walk": 20,
+      "fly": 40
+    },
+    "str": 6,
+    "dex": 17,
+    "con": 13,
+    "int": 15,
+    "wis": 12,
+    "cha": 11,
+    "skill": {
+      "arcana": "+4",
+      "religion": "+4",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 11,
+    "languages": [
+      "Celestial",
+      "Common"
+    ],
+    "cr": "1",
+    "trait": [
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The sphinx has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}5 ({@damage 1d4 + 3}) Slashing damage plus 7 ({@damage 2d6}) Radiant damage."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Burst of Ingenuity (2/Day)",
+        "entries": [
+          "{@actTrigger} The sphinx or another creature within 30 feet makes an ability check or a saving throw. {@actResponse} The sphinx adds 2 to the roll."
+        ]
+      }
+    ],
+    "resist": [
+      "necrotic",
+      "psychic",
+      "radiant"
+    ],
+    "catalogReferences": [
+      "rulebook.page-327"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        327
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/264"
+      },
+      "candidatePage": 327,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.spirit-naga",
+    "kind": "monster",
+    "name": "Spirit Naga",
+    "size": [
+      "L"
+    ],
+    "type": "fiend",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 135,
+      "formula": "18d10 + 36"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 18,
+    "dex": 17,
+    "con": 14,
+    "int": 16,
+    "wis": 15,
+    "cha": 16,
+    "save": {
+      "dex": "+6",
+      "con": "+5",
+      "wis": "+5",
+      "cha": "+6"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "Abyssal",
+      "Common"
+    ],
+    "cr": "8",
+    "trait": [
+      {
+        "name": "Fiendish Restoration",
+        "entries": [
+          "If it dies, the naga returns to life in {@dice 1d6} days and regains all its {@variantrule Hit Points|SRD52}. Only a {@spell Wish|SRD52} spell can prevent this trait from functioning."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The naga makes three attacks, using Bite or Necrotic Ray in any combination."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}7 ({@damage 1d6 + 4}) Piercing damage plus 14 ({@damage 4d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Necrotic Ray",
+        "entries": [
+          "{@atkr r} {@hit 6}, range 60 ft. {@h}21 ({@damage 6d6}) Necrotic damage."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The naga casts one of the following spells, requiring no Somatic or Material components and using Intelligence as the spellcasting ability (spell save {@dc 14}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Mage Hand|SRD52}",
+          "{@spell Minor Illusion|SRD52}",
+          "{@spell Water Breathing|SRD52}"
+        ],
+        "daily": {
+          "2e": [
+            "{@spell Detect Thoughts|SRD52}",
+            "{@spell Dimension Door|SRD52}",
+            "{@spell Hold Person|SRD52} (level 3 version)",
+            "{@spell Lightning Bolt|SRD52} (level 4 version)"
+          ]
+        },
+        "ability": "int",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.poisoned",
+      "rulebook.page-329",
+      "spell.detect-magic",
+      "spell.detect-thoughts",
+      "spell.dimension-door",
+      "spell.hold-person",
+      "spell.lightning-bolt",
+      "spell.mage-hand",
+      "spell.minor-illusion",
+      "spell.water-breathing",
+      "spell.wish"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        329
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/266"
+      },
+      "candidatePage": 329,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.sprite",
+    "kind": "monster",
+    "name": "Sprite",
+    "size": [
+      "T"
+    ],
+    "type": "fey",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 10,
+      "formula": "4d4"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": 40
+    },
+    "str": 3,
+    "dex": 18,
+    "con": 10,
+    "int": 14,
+    "wis": 13,
+    "cha": 11,
+    "skill": {
+      "perception": "+3",
+      "stealth": "+8"
+    },
+    "passive": 13,
+    "languages": [
+      "Common",
+      "Elvish",
+      "Sylvan"
+    ],
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Needle Sword",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}6 ({@damage 1d4 + 4}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Enchanting Bow",
+        "entries": [
+          "{@atkr r} {@hit 6}, range 40/160 ft. {@h}1 Piercing damage, and the target has the {@condition Charmed|SRD52} condition until the start of the sprite's next turn."
+        ]
+      },
+      {
+        "name": "Heart Sight",
+        "entries": [
+          "{@actSave cha} {@dc 10}, one creature within 5 feet the sprite can see (Celestials, Fiends, and Undead automatically fail the save). {@actSaveFail} The sprite knows the target's emotions and alignment."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Invisibility",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The sprite casts {@spell Invisibility|SRD52} on itself, requiring no spell components and using Charisma as the spellcasting ability."
+        ],
+        "will": [
+          "{@spell Invisibility|SRD52}"
+        ],
+        "ability": "cha",
+        "displayAs": "action",
+        "hidden": [
+          "will"
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "rulebook.page-329",
+      "spell.invisibility"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        329
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/267"
+      },
+      "candidatePage": 329,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.spy",
+    "kind": "monster",
+    "name": "Spy",
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 27,
+      "formula": "6d8"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 10,
+    "dex": 15,
+    "con": 10,
+    "int": 12,
+    "wis": 14,
+    "cha": 16,
+    "skill": {
+      "deception": "+5",
+      "insight": "+4",
+      "investigation": "+5",
+      "perception": "+6",
+      "sleight of hand": "+4",
+      "stealth": "+6"
+    },
+    "passive": 16,
+    "languages": [
+      "Common plus one other language"
+    ],
+    "cr": "1",
+    "action": [
+      {
+        "name": "Shortsword",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Piercing damage plus 7 ({@damage 2d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Hand Crossbow",
+        "entries": [
+          "{@atkr r} {@hit 4}, range 30/120 ft. {@h}5 ({@damage 1d6 + 2}) Piercing damage plus 7 ({@damage 2d6}) Poison damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Cunning Action",
+        "entries": [
+          "The spy takes the {@action Dash|SRD52}, {@action Disengage|SRD52}, or {@action Hide|SRD52} action."
+        ]
+      }
+    ],
+    "gear": [
+      "hand crossbow|srd52",
+      "shortsword|srd52",
+      "thieves' tools|srd52"
+    ],
+    "catalogReferences": [
+      "rulebook.page-329"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        329
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/268"
+      },
+      "candidatePage": 329,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.steam-mephit",
+    "kind": "monster",
+    "name": "Steam Mephit",
+    "size": [
+      "S"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      10
+    ],
+    "hp": {
+      "average": 17,
+      "formula": "5d6"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 30
+    },
+    "str": 5,
+    "dex": 11,
+    "con": 10,
+    "int": 11,
+    "wis": 10,
+    "cha": 12,
+    "skill": {
+      "stealth": "+2"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "Primordial (Aquan, Ignan)"
+    ],
+    "cr": "1/4",
+    "trait": [
+      {
+        "name": "Blurred Form",
+        "entries": [
+          "Attack rolls against the mephit are made with {@variantrule Disadvantage|SRD52} unless the mephit has the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Death Burst",
+        "entries": [
+          "The mephit explodes when it dies. {@actSave dex} {@dc 10}, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the mephit. {@actSaveFail} 5 ({@damage 2d4}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 2}, reach 5 ft. {@h}2 ({@damage 1d4}) Slashing damage plus 2 ({@damage 1d4}) Fire damage."
+        ]
+      },
+      {
+        "name": "Steam Breath {@recharge}",
+        "entries": [
+          "{@actSave con} {@dc 10}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 5 ({@damage 2d4}) Fire damage, and the target's {@variantrule Speed|SRD52} decreases by 10 feet until the end of the mephit's next turn. {@actSaveSuccess} Half damage only. {@actSaveSuccessOrFail} Being underwater doesn't grant {@variantrule Resistance|SRD52} to this Fire damage."
+        ]
+      }
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.exhaustion",
+      "condition.incapacitated",
+      "condition.poisoned",
+      "rulebook.page-308"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        308
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/269"
+      },
+      "candidatePage": 308,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.stirge",
+    "kind": "monster",
+    "name": "Stirge",
+    "size": [
+      "T"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 5,
+      "formula": "2d4"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": 40
+    },
+    "str": 4,
+    "dex": 16,
+    "con": 11,
+    "int": 2,
+    "wis": 8,
+    "cha": 6,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 9,
+    "cr": "1/8",
+    "action": [
+      {
+        "name": "Proboscis",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Piercing damage, and the stirge attaches to the target. While attached, the stirge can't make Proboscis attacks, and the target takes 5 ({@damage 2d4}) Necrotic damage at the start of each of the stirge's turns.",
+          "The stirge can detach itself by spending 5 feet of its movement. The target or a creature within 5 feet of it can detach the stirge as an action."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-329"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        329
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/270"
+      },
+      "candidatePage": 329,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.stone-giant",
+    "kind": "monster",
+    "name": "Stone Giant",
+    "size": [
+      "H"
+    ],
+    "type": "giant",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 126,
+      "formula": "11d12 + 55"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 23,
+    "dex": 15,
+    "con": 20,
+    "int": 10,
+    "wis": 12,
+    "cha": 9,
+    "save": {
+      "dex": "+5",
+      "con": "+8",
+      "wis": "+4"
+    },
+    "skill": {
+      "athletics": "+12",
+      "perception": "+4",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "languages": [
+      "Giant"
+    ],
+    "cr": "7",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The giant makes two attacks, using Stone Club or Boulder in any combination."
+        ]
+      },
+      {
+        "name": "Stone Club",
+        "entries": [
+          "{@atkr m} {@hit 9}, reach 15 ft. {@h}22 ({@damage 3d10 + 6}) Bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Boulder",
+        "entries": [
+          "{@atkr r} {@hit 9}, range 60/240 ft. {@h}15 ({@damage 2d8 + 6}) Bludgeoning damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Deflect Missile {@recharge 5}",
+        "entries": [
+          "{@actTrigger} The giant is hit by a ranged attack roll and takes Bludgeoning, Piercing, or Slashing damage from it. {@actResponse} The giant reduces the damage it takes from the attack by 11 ({@dice 1d10 + 6}), and if that damage is reduced to 0, the giant can redirect some of the attack's force. {@actSave dex} {@dc 17}, one creature the giant can see within 60 feet. {@actSaveFail} 11 ({@damage 1d10 + 6}) Force damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.prone",
+      "rulebook.page-330"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        330
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/271"
+      },
+      "candidatePage": 330,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.stone-golem",
+    "kind": "monster",
+    "name": "Stone Golem",
+    "size": [
+      "L"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 220,
+      "formula": "21d10 + 105"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 22,
+    "dex": 9,
+    "con": 20,
+    "int": 3,
+    "wis": 11,
+    "cha": 1,
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "understands Common plus two other languages but can't speak"
+    ],
+    "cr": "10",
+    "trait": [
+      {
+        "name": "Immutable Form",
+        "entries": [
+          "The golem can't shape-shift."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The golem has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The golem makes two attacks, using Slam or Force Bolt in any combination."
+        ]
+      },
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hit 10}, reach 5 ft. {@h}15 ({@damage 2d8 + 6}) Bludgeoning damage plus 9 ({@damage 2d8}) Force damage."
+        ]
+      },
+      {
+        "name": "Force Bolt",
+        "entries": [
+          "{@atkr r} {@hit 9}, range 120 ft. {@h}22 ({@damage 4d10}) Force damage."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Slow {@recharge 5}",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The golem casts the {@spell Slow|SRD52} spell, requiring no spell components and using Constitution as the spellcasting ability (spell save {@dc 17})."
+        ],
+        "recharge": {
+          "5": [
+            "{@spell Slow|SRD52}"
+          ]
+        },
+        "ability": "con",
+        "displayAs": "bonus",
+        "hidden": [
+          "recharge"
+        ]
+      }
+    ],
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "rulebook.page-330",
+      "spell.slow"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        330
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/272"
+      },
+      "candidatePage": 330,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.storm-giant",
+    "kind": "monster",
+    "name": "Storm Giant",
+    "size": [
+      "H"
+    ],
+    "type": "giant",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      16
+    ],
+    "hp": {
+      "average": 230,
+      "formula": "20d12 + 100"
+    },
+    "speed": {
+      "walk": 50,
+      "fly": {
+        "number": 25,
+        "condition": "(hover)"
+      },
+      "swim": 50,
+      "canHover": true
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 29,
+    "dex": 14,
+    "con": 20,
+    "int": 16,
+    "wis": 20,
+    "cha": 18,
+    "save": {
+      "str": "+14",
+      "con": "+10",
+      "wis": "+10",
+      "cha": "+9"
+    },
+    "skill": {
+      "arcana": "+8",
+      "athletics": "+14",
+      "history": "+8",
+      "perception": "+10"
+    },
+    "senses": [
+      "Darkvision 120 ft.",
+      "Truesight 30 ft."
+    ],
+    "passive": 20,
+    "languages": [
+      "Common",
+      "Giant"
+    ],
+    "cr": "13",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The giant can breathe air and water."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The giant makes two attacks, using Storm Sword or Thunderbolt in any combination."
+        ]
+      },
+      {
+        "name": "Storm Sword",
+        "entries": [
+          "{@atkr m} {@hit 14}, reach 10 ft. {@h}23 ({@damage 4d6 + 9}) Slashing damage plus 13 ({@damage 3d8}) Lightning damage."
+        ]
+      },
+      {
+        "name": "Thunderbolt",
+        "entries": [
+          "{@atkr r} {@hit 14}, range 500 ft. {@h}22 ({@damage 2d12 + 9}) Lightning damage, and the target has the {@condition Blinded|SRD52} and {@condition Deafened|SRD52} conditions until the start of the giant's next turn."
+        ]
+      },
+      {
+        "name": "Lightning Storm {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 18}, each creature in a 10-foot-radius, 40-foot-high {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} originating from a point the giant can see within 500 feet. {@actSaveFail} 55 ({@damage 10d10}) Lightning damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The giant casts one of the following spells, requiring no Material components and using Wisdom as the spellcasting ability (spell save {@dc 18}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Light|SRD52}"
+        ],
+        "daily": {
+          "1": [
+            "{@spell Control Weather|SRD52}"
+          ]
+        },
+        "ability": "wis",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "lightning",
+      "thunder"
+    ],
+    "resist": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.deafened",
+      "rulebook.page-330",
+      "spell.control-weather",
+      "spell.detect-magic",
+      "spell.light"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        330
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/273"
+      },
+      "candidatePage": 330,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.succubus",
+    "kind": "monster",
+    "name": "Succubus",
+    "size": [
+      "M"
+    ],
+    "type": "fiend",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 71,
+      "formula": "13d8 + 13"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60
+    },
+    "str": 8,
+    "dex": 17,
+    "con": 13,
+    "int": 15,
+    "wis": 12,
+    "cha": 20,
+    "skill": {
+      "deception": "+9",
+      "insight": "+5",
+      "perception": "+5",
+      "persuasion": "+9",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "languages": [
+      "Abyssal",
+      "Common",
+      "Infernal; telepathy 60 ft."
+    ],
+    "cr": "4",
+    "trait": [
+      {
+        "name": "Incubus Form",
+        "entries": [
+          "When the succubus finishes a {@variantrule Long Rest|SRD52}, it can shape-shift into an {@creature Incubus|SRD52}, using that stat block instead of this one."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The succubus makes one Fiendish Touch attack and uses Charm or Draining Kiss."
+        ]
+      },
+      {
+        "name": "Fiendish Touch",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}16 ({@damage 2d10 + 5}) Psychic damage."
+        ]
+      },
+      {
+        "name": "Charm",
+        "entries": [
+          "The succubus casts {@spell Dominate Person|SRD52} (level 8 version), requiring no spell components and using Charisma as the spellcasting ability (spell save {@dc 15})."
+        ]
+      },
+      {
+        "name": "Draining Kiss",
+        "entries": [
+          "{@actSave con} {@dc 15}, one creature {@condition Charmed|SRD52} by the succubus within 5 feet. {@actSaveFail} 13 ({@damage 3d8}) Psychic damage. {@actSaveSuccess} Half damage. {@actSaveSuccessOrFail} The target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the damage taken."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Shape-Shift",
+        "entries": [
+          "The succubus shape-shifts to resemble a Medium or Small Humanoid or back into its true form. Its game statistics are the same in each form, except its {@variantrule Fly Speed|SRD52} is available only in its true form. Any equipment it's wearing or carrying isn't transformed."
+        ]
+      }
+    ],
+    "resist": [
+      "cold",
+      "fire",
+      "poison",
+      "psychic"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "monster.incubus",
+      "rulebook.page-331",
+      "spell.dominate-person"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        331
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/274"
+      },
+      "candidatePage": 331,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.swarm-of-crawling-claws",
+    "kind": "monster",
+    "name": "Swarm of Crawling Claws",
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "undead",
+      "swarmSize": "T"
+    },
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 49,
+      "formula": "11d8"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 14,
+    "dex": 14,
+    "con": 11,
+    "int": 5,
+    "wis": 10,
+    "cha": 4,
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "understands Common but can't speak"
+    ],
+    "cr": "3",
+    "trait": [
+      {
+        "name": "Swarm",
+        "entries": [
+          "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny creature. The swarm can't regain {@variantrule Hit Points|SRD52} or gain {@variantrule Temporary Hit Points|SRD52}."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Swarm of Grasping Hands",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}20 ({@damage 4d8 + 2}) Necrotic damage, or 11 ({@damage 2d8 + 2}) Necrotic damage if the swarm is {@status Bloodied|SRD52}. If the target is a Medium or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "immune": [
+      "necrotic",
+      "poison"
+    ],
+    "resist": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "grappled",
+      "incapacitated",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "prone",
+      "restrained",
+      "stunned"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.grappled",
+      "condition.incapacitated",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "condition.prone",
+      "condition.restrained",
+      "condition.stunned",
+      "rulebook.page-278"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        278
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/276"
+      },
+      "candidatePage": 278,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.tarrasque",
+    "kind": "monster",
+    "name": "Tarrasque",
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "monstrosity",
+      "tags": [
+        "titan"
+      ]
+    },
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      25
+    ],
+    "hp": {
+      "average": 697,
+      "formula": "34d20 + 340"
+    },
+    "speed": {
+      "walk": 60,
+      "burrow": 40,
+      "climb": 60
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 30,
+    "dex": 11,
+    "con": 30,
+    "int": 3,
+    "wis": 11,
+    "cha": 11,
+    "save": {
+      "dex": "+9",
+      "int": "+5",
+      "wis": "+9",
+      "cha": "+9"
+    },
+    "skill": {
+      "perception": "+9"
+    },
+    "senses": [
+      "Blindsight 120 ft."
+    ],
+    "passive": 19,
+    "cr": "30",
+    "trait": [
+      {
+        "name": "Legendary Resistance (6/Day)",
+        "entries": [
+          "If the tarrasque fails a saving throw, it can choose to succeed instead."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The tarrasque has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Reflective Carapace",
+        "entries": [
+          "If the tarrasque is targeted by a {@spell Magic Missile|SRD52} spell or a spell that requires a ranged attack roll, roll {@dice 1d6}. On a 1-5, the tarrasque is unaffected. On a 6, the tarrasque is unaffected and reflects the spell, turning the caster into the target."
+        ]
+      },
+      {
+        "name": "Siege Monster",
+        "entries": [
+          "The tarrasque deals double damage to objects and structures."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The tarrasque makes one Bite attack and three other attacks, using Claw or Tail in any combination."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 19}, reach 15 ft. {@h}36 ({@damage 4d12 + 10}) Piercing damage, and the target has the {@condition Grappled|SRD52} condition (escape {@dc 20}). Until the grapple ends, the target has the {@condition Restrained|SRD52} condition and can't teleport."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 19}, reach 15 ft. {@h}28 ({@damage 4d8 + 10}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atkr m} {@hit 19}, reach 30 ft. {@h}23 ({@damage 3d8 + 10}) Bludgeoning damage. If the target is a Huge or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Thunderous Bellow {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 27}, each creature and each object that isn't being worn or carried in a 150-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 78 ({@damage 12d12}) Thunder damage, and the target has the {@condition Deafened|SRD52} and {@condition Frightened|SRD52} conditions until the end of its next turn. {@actSaveSuccess} Half damage only."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Swallow",
+        "entries": [
+          "{@actSave str} {@dc 27}, one Large or smaller creature {@condition Grappled|SRD52} by the tarrasque (it can have up to six creatures swallowed at a time). {@actSaveFail} The target is swallowed, and the {@condition Grappled|SRD52} condition ends. A swallowed creature has the {@condition Blinded|SRD52} and {@condition Restrained|SRD52} conditions and can't teleport, it has {@variantrule Cover|SRD52|Total Cover} against attacks and other effects outside the tarrasque, and it takes 56 ({@damage 16d6}) Acid damage at the start of each of the tarrasque's turns.",
+          "If the tarrasque takes 60 damage or more on a single turn from a creature inside it, the tarrasque must succeed on a {@dc 20} Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, each of which falls in a space within 10 feet of the tarrasque and has the {@condition Prone|SRD52} condition. If the tarrasque dies, any swallowed creature no longer has the {@condition Restrained|SRD52} condition and can escape from the corpse using 20 feet of movement, exiting {@condition Prone|SRD52}."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Onslaught",
+        "entries": [
+          "The tarrasque moves up to half its {@variantrule Speed|SRD52}, and it makes one Claw or Tail attack."
+        ]
+      },
+      {
+        "name": "World-Shaking Movement",
+        "entries": [
+          "The tarrasque moves up to its {@variantrule Speed|SRD52}. At the end of this movement, the tarrasque creates an instantaneous shock wave in a 60-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from itself. Creatures in that area lose {@status Concentration|SRD52} and, if Medium or smaller, have the {@condition Prone|SRD52} condition. The tarrasque can't take this action again until the start of its next turn."
+        ]
+      }
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "resist": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "deafened",
+      "frightened",
+      "paralyzed",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.charmed",
+      "condition.deafened",
+      "condition.frightened",
+      "condition.grappled",
+      "condition.paralyzed",
+      "condition.poisoned",
+      "condition.prone",
+      "condition.restrained",
+      "rulebook.page-331",
+      "spell.magic-missile"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        331
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/282"
+      },
+      "candidatePage": 331,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.tough",
+    "kind": "monster",
+    "name": "Tough",
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 32,
+      "formula": "5d8 + 10"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 15,
+    "dex": 12,
+    "con": 14,
+    "int": 10,
+    "wis": 10,
+    "cha": 11,
+    "passive": 10,
+    "languages": [
+      "Common"
+    ],
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The tough has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the tough's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Mace",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Heavy Crossbow",
+        "entries": [
+          "{@atkr r} {@hit 3}, range 100/400 ft. {@h}6 ({@damage 1d10 + 1}) Piercing damage."
+        ]
+      }
+    ],
+    "gear": [
+      "heavy crossbow|srd52",
+      "leather armor|srd52",
+      "mace|srd52"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "rulebook.page-332"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        332
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/284"
+      },
+      "candidatePage": 332,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.tough-boss",
+    "kind": "monster",
+    "name": "Tough Boss",
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      16
+    ],
+    "hp": {
+      "average": 82,
+      "formula": "11d8 + 33"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 17,
+    "dex": 14,
+    "con": 16,
+    "int": 11,
+    "wis": 10,
+    "cha": 11,
+    "save": {
+      "str": "+5",
+      "con": "+5",
+      "cha": "+2"
+    },
+    "passive": 10,
+    "languages": [
+      "Common plus one other language"
+    ],
+    "cr": "4",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The tough has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the tough's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The tough makes two attacks, using Warhammer or Heavy Crossbow in any combination."
+        ]
+      },
+      {
+        "name": "Warhammer",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}12 ({@damage 2d8 + 3}) Bludgeoning damage. If the target is a Large or smaller creature, the tough pushes the target up to 10 feet straight away from itself."
+        ]
+      },
+      {
+        "name": "Heavy Crossbow",
+        "entries": [
+          "{@atkr r} {@hit 4}, range 100/400 ft. {@h}13 ({@damage 2d10 + 2}) Piercing damage."
+        ]
+      }
+    ],
+    "gear": [
+      "chain mail|srd52",
+      "heavy crossbow|srd52",
+      "warhammer|srd52"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "rulebook.page-332"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        332
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/285"
+      },
+      "candidatePage": 332,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.treant",
+    "kind": "monster",
+    "name": "Treant",
+    "size": [
+      "H"
+    ],
+    "type": "plant",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      16
+    ],
+    "hp": {
+      "average": 138,
+      "formula": "12d12 + 60"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 23,
+    "dex": 8,
+    "con": 21,
+    "int": 12,
+    "wis": 16,
+    "cha": 12,
+    "passive": 13,
+    "languages": [
+      "Common",
+      "Druidic",
+      "Elvish",
+      "Sylvan"
+    ],
+    "cr": "9",
+    "trait": [
+      {
+        "name": "Siege Monster",
+        "entries": [
+          "The treant deals double damage to objects and structures."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The treant makes two Slam attacks."
+        ]
+      },
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hit 10}, reach 5 ft. {@h}16 ({@damage 3d6 + 6}) Bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Hail of Bark",
+        "entries": [
+          "{@atkr r} {@hit 10}, range 180 ft. {@h}28 ({@damage 4d10 + 6}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Animate Trees (1/Day)",
+        "entries": [
+          "The treant magically animates up to two trees it can see within 60 feet of itself. Each tree uses the Treant stat block, except it has Intelligence and Charisma scores of 1, it can't speak, and it lacks this action. The tree takes its turn immediately after the treant on the same {@variantrule Initiative|SRD52} count, and it obeys the treant. A tree remains animate for 1 day or until it dies, the treant dies, or it is more than 120 feet from the treant. The tree then takes root if possible."
+        ]
+      }
+    ],
+    "resist": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "vulnerable": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "rulebook.page-333"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        333
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/286"
+      },
+      "candidatePage": 333,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.troll",
+    "kind": "monster",
+    "name": "Troll",
+    "size": [
+      "L"
+    ],
+    "type": "giant",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 94,
+      "formula": "9d10 + 45"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 18,
+    "dex": 13,
+    "con": 20,
+    "int": 7,
+    "wis": 9,
+    "cha": 7,
+    "skill": {
+      "perception": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "languages": [
+      "Giant"
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Loathsome Limbs (4/Day)",
+        "entries": [
+          "If the troll ends any turn {@status Bloodied|SRD52} and took 15+ Slashing damage during that turn, one of the troll's limbs is severed, falls into the troll's space, and becomes a {@creature Troll Limb|SRD52}. The limb acts immediately after the troll's turn. The troll has 1 {@condition Exhaustion|SRD52} level for each missing limb, and it grows replacement limbs the next time it regains {@variantrule Hit Points|SRD52}."
+        ]
+      },
+      {
+        "name": "Regeneration",
+        "entries": [
+          "The troll regains 15 {@variantrule Hit Points|SRD52} at the start of each of its turns. If the troll takes Acid or Fire damage, this trait doesn't function on the troll's next turn. The troll dies only if it starts its turn with 0 {@variantrule Hit Points|SRD52} and doesn't regenerate."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The troll makes three Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Slashing damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Charge",
+        "entries": [
+          "The troll moves up to half its {@variantrule Speed|SRD52} straight toward an enemy it can see."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.exhaustion",
+      "monster.troll-limb",
+      "rulebook.page-333"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        333
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/288"
+      },
+      "candidatePage": 333,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.troll-limb",
+    "kind": "monster",
+    "name": "Troll Limb",
+    "size": [
+      "S"
+    ],
+    "type": "giant",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 14,
+      "formula": "4d6"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 10,
+    "int": 1,
+    "wis": 9,
+    "cha": 1,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 9,
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Regeneration",
+        "entries": [
+          "The limb regains 5 {@variantrule Hit Points|SRD52} at the start of each of its turns. If the limb takes Acid or Fire damage, this trait doesn't function on the limb's next turn. The limb dies only if it starts its turn with 0 {@variantrule Hit Points|SRD52} and doesn't regenerate."
+        ]
+      },
+      {
+        "name": "Troll Spawn",
+        "entries": [
+          "The limb uncannily has the same senses as a whole troll. If the limb isn't destroyed within 24 hours, roll {@dice 1d12}. On a 12, the limb turns into a {@creature Troll|SRD52}. Otherwise, the limb withers away."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}9 ({@damage 2d4 + 4}) Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "monster.troll",
+      "rulebook.page-333"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        333
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/289"
+      },
+      "candidatePage": 333,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  }
+]
