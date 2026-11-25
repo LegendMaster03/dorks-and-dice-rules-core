@@ -186,7 +186,7 @@ internal static class NativeOriginReferenceEndpoints
             sourceRestriction = candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Restricted
                 ? candidate.SelectionBasis.Explanation : null
         }).ToArray();
-        var fixedValues = issues.Count != 0 ? [] : proposal.Candidates
+        FixedIntrinsic[] fixedValues = issues.Count != 0 ? [] : proposal.Candidates
             .Where(c => c.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic &&
                 c.SelectionBasis.Eligibility != NativeOriginEligibility.Restricted)
             .GroupBy(c => c.Identity.IntrinsicSlotId, StringComparer.Ordinal)
@@ -268,8 +268,8 @@ internal static class NativeOriginReferenceEndpoints
             componentCategory = Text(component.Definition, "componentCategory"),
             sourcePath = component.SourcePath, definition = component.Definition,
             configuration, recipes, materialCompatibilityAvailable = false,
-            materialAssignmentOptions = configuration.MaterialSlots.Count == 0 ? [] : members
-                .Where(e => e.Category == "construct-material")
+            materialAssignmentOptions = members
+                .Where(e => configuration.MaterialSlots.Count != 0 && e.Category == "construct-material")
                 .Select(e => new { id = e.Id, name = e.Name }).ToArray() });
     }
 
@@ -299,12 +299,15 @@ internal static class NativeOriginReferenceEndpoints
             if (config.ConstructionVariants.Any(x => x.RecipeId == targetId))
                 Link("/constructionVariants", "variant-recipe");
         }
-        // A recipe can produce an option rather than a component.
-        if (target.Category == "crafting-recipe" && Text(target.Definition, "producesDefinitionId") is string output &&
-            catalog.TryGetById(output, out var product) && product is not null)
-            sources.Add(new(product.Id, product.Name, product.Category, "/producesDefinitionId", "recipe-output"));
+        // The output pointer belongs to the recipe, not to its product.
+        var productId = target.Category == "crafting-recipe" ? Text(target.Definition, "producesDefinitionId") : null;
+        var output = productId is not null && catalog.TryGetById(productId, out var product) && product is not null
+            ? new { id = product.Id, name = product.Name, kind = product.Category, path = "/producesDefinitionId" } : null;
+        var recipes = members.Where(e => e.Category == "crafting-recipe" &&
+            Text(e.Definition, "producesDefinitionId") == targetId)
+            .Select(e => new { id = e.Id, name = e.Name }).ToArray();
         return Results.Ok(new { contractVersion = 1, rulesetId = catalog.RulesetId,
-            fingerprint = catalog.Fingerprint, targetId, complete = true, sources });
+            fingerprint = catalog.Fingerprint, targetId, complete = true, sources, output, recipes });
     }
 
     // Complete-family semantics: never return a silently truncated tree or reverse lookup.

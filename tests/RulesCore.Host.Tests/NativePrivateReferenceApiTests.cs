@@ -180,6 +180,9 @@ public sealed class NativePrivateReferenceApiTests
             .Single(x => x.GetProperty("sourceId").GetString() == "species.dragonborn" && x.GetProperty("path").GetString() == "/traits/2");
         Assert.Equal("fire", breath.GetProperty("authoredParameters").GetProperty("damageType").GetString());
         var methods = await Read("methods/all");
+        Assert.Equal("all", methods.GetProperty("scope").GetString());
+        var typeMethods = await Read("methods/creature-type.dragon");
+        Assert.Equal("creature-type.dragon", typeMethods.GetProperty("scope").GetString());
         Assert.Contains(methods.GetProperty("methods").EnumerateArray(), x =>
             x.GetProperty("reference").GetProperty("methodId").GetString() == "rite-of-rebirth" &&
             x.GetProperty("stage").GetString() == "post-origination" && !x.GetProperty("createsNewIndividual").GetBoolean());
@@ -199,6 +202,7 @@ public sealed class NativePrivateReferenceApiTests
         Assert.Contains(component.GetProperty("materialAssignmentOptions").EnumerateArray(),
             x => x.GetProperty("id").GetString() == "construct-material.steel");
         var componentReverse = await Read("component-sources/crafting-recipe.construct-component.locomotion-unit");
+        Assert.Equal("construct-component.locomotion-unit", componentReverse.GetProperty("output").GetProperty("id").GetString());
         Assert.Contains(componentReverse.GetProperty("sources").EnumerateArray(), x =>
             x.GetProperty("sourceId").GetString() == "construct-component.locomotion-unit" &&
             x.GetProperty("relation").GetString() == "default-recipe");
