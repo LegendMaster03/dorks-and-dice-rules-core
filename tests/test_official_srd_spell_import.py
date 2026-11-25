@@ -29,7 +29,9 @@ class OfficialSrdSpellImportTests(unittest.TestCase):
                     candidate = expected[int(pointer.split("/")[-1])]
                     self.assertEqual("SRD" + tag, candidate["source"])
                     self.assertEqual(record["id"], "spell." + slug(candidate["name"]))
-                    for field in ("time", "range", "components", "duration", "entries", "entriesHigherLevel"):
+                    # Body projections are verified by promote_srd_json.mjs --check and
+                    # independent publisher fidelity tests, not equality to uncorrected JSON.
+                    for field in ("time", "range", "components", "duration"):
                         self.assertEqual(candidate.get(field), record.get(field), (record["id"], field))
                     self.assertEqual(manifest["officialPageImport"]["pdfSha256"], record["source"]["pdfSha256"])
                     self.assertEqual(manifest["attribution"], record["source"]["attribution"])

@@ -142,6 +142,140 @@ function enrichSpell(row, candidate, index, manifest, tag) {
             }
         }
     }
+    // Explicit publisher-confirmed corrections, including nested entries.
+    const bodyCorrections=[
+  [
+    "51",
+    "spell.levitate",
+    [
+      0
+    ],
+    "One creature or loose object",
+    "One creature or object",
+    "One creature or object of your choice"
+  ],
+  [
+    "51",
+    "spell.magnificent-mansion",
+    [
+      2
+    ],
+    "any creatures or objects left inside",
+    "any creatures inside",
+    "any creatures inside the extradimensional space"
+  ],
+  [
+    "51",
+    "spell.moonbeam",
+    [
+      3
+    ],
+    "move the beam up to 60 feet",
+    "move the beam 60 feet",
+    "move the beam 60 feet"
+  ],
+  [
+    "51",
+    "spell.sanctuary",
+    [
+      1
+    ],
+    "If the warded creature makes an attack, casts a spell that affects an enemy, or deals damage to another creature, this spell ends.",
+    "If the warded creature makes an attack or casts a spell that affects an enemy creature, this spell ends.",
+    "If the warded creature makes an attack or casts a spell that affects an enemy creature, this spell ends."
+  ],
+  [
+    "51",
+    "spell.simulacrum",
+    [
+      0
+    ],
+    "it duplicates, except that it is a construct.",
+    "it duplicates.",
+    "illusion uses all the statistics of the creature it duplicates."
+  ],
+  [
+    "51",
+    "spell.true-polymorph",
+    [
+      0
+    ],
+    "the creature into a nonmagical object",
+    "the creature into an object",
+    "the creature into an object"
+  ],
+  [
+    "51",
+    "spell.true-polymorph",
+    [
+      6,
+      "entries",
+      0
+    ],
+    "The DM has the creature's statistics",
+    "The GM has the creature's statistics",
+    "The GM has the creature's statistics"
+  ],
+  [
+    "51",
+    "spell.true-polymorph",
+    [
+      8,
+      "entries",
+      0
+    ],
+    "into that form, as long as the object's size is no larger than the creature's size.",
+    "into that form.",
+    "wearing and carrying into that form."
+  ],
+  [
+    "51",
+    "spell.true-resurrection",
+    [
+      1
+    ],
+    " If the creature was undead, it is restored to its non-undead form.",
+    "",
+    "replaces damaged or missing organs and limbs. The spell can even provide"
+  ],
+  [
+    "51",
+    "spell.unseen-servant",
+    [
+      0
+    ],
+    "mindless, shapeless, Medium force",
+    "mindless, shapeless force",
+    "mindless, shapeless force"
+  ],
+  [
+    "52",
+    "spell.wish",
+    [
+      3,
+      "items",
+      6,
+      "entries",
+      0
+    ],
+    "If your wish would undo the multiverse itself, threaten the City of Sigil, or affect the Lady of Pain in any way, you see an image of her in your mind for a moment; she shakes her head, and your wish fails.",
+    "If your wish would undo the multiverse itself, your wish fails.",
+    "If your wish would undo the multiverse itself, your wish fails."
+  ]
+];
+    const applicable=bodyCorrections.filter(([edition,id])=>edition===tag&&id===row.id);
+    if(applicable.length){
+        result.entries=JSON.parse(JSON.stringify(result.entries));
+        const official=row.officialTextLayout.replace(/[’‘]/g,"'").replace(/\s+/g," ");
+        for(const [,id,path,from,to,evidence] of applicable){
+            if(!official.includes(evidence))throw Error("Publisher evidence changed: "+id);
+            let target=result.entries;
+            for(const key of path.slice(0,-1))target=target[key];
+            const key=path.at(-1);
+            if(typeof target[key]!=="string"||target[key].split(from).length!==2)throw Error("Source entry changed: "+id);
+            target[key]=target[key].replace(from,to);
+        }
+    }
     result.source = {...row.source, structuredSource: pointer(manifest, tag, "spell", index),
         structuredStatus: "publisher-name-level-school-verified; structured body review pending"};
     return result;

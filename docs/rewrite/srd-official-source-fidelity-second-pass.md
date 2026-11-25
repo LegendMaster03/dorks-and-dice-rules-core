@@ -84,3 +84,7 @@ Seven further legacy spell descriptions differ from the pinned CC SRD 5.1, large
 | Heroes' Feast | Up to twelve other creatures |
 
 The existing generator preserves the unchanged upstream source and verifies specific publisher evidence before applying these corrections. The complete normalized descriptions are checked by the fidelity tests. No executable spell mechanics are added.
+
+### Legacy spell body corrections — second batch, and modern Wish
+
+Restore published Levitate object eligibility, Magnificent Mansion expulsion, Moonbeam movement distance, Sanctuary termination, Simulacrum creature statistics, True Polymorph object transformation restrictions, True Resurrection wording, and Unseen Servant's unspecified size. Modern Wish removes the additional non-SRD City of Sigil/Lady of Pain restriction; the publisher's multiverse restriction remains. These are exact occurrence edits checked against publisher evidence, not arbitrary replacements across all entries. The former offline test comparing every spell body to uncorrected structured JSON conflicted with the source correction workflow and has been narrowed to the casting fields; reproducible generator checks and independent publisher text comparison cover the corrected bodies.
