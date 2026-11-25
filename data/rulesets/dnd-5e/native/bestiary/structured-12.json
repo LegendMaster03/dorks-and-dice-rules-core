@@ -494,6 +494,7 @@
       "mace|srd51"
     ],
     "catalogReferences": [
+      "baseitem.leather-armor",
       "condition.incapacitated",
       "rulebook.page-402"
     ],
@@ -780,6 +781,7 @@
       "spear|srd51"
     ],
     "catalogReferences": [
+      "baseitem.hide-armor",
       "condition.incapacitated",
       "rulebook.page-402"
     ],
@@ -1435,6 +1437,7 @@
       "condition.paralyzed",
       "condition.restrained",
       "condition.unconscious",
+      "item.holy-water-flask",
       "monster.swarm-of-bats",
       "monster.swarm-of-rats",
       "monster.vampire-spawn",
@@ -1592,6 +1595,7 @@
       "condition.grappled",
       "condition.incapacitated",
       "condition.restrained",
+      "item.holy-water-flask",
       "rulebook.page-354"
     ],
     "source": {
@@ -1692,6 +1696,7 @@
       "shortsword|srd51"
     ],
     "catalogReferences": [
+      "baseitem.splint-armor",
       "rulebook.page-403"
     ],
     "source": {
@@ -1915,6 +1920,7 @@
     "catalogReferences": [
       "condition.poisoned",
       "condition.stunned",
+      "item.holy-water-flask",
       "rulebook.page-273"
     ],
     "source": {

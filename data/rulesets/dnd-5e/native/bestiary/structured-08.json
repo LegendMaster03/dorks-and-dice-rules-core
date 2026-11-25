@@ -264,6 +264,7 @@
       "heavy crossbow|srd51"
     ],
     "catalogReferences": [
+      "baseitem.plate-armor",
       "condition.frightened",
       "condition.incapacitated",
       "rulebook.page-400"
@@ -772,6 +773,7 @@
       "condition.charmed",
       "condition.frightened",
       "condition.poisoned",
+      "item.holy-water-flask",
       "rulebook.page-278",
       "spell.bless"
     ],
@@ -1327,6 +1329,7 @@
       "javelin|srd51"
     ],
     "catalogReferences": [
+      "baseitem.shield",
       "rulebook.page-326"
     ],
     "source": {

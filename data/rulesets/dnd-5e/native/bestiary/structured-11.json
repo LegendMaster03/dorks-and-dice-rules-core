@@ -1175,6 +1175,7 @@
       "shortbow|srd51"
     ],
     "catalogReferences": [
+      "baseitem.leather-armor",
       "condition.invisible",
       "condition.poisoned",
       "condition.unconscious",
@@ -1848,6 +1849,7 @@
       "greatsword|srd51"
     ],
     "catalogReferences": [
+      "baseitem.scale-mail",
       "rulebook.page-313",
       "spell.control-weather",
       "spell.detect-magic",

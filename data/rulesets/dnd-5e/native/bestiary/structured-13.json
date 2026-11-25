@@ -332,6 +332,7 @@
       "longsword|srd51"
     ],
     "catalogReferences": [
+      "baseitem.studded-leather-armor",
       "condition.exhaustion",
       "condition.poisoned",
       "monster.zombie",

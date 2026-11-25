@@ -361,20 +361,7 @@
       "pointer": "/monster/333/_versions"
     }
   ],
-  "unresolvedTags": [
-    {
-      "id": "monster.lemure",
-      "kind": "item",
-      "name": "Holy Water",
-      "source": "SRD52"
-    },
-    {
-      "id": "monster.vrock",
-      "kind": "item",
-      "name": "Holy Water",
-      "source": "SRD52"
-    }
-  ],
+  "unresolvedTags": [],
   "corrections": [
     {
       "id": "monster.adult-black-dragon",

@@ -1925,6 +1925,7 @@
       "shortsword|srd51"
     ],
     "catalogReferences": [
+      "baseitem.leather-armor",
       "rulebook.page-344"
     ],
     "source": {
@@ -2096,6 +2097,7 @@
       "shortsword|srd51"
     ],
     "catalogReferences": [
+      "baseitem.leather-armor",
       "rulebook.page-401",
       "skill.perception"
     ],

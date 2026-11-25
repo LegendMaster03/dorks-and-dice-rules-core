@@ -363,6 +363,7 @@
       "condition.charmed",
       "condition.frightened",
       "condition.poisoned",
+      "item.holy-water",
       "rulebook.page-304",
       "spell.bless"
     ],

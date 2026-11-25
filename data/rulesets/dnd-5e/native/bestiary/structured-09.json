@@ -825,6 +825,7 @@
       "rapier|srd51"
     ],
     "catalogReferences": [
+      "baseitem.breastplate",
       "rulebook.page-401"
     ],
     "source": {
@@ -1111,6 +1112,7 @@
       "javelin|srd51"
     ],
     "catalogReferences": [
+      "baseitem.hide-armor",
       "rulebook.page-336"
     ],
     "source": {
@@ -1341,6 +1343,7 @@
       "glaive|srd51"
     ],
     "catalogReferences": [
+      "baseitem.chain-mail",
       "rulebook.page-336",
       "spell.charm-person",
       "spell.cone-of-cold",
@@ -1446,6 +1449,7 @@
       "javelin|srd51"
     ],
     "catalogReferences": [
+      "baseitem.hide-armor",
       "rulebook.page-339"
     ],
     "source": {
@@ -2754,6 +2758,7 @@
       "mace|srd51"
     ],
     "catalogReferences": [
+      "baseitem.chain-shirt",
       "rulebook.page-401",
       "spell.cure-wounds",
       "spell.dispel-magic",

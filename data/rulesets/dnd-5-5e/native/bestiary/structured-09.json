@@ -850,6 +850,7 @@
     "catalogReferences": [
       "condition.poisoned",
       "condition.stunned",
+      "item.holy-water",
       "rulebook.page-336"
     ],
     "source": {
