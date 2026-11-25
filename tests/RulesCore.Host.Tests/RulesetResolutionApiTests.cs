@@ -202,7 +202,7 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal("fire", fireDefinition.GetProperty("variantSelection").GetProperty("sharedResistance").GetString());
 
         var modernItems = await client.GetFromJsonAsync<JsonElement>(animals + "?category=item&limit=1");
-        Assert.Equal(1037, modernItems.GetProperty("total").GetInt32());
+        Assert.Equal(1157, modernItems.GetProperty("total").GetInt32());
         // Concrete numbered items retain the original edition-local equipment and template.
         foreach (var prefix in new[] { "/api/rulesets/dnd-5e/rules", animals })
         {
