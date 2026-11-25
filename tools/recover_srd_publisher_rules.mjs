@@ -157,10 +157,17 @@ function recoverPublisherRules(manifest,pages,tag,knownIds,items){
   rows.push(...legacyPublisherRules(pageMap,metadata));
   rows.push(legacySentientMagicItems(pageMap,metadata));
  }else{
+  // The expanded upstream candidate matches the complete official glossary entry.
+  // Keep its provenance separate from pointers into the original pinned corpus.
+  const reachPage=pageMap.get(186),reachEntries=["A creature has a reach of 5 feet unless a rule says otherwise."];
+  const right=reachPage.textLayout.split("\n").map(l=>l.trim().split(/ {4,}/).at(-1)).filter(Boolean);
+  const start=right.indexOf("Reach"),end=right.indexOf("Reaction",start+1);
+  if(start<0||end!==start+3||right.slice(start+1,end).join(" ")!==reachEntries[0])throw Error("Publisher Reach glossary body mismatch");
   const page=pageMap.get(90),entry="Each weapon has a mastery property, which is usable only by a character who has a feature, such as Weapon Mastery, that unlocks the property for the character. The properties are defined below.";
   const names=["Cleave","Graze","Nick","Push","Sap","Slow","Topple","Vex"];
   if(!page.textLayout.includes("Mastery Properties")||names.some(n=>!page.textLayout.includes(n)))throw Error("Missing mastery section");
   rows.push({id:"rule.weapon-mastery-properties",kind:"rule",name:"Mastery Properties",aliases:["Weapon Mastery Properties"],entries:[entry],properties:names.map(n=>"item-mastery."+slug(n)),catalogReferences:[page.id,...names.map(n=>"item-mastery."+slug(n))].sort(),source:metadata([90])});
+  rows.push({id:"glossary.reach",kind:"glossary",name:"Reach",entries:reachEntries,catalogReferences:[reachPage.id],source:{...metadata([186]),structuredStatus:"Expanded upstream SRD candidate; exact published glossary body verified.",expandedStructuredSource:{provider:"5etools-mirror-3/5etools-src",commit:"2512db75eb48ef06f6190b086a82430887906dca",path:"data/variantrules.json",pointer:"/variantrule/179"}}});
  }
  const known=new Set([...knownIds,...pages.map(p=>p.id),...rows.map(r=>r.id)]);
  for(const r of rows)for(const id of r.catalogReferences)if(!known.has(id))throw Error("Missing publisher recovery reference "+id);
@@ -168,7 +175,7 @@ function recoverPublisherRules(manifest,pages,tag,knownIds,items){
 }
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
-for(const [pack,tag,files] of [["dnd-5e","51",["053-077","178-202","203-227","228-252","253-277"]],["dnd-5-5e","52",["080-104"]]]){
+for(const [pack,tag,files] of [["dnd-5e","51",["053-077","178-202","203-227","228-252","253-277"]],["dnd-5-5e","52",["080-104","180-204"]]]){
  const base="data/rulesets/"+pack+"/",native=base+"native/";
  const pages=files.flatMap(f=>read(native+"rulebook/pages-"+f+".json"));
  const load=dir=>fs.readdirSync(path.join(root,native,dir)).filter(f=>f.endsWith(".json")).flatMap(f=>read(native+dir+"/"+f));

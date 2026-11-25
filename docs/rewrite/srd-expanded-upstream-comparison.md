@@ -29,7 +29,7 @@ publisher-source or license verification.
 
 These are identity comparisons against the existing pinned corpus, not a
 certification of native coverage. Use an Object already has a corrected
-legacy native identity. Reach needs a modern glossary cross-check. The
+legacy native identity. Reach is now recovered as glossary.reach from the upstream record at data/variantrules.json#/variantrule/179. Its complete body agrees with official SRD 5.2.1 p.186; the existing publisher recovery generator checks the exact right-column section. The expanded source pointer is tracked separately from original corpus pointers and validated by the comparison audit. The
 variant candidates require comparison against existing concrete and template
 item definitions rather than automatic import. The source tree and selected
 file comparisons were inspected via GitHub; no local upstream checkout was

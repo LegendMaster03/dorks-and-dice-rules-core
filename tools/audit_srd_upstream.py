@@ -140,11 +140,19 @@ def audit(checkout):
     indexes = {edition: defaultdict(list) for edition in PACKAGES}
     native_names = {edition: defaultdict(list) for edition in PACKAGES}
     dispositions = {}
+    expanded_links = {edition: defaultdict(list) for edition in PACKAGES}
     for edition, package in PACKAGES.items():
         native = list(native_rows(REPO / "data" / "rulesets" / package / "native"))
         for row in native:
             if row.get("name"):
                 native_names[edition][norm(row["name"])].append(row["id"])
+            pointer = row.get("source", {}).get("expandedStructuredSource")
+            if pointer:
+                if pointer.get("commit") != UPSTREAM_COMMIT or pointer.get("provider") != "5etools-mirror-3/5etools-src":
+                    raise ValueError("Unexpected expanded source pin: " + row["id"])
+                if row["source"].get("release") != edition:
+                    raise ValueError("Wrong expanded source edition: " + row["id"])
+                expanded_links[edition][(pointer["path"], pointer["pointer"])].append(row["id"])
         for row in candidates[edition]:
             payload = row["payload"]
             if name_of(payload):
@@ -167,13 +175,16 @@ def audit(checkout):
             groups[kind] += 1
             for edition, value, flag in candidate_flags(record):
                 row = compare_candidate(edition, kind, record, value, indexes, native_names, dispositions)
-                row.update({"path": path, "pointer": pointer, "flag": flag})
+                row.update({"path": path, "pointer": pointer, "flag": flag,
+                            "expandedSourceNativeIds": sorted(expanded_links[edition].pop((path, pointer), []))})
                 occurrences.append(row)
                 totals[edition][row["status"]] += 1
                 represented_flags[flag.rsplit("/", 1)[-1]] += 1
         all_flags = Counter(flagged_nested(document))
         entry["topLevelObjectCounts"] = dict(sorted(groups.items()))
         entry["flagsOutsideCandidateSelection"] = dict(sorted((all_flags - represented_flags).items()))
+    if any(expanded_links[edition] for edition in PACKAGES):
+        raise ValueError("Unmatched expanded upstream native source pointer")
     return {"status": "diagnostic-only; not licensing or official fidelity verification",
             "upstreamRepository": "5etools-mirror-3/5etools-src", "upstreamCommit": UPSTREAM_COMMIT,
             "fileCount": len(files), "files": files,

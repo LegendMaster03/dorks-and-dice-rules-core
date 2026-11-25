@@ -620,7 +620,12 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal(10, oldCoreActions.GetProperty("total").GetInt32());
         Assert.Equal(12, newCoreActions.GetProperty("total").GetInt32());
         var glossary = await client.GetFromJsonAsync<JsonElement>(animals + "?category=glossary&limit=1");
-        Assert.Equal(114, glossary.GetProperty("total").GetInt32());
+        Assert.Equal(115, glossary.GetProperty("total").GetInt32());
+        var reach = await client.GetFromJsonAsync<JsonElement>(animals + "/glossary.reach");
+        var reachDefinition = reach.GetProperty("rule").GetProperty("definition");
+        Assert.Equal("A creature has a reach of 5 feet unless a rule says otherwise.", reachDefinition.GetProperty("entries")[0].GetString());
+        Assert.Contains("rulebook.page-186", reachDefinition.GetProperty("catalogReferences").GetRawText());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/glossary.reach")).StatusCode);
         var grapple = await client.GetFromJsonAsync<JsonElement>(oldRules + "/attack-option.grapple");
         var grappleDefinition = grapple.GetProperty("rule").GetProperty("definition");
         Assert.True(grappleDefinition.GetProperty("replacesAttack").GetBoolean());
