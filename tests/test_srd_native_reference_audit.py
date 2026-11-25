@@ -35,7 +35,7 @@ class NativeReferenceAuditTests(unittest.TestCase):
         self.assertTrue(refs[2]["alreadyExplicit"])
         self.assertEqual("missing", refs[3]["status"])
         self.assertEqual("named-variant-candidate", refs[4]["status"])
-        self.assertEqual("unsupported-tag", refs[5]["status"])
+        self.assertEqual("book-navigation", refs[5]["status"])
 
     def test_ambiguity_is_not_silently_resolved(self):
         rows = [
@@ -110,3 +110,29 @@ class NativeReferenceAuditTests(unittest.TestCase):
         refs = audit(rows, "SRD52")["occurrences"]
         self.assertEqual(["item.1-longsword"], refs[0]["targets"])
         self.assertEqual("foreign-source", refs[1]["status"])
+
+    def test_markup_classification_does_not_invent_dependencies(self):
+        rows = [
+            {"id": "background.soldier", "kind": "background", "name": "Soldier"},
+            {"id": "magical-contagion.sight-rot", "kind": "magical-contagion", "name": "Sight Rot"},
+            {"id": "item.deck", "kind": "item", "name": "Deck"},
+            {"id": "rule.test", "kind": "rule", "name": "Test", "entries": [
+                "{@background Soldier|SRD52}", "{@disease Sight Rot|SRD52}",
+                "{@background Soldier|SRD51}", "{@book Chapter|SRD52|1}",
+                "{@book Chapter|SRD51|1}", "{@quickref Cover||3}",
+                "{@filter spells|spells|class=Bard}", "{@filter malformed}",
+                "{@card Fool|Deck}", "{@card Fool|Missing}",
+                "{@link editorial|https://example.invalid}", "{@unknown text}"]},
+        ]
+        refs = audit(rows, "SRD52")["occurrences"]
+        self.assertEqual(
+            ["unique-literal-candidate", "unique-literal-candidate", "foreign-source",
+             "book-navigation", "foreign-source", "quick-reference-navigation",
+             "display-filter-review", "malformed-filter", "nested-card-review",
+             "missing", "external-link-review", "unsupported-tag"],
+            [r["status"] for r in refs])
+        self.assertEqual(["background.soldier"], refs[0]["targets"])
+        self.assertEqual(["magical-contagion.sight-rot"], refs[1]["targets"])
+        self.assertEqual(["item.deck"], refs[8]["targets"])
+        self.assertEqual("Fool", refs[8]["variant"])
+        self.assertEqual([], refs[6]["targets"])

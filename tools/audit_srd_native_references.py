@@ -22,6 +22,8 @@ KINDS = {
     "skill": ("skill",),
     "item": ("item", "baseitem", "item-group", "magic-variant"),
     "feat": ("feat",),
+    "background": ("background",),
+    "disease": ("disease", "magical-contagion"),
     "action": ("action", "attack-option", "combat-option", "equipment-option", "reaction-option", "activity"),
     "sense": ("sense",),
     "language": ("language",),
@@ -112,6 +114,32 @@ class Index:
                 return "foreign-source", [], None
             targets = sorted(self.features[key])
             return self.result(targets)
+        # Navigation and display filters are not grants or standalone identities.
+        # Preserve their raw selectors for consumers and subsequent fidelity review.
+        if kind == "book":
+            if len(parts) < 2 or not parts[1]:
+                return "malformed-navigation", [], None
+            if parts[1].upper() != self.tag:
+                return "foreign-source", [], None
+            return "book-navigation", [], None
+        if kind == "quickref":
+            return "quick-reference-navigation", [], None
+        if kind == "filter":
+            if len(parts) < 3 or not parts[1] or not all(parts[2:]):
+                return "malformed-filter", [], None
+            return "display-filter-review", [], None
+        if kind == "link":
+            # An external hyperlink is not evidence of licensing or publisher fidelity.
+            return "external-link-review", [], None
+        if kind == "card":
+            # Cards in a deck are nested effects, not independent catalog definitions.
+            # The parent identity is a candidate; the effect name remains unverified.
+            if len(parts) < 2 or not parts[1]:
+                return "malformed-context", [], None
+            targets = sorted(self.names["item", normalize(parts[1])])
+            if len(targets) != 1:
+                return self.result(targets)
+            return "nested-card-review", targets, name
         if kind not in KINDS:
             return "unsupported-tag", [], None
         source = parts[1] if len(parts) > 1 else ""
