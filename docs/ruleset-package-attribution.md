@@ -27,31 +27,16 @@ remains unchanged in meaning (native entities, not manifest display fields).
 Rediscover the descriptor when opening a reader; publication review must also
 review metadata independently. Do not infer approval from a license.
 
-## Private access finding and proposed contract (approval required)
+## Existing access boundary (unchanged)
 
-PrivateReferenceTicketValidator redeems one-time Site tickets, checks target
-rules-core, contract version, user ID, dorks-and-dice mode and rules-wiki tunnel
-source. PrivateOnly ingress maps the reference routes. NativeReferenceEndpoints
-requires the first-party active domain and then uses NativePublicEndpoints.MayRead
-for index/search/detail: authenticated first-party or exact package publication
-approval. Direct authenticated consumer and anonymous public routes are separate.
-
-Propose a private Wiki preview entitlement, not a publication bypass. The
-validated Site subject and source must still pass all current checks; a
-Core-owned, default-deny per-package preview configuration must separately
-authorize the exact snapshot fingerprint and explicit review subjects (or an
-owner-approved reviewer entitlement from Site). No client header, browser role,
-network membership or license identifier grants preview. Apply the same decision
-to index/search/detail, conceal denied catalogs, preserve first-party access,
-retain the existing publication path for already-approved foreign packages.
-Do not expose preview configuration, change public/direct consumer routes, or
-allow preview exports. Require isolated acceptance tests for wrong source,
-subject, mode, missing entitlement, stale fingerprint, unrelated package,
-public/direct consumer denial and first-party regression. Isolated fixtures can
-exercise the existing approval path without changing deployment settings.
-
-This proposal is not implemented. Owner must approve scope of preview
-subjects/entitlements and environment policy before implementation.
+Site owns tester access to the Rules Wiki. The private reference tunnel and
+the existing Core endpoint policies remain authoritative. The private catalog
+index currently applies the existing foreign-package distribution approval
+check; this work does not change that behavior. No additional reviewer roster,
+preview entitlement, package eligibility configuration or authorization path is
+in scope. Metadata is returned only for descriptors already permitted by
+the existing endpoint. Fixture tests exercise the existing approval path
+without enabling production packages.
 
 ## Future campaign rulesets
 
