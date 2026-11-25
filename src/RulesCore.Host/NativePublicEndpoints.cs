@@ -8,7 +8,7 @@ namespace RulesCore.Host;
 // Explicit transport DTOs; no internal NativeRuleEntity (including SourcePath) is serialized.
 public sealed record PublicRulesetCapabilities(bool Read, bool Write);
 public sealed record PublicRulesetSummary(string Id, int EntityCount, string Fingerprint,
-    PublicRulesetCapabilities Capabilities);
+    PublicRulesetCapabilities Capabilities, NativePackageMetadata? Metadata = null);
 public sealed record PublicRulesetsResponse(PublicRulesetSummary[] Rulesets);
 public sealed record PublicRuleSummary(string Id, string Name, string Kind);
 public sealed record PublicCategoryFacet(string Kind, int Count);
@@ -67,7 +67,7 @@ public static class NativePublicEndpoints
             if (request.Query.Count != 0) return Results.BadRequest(new { error = "invalid_query" });
             var visible = snapshots.Where(snapshot => MayRead(snapshot, policy, authenticated))
                 .Select(snapshot => new PublicRulesetSummary(snapshot.RulesetId, snapshot.Count,
-                    snapshot.Fingerprint, new PublicRulesetCapabilities(true, false))).ToArray();
+                    snapshot.Fingerprint, new PublicRulesetCapabilities(true, false), snapshot.Metadata)).ToArray();
             return Results.Ok(new PublicRulesetsResponse(visible));
         });
 

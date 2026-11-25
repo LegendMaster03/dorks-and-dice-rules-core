@@ -14,5 +14,18 @@
     "commit": "93ed848e723f31b4994b466b7241011ba24be885",
     "sectionRecords": 127,
     "representation": "markdown-headings"
-  }
+  },
+  "sourceSystem": "Fate",
+  "sourceEdition": "Condensed",
+  "sourcePublication": "Fate Condensed",
+  "sourceVersion": "2020",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+  "originalSources": [
+    "https://fate-srd.com/fate-condensed",
+    "https://www.faterpg.com/",
+    "https://github.com/fate-srd/fate-srd-content/blob/93ed848e723f31b4994b466b7241011ba24be885/docs/markdown/Fate-Condensed-SRD-CC-BY.md"
+  ],
+  "modificationNotices": [
+    "Original text segmented by heading with native metadata; selected rules additionally represented as structured definitions."
+  ]
 }

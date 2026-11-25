@@ -39,6 +39,7 @@ public static class NativeReferenceEndpoints
                         id = snapshot.RulesetId,
                         entityCount = snapshot.Count,
                         fingerprint = snapshot.Fingerprint,
+                        metadata = snapshot.Metadata,
                         capabilities = new { read = true, write = false }
                     }).ToArray()
             });

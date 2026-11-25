@@ -36,6 +36,7 @@ public sealed class NativeCatalogSnapshot
     public string RulesetId { get; }
     public int SchemaVersion { get; }
     public string Fingerprint { get; }
+    public NativePackageMetadata? Metadata { get; }
     public int Count => _all.Length;
     public IReadOnlyDictionary<string, int> CountsByCategory { get; }
 
@@ -44,7 +45,8 @@ public sealed class NativeCatalogSnapshot
         int schemaVersion,
         string fingerprint,
         IReadOnlyCollection<NativeRuleEntity> entities,
-        IReadOnlyDictionary<string, string>? originTraitReferences = null)
+        IReadOnlyDictionary<string, string>? originTraitReferences = null,
+        NativePackageMetadata? metadata = null)
     {
         _originTraitReferences = (originTraitReferences ??
             new Dictionary<string, string>(StringComparer.Ordinal))
@@ -52,6 +54,7 @@ public sealed class NativeCatalogSnapshot
         RulesetId = rulesetId;
         SchemaVersion = schemaVersion;
         Fingerprint = fingerprint;
+        Metadata = metadata;
 
         var ordered = entities.OrderBy(e => e.Id, StringComparer.Ordinal).ToArray();
         _byId = ordered.ToFrozenDictionary(e => e.Id, StringComparer.Ordinal);
