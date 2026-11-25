@@ -14,6 +14,22 @@
   },
   "corrections": [
     {
+      "id": "class.bard",
+      "reason": "Official SRD 5.1 pp.11,13: Magical Secrets chooses two cantrips or spells from any class at each acquisition level, bounded by the Bard spell-slot progression. Use the eight published class lists; restore the missing explicit level-18 filter.",
+      "pages": [
+        11,
+        13
+      ]
+    },
+    {
+      "id": "subclass.bard.lore",
+      "reason": "Official SRD 5.1 pp.11,13: Magical Secrets chooses two cantrips or spells from any class at each acquisition level, bounded by the Bard spell-slot progression. Use the eight published class lists; restore the missing explicit level-18 filter.",
+      "pages": [
+        11,
+        13
+      ]
+    },
+    {
       "id": "subclass-feature.cleric.life.life-domain.1",
       "reason": "Preserve seven deity examples printed on official SRD 5.1 p.17 as plain text; the SRD does not publish standalone entries for them.",
       "pages": [

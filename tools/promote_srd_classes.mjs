@@ -32,6 +32,31 @@ function generateClasses(inputs,manifest,src,pages,tag){
     if(!selected.length)report.publisherNameLocatorMissing.push({id,candidatePage:c.page??null,reason:"No literal name locator in class chapter; may be a progression placeholder."});
     const record={id,kind:kinds[kind],name:c.name};
     for(const [key,val] of Object.entries(c))if(!omit.has(key))record[key]=JSON.parse(JSON.stringify(val));
+    if(tag==="51"&&(id==="class.bard"||id==="subclass.bard.lore")){
+     const evidence=pages.find(p=>p.page===13).textLayout;
+     if(!evidence.includes("Choose two spells from any class, including this one.")||
+        !evidence.includes("14th level and again at 18th level.")||
+        !evidence.includes("At 6th level, you learn two spells of your choice from"))throw Error("Magical Secrets publisher evidence changed");
+     const bard=inputs.bard.class.find(x=>x.source===edition);
+     const slots=bard.classTableGroups.find(x=>x.rowsSpellProgression).rowsSpellProgression;
+     const known=record.additionalSpells[0].known;
+     const acquisition=id==="class.bard"?[10,14,18]:[6];
+     if(JSON.stringify(Object.keys(known))!==JSON.stringify(acquisition.map(String)))throw Error("Magical Secrets acquisition levels changed");
+     for(const level of acquisition){
+      const max=slots[level-1].filter(n=>n>0).length;
+      const expected={6:3,10:5,14:7,18:9}[level];
+      const publisherRow=pages.find(p=>p.page===11).textLayout.split("\n").find(line=>line.trim().startsWith(level+"th "));
+      // The printed table and the pinned slot progression agree on these maximum spell levels.
+      if(max!==expected||!publisherRow)throw Error("Magical Secrets slot progression changed");
+      const original=level===18?"":"level="+Array.from({length:max+1},(_,i)=>i).join(";");
+      if(known[level].length!==2||known[level].some(x=>JSON.stringify(x)!==JSON.stringify({choose:original})))throw Error("Magical Secrets source selector changed");
+      known[level]=known[level].map(()=>({choose:"level="+Array.from({length:max+1},(_,i)=>i).join(";")+"|class=Bard;Cleric;Druid;Paladin;Ranger;Sorcerer;Warlock;Wizard"}));
+     }
+     report.corrections.push({id,reason:"Official SRD 5.1 pp.11,13: Magical Secrets chooses two cantrips or spells from any class at each acquisition level, bounded by the Bard spell-slot progression. Use the eight published class lists; restore the missing explicit level-18 filter.",pages:[11,13]});
+     for(const p of [11,13])if(!selected.includes(p))selected.push(p);
+     selected.sort((a,b)=>a-b);
+    }
+    if(tag==="51"&&id.startsWith("class-feature.bard.magical-secrets.")&&!selected.includes(13))selected.push(13);
     if(kind==="classFeature"&&tag==="52"&&c.className==="Warlock"&&c.name==="Pact Magic"&&c.level===1){
      const original=JSON.stringify(record.entries),corrected=original.replace("{@spell Witch Bolt|SRD52}","{@spell Charm Person|SRD52}");
      if(original===corrected)throw Error("Missing expected S52-019 discrepancy");

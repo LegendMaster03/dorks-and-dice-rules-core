@@ -63,26 +63,26 @@
         "known": {
           "10": [
             {
-              "choose": "level=0;1;2;3;4;5"
+              "choose": "level=0;1;2;3;4;5|class=Bard;Cleric;Druid;Paladin;Ranger;Sorcerer;Warlock;Wizard"
             },
             {
-              "choose": "level=0;1;2;3;4;5"
+              "choose": "level=0;1;2;3;4;5|class=Bard;Cleric;Druid;Paladin;Ranger;Sorcerer;Warlock;Wizard"
             }
           ],
           "14": [
             {
-              "choose": "level=0;1;2;3;4;5;6;7"
+              "choose": "level=0;1;2;3;4;5;6;7|class=Bard;Cleric;Druid;Paladin;Ranger;Sorcerer;Warlock;Wizard"
             },
             {
-              "choose": "level=0;1;2;3;4;5;6;7"
+              "choose": "level=0;1;2;3;4;5;6;7|class=Bard;Cleric;Druid;Paladin;Ranger;Sorcerer;Warlock;Wizard"
             }
           ],
           "18": [
             {
-              "choose": ""
+              "choose": "level=0;1;2;3;4;5;6;7;8;9|class=Bard;Cleric;Druid;Paladin;Ranger;Sorcerer;Warlock;Wizard"
             },
             {
-              "choose": ""
+              "choose": "level=0;1;2;3;4;5;6;7;8;9|class=Bard;Cleric;Druid;Paladin;Ranger;Sorcerer;Warlock;Wizard"
             }
           ]
         }
@@ -606,6 +606,7 @@
       "item.diplomat-s-pack",
       "item.entertainer-s-pack",
       "rulebook.page-011",
+      "rulebook.page-013",
       "rulebook.page-105",
       "rulebook.page-106",
       "spell.animal-friendship",
@@ -728,7 +729,8 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
-        11
+        11,
+        13
       ],
       "candidatePage": 11,
       "structuredSource": {
@@ -928,10 +930,10 @@
         "known": {
           "6": [
             {
-              "choose": "level=0;1;2;3"
+              "choose": "level=0;1;2;3|class=Bard;Cleric;Druid;Paladin;Ranger;Sorcerer;Warlock;Wizard"
             },
             {
-              "choose": "level=0;1;2;3"
+              "choose": "level=0;1;2;3|class=Bard;Cleric;Druid;Paladin;Ranger;Sorcerer;Warlock;Wizard"
             }
           ]
         }
@@ -944,6 +946,7 @@
     ],
     "catalogReferences": [
       "class.bard",
+      "rulebook.page-011",
       "rulebook.page-013",
       "subclass-feature.bard.lore.additional-magical-secrets.6",
       "subclass-feature.bard.lore.college-of-lore.3",
@@ -956,6 +959,7 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
+        11,
         13
       ],
       "candidatePage": 13,
@@ -1537,7 +1541,8 @@
     ],
     "catalogReferences": [
       "class.bard",
-      "rulebook.page-011"
+      "rulebook.page-011",
+      "rulebook.page-013"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1546,7 +1551,8 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
-        11
+        11,
+        13
       ],
       "candidatePage": 51,
       "structuredSource": {
@@ -1668,7 +1674,8 @@
     ],
     "catalogReferences": [
       "class.bard",
-      "rulebook.page-011"
+      "rulebook.page-011",
+      "rulebook.page-013"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1677,7 +1684,8 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
-        11
+        11,
+        13
       ],
       "candidatePage": 51,
       "structuredSource": {
@@ -1802,7 +1810,8 @@
     ],
     "catalogReferences": [
       "class.bard",
-      "rulebook.page-011"
+      "rulebook.page-011",
+      "rulebook.page-013"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1811,7 +1820,8 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
-        11
+        11,
+        13
       ],
       "candidatePage": 51,
       "structuredSource": {

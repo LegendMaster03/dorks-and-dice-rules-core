@@ -348,6 +348,15 @@ public sealed class RulesetResolutionApiTests
         Assert.Contains("baseitem.smith-s-tools", dwarfRelationships.GetProperty("catalogReferences").GetRawText());
         Assert.Contains("baseitem.brewer-s-supplies", dwarfRelationships.GetProperty("catalogReferences").GetRawText());
         Assert.Contains("language.dwarvish", dwarfRelationships.GetProperty("catalogReferences").GetRawText());
+        var legacySecrets = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/class.bard")).GetProperty("rule").GetProperty("definition").GetProperty("additionalSpells")[0].GetProperty("known");
+        var legacyLoreSecrets = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/subclass.bard.lore")).GetProperty("rule").GetProperty("definition").GetProperty("additionalSpells")[0].GetProperty("known");
+        foreach (var (knownSecrets, level, max) in new[] { (legacyLoreSecrets, "6", 3), (legacySecrets, "10", 5), (legacySecrets, "14", 7), (legacySecrets, "18", 9) })
+        {
+            var choices = knownSecrets.GetProperty(level);
+            Assert.Equal(2, choices.GetArrayLength());
+            foreach (var choice in choices.EnumerateArray())
+                Assert.Equal("level=" + string.Join(";", Enumerable.Range(0, max + 1)) + "|class=Bard;Cleric;Druid;Paladin;Ranger;Sorcerer;Warlock;Wizard", choice.GetProperty("choose").GetString());
+        }
         var modernElf = (await client.GetFromJsonAsync<JsonElement>(animals + "/species.elf")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("spell.prestidigitation", modernElf.GetProperty("catalogReferences").GetRawText());
         var highElfGrants = modernElf.GetProperty("additionalSpells").EnumerateArray().Single(x => x.GetProperty("name").GetString() == "High Elf");
