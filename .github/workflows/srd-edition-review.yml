@@ -8,6 +8,8 @@ on:
       - 'tests/NativeCatalogFingerprint/**'
       - 'src/RulesCore.Content/**'
       - 'tools/inventory_srd_editions.py'
+      - 'tools/audit_srd_upstream.py'
+      - 'tests/test_srd_upstream_audit.py'
       - 'tools/report_srd_promotion.py'
       - 'tools/audit_srd_native_references.py'
       - 'tests/test_srd_native_reference_audit.py'
@@ -75,6 +77,18 @@ jobs:
         run: node tools/promote_srd_numbered_item_variants.mjs --check
       - name: Reconcile native promotion coverage (diagnostic only)
         run: python3 tools/report_srd_promotion.py --output build/srd-review/promotion-coverage.json
+      - name: Test expanded upstream comparison
+        run: python3 -m unittest discover -s tests -p test_srd_upstream_audit.py
+      - name: Checkout pinned upstream data for comparison only
+        uses: actions/checkout@v4
+        with:
+          repository: 5etools-mirror-3/5etools-src
+          ref: 2512db75eb48ef06f6190b086a82430887906dca
+          path: build/5etools-upstream
+          sparse-checkout: data
+          persist-credentials: false
+      - name: Compare complete upstream data inventory (diagnostic only)
+        run: python3 tools/audit_srd_upstream.py --checkout build/5etools-upstream --output build/srd-review/upstream-comparison.json
       - name: Test semantic reference audit
         run: python3 -m unittest discover -s tests -p test_srd_native_reference_audit.py
       - name: Audit edition-local inline references (diagnostic only)
