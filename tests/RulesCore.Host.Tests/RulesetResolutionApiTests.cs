@@ -207,6 +207,27 @@ public sealed class RulesetResolutionApiTests
         var oldChain = await client.GetFromJsonAsync<JsonElement>(oldRules + "/optional-feature.pact-of-the-chain");
         Assert.True(oldChain.GetProperty("rule").GetProperty("definition").GetProperty("additionalSpells")[0].GetProperty("innate").GetProperty("_").TryGetProperty("ritual", out _));
 
+        // Supplementary actions, glossary and contagions preserve edition-specific categories.
+        var oldCoreActions = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=action&limit=1");
+        var newCoreActions = await client.GetFromJsonAsync<JsonElement>(animals + "?category=action&limit=1");
+        Assert.Equal(10, oldCoreActions.GetProperty("total").GetInt32());
+        Assert.Equal(12, newCoreActions.GetProperty("total").GetInt32());
+        var glossary = await client.GetFromJsonAsync<JsonElement>(animals + "?category=glossary&limit=1");
+        Assert.Equal(114, glossary.GetProperty("total").GetInt32());
+        var grapple = await client.GetFromJsonAsync<JsonElement>(oldRules + "/attack-option.grapple");
+        var grappleDefinition = grapple.GetProperty("rule").GetProperty("definition");
+        Assert.True(grappleDefinition.GetProperty("replacesAttack").GetBoolean());
+        Assert.False(grappleDefinition.TryGetProperty("time", out _));
+        Assert.Contains("action.attack", grappleDefinition.GetProperty("catalogReferences").GetRawText());
+        var modernShield = await client.GetFromJsonAsync<JsonElement>(animals + "/equipment-option.don-or-doff-a-shield");
+        Assert.Equal("action.utilize", modernShield.GetProperty("rule").GetProperty("definition").GetProperty("actionId").GetString());
+        var madness = await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.madness");
+        Assert.DoesNotContain("Sanity", madness.GetProperty("rule").GetProperty("definition").GetProperty("entries").GetRawText());
+        Assert.Equal(HttpStatusCode.OK, (await client.GetAsync(oldRules + "/disease.cackle-fever")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(animals + "/disease.cackle-fever")).StatusCode);
+        Assert.Equal(HttpStatusCode.OK, (await client.GetAsync(animals + "/magical-contagion.cackle-fever")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/magical-contagion.cackle-fever")).StatusCode);
+
         // The foreign catalogs expose original typed spell fields and entries,
         // not just publisher layout strings.
         foreach (var id in ids.Take(2))

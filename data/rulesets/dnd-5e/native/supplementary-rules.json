@@ -1,0 +1,1441 @@
+[
+  {
+    "id": "rule.madness",
+    "kind": "rule",
+    "name": "Madness",
+    "entries": [
+      "In a typical campaign, characters aren't driven mad by the horrors they face and the carnage they inflict day after day, but sometimes the stress of being an adventurer can be too much to bear. If your campaign has a strong horror theme, you might want to use madness as a way to reinforce that theme, emphasizing the extraordinarily horrific nature of the threats the adventurers face.",
+      {
+        "type": "entries",
+        "name": "Going Mad",
+        "entries": [
+          "Various magical effects can inflict madness on an otherwise stable mind. Certain spells, such as {@spell contact other plane} and {@spell symbol}, can cause insanity, and you can use the madness rules here instead of the spell effects of those spells. Diseases, poisons, and planar effects such as psychic wind or the howling winds of Pandemonium can all inflict madness. Some artifacts can also break the psyche of a character who uses or becomes attuned to them.",
+          "Resisting a madness-inducing effect usually requires a Wisdom or Charisma saving throw."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Madness Effects",
+        "entries": [
+          "Madness can be short-term, long-term, or indefinite. Most relatively mundane effects impose short-term madness, which lasts for just a few minutes. More horrific effects or cumulative effects can result in long-term or indefinite madness.",
+          "A character afflicted with {@b short-term madness} is subjected to an effect from the Short-Term Madness table for {@dice 1d10} minutes.",
+          "A character afflicted with {@b long-term madness} is subjected to an effect from the Long-Term Madness table for {@dice 1d10 × 10} hours.",
+          "A character afflicted with {@b indefinite madness} gains a new character flaw from the Indefinite Madness table that lasts until cured.",
+          {
+            "type": "table",
+            "caption": "Short-Term Madness",
+            "colLabels": [
+              "d100",
+              "Effects (lasts {@dice 1d10} minutes)"
+            ],
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "rows": [
+              [
+                "01-20",
+                "The character retreats into his or her mind and becomes {@condition paralyzed}. The effect ends if the character takes any damage."
+              ],
+              [
+                "21-30",
+                "The character becomes {@condition incapacitated} and spends the duration screaming, laughing, or weeping."
+              ],
+              [
+                "31-40",
+                "The character becomes {@condition frightened} and must use his or her action and movement each round to flee from the source of the fear."
+              ],
+              [
+                "41-50",
+                "The character begins babbling and is incapable of normal speech or spellcasting."
+              ],
+              [
+                "51-60",
+                "The character must use his or her action each round to attack the nearest creature."
+              ],
+              [
+                "61-70",
+                "The character experiences vivid hallucinations and has disadvantage on ability checks."
+              ],
+              [
+                "71-75",
+                "The character does whatever anyone tells him or her to do that isn't obviously self-destructive."
+              ],
+              [
+                "76-80",
+                "The character experiences an overpowering urge to eat something strange such as dirt, slime, or offal."
+              ],
+              [
+                "81-90",
+                "The character is {@condition stunned}."
+              ],
+              [
+                "91-100",
+                "The character falls {@condition unconscious}."
+              ]
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Long-Term Madness",
+            "colLabels": [
+              "d100",
+              "Effects (lasts {@dice 1d10 × 10} hours)"
+            ],
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "rows": [
+              [
+                "01-10",
+                "The character feels compelled to repeat a specific activity over and over, such as washing hands, touching things, praying, or counting coins."
+              ],
+              [
+                "11-20",
+                "The character experiences vivid hallucinations and has disadvantage on ability checks."
+              ],
+              [
+                "21-30",
+                "The character suffers extreme paranoia. The character has disadvantage on Wisdom and Charisma checks."
+              ],
+              [
+                "31-40",
+                "The character regards something (usually the source of madness) with intense revulsion, as if affected by the antipathy effect of the {@spell antipathy/sympathy} spell."
+              ],
+              [
+                "41-45",
+                "The character experiences a powerful delusion. Choose a potion. The character imagines that he or she is under its effects."
+              ],
+              [
+                "46-55",
+                "The character becomes attached to a \"lucky charm,\" such as a person or an object, and has disadvantage on attack rolls, ability checks, and saving throws while more than 30 feet from it."
+              ],
+              [
+                "56-65",
+                "The character is {@condition blinded} (25%) or {@condition deafened} (75%)."
+              ],
+              [
+                "66-75",
+                "The character experiences uncontrollable tremors or tics, which impose disadvantage on attack rolls, ability checks, and saving throws that involve Strength or Dexterity."
+              ],
+              [
+                "76-85",
+                "The character suffers from partial amnesia. The character knows who he or she is and retains racial traits and class features, but doesn't recognize other people or remember anything that happened before the madness took effect."
+              ],
+              [
+                "86-90",
+                "Whenever the character takes damage, he or she must succeed on a {@dc 15} Wisdom saving throw or be affected as though he or she failed a saving throw against the {@spell confusion} spell. The confusion effect lasts for 1 minute."
+              ],
+              [
+                "91-95",
+                "The character loses the ability to speak."
+              ],
+              [
+                "96-100",
+                "The character falls {@condition unconscious}. No amount of jostling or damage can wake the character."
+              ]
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Indefinite Madness",
+            "colLabels": [
+              "d100",
+              "Flaw (lasts until cured)"
+            ],
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "rows": [
+              [
+                "01-15",
+                "\"Being drunk keeps me sane.\""
+              ],
+              [
+                "16-25",
+                "\"I keep whatever I find.\""
+              ],
+              [
+                "26-30",
+                "\"I try to become more like someone else I know—adopting his or her style of dress, mannerisms, and name.\""
+              ],
+              [
+                "31-35",
+                "\"I must bend the truth, exaggerate, or outright lie to be interesting to other people.\""
+              ],
+              [
+                "36-45",
+                "\"Achieving my goal is the only thing of interest to me, and I'll ignore everything else to pursue it.\""
+              ],
+              [
+                "46-50",
+                "\"I find it hard to care about anything that goes on around me.\""
+              ],
+              [
+                "51-55",
+                "\"I don't like the way people judge me all the time.\""
+              ],
+              [
+                "56-70",
+                "\"I am the smartest, wisest, strongest, fastest, and most beautiful person I know.\""
+              ],
+              [
+                "71-80",
+                "\"I am convinced that powerful enemies are hunting me, and their agents are everywhere I go. I am sure they're watching me all the time.\""
+              ],
+              [
+                "81-85",
+                "\"There's only one person I can trust. And only I can see this special friend.\""
+              ],
+              [
+                "86-95",
+                "\"I can't take anything seriously. The more serious the situation, the funnier I find it.\""
+              ],
+              [
+                "96-100",
+                "\"I've discovered that I really like killing people.\""
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Curing Madness",
+        "entries": [
+          "A {@spell calm emotions} spell can suppress the effects of madness, while a {@spell lesser restoration} spell can rid a character of a short-term or long-term madness. Depending on the source of the madness, {@spell remove curse} or {@spell dispel evil and good||dispel evil} might also prove effective. A {@spell greater restoration} spell or more powerful magic is required to rid a character of indefinite madness."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-201",
+      "rulebook.page-202"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        201,
+        202
+      ],
+      "candidatePage": 201,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "variantrules.json",
+        "pointer": "/variantrule/75"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "disease.cackle-fever",
+    "kind": "disease",
+    "name": "Cackle Fever",
+    "entries": [
+      "This disease targets humanoids, although gnomes are strangely immune. While in the grips of this disease, victims frequently succumb to fits of mad laughter, giving the disease its common name and its morbid nickname: \"the shrieks.\"",
+      "Symptoms manifest {@dice 1d4} hours after infection and include fever and disorientation. The infected creature gains one level of {@condition exhaustion} that can't be removed until the disease is cured.",
+      "Any event that causes the infected creature great stress—including entering combat, taking damage, experiencing fear, or having a nightmare—forces the creature to make a {@dc 13} Constitution saving throw.",
+      "On a failed save, the creature takes 5 ({@dice 1d10}) psychic damage and becomes {@condition incapacitated} with mad laughter for 1 minute. The creature can repeat the saving throw at the end of each of its turns, ending the mad laughter and the {@condition incapacitated} condition on a success. Any humanoid creature that starts its turn within 10 feet of an infected creature in the throes of mad laughter must succeed on a {@dc 10} Constitution saving throw or also become infected with the disease. Once a creature succeeds on this save, it is immune to the mad laughter of that particular infected creature for 24 hours.",
+      "At the end of each long rest, an infected creature can make a {@dc 13} Constitution saving throw. On a successful save, the DC for this save and for the save to avoid an attack of mad laughter drops by {@dice 1d6}. When the saving throw DC drops to 0, the creature recovers from the disease. A creature that fails three of these saving throws gains a randomly determined form of {@variantrule Madness|SRD51|indefinite madness}."
+    ],
+    "catalogReferences": [
+      "rulebook.page-199"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        199
+      ],
+      "candidatePage": 257,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "conditionsdiseases.json",
+        "pointer": "/disease/0"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "disease.sewer-plague",
+    "kind": "disease",
+    "name": "Sewer Plague",
+    "entries": [
+      "Sewer plague is a generic term for a broad category of illnesses that incubate in sewers, refuse heaps, and stagnant swamps, and which are sometimes transmitted by creatures that dwell in those areas, such as rats and otyughs.",
+      "When a humanoid creature is bitten by a creature that carries the disease, or when it comes into contact with filth or offal contaminated by the disease, the creature must succeed on a {@dc 11} Constitution saving throw or become infected.",
+      "It takes {@dice 1d4} days for sewer plague's symptoms to manifest in an infected creature. Symptoms include fatigue and cramps. The infected creature suffers one level of {@condition exhaustion}, and it regains only half the normal number of hit points from spending Hit Dice and no hit points from finishing a long rest.",
+      "At the end of each long rest, an infected creature must make a {@dc 11} Constitution saving throw. On a failed save, the character gains one level of {@condition exhaustion}.",
+      "On a successful save, the character's {@condition exhaustion} level decreases by one level. If a successful saving throw reduces the infected creature's level of {@condition exhaustion} below 1, the creature recovers from the disease."
+    ],
+    "catalogReferences": [
+      "rulebook.page-199"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        199
+      ],
+      "candidatePage": 257,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "conditionsdiseases.json",
+        "pointer": "/disease/2"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "disease.sight-rot",
+    "kind": "disease",
+    "name": "Sight Rot",
+    "entries": [
+      "This painful infection causes bleeding from the eyes and eventually blinds the victim.",
+      "A beast or humanoid that drinks water tainted by sight rot must succeed on a {@dc 15} Constitution saving throw or become infected. One day after infection, the creature's vision starts to become blurry. The creature takes a -1 penalty to attack rolls and ability checks that rely on sight. At the end of each long rest after the symptoms appear, the penalty worsens by 1. When it reaches -5, the victim is {@condition blinded} until its sight is restored by magic such as {@spell lesser restoration} or {@spell heal}.",
+      "Sight rot can be cured using a rare flower called Eyebright, which grows in some swamps. Given an hour, a character who has proficiency with an {@item herbalism kit|srd51} can turn the flower into one dose of ointment. Applied to the eyes before a long rest, one dose of it prevents the disease from worsening after that rest. After three doses, the ointment cures the disease entirely."
+    ],
+    "catalogReferences": [
+      "rulebook.page-199",
+      "rulebook.page-200"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        199,
+        200
+      ],
+      "candidatePage": 257,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "conditionsdiseases.json",
+        "pointer": "/disease/4"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "status.concentration",
+    "kind": "status",
+    "name": "Concentration",
+    "entries": [
+      "Some spells require you to maintain {@status concentration} in order to keep their magic active. If you lose {@status concentration}, such a spell ends.",
+      "If a spell must be maintained with {@status concentration}, that fact appears in its Duration entry, and the spell specifies how long you can concentrate on it. You can end {@status concentration} at any time (no action required).",
+      "Normal activity, such as moving and attacking, doesn't interfere with {@status concentration}. The following factors can break {@status concentration}:",
+      {
+        "type": "list",
+        "items": [
+          {
+            "type": "entries",
+            "name": "Casting another spell that requires concentration",
+            "entries": [
+              "You lose {@status concentration} on a spell if you cast another spell that requires {@status concentration}. You can't concentrate on two spells at once."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Taking damage",
+            "entries": [
+              "Whenever you take damage while you are {@status concentration||concentrating} on a spell, you must make a Constitution saving throw to maintain your {@status concentration}. The DC equals 10 or half the damage you take, whichever number is higher. If you take damage from multiple sources, such as an arrow and a dragon's breath, you make a separate saving throw for each source of damage."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Being incapacitated or killed",
+            "entries": [
+              "You lose {@status concentration} on a spell if you are {@condition incapacitated} or if you die."
+            ]
+          }
+        ]
+      },
+      "The DM might also decide that certain environmental phenomena, such as a wave crashing over you while you're on a storm-tossed ship, require you to succeed on a {@dc 10} Constitution saving throw to maintain {@status concentration} on a spell."
+    ],
+    "catalogReferences": [
+      "rulebook.page-102"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        102
+      ],
+      "candidatePage": 203,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "conditionsdiseases.json",
+        "pointer": "/status/1"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "status.surprised",
+    "kind": "status",
+    "name": "Surprised",
+    "entries": [
+      "A band of adventurers sneaks up on a bandit camp, springing from the trees to attack them. A {@creature gelatinous cube} glides down a dungeon passage, unnoticed by the adventurers until the cube engulfs one of them. In these situations, one side of the battle gains surprise over the other.",
+      "The DM determines who might be surprised. If neither side tries to be stealthy, they automatically notice each other. Otherwise, the DM compares the Dexterity ({@skill Stealth}) checks of anyone hiding with the passive Wisdom ({@skill Perception}) score of each creature on the opposing side. Any character or monster that doesn't notice a threat is {@status surprised} at the start of the encounter.",
+      "If you're surprised, you can't move or take an action on your first turn of the combat, and you can't take a reaction until that turn ends. A member of a group can be {@status surprised} even if the other members aren't."
+    ],
+    "catalogReferences": [
+      "rulebook.page-090"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        90
+      ],
+      "candidatePage": 189,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "conditionsdiseases.json",
+        "pointer": "/status/3"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "trap.collapsing-roof",
+    "kind": "trap",
+    "name": "Collapsing Roof",
+    "trapHazType": "MECH",
+    "entries": [
+      "This trap uses a trip wire to collapse the supports keeping an unstable section of a ceiling in place.",
+      "The trip wire is 3 inches off the ground and stretches between two support beams. The DC to spot the trip wire is 10. A successful {@dc 15} Dexterity check using {@item thieves' tools|srd51} disables the trip wire harmlessly. A character without {@item thieves' tools|srd51} can attempt this check with disadvantage using any edged weapon or edged tool. On a failed check, the trap triggers.",
+      "Anyone who inspects the beams can easily determine that they are merely wedged in place. As an action, a character can knock over a beam, causing the trap to trigger.",
+      "The ceiling above the trip wire is in bad repair, and anyone who can see it can tell that it's in danger of collapse.",
+      "When the trap is triggered, the unstable ceiling collapses. Any creature in the area beneath the unstable section must succeed on a {@dc 15} Dexterity saving throw, taking 22 ({@damage 4d10}) bludgeoning damage on a failed save, or half as much damage on a successful one. Once the trap is triggered, the floor of the area is filled with rubble and becomes {@quickref difficult terrain||3}."
+    ],
+    "catalogReferences": [
+      "rulebook.page-196"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        196
+      ],
+      "candidatePage": 196,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "trapshazards.json",
+        "pointer": "/trap/0"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "trap.falling-net",
+    "kind": "trap",
+    "name": "Falling Net",
+    "trapHazType": "MECH",
+    "entries": [
+      "This trap uses a trip wire to release a net suspended from the ceiling.",
+      "The trip wire is 3 inches off the ground and stretches between two columns or trees. The net is hidden by cobwebs or foliage. The DC to spot the trip wire and net is 10. A successful {@dc 15} Dexterity check using thieves' tools breaks the trip wire harmlessly. A character without thieves' tools can attempt this check with disadvantage using any edged weapon or edged tool. On a failed check, the trap triggers.",
+      "When the trap is triggered, the net is released, covering a 10-foot-square area. Those in the area are trapped under the net and {@condition restrained}, and those that fail a {@dc 10} Strength saving throw are also knocked {@condition prone}.",
+      "A creature can use its action to make a {@dc 10} Strength check, freeing itself or another creature within its reach on a success. The net has AC 10 and 20 hit points.",
+      "Dealing 5 slashing damage to the net (AC 10) destroys a 5-foot-square section of it, freeing any creature trapped in that section."
+    ],
+    "catalogReferences": [
+      "rulebook.page-196"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        196
+      ],
+      "candidatePage": 196,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "trapshazards.json",
+        "pointer": "/trap/2"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "trap.fire-breathing-statue",
+    "kind": "trap",
+    "name": "Fire-Breathing Statue",
+    "trapHazType": "MAG",
+    "entries": [
+      "This trap is activated when an intruder steps on a hidden pressure plate, releasing a magical gout of flame from a nearby statue. The statue can be of anything, including a dragon or a wizard casting a spell.",
+      "The DC is 15 to spot the pressure plate, as well as faint scorch marks on the floor and walls. A spell or other effect that can sense the presence of magic, such as detect magic, reveals an aura of evocation magic around the statue.",
+      "The trap activates when more than 20 pounds of weight is placed on the pressure plate, causing the statue to release a 30-foot cone of fire. Each creature in the fire must make a {@dc 13} Dexterity saving throw, taking 22 ({@damage 4d10}) fire damage on a failed save, or half as much damage on a successful one.",
+      "Wedging an iron spike or other object under the pressure plate prevents the trap from activating. A successful {@spell dispel magic} ({@dc 13}) cast on the statue destroys the trap."
+    ],
+    "catalogReferences": [
+      "rulebook.page-197"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        197
+      ],
+      "candidatePage": 197,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "trapshazards.json",
+        "pointer": "/trap/4"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "trap.pits",
+    "kind": "trap",
+    "name": "Pits",
+    "trapHazType": "MECH",
+    "entries": [
+      {
+        "type": "entries",
+        "name": "Simple Pit",
+        "entries": [
+          "A simple pit trap is a hole dug in the ground. The hole is covered by a large cloth anchored on the pit's edge and camouflaged with dirt and debris.",
+          "The DC to spot the pit is 10. Anyone stepping on the cloth falls through and pulls the cloth down into the pit, taking damage based on the pit's depth (usually 10 feet, but some pits are deeper)."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Hidden Pit",
+        "entries": [
+          "A successful {@dc 15} Wisdom ({@skill Perception}) check discerns an absence of foot traffic over the section of floor that forms the pit's cover. A successful {@dc 15} Intelligence ({@skill Investigation}) check is necessary to confirm that the trapped section of floor is actually the cover of a pit.",
+          "When a creature steps on the cover, it swings open like a trapdoor, causing the intruder to spill into the pit below. The pit is usually 10 or 20 feet deep but can be deeper.",
+          "Once the pit trap is detected, an iron spike or similar object can be wedged between the pit's cover and the surrounding floor in such a way as to prevent the cover from opening, thereby making it safe to cross. The cover can also be magically held shut using the {@spell arcane lock} spell or similar magic."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Locking Pit",
+        "entries": [
+          "This pit trap is identical to a hidden pit trap, with one key exception: the trap door that covers the pit is spring-loaded. After a creature falls into the pit, the cover snaps shut to trap its victim inside.",
+          "A successful {@dc 20} Strength check is necessary to pry the cover open. The cover can also be smashed open (determine the cover's statistics using the guidelines in chapter 8). A character in the pit can also attempt to disable the spring mechanism from the inside with a {@dc 15} Dexterity check using thieves' tools, provided that the mechanism can be reached and the character can see.",
+          "In some cases, a mechanism (usually hidden behind a secret door nearby) opens the pit."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spiked Pit",
+        "entries": [
+          "This pit trap is a simple, hidden, or locking pit trap with sharpened wooden or iron spikes at the bottom. A creature falling into the pit takes 11 ({@damage 2d10}) piercing damage from the spikes, in addition to any falling damage. Even nastier versions have poison smeared on the spikes. In that case, anyone taking piercing damage from the spikes must also make a {@dc 13} Constitution saving throw, taking an 22 ({@damage 4d10}) poison damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-197",
+      "rulebook.page-198"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        197,
+        198
+      ],
+      "candidatePage": 197,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "trapshazards.json",
+        "pointer": "/trap/7"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "trap.poison-darts",
+    "kind": "trap",
+    "name": "Poison Darts",
+    "trapHazType": "MECH",
+    "entries": [
+      "When a creature steps on a hidden pressure plate, poison-tipped darts shoot from spring-loaded or pressurized tubes cleverly embedded in the surrounding walls. An area might include multiple pressure plates, each one rigged to its own set of darts.",
+      "The tiny holes in the walls are obscured by dust and cobwebs, or cleverly hidden amid bas-reliefs, murals, or frescoes that adorn the walls. The DC to spot them is 15. With a successful {@dc 15} Intelligence ({@skill Investigation}) check, a character can deduce the presence of the pressure plate from variations in the mortar and stone used to create it, compared to the surrounding floor. Wedging an iron spike or other object under the pressure plate prevents the trap from activating. Stuffing the holes with cloth or wax prevents the darts contained within from launching.",
+      "The trap activates when more than 20 pounds of weight is placed on the pressure plate, releasing four darts. Each dart makes a ranged attack with a +8 bonus against a random target within 10 feet of the pressure plate (vision is irrelevant to this attack roll). (If there are no targets in the area, the darts don't hit anything.) A target that is hit takes 2 ({@damage 1d4}) piercing damage and must succeed on a {@dc 15} Constitution saving throw, taking 11 ({@damage 2d10}) poison damage on a failed save, or half as much damage on a successful one."
+    ],
+    "catalogReferences": [
+      "rulebook.page-197"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        197
+      ],
+      "candidatePage": 197,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "trapshazards.json",
+        "pointer": "/trap/8"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "trap.poison-needle",
+    "kind": "trap",
+    "name": "Poison Needle",
+    "trapHazType": "MECH",
+    "entries": [
+      "A poisoned needle is hidden within a treasure chest's lock, or in something else that a creature might open. Opening the chest without the proper key causes the needle to spring out, delivering a dose of poison.",
+      "When the trap is triggered, the needle extends 3 inches straight out from the lock. A creature within range takes 1 piercing damage and 11 ({@damage 2d10}) poison damage, and must succeed on a {@dc 15} Constitution saving throw or be {@condition poisoned} for 1 hour.",
+      "A successful {@dc 20} Intelligence ({@skill Investigation}) check allows a character to deduce the trap's presence from alterations made to the lock to accommodate the needle.",
+      "A successful {@dc 15} Dexterity check using {@item thieves' tools|srd51} disarms the trap, removing the needle from the lock. Unsuccessfully attempting to pick the lock triggers the trap."
+    ],
+    "catalogReferences": [
+      "rulebook.page-198"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        198
+      ],
+      "candidatePage": 198,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "trapshazards.json",
+        "pointer": "/trap/9"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "trap.rolling-sphere",
+    "kind": "trap",
+    "name": "Rolling Sphere",
+    "trapHazType": "MECH",
+    "entries": [
+      "When 20 or more pounds of pressure are placed on this trap's pressure plate, a hidden trapdoor in the ceiling opens, releasing a 10-foot-diameter rolling sphere of solid stone.",
+      "With a successful {@dc 15} Wisdom ({@skill Perception}) check, a character can spot the trapdoor and pressure plate.",
+      "A search of the floor accompanied by a successful {@dc 15} Intelligence ({@skill Investigation}) check reveals variations in the mortar and stone that betray the pressure plate's presence. The same check made while inspecting the ceiling notes variations in the stonework that reveal the trapdoor. Wedging an iron spike or other object under the pressure plate prevents the trap from activating.",
+      "Activation of the sphere requires all creatures present to roll initiative. The sphere rolls initiative with a {@hit +8} bonus. On its turn, it moves 60 feet in a straight line.",
+      "The sphere can move through creatures' spaces, and creatures can move through its space, treating it as {@quickref difficult terrain||3}. Whenever the sphere enters a creature's space or a creature enters its space while it's rolling, that creature must succeed on a {@dc 15} Dexterity saving throw or take 55 ({@damage 10d10}) bludgeoning damage and be knocked {@condition prone}.",
+      "The sphere stops when it hits a wall or similar barrier. It can't go around corners, but smart dungeon builders incorporate gentle, curving turns into nearby passages that allow the sphere to keep moving.",
+      "As an action, a creature within 5 feet of the sphere can attempt to slow it down with a {@dc 20} Strength check. On a successful check, the sphere's speed is reduced by 15 feet. If the sphere's speed drops to 0, it stops moving and is no longer a threat."
+    ],
+    "catalogReferences": [
+      "rulebook.page-198"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        198
+      ],
+      "candidatePage": 198,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "trapshazards.json",
+        "pointer": "/trap/12"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "trap.sphere-of-annihilation",
+    "kind": "trap",
+    "name": "Sphere of Annihilation",
+    "trapHazType": "MAG",
+    "entries": [
+      "Magical, impenetrable darkness fills the gaping mouth of a stone face carved into a wall. The mouth is 2 feet in diameter and roughly circular. No sound issues from it, no light can illuminate the inside of it, and any matter that enters it is instantly obliterated.",
+      "A successful {@dc 20} Intelligence ({@skill Arcana}) check reveals that the mouth contains a sphere of annihilation that can't be controlled or moved. It is otherwise identical to a normal {@item sphere of annihilation}, as described in chapter 7, \"Treasure.\" Some versions of the trap include an enchantment placed on the stone face, such that specified creatures feel an overwhelming urge to approach it and crawl inside its mouth. This effect is otherwise like the sympathy aspect of the {@spell antipathy/sympathy} spell.",
+      "A successful {@spell dispel magic} ({@dc 18}) removes this enchantment."
+    ],
+    "catalogReferences": [
+      "rulebook.page-198"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        198
+      ],
+      "candidatePage": 198,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "trapshazards.json",
+        "pointer": "/trap/14"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "table.damage-types",
+    "kind": "table",
+    "name": "Damage Types",
+    "colLabels": [
+      "Type",
+      "Examples"
+    ],
+    "rows": [
+      [
+        "Acid",
+        "The corrosive spray of a black dragon's breath and the dissolving enzymes secreted by a black pudding deal acid damage."
+      ],
+      [
+        "Bludgeoning",
+        "Blunt force attacks—hammers, falling, constriction, and the like—deal bludgeoning damage."
+      ],
+      [
+        "Cold",
+        "The infernal chill radiating from an ice devil's spear and the frigid blast of a white dragon's breath deal cold damage."
+      ],
+      [
+        "Fire",
+        "Red dragons breathe fire, and many spells conjure flames to deal fire damage."
+      ],
+      [
+        "Force",
+        "Force is pure magical energy focused into a damaging form. Most effects that deal force damage are spells, including magic missile and spiritual weapon."
+      ],
+      [
+        "Lightning",
+        "A lightning bolt spell and a blue dragon's breath deal lightning damage."
+      ],
+      [
+        "Necrotic",
+        "Necrotic damage, dealt by certain undead and a spell such as chill touch, withers matter and even the soul."
+      ],
+      [
+        "Piercing",
+        "Puncturing and impaling attacks, including spears and monsters' bites, deal piercing damage."
+      ],
+      [
+        "Poison",
+        "Venomous stings and the toxic gas of a green dragon's breath deal poison damage."
+      ],
+      [
+        "Psychic",
+        "Mental abilities such as a mind flayer's psionic blast deal psychic damage."
+      ],
+      [
+        "Radiant",
+        "Radiant damage, dealt by a cleric's flame strike spell or an angel's smiting weapon, sears the flesh like fire and overloads the spirit with power."
+      ],
+      [
+        "Slashing",
+        "Swords, axes, and monsters' claws deal slashing damage."
+      ],
+      [
+        "Thunder",
+        "A concussive burst of sound, such as the effect of the thunderwave spell, deals thunder damage."
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-097"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        97
+      ],
+      "candidatePage": 97,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "tables.json",
+        "pointer": "/table/0"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "table.donning-and-doffing-armor",
+    "kind": "table",
+    "name": "Donning and Doffing Armor",
+    "colLabels": [
+      "Category",
+      "Don",
+      "Doff"
+    ],
+    "rows": [
+      [
+        "Light Armor",
+        "1 minute",
+        "1 minute"
+      ],
+      [
+        "Medium Armor",
+        "5 minutes",
+        "1 minute"
+      ],
+      [
+        "Heavy Armor",
+        "10 minutes",
+        "5 minutes"
+      ],
+      [
+        "Shield",
+        "1 action",
+        "1 action"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-064"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64
+      ],
+      "candidatePage": 64,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "tables.json",
+        "pointer": "/table/2"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "rule.breaking-objects",
+    "kind": "rule",
+    "name": "Breaking Objects",
+    "entries": [
+      "When characters need to saw through ropes, shatter a window, or smash a vampire's coffin, the only hard and fast rule is this: given enough time and the right tools, characters can destroy any destructible object. Use common sense when determining a character's success at damaging an object. Can a fighter cut through a section of a stone wall with a sword? No, the sword is likely to break before the wall does.",
+      "For the purpose of these rules, an object is a discrete, inanimate item like a window, door, sword, book, table, chair, or stone, not a building or a vehicle that is composed of many other objects.",
+      {
+        "type": "entries",
+        "name": "Statistics for Objects",
+        "entries": [
+          "When time is a factor, you can assign an Armor Class and hit points to a destructible object. You can also give it immunities, resistances, and vulnerabilities to specific types of damage.",
+          {
+            "type": "entries",
+            "name": "Armor Class",
+            "entries": [
+              "An object's Armor Class is a measure of how difficult it is to deal damage to the object when striking it (because the object has no chance of dodging out of the way). The Object Armor Class table provides suggested AC values for various substances.",
+              {
+                "type": "table",
+                "caption": "Object Armor Class",
+                "colLabels": [
+                  "Substance",
+                  "AC"
+                ],
+                "colStyles": [
+                  "col-6",
+                  "col-6"
+                ],
+                "rows": [
+                  [
+                    "Cloth, paper, rope",
+                    "11"
+                  ],
+                  [
+                    "Crystal, glass, ice",
+                    "13"
+                  ],
+                  [
+                    "Wood, bone",
+                    "15"
+                  ],
+                  [
+                    "Stone",
+                    "17"
+                  ],
+                  [
+                    "Iron, steel",
+                    "19"
+                  ],
+                  [
+                    "Mithral",
+                    "21"
+                  ],
+                  [
+                    "Adamantine",
+                    "23"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Hit Points",
+            "entries": [
+              "An object's hit points measure how much damage it can take before losing its structural integrity. Resilient objects have more hit points than fragile ones. Large objects also tend to have more hit points than small ones, unless breaking a small part of the object is just as effective as breaking the whole thing. The Object Hit Points table provides suggested hit points for fragile and resilient objects that are Large or smaller.",
+              {
+                "type": "table",
+                "caption": "Object Hit Points",
+                "colLabels": [
+                  "Size",
+                  "Fragile",
+                  "Resilient"
+                ],
+                "colStyles": [
+                  "col-6",
+                  "col-3 text-center",
+                  "col-3 text-center"
+                ],
+                "rows": [
+                  [
+                    "Tiny (bottle, lock)",
+                    "2 ({@dice 1d4})",
+                    "5 ({@dice 2d4})"
+                  ],
+                  [
+                    "Small (chest, lute)",
+                    "3 ({@dice 1d6})",
+                    "10 ({@dice 3d6})"
+                  ],
+                  [
+                    "Medium (barrel, chandelier)",
+                    "4 ({@dice 1d8})",
+                    "18 ({@dice 4d8})"
+                  ],
+                  [
+                    "Large (cart, 10-ft.-by-10-ft. window)",
+                    "5 ({@dice 1d10})",
+                    "27 ({@dice 5d10})"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Huge and Gargantuan Objects",
+            "entries": [
+              "Normal weapons are of little use against many Huge and Gargantuan objects, such as a colossal statue, towering column of stone, or massive boulder. That said, one torch can burn a Huge tapestry, and an earthquake spell can reduce a colossus to rubble. You can track a Huge or Gargantuan object's hit points if you like, or you can simply decide how long the object can withstand whatever weapon or force is acting against it. If you track hit points for the object, divide it into Large or smaller sections, and track each section's hit points separately. Destroying one of those sections could ruin the entire object. For example, a Gargantuan statue of a human might topple over when one of its Large legs is reduced to 0 hit points."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Objects and Damage Types",
+            "entries": [
+              "Objects are immune to poison and psychic damage. You might decide that some damage types are more effective against a particular object or substance than others. For example, bludgeoning damage works well for smashing things but not for cutting through rope or leather. Paper or cloth objects might be vulnerable to fire and lightning damage. A pick can chip away stone but can't effectively cut down a tree. As always, use your best judgment."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Damage Threshold",
+            "entries": [
+              "Big objects such as castle walls often have extra resilience represented by a damage threshold. An object with a damage threshold has immunity to all damage unless it takes an amount of damage from a single attack or effect equal to or greater than its damage threshold, in which case it takes damage as normal. Any damage that fails to meet or exceed the object's damage threshold is considered superficial and doesn't reduce the object's hit points."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-203"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        203
+      ],
+      "candidatePage": 203,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "objects.json",
+        "pointer": "/object/0"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "equipment-option.activate-an-item",
+    "kind": "equipment-option",
+    "name": "Activate an Item",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "Activating some magic items requires a user to do something in particular, such as holding the item and uttering a command word, reading the item if it is a scroll, or drinking it if it is a potion. The description of each item category or individual item details how an item is activated. Certain items use one or more of the following rules related to their activation.",
+      "If an item requires an action to activate, that action isn't a function of the {@action Use an Object} action, so a feature such as the rogue's {@subclassFeature Fast Hands|Rogue||Thief||3} can't be used to activate the item.",
+      {
+        "type": "entries",
+        "name": "Command Word",
+        "entries": [
+          "A command word is a word or phrase that must be spoken audibly for the item to operate. A magic item that requires the user to speak a command word can't be activated in the area of any effect that prevents sound, such as the area created by the silence spell."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Consumables",
+        "entries": [
+          "Some items are used up when they are activated. A potion or elixir must be swallowed, or an oil applied to the body. The writing vanishes from a scroll when it is read. Once used, a consumable item loses its magic and no longer functions."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spells",
+        "entries": [
+          "Some magic items allow the user to cast a spell from the item, often by expending charges from it. The spell is cast at the lowest possible spell and caster level, doesn't expend any of the user's spell slots, and requires no components unless the item's description says otherwise. The spell uses its normal casting time, range, and duration, and the user of the item must concentrate if the spell requires {@status concentration}. Certain items make exceptions to these rules, changing the casting time, duration, or other parts of a spell.",
+          "Many items, such as potions, bypass the casting of the spell and confer the spell's effects. Such an item still uses the spell's duration unless the item's description says otherwise.",
+          "A magic item, such as certain staffs, may require you to use your own spellcasting ability when you cast a spell from the item. If you have more than one spellcasting ability, you choose which one to use with the item. If you don't have a spellcasting ability—perhaps you're a rogue with the Use Magic Device feature—your spellcasting ability modifier is +0 for the item, and your proficiency bonus does apply."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Charges",
+        "entries": [
+          "Some magic items have charges that you expend to activate its properties. The number of charges an item has remaining is revealed when an identify spell is cast on the item, or when a creature attunes to the item. Additionally, when an item regains charges, the creature attuned to that item learns how many charges it regained."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-206"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        206
+      ],
+      "candidatePage": 141,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/0"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "equipment-option.don-or-doff-a-shield",
+    "kind": "equipment-option",
+    "name": "Don or Doff a Shield",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "The time it takes to don or doff armor {@table Getting Into and Out of Armor; Donning and Doffing Armor|srd51|depends on the armor's category}. A {@item shield|srd51} can be donned or doffed as an action."
+    ],
+    "catalogReferences": [
+      "rulebook.page-064"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64
+      ],
+      "candidatePage": 146,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/10"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "activity.end-concentration",
+    "kind": "activity",
+    "name": "End Concentration",
+    "time": [
+      "Free"
+    ],
+    "entries": [
+      "If a spell must be maintained with {@status concentration}, that fact appears in its Duration entry, and the spell specifies how long you can concentrate on it. You can end {@status concentration} at any time (no action required)."
+    ],
+    "catalogReferences": [
+      "rulebook.page-102"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        102
+      ],
+      "candidatePage": 203,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/12"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "combat-option.escape-a-grapple",
+    "kind": "combat-option",
+    "name": "Escape a Grapple",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "A {@condition grappled} creature can use its action to escape. To do so, it must succeed on a Strength ({@skill Athletics}) or Dexterity ({@skill Acrobatics}) check contested by your Strength ({@skill Athletics}) check."
+    ],
+    "seeAlsoAction": [
+      "Grapple"
+    ],
+    "catalogReferences": [
+      "rulebook.page-095"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        95
+      ],
+      "candidatePage": 195,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/14"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "attack-option.grapple",
+    "kind": "attack-option",
+    "name": "Grapple",
+    "entries": [
+      "When you want to grab a creature or wrestle with it, you can use the {@action Attack} action to make a special melee attack, a grapple. If you're able to make multiple attacks with the {@action Attack} action, this attack replaces one of them. The target of your grapple must be no more than one size larger than you, and it must be within your reach.",
+      "Using at least one free hand, you try to seize the target by making a grapple check, a Strength ({@skill Athletics}) check contested by the target's Strength ({@skill Athletics}) or Dexterity ({@skill Acrobatics}) check (the target chooses the ability to use). You succeed automatically if the target is {@condition incapacitated}. If you succeed, you subject the target to the {@condition grappled} condition (see the appendix). The condition specifies the things that end it, and you can release the target whenever you like (no action required).",
+      {
+        "type": "entries",
+        "name": "Moving a Grappled Target",
+        "entries": [
+          "When you move, you can drag or carry the {@condition grappled} creature with you, but your speed is halved, unless the creature is two or more sizes smaller than you."
+        ]
+      }
+    ],
+    "seeAlsoAction": [
+      "Escape a Grapple"
+    ],
+    "replacesAttack": true,
+    "catalogReferences": [
+      "rulebook.page-095",
+      "rulebook.page-096",
+      "action.attack"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        95,
+        96
+      ],
+      "candidatePage": 195,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/16"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "reaction-option.opportunity-attack",
+    "kind": "reaction-option",
+    "name": "Opportunity Attack",
+    "time": [
+      {
+        "number": 1,
+        "unit": "reaction"
+      }
+    ],
+    "entries": [
+      "In a fight, everyone is constantly watching for enemies to drop their guard. You can rarely move heedlessly past your foes without putting yourself in danger; doing so provokes an opportunity attack.",
+      "You can make an opportunity attack when a hostile creature that you can see moves out of your reach. To make the opportunity attack, you use your reaction to make one melee attack against the provoking creature. The attack interrupts the provoking creature's movement, occurring right before the creature leaves your reach.",
+      "You can avoid provoking an opportunity attack by taking the {@action Disengage} action. You also don't provoke an opportunity attack when you teleport or when someone or something moves you without using your movement, action, or reaction. For example, you don't provoke an opportunity attack if an explosion hurls you out of a foe's reach or if gravity causes you to fall past an enemy."
+    ],
+    "catalogReferences": [
+      "rulebook.page-095"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        95
+      ],
+      "candidatePage": 195,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/23"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "activity.other-activity",
+    "kind": "activity",
+    "name": "Other Activity",
+    "time": [
+      "Varies"
+    ],
+    "entries": [
+      "Your turn can include a variety of flourishes that require neither your action nor your move.",
+      "You can communicate however you are able, through brief utterances and gestures, as you take your turn.",
+      "You can also interact with one object or feature of the environment for free, during either your move or your action. For example, you could open a door during your move as you stride toward a foe, or you could draw your weapon as part of the same action you use to attack.",
+      "If you want to interact with a second object, you need to use your action. Some magic items and other special objects always require an action to use, as stated in their descriptions.",
+      "The DM might require you to use an action for any of these activities when it needs special care or when it presents an unusual obstacle. For instance, the DM could reasonably expect you to use an action to open a stuck door or turn a crank to lower a drawbridge.",
+      {
+        "type": "inset",
+        "name": "Interacting with Objects Around You",
+        "entries": [
+          "Here are a few examples of the sorts of thing you can do in tandem with your movement and action:",
+          {
+            "type": "list",
+            "items": [
+              "draw or sheathe a sword",
+              "open or close a door",
+              "withdraw a potion from your backpack",
+              "pick up a dropped axe",
+              "take a bauble from a table",
+              "remove a ring from your finger",
+              "stuff some food into your mouth",
+              "plant a banner in the ground",
+              "fish a few coins from your belt pouch",
+              "drink all the ale in a flagon",
+              "throw a lever or a switch",
+              "pull a torch from a sconce",
+              "take a book from a shelf you can reach",
+              "extinguish a small flame",
+              "don a mask",
+              "pull the hood of your cloak up and over your head",
+              "put your ear to a door",
+              "kick a small stone",
+              "turn a key in a lock",
+              "tap the floor with a 10-foot pole",
+              "hand an item to another character"
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-091"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        91
+      ],
+      "candidatePage": 190,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/25"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "attack-option.shove",
+    "kind": "attack-option",
+    "name": "Shove",
+    "entries": [
+      "Using the {@action Attack} action, you can make a special melee attack to shove a creature, either to knock it {@condition prone} or push it away from you. If you're able to make multiple attacks with the {@action Attack} action, this attack replaces one of them.",
+      "The target of your shove must be no more than one size larger than you, and it must be within your reach. You make a Strength ({@skill Athletics}) check contested by the target's Strength ({@skill Athletics}) or Dexterity ({@skill Acrobatics}) check (the target chooses the ability to use). You succeed automatically if the target is {@condition incapacitated}. If you succeed, you either knock the target {@condition prone} or push it 5 feet away from you."
+    ],
+    "seeAlsoAction": [
+      "Attack",
+      "Shove Aside|SRD51"
+    ],
+    "replacesAttack": true,
+    "catalogReferences": [
+      "rulebook.page-096",
+      "action.attack"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        96
+      ],
+      "candidatePage": 195,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/30"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "combat-option.stabilize-a-creature",
+    "kind": "combat-option",
+    "name": "Stabilize a Creature",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "You can use your action to administer first aid to an {@condition unconscious} creature and attempt to stabilize it, which requires a successful {@dc 10} Wisdom ({@skill Medicine}) check.",
+      "A stable creature doesn't make death saving throws, even though it has 0 hit points, but it does remain {@condition unconscious}. The creature stops being stable, and must start making death saving throws again, if it takes any damage. A stable creature that isn't healed regains 1 hit point after {@dice 1d4} hours."
+    ],
+    "catalogReferences": [
+      "rulebook.page-098"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        98
+      ],
+      "candidatePage": 197,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/31"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "combat-option.two-weapon-fighting",
+    "kind": "combat-option",
+    "name": "Two-Weapon Fighting",
+    "time": [
+      {
+        "number": 1,
+        "unit": "bonus"
+      }
+    ],
+    "entries": [
+      "When you take the {@action Attack} action and attack with a light melee weapon that you're holding in one hand, you can use a bonus action to attack with a different light melee weapon that you're holding in the other hand. You don't add your ability modifier to the damage of the bonus attack, unless that modifier is negative.",
+      "If either weapon has the thrown property, you can throw the weapon, instead of making a melee attack with it."
+    ],
+    "seeAlsoAction": [
+      "Attack"
+    ],
+    "catalogReferences": [
+      "rulebook.page-095"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        95
+      ],
+      "candidatePage": 195,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/33"
+      },
+      "structuredStatus": "pinned edition-specific projection; publisher locator verified; full body and semantic review pending"
+    }
+  }
+]

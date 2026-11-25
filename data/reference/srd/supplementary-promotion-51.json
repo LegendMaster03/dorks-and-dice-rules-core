@@ -1,0 +1,908 @@
+{
+  "edition": "srd-5.1",
+  "sourceCounts": {
+    "variantrule": 1,
+    "disease": 3,
+    "status": 2,
+    "trap": 8,
+    "table": 2,
+    "object": 1,
+    "action": 20,
+    "vehicle": 1,
+    "deity": 72
+  },
+  "nativeCounts": {
+    "rule": 2,
+    "disease": 3,
+    "status": 2,
+    "trap": 8,
+    "table": 2,
+    "equipment-option": 2,
+    "activity": 2,
+    "combat-option": 3,
+    "attack-option": 2,
+    "reaction-option": 1
+  },
+  "excluded": [
+    {
+      "path": "actions.json",
+      "pointer": "/action/1",
+      "name": "Attack",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/3",
+      "name": "Cast a Spell",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/4",
+      "name": "Dash",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/6",
+      "name": "Disengage",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/8",
+      "name": "Dodge",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/17",
+      "name": "Help",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/19",
+      "name": "Hide",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/26",
+      "name": "Ready",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/28",
+      "name": "Search",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/35",
+      "name": "Use an Item",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "vehicles.json",
+      "pointer": "/vehicle/0",
+      "name": "Apparatus of the Crab",
+      "reason": "Apparatus of the Crab is an existing magic-item identity; vehicle-specific projection needs separate reconciliation."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/0",
+      "name": "Aegir",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/1",
+      "name": "Anubis",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/2",
+      "name": "Apep",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/3",
+      "name": "Aphrodite",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/4",
+      "name": "Apollo",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/5",
+      "name": "Arawn",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/6",
+      "name": "Ares",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/7",
+      "name": "Artemis",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/8",
+      "name": "Athena",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/9",
+      "name": "Balder",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/10",
+      "name": "Bast",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/11",
+      "name": "Belenus",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/12",
+      "name": "Bes",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/13",
+      "name": "Brigantia",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/14",
+      "name": "Demeter",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/15",
+      "name": "Diancecht",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/16",
+      "name": "Dionysus",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/17",
+      "name": "Dunatis",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/18",
+      "name": "Forseti",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/19",
+      "name": "Frey",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/20",
+      "name": "Freya",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/21",
+      "name": "Frigga",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/22",
+      "name": "Goibhniu",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/23",
+      "name": "Hades",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/24",
+      "name": "Hathor",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/25",
+      "name": "Hecate",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/26",
+      "name": "Heimdall",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/27",
+      "name": "Hel",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/28",
+      "name": "Hephaestus",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/29",
+      "name": "Hera",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/30",
+      "name": "Hercules",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/31",
+      "name": "Hermes",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/32",
+      "name": "Hermod",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/33",
+      "name": "Hestia",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/34",
+      "name": "Imhotep",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/35",
+      "name": "Isis",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/36",
+      "name": "Loki",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/37",
+      "name": "Lugh",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/38",
+      "name": "Manannan mac Lir",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/39",
+      "name": "Math Mathonwy",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/40",
+      "name": "Morrigan",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/41",
+      "name": "Nephthys",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/42",
+      "name": "Nike",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/43",
+      "name": "Njord",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/44",
+      "name": "Nuada",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/45",
+      "name": "Odin",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/46",
+      "name": "Odur",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/47",
+      "name": "Oghma",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/48",
+      "name": "Oghma",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/49",
+      "name": "Osiris",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/50",
+      "name": "Pan",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/51",
+      "name": "Poseidon",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/52",
+      "name": "Ptah",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/53",
+      "name": "Re-Horakhty",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/54",
+      "name": "Set",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/55",
+      "name": "Sif",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/56",
+      "name": "Silvanus",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/57",
+      "name": "Silvanus",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/58",
+      "name": "Skadi",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/59",
+      "name": "Sobek",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/60",
+      "name": "Surtur",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/61",
+      "name": "Surtur",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/62",
+      "name": "The Daghdha",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/63",
+      "name": "Thor",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/64",
+      "name": "Thoth",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/65",
+      "name": "Thrym",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/66",
+      "name": "Thrym",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/67",
+      "name": "Tyche",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/68",
+      "name": "Tyr",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/69",
+      "name": "Tyr",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/70",
+      "name": "Uller",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/71",
+      "name": "Zeus",
+      "reason": "Publisher pantheon table provenance not established; retain in reference corpus only."
+    }
+  ],
+  "corrections": [
+    {
+      "id": "rule.madness",
+      "reason": "Publisher pp.201–202 omit the Sanity ability-score variant and use the spells themselves, not a Player's Handbook pointer."
+    },
+    {
+      "id": "rule.breaking-objects",
+      "reason": "Publisher general object-damage rules, not a generic creature-like stat block; remove renderer-only envelope."
+    },
+    {
+      "id": "attack-option.grapple",
+      "reason": "Legacy grapple/shove replaces an attack within the Attack action, rather than requiring a separate full action."
+    },
+    {
+      "id": "attack-option.shove",
+      "reason": "Legacy grapple/shove replaces an attack within the Attack action, rather than requiring a separate full action."
+    }
+  ],
+  "pendingReferences": [
+    {
+      "id": "rule.madness",
+      "reference": "spell|contact other plane",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "spell|symbol",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "condition|paralyzed",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "condition|incapacitated",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "condition|frightened",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "condition|stunned",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "condition|unconscious",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "spell|antipathy/sympathy",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "condition|blinded",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "condition|deafened",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "spell|confusion",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "spell|calm emotions",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "spell|lesser restoration",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "spell|remove curse",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "spell|dispel evil and good||dispel evil",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "rule.madness",
+      "reference": "spell|greater restoration",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "disease.cackle-fever",
+      "reference": "condition|exhaustion",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "disease.cackle-fever",
+      "reference": "condition|incapacitated",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "disease.cackle-fever",
+      "reference": "variantrule|Madness|SRD51|indefinite madness",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "disease.sewer-plague",
+      "reference": "condition|exhaustion",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "disease.sight-rot",
+      "reference": "condition|blinded",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "disease.sight-rot",
+      "reference": "spell|lesser restoration",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "disease.sight-rot",
+      "reference": "spell|heal",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "disease.sight-rot",
+      "reference": "item|herbalism kit|srd51",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.concentration",
+      "reference": "status|concentration",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.concentration",
+      "reference": "status|concentration||concentrating",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.concentration",
+      "reference": "condition|incapacitated",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.surprised",
+      "reference": "creature|gelatinous cube",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.surprised",
+      "reference": "skill|Stealth",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.surprised",
+      "reference": "skill|Perception",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.surprised",
+      "reference": "status|surprised",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.collapsing-roof",
+      "reference": "item|thieves' tools|srd51",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.falling-net",
+      "reference": "condition|restrained",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.falling-net",
+      "reference": "condition|prone",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.fire-breathing-statue",
+      "reference": "spell|dispel magic",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.pits",
+      "reference": "skill|Perception",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.pits",
+      "reference": "skill|Investigation",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.pits",
+      "reference": "spell|arcane lock",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poison-darts",
+      "reference": "skill|Investigation",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poison-needle",
+      "reference": "condition|poisoned",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poison-needle",
+      "reference": "skill|Investigation",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poison-needle",
+      "reference": "item|thieves' tools|srd51",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.rolling-sphere",
+      "reference": "skill|Perception",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.rolling-sphere",
+      "reference": "skill|Investigation",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.rolling-sphere",
+      "reference": "condition|prone",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.sphere-of-annihilation",
+      "reference": "skill|Arcana",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.sphere-of-annihilation",
+      "reference": "item|sphere of annihilation",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.sphere-of-annihilation",
+      "reference": "spell|antipathy/sympathy",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.sphere-of-annihilation",
+      "reference": "spell|dispel magic",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "equipment-option.activate-an-item",
+      "reference": "action|Use an Object",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "equipment-option.activate-an-item",
+      "reference": "subclassFeature|Fast Hands|Rogue||Thief||3",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "equipment-option.activate-an-item",
+      "reference": "status|concentration",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "equipment-option.don-or-doff-a-shield",
+      "reference": "table|Getting Into and Out of Armor; Donning and Doffing Armor|srd51|depends on the armor's category",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "equipment-option.don-or-doff-a-shield",
+      "reference": "item|shield|srd51",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "activity.end-concentration",
+      "reference": "status|concentration",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.escape-a-grapple",
+      "reference": "condition|grappled",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.escape-a-grapple",
+      "reference": "skill|Athletics",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.escape-a-grapple",
+      "reference": "skill|Acrobatics",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "attack-option.grapple",
+      "reference": "action|Attack",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "attack-option.grapple",
+      "reference": "skill|Athletics",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "attack-option.grapple",
+      "reference": "skill|Acrobatics",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "attack-option.grapple",
+      "reference": "condition|incapacitated",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "attack-option.grapple",
+      "reference": "condition|grappled",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "reaction-option.opportunity-attack",
+      "reference": "action|Disengage",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "attack-option.shove",
+      "reference": "action|Attack",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "attack-option.shove",
+      "reference": "condition|prone",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "attack-option.shove",
+      "reference": "skill|Athletics",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "attack-option.shove",
+      "reference": "skill|Acrobatics",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "attack-option.shove",
+      "reference": "condition|incapacitated",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.stabilize-a-creature",
+      "reference": "condition|unconscious",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.stabilize-a-creature",
+      "reference": "skill|Medicine",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.two-weapon-fighting",
+      "reference": "action|Attack",
+      "reason": "semantic reference reconciliation pending"
+    }
+  ],
+  "locatorLimitations": [],
+  "nativeCount": 27
+}
