@@ -361,6 +361,19 @@ public sealed class RulesetResolutionApiTests
             Assert.True(replacement.GetProperty("different").GetBoolean());
             Assert.Equal("level=0|class=Wizard", replacement.GetProperty("selector").GetProperty("choose").GetString());
         }
+        var modernTiefling = (await client.GetFromJsonAsync<JsonElement>(animals + "/species.tiefling")).GetProperty("rule").GetProperty("definition");
+        foreach (var lineageSpecies in new[] { modernElf, modernTiefling })
+        {
+            var lineageGrants = lineageSpecies.GetProperty("additionalSpells").EnumerateArray().Concat(lineageSpecies.GetProperty("_versions").EnumerateArray().SelectMany(x => x.GetProperty("additionalSpells").EnumerateArray()));
+            foreach (var lineageGrant in lineageGrants)
+            {
+                foreach (var level in new[] { "3", "5" })
+                {
+                    var freeSpell = lineageGrant.GetProperty("innate").GetProperty(level).GetProperty("daily").GetProperty("1")[0].GetString();
+                    Assert.Equal(freeSpell, lineageGrant.GetProperty("prepared").GetProperty(level)[0].GetString());
+                }
+            }
+        }
         var modernGnome = (await client.GetFromJsonAsync<JsonElement>(animals + "/species.gnome")).GetProperty("rule").GetProperty("definition");
         var forestGnome = modernGnome.GetProperty("_versions").EnumerateArray().Single(x => x.GetProperty("name").GetString() == "Gnome; Forest Gnome Lineage").GetProperty("additionalSpells")[0];
         Assert.Equal("speak with animals|srd52", forestGnome.GetProperty("innate").GetProperty("1").GetProperty("daily").GetProperty("pb")[0].GetString());

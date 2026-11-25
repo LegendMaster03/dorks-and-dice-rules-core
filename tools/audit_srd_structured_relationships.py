@@ -268,6 +268,7 @@ def audit(rows, tag):
             "scope": "Structured grants, prerequisites, equipment and proficiency fields in character options; selectors and constraints remain unexecuted.",
             "counts": dict(sorted(counts.items())),
             "relationCounts": dict(sorted(relation_counts.items())),
+            "nativeEntities": len(rows),
             "spellSelectorCounts": dict(sorted(selector_counts.items())),
             "explicitLiteralLinks": sum(o["alreadyExplicit"] for o in result),
             "unlinkedLiteralOccurrences": len(unlinked),
@@ -285,7 +286,8 @@ def main():
         report[edition] = audit(rows, "SRD51" if edition == "srd-5.1" else "SRD52")
         print(edition, report[edition]["counts"], "explicit", report[edition]["explicitLiteralLinks"],
               "unlinked literal", report[edition]["unlinkedLiteralOccurrences"],
-              "spell selectors", report[edition]["spellSelectorCounts"])
+              "spell selectors", report[edition]["spellSelectorCounts"],
+              "native entities", report[edition]["nativeEntities"])
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if args.require_literal_links and any(r["unlinkedLiteralOccurrences"] for r in report.values()):

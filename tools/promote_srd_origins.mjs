@@ -71,6 +71,24 @@ function generate(races,backgrounds,manifest,sourceManifest,pages,skills,tag) {
    grant.prepared={"1":["speak with animals|srd52"]};
    report.corrections.push({id:row.id,reason:"SRD 5.2.1 p.85: Forest Gnome receives Speak with Animals as a starting lineage benefit, always prepared; preserve proficiency-bonus free casts per Long Rest instead of delaying acquisition to level 3."});
   }
+  if(modern&&["species.elf","species.tiefling"].includes(row.id)){
+   const page=row.id==="species.elf"?84:86;
+   const publisher=byPage.get(page).textLayout.replace(/\s+/g," ");
+   if(!publisher.includes("When you reach character levels 3 and 5, you")||
+      !publisher.includes("You always have that spell prepared."))throw Error("Lineage prepared spell evidence changed "+row.id);
+   const grants=[...row.additionalSpells,...row._versions.flatMap(v=>v.additionalSpells)];
+   if(grants.length!==6)throw Error("Lineage branches changed "+row.id);
+   for(const grant of grants){
+    if(grant.prepared||JSON.stringify(Object.keys(grant.innate))!==JSON.stringify(["3","5"]))throw Error("Lineage grant shape changed "+row.id);
+    grant.prepared={};
+    for(const [level,free] of Object.entries(grant.innate)){
+     const spells=free.daily["1"];
+     if(!Array.isArray(spells)||spells.length!==1||typeof spells[0]!=="string")throw Error("Lineage spell changed "+row.id);
+     grant.prepared[level]=[...spells];
+    }
+   }
+   report.corrections.push({id:row.id,reason:"Official lineage table and grant text: the level-3 and level-5 spells are always prepared in addition to the once-per-Long-Rest slot-free casting. Preserve both modes for all named branches and nested versions."});
+  }
   if(!modern){
    const age=row.entries.findIndex(e=>e.name==="Age");
    if(age<0||!alignment[c.name])throw Error("Missing guidance "+c.name);

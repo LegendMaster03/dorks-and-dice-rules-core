@@ -111,8 +111,16 @@
       "reason": "SRD 5.2.1 p.85: High Elf starts with Prestidigitation; a different Wizard cantrip may replace the lineage cantrip after a Long Rest. Retain the source selector as a conditional replacement, not an initial choice."
     },
     {
+      "id": "species.elf",
+      "reason": "Official lineage table and grant text: the level-3 and level-5 spells are always prepared in addition to the once-per-Long-Rest slot-free casting. Preserve both modes for all named branches and nested versions."
+    },
+    {
       "id": "species.gnome",
       "reason": "SRD 5.2.1 p.85: Forest Gnome receives Speak with Animals as a starting lineage benefit, always prepared; preserve proficiency-bonus free casts per Long Rest instead of delaying acquisition to level 3."
+    },
+    {
+      "id": "species.tiefling",
+      "reason": "Official lineage table and grant text: the level-3 and level-5 spells are always prepared in addition to the once-per-Long-Rest slot-free casting. Preserve both modes for all named branches and nested versions."
     }
   ],
   "mergedOccurrences": [],
@@ -661,7 +669,7 @@
     "Semantic cross-category reference reconciliation and general character-creation rules pending."
   ],
   "literalSpellRelationships": {
-    "grantOccurrences": 47,
+    "grantOccurrences": 71,
     "prerequisiteOccurrences": 0,
     "addedCatalogLinks": 23,
     "unresolvedSelectors": 0

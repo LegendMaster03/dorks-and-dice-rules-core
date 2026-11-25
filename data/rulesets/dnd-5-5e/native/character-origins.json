@@ -404,6 +404,14 @@
           "1": [
             "dancing lights|srd52#c"
           ]
+        },
+        "prepared": {
+          "3": [
+            "faerie fire|srd52"
+          ],
+          "5": [
+            "darkness|srd52"
+          ]
         }
       },
       {
@@ -445,7 +453,15 @@
               "choose": "level=0|class=Wizard"
             }
           }
-        ]
+        ],
+        "prepared": {
+          "3": [
+            "detect magic|srd52"
+          ],
+          "5": [
+            "misty step|srd52"
+          ]
+        }
       },
       {
         "name": "Wood Elf",
@@ -475,6 +491,14 @@
         "known": {
           "1": [
             "druidcraft|srd52#c"
+          ]
+        },
+        "prepared": {
+          "3": [
+            "longstrider|srd52"
+          ],
+          "5": [
+            "pass without trace|srd52"
           ]
         }
       }
@@ -623,6 +647,14 @@
               "1": [
                 "dancing lights|srd52#c"
               ]
+            },
+            "prepared": {
+              "3": [
+                "faerie fire|srd52"
+              ],
+              "5": [
+                "darkness|srd52"
+              ]
             }
           }
         ]
@@ -684,7 +716,15 @@
                   "choose": "level=0|class=Wizard"
                 }
               }
-            ]
+            ],
+            "prepared": {
+              "3": [
+                "detect magic|srd52"
+              ],
+              "5": [
+                "misty step|srd52"
+              ]
+            }
           }
         ]
       },
@@ -735,6 +775,14 @@
             "known": {
               "1": [
                 "druidcraft|srd52#c"
+              ]
+            },
+            "prepared": {
+              "3": [
+                "longstrider|srd52"
+              ],
+              "5": [
+                "pass without trace|srd52"
               ]
             }
           }
@@ -1512,6 +1560,14 @@
               ]
             }
           }
+        },
+        "prepared": {
+          "3": [
+            "ray of sickness|srd52"
+          ],
+          "5": [
+            "hold person|srd52"
+          ]
         }
       },
       {
@@ -1544,6 +1600,14 @@
               ]
             }
           }
+        },
+        "prepared": {
+          "3": [
+            "false life|srd52"
+          ],
+          "5": [
+            "ray of enfeeblement|srd52"
+          ]
         }
       },
       {
@@ -1576,6 +1640,14 @@
               ]
             }
           }
+        },
+        "prepared": {
+          "3": [
+            "hellish rebuke|srd52"
+          ],
+          "5": [
+            "darkness|srd52"
+          ]
         }
       }
     ],
@@ -1699,6 +1771,14 @@
                 "thaumaturgy|srd52#c",
                 "poison spray|srd52#c"
               ]
+            },
+            "prepared": {
+              "3": [
+                "ray of sickness|srd52"
+              ],
+              "5": [
+                "hold person|srd52"
+              ]
             }
           }
         ]
@@ -1754,6 +1834,14 @@
                 "thaumaturgy|srd52#c",
                 "chill touch|srd52#c"
               ]
+            },
+            "prepared": {
+              "3": [
+                "false life|srd52"
+              ],
+              "5": [
+                "ray of enfeeblement|srd52"
+              ]
             }
           }
         ]
@@ -1808,6 +1896,14 @@
               "1": [
                 "thaumaturgy|srd52#c",
                 "fire bolt|srd52#c"
+              ]
+            },
+            "prepared": {
+              "3": [
+                "hellish rebuke|srd52"
+              ],
+              "5": [
+                "darkness|srd52"
               ]
             }
           }
