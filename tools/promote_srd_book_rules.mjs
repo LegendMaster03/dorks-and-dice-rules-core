@@ -29,6 +29,7 @@ const selections={
   ["Starting Equipment at Higher Levels","/data/2/entries/3/entries/2/entries/2",24,4],
   ["Multiclass Spellcaster: Spell Slots per Spell Level","/data/2/entries/4/entries/6/entries/4/entries/1",26,20],
   ["Coin Values","/data/6/entries/1/entries/2",89,5],
+  ["Travel Terrain","/data/10/entries/0/entries/5/entries/1",192,11],
   ["XP Budget per Character","/data/10/entries/7/entries/2/entries/2/entries/1",202,20],
   ["Hit Dice by Size","/data/13/entries/1/entries/8",255,6],
   ["Experience Points by Challenge Rating","/data/13/entries/1/entries/20/entries/2",256,34],
@@ -128,6 +129,70 @@ function generateBookRules(book,manifest,src,pages,tag,known){
  rows.push(rule);
  report.rules.push({id:rule.id,pointer:multiPointer,pages:nums});
  report.corrections.push({id:rule.id,reason:"Remove non-SRD Eldritch Knight/Arcane Trickster spell-slot contributions; retain legacy half-caster rounding down and modern rounding up as printed. Normalize book navigation; canonicalize nested tables."});
+ // Individually reviewed extended rules. Keep the modern glossary and existing
+ // native item definitions authoritative; book navigation remains plain text.
+ const extraRules=tag==="51"?[
+  ["Advantage and Disadvantage","/data/6/entries/5",[76,77],[]],
+  ["Proficiency Bonus","/data/6/entries/6",[77],["skill.history","table.character-advancement"]],
+  ["Saving Throws","/data/6/entries/9",[83],["rule.proficiency-bonus","rule.advantage-and-disadvantage"]],
+  ["Resting","/data/7/entries/3",[87],[]],
+  ["Cover","/data/8/entries/4",[96],[]],
+  ["Mounted Combat","/data/8/entries/6",[99],["condition.prone","action.dash","action.disengage","action.dodge","reaction-option.opportunity-attack"]],
+  ["Underwater Combat","/data/8/entries/7",[99],[]]
+ ]:[
+  ["Travel Pace","/data/10/entries/0",[192],["table.travel-pace","condition.exhaustion","spell.wind-walk","item-group.carpet-of-flying","glossary.difficult-terrain"]],
+  ["Creating a Background","/data/10/entries/1",[192,193],[]],
+  ["Combat Encounters","/data/10/entries/7",[202,203],["monster.bugbear-warrior","monster.giant-wasp","monster.giant-rat","monster.druid","monster.stirge","monster.wight","monster.warhorse-skeleton","monster.skeleton","monster.adult-red-dragon","monster.fire-giant","monster.ogre"]],
+  ["Crafting Nonmagical Items","/data/6/entries/12",[103],["baseitem.plate-armor","baseitem.heavy-crossbow"]],
+  ["Brewing Potions of Healing","/data/6/entries/13",[103],["item.herbalism-kit","item.potion-of-healing"]],
+  ["Scribing Spell Scrolls","/data/6/entries/14",[103],["table.spell-scroll-costs","item-group.spell-scroll","skill.arcana","baseitem.calligrapher-s-supplies"]]
+ ];
+ const extraCorrections={
+  "Advantage and Disadvantage":"Restore the original reroll-only wording and unrestricted Inspiration wording from pp.76–77; remove later source additions.",
+  "Resting":"Restore published short-rest healing wording and long-rest sleep/light-activity wording from p.87; do not import later errata into the pinned SRD.",
+  "Combat Encounters":"Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
+ };
+ for(const [name,pointer,nums,refs] of extraRules){
+  const node=get(pointer);
+  if(node.name!==name||nums.some(n=>!pageMap.has(n)))throw Error("Unreviewed book rule "+name);
+  if(name!=="Advantage and Disadvantage"&&!nums.some(n=>norm(pageMap.get(n).textLayout).includes(norm(name))))throw Error("Missing book rule heading "+name);
+  const local=new Set([...nums.map(pageId),...refs]);
+  const project=x=>{
+   if(typeof x==="string")return x.replace(/\{@book ([^}|]+)(?:\|[^}]+)?\}/g,(_,label)=>label);
+   if(Array.isArray(x))return x.map(project);
+   if(x&&typeof x==="object"){
+    if(x.type==="table"){
+     const id="table."+slug(x.caption);
+     if(!known.has(id)&&!rows.some(r=>r.id===id))throw Error("Unprojected book table "+id);
+     local.add(id);return "See the "+x.caption+" table.";
+    }
+    return Object.fromEntries(Object.entries(x).filter(([k])=>!["id","page","data","srd","srd52","basicRules","basicRules2024"].includes(k)).map(([k,v])=>[k,project(v)]));
+   }
+   return x;
+  };
+  let content=project(node.entries);
+  if(name==="Advantage and Disadvantage"){
+   content[3]=content[3].replaceAll("reroll or replace","reroll");
+   content[4]=content[4].replace("advantage on checks related to the character's personality, ideals, or bonds","advantage");
+  }
+  if(name==="Resting"){
+   content[0]=content[0].replace("rest-time","rest—time");
+   content[1]="Adventurers can take short rests in the midst of an adventuring day and a long rest to end the day.";
+   find(content,"Short Rest").entries[1]=find(content,"Short Rest").entries[1].replace(" (minimum of 0)","");
+   const lr=find(content,"Long Rest");
+   lr.entries[0]=lr.entries[0].replace("sleeps for at least 6 hours and performs no more than 2 hours of light activity, such as reading, talking, eating, or standing watch","sleeps or performs light activity: reading, talking, eating, or standing watch for no more than 2 hours");
+   lr.entries[1]=lr.entries[1].replace("number of them. You regain at least 1 Hit Die when you finish a long rest.","number of them (minimum of one die).");
+  }
+  if(name==="Combat Encounters"){
+   const before=JSON.stringify(content);
+   content=JSON.parse(before.replace("{@creature Twig Blight|srd52|Twig Blights}","{@creature Giant Rat|srd52|Giant Rats}").replace("{@creature Nothic|srd52|Nothics}","{@creature Druid|srd52|Druids}").replace("use swarms from the Monster Manual instead","use swarms instead"));
+   if(JSON.stringify(content).includes("Twig Blight")||JSON.stringify(content).includes("Nothic")||JSON.stringify(content).includes("Monster Manual"))throw Error("Unreconciled encounter example");
+  }
+  const id="rule."+slug(name);
+  rows.push({id,kind:"rule",name,entries:content,catalogReferences:[...local].sort(),source:metadata(pointer,nums)});
+  report.rules.push({id,pointer,pages:nums});
+  if(extraCorrections[name])report.corrections.push({id,reason:extraCorrections[name]});
+ }
  const ids=new Set(rows.map(r=>r.id));
  if(ids.size!==rows.length||rows.some(r=>known.has(r.id)))throw Error("Book projection identity collision");
  for(const r of rows)for(const id of r.catalogReferences)if(!known.has(id)&&!ids.has(id))throw Error("Missing book reference "+r.id+" -> "+id);

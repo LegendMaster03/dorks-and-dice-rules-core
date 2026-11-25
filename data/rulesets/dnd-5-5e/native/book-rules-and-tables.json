@@ -1095,6 +1095,134 @@
     }
   },
   {
+    "id": "table.travel-terrain",
+    "kind": "table",
+    "name": "Travel Terrain",
+    "colLabels": [
+      "Terrain",
+      "Maximum Pace",
+      "Encounter Distance",
+      "Foraging DC",
+      "Navigation DC",
+      "Search DC"
+    ],
+    "rows": [
+      [
+        "Arctic",
+        "Fast*",
+        "{@dice 6d6 × 10} feet",
+        "20",
+        "10",
+        "10"
+      ],
+      [
+        "Coastal",
+        "Normal",
+        "{@dice 2d10 × 10} feet",
+        "10",
+        "5",
+        "15"
+      ],
+      [
+        "Desert",
+        "Normal",
+        "{@dice 6d6 × 10} feet",
+        "20",
+        "10",
+        "10"
+      ],
+      [
+        "Forest",
+        "Normal",
+        "{@dice 2d8 × 10} feet",
+        "10",
+        "15",
+        "15"
+      ],
+      [
+        "Grassland",
+        "Fast",
+        "{@dice 6d6 × 10} feet",
+        "15",
+        "5",
+        "15"
+      ],
+      [
+        "Hill",
+        "Normal",
+        "{@dice 2d10 × 10} feet",
+        "15",
+        "10",
+        "15"
+      ],
+      [
+        "Mountain",
+        "Slow",
+        "{@dice 4d10 × 10} feet",
+        "20",
+        "15",
+        "20"
+      ],
+      [
+        "Swamp",
+        "Slow",
+        "{@dice 2d8 × 10} feet",
+        "10",
+        "15",
+        "20"
+      ],
+      [
+        "Underdark",
+        "Normal",
+        "{@dice 2d6 × 10} feet",
+        "20",
+        "10",
+        "20"
+      ],
+      [
+        "Urban",
+        "Normal",
+        "{@dice 2d6 × 10} feet",
+        "20",
+        "15",
+        "15"
+      ],
+      [
+        "Waterborne",
+        "Special†",
+        "{@dice 6d6 × 10} feet",
+        "15",
+        "10",
+        "15"
+      ]
+    ],
+    "footnotes": [
+      "*Appropriate equipment (such as skis) is necessary to keep up a Fast pace in Arctic terrain.",
+      "†Characters' rate of travel while waterborne depends on the vehicle carrying them; see \"Vehicles.\""
+    ],
+    "catalogReferences": [
+      "rulebook.page-192"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        192
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/10",
+        "entryPointer": "/data/10/entries/0/entries/5/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
     "id": "table.xp-budget-per-character",
     "kind": "table",
     "name": "XP Budget per Character",
@@ -1710,6 +1838,554 @@
         "path": "book/book-srd52.json",
         "pointer": "/data/2",
         "entryPointer": "/data/2/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.travel-pace",
+    "kind": "rule",
+    "name": "Travel Pace",
+    "entries": [
+      "A group of characters can travel overland at a Normal, Fast, or Slow pace, as described in \"Playing the Game\". During any journey stage, the predominant terrain determines the characters' maximum travel pace, as shown in the Maximum Pace column of the Travel Terrain table. Certain factors can affect a group's travel pace.",
+      {
+        "type": "entries",
+        "name": "Good Roads",
+        "entries": [
+          "The presence of a good road increases the group's maximum pace by one step (from Slow to Normal or from Normal to Fast)."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Slower Travelers",
+        "entries": [
+          "The group must move at a Slow pace if any group member's Speed is reduced to half or less of normal."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Extended Travel",
+        "entries": [
+          "Characters can push themselves to travel for more than 8 hours per day, at the risk of tiring. At the end of each additional hour of travel beyond 8 hours, each character must succeed on a Constitution saving throw or gain 1 {@condition Exhaustion|srd52} level. The DC is 10 plus 1 for each hour past 8 hours."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Special Movement",
+        "entries": [
+          "If a party can travel at a high Speed for an extended time, as with a spell such as {@spell Wind Walk|srd52} or a magic item such as a {@item Carpet of Flying|srd52}, translate the party's Speed into travel rates using these rules:",
+          {
+            "type": "abilityGeneric",
+            "name": "Miles per hour",
+            "text": "Speed ÷ 10"
+          },
+          {
+            "type": "abilityGeneric",
+            "name": "Miles per day (Normal pace)",
+            "text": "Miles per hour × number of hours traveled (typically 8)"
+          },
+          {
+            "type": "abilityGeneric",
+            "name": "Fast pace",
+            "text": "Miles per day × 1⅓ (round down)"
+          },
+          {
+            "type": "abilityGeneric",
+            "name": "Slow pace",
+            "text": "Miles per day × 2/3 (round down)"
+          },
+          "If the characters are flying or their special movement allows them to ignore {@variantrule Difficult Terrain|srd52}, they can move at a Fast pace regardless of the terrain."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Vehicles",
+        "entries": [
+          "Characters traveling in a vehicle use the vehicle's speed in miles per hour (as shown in \"Equipment\") to determine their rate of travel, and they don't choose a travel pace.",
+          "See the Travel Terrain table."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.exhaustion",
+      "glossary.difficult-terrain",
+      "item-group.carpet-of-flying",
+      "rulebook.page-192",
+      "spell.wind-walk",
+      "table.travel-pace",
+      "table.travel-terrain"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        192
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/10",
+        "entryPointer": "/data/10/entries/0"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.creating-a-background",
+    "kind": "rule",
+    "name": "Creating a Background",
+    "entries": [
+      "A character's background represents what the character did prior to becoming an adventurer. Creating a unique background or customizing an existing one can reflect the particular theme of your campaign or elements of your world. You can also create a background to help a player craft the story they have in mind for their character.",
+      "This section describes, step by step, how you can create backgrounds tailored for your world and the heroes in it.",
+      {
+        "type": "entries",
+        "name": "1: Choose Abilities",
+        "entries": [
+          "Choose three abilities that seem appropriate for the background:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Strength or Dexterity",
+                "entry": "These abilities are ideal for a background involving physical exertion."
+              },
+              {
+                "type": "item",
+                "name": "Constitution",
+                "entry": "This ability is ideal for a background that involves endurance or long hours of activity."
+              },
+              {
+                "type": "item",
+                "name": "Intelligence or Wisdom",
+                "entry": "One or both abilities are ideal for a background that focuses on cerebral or spiritual matters."
+              },
+              {
+                "type": "item",
+                "name": "Charisma",
+                "entry": "This ability is ideal for a background that involves performance or social interaction."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "2: Choose a Feat",
+        "entries": [
+          "Choose one feat from the Origin category. See \"Origin Feats\" for examples of Origin feats."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "3: Choose Skill Proficiencies",
+        "entries": [
+          "Choose two skills appropriate for the background. There needn't be a relationship between the skill proficiencies a background grants and the ability scores it increases."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "4: Choose a Tool Proficiency",
+        "entries": [
+          "Choose one tool used in the practice of the background or often associated with it."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "5: Choose Equipment",
+        "entries": [
+          "Assemble a package of equipment worth 50 GP (including unspent gold). Don't include Martial weapons or armor, as characters get them from their class choices."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-192",
+      "rulebook.page-193"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        192,
+        193
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/10",
+        "entryPointer": "/data/10/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.combat-encounters",
+    "kind": "rule",
+    "name": "Combat Encounters",
+    "entries": [
+      "The following features can make a combat encounter more interesting or challenging:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Changes in Elevation",
+            "entry": "Terrain features that provide a change of elevation (such as stacks of empty crates, ledges, and balconies) reward clever positioning and encourage characters to jump, climb, fly, or teleport."
+          },
+          {
+            "type": "item",
+            "name": "Defensive Positions",
+            "entry": "Enemies in hard-to-reach locations or defensive positions force characters who normally attack at range to move around."
+          },
+          {
+            "type": "item",
+            "name": "Mixed Monster Groups",
+            "entry": "When different types of monsters work together, they can combine their abilities—just like characters with different classes and origins. A diverse force is more powerful."
+          },
+          {
+            "type": "item",
+            "name": "Reasons to Move",
+            "entry": "Use features that encourage characters and their enemies to move around, such as chandeliers, kegs of gunpowder or oil, and rolling stone traps."
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Combat Encounter Difficulty",
+        "entries": [
+          "Use the following guidelines to create a combat encounter of a desired level of difficulty.",
+          {
+            "type": "entries",
+            "name": "Step 1: Choose a Difficulty",
+            "entries": [
+              "Three categories describe the range of encounter difficulty:",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Low Difficulty",
+                    "entry": "An encounter of low difficulty is likely to have one or two scary moments for the players, but their characters should emerge victorious with no casualties. One or more of them might need to use healing resources, however. As a rough guideline, a single monster generally presents a low-difficulty challenge for a party of four characters whose level equals the monster's CR."
+                  },
+                  {
+                    "type": "item",
+                    "name": "Moderate Difficulty",
+                    "entry": "Absent healing and other resources, an encounter of moderate difficulty could go badly for the adventurers. Weaker characters might get taken out of the fight, and there's a slim chance that one or more characters might die."
+                  },
+                  {
+                    "type": "item",
+                    "name": "High Difficulty",
+                    "entry": "A high-difficulty encounter could be lethal for one or more characters. To survive it, the characters will need smart tactics, quick thinking, and maybe even a little luck."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Step 2: Determine Your XP Budget",
+            "entries": [
+              "Using the XP Budget per Character table, cross-reference the party's level with the desired encounter difficulty. Multiply the number in the table by the number of characters in the party to get your XP budget for the encounter.",
+              "See the XP Budget per Character table."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Step 3: Spend Your Budget",
+            "entries": [
+              "Every creature has an XP value in its stat block. When you add a creature to your combat encounter, deduct its XP from your XP budget to determine how many XP you have left to spend. Spend as much of your XP budget as you can without going over. It's OK if you have a few unspent XP left over. Examples are given below:",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Example 1",
+                    "entry": "A low-difficulty encounter for four level 1 characters has an XP budget of 50 × 4, for a total of 200 XP. With that, you could build any of the following encounters:"
+                  }
+                ]
+              },
+              {
+                "type": "list",
+                "items": [
+                  "1 {@creature Bugbear Warrior|srd52} (200 XP)",
+                  "2 {@creature Giant Wasp|srd52|Giant Wasps} (100 XP each), for 200 XP total",
+                  "6 {@creature Giant Rat|srd52|Giant Rats} (25 XP each), for 150 XP total"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Example 2",
+                    "entry": "A moderate-difficulty encounter for five level 3 characters has an XP budget of 225 × 5, for a total of 1,125 XP. With that, you could build either of these encounters:"
+                  }
+                ]
+              },
+              {
+                "type": "list",
+                "items": [
+                  "2 {@creature Druid|srd52|Druids} (450 XP each) and 9 {@creature Stirge|srd52|Stirges} (25 XP each), for 1,125 XP total",
+                  "1 {@creature Wight|srd52} (700 XP), 1 {@creature Warhorse Skeleton|srd52} (100 XP), and 6 {@creature Skeleton|srd52|Skeletons} (50 XP each), for 1,100 XP total"
+                ]
+              },
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Example 3",
+                    "entry": "A high-difficulty encounter for six level 15 characters has an XP budget of 7,800 × 6, for a total of 46,800 XP. With that, you could build this encounter:"
+                  }
+                ]
+              },
+              {
+                "type": "list",
+                "items": [
+                  "2 {@creature Adult Red Dragon|srd52|Adult Red Dragons} (18,000 XP each) and 2 {@creature Fire Giant|srd52|Fire Giants} (5,000 XP each), for 46,000 XP total"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Troubleshooting",
+        "entries": [
+          "When creating and running combat encounters, keep the following in mind.",
+          {
+            "type": "entries",
+            "name": "Many Creatures",
+            "entries": [
+              "The more creatures in an encounter, the higher the risk that a lucky streak on their part could deal more damage to the characters than you expect. If your encounter includes more than two creatures per character, include fragile creatures that can be defeated quickly. This guideline is especially important for characters of level 1 or 2."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Adjustments",
+            "entries": [
+              "A player's absence might warrant removing creatures from an encounter to keep it at the intended difficulty. Also, die rolls and other factors can result in an encounter being easier or harder than intended. You can adjust an encounter on the fly, such as by having creatures flee (making the encounter easier) or adding reinforcements (making the encounter harder)."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "CR 0 Creatures",
+            "entries": [
+              "Creatures that have a CR of 0, particularly ones that are worth 0 XP, should be used sparingly. If you want to include many CR 0 critters in an encounter, use swarms instead."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Number of Stat Blocks",
+            "entries": [
+              "The best combat encounters often pair one kind of creature with another, such as fire giants paired with hell hounds. Be mindful of the number of stat blocks you need to run the encounter. Referencing more than two or three stat blocks for a single encounter can be daunting, particularly if the creatures are complex."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Powerful Creatures",
+            "entries": [
+              "If your combat encounter includes a creature whose CR is higher than the party's level, be aware that such a creature might deal enough damage with a single action to take out one or more characters. For example, an {@creature Ogre|srd52} (CR 2) can kill a level 1 Wizard with a single blow."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Unusual Features",
+            "entries": [
+              "If a monster has a feature that lower-level characters can't easily overcome, consider not adding that monster to an encounter for characters whose level is lower than the monster's Challenge Rating."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "monster.adult-red-dragon",
+      "monster.bugbear-warrior",
+      "monster.druid",
+      "monster.fire-giant",
+      "monster.giant-rat",
+      "monster.giant-wasp",
+      "monster.ogre",
+      "monster.skeleton",
+      "monster.stirge",
+      "monster.warhorse-skeleton",
+      "monster.wight",
+      "rulebook.page-202",
+      "rulebook.page-203",
+      "table.xp-budget-per-character"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        202,
+        203
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/10",
+        "entryPointer": "/data/10/entries/7"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.crafting-nonmagical-items",
+    "kind": "rule",
+    "name": "Crafting Nonmagical Items",
+    "entries": [
+      "To craft a nonmagical item, you need tools, raw materials, and time, each of which is detailed below. If you meet the requirements, you make the item, and you can use it or sell it at its normal price.",
+      {
+        "type": "entries",
+        "name": "Tools",
+        "entries": [
+          "The \"Tools\" section of \"Equipment\" lists which tools are required to make certain items. The GM assigns required tools for items not listed there.",
+          "You must use the required tool to make an item and have proficiency with that tool. Anyone who helps you must also have proficiency with it."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Raw Materials",
+        "entries": [
+          "To make an item, you need raw materials worth half its purchase cost (round down). For example, you need 750 GP of raw materials to make Plate Armor, which sells for 1,500 GP. The GM determines whether appropriate raw materials are available."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Time",
+        "entries": [
+          "To determine how many days (working 8 hours a day) it takes to make an item, divide its purchase cost in GP by 10 (round a fraction up to a day). For example, you need 5 days to make a Heavy Crossbow, which sells for 50 GP.",
+          "If an item requires multiple days, the days needn't be consecutive.",
+          "Characters can combine their efforts to shorten the crafting time. Divide the time needed to create an item by the number of characters working on it. Normally, only one other character can assist you, but the GM might allow more assistants."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.heavy-crossbow",
+      "baseitem.plate-armor",
+      "rulebook.page-103"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        103
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/12"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.brewing-potions-of-healing",
+    "kind": "rule",
+    "name": "Brewing Potions of Healing",
+    "entries": [
+      "A character who has proficiency with the Herbalism Kit can create a {@item Potion of Healing|srd52}. Doing so requires using that kit and 25 GP of raw material over the course of 1 day (8 hours of work)."
+    ],
+    "catalogReferences": [
+      "item.herbalism-kit",
+      "item.potion-of-healing",
+      "rulebook.page-103"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        103
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/13"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.scribing-spell-scrolls",
+    "kind": "rule",
+    "name": "Scribing Spell Scrolls",
+    "entries": [
+      "A spellcaster can transfer a spell to a scroll and create a {@item Spell Scroll|srd52}, using the rules below.",
+      {
+        "type": "entries",
+        "name": "Time and Cost",
+        "entries": [
+          "Scribing a scroll takes an amount of time and money based on the level of the spell, as shown in the Spell Scroll Costs table. For each day of inscription, you must work for 8 hours. If a scroll requires multiple days, those days needn't be consecutive."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Prerequisites for the Scribe",
+        "entries": [
+          "To scribe a scroll, you must have proficiency in the {@skill Arcana|srd52} skill or with {@item Calligrapher's Supplies|srd52} and have the spell prepared on each day of the inscription. You must also have at hand any Material components required by the spell; if the spell consumes its Material components, they are consumed only when you complete the scroll. The scroll's spell uses your spell save DC and spell attack bonus."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Cantrips",
+        "entries": [
+          "If the scribed spell is a cantrip, the version on the scroll works as if the caster were your level."
+        ]
+      },
+      "See the Spell Scroll Costs table."
+    ],
+    "catalogReferences": [
+      "baseitem.calligrapher-s-supplies",
+      "item-group.spell-scroll",
+      "rulebook.page-103",
+      "skill.arcana",
+      "table.spell-scroll-costs"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        103
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/14"
       },
       "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
     }

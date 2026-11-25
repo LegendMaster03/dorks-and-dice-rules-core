@@ -68,6 +68,12 @@
       "rowCount": 5
     },
     {
+      "id": "table.travel-terrain",
+      "pointer": "/data/10/entries/0/entries/5/entries/1",
+      "page": 192,
+      "rowCount": 11
+    },
+    {
       "id": "table.xp-budget-per-character",
       "pointer": "/data/10/entries/7/entries/2/entries/2/entries/1",
       "page": 202,
@@ -101,13 +107,61 @@
         25,
         26
       ]
+    },
+    {
+      "id": "rule.travel-pace",
+      "pointer": "/data/10/entries/0",
+      "pages": [
+        192
+      ]
+    },
+    {
+      "id": "rule.creating-a-background",
+      "pointer": "/data/10/entries/1",
+      "pages": [
+        192,
+        193
+      ]
+    },
+    {
+      "id": "rule.combat-encounters",
+      "pointer": "/data/10/entries/7",
+      "pages": [
+        202,
+        203
+      ]
+    },
+    {
+      "id": "rule.crafting-nonmagical-items",
+      "pointer": "/data/6/entries/12",
+      "pages": [
+        103
+      ]
+    },
+    {
+      "id": "rule.brewing-potions-of-healing",
+      "pointer": "/data/6/entries/13",
+      "pages": [
+        103
+      ]
+    },
+    {
+      "id": "rule.scribing-spell-scrolls",
+      "pointer": "/data/6/entries/14",
+      "pages": [
+        103
+      ]
     }
   ],
   "corrections": [
     {
       "id": "rule.multiclassing",
       "reason": "Remove non-SRD Eldritch Knight/Arcane Trickster spell-slot contributions; retain legacy half-caster rounding down and modern rounding up as printed. Normalize book navigation; canonicalize nested tables."
+    },
+    {
+      "id": "rule.combat-encounters",
+      "reason": "Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
     }
   ],
-  "nativeCount": 16
+  "nativeCount": 23
 }

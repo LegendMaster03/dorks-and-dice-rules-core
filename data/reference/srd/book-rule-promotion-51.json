@@ -65,13 +65,71 @@
         57,
         58
       ]
+    },
+    {
+      "id": "rule.advantage-and-disadvantage",
+      "pointer": "/data/6/entries/5",
+      "pages": [
+        76,
+        77
+      ]
+    },
+    {
+      "id": "rule.proficiency-bonus",
+      "pointer": "/data/6/entries/6",
+      "pages": [
+        77
+      ]
+    },
+    {
+      "id": "rule.saving-throws",
+      "pointer": "/data/6/entries/9",
+      "pages": [
+        83
+      ]
+    },
+    {
+      "id": "rule.resting",
+      "pointer": "/data/7/entries/3",
+      "pages": [
+        87
+      ]
+    },
+    {
+      "id": "rule.cover",
+      "pointer": "/data/8/entries/4",
+      "pages": [
+        96
+      ]
+    },
+    {
+      "id": "rule.mounted-combat",
+      "pointer": "/data/8/entries/6",
+      "pages": [
+        99
+      ]
+    },
+    {
+      "id": "rule.underwater-combat",
+      "pointer": "/data/8/entries/7",
+      "pages": [
+        99
+      ]
     }
   ],
   "corrections": [
     {
       "id": "rule.multiclassing",
       "reason": "Remove non-SRD Eldritch Knight/Arcane Trickster spell-slot contributions; retain legacy half-caster rounding down and modern rounding up as printed. Normalize book navigation; canonicalize nested tables."
+    },
+    {
+      "id": "rule.advantage-and-disadvantage",
+      "reason": "Restore the original reroll-only wording and unrestricted Inspiration wording from pp.76–77; remove later source additions."
+    },
+    {
+      "id": "rule.resting",
+      "reason": "Restore published short-rest healing wording and long-rest sleep/light-activity wording from p.87; do not import later errata into the pinned SRD."
     }
   ],
-  "nativeCount": 10
+  "nativeCount": 17
 }

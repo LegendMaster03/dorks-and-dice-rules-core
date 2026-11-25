@@ -384,6 +384,19 @@ public sealed class RulesetResolutionApiTests
         var xpBudgetTable = await client.GetFromJsonAsync<JsonElement>(animals + "/table.xp-budget-per-character");
         Assert.Equal(20, xpBudgetTable.GetProperty("rule").GetProperty("definition").GetProperty("rows").GetArrayLength());
 
+        var oldRestRule = await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.resting");
+        var oldRestEntries = oldRestRule.GetProperty("rule").GetProperty("definition").GetProperty("entries").GetRawText();
+        Assert.DoesNotContain("minimum of 0", oldRestEntries);
+        Assert.DoesNotContain("at least 6 hours", oldRestEntries);
+        var encounterRule = await client.GetFromJsonAsync<JsonElement>(animals + "/rule.combat-encounters");
+        var encounterDefinition = encounterRule.GetProperty("rule").GetProperty("definition");
+        Assert.Contains("monster.giant-rat", encounterDefinition.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("monster.druid", encounterDefinition.GetProperty("catalogReferences").GetRawText());
+        Assert.DoesNotContain("Nothic", encounterDefinition.GetProperty("entries").GetRawText());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/rule.creating-a-background")).StatusCode);
+        var terrainTable = await client.GetFromJsonAsync<JsonElement>(animals + "/table.travel-terrain");
+        Assert.Equal(11, terrainTable.GetProperty("rule").GetProperty("definition").GetProperty("rows").GetArrayLength());
+
         // Supplementary actions, glossary and contagions preserve edition-specific categories.
         var oldCoreActions = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=action&limit=1");
         var newCoreActions = await client.GetFromJsonAsync<JsonElement>(animals + "?category=action&limit=1");

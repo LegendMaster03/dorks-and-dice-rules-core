@@ -1074,5 +1074,279 @@
       },
       "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
     }
+  },
+  {
+    "id": "rule.advantage-and-disadvantage",
+    "kind": "rule",
+    "name": "Advantage and Disadvantage",
+    "entries": [
+      "Sometimes a special ability or spell tells you that you have advantage or disadvantage on an ability check, a saving throw, or an attack roll. When that happens, you roll a second d20 when you make the roll. Use the higher of the two rolls if you have advantage, and use the lower roll if you have disadvantage. For example, if you have disadvantage and roll a 17 and a 5, you use the 5. If you instead have advantage and roll those numbers, you use the 17.",
+      "If multiple situations affect a roll and each one grants advantage or imposes disadvantage on it, you don't roll more than one additional d20. If two favorable situations grant advantage, for example, you still roll only one additional d20.",
+      "If circumstances cause a roll to have both advantage and disadvantage, you are considered to have neither of them, and you roll one d20. This is true even if multiple circumstances impose disadvantage and only one grants advantage or vice versa. In such a situation, you have neither advantage nor disadvantage.",
+      "When you have advantage or disadvantage and something in the game, such as the halfling's Lucky trait, lets you reroll the d20, you can reroll only one of the dice. You choose which one. For example, if a halfling has advantage or disadvantage on an ability check and rolls a 1 and a 13, the halfling could use the Lucky trait to reroll the 1.",
+      "You usually gain advantage or disadvantage through the use of special abilities, actions, or spells. Inspiration can also give a character advantage. The GM can also decide that circumstances influence a roll in one direction or the other and grant advantage or impose disadvantage as a result."
+    ],
+    "catalogReferences": [
+      "rulebook.page-076",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        76,
+        77
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/5"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.proficiency-bonus",
+    "kind": "rule",
+    "name": "Proficiency Bonus",
+    "entries": [
+      "Characters have a proficiency bonus determined by level. Monsters also have this bonus, which is incorporated in their stat blocks. The bonus is used in the rules on ability checks, saving throws, and attack rolls.",
+      "Your proficiency bonus can't be added to a single die roll or other number more than once. For example, if two different rules say you can add your proficiency bonus to a Wisdom saving throw, you nevertheless add the bonus only once when you make the save.",
+      "Occasionally, your proficiency bonus might be multiplied or divided (doubled or halved, for example) before you apply it. For example, the rogue's Expertise feature doubles the proficiency bonus for certain ability checks. If a circumstance suggests that your proficiency bonus applies more than once to the same roll, you still add it only once and multiply or divide it only once.",
+      "By the same token, if a feature or effect allows you to multiply your proficiency bonus when making an ability check that wouldn't normally benefit from your proficiency bonus, you still don't add the bonus to the check. For that check your proficiency bonus is 0, given the fact that multiplying 0 by any number is still 0. For instance, if you lack proficiency in the {@skill History} skill, you gain no benefit from a feature that lets you double your proficiency bonus when you make Intelligence ({@skill History}) checks.",
+      "In general, you don't multiply your proficiency bonus for attack rolls or saving throws. If a feature or effect allows you to do so, these same rules apply."
+    ],
+    "catalogReferences": [
+      "rulebook.page-077",
+      "skill.history",
+      "table.character-advancement"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/6"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.saving-throws",
+    "kind": "rule",
+    "name": "Saving Throws",
+    "entries": [
+      "A saving throw—also called a save—represents an attempt to resist a spell, a trap, a poison, a disease, or a similar threat. You don't normally decide to make a saving throw; you are forced to make one because your character or monster is at risk of harm.",
+      "To make a saving throw, roll a d20 and add the appropriate ability modifier. For example, you use your Dexterity modifier for a Dexterity saving throw.",
+      "A saving throw can be modified by a situational bonus or penalty and can be affected by advantage and disadvantage, as determined by the GM.",
+      "Each class gives proficiency in at least two saving throws. The wizard, for example, is proficient in Intelligence saves. As with skill proficiencies, proficiency in a saving throw lets a character add his or her proficiency bonus to saving throws made using a particular ability score. Some monsters have saving throw proficiencies as well.",
+      "The Difficulty Class for a saving throw is determined by the effect that causes it. For example, the DC for a saving throw allowed by a spell is determined by the caster's spellcasting ability and proficiency bonus.",
+      "The result of a successful or failed saving throw is also detailed in the effect that allows the save. Usually, a successful save means that a creature suffers no harm, or reduced harm, from an effect."
+    ],
+    "catalogReferences": [
+      "rule.advantage-and-disadvantage",
+      "rule.proficiency-bonus",
+      "rulebook.page-083"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        83
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/9"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.resting",
+    "kind": "rule",
+    "name": "Resting",
+    "entries": [
+      "Heroic though they might be, adventurers can't spend every hour of the day in the thick of exploration, social interaction, and combat. They need rest—time to sleep and eat, tend their wounds, refresh their minds and spirits for spellcasting, and brace themselves for further adventure.",
+      "Adventurers can take short rests in the midst of an adventuring day and a long rest to end the day.",
+      {
+        "type": "entries",
+        "name": "Short Rest",
+        "entries": [
+          "A short rest is a period of downtime, at least 1 hour long, during which a character does nothing more strenuous than eating, drinking, reading, and tending to wounds.",
+          "A character can spend one or more Hit Dice at the end of a short rest, up to the character's maximum number of Hit Dice, which is equal to the character's level. For each Hit Die spent in this way, the player rolls the die and adds the character's Constitution modifier to it. The character regains hit points equal to the total. The player can decide to spend an additional Hit Die after each roll. A character regains some spent Hit Dice upon finishing a long rest, as explained below."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Long Rest",
+        "entries": [
+          "A long rest is a period of extended downtime, at least 8 hours long, during which a character sleeps or performs light activity: reading, talking, eating, or standing watch for no more than 2 hours. If the rest is interrupted by a period of strenuous activity—at least 1 hour of walking, fighting, casting spells, or similar adventuring activity—the characters must begin the rest again to gain any benefit from it.",
+          "At the end of a long rest, a character regains all lost hit points. The character also regains spent Hit Dice, up to a number of dice equal to half of the character's total number of them (minimum of one die).",
+          "For example, if a character has eight Hit Dice, he or she can regain four spent Hit Dice upon finishing a long rest.",
+          "A character can't benefit from more than one long rest in a 24-hour period, and a character must have at least 1 hit point at the start of the rest to gain its benefits."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-087"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        87
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/7",
+        "entryPointer": "/data/7/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.cover",
+    "kind": "rule",
+    "name": "Cover",
+    "entries": [
+      "Walls, trees, creatures, and other obstacles can provide cover during combat, making a target more difficult to harm. A target can benefit from cover only when an attack or other effect originates on the opposite side of the cover.",
+      "There are three degrees of cover. If a target is behind multiple sources of cover, only the most protective degree of cover applies; the degrees aren't added together. For example, if a target is behind a creature that gives half cover and a tree trunk that gives three-quarters cover, the target has three-quarters cover.",
+      "A target with {@b half cover} has a +2 bonus to AC and Dexterity saving throws. A target has half cover if an obstacle blocks at least half of its body. The obstacle might be a low wall, a large piece of furniture, a narrow tree trunk, or a creature, whether that creature is an enemy or a friend.",
+      "A target with {@b three-quarters} cover has a +5 bonus to AC and Dexterity saving throws. A target has three-quarters cover if about three-quarters of it is covered by an obstacle. The obstacle might be a portcullis, an arrow slit, or a thick tree trunk.",
+      "A target with {@b total cover} can't be targeted directly by an attack or a spell, although some spells can reach such a target by including it in an area of effect. A target has total cover if it is completely concealed by an obstacle."
+    ],
+    "catalogReferences": [
+      "rulebook.page-096"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        96
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/8",
+        "entryPointer": "/data/8/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.mounted-combat",
+    "kind": "rule",
+    "name": "Mounted Combat",
+    "entries": [
+      "A knight charging into battle on a warhorse, a wizard casting spells from the back of a griffon, or a cleric soaring through the sky on a pegasus all enjoy the benefits of speed and mobility that a mount can provide.",
+      "A willing creature that is at least one size larger than you and that has an appropriate anatomy can serve as a mount, using the following rules.",
+      {
+        "type": "entries",
+        "name": "Mounting and Dismounting",
+        "entries": [
+          "Once during your move, you can mount a creature that is within 5 feet of you or dismount. Doing so costs an amount of movement equal to half your speed. For example, if your speed is 30 feet, you must spend 15 feet of movement to mount a horse. Therefore, you can't mount it if you don't have 15 feet of movement left or if your speed is 0.",
+          "If an effect moves your mount against its will while you're on it, you must succeed on a {@dc 10} Dexterity saving throw or fall off the mount, landing {@condition prone} in a space within 5 feet of it. If you're knocked {@condition prone} while mounted, you must make the same saving throw.",
+          "If your mount is knocked {@condition prone}, you can use your reaction to dismount it as it falls and land on your feet. Otherwise, you are dismounted and fall {@condition prone} in a space within 5 feet it."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Controlling a Mount",
+        "entries": [
+          "While you're mounted, you have two options. You can either control the mount or allow it to act independently. Intelligent creatures, such as dragons, act independently.",
+          "You can control a mount only if it has been trained to accept a rider. Domesticated horses, donkeys, and similar creatures are assumed to have such training.",
+          "The initiative of a controlled mount changes to match yours when you mount it. It moves as you direct it, and it has only three action options: {@action Dash|srd51}, {@action Disengage|srd51}, and {@action Dodge|srd51}. A controlled mount can move and act even on the turn that you mount it.",
+          "An independent mount retains its place in the initiative order. Bearing a rider puts no restrictions on the actions the mount can take, and it moves and acts as it wishes. It might flee from combat, rush to attack and devour a badly injured foe, or otherwise act against your wishes.",
+          "In either case, if the mount provokes an opportunity attack while you're on it, the attacker can target you or the mount."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "action.dash",
+      "action.disengage",
+      "action.dodge",
+      "condition.prone",
+      "reaction-option.opportunity-attack",
+      "rulebook.page-099"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        99
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/8",
+        "entryPointer": "/data/8/entries/6"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.underwater-combat",
+    "kind": "rule",
+    "name": "Underwater Combat",
+    "entries": [
+      "When adventurers pursue sahuagin back to their undersea homes, fight off sharks in an ancient shipwreck, or find themselves in a flooded dungeon room, they must fight in a challenging environment. Underwater the following rules apply.",
+      "When making a {@b melee weapon attack}, a creature that doesn't have a swimming speed (either natural or granted by magic) has disadvantage on the attack roll unless the weapon is a dagger, javelin, shortsword, spear, or trident.",
+      "A {@b ranged weapon attack} automatically misses a target beyond the weapon's normal range. Even against a target within normal range, the attack roll has disadvantage unless the weapon is a crossbow, a net, or a weapon that is thrown like a javelin (including a spear, trident, or dart).",
+      "Creatures and objects that are fully immersed in water have resistance to fire damage."
+    ],
+    "catalogReferences": [
+      "rulebook.page-099"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        99
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/8",
+        "entryPointer": "/data/8/entries/7"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
   }
 ]
