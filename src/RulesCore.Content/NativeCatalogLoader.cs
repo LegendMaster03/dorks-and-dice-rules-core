@@ -117,7 +117,7 @@ public static class NativeCatalogLoader
         ValidateImportedSource(manifestRoot, resolvedEntities);
         var fingerprint = Fingerprint(expected.RulesetId, schemaVersion, resolvedEntities);
         return new NativeCatalogSnapshot(expected.RulesetId, schemaVersion, fingerprint,
-            resolvedEntities, traitReferences);
+            resolvedEntities, traitReferences, NativePackageMetadata.FromManifest(expected.RulesetId, manifestRoot));
     }
 
     // Explicit catalogReferences are scoped to the currently loaded package.

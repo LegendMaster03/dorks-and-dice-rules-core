@@ -57,7 +57,7 @@ public sealed class NativePrivateReferenceApiTests
             Directory.CreateDirectory(Path.Combine(package, "native"));
             Directory.CreateDirectory(Path.Combine(package, "working"));
             File.WriteAllText(Path.Combine(package, "manifest.json"),
-                """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/"}""");
+                """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/","name":"First-party test","reviewReference":"private-marker"}""");
             File.WriteAllText(Path.Combine(package, "native", "base.json"),
                 """{"id":"rule.native","name":"Native Rule","kind":"rule","description":"Approved definition"}""");
             File.WriteAllText(Path.Combine(package, "working", "unfinished.json"),
@@ -71,7 +71,7 @@ public sealed class NativePrivateReferenceApiTests
                     var location = NativeRulesetLayout.Resolve(root, id);
                     Directory.CreateDirectory(location.NativeDirectory);
                     File.WriteAllText(Path.Combine(root, id, "manifest.json"),
-                        $$"""{"id":"{{id}}","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/"}""");
+                        $$"""{"id":"{{id}}","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/","name":"{{id}} test","license":"CC-BY-4.0","licenseUrl":"https://creativecommons.org/licenses/by/4.0/","attribution":"{{id}} attribution","originalSources":["https://example.org/source","file:///private/file"],"reviewReference":"private-marker"}""");
                     File.WriteAllText(Path.Combine(location.NativeDirectory, "base.json"),
                         $$"""{"id":"rule.native","name":"{{id}} rule","kind":"rule"}""");
                     additional["Rulesets:AdditionalRulesets:" + index] = id;
@@ -141,6 +141,11 @@ public sealed class NativePrivateReferenceApiTests
         Assert.Equal(HttpStatusCode.OK, listResponse.StatusCode);
         var list = (await listResponse.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("rulesets")[0];
         Assert.Equal(1, list.GetProperty("entityCount").GetInt32());
+        var metadata = list.GetProperty("metadata");
+        Assert.Equal("first-party-001", metadata.GetProperty("rulesetId").GetString());
+        Assert.Equal("First-party test", metadata.GetProperty("displayName").GetString());
+        Assert.Equal(JsonValueKind.Null, metadata.GetProperty("licenseIdentifier").ValueKind);
+        Assert.DoesNotContain("private-marker", list.ToString());
         var fingerprint = list.GetProperty("fingerprint").GetString();
 
         using var browseResponse = await host.Client.SendAsync(host.TicketRequest(
@@ -172,6 +177,15 @@ public sealed class NativePrivateReferenceApiTests
         var body = await listing.Content.ReadFromJsonAsync<JsonElement>();
         Assert.Equal(new[] { "dnd-5e", "first-party-001" },
             body.GetProperty("rulesets").EnumerateArray().Select(item => item.GetProperty("id").GetString()).ToArray());
+        var foreignMetadata = body.GetProperty("rulesets")[0].GetProperty("metadata");
+        Assert.Equal("dnd-5e", foreignMetadata.GetProperty("rulesetId").GetString());
+        Assert.Equal("dnd-5e attribution", foreignMetadata.GetProperty("attributionStatement").GetString());
+        Assert.Equal("CC-BY-4.0", foreignMetadata.GetProperty("licenseIdentifier").GetString());
+        Assert.Equal("https://creativecommons.org/licenses/by/4.0/", foreignMetadata.GetProperty("licenseUrl").GetString());
+        Assert.Single(foreignMetadata.GetProperty("originalSources").EnumerateArray());
+        Assert.DoesNotContain("private-marker", body.ToString());
+        Assert.DoesNotContain("dnd-5-5e", body.ToString());
+        Assert.DoesNotContain("TEST-FIXTURE", body.ToString());
         using var detail = await host.Client.SendAsync(host.TicketRequest("/api/private/rulesets/dnd-5e/rules/rule.native"));
         Assert.Equal(HttpStatusCode.OK, detail.StatusCode);
         var rule = await detail.Content.ReadFromJsonAsync<JsonElement>();

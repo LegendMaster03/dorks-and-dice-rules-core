@@ -74,6 +74,43 @@ public sealed class NativeCatalogRegistryTests
             registry.GetStore(id).Publish(NativeCatalogLoader.Load(NativeRulesetLayout.Resolve(root, id)));
         Assert.All(ids, id => Assert.True(registry.GetStore(id).Current().IsReady));
         Assert.Equal(4, ids.Select(id => registry.GetStore(id).Snapshot!.Fingerprint).Distinct().Count());
+
+        // Exercise the actual authored manifests through the production loader,
+        // not just synthetic metadata fixtures. No access policy is involved.
+        var expected = new (string Id, string Name, string? License, string? Version)[]
+        {
+            ("first-party-001", "Dorks & Dice", null, null),
+            ("dnd-5e", "D&D SRD 5.1", "CC-BY-4.0", "5.1"),
+            ("dnd-5-5e", "D&D SRD 5.2.1", "CC-BY-4.0", "5.2.1"),
+            ("fate-condensed", "Fate Condensed", "CC-BY-3.0", "2020")
+        };
+        foreach (var item in expected)
+        {
+            var metadata = registry.GetStore(item.Id).Snapshot!.Metadata;
+            Assert.NotNull(metadata);
+            Assert.Equal(item.Id, metadata!.RulesetId);
+            Assert.Equal(item.Name, metadata.DisplayName);
+            Assert.Equal(item.License, metadata.LicenseIdentifier);
+            Assert.Equal(item.Version, metadata.SourceVersion);
+            Assert.False(string.IsNullOrWhiteSpace(metadata.SourceSystem));
+            if (item.License is null)
+            {
+                Assert.Null(metadata.LicenseUrl);
+                Assert.Null(metadata.AttributionStatement);
+                Assert.Empty(metadata.OriginalSources);
+            }
+            else
+            {
+                Assert.False(string.IsNullOrWhiteSpace(metadata.AttributionStatement));
+                Assert.StartsWith("https://creativecommons.org/licenses/", metadata.LicenseUrl!);
+                Assert.NotEmpty(metadata.OriginalSources);
+                Assert.All(metadata.OriginalSources, source => Assert.StartsWith("https://", source));
+                Assert.NotEmpty(metadata.ModificationNotices);
+            }
+        }
+        var fateMetadata = registry.GetStore("fate-condensed").Snapshot!.Metadata!;
+        Assert.NotEmpty(fateMetadata.CopyrightNotices);
+        Assert.NotEmpty(fateMetadata.Acknowledgments);
         var old = registry.GetStore(ids[1]).Snapshot!;
         var modern = registry.GetStore(ids[2]).Snapshot!;
         Assert.True(old.TryGetById("condition.exhaustion", out var a));
