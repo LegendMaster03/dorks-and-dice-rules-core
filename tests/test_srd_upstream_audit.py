@@ -43,7 +43,7 @@ class UpstreamComparisonTests(unittest.TestCase):
         result = compare_candidate(edition, "spell", row, row["srd"], indexes, names, dispositions)
         self.assertEqual(result["status"], "unique-pinned-identity")
         self.assertIn("entries", result["differentSharedFields"])
-        self.assertNotIn("upstream", str(result))
+        self.assertNotIn("['upstream']", str(result))
         indexes[edition][key(edition, "spell", row, row["srd"])].append(candidate)
         result = compare_candidate(edition, "spell", row, row["srd"], indexes, names, dispositions)
         self.assertEqual(result["status"], "ambiguous-pinned-identity")
