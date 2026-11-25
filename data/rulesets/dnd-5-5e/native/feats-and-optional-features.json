@@ -1231,6 +1231,10 @@
         "pointer": "/optionalfeature/49"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": true,
+      "distinctSelection": "cantrip"
     }
   },
   {
@@ -1274,6 +1278,9 @@
         "pointer": "/optionalfeature/50"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -1329,6 +1336,9 @@
         "pointer": "/optionalfeature/51"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -1339,7 +1349,8 @@
       "MM"
     ],
     "consumes": {
-      "name": "Sorcery Point"
+      "name": "Sorcery Point",
+      "amount": 1
     },
     "entries": [
       "When you cast a spell that forces other creatures to make a saving throw, you can protect some of those creatures from the spell's full force. To do so, spend 1 Sorcery Point and choose a number of those creatures up to your Charisma modifier (minimum of one creature). A chosen creature automatically succeeds on its saving throw against the spell, and it takes no damage if it would normally take half damage on a successful save."
@@ -1365,6 +1376,9 @@
         "pointer": "/optionalfeature/52"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -1410,6 +1424,9 @@
         "pointer": "/optionalfeature/53"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -1459,6 +1476,9 @@
         "pointer": "/optionalfeature/54"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -1469,7 +1489,8 @@
       "MM"
     ],
     "consumes": {
-      "name": "Sorcery Point"
+      "name": "Sorcery Point",
+      "amount": 1
     },
     "entries": [
       "When you cast a spell that has a range of at least 5 feet, you can spend 1 Sorcery Point to double the spell's range. Or when you cast a spell that has a range of Touch, you can spend 1 Sorcery Point to make the spell's range 30 feet."
@@ -1495,6 +1516,9 @@
         "pointer": "/optionalfeature/55"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -1528,6 +1552,9 @@
         "pointer": "/optionalfeature/56"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -1577,6 +1604,9 @@
         "pointer": "/optionalfeature/57"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -1650,6 +1680,10 @@
         "pointer": "/optionalfeature/58"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": true,
+      "distinctSelection": "cantrip"
     }
   },
   {
@@ -1660,7 +1694,8 @@
       "MM"
     ],
     "consumes": {
-      "name": "Sorcery Point"
+      "name": "Sorcery Point",
+      "amount": 1
     },
     "entries": [
       "When you roll damage for a spell, you can spend 1 Sorcery Point to reroll a number of the damage dice up to your Charisma modifier (minimum of one), and you must use the new rolls.",
@@ -1687,6 +1722,9 @@
         "pointer": "/optionalfeature/59"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": true
     }
   },
   {
@@ -1725,6 +1763,9 @@
         "pointer": "/optionalfeature/60"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -1780,6 +1821,9 @@
         "pointer": "/optionalfeature/61"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -1826,6 +1870,9 @@
         "pointer": "/optionalfeature/62"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -1872,6 +1919,9 @@
         "pointer": "/optionalfeature/63"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -1923,6 +1973,9 @@
         "pointer": "/optionalfeature/64"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -1960,6 +2013,9 @@
         "pointer": "/optionalfeature/65"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -2044,6 +2100,9 @@
         "pointer": "/optionalfeature/66"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2096,7 +2155,21 @@
         "pointer": "/optionalfeature/67"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
-    }
+    },
+    "repeatability": {
+      "allowed": true,
+      "distinctSelection": "origin-feat"
+    },
+    "feats": [
+      {
+        "anyFromCategory": {
+          "category": [
+            "O"
+          ],
+          "count": 1
+        }
+      }
+    ]
   },
   {
     "id": "optional-feature.lifedrinker",
@@ -2145,6 +2218,9 @@
         "pointer": "/optionalfeature/68"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2200,6 +2276,9 @@
         "pointer": "/optionalfeature/69"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2255,6 +2334,9 @@
         "pointer": "/optionalfeature/70"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2310,6 +2392,9 @@
         "pointer": "/optionalfeature/71"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2365,6 +2450,9 @@
         "pointer": "/optionalfeature/72"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2420,6 +2508,9 @@
         "pointer": "/optionalfeature/73"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2455,6 +2546,9 @@
         "pointer": "/optionalfeature/74"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2501,6 +2595,9 @@
         "pointer": "/optionalfeature/75"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2574,6 +2671,9 @@
         "pointer": "/optionalfeature/76"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2611,6 +2711,9 @@
         "pointer": "/optionalfeature/77"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -2684,6 +2787,10 @@
         "pointer": "/optionalfeature/78"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": true,
+      "distinctSelection": "cantrip"
     }
   },
   {
@@ -2694,7 +2801,8 @@
       "MM"
     ],
     "consumes": {
-      "name": "Sorcery Point"
+      "name": "Sorcery Point",
+      "amount": 1
     },
     "entries": [
       "When you cast a spell, you can spend 1 Sorcery Point to cast it without any Verbal, Somatic, or Material components, except Material components that are consumed by the spell or that have a cost specified in the spell."
@@ -2720,6 +2828,9 @@
         "pointer": "/optionalfeature/79"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -2769,6 +2880,9 @@
         "pointer": "/optionalfeature/80"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2779,7 +2893,8 @@
       "MM"
     ],
     "consumes": {
-      "name": "Sorcery Point"
+      "name": "Sorcery Point",
+      "amount": 1
     },
     "entries": [
       "When you cast a spell, such as {@spell Charm Person|SRD52}, that can be cast with a higher-level spell slot to target an additional creature, you can spend 1 Sorcery Point to increase the spell's effective level by 1."
@@ -2805,6 +2920,9 @@
         "pointer": "/optionalfeature/81"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -2860,6 +2978,9 @@
         "pointer": "/optionalfeature/82"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2915,6 +3036,9 @@
         "pointer": "/optionalfeature/83"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -2965,6 +3089,9 @@
         "pointer": "/optionalfeature/84"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "repeatability": {
+      "allowed": false
     }
   },
   {
@@ -3002,6 +3129,9 @@
         "path": "data/optionalfeatures.json",
         "pointer": "/optionalfeature/190"
       }
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": true
     }
   },
   {
@@ -3038,6 +3168,9 @@
         "path": "data/optionalfeatures.json",
         "pointer": "/optionalfeature/213"
       }
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   }
 ]

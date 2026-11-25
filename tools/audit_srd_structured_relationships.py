@@ -399,7 +399,8 @@ class CharacterSelectorInventory:
             if raw["special"] == "Spellbook" and quantity == 1 and owner == "class.wizard" and self.index.tag == "SRD52":
                 feature = self.rows.get("class-feature.wizard.spellcasting.1")
                 page = self.rows.get("rulebook.page-078", {}).get("textLayout", "")
-                if feature and "unique book: your spellbook" in page and "100 pages" in page:
+                left = " ".join(line[:62].strip() for line in page.splitlines())
+                if feature and "unique book: your spellbook" in left and "100 pages" in left:
                     return self.result("class-defined-equipment", quantity=1, definitionId=feature["id"])
         if set(raw) - {"equipmentType", "equipmentTypes", "quantity"}:
             return self.result("unreviewed-equipment-shape")

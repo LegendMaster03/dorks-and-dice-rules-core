@@ -420,7 +420,8 @@
       "MM"
     ],
     "consumes": {
-      "name": "Sorcery Point"
+      "name": "Sorcery Point",
+      "amount": 1
     },
     "entries": [
       "When you cast a spell that forces other creatures to make a saving throw, you can protect some of those creatures from the spell's full force. To do so, you spend 1 sorcery point and choose a number of those creatures up to your Charisma modifier (minimum of one creature). A chosen creature automatically succeeds on its saving throw against the spell."
@@ -446,6 +447,9 @@
         "pointer": "/optionalfeature/8"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -585,7 +589,8 @@
       "MM"
     ],
     "consumes": {
-      "name": "Sorcery Point"
+      "name": "Sorcery Point",
+      "amount": 1
     },
     "entries": [
       "When you cast a spell that has a range of 5 feet or greater, you can spend 1 sorcery point to double the range of the spell.",
@@ -612,6 +617,9 @@
         "pointer": "/optionalfeature/12"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -800,7 +808,8 @@
       "MM"
     ],
     "consumes": {
-      "name": "Sorcery Point"
+      "name": "Sorcery Point",
+      "amount": 1
     },
     "entries": [
       "When you roll damage for a spell, you can spend 1 sorcery point to reroll a number of the damage dice up to your Charisma modifier (minimum of one). You must use the new rolls.",
@@ -827,6 +836,9 @@
         "pointer": "/optionalfeature/17"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": true
     }
   },
   {
@@ -864,6 +876,9 @@
         "pointer": "/optionalfeature/18"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -1045,6 +1060,9 @@
         "pointer": "/optionalfeature/23"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -1640,6 +1658,9 @@
         "pointer": "/optionalfeature/36"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -1805,7 +1826,8 @@
       "MM"
     ],
     "consumes": {
-      "name": "Sorcery Point"
+      "name": "Sorcery Point",
+      "amount": 1
     },
     "entries": [
       "When you cast a spell, you can spend 1 sorcery point to cast it without any somatic or verbal components."
@@ -1831,6 +1853,9 @@
         "pointer": "/optionalfeature/40"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {
@@ -1935,7 +1960,12 @@
     "consumes": {
       "name": "Sorcery Point",
       "amountMin": 1,
-      "amountMax": 9
+      "amountMax": 9,
+      "costBasis": {
+        "type": "spell-level",
+        "minimum": 1,
+        "maximum": 9
+      }
     },
     "entries": [
       "When you cast a spell that targets only one creature and doesn't have a range of self, you can spend a number of sorcery points equal to the spell's level to target a second creature in range with the same spell (1 sorcery point if the spell is a cantrip).",
@@ -1962,6 +1992,9 @@
         "pointer": "/optionalfeature/43"
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    },
+    "metamagicUse": {
+      "canCombineWithAnotherOption": false
     }
   },
   {

@@ -461,6 +461,24 @@
   "expandedSourceCounts": {
     "optional-feature": 2
   },
+  "metamagicMetadata": {
+    "options": 10,
+    "fixedCosts": 10,
+    "variableCosts": 0,
+    "combinationExceptions": [
+      "optional-feature.empowered-spell",
+      "optional-feature.seeking-spell"
+    ]
+  },
+  "invocationRepeatability": {
+    "options": 28,
+    "repeatable": [
+      "optional-feature.agonizing-blast",
+      "optional-feature.eldritch-spear",
+      "optional-feature.lessons-of-the-first-ones",
+      "optional-feature.repelling-blast"
+    ]
+  },
   "literalSpellRelationships": {
     "grantOccurrences": 11,
     "prerequisiteOccurrences": 0,

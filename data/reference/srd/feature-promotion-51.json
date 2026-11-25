@@ -226,6 +226,14 @@
   ],
   "resolvedStructuredPrerequisites": 21,
   "nativeCount": 50,
+  "metamagicMetadata": {
+    "options": 8,
+    "fixedCosts": 7,
+    "variableCosts": 1,
+    "combinationExceptions": [
+      "optional-feature.empowered-spell"
+    ]
+  },
   "literalSpellRelationships": {
     "grantOccurrences": 20,
     "prerequisiteOccurrences": 3,

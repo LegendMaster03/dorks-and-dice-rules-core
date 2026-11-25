@@ -120,6 +120,54 @@ function generateFeatures(feats,optional,manifest,src,pages,tag){
  }
  report.nativeCount=rows.length;return {records:rows,report};
 }
+function reconcileOptionalFeatureMetadata(records,report,pages,tag){
+ const modern=tag==="52",meta=records.filter(r=>r.kind==="optional-feature"&&r.featureType?.includes("MM"));
+ const expected={"Careful Spell":1,"Distant Spell":1,"Empowered Spell":1,"Extended Spell":1,"Heightened Spell":modern?2:3,"Quickened Spell":2,"Subtle Spell":1,"Twinned Spell":modern?1:null,...(modern?{"Seeking Spell":1,"Transmuted Spell":1}:{})};
+ if(meta.length!==Object.keys(expected).length)throw Error("Metamagic inventory changed");
+ for(const row of meta){
+  if(!Object.hasOwn(expected,row.name)||row.consumes?.name!=="Sorcery Point")throw Error("Unexpected Metamagic cost schema "+row.id);
+  const amount=expected[row.name],combine=row.name==="Empowered Spell"||modern&&row.name==="Seeking Spell",page=modern?(row.name==="Careful Spell"?66:67):44;
+  const evidence=pages.find(p=>p.page===page).textLayout;
+  if(!evidence.includes(row.name))throw Error("Missing Metamagic publisher heading "+row.name);
+  if(modern){
+   // The published cost is on the next line in the same column as the heading.
+   const lines=evidence.split("\n"),i=lines.findIndex(l=>l.includes(row.name)&&!l.includes("can use"));
+   const column=lines[i].indexOf(row.name)>=60?60:0;
+   const cost=lines[i+1].slice(column,column?undefined:60).trim();
+   if(cost!=="Cost: "+amount+" Sorcery Point"+(amount===1?"":"s"))throw Error("Publisher Metamagic cost mismatch "+row.name+": "+cost);
+  }
+  if(amount===null){
+   if(row.consumes.amountMin!==1||row.consumes.amountMax!==9||!evidence.includes("number of sorcery points equal to the spell’s level")||!evidence.includes("1 sorcery point if the spell is a cantrip"))throw Error("Legacy Twinned Spell cost mismatch");
+   row.consumes.costBasis={type:"spell-level",minimum:1,maximum:9};
+  }else{
+   if((row.consumes.amount??1)!==amount)throw Error("Metamagic cost mismatch "+row.name);
+   row.consumes.amount=amount;
+  }
+  const text=JSON.stringify(row.entries);
+  if(combine!==text.includes("even if you")||combine&&!evidence.includes("You can use "+row.name+" even if"))throw Error("Metamagic combination evidence mismatch "+row.name);
+  row.metamagicUse={canCombineWithAnotherOption:combine};
+ }
+ report.metamagicMetadata={options:meta.length,fixedCosts:meta.length-(modern?0:1),variableCosts:modern?0:1,combinationExceptions:meta.filter(r=>r.metamagicUse.canCombineWithAnotherOption).map(r=>r.id)};
+ if(modern){
+  const repeatable={"Agonizing Blast":72,"Eldritch Spear":73,"Lessons of the First Ones":73,"Repelling Blast":74};
+  const invocations=records.filter(r=>r.kind==="optional-feature"&&r.featureType?.includes("EI"));
+  if(invocations.length!==28)throw Error("Modern invocation inventory changed");
+  for(const row of invocations){
+   const canRepeat=Object.hasOwn(repeatable,row.name);
+   if(JSON.stringify(row.entries).includes('"name":"Repeatable"')!==canRepeat)throw Error("Invocation repeatability mismatch "+row.name);
+   if(canRepeat){
+    const evidence=pages.find(p=>p.page===repeatable[row.name]).textLayout;
+    if(!evidence.includes(row.name)||!evidence.includes("Repeatable. You can gain this invocation more")||!evidence.includes("choose a different"))throw Error("Publisher repeatability mismatch "+row.name);
+    row.repeatability={allowed:true,distinctSelection:row.name==="Lessons of the First Ones"?"origin-feat":"cantrip"};
+    if(row.name==="Lessons of the First Ones"){
+     if(!evidence.includes("feat of your choice (see “Feats”).")||!evidence.includes("Origin feat."))throw Error("Origin feat choice evidence changed");
+     row.feats=[{anyFromCategory:{category:["O"],count:1}}];
+    }
+   }else row.repeatability={allowed:false};
+  }
+  report.invocationRepeatability={options:invocations.length,repeatable:invocations.filter(r=>r.repeatability.allowed).map(r=>r.id)};
+ }
+}
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
 const json=x=>JSON.stringify(x,null,2)+"\n";
@@ -135,6 +183,7 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
   records.push(...additions);report.nativeCounts["optional-feature"]+=additions.length;report.nativeCount+=additions.length;report.expandedSourceCounts={"optional-feature":additions.length};
  }
  const spells=fs.readdirSync(path.join(root,base+"native/spells")).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(base+"native/spells/"+f));
+ reconcileOptionalFeatureMetadata(records,report,pages,tag);
  report.literalSpellRelationships=linkSpellRelationships(records,spells,"SRD"+tag);
  report.literalCharacterRelationships=linkCharacterRelationships(records,characterRelationshipCatalog(root,base,read,records),"SRD"+tag);
  for(const [file,body] of [[base+"native/feats-and-optional-features.json",json(records)],["data/reference/srd/feature-promotion-"+tag+".json",json(report)]]){

@@ -336,7 +336,7 @@ class StructuredRelationshipsTests(unittest.TestCase):
         self.assertEqual([0]*9 + [1]*11, result["cumulativeCounts"])
         modern = [
             {"id": "rulebook.page-078", "kind": "rulebook-page", "name": "Page 78",
-             "textLayout": "unique book: your spellbook\n100 pages"},
+             "textLayout": "unique book: your\nspellbook. It contains 100 pages"},
             {"id": "class-feature.wizard.spellcasting.1", "kind": "class-feature", "name": "Spellcasting",
              "className": "Wizard", "level": 1},
             {"id": "class.wizard", "kind": "class", "name": "Wizard",

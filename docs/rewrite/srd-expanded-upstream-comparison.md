@@ -158,3 +158,7 @@ The source evidence for the legacy Paladin and Ranger Fighting Style rules is on
 ### Strict-gate follow-up
 
 The first strict run exposed a ninth progression (legacy Champion's additional style at level 10, p.25) and a modern Wizard class-defined Spellbook (pp.77–78). The subclass allowance is additional to the Fighter's class allowance, not a replacement for it. The Spellbook is defined in Wizard Spellcasting, not a separately published purchasable item; classify its starting-equipment occurrence against that feature and publisher evidence. The remaining 33 modern values are currency, not 34 as initially estimated. The gate now requires seven legacy and two modern progression schedules.
+
+## Optional feature resource and repeatability metadata
+
+The feature generator normalizes all 18 Metamagic options across the two editions. Fixed costs are explicit (including previously implicit one-point costs); SRD 5.1 Twinned Spell retains a spell-level cost with minimum one, while SRD 5.2.1 Twinned Spell costs one point. Empowered Spell in both editions and modern Seeking Spell retain their explicit same-casting combination exceptions. The 28 modern invocations now declare repeatability, including the four publisher-defined repeatable options. Lessons of the First Ones exposes a one-Origin-feat category selector, with a different feat required on each repetition. These native fields are descriptive only; the normal expenditure, character-state, replacement and eligibility mechanics remain unimplemented. Source prose and pinned source records are retained.
