@@ -116,7 +116,13 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
                     pages=[252,253];addCorrection(id,"Remove non-SRD setting names and foreign creature link; retain official artifact mechanics");
                 }
                 if(tag==="52"&&kind==="item"){
-                    if(name==="Cube of Force"){
+                    if(name==="Trinket"){
+                        // The published random table is already part of this canonical item.
+                        const table=row.entries.find(entry=>entry?.type==="table"&&entry.caption==="Trinkets");
+                        if(table?.rows.length!==100||table.rows.some((r,i)=>r[0]!==String((i+1)%100).padStart(2,"0")))throw Error("Unexpected Trinkets roll coverage");
+                        row.entries[0]=row.entries[0].replace("The DM might also","The GM might also");
+                        pages=[26,27];addCorrection(id,"Verify all 100 Trinkets rows against publisher pp.26–27; restore GM wording and page references.");
+                    }else if(name==="Cube of Force"){
                         const swaps=[["Leomund's Tiny Hut","Tiny Hut"],["Mordenkainen's Private Sanctum","Private Sanctum"],["Otiluke's Resilient Sphere","Resilient Sphere"]];
                         let serialized=JSON.stringify(row);
                         for(const [old,modern] of swaps)serialized=serialized.split(old).join(modern).split(old.toLowerCase()).join(modern.toLowerCase());

@@ -265,6 +265,10 @@
       "reason": "Use official Handy Haversack name"
     },
     {
+      "id": "item.trinket",
+      "reason": "Verify all 100 Trinkets rows against publisher pp.26–27; restore GM wording and page references."
+    },
+    {
       "id": "magic-variant.dancing-sword",
       "reason": "Use the five explicitly listed eligible weapons rather than a generic sword tag."
     },
@@ -294,7 +298,7 @@
       "reason": "missing-or-ambiguous"
     }
   ],
-  "resolvedReferenceCount": 1107,
+  "resolvedReferenceCount": 1109,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",

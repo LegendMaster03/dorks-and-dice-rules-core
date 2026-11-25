@@ -325,6 +325,10 @@ function generateBookRules(book,manifest,src,pages,tag,known){
  for(const r of rows)for(const id of r.catalogReferences)if(!known.has(id)&&!ids.has(id))throw Error("Missing book reference "+r.id+" -> "+id);
  report.nativeCount=rows.length;
  report.tableInventory=inventoryBookTables(book,report,tag);
+ if(tag==="52"){
+  if(!known.has("item.trinket"))throw Error("Missing existing Trinkets table");
+  report.externalTables=[{"name":"Trinkets","bookPointer":"/data/2/entries/5","representation":"item.trinket","structuredPath":"items.json","structuredPointer":"/item/901/entries/1","pages":[26,27],"rows":100,"disposition":"existing-catalog-representation","review":"All 100 publisher roll labels and text matched after punctuation, case and layout normalization."}];
+ }
  return {rows,report};
 }
 

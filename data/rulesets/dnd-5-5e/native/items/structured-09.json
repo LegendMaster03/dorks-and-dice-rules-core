@@ -2342,7 +2342,7 @@
     "type": "G|SRD52",
     "rarity": "none",
     "entries": [
-      "When you make your character, you can roll once on the Trinkets table to gain a Tiny trinket, a simple item lightly touched by mystery. The DM might also use this table. It can help stock a room in a dungeon or fill a creature's pockets.",
+      "When you make your character, you can roll once on the Trinkets table to gain a Tiny trinket, a simple item lightly touched by mystery. The GM might also use this table. It can help stock a room in a dungeon or fill a creature's pockets.",
       {
         "type": "table",
         "caption": "Trinkets",
@@ -2758,14 +2758,20 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "rulebook.page-026",
+      "rulebook.page-027"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
       "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        26,
+        27
+      ],
       "candidatePage": 26,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",

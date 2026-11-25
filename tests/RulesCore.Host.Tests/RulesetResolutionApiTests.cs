@@ -410,6 +410,17 @@ public sealed class RulesetResolutionApiTests
         var preparationTable = await client.GetFromJsonAsync<JsonElement>(animals + "/table.spell-preparation-by-class");
         Assert.Equal(8, preparationTable.GetProperty("rule").GetProperty("definition").GetProperty("rows").GetArrayLength());
 
+        var trinketItem = await client.GetFromJsonAsync<JsonElement>(animals + "/item.trinket");
+        var trinketDefinition = trinketItem.GetProperty("rule").GetProperty("definition");
+        var trinketRows = trinketDefinition.GetProperty("entries")[1].GetProperty("rows");
+        Assert.Equal(100, trinketRows.GetArrayLength());
+        Assert.Equal("01", trinketRows[0][0].GetString());
+        Assert.Equal("00", trinketRows[99][0].GetString());
+        Assert.Contains("rulebook.page-027", trinketDefinition.GetProperty("catalogReferences").GetRawText());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/table.potion-miscibility")).StatusCode);
+        var miscibilityTable = await client.GetFromJsonAsync<JsonElement>(animals + "/table.potion-miscibility");
+        Assert.Equal(8, miscibilityTable.GetProperty("rule").GetProperty("definition").GetProperty("rows").GetArrayLength());
+
         // Supplementary actions, glossary and contagions preserve edition-specific categories.
         var oldCoreActions = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=action&limit=1");
         var newCoreActions = await client.GetFromJsonAsync<JsonElement>(animals + "?category=action&limit=1");
