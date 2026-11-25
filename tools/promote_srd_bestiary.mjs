@@ -26,14 +26,20 @@ const fixes = {
            "Ancient Black Dragon": ["Melf's Acid Arrow", "Acid Arrow"]}
 };
 
-function generate(candidates, spells, conditions, skills, pages, existing, sourceManifest, packageManifest, tag, officialUrl) {
+function generate(candidates, spells, conditions, skills, pages, existing, sourceManifest, packageManifest, tag, officialUrl, items) {
     const idFor = (kind, name) => (kind === "creature" ? "monster" : kind) + "." + slug(name);
     const expectedTag = "SRD" + tag;
+    const itemIds = new Map();
+    for(const item of items.filter(row=>row.kind==="item"||row.kind==="baseitem")){
+        const key=slug(item.name);
+        if(itemIds.has(key)) itemIds.set(key,null); // no arbitrary choice on collision
+        else itemIds.set(key,item.id);
+    }
     const known = new Set([
         ...candidates.map(row=>idFor("creature",row.name)),
         ...existing.map(row=>row.id),
         ...spells.map(row=>idFor("spell",row.name)),
-        ...conditions.map(row=>row.id), ...skills.map(row=>row.id)
+        ...conditions.map(row=>row.id), ...skills.map(row=>row.id), ...items.map(row=>row.id)
     ]);
     const identities = new Set(candidates.map(row=>idFor("creature",row.name)));
     if (identities.size !== candidates.length) throw Error("Duplicate monster identity");
@@ -71,7 +77,7 @@ function generate(candidates, spells, conditions, skills, pages, existing, sourc
         const refs=new Set(publisherPage?[publisherPage.id]:[]);
         for (const match of JSON.stringify(row).matchAll(/\{@(spell|creature|condition|skill|item|feat) ([^}]+)\}/g)) {
             const [name,edition] = match[2].split("|");
-            const target=idFor(match[1],name);
+            const target=match[1]==="item"?itemIds.get(slug(name)):idFor(match[1],name);
             if ((!edition || edition.toUpperCase()===expectedTag) && known.has(target)) refs.add(target);
             else report.unresolvedTags.push({id,kind:match[1],name,source:edition??null});
         }
@@ -112,7 +118,7 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
     const pages=fs.readdirSync(path.join(root,native,"rulebook")).filter(f=>/^pages-\d+-\d+\.json$/.test(f)).sort().flatMap(f=>read(native+"rulebook/"+f));
     const directory=native+"bestiary/";
     const existing=fs.readdirSync(path.join(root,directory)).filter(f=>f==="reviewed-initial.json"||/^animals-\d+\.json$/.test(f)).sort().flatMap(f=>read(directory+f));
-    const {rows,report}=generate(candidates,spells,read(native+"conditions.json"),read(native+"skills.json"),pages,existing,sourceManifest,read(base+"manifest.json"),tag,pages[0].source.url);
+    const {rows,report}=generate(candidates,spells,read(native+"conditions.json"),read(native+"skills.json"),pages,existing,sourceManifest,read(base+"manifest.json"),tag,pages[0].source.url,fs.readdirSync(path.join(root,native,"items")).filter(f=>/^structured-\d+\.json$/.test(f)).sort().flatMap(f=>read(native+"items/"+f)));
     const outputs=new Map();
     for(let i=0;i<rows.length;i+=25)outputs.set(directory+"structured-"+String(i/25+1).padStart(2,"0")+".json",json(rows.slice(i,i+25)));
     outputs.set("data/reference/srd/bestiary-promotion-"+tag+".json",json(report));
