@@ -453,6 +453,43 @@
         73,
         74
       ]
+    },
+    {
+      "id": "rule.armor",
+      "pointer": "/data/4/entries/8",
+      "pages": [
+        62,
+        63,
+        64
+      ]
+    },
+    {
+      "id": "rule.weapons",
+      "pointer": "/data/4/entries/9",
+      "pages": [
+        64,
+        65,
+        66
+      ]
+    },
+    {
+      "id": "rule.adventuring-gear",
+      "pointer": "/data/4/entries/10",
+      "pages": [
+        66,
+        67,
+        68,
+        69,
+        70
+      ]
+    },
+    {
+      "id": "rule.tools",
+      "pointer": "/data/4/entries/11",
+      "pages": [
+        70,
+        71
+      ]
     }
   ],
   "corrections": [
@@ -569,9 +606,25 @@
     {
       "id": "rule.expenses",
       "reason": "Replace source-specific spell filter navigation with published spell-level labels (p.74)."
+    },
+    {
+      "id": "rule.armor",
+      "reason": "Reuse canonical armor descriptions after exact comparison and retain proficiency, AC, speed, stealth and don/doff rules (pp.62–64)."
+    },
+    {
+      "id": "rule.weapons",
+      "reason": "Reuse canonical weapon properties and special weapon definitions; reconcile original property wording (pp.64–66)."
+    },
+    {
+      "id": "rule.adventuring-gear",
+      "reason": "Use existing item/group/pack identities rather than duplicate their descriptive bodies; retain potion administration action cost (pp.66–70)."
+    },
+    {
+      "id": "rule.tools",
+      "reason": "Reuse canonical concrete tool identities; preserve group proficiency guidance and omit the commercial card-game example (pp.70–71)."
     }
   ],
-  "nativeCount": 58,
+  "nativeCount": 62,
   "tableInventory": {
     "total": 30,
     "counts": {

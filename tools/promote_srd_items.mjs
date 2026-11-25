@@ -57,6 +57,19 @@ function reconcileNamedTemplate(row,tag){
  if(!reason)return null;
  row.inherits=h;return {page,reason};
 }
+function reconcileLegacyWeaponProperty(row){
+ const corrections={
+ "item-property.a":{pages:[64],entries:["You can use a weapon that has the ammunition property to make a ranged attack only if you have ammunition to fire from the weapon. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack (you need a free hand to load a one-handed weapon). At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.","If you use a weapon that has the ammunition property to make a melee attack, you treat the weapon as an improvised weapon (see \"Improvised Weapons\" later in the section). A sling must be loaded to deal any damage when used in this way."]},
+ "item-property.h":{pages:[65],entries:["Small creatures have disadvantage on attack rolls with heavy weapons. A heavy weapon's size and bulk make it too large for a Small creature to use effectively."]},
+ "item-property.r":{pages:[65],entries:["This weapon adds 5 feet to your reach when you attack with it, as well as when determining your reach for opportunity attacks with it."]},
+ "item-property.2h":{pages:[65],entries:["This weapon requires two hands when you attack with it."]}
+ };
+ const v=corrections[row.id];if(!v)return null;
+ if(row.entries?.length!==1||!row.entries[0].entries)throw Error("Unexpected weapon property "+row.id);
+ row.entries=[{...row.entries[0],entries:v.entries}];
+ return {pages:v.pages,reason:"Restore original SRD 5.1 weapon property wording; do not import later errata."};
+}
+
 function generate(files, sourceManifest, packageManifest, tag, officialUrl, externalIds, vehicles, supplement) {
     const records=[], report={edition:packageManifest.officialPageImport.release, counts:{}, excluded:[], corrections:[], publisherOnly:[]};
     const source="SRD"+tag;
@@ -150,6 +163,10 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
                 if(tag==="52"&&kind==="itemGroup"&&name==="Druidic Focus"){
                     if(JSON.stringify(row.focus)!=='["Druid"]')throw Error("Unexpected source Druidic Focus eligibility");
                     row.focus=["Druid","Ranger"];pages=[97];addCorrection(id,"Restore Ranger as an eligible user of a Druidic Focus, as printed on SRD 5.2.1 p.97.");
+                }
+                if(tag==="51"&&kind==="itemProperty"){
+                    const correction=reconcileLegacyWeaponProperty(row);
+                    if(correction){pages=correction.pages;addCorrection(id,correction.reason);}
                 }
                 const templateCorrection=reconcileNamedTemplate(row,tag);
                 if(templateCorrection){pages=[templateCorrection.page];addCorrection(id,templateCorrection.reason);}

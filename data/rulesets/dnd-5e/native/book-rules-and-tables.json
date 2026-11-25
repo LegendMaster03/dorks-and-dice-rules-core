@@ -6849,5 +6849,1017 @@
       },
       "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
     }
+  },
+  {
+    "id": "rule.armor",
+    "kind": "rule",
+    "name": "Armor",
+    "entries": [
+      "Fantasy gaming worlds are a vast tapestry made up of many different cultures, each with its own technology level. For this reason, adventurers have access to a variety of armor types, ranging from leather armor to chain mail to costly plate armor, with several other kinds of armor in between. The Armor table collects the most commonly available types of armor found in the game and separates them into three categories: light armor, medium armor, and heavy armor. Many warriors supplement their armor with a shield.",
+      "The Armor table shows the cost, weight, and other properties of the common types of armor worn in fantasy gaming worlds.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Armor Proficiency",
+                "entries": [
+                  "Anyone can put on a suit of armor or strap a shield to an arm. Only those proficient in the armor's use know how to wear it effectively, however.",
+                  "Your class gives you proficiency with certain types of armor. If you wear armor that you lack proficiency with, you have disadvantage on any ability check, saving throw, or attack roll that involves Strength or Dexterity, and you can't cast spells."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Armor Class (AC)",
+                "entries": [
+                  "Armor protects its wearer from attacks. The armor (and shield) you wear determines your base Armor Class."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Heavy Armor",
+                "entries": [
+                  "Heavier armor interferes with the wearer's ability to move quickly, stealthily, and freely. If the Armor table shows \"Str 13\" or \"Str 15\" in the Strength column for an armor type, the armor reduces the wearer's speed by 10 feet unless the wearer has a Strength score equal to or higher than the listed score."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Stealth",
+                "entries": [
+                  "If the Armor table shows \"Disadvantage\" in the Stealth column, the wearer has disadvantage on Dexterity ({@skill Stealth}) checks."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Shields",
+                "entries": [
+                  "A shield is made from wood or metal and is carried in one hand. Wielding a shield increases your Armor Class by 2. You can benefit from only one shield at a time."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Light Armor",
+        "entries": [
+          "Made from supple and thin materials, light armor favors agile adventurers since it offers some protection without sacrificing mobility. If you wear light armor, you add your Dexterity modifier to the base number from your armor type to determine your Armor Class.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Padded",
+                "entries": [
+                  "See the Padded catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Leather",
+                "entries": [
+                  "See the Leather catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Studded Leather",
+                "entries": [
+                  "See the Studded Leather catalog definition."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Medium Armor",
+        "entries": [
+          "Medium armor offers more protection than light armor, but it also impairs movement more. If you wear medium armor, you add your Dexterity modifier, to a maximum of +2, to the base number from your armor type to determine your Armor Class.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Hide",
+                "entries": [
+                  "See the Hide catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Chain Shirt",
+                "entries": [
+                  "See the Chain Shirt catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Scale Mail",
+                "entries": [
+                  "See the Scale Mail catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Breastplate",
+                "entries": [
+                  "See the Breastplate catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Half Plate",
+                "entries": [
+                  "See the Half Plate catalog definition."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Heavy Armor",
+        "entries": [
+          "Of all the armor categories, heavy armor offers the best protection. These suits of armor cover the entire body and are designed to stop a wide range of attacks. Only proficient warriors can manage their weight and bulk. Heavy armor doesn't let you add your Dexterity modifier to your Armor Class, but it also doesn't penalize you if your Dexterity modifier is negative.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Ring Mail",
+                "entries": [
+                  "See the Ring Mail catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Chain Mail",
+                "entries": [
+                  "See the Chain Mail catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Splint",
+                "entries": [
+                  "See the Splint catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Plate",
+                "entries": [
+                  "See the Plate catalog definition."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "See the Armor table.",
+      {
+        "type": "entries",
+        "name": "Getting Into and Out of Armor",
+        "entries": [
+          "The time it takes to don or doff armor depends on the armor's category.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Don",
+                "entries": [
+                  "This is the time it takes to put on armor. You benefit from the armor's AC only if you take the full time to don the suit of armor."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Doff",
+                "entries": [
+                  "This is the time it takes to take off armor. If you have help, reduce this time by half."
+                ]
+              }
+            ]
+          },
+          "See the Donning and Doffing Armor table."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.breastplate",
+      "baseitem.chain-mail",
+      "baseitem.chain-shirt",
+      "baseitem.half-plate-armor",
+      "baseitem.hide-armor",
+      "baseitem.leather-armor",
+      "baseitem.padded-armor",
+      "baseitem.plate-armor",
+      "baseitem.ring-mail",
+      "baseitem.scale-mail",
+      "baseitem.splint-armor",
+      "baseitem.studded-leather-armor",
+      "equipment-option.don-or-doff-a-shield",
+      "rulebook.page-062",
+      "rulebook.page-063",
+      "rulebook.page-064",
+      "skill.stealth",
+      "table.armor",
+      "table.donning-and-doffing-armor"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62,
+        63,
+        64
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/8"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.weapons",
+    "kind": "rule",
+    "name": "Weapons",
+    "entries": [
+      "Your class grants proficiency in certain weapons, reflecting both the class's focus and the tools you are most likely to use. Whether you favor a longsword or a longbow, your weapon and your ability to wield it effectively can mean the difference between life and death while adventuring.",
+      "The Weapons table shows the most common weapons used in the fantasy gaming worlds, their price and weight, the damage they deal when they hit, and any special properties they possess. Every weapon is classified as either melee or ranged. A melee weapon is used to attack a target within 5 feet of you, whereas a ranged weapon is used to attack a target at a distance.",
+      {
+        "type": "entries",
+        "name": "Weapon Proficiency",
+        "entries": [
+          "Your race, class, and feats can grant you proficiency with certain weapons or categories of weapons. The two categories are simple and martial. Most people can use simple weapons with proficiency. These weapons include clubs, maces, and other weapons often found in the hands of commoners. Martial weapons, including swords, axes, and polearms, require more specialized training to use effectively. Most warriors use martial weapons because these weapons put their fighting style and training to best use.",
+          "Proficiency with a weapon allows you to add your proficiency bonus to the attack roll for any attack you make with that weapon. If you make an attack roll using a weapon with which you lack proficiency, you do not add your proficiency bonus to the attack roll."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Weapon Properties",
+        "entries": [
+          "Many weapons have special properties related to their use, as shown in the Weapons table.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Ammunition",
+                "entries": [
+                  "See the Ammunition catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Finesse",
+                "entries": [
+                  "See the Finesse catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Heavy",
+                "entries": [
+                  "See the Heavy catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Light",
+                "entries": [
+                  "See the Light catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Loading",
+                "entries": [
+                  "See the Loading catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Range",
+                "entries": [
+                  "A weapon that can be used to make a ranged attack has a range shown in parentheses after the ammunition or thrown property. The range lists two numbers. The first is the weapon's normal range in feet, and the second indicates the weapon's long range. When attacking a target beyond normal range, you have disadvantage on the attack roll. You can't attack a target beyond the weapon's long range."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Reach",
+                "entries": [
+                  "See the Reach catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Special",
+                "entries": [
+                  "A weapon with the special property has unusual rules governing its use, explained in the weapon's description (see \"Special Weapons\" later in this section)."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Thrown",
+                "entries": [
+                  "See the Thrown catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Two-Handed",
+                "entries": [
+                  "See the Two-Handed catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Versatile",
+                "entries": [
+                  "See the Versatile catalog definition."
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Improvised Weapons",
+            "entries": [
+              "Sometimes characters don't have their weapons and have to attack with whatever is close at hand. An improvised weapon includes any object you can wield in one or two hands, such as broken glass, a table leg, a frying pan, a wagon wheel, or a dead goblin.",
+              "Often, an improvised weapon is similar to an actual weapon and can be treated as such. For example, a table leg is akin to a club. At the GM's option, a character proficient with a weapon can use a similar object as if it were that weapon and use his or her proficiency bonus.",
+              "An object that bears no resemblance to a weapon deals 1d4 damage (the GM assigns a damage type appropriate to the object). If a character uses a ranged weapon to make a melee attack, or throws a melee weapon that does not have the thrown property, it also deals 1d4 damage. An improvised thrown weapon has a normal range of 20 feet and a long range of 60 feet."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Silvered Weapons",
+            "entries": [
+              "Some monsters that have immunity or resistance to nonmagical weapons are susceptible to silver weapons, so cautious adventurers invest extra coin to plate their weapons with silver. You can silver a single weapon or ten pieces of ammunition for 100 gp. This cost represents not only the price of the silver, but the time and expertise needed to add silver to the weapon without making it less effective."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Special Weapons",
+            "entries": [
+              "Weapons with special rules are described here.",
+              {
+                "type": "entries",
+                "name": "Lance",
+                "entries": [
+                  "See the Lance catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Net",
+                "entries": [
+                  "See the Net catalog definition."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "See the Weapons table."
+    ],
+    "catalogReferences": [
+      "baseitem.lance",
+      "baseitem.net",
+      "combat-option.two-weapon-fighting",
+      "condition.restrained",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.f",
+      "item-property.h",
+      "item-property.l",
+      "item-property.ld",
+      "item-property.r",
+      "item-property.s",
+      "item-property.t",
+      "item-property.v",
+      "reaction-option.opportunity-attack",
+      "rule.making-an-attack",
+      "rulebook.page-064",
+      "rulebook.page-065",
+      "rulebook.page-066",
+      "table.weapons"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64,
+        65,
+        66
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/9"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.adventuring-gear",
+    "kind": "rule",
+    "name": "Adventuring Gear",
+    "entries": [
+      "This section describes items that have special rules or require further explanation.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Acid",
+                "entries": [
+                  "See the Acid catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Alchemist's Fire",
+                "entries": [
+                  "See the Alchemist's Fire catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Antitoxin",
+                "entries": [
+                  "See the Antitoxin catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Arcane Focus",
+                "entries": [
+                  "See the Arcane Focus catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Ball Bearings",
+                "entries": [
+                  "See the Ball Bearings catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Block and Tackle",
+                "entries": [
+                  "See the Block and Tackle catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Book",
+                "entries": [
+                  "See the Book catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Caltrops",
+                "entries": [
+                  "See the Caltrops catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Candle",
+                "entries": [
+                  "See the Candle catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Case, Crossbow Bolt",
+                "entries": [
+                  "See the Case, Crossbow Bolt catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Case, Map or Scroll",
+                "entries": [
+                  "See the Case, Map or Scroll catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Chain",
+                "entries": [
+                  "See the Chain catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Climber's Kit",
+                "entries": [
+                  "See the Climber's Kit catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Component Pouch",
+                "entries": [
+                  "See the Component Pouch catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Crowbar",
+                "entries": [
+                  "See the Crowbar catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Druidic Focus",
+                "entries": [
+                  "See the Druidic Focus catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Fishing Tackle",
+                "entries": [
+                  "See the Fishing Tackle catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Healer's Kit",
+                "entries": [
+                  "See the Healer's Kit catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Holy Symbol",
+                "entries": [
+                  "See the Holy Symbol catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Holy Water",
+                "entries": [
+                  "See the Holy Water catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Hunting Trap",
+                "entries": [
+                  "See the Hunting Trap catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Lamp",
+                "entries": [
+                  "See the Lamp catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Lantern, Bullseye",
+                "entries": [
+                  "See the Lantern, Bullseye catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Lantern, Hooded",
+                "entries": [
+                  "See the Lantern, Hooded catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Lock",
+                "entries": [
+                  "See the Lock catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Magnifying Glass",
+                "entries": [
+                  "See the Magnifying Glass catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Manacles",
+                "entries": [
+                  "See the Manacles catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Mess Kit",
+                "entries": [
+                  "See the Mess Kit catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Oil",
+                "entries": [
+                  "See the Oil catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Poison, Basic",
+                "entries": [
+                  "See the Poison, Basic catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Potion of Healing",
+                "entries": [
+                  "See Potion of Healing. Drinking or administering a potion takes an action."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Pouch",
+                "entries": [
+                  "See the Pouch catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Quiver",
+                "entries": [
+                  "See the Quiver catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Ram, Portable",
+                "entries": [
+                  "See the Ram, Portable catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Rations",
+                "entries": [
+                  "See the Rations catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Rope",
+                "entries": [
+                  "See Hempen Rope (50 feet) and Silk Rope (50 feet)."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Scale, Merchant's",
+                "entries": [
+                  "See the Scale, Merchant's catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Spellbook",
+                "entries": [
+                  "See the Spellbook catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Spyglass",
+                "entries": [
+                  "See the Spyglass catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Tent",
+                "entries": [
+                  "See the Tent catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Tinderbox",
+                "entries": [
+                  "See the Tinderbox catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Torch",
+                "entries": [
+                  "See the Torch catalog definition."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "See the Adventuring Gear table.",
+      "See the Container Capacity table.",
+      {
+        "type": "inset",
+        "name": "Equipment Packs",
+        "entries": [
+          "The starting equipment you get from your class includes a collection of useful adventuring gear, put together in a pack. The contents of these packs are listed here. If you are buying your starting equipment, you can purchase a pack for the price shown, which might be cheaper than buying the items individually.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "name": "Burglar's Pack (16 gp)",
+                    "entries": [
+                      "See the Burglar's Pack (16 gp) catalog definition."
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Diplomat's Pack (39 gp)",
+                    "entries": [
+                      "See the Diplomat's Pack (39 gp) catalog definition."
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Dungeoneer's Pack (12 gp)",
+                    "entries": [
+                      "See the Dungeoneer's Pack (12 gp) catalog definition."
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Entertainer's Pack (40 gp)",
+                    "entries": [
+                      "See the Entertainer's Pack (40 gp) catalog definition."
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Explorer's Pack (10 gp)",
+                    "entries": [
+                      "See the Explorer's Pack (10 gp) catalog definition."
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Priest's Pack (19 gp)",
+                    "entries": [
+                      "See the Priest's Pack (19 gp) catalog definition."
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Scholar's Pack (40 gp)",
+                    "entries": [
+                      "See the Scholar's Pack (40 gp) catalog definition."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "item-group.arcane-focus",
+      "item-group.druidic-focus",
+      "item-group.holy-symbol",
+      "item.acid-vial",
+      "item.alchemist-s-fire-flask",
+      "item.antitoxin-vial",
+      "item.ball-bearings-bag-of-1-000",
+      "item.basic-poison-vial",
+      "item.block-and-tackle",
+      "item.book",
+      "item.bullseye-lantern",
+      "item.burglar-s-pack",
+      "item.caltrops-bag-of-20",
+      "item.candle",
+      "item.chain-10-feet",
+      "item.climber-s-kit",
+      "item.component-pouch",
+      "item.crossbow-bolt-case",
+      "item.crowbar",
+      "item.diplomat-s-pack",
+      "item.dungeoneer-s-pack",
+      "item.entertainer-s-pack",
+      "item.explorer-s-pack",
+      "item.fishing-tackle",
+      "item.healer-s-kit",
+      "item.hempen-rope-50-feet",
+      "item.holy-water-flask",
+      "item.hooded-lantern",
+      "item.hunting-trap",
+      "item.lamp",
+      "item.lock",
+      "item.magnifying-glass",
+      "item.manacles",
+      "item.map-or-scroll-case",
+      "item.merchant-s-scale",
+      "item.mess-kit",
+      "item.oil-flask",
+      "item.portable-ram",
+      "item.potion-of-healing",
+      "item.pouch",
+      "item.priest-s-pack",
+      "item.quiver",
+      "item.rations-1-day",
+      "item.scholar-s-pack",
+      "item.silk-rope-50-feet",
+      "item.spellbook",
+      "item.spyglass",
+      "item.tinderbox",
+      "item.torch",
+      "item.two-person-tent",
+      "rule.casting-a-spell",
+      "rule.the-environment",
+      "rulebook.page-066",
+      "rulebook.page-067",
+      "rulebook.page-068",
+      "rulebook.page-069",
+      "rulebook.page-070",
+      "table.adventuring-gear",
+      "table.container-capacity"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        66,
+        67,
+        68,
+        69,
+        70
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/10"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.tools",
+    "kind": "rule",
+    "name": "Tools",
+    "entries": [
+      "A tool helps you to do something you couldn't otherwise do, such as craft or repair an item, forge a document, or pick a lock. Your race, class, background, or feats give you proficiency with certain tools. Proficiency with a tool allows you to add your proficiency bonus to any ability check you make using that tool. Tool use is not tied to a single ability, since proficiency with a tool represents broader knowledge of its use. For example, the GM might ask you to make a Dexterity check to carve a fine detail with your woodcarver's tools, or a Strength check to make something out of particularly hard wood.",
+      "See the Tools table.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Artisan's Tools",
+                "entries": [
+                  "These special tools include the items needed to pursue a craft or trade. The table shows examples of the most common types of tools, each providing items related to a single craft. Proficiency with a set of artisan's tools lets you add your proficiency bonus to any ability checks you make using the tools in your craft. Each type of artisan's tools requires a separate proficiency."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Disguise Kit",
+                "entries": [
+                  "See the Disguise Kit catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Forgery Kit",
+                "entries": [
+                  "See the Forgery Kit catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Gaming Set",
+                "entries": [
+                  "This item encompasses a wide range of game pieces, including dice and decks of cards. A few common examples appear on the Tools table, but other kinds of gaming sets exist. If you are proficient with a gaming set, you can add your proficiency bonus to ability checks you make to play a game with that set. Each type of gaming set requires a separate proficiency."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Herbalism Kit",
+                "entries": [
+                  "See the Herbalism Kit catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Musical Instrument",
+                "entries": [
+                  "Several of the most common types of musical instruments are shown on the table as examples. If you have proficiency with a given musical instrument, you can add your proficiency bonus to any ability checks you make to play music with the instrument. A bard can use a musical instrument as a spellcasting focus. Each type of musical instrument requires a separate proficiency."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Navigator's Tools",
+                "entries": [
+                  "See the Navigator's Tools catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Poisoner's Kit",
+                "entries": [
+                  "See the Poisoner's Kit catalog definition."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Thieves' Tools",
+                "entries": [
+                  "See the Thieves' Tools catalog definition."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "item-group.artisan-s-tools",
+      "item-group.gaming-set",
+      "item-group.musical-instrument",
+      "item.disguise-kit",
+      "item.forgery-kit",
+      "item.herbalism-kit",
+      "item.navigator-s-tools",
+      "item.poisoner-s-kit",
+      "item.thieves-tools",
+      "rule.ability-checks",
+      "rule.mounts-and-vehicles",
+      "rule.proficiency-bonus",
+      "rulebook.page-070",
+      "rulebook.page-071",
+      "table.tools"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        70,
+        71
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/11"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
   }
 ]

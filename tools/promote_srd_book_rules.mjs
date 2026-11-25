@@ -579,6 +579,53 @@ function legacyEconomyEntries(name,entries){
  return entries;
 }
 
+function legacyEquipmentEntries(name,entries,existing,local){
+ const find=(arr,name)=>{for(const n of arr){if(n&&typeof n==="object"){if(n.name===name)return n;if(n.entries){const v=find(n.entries,name);if(v)return v;}}}};
+ const lookup=id=>{const row=existing.find(x=>x.id===id);if(!row)throw Error("Missing equipment identity "+id);local.add(id);return row;};
+ const link=(entry,id)=>{lookup(id);return {type:"entries",name:entry.name,entries:["See the "+entry.name+" catalog definition."]};};
+ if(name==="Armor"){
+  const aliases={Padded:"padded-armor",Leather:"leather-armor","Studded Leather":"studded-leather-armor",Hide:"hide-armor","Chain Shirt":"chain-shirt","Scale Mail":"scale-mail",Breastplate:"breastplate","Half Plate":"half-plate-armor","Ring Mail":"ring-mail","Chain Mail":"chain-mail",Splint:"splint-armor",Plate:"plate-armor"};
+  let count=0;
+  const visit=x=>{if(Array.isArray(x))return x.map(visit);if(x&&typeof x==="object"){if(Object.hasOwn(aliases,x.name)){const row=lookup("baseitem."+aliases[x.name]);if(JSON.stringify(row.entries)!==JSON.stringify(x.entries))throw Error("Unreconciled armor description "+x.name);count++;return link(x,row.id);}if(x.entries)x.entries=visit(x.entries);}return x;};
+  entries=visit(entries);if(count!==12)throw Error("Incomplete armor index");
+ }
+ if(name==="Weapons"){
+  const properties=find(entries,"Weapon Properties");
+  const ids={Ammunition:"a",Finesse:"f",Heavy:"h",Light:"l",Loading:"ld",Reach:"r",Thrown:"t","Two-Handed":"2h",Versatile:"v"};
+  properties.entries[1].entries=properties.entries[1].entries.map(x=>Object.hasOwn(ids,x.name)?link(x,"item-property."+ids[x.name]):x);
+  const special=find(entries,"Special Weapons");special.entries=special.entries.map(x=>typeof x==="string"?x:link(x,"baseitem."+x.name.toLowerCase()));
+  lookup("item-property.s");
+ }
+ if(name==="Adventuring Gear"){
+  const aliases={"Acid":"acid-vial","Alchemist's Fire":"alchemist-s-fire-flask","Antitoxin":"antitoxin-vial","Ball Bearings":"ball-bearings-bag-of-1-000","Block and Tackle":"block-and-tackle","Book":"book","Caltrops":"caltrops-bag-of-20","Candle":"candle","Case, Crossbow Bolt":"crossbow-bolt-case","Case, Map or Scroll":"map-or-scroll-case","Chain":"chain-10-feet","Climber's Kit":"climber-s-kit","Component Pouch":"component-pouch","Crowbar":"crowbar","Fishing Tackle":"fishing-tackle","Healer's Kit":"healer-s-kit","Holy Water":"holy-water-flask","Hunting Trap":"hunting-trap","Lamp":"lamp","Lantern, Bullseye":"bullseye-lantern","Lantern, Hooded":"hooded-lantern","Lock":"lock","Magnifying Glass":"magnifying-glass","Manacles":"manacles","Mess Kit":"mess-kit","Oil":"oil-flask","Poison, Basic":"basic-poison-vial","Potion of Healing":"potion-of-healing","Pouch":"pouch","Quiver":"quiver","Ram, Portable":"portable-ram","Rations":"rations-1-day","Scale, Merchant's":"merchant-s-scale","Spellbook":"spellbook","Spyglass":"spyglass","Tent":"two-person-tent","Tinderbox":"tinderbox","Torch":"torch"};
+  const group={"Arcane Focus":"arcane-focus","Druidic Focus":"druidic-focus","Holy Symbol":"holy-symbol"};
+  const descriptions=entries[1].entries[0].entries;
+  if(descriptions.length!==42)throw Error("Unexpected gear index size "+descriptions.length);
+  entries[1].entries[0].entries=descriptions.map(x=>{
+   if(x.name==="Rope"){lookup("item.hempen-rope-50-feet");lookup("item.silk-rope-50-feet");return {type:"entries",name:x.name,entries:["See Hempen Rope (50 feet) and Silk Rope (50 feet)."]};}
+   if(Object.hasOwn(group,x.name))return link(x,"item-group."+group[x.name]);
+   if(!Object.hasOwn(aliases,x.name))throw Error("Unknown gear entry "+x.name);
+   const id="item."+aliases[x.name];
+   if(x.name==="Potion of Healing"){lookup(id);return {type:"entries",name:x.name,entries:["See Potion of Healing. Drinking or administering a potion takes an action."]};}
+   return link(x,id);
+  });
+  const packs=find(entries,"Equipment Packs");const packList=packs.entries[1].entries[0].entries;
+  if(packList.length!==7)throw Error("Unexpected pack list");
+  packs.entries[1].entries[0].entries=packList.map(x=>link(x,"item."+x.name.replace(/ \(\d+ gp\)$/,"").toLowerCase().replace(/[^a-z0-9]+/g,"-")));
+ }
+ if(name==="Tools"){
+  const list=entries[2].entries[0].entries;
+  const aliases={"Disguise Kit":"disguise-kit","Forgery Kit":"forgery-kit","Herbalism Kit":"herbalism-kit","Navigator's Tools":"navigator-s-tools","Poisoner's Kit":"poisoner-s-kit","Thieves' Tools":"thieves-tools"};
+  const groups={"Artisan's Tools":"artisan-s-tools","Gaming Set":"gaming-set","Musical Instrument":"musical-instrument"};
+  entries[2].entries[0].entries=list.map(x=>{
+   if(Object.hasOwn(groups,x.name)){lookup("item-group."+groups[x.name]);if(x.name==="Gaming Set")x.entries[0]=x.entries[0].replace(" (for games such as Three-Dragon Ante)","");return x;}
+   if(!Object.hasOwn(aliases,x.name))throw Error("Unknown tool "+x.name);
+   return link(x,"item."+aliases[x.name]);
+  });
+ }
+ return entries;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -760,7 +807,11 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Selling Treasure","/data/4/entries/7",[62],["table.trade-goods"]],
   ["Mounts and Vehicles","/data/4/entries/12",[71,72],["table.armor","rule.mounted-combat","rule.using-each-ability","rule.movement"]],
   ["Trade Goods","/data/4/entries/13",[72],[]],
-  ["Expenses","/data/4/entries/14",[72,73,74],["skill.survival","rule.between-adventures","spell.cure-wounds","spell.identify","spell.secret-chest"]]
+  ["Expenses","/data/4/entries/14",[72,73,74],["skill.survival","rule.between-adventures","spell.cure-wounds","spell.identify","spell.secret-chest"]],
+  ["Armor","/data/4/entries/8",[62,63,64],["table.donning-and-doffing-armor","equipment-option.don-or-doff-a-shield","skill.stealth"]],
+  ["Weapons","/data/4/entries/9",[64,65,66],["rule.making-an-attack","combat-option.two-weapon-fighting","reaction-option.opportunity-attack","condition.restrained"]],
+  ["Adventuring Gear","/data/4/entries/10",[66,67,68,69,70],["rule.the-environment","rule.casting-a-spell","item-group.arcane-focus","item-group.druidic-focus","item-group.holy-symbol"]],
+  ["Tools","/data/4/entries/11",[70,71],["rule.proficiency-bonus","rule.ability-checks","rule.mounts-and-vehicles","class.bard"]]
  ]:[
   ["Travel Pace","/data/10/entries/0",[192],["table.travel-pace","condition.exhaustion","spell.wind-walk","item-group.carpet-of-flying","glossary.difficult-terrain"]],
   ["Creating a Background","/data/10/entries/1",[192,193],[]],
@@ -782,6 +833,10 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Sentient Magic Items","/data/11/entries/9",[207,208],["condition.charmed","rule.the-next-dawn","rule.attunement"]]
  ];
  const extraCorrections={
+  "Armor":"Reuse canonical armor descriptions after exact comparison and retain proficiency, AC, speed, stealth and don/doff rules (pp.62–64).",
+  "Weapons":"Reuse canonical weapon properties and special weapon definitions; reconcile original property wording (pp.64–66).",
+  "Adventuring Gear":"Use existing item/group/pack identities rather than duplicate their descriptive bodies; retain potion administration action cost (pp.66–70).",
+  "Tools":"Reuse canonical concrete tool identities; preserve group proficiency guidance and omit the commercial card-game example (pp.70–71).",
   "Mounts and Vehicles":"Restore publisher barding table navigation (p.71).",
   "Expenses":"Replace source-specific spell filter navigation with published spell-level labels (p.74).",
   "Using Each Ability":"Reuse all 18 canonical skill descriptions after exact normalized body checks; restore publisher environmental navigation (pp.79–83).",
@@ -827,7 +882,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   };
   if(entryRange&&(entryRange[0]!==0||entryRange[1]>node.entries.length||node.entries.slice(...entryRange).some(x=>typeof x!=="string"&&x.type!=="table")))throw Error("Unexpected chapter introduction "+name);
   let content=project(entryRange?node.entries.slice(...entryRange):node.entries);
-  if(tag==="51")content=legacyEconomyEntries(name,legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local));
+  if(tag==="51")content=legacyEquipmentEntries(name,legacyEconomyEntries(name,legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local)),existing,local);
   else content=modernMagicItemEntries(name,content);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");

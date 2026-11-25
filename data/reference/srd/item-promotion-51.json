@@ -375,6 +375,22 @@
       "reason": "Remove gaming set variants absent from the 5.1 tools table"
     },
     {
+      "id": "item-property.2h",
+      "reason": "Restore original SRD 5.1 weapon property wording; do not import later errata."
+    },
+    {
+      "id": "item-property.a",
+      "reason": "Restore original SRD 5.1 weapon property wording; do not import later errata."
+    },
+    {
+      "id": "item-property.h",
+      "reason": "Restore original SRD 5.1 weapon property wording; do not import later errata."
+    },
+    {
+      "id": "item-property.r",
+      "reason": "Restore original SRD 5.1 weapon property wording; do not import later errata."
+    },
+    {
       "id": "magic-variant.arrow-of-slaying",
       "reason": "Restore legacy slaying ammunition's piercing damage, flexible target grouping and alternate ammunition guidance; remove imported modern random creature-type table."
     },
@@ -401,7 +417,7 @@
   ],
   "publisherOnly": [],
   "unresolvedReferences": [],
-  "resolvedReferenceCount": 731,
+  "resolvedReferenceCount": 735,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",

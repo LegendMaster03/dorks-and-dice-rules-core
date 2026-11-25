@@ -544,6 +544,13 @@ public sealed class RulesetResolutionApiTests
         Assert.Contains("10 to 50 gold pieces", legacyExpenses.GetProperty("entries").GetRawText());
         Assert.Contains("table.services", legacyExpenses.GetProperty("catalogReferences").GetRawText());
 
+        // Equipment guidance reuses canonical definitions within each edition.
+        foreach (var (ruleId, referenceId) in new[] { ("rule.armor", "table.donning-and-doffing-armor"), ("rule.weapons", "item-property.h"), ("rule.adventuring-gear", "item.potion-of-healing"), ("rule.tools", "item-group.artisan-s-tools") })
+        {
+            var equipmentRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/" + ruleId)).GetProperty("rule").GetProperty("definition");
+            Assert.Contains(referenceId, equipmentRule.GetProperty("catalogReferences").GetRawText());
+        }
+
         // Legacy travel and downtime must retain their own published procedures.
         var legacyTravelRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.movement")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("table.travel-pace", legacyTravelRule.GetProperty("catalogReferences").GetRawText());
