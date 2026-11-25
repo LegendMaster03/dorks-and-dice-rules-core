@@ -4,6 +4,7 @@ from pathlib import Path
 from collections import defaultdict
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+from srd_upstream_crosswalk import Crosswalk, LEGACY, MODERN
 from audit_srd_upstream import candidate_flags, classify_rules_matches, compare_candidate, key, upstream_occurrences
 
 
@@ -65,3 +66,30 @@ class UpstreamComparisonTests(unittest.TestCase):
         dispositions["duplicate"]["status"] = "unreviewed"
         self.assertEqual("ambiguous-rules-sources", classify_rules_matches(rows, dispositions)["status"])
         self.assertEqual("metadata-only", classify_rules_matches(rows[1:2], dispositions)["status"])
+
+    def test_crosswalk_table_titles_scope_and_nested_identity(self):
+        rows = [
+            {"id": "table.waterborne-vehicles", "kind": "table", "name": "Waterborne Vehicles", "rows": [["boat"]]},
+            {"id": "table.example", "kind": "table", "name": "Example", "rows": [["one"]]},
+            {"id": "rule.madness", "kind": "rule", "name": "Madness", "entries": [
+                {"type": "table", "caption": "Short-Term Madness", "rows": [["one"], ["two"]]}]},
+        ]
+        crosswalk = Crosswalk(LEGACY, rows)
+        self.assertEqual("native-table-title-match", crosswalk.table("Group; Example", {"rows": [["one"]]})["status"])
+        self.assertEqual("publisher-scope-review", crosswalk.table("Group; Airborne and Waterborne Vehicles", {})["status"])
+        self.assertEqual("unresolved-table", crosswalk.table("Nonexistent", {})["status"])
+        nested = crosswalk.table("Short-Term Madness", {})
+        self.assertEqual("/entries/0", nested["nativePointer"])
+        self.assertEqual(2, nested["nativeRowCount"])
+
+    def test_crosswalk_card_preserves_duplicate_illusion_rows_and_local_parent(self):
+        rows = [{"id": "item.deck-of-illusions", "kind": "item", "name": "Deck of Illusions", "entries": [
+            {"type": "table", "rows": [["Two of hearts", "{@creature Goblin}"], ["Two of spades", "{@creature Goblin}"]]}]},
+            {"id": "item.mysterious-deck", "kind": "item", "name": "Mysterious Deck", "entries": [
+                {"type": "entries", "name": "Balance", "entries": ["example"]}]}]
+        crosswalk = Crosswalk(MODERN, rows)
+        card = crosswalk.card({"name": "Goblin", "set": "Deck of Illusions"})
+        self.assertEqual(["/entries/0/rows/0", "/entries/0/rows/1"], card["nativePointers"])
+        effect = crosswalk.card({"name": "Balance", "set": "Deck of Many Things"})
+        self.assertEqual(["item.mysterious-deck"], effect["nativeIds"])
+        self.assertEqual("nested-card-effect-heading", effect["status"])

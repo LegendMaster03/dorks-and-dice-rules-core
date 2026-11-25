@@ -13,6 +13,7 @@ import subprocess
 from inventory_srd_editions import ROOT
 from stage_srd_editions import PACKAGES, build
 from report_srd_promotion import REPO, load_decisions, native_rows, report
+from srd_upstream_crosswalk import Crosswalk
 
 UPSTREAM_COMMIT = "2512db75eb48ef06f6190b086a82430887906dca"
 FLAGS = {"srd": "srd-5.1", "srd52": "srd-5.2.1"}
@@ -167,8 +168,10 @@ def audit(checkout):
     native_names = {edition: defaultdict(list) for edition in PACKAGES}
     dispositions = {}
     expanded_links = {edition: defaultdict(list) for edition in PACKAGES}
+    crosswalks = {}
     for edition, package in PACKAGES.items():
         native = list(native_rows(REPO / "data" / "rulesets" / package / "native"))
+        crosswalks[edition] = Crosswalk(edition, native)
         for row in native:
             if row.get("name"):
                 native_names[edition][norm(row["name"])].append(row["id"])
@@ -190,6 +193,7 @@ def audit(checkout):
     totals = {edition: Counter() for edition in PACKAGES}
     rules_totals = {edition: Counter() for edition in PACKAGES}
     gap_kinds = {edition: Counter() for edition in PACKAGES}
+    crosswalk_totals = {edition: Counter() for edition in PACKAGES}
     for path, file in checkout_files(checkout):
         entry = {"path": path, "bytes": file.stat().st_size}
         files.append(entry)
@@ -205,6 +209,9 @@ def audit(checkout):
                 row = compare_candidate(edition, kind, record, value, indexes, native_names, dispositions)
                 row.update({"path": path, "pointer": pointer, "flag": flag,
                             "expandedSourceNativeIds": sorted(expanded_links[edition].pop((path, pointer), []))})
+                if row["status"] in {"not-in-pinned-corpus", "no-identity"}:
+                    row["nativeCrosswalk"] = crosswalks[edition].classify(row, record)
+                    crosswalk_totals[edition][row["nativeCrosswalk"]["status"]] += 1
                 occurrences.append(row)
                 totals[edition][row["status"]] += 1
                 rules_totals[edition][row["rulesSourceDisposition"]["status"]] += 1
@@ -222,6 +229,7 @@ def audit(checkout):
             "identityCounts": {edition: dict(sorted(counts.items())) for edition, counts in totals.items()},
             "rulesSourceCounts": {edition: dict(sorted(counts.items())) for edition, counts in rules_totals.items()},
             "unmatchedUnlinkedByKind": {edition: dict(sorted(counts.items())) for edition, counts in gap_kinds.items()},
+            "nativeCrosswalkCounts": {edition: dict(sorted(counts.items())) for edition, counts in crosswalk_totals.items()},
             "occurrences": occurrences}
 
 
@@ -238,7 +246,8 @@ def main():
     output.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({"fileCount": result["fileCount"], "identityCounts": result["identityCounts"],
                       "rulesSourceCounts": result["rulesSourceCounts"],
-                      "unmatchedUnlinkedByKind": result["unmatchedUnlinkedByKind"]}, indent=2))
+                      "unmatchedUnlinkedByKind": result["unmatchedUnlinkedByKind"],
+                      "nativeCrosswalkCounts": result["nativeCrosswalkCounts"]}, indent=2))
 
 
 if __name__ == "__main__":

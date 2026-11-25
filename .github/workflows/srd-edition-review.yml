@@ -9,6 +9,7 @@ on:
       - 'src/RulesCore.Content/**'
       - 'tools/inventory_srd_editions.py'
       - 'tools/audit_srd_upstream.py'
+      - 'tools/srd_upstream_crosswalk.py'
       - 'tests/test_srd_upstream_audit.py'
       - 'tools/report_srd_promotion.py'
       - 'tools/audit_srd_native_references.py'
