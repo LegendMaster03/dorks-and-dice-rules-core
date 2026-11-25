@@ -71,7 +71,7 @@ public sealed class NativePrivateReferenceApiTests
                     var location = NativeRulesetLayout.Resolve(root, id);
                     Directory.CreateDirectory(location.NativeDirectory);
                     File.WriteAllText(Path.Combine(root, id, "manifest.json"),
-                        $"""{"id":"{{id}}","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/","name":"{{id}} test","license":"CC-BY-4.0","licenseUrl":"https://creativecommons.org/licenses/by/4.0/","attribution":"{{id}} attribution","originalSources":["https://example.org/source","file:///private/file"],"reviewReference":"private-marker"}""");
+                        $$"""{"id":"{{id}}","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/","name":"{{id}} test","license":"CC-BY-4.0","licenseUrl":"https://creativecommons.org/licenses/by/4.0/","attribution":"{{id}} attribution","originalSources":["https://example.org/source","file:///private/file"],"reviewReference":"private-marker"}""");
                     File.WriteAllText(Path.Combine(location.NativeDirectory, "base.json"),
                         $$"""{"id":"rule.native","name":"{{id}} rule","kind":"rule"}""");
                     additional["Rulesets:AdditionalRulesets:" + index] = id;
