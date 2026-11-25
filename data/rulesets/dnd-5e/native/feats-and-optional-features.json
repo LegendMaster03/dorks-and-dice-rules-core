@@ -277,7 +277,9 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-048"
+      "rulebook.page-048",
+      "skill.deception",
+      "skill.persuasion"
     ],
     "source": {
       "release": "srd-5.1",

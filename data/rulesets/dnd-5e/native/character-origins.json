@@ -152,6 +152,8 @@
       }
     ],
     "catalogReferences": [
+      "language.common",
+      "language.draconic",
       "rulebook.page-005",
       "rulebook.page-006"
     ],
@@ -450,6 +452,15 @@
       }
     ],
     "catalogReferences": [
+      "baseitem.battleaxe",
+      "baseitem.brewer-s-supplies",
+      "baseitem.handaxe",
+      "baseitem.light-hammer",
+      "baseitem.mason-s-tools",
+      "baseitem.smith-s-tools",
+      "baseitem.warhammer",
+      "language.common",
+      "language.dwarvish",
       "rulebook.page-003",
       "skill.history"
     ],
@@ -557,6 +568,8 @@
       }
     ],
     "catalogReferences": [
+      "language.common",
+      "language.elvish",
       "rulebook.page-004",
       "skill.perception"
     ],
@@ -644,6 +657,8 @@
       }
     ],
     "catalogReferences": [
+      "language.common",
+      "language.gnomish",
       "rulebook.page-006"
     ],
     "source": {
@@ -753,6 +768,8 @@
       }
     ],
     "catalogReferences": [
+      "language.common",
+      "language.elvish",
       "rulebook.page-006",
       "rulebook.page-007"
     ],
@@ -869,6 +886,8 @@
       }
     ],
     "catalogReferences": [
+      "language.common",
+      "language.orc",
       "rulebook.page-007",
       "skill.intimidation"
     ],
@@ -970,6 +989,8 @@
       }
     ],
     "catalogReferences": [
+      "language.common",
+      "language.halfling",
       "rulebook.page-004",
       "rulebook.page-005"
     ],
@@ -1038,6 +1059,7 @@
       }
     ],
     "catalogReferences": [
+      "language.common",
       "rulebook.page-005"
     ],
     "source": {
@@ -1179,6 +1201,8 @@
       }
     ],
     "catalogReferences": [
+      "language.common",
+      "language.infernal",
       "rulebook.page-007",
       "spell.darkness",
       "spell.hellish-rebuke",
@@ -1323,6 +1347,12 @@
       "languageProficiencies": true
     },
     "catalogReferences": [
+      "baseitem.longbow",
+      "baseitem.longsword",
+      "baseitem.shortbow",
+      "baseitem.shortsword",
+      "language.common",
+      "language.elvish",
       "race.elf",
       "rulebook.page-004"
     ],
@@ -1401,6 +1431,7 @@
       }
     ],
     "catalogReferences": [
+      "baseitem.tinker-s-tools",
       "race.gnome",
       "rulebook.page-006",
       "skill.history"
@@ -1717,6 +1748,10 @@
       }
     ],
     "catalogReferences": [
+      "item-group.holy-symbol",
+      "item.book",
+      "item.common-clothes",
+      "item.pouch",
       "rulebook.page-060",
       "rulebook.page-061",
       "skill.insight",

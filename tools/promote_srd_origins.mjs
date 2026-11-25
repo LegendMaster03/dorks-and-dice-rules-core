@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {linkSpellRelationships} from "./link_srd_spell_relationships.mjs";
+import {characterRelationshipCatalog,linkCharacterRelationships} from "./link_srd_character_relationships.mjs";
 
 function generate(races,backgrounds,manifest,sourceManifest,pages,skills,tag) {
  const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""), edition="SRD"+tag, modern=tag==="52";
@@ -104,6 +105,7 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  const {records,report}=generate(races,backgrounds,manifest,src,pages,read(base+"native/skills.json"),tag);
  const spells=fs.readdirSync(path.join(root,base+"native/spells")).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(base+"native/spells/"+f));
  report.literalSpellRelationships=linkSpellRelationships(records,spells,"SRD"+tag);
+ report.literalCharacterRelationships=linkCharacterRelationships(records,characterRelationshipCatalog(root,base,read),"SRD"+tag);
  for(const [file,body] of [[base+"native/character-origins.json",json(records)],["data/reference/srd/origins-promotion-"+tag+".json",json(report)]]){
   const target=path.join(root,file);
   if(check){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale origins promotion "+file);}

@@ -15,6 +15,8 @@ on:
       - 'tools/audit_srd_native_references.py'
       - 'tools/audit_srd_structured_relationships.py'
       - 'tools/link_srd_spell_relationships.mjs'
+      - 'tools/link_srd_character_relationships.mjs'
+      - 'tests/test_srd_character_relationships.mjs'
       - 'tests/test_srd_structured_relationships.py'
       - 'tests/test_srd_native_reference_audit.py'
       - 'tools/promote_srd_bestiary.mjs'
@@ -67,6 +69,8 @@ jobs:
         run: node tools/promote_srd_features.mjs --check
       - name: Verify structured class source projection
         run: node tools/promote_srd_classes.mjs --check
+      - name: Test literal character relationship linker
+        run: node --test tests/test_srd_character_relationships.mjs
       - name: Verify structured character origins source projection
         run: node tools/promote_srd_origins.mjs --check
       - name: Verify structured item source projection

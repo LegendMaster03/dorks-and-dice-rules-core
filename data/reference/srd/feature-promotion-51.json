@@ -231,5 +231,10 @@
     "prerequisiteOccurrences": 3,
     "addedCatalogLinks": 23,
     "unresolvedSelectors": 2
+  },
+  "literalCharacterRelationships": {
+    "literalOccurrences": 2,
+    "namedVariantOccurrences": 0,
+    "addedCatalogLinks": 2
   }
 }

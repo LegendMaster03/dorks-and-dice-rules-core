@@ -1948,6 +1948,12 @@
       }
     ],
     "catalogReferences": [
+      "baseitem.calligrapher-s-supplies",
+      "feat.magic-initiate",
+      "item-group.holy-symbol",
+      "item.book",
+      "item.parchment",
+      "item.robe",
       "rulebook.page-083",
       "skill.insight",
       "skill.religion"
@@ -2089,6 +2095,12 @@
       }
     ],
     "catalogReferences": [
+      "baseitem.dagger",
+      "feat.alert",
+      "item.crowbar",
+      "item.pouch",
+      "item.thieves-tools",
+      "item.traveler-s-clothes",
       "rulebook.page-083",
       "skill.sleight-of-hand",
       "skill.stealth"
@@ -2229,6 +2241,12 @@
       }
     ],
     "catalogReferences": [
+      "baseitem.calligrapher-s-supplies",
+      "baseitem.quarterstaff",
+      "feat.magic-initiate",
+      "item.book",
+      "item.parchment",
+      "item.robe",
       "rulebook.page-083",
       "skill.arcana",
       "skill.history"
@@ -2374,6 +2392,13 @@
       }
     ],
     "catalogReferences": [
+      "baseitem.arrows-20",
+      "baseitem.shortbow",
+      "baseitem.spear",
+      "feat.savage-attacker",
+      "item.healer-s-kit",
+      "item.quiver",
+      "item.traveler-s-clothes",
       "rulebook.page-083",
       "skill.athletics",
       "skill.intimidation"

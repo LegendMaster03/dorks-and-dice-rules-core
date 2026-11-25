@@ -656,5 +656,10 @@
     "prerequisiteOccurrences": 0,
     "addedCatalogLinks": 22,
     "unresolvedSelectors": 2
+  },
+  "literalCharacterRelationships": {
+    "literalOccurrences": 39,
+    "namedVariantOccurrences": 2,
+    "addedCatalogLinks": 25
   }
 }
