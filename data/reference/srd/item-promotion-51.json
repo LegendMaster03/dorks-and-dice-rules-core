@@ -353,46 +353,33 @@
       "reason": "schema metadata or reusable entry template; not a standalone native rule"
     }
   ],
-  "corrections": [],
-  "publisherOnly": [],
-  "unresolvedReferences": [
+  "corrections": [
     {
       "id": "item.bag-of-holding",
-      "kind": "item",
-      "raw": "Heward's handy haversack",
-      "reason": "missing-or-ambiguous"
+      "reason": "Use official Handy Haversack name"
     },
+    {
+      "id": "item.orb-of-dragonkind",
+      "reason": "Remove non-SRD setting names and foreign creature link; retain official artifact mechanics"
+    },
+    {
+      "id": "item.portable-hole",
+      "reason": "Use official Handy Haversack name"
+    },
+    {
+      "id": "item-group.gaming-set",
+      "reason": "Remove gaming set variants absent from the 5.1 tools table"
+    }
+  ],
+  "publisherOnly": [],
+  "unresolvedReferences": [
     {
       "id": "item.crawler-mucus-contact",
       "kind": "creature",
       "raw": "carrion crawler",
       "reason": "missing-or-ambiguous"
-    },
-    {
-      "id": "item.orb-of-dragonkind",
-      "kind": "creature",
-      "raw": "Tiamat|RoT",
-      "reason": "foreign-source"
-    },
-    {
-      "id": "item.portable-hole",
-      "kind": "item",
-      "raw": "Heward's handy haversack",
-      "reason": "missing-or-ambiguous"
-    },
-    {
-      "id": "item-group.gaming-set",
-      "kind": "item",
-      "raw": "Dragonchess Set|SRD51",
-      "reason": "missing-or-ambiguous"
-    },
-    {
-      "id": "item-group.gaming-set",
-      "kind": "item",
-      "raw": "Three-Dragon Ante Set|SRD51",
-      "reason": "missing-or-ambiguous"
     }
   ],
-  "resolvedReferenceCount": 718,
+  "resolvedReferenceCount": 724,
   "nativeCount": 630
 }

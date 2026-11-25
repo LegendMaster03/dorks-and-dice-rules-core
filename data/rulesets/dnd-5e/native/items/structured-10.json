@@ -1796,13 +1796,13 @@
     "rarity": "none",
     "items": [
       "Dice Set|SRD51",
-      "Dragonchess Set|SRD51",
-      "Playing Card Set|SRD51",
-      "Three-Dragon Ante Set|SRD51"
+      "Playing Card Set|SRD51"
     ],
     "catalogReferences": [
       "item.dice-set",
-      "item.playing-card-set"
+      "item.playing-card-set",
+      "rulebook.page-070",
+      "rulebook.page-071"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1810,7 +1810,10 @@
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        70,
+        71
+      ],
       "candidatePage": 70,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",

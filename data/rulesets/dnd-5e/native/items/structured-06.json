@@ -773,12 +773,12 @@
     "rechargeAmount": "{@dice 1d4 + 3}",
     "charges": 7,
     "entries": [
-      "Ages past, on the world of Krynn, elves and humans waged a terrible war against evil dragons. When the world seemed doomed, the wizards of the Towers of High Sorcery came together and worked their greatest magic, forging five Orbs of Dragonkind (or Dragon Orbs) to help them defeat the dragons. One orb was taken to each of the five towers, and there they were used to speed the war toward a victorious end. The wizards used the orbs to lure dragons to them, then destroyed the dragons with powerful magic.",
-      "As the Towers of High Sorcery fell in later ages, the orbs were destroyed or faded into legend, and only three are thought to survive. Their magic has been warped and twisted over the centuries, so although their primary purpose of calling dragons still functions, they also allow some measure of control over dragons.",
+      "Ages past, elves and humans waged a terrible war against evil dragons. When the world seemed doomed, powerful wizards came together and worked their greatest magic, forging five Orbs of Dragonkind (or Dragon Orbs) to help them defeat the dragons. One orb was taken to each of the five wizard towers, and there they were used to speed the war toward a victorious end. The wizards used the orbs to lure dragons to them, then destroyed the dragons with powerful magic.",
+      "As the wizard towers fell in later ages, the orbs were destroyed or faded into legend, and only three are thought to survive. Their magic has been warped and twisted over the centuries, so although their primary purpose of calling dragons still functions, they also allow some measure of control over dragons.",
       "Each orb contains the essence of an evil dragon, a presence that resents any attempt to coax magic from it. Those lacking in force of personality might find themselves enslaved to an orb.",
       "An orb is an etched crystal globe about 10 inches in diameter. When used, it grows to about 20 inches in diameter, and mist swirls inside it.",
       "While attuned to an orb, you can use an action to peer into the orb's depths and speak its command word. You must then make a {@dc 15} Charisma check. On a successful check, you control the orb for as long as you remain attuned to it. On a failed check, you become {@condition charmed} by the orb for as long as you remain attuned to it.",
-      "While you are {@condition charmed} by the orb, you can't voluntarily end your attunement to it, and the orb casts {@spell suggestion} on you at will (save {@dc 18}), urging you to work toward the evil ends it desires. The dragon essence within the orb might want many things: the annihilation of a particular people, freedom from the orb, to spread suffering in the world, to advance the worship of Takhisis ({@creature Tiamat|RoT|Tiamat's} name on Krynn), or something else the DM decides.",
+      "While you are {@condition charmed} by the orb, you can't voluntarily end your attunement to it, and the orb casts {@spell suggestion} on you at will (save {@dc 18}), urging you to work toward the evil ends it desires. The dragon essence within the orb might want many things: the annihilation of a particular people, freedom from the orb, to spread suffering in the world, to advance the worship of Tiamat, or something else the DM decides.",
       {
         "type": "entries",
         "name": "Random Properties",
@@ -805,7 +805,7 @@
         "type": "entries",
         "name": "Call Dragons",
         "entries": [
-          "While you control the orb, you can use an action to cause the artifact to issue a telepathic call that extends in all directions for 40 miles. Evil dragons in range feel compelled to come to the orb as soon as possible by the most direct route. Dragon deities such as {@creature Tiamat|RoT} are unaffected by this call. Dragons drawn to the orb might be hostile toward you for compelling them against their will. Once you have used this property, it can't be used again for 1 hour."
+          "While you control the orb, you can use an action to cause the artifact to issue a telepathic call that extends in all directions for 40 miles. Evil dragons in range feel compelled to come to the orb as soon as possible by the most direct route. Dragon deities such as Tiamat are unaffected by this call. Dragons drawn to the orb might be hostile toward you for compelling them against their will. Once you have used this property, it can't be used again for 1 hour."
         ]
       },
       {
@@ -835,6 +835,8 @@
     },
     "catalogReferences": [
       "condition.charmed",
+      "rulebook.page-252",
+      "rulebook.page-253",
       "spell.cure-wounds",
       "spell.daylight",
       "spell.death-ward",
@@ -849,7 +851,10 @@
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        252,
+        253
+      ],
       "candidatePage": 252,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -1549,10 +1554,11 @@
       "You can use an action to unfold a portable hole and place it on or against a solid surface, whereupon the portable hole creates an extradimensional hole 10 feet deep. The cylindrical space within the hole exists on a different plane, so it can't be used to create open passages. Any creature inside an open portable hole can exit the hole by climbing out of it.",
       "You can use an action to close a portable hole by taking hold of the edges of the cloth and folding it up. Folding the cloth closes the hole, and any creatures or objects within remain in the extradimensional space. No matter what's in it, the hole weighs next to nothing.",
       "If the hole is folded up, a creature within the hole's extradimensional space can use an action to make a {@dc 10} Strength check. On a successful check, the creature forces its way out and appears within 5 feet of the portable hole or the creature carrying it. A breathing creature within a closed portable hole can survive for up to 10 minutes, after which time it begins to suffocate.",
-      "Placing a portable hole inside an extradimensional space created by a {@item bag of holding}, {@item Heward's handy haversack}, or similar item instantly destroys both items and opens a gate to the Astral Plane. The gate originates where the one item was placed inside the other. Any creature within 10 feet of the gate is sucked through it and deposited in a random location on the Astral Plane. The gate then closes. The gate is one-way only and can't be reopened."
+      "Placing a portable hole inside an extradimensional space created by a {@item bag of holding}, {@item Handy Haversack}, or similar item instantly destroys both items and opens a gate to the Astral Plane. The gate originates where the one item was placed inside the other. Any creature within 10 feet of the gate is sucked through it and deposited in a random location on the Astral Plane. The gate then closes. The gate is one-way only and can't be reopened."
     ],
     "catalogReferences": [
-      "item.bag-of-holding"
+      "item.bag-of-holding",
+      "item.handy-haversack"
     ],
     "source": {
       "release": "srd-5.1",
