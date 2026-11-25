@@ -52,3 +52,13 @@ class NativeFidelityTests(unittest.TestCase):
                 self.assertEqual("exact-normalized-text", spell_body(row)["status"])
                 if identity == "spell.acid-splash":
                     self.assertNotIn("SGT", row["miscTags"])
+
+    def test_legacy_errata_does_not_replace_pinned_publisher_rules(self):
+        import json
+        root = Path(__file__).resolve().parents[1] / "data/rulesets/dnd-5e/native/spells"
+        targets = ["spell.call-lightning","spell.clone","spell.color-spray","spell.contagion","spell.disintegrate","spell.glyph-of-warding","spell.heroes-feast"]
+        rows = {r["id"]: r for path in root.glob("spells-*.json") for r in json.loads(path.read_text())}
+        for identity in targets:
+            with self.subTest(identity=identity):
+                self.assertEqual("exact-normalized-text", spell_body(rows[identity])["status"])
+        self.assertNotIn("poisoned", rows["spell.contagion"]["conditionInflict"])

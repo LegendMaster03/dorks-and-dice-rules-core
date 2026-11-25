@@ -68,3 +68,19 @@ The historical audit on commit f4162a5aaf2ed6c2aa120d902f2f3fe1b16af95b compared
 - **SRD 5.2.1 Animate Dead (p.108):** restore the publisher cross-reference to the Monsters section for the Skeleton and Zombie stat blocks. No mechanical grant changes.
 
 Both native corrections are reproducible in the existing spell promotion generator. Their entire normalized spell bodies are covered by the native fidelity comparison. The remainder of the spell inventory and other content categories have not been certified.
+
+### Legacy spell body corrections — first batch
+
+Seven further legacy spell descriptions differ from the pinned CC SRD 5.1, largely because the structured source includes later errata. Restore the publisher's specific rules rather than treating that later text as authoritative for this package.
+
+| Spell | Publisher rule restored |
+|---|---|
+| Call Lightning | Cloud centered 100 feet directly above the caster; strike point within range |
+| Clone | Clone grows in a sealed vessel |
+| Color Spray | Blinded until the spell ends |
+| Contagion | Disease selected and inflicted on hit; three failures sustain disease, three successes recover; remove imported poisoned condition |
+| Disintegrate | Damage that reduces target to 0 HP disintegrates it |
+| Glyph of Warding | Surface area limitation and object-specific movement restriction as published |
+| Heroes' Feast | Up to twelve other creatures |
+
+The existing generator preserves the unchanged upstream source and verifies specific publisher evidence before applying these corrections. The complete normalized descriptions are checked by the fidelity tests. No executable spell mechanics are added.

@@ -40,6 +40,108 @@ function enrichSpell(row, candidate, index, manifest, tag) {
             throw Error("Unexpected modern Animate Dead cross-reference evidence");
         result.entries=[result.entries[0].replace(/corpse\.$/,'corpse (see “Monsters” for the stat blocks).'),...result.entries.slice(1)];
     }
+    if(tag==="51") {
+        const corrections={
+  "spell.call-lightning": [
+    [
+      0,
+      "within range directly above you",
+      "100 feet directly above you"
+    ],
+    [
+      1,
+      "you can see under the cloud",
+      "you can see within range"
+    ]
+  ],
+  "spell.clone": [
+    [
+      0,
+      "inside the vessel used in the spell's casting",
+      "inside a sealed vessel"
+    ]
+  ],
+  "spell.color-spray": [
+    [
+      1,
+      "until the end of your next turn",
+      "until the spell ends"
+    ]
+  ],
+  "spell.contagion": [
+    [
+      0,
+      "On a hit, the target is {@condition poisoned}.",
+      "On a hit, you afflict the creature with a disease of your choice from any of the ones described below."
+    ],
+    [
+      1,
+      "At the end of each of the {@condition poisoned} target's turns, the target must make a Constitution saving throw. If the target succeeds on three of these saves, it is no longer {@condition poisoned}, and the spell ends. If the target fails three of these saves, the target is no longer {@condition poisoned}, but choose one of the diseases below. The target is subjected to the chosen disease for the spell's duration.",
+      "At the end of each of the target's turns, it must make a Constitution saving throw. After failing three of these saving throws, the disease's effects last for the duration, and the creature stops making these saves. After succeeding on three of these saving throws, the creature recovers from the disease, and the spell ends."
+    ]
+  ],
+  "spell.disintegrate": [
+    [
+      1,
+      "The target is disintegrated if this damage leaves it with 0 hit points.",
+      "If this damage reduces the target to 0 hit points, it is disintegrated."
+    ]
+  ],
+  "spell.glyph-of-warding": [
+    [
+      0,
+      "When you cast this spell, you inscribe a glyph that later unleashes a magical effect. You inscribe it either on a surface (such as a table or a section of floor or wall) or within an object that can be closed (such as a book, a scroll, or a treasure chest) to conceal the glyph. The glyph can cover an area no larger than 10 feet in diameter. If the surface or object is moved more than 10 feet from where you cast this spell, the glyph is broken, and the spell ends without being triggered.",
+      "When you cast this spell, you inscribe a glyph that harms other creatures, either upon a surface (such as a table or a section of floor or wall) or within an object that can be closed (such as a book, a scroll, or a treasure chest) to conceal the glyph. If you choose a surface, the glyph can cover an area of the surface no larger than 10 feet in diameter. If you choose an object, that object must remain in its place; if the object is moved more than 10 feet from where you cast this spell, the glyph is broken, and the spell ends without being triggered."
+    ]
+  ],
+  "spell.heroes-feast": [
+    [
+      0,
+      "Up to twelve creatures",
+      "Up to twelve other creatures"
+    ]
+  ]
+};
+        const evidenceById={
+  "spell.call-lightning": [
+    "100 feet directly above you",
+    "see within range"
+  ],
+  "spell.clone": [
+    "inside a sealed vessel"
+  ],
+  "spell.color-spray": [
+    "spell is blinded until the spell ends"
+  ],
+  "spell.contagion": [
+    "afflict the creature with a disease of your choice",
+    "After failing three of these saving throws"
+  ],
+  "spell.disintegrate": [
+    "If this damage reduces the target to 0 hit points, it is disintegrated."
+  ],
+  "spell.glyph-of-warding": [
+    "harms other creatures, either upon a surface",
+    "If you choose an object, that object must remain in its place"
+  ],
+  "spell.heroes-feast": [
+    "Up to twelve other creatures"
+  ]
+};
+        if(Object.hasOwn(corrections,row.id)){
+            const official=row.officialTextLayout.replace(/[’‘]/g,"'").replace(/\s+/g," ");
+            if(evidenceById[row.id].some(phrase=>!official.includes(phrase)))throw Error("Publisher evidence changed: "+row.id);
+            result.entries=[...result.entries];
+            for(const [index,from,to] of corrections[row.id]){
+                if(typeof result.entries[index]!=="string"||result.entries[index].split(from).length!==2)throw Error("Legacy spell source changed: "+row.id);
+                result.entries[index]=result.entries[index].replace(from,to);
+            }
+            if(row.id==="spell.contagion"){
+                if(!result.conditionInflict.includes("poisoned"))throw Error("Unexpected Contagion condition metadata");
+                result.conditionInflict=result.conditionInflict.filter(c=>c!=="poisoned");
+            }
+        }
+    }
     result.source = {...row.source, structuredSource: pointer(manifest, tag, "spell", index),
         structuredStatus: "publisher-name-level-school-verified; structured body review pending"};
     return result;
