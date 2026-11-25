@@ -320,3 +320,30 @@ class StructuredRelationshipsTests(unittest.TestCase):
                           "unreviewed-equipment-shape": 1}, report["characterSelectorCounts"])
         rows[1]["optionalfeatureProgression"][0]["progression"]["10"] = 4
         self.assertEqual({"progression-mismatch": 1}, audit(rows, "SRD51")["optionalFeatureProgressionCounts"])
+
+    def test_champion_additional_allowance_and_modern_spellbook(self):
+        rows = [
+            {"id": "rulebook.page-025", "kind": "rulebook-page", "name": "Page 25",
+             "textLayout": "At 10th level, you can choose a second option from\nthe Fighting Style class feature."},
+            {"id": "subclass.fighter.champion", "kind": "subclass", "name": "Champion",
+             "optionalfeatureProgression": [{"name": "Fighting Style", "featureType": ["FS:F"],
+                                             "progression": {"10": 1}}]},
+        ] + [{"id": "optional-feature.style-" + str(i), "kind": "optional-feature",
+              "name": "Style " + str(i), "featureType": ["FS:F"]} for i in range(6)]
+        result = next(o for o in audit(rows, "SRD51")["occurrences"] if "progressionStatus" in o)
+        self.assertEqual("reviewed-static-progression", result["progressionStatus"])
+        self.assertEqual("subclass-additional", result["allowanceScope"])
+        self.assertEqual([0]*9 + [1]*11, result["cumulativeCounts"])
+        modern = [
+            {"id": "rulebook.page-078", "kind": "rulebook-page", "name": "Page 78",
+             "textLayout": "unique book: your spellbook\n100 pages"},
+            {"id": "class-feature.wizard.spellcasting.1", "kind": "class-feature", "name": "Spellcasting",
+             "className": "Wizard", "level": 1},
+            {"id": "class.wizard", "kind": "class", "name": "Wizard",
+             "startingEquipment": [{"A": [{"special": "Spellbook"}]}]}
+        ]
+        result = audit(modern, "SRD52")["occurrences"][0]
+        self.assertEqual("class-defined-equipment", result["candidateStatus"])
+        self.assertEqual("class-feature.wizard.spellcasting.1", result["definitionId"])
+        self.assertEqual([], result["targets"])
+        self.assertEqual({"unreviewed-equipment-shape": 1}, audit(modern, "SRD51")["characterSelectorCounts"])

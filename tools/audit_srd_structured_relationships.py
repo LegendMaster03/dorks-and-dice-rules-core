@@ -203,6 +203,7 @@ class OptionalFeatureProgressionInventory:
     """
     SPECS = {
         ("SRD51", "class.fighter", "FS:F"): ("Fighting Style", {1: 1}, 6, 24),
+        ("SRD51", "subclass.fighter.champion", "FS:F"): ("Fighting Style", {10: 1}, 6, 25),
         ("SRD51", "class.paladin", "FS:P"): ("Fighting Style", {2: 1}, 4, 31),
         ("SRD51", "class.ranger", "FS:R"): ("Fighting Style", {2: 1}, 4, 36),
         ("SRD51", "class.sorcerer", "MM"): ("Metamagic", {3: 2, 10: 3, 17: 4}, 8, 44),
@@ -277,7 +278,8 @@ class OptionalFeatureProgressionInventory:
                 ("SRD51", "PB"): ["At 3rd level, your otherworldly patron bestows a gift"],
                 ("SRD52", "MM"): ["level 10 and two more at Sorcerer level 17."],
             }
-            if any(phrase not in published for phrase in phrases[(self.tag, kind)]):
+            evidence = ["At 10th level, you can choose a second option from", "the Fighting Style class feature."] if row["id"] == "subclass.fighter.champion" else phrases[(self.tag, kind)]
+            if any(phrase not in published for phrase in evidence):
                 return result("changed-progression-evidence")
             if raw["progression"] != {str(k): v for k, v in expected.items()}:
                 return result("progression-mismatch", publisherCounts=expected)
@@ -291,7 +293,8 @@ class OptionalFeatureProgressionInventory:
             return result("invalid-progression-counts")
         return result("reviewed-static-progression", candidateOptionIds=candidates,
                       cumulativeCounts=expected_dense, gainedCounts=gained,
-                      publisherPage=page, characterEligibilityEvaluated=False,
+                      publisherPage=page, allowanceScope="subclass-additional" if row["id"] == "subclass.fighter.champion" else "class",
+                      characterEligibilityEvaluated=False,
                       replacementOnClassLevel=(kind == "EI" or self.tag == "SRD52" and kind == "MM"),
                       protectPrerequisiteOnReplacement=(kind == "EI" and self.tag == "SRD52"))
 
@@ -384,7 +387,7 @@ class CharacterSelectorInventory:
                 ids.append(row["id"])
         return ids
 
-    def equipment(self, raw):
+    def equipment(self, raw, owner=None):
         if not isinstance(raw, dict):
             return self.result("unreviewed-equipment-shape")
         if set(raw) == {"value"} and type(raw["value"]) is int and raw["value"] >= 0:
@@ -393,6 +396,11 @@ class CharacterSelectorInventory:
             quantity = raw.get("quantity", 1)
             if raw["special"] in {"sticks of incense", "vestments", "prayer wheel"} and type(quantity) is int and quantity > 0:
                 return self.result("descriptive-special-equipment", quantity=quantity)
+            if raw["special"] == "Spellbook" and quantity == 1 and owner == "class.wizard" and self.index.tag == "SRD52":
+                feature = self.rows.get("class-feature.wizard.spellcasting.1")
+                page = self.rows.get("rulebook.page-078", {}).get("textLayout", "")
+                if feature and "unique book: your spellbook" in page and "100 pages" in page:
+                    return self.result("class-defined-equipment", quantity=1, definitionId=feature["id"])
         if set(raw) - {"equipmentType", "equipmentTypes", "quantity"}:
             return self.result("unreviewed-equipment-shape")
         if ("equipmentType" in raw) == ("equipmentTypes" in raw):
@@ -519,7 +527,7 @@ def audit(rows, tag):
                     literal(path + "/item", "starting-equipment", "item", value["item"])
                 elif any(k in value for k in ("equipmentType", "equipmentTypes", "special", "value")):
                     emit(path, "equipment-selector-or-value", value, "selector-review",
-                         **character_selectors.equipment(value))
+                         **character_selectors.equipment(value, row["id"]))
                 else:
                     for _, child, child_path in children(value, path):
                         equipment(child, child_path)
@@ -726,14 +734,14 @@ def main():
         raise SystemExit("Unlinked literal structured relationships")
     if args.require_reviewed_selectors:
         allowed = {"selectorStatus": {"static-candidates"},
-                   "candidateStatus": {"static-candidates", "currency-value", "descriptive-special-equipment"},
+                   "candidateStatus": {"static-candidates", "currency-value", "descriptive-special-equipment", "class-defined-equipment"},
                    "predicateStatus": {"reviewed-static-predicate"},
                    "progressionStatus": {"reviewed-static-progression"}}
         failures = [(edition, o["entity"], o["pointer"], key, o[key])
                     for edition, r in report.items() for o in r["occurrences"]
                     for key, statuses in allowed.items() if key in o and o[key] not in statuses]
         # The reviewed progression inventory must be present in full, not simply absent.
-        for edition, expected in (("srd-5.1", 6), ("srd-5.2.1", 2)):
+        for edition, expected in (("srd-5.1", 7), ("srd-5.2.1", 2)):
             if report[edition]["optionalFeatureProgressionCounts"].get("reviewed-static-progression") != expected:
                 failures.append((edition, "optional-feature-progression", "reviewed count", expected))
         if failures:
