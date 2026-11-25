@@ -189,6 +189,24 @@ public sealed class RulesetResolutionApiTests
         }
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync("/api/rulesets/fate-condensed/rules/class.warlock")).StatusCode);
 
+        // Legacy optional features and modern feats must retain their edition-specific semantics.
+        var legacyFeats = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=feat&limit=1");
+        var modernFeats = await client.GetFromJsonAsync<JsonElement>(animals + "?category=feat&limit=1");
+        Assert.Equal(1, legacyFeats.GetProperty("total").GetInt32());
+        Assert.Equal(17, modernFeats.GetProperty("total").GetInt32());
+        var magicInitiate = await client.GetFromJsonAsync<JsonElement>(animals + "/feat.magic-initiate");
+        var magicDefinition = magicInitiate.GetProperty("rule").GetProperty("definition");
+        Assert.Equal("O", magicDefinition.GetProperty("category").GetString());
+        Assert.Equal(3, magicDefinition.GetProperty("additionalSpells").GetArrayLength());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/feat.magic-initiate")).StatusCode);
+        var modernChain = await client.GetFromJsonAsync<JsonElement>(animals + "/optional-feature.pact-of-the-chain");
+        var chain = modernChain.GetProperty("rule").GetProperty("definition");
+        Assert.DoesNotContain("Slaad Tadpole", chain.GetProperty("entries").GetRawText());
+        Assert.DoesNotContain("appendix B", chain.GetProperty("entries").GetRawText());
+        Assert.Equal(JsonValueKind.Array, chain.GetProperty("additionalSpells")[0].GetProperty("innate").GetProperty("_").ValueKind);
+        var oldChain = await client.GetFromJsonAsync<JsonElement>(oldRules + "/optional-feature.pact-of-the-chain");
+        Assert.True(oldChain.GetProperty("rule").GetProperty("definition").GetProperty("additionalSpells")[0].GetProperty("innate").GetProperty("_").TryGetProperty("ritual", out _));
+
         // The foreign catalogs expose original typed spell fields and entries,
         // not just publisher layout strings.
         foreach (var id in ids.Take(2))

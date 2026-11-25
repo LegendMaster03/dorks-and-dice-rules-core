@@ -1,0 +1,2932 @@
+[
+  {
+    "id": "feat.ability-score-improvement",
+    "kind": "feat",
+    "name": "Ability Score Improvement",
+    "category": "G",
+    "prerequisite": [
+      {
+        "level": 4
+      }
+    ],
+    "repeatable": true,
+    "ability": [
+      {
+        "choose": {
+          "from": [
+            "str",
+            "dex",
+            "con",
+            "int",
+            "wis",
+            "cha"
+          ],
+          "amount": 2
+        },
+        "hidden": true
+      },
+      {
+        "choose": {
+          "from": [
+            "str",
+            "dex",
+            "con",
+            "int",
+            "wis",
+            "cha"
+          ],
+          "count": 2
+        },
+        "hidden": true
+      }
+    ],
+    "entries": [
+      "Increase one ability score of your choice by 2, or increase two ability scores of your choice by 1. This feat can't increase an ability score above 20.",
+      {
+        "type": "entries",
+        "name": "Repeatable",
+        "entries": [
+          "You can take this feat more than once."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-087"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        87
+      ],
+      "candidatePage": 202,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/0"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.alert",
+    "kind": "feat",
+    "name": "Alert",
+    "category": "O",
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Initiative Proficiency",
+        "entries": [
+          "When you roll {@variantrule Initiative|SRD52}, you can add your {@variantrule Proficiency|SRD52|Proficiency Bonus} to the roll."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Initiative Swap",
+        "entries": [
+          "Immediately after you roll {@variantrule Initiative|SRD52}, you can swap your {@variantrule Initiative|SRD52} with the {@variantrule Initiative|SRD52} of one willing ally in the same combat. You can't make this swap if you or the ally has the {@condition Incapacitated|SRD52} condition."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-087"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        87
+      ],
+      "candidatePage": 200,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/1"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.archery",
+    "kind": "feat",
+    "name": "Archery",
+    "category": "FS",
+    "prerequisite": [
+      {
+        "feature": [
+          "Fighting Style"
+        ]
+      }
+    ],
+    "entries": [
+      "You gain a +2 bonus to attack rolls you make with Ranged weapons."
+    ],
+    "catalogReferences": [
+      "rulebook.page-087"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        87
+      ],
+      "candidatePage": 209,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/2"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.boon-of-combat-prowess",
+    "kind": "feat",
+    "name": "Boon of Combat Prowess",
+    "category": "EB",
+    "prerequisite": [
+      {
+        "level": 19
+      }
+    ],
+    "ability": [
+      {
+        "choose": {
+          "from": [
+            "str",
+            "dex",
+            "con",
+            "int",
+            "wis",
+            "cha"
+          ]
+        },
+        "max": 30
+      }
+    ],
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Peerless Aim",
+        "entries": [
+          "When you miss with an attack roll, you can hit instead. Once you use this benefit, you can't use it again until the start of your next turn."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-088"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        88
+      ],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/3"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.boon-of-dimensional-travel",
+    "kind": "feat",
+    "name": "Boon of Dimensional Travel",
+    "category": "EB",
+    "prerequisite": [
+      {
+        "level": 19
+      }
+    ],
+    "ability": [
+      {
+        "choose": {
+          "from": [
+            "str",
+            "dex",
+            "con",
+            "int",
+            "wis",
+            "cha"
+          ]
+        },
+        "max": 30
+      }
+    ],
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Blink Steps",
+        "entries": [
+          "Immediately after you take the {@action Attack|SRD52} action or the {@action Magic|SRD52} action, you can teleport up to 30 feet to an unoccupied space you can see."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-088"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        88
+      ],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/4"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.boon-of-fate",
+    "kind": "feat",
+    "name": "Boon of Fate",
+    "category": "EB",
+    "prerequisite": [
+      {
+        "level": 19
+      }
+    ],
+    "ability": [
+      {
+        "choose": {
+          "from": [
+            "str",
+            "dex",
+            "con",
+            "int",
+            "wis",
+            "cha"
+          ]
+        },
+        "max": 30
+      }
+    ],
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Improve Fate",
+        "entries": [
+          "When you or another creature within 60 feet of you succeeds on or fails a {@variantrule D20 Test|SRD52}, you can roll {@dice 2d4} and apply the total rolled as a bonus or penalty to the {@dice d20} roll. Once you use this benefit, you can't use it again until you roll {@variantrule Initiative|SRD52} or finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-088"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        88
+      ],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/5"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.boon-of-irresistible-offense",
+    "kind": "feat",
+    "name": "Boon of Irresistible Offense",
+    "category": "EB",
+    "prerequisite": [
+      {
+        "level": 19
+      }
+    ],
+    "ability": [
+      {
+        "choose": {
+          "from": [
+            "str",
+            "dex"
+          ]
+        },
+        "max": 30
+      }
+    ],
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Overcome Defenses",
+        "entries": [
+          "The Bludgeoning, Piercing, and Slashing damage you deal always ignores {@variantrule Resistance|SRD52}."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Overwhelming Strike",
+        "entries": [
+          "When you roll a 20 on the {@dice d20} for an attack roll, you can deal extra damage to the target equal to the ability score increased by this feat. The extra damage's type is the same as the attack's type."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-088"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        88
+      ],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/6"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.boon-of-spell-recall",
+    "kind": "feat",
+    "name": "Boon of Spell Recall",
+    "category": "EB",
+    "prerequisite": [
+      {
+        "level": 19,
+        "spellcasting2020": true
+      }
+    ],
+    "ability": [
+      {
+        "choose": {
+          "from": [
+            "int",
+            "wis",
+            "cha"
+          ]
+        },
+        "max": 30
+      }
+    ],
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Free Casting",
+        "entries": [
+          "Whenever you cast a spell with a level 1-4 spell slot, roll {@dice 1d4}. If the number you roll is the same as the slot's level, the slot isn't expended."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-088"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        88
+      ],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/7"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.boon-of-the-night-spirit",
+    "kind": "feat",
+    "name": "Boon of the Night Spirit",
+    "category": "EB",
+    "prerequisite": [
+      {
+        "level": 19
+      }
+    ],
+    "ability": [
+      {
+        "choose": {
+          "from": [
+            "str",
+            "dex",
+            "con",
+            "int",
+            "wis",
+            "cha"
+          ]
+        },
+        "max": 30
+      }
+    ],
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Merge with Shadows",
+        "entries": [
+          "While within {@variantrule Dim Light|SRD52} or {@variantrule Darkness|SRD52}, you can give yourself the {@condition Invisible|SRD52} condition as a {@variantrule Bonus Action|SRD52}. The condition ends on you immediately after you take an action, a {@variantrule Bonus Action|SRD52}, or a {@variantrule Reaction|SRD52}."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Shadowy Form",
+        "entries": [
+          "While within {@variantrule Dim Light|SRD52} or {@variantrule Darkness|SRD52}, you have {@variantrule Resistance|SRD52} to all damage except Psychic and Radiant."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-088"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        88
+      ],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/8"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.boon-of-truesight",
+    "kind": "feat",
+    "name": "Boon of Truesight",
+    "category": "EB",
+    "prerequisite": [
+      {
+        "level": 19
+      }
+    ],
+    "ability": [
+      {
+        "choose": {
+          "from": [
+            "str",
+            "dex",
+            "con",
+            "int",
+            "wis",
+            "cha"
+          ]
+        },
+        "max": 30
+      }
+    ],
+    "senses": [
+      {
+        "truesight": 60
+      }
+    ],
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Truesight",
+        "entries": [
+          "You have {@sense Truesight|SRD52} with a range of 60 feet."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-088"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        88
+      ],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/9"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.defense",
+    "kind": "feat",
+    "name": "Defense",
+    "category": "FS",
+    "prerequisite": [
+      {
+        "feature": [
+          "Fighting Style"
+        ]
+      }
+    ],
+    "entries": [
+      "While you're wearing Light, Medium, or Heavy armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}."
+    ],
+    "catalogReferences": [
+      "rulebook.page-088"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        88
+      ],
+      "candidatePage": 209,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/10"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.grappler",
+    "kind": "feat",
+    "name": "Grappler",
+    "category": "G",
+    "prerequisite": [
+      {
+        "level": 4,
+        "ability": [
+          {
+            "str": 13
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "ability": [
+          {
+            "dex": 13
+          }
+        ]
+      }
+    ],
+    "ability": [
+      {
+        "choose": {
+          "from": [
+            "str",
+            "dex"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Punch and Grab",
+        "entries": [
+          "When you hit a creature with an {@variantrule Unarmed Strike|SRD52} as part of the {@action Attack|SRD52} action on your turn, you can use both the Damage and the Grapple option. You can use this benefit only once per turn."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Attack Advantage",
+        "entries": [
+          "You have {@variantrule Advantage|SRD52} on attack rolls against a creature {@condition Grappled|SRD52} by you."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Fast Wrestler",
+        "entries": [
+          "You don't have to spend extra movement to move a creature {@condition Grappled|SRD52} by you if the creature is your size or smaller."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-087"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        87
+      ],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/12"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.great-weapon-fighting",
+    "kind": "feat",
+    "name": "Great Weapon Fighting",
+    "category": "FS",
+    "prerequisite": [
+      {
+        "feature": [
+          "Fighting Style"
+        ]
+      }
+    ],
+    "entries": [
+      "When you roll damage for an attack you make with a Melee weapon that you are holding with two hands, you can treat any 1 or 2 on a damage die as a 3. The weapon must have the {@itemProperty 2h|SRD52|Two-Handed} or {@itemProperty V|SRD52|Versatile} property to gain this benefit."
+    ],
+    "catalogReferences": [
+      "rulebook.page-088"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        88
+      ],
+      "candidatePage": 209,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/13"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.magic-initiate",
+    "kind": "feat",
+    "name": "Magic Initiate",
+    "category": "O",
+    "repeatable": true,
+    "additionalSpells": [
+      {
+        "name": "Cleric Spells",
+        "ability": {
+          "choose": [
+            "int",
+            "wis",
+            "cha"
+          ]
+        },
+        "innate": {
+          "_": {
+            "daily": {
+              "1": [
+                {
+                  "choose": "level=1|class=Cleric"
+                }
+              ]
+            }
+          }
+        },
+        "known": {
+          "_": [
+            {
+              "choose": "level=0|class=Cleric",
+              "count": 2
+            }
+          ]
+        }
+      },
+      {
+        "name": "Druid Spells",
+        "ability": {
+          "choose": [
+            "int",
+            "wis",
+            "cha"
+          ]
+        },
+        "innate": {
+          "_": {
+            "daily": {
+              "1": [
+                {
+                  "choose": "level=1|class=Druid"
+                }
+              ]
+            }
+          }
+        },
+        "known": {
+          "_": [
+            {
+              "choose": "level=0|class=Druid",
+              "count": 2
+            }
+          ]
+        }
+      },
+      {
+        "name": "Wizard Spells",
+        "ability": {
+          "choose": [
+            "int",
+            "wis",
+            "cha"
+          ]
+        },
+        "innate": {
+          "_": {
+            "daily": {
+              "1": [
+                {
+                  "choose": "level=1|class=Wizard"
+                }
+              ]
+            }
+          }
+        },
+        "known": {
+          "_": [
+            {
+              "choose": "level=0|class=Wizard",
+              "count": 2
+            }
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Two Cantrips",
+        "entries": [
+          "You learn two cantrips of your choice from the {@filter Cleric|spells|level=0;1|class=Cleric}, {@filter Druid|spells|level=0;1|class=Druid}, or {@filter Wizard|spells|level=0;1|class=Wizard} spell list. Intelligence, Wisdom, or Charisma is your spellcasting ability for this feat's spells (choose when you select this feat)."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Level 1 Spell",
+        "entries": [
+          "Choose a level 1 spell from the same list you selected for this feat's cantrips. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a {@variantrule Long Rest|SRD52}. You can also cast the spell using any spell slots you have."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spell Change",
+        "entries": [
+          "Whenever you gain a new level, you can replace one of the spells you chose for this feat with a different spell of the same level from the chosen spell list."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Repeatable",
+        "entries": [
+          "You can take this feat more than once, but you must choose a different spell list each time."
+        ]
+      }
+    ],
+    "_versions": [
+      {
+        "name": "Magic Initiate; Cleric",
+        "source": "SRD52",
+        "_mod": {
+          "entries": [
+            {
+              "mode": "replaceArr",
+              "replace": "Two Cantrips",
+              "items": {
+                "name": "Two Cantrips",
+                "entries": [
+                  "You learn two cantrips of your choice from the {@filter Cleric|spells|level=0;1|class=Cleric} spell list. Intelligence, Wisdom, or Charisma is your spellcasting ability for this feat's spells (choose when you select this feat)."
+                ]
+              }
+            },
+            {
+              "mode": "replaceArr",
+              "replace": "Level 1 Spell",
+              "items": {
+                "name": "Level 1 Spell",
+                "entries": [
+                  "Choose a level 1 spell from the {@filter Cleric|spells|level=0;1|class=Cleric} spell list. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a {@variantrule Long Rest|SRD52}. You can also cast the spell using any spell slots you have."
+                ]
+              }
+            }
+          ]
+        },
+        "additionalSpells": [
+          {
+            "ability": {
+              "choose": [
+                "int",
+                "wis",
+                "cha"
+              ]
+            },
+            "innate": {
+              "_": {
+                "daily": {
+                  "1": [
+                    {
+                      "choose": "level=1|class=Cleric"
+                    }
+                  ]
+                }
+              }
+            },
+            "known": {
+              "_": [
+                {
+                  "choose": "level=0|class=Cleric",
+                  "count": 2
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Magic Initiate; Druid",
+        "source": "SRD52",
+        "_mod": {
+          "entries": [
+            {
+              "mode": "replaceArr",
+              "replace": "Two Cantrips",
+              "items": {
+                "name": "Two Cantrips",
+                "entries": [
+                  "You learn two cantrips of your choice from the {@filter Druid|spells|level=0;1|class=Druid} spell list. Intelligence, Wisdom, or Charisma is your spellcasting ability for this feat's spells (choose when you select this feat)."
+                ]
+              }
+            },
+            {
+              "mode": "replaceArr",
+              "replace": "Level 1 Spell",
+              "items": {
+                "name": "Level 1 Spell",
+                "entries": [
+                  "Choose a level 1 spell from the {@filter Druid|spells|level=0;1|class=Druid} spell list. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a {@variantrule Long Rest|SRD52}. You can also cast the spell using any spell slots you have."
+                ]
+              }
+            }
+          ]
+        },
+        "additionalSpells": [
+          {
+            "ability": {
+              "choose": [
+                "int",
+                "wis",
+                "cha"
+              ]
+            },
+            "innate": {
+              "_": {
+                "daily": {
+                  "1": [
+                    {
+                      "choose": "level=1|class=Druid"
+                    }
+                  ]
+                }
+              }
+            },
+            "known": {
+              "_": [
+                {
+                  "choose": "level=0|class=Druid",
+                  "count": 2
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Magic Initiate; Wizard",
+        "source": "SRD52",
+        "_mod": {
+          "entries": [
+            {
+              "mode": "replaceArr",
+              "replace": "Two Cantrips",
+              "items": {
+                "name": "Two Cantrips",
+                "entries": [
+                  "You learn two cantrips of your choice from the {@filter Wizard|spells|level=0;1|class=Wizard} spell list. Intelligence, Wisdom, or Charisma is your spellcasting ability for this feat's spells (choose when you select this feat)."
+                ]
+              }
+            },
+            {
+              "mode": "replaceArr",
+              "replace": "Level 1 Spell",
+              "items": {
+                "name": "Level 1 Spell",
+                "entries": [
+                  "Choose a level 1 spell from the {@filter Wizard|spells|level=0;1|class=Wizard} spell list. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a {@variantrule Long Rest|SRD52}. You can also cast the spell using any spell slots you have."
+                ]
+              }
+            }
+          ]
+        },
+        "additionalSpells": [
+          {
+            "ability": {
+              "choose": [
+                "int",
+                "wis",
+                "cha"
+              ]
+            },
+            "innate": {
+              "_": {
+                "daily": {
+                  "1": [
+                    {
+                      "choose": "level=1|class=Wizard"
+                    }
+                  ]
+                }
+              }
+            },
+            "known": {
+              "_": [
+                {
+                  "choose": "level=0|class=Wizard",
+                  "count": 2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-087"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        87
+      ],
+      "candidatePage": 201,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/15"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.savage-attacker",
+    "kind": "feat",
+    "name": "Savage Attacker",
+    "category": "O",
+    "entries": [
+      "You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either roll against the target."
+    ],
+    "catalogReferences": [
+      "rulebook.page-087"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        87
+      ],
+      "candidatePage": 201,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/17"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.skilled",
+    "kind": "feat",
+    "name": "Skilled",
+    "category": "O",
+    "repeatable": true,
+    "skillToolLanguageProficiencies": [
+      {
+        "choose": [
+          {
+            "from": [
+              "anySkill",
+              "anyTool"
+            ],
+            "count": 3
+          }
+        ]
+      }
+    ],
+    "entries": [
+      "You gain proficiency in any combination of three skills or {@filter tools|items|type=tool;artisan's tools;instrument;gaming set} of your choice.",
+      {
+        "type": "entries",
+        "name": "Repeatable",
+        "entries": [
+          "You can take this feat more than once."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-087"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        87
+      ],
+      "candidatePage": 201,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/19"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "feat.two-weapon-fighting",
+    "kind": "feat",
+    "name": "Two-Weapon Fighting",
+    "category": "FS",
+    "prerequisite": [
+      {
+        "feature": [
+          "Fighting Style"
+        ]
+      }
+    ],
+    "entries": [
+      "When you make an extra attack as a result of using a weapon that has the {@itemProperty L|SRD52|Light} property, you can add your ability modifier to the damage of that attack if you aren't already adding it to the damage."
+    ],
+    "catalogReferences": [
+      "rulebook.page-088"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        88
+      ],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "feats.json",
+        "pointer": "/feat/20"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.agonizing-blast",
+    "kind": "optional-feature",
+    "name": "Agonizing Blast",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "spell": [
+          {
+            "choose": "level=0|class=Warlock",
+            "entry": "a Warlock Cantrip That Deals Damage",
+            "entrySummary": "Warlock Cantrip That Deals Damage"
+          }
+        ],
+        "level": {
+          "level": 2,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "entries": [
+      "Choose one of your known {@filter Warlock cantrips|spells|level=0|class=Warlock|damage type=acid;bludgeoning;cold;fire;force;lightning;necrotic;piercing;poison;psychic;radiant;slashing;thunder} that deals damage. You can add your Charisma modifier to that spell's damage rolls.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Repeatable",
+            "entries": [
+              "You can gain this invocation more than once. Each time you do so, choose a different eligible cantrip."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-072"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        72
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/49"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.armor-of-shadows",
+    "kind": "optional-feature",
+    "name": "Armor of Shadows",
+    "featureType": [
+      "EI"
+    ],
+    "additionalSpells": [
+      {
+        "innate": {
+          "_": [
+            "mage armor|srd52"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You can cast {@spell Mage Armor|SRD52} on yourself without expending a spell slot."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-072"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        72
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/50"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.ascendant-step",
+    "kind": "optional-feature",
+    "name": "Ascendant Step",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 5,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "additionalSpells": [
+      {
+        "innate": {
+          "_": [
+            "levitate|srd52"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You can cast {@spell Levitate|SRD52} on yourself without expending a spell slot."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-072"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        72
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/51"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.careful-spell",
+    "kind": "optional-feature",
+    "name": "Careful Spell",
+    "featureType": [
+      "MM"
+    ],
+    "consumes": {
+      "name": "Sorcery Point"
+    },
+    "entries": [
+      "When you cast a spell that forces other creatures to make a saving throw, you can protect some of those creatures from the spell's full force. To do so, spend 1 Sorcery Point and choose a number of those creatures up to your Charisma modifier (minimum of one creature). A chosen creature automatically succeeds on its saving throw against the spell, and it takes no damage if it would normally take half damage on a successful save."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-066"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        66
+      ],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/52"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.devils-sight",
+    "kind": "optional-feature",
+    "name": "Devil's Sight",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 2,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "entries": [
+      "You can see normally in {@variantrule Dim Light|SRD52} and {@variantrule Darkness|SRD52}—both magical and nonmagical—within 120 feet of yourself."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-072"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        72
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/53"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.devouring-blade",
+    "kind": "optional-feature",
+    "name": "Devouring Blade",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 12,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        },
+        "optionalfeature": [
+          "thirsting blade|srd52"
+        ]
+      }
+    ],
+    "entries": [
+      "The Extra Attack of your {@optionalfeature Thirsting Blade|SRD52} invocation confers two extra attacks rather than one."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "optional-feature.thirsting-blade",
+      "rulebook.page-072"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        72
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/54"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.distant-spell",
+    "kind": "optional-feature",
+    "name": "Distant Spell",
+    "featureType": [
+      "MM"
+    ],
+    "consumes": {
+      "name": "Sorcery Point"
+    },
+    "entries": [
+      "When you cast a spell that has a range of at least 5 feet, you can spend 1 Sorcery Point to double the spell's range. Or when you cast a spell that has a range of Touch, you can spend 1 Sorcery Point to make the spell's range 30 feet."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-067"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        67
+      ],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/55"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.eldritch-mind",
+    "kind": "optional-feature",
+    "name": "Eldritch Mind",
+    "featureType": [
+      "EI"
+    ],
+    "entries": [
+      "You have {@variantrule Advantage|SRD52} on Constitution saving throws that you make to maintain {@variantrule Concentration|SRD52}."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-072"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        72
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/56"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.eldritch-smite",
+    "kind": "optional-feature",
+    "name": "Eldritch Smite",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 5,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        },
+        "optionalfeature": [
+          "pact of the blade|srd52"
+        ]
+      }
+    ],
+    "entries": [
+      "Once per turn when you hit a creature with your pact weapon, you can expend a Pact Magic spell slot to deal an extra {@damage 1d8} Force damage to the target, plus another {@damage 1d8} per level of the spell slot, and you can give the target the {@condition Prone|SRD52} condition if it is Huge or smaller."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "optional-feature.pact-of-the-blade",
+      "rulebook.page-072"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        72
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/57"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.eldritch-spear",
+    "kind": "optional-feature",
+    "name": "Eldritch Spear",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "spell": [
+          {
+            "choose": "level=0|class=Warlock",
+            "entry": "a Warlock Cantrip That Deals Damage",
+            "entrySummary": "Warlock Cantrip That Deals Damage"
+          }
+        ],
+        "level": {
+          "level": 2,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "entries": [
+      "Choose one of your known {@filter Warlock cantrips|spells|level=0|class=Warlock|damage type=acid;bludgeoning;cold;fire;force;lightning;necrotic;piercing;poison;psychic;radiant;slashing;thunder|range=point} that deals damage and has a range of 10+ feet. When you cast that spell, its range increases by a number of feet equal to 30 times your Warlock level.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Repeatable",
+            "entries": [
+              "You can gain this invocation more than once. Each time you do so, choose a different eligible cantrip."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-073"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        73
+      ],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/58"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.empowered-spell",
+    "kind": "optional-feature",
+    "name": "Empowered Spell",
+    "featureType": [
+      "MM"
+    ],
+    "consumes": {
+      "name": "Sorcery Point"
+    },
+    "entries": [
+      "When you roll damage for a spell, you can spend 1 Sorcery Point to reroll a number of the damage dice up to your Charisma modifier (minimum of one), and you must use the new rolls.",
+      "You can use Empowered Spell even if you've already used a different Metamagic option during the casting of the spell."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-067"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        67
+      ],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/59"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.extended-spell",
+    "kind": "optional-feature",
+    "name": "Extended Spell",
+    "featureType": [
+      "MM"
+    ],
+    "consumes": {
+      "name": "Sorcery Point",
+      "amount": 1
+    },
+    "entries": [
+      "When you cast a spell that has a duration of 1 minute or longer, you can spend 1 Sorcery Point to double its duration to a maximum duration of 24 hours.",
+      "If the affected spell requires {@status Concentration|SRD52}, you have {@variantrule Advantage|SRD52} on any saving throw you make to maintain that {@status Concentration|SRD52}."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-067"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        67
+      ],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/60"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.fiendish-vigor",
+    "kind": "optional-feature",
+    "name": "Fiendish Vigor",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 2,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "additionalSpells": [
+      {
+        "innate": {
+          "_": [
+            "false life|srd52"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You can cast {@spell False Life|SRD52} on yourself without expending a spell slot. When you cast the spell with this feature, you don't roll the die for the {@variantrule Temporary Hit Points|SRD52}; you automatically get the highest number on the die."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-073"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        73
+      ],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/61"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.gaze-of-two-minds",
+    "kind": "optional-feature",
+    "name": "Gaze of Two Minds",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 5,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "entries": [
+      "You can use a {@variantrule Bonus Action|SRD52} to touch a willing creature and perceive through its senses until the end of your next turn. As long as the creature is on the same plane of existence as you, you can take a {@variantrule Bonus Action|SRD52} on subsequent turns to maintain this connection, extending the duration until the end of your next turn. The connection ends if you don't maintain it in this way.",
+      "While perceiving through the other creature's senses, you benefit from any special senses possessed by that creature, and you can cast spells as if you were in your space or the other creature's space if the two of you are within 60 feet of each other."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-073"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        73
+      ],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/62"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.gift-of-the-depths",
+    "kind": "optional-feature",
+    "name": "Gift of the Depths",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 5,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "entries": [
+      "You can breathe underwater, and you gain a Swim Speed equal to your Speed.",
+      "You can also cast {@spell Water Breathing|SRD52} once without expending a spell slot. You regain the ability to cast it in this way again when you finish a {@variantrule Long Rest|SRD52}."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-073"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        73
+      ],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/63"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.gift-of-the-protectors",
+    "kind": "optional-feature",
+    "name": "Gift of the Protectors",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 9,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        },
+        "optionalfeature": [
+          "pact of the tome|srd52"
+        ]
+      }
+    ],
+    "entries": [
+      "A new page appears in your Book of Shadows when you conjure it. With your permission, a creature can take an action to write its name on that page, which can contain a number of names equal to your Charisma modifier (minimum of one name).",
+      "When any creature whose name is on the page is reduced to 0 {@variantrule Hit Points|SRD52} but not killed outright, the creature magically drops to 1 {@variantrule Hit Points|SRD52|Hit Point} instead. Once this magic is triggered, no creature can benefit from it until you finish a {@variantrule Long Rest|SRD52}.",
+      "As a {@action Magic|SRD52} action, you can erase a name on the page by touching it."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "optional-feature.pact-of-the-tome",
+      "rulebook.page-073"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        73
+      ],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/64"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.heightened-spell",
+    "kind": "optional-feature",
+    "name": "Heightened Spell",
+    "featureType": [
+      "MM"
+    ],
+    "consumes": {
+      "name": "Sorcery Point",
+      "amount": 2
+    },
+    "entries": [
+      "When you cast a spell that forces a creature to make a saving throw, you can spend 2 Sorcery Points to give one target of the spell {@variantrule Disadvantage|SRD52} on saves against the spell."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-067"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        67
+      ],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/65"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.investment-of-the-chain-master",
+    "kind": "optional-feature",
+    "name": "Investment of the Chain Master",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 5,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        },
+        "optionalfeature": [
+          "pact of the chain|srd52"
+        ]
+      }
+    ],
+    "entries": [
+      "When you cast {@spell Find Familiar|SRD52}, you infuse the summoned familiar with a measure of your eldritch power, granting the creature the following benefits.",
+      {
+        "type": "entries",
+        "name": "Aerial or Aquatic",
+        "entries": [
+          "The familiar gains either a Fly Speed or a Swim Speed (your choice) of 40 feet."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Quick Attack",
+        "entries": [
+          "As a {@variantrule Bonus Action|SRD52}, you can command the familiar to take the {@action Attack|SRD52} action."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Necrotic or Radiant Damage",
+        "entries": [
+          "Whenever the familiar deals Bludgeoning, Piercing, or Slashing damage, you can make it deal Necrotic or Radiant damage instead."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Your Save DC",
+        "entries": [
+          "If the familiar forces a creature to make a saving throw, it uses your spell save DC."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Resistance",
+        "entries": [
+          "When the familiar takes damage, you can take a {@variantrule Reaction|SRD52} to grant it {@variantrule Resistance|SRD52} against that damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "optional-feature.pact-of-the-chain",
+      "rulebook.page-073"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        73
+      ],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/66"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.lessons-of-the-first-ones",
+    "kind": "optional-feature",
+    "name": "Lessons of the First Ones",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 2,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "entries": [
+      "You have received knowledge from an elder entity of the multiverse, allowing you to gain one Origin feat of your choice (see \"Feats\").",
+      {
+        "type": "entries",
+        "name": "Repeatable",
+        "entries": [
+          "You can gain this invocation more than once. Each time you do so, choose a different Origin feat."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-073"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        73
+      ],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/67"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.lifedrinker",
+    "kind": "optional-feature",
+    "name": "Lifedrinker",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 9,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        },
+        "optionalfeature": [
+          "pact of the blade|srd52"
+        ]
+      }
+    ],
+    "entries": [
+      "Once per turn when you hit a creature with your pact weapon, you can deal an extra {@damage 1d6} Necrotic, Psychic, or Radiant damage (your choice) to the creature, and you can expend one of your {@variantrule Hit Point Dice|SRD52} to roll it and regain a number of {@variantrule Hit Points|SRD52} equal to the roll plus your Constitution modifier (minimum of 1 {@variantrule Hit Points|SRD52|Hit Point})."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "optional-feature.pact-of-the-blade",
+      "rulebook.page-073"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        73
+      ],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/68"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.mask-of-many-faces",
+    "kind": "optional-feature",
+    "name": "Mask of Many Faces",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 2,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "additionalSpells": [
+      {
+        "innate": {
+          "_": [
+            "disguise self|srd52"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You can cast {@spell Disguise Self|SRD52} without expending a spell slot."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-073"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        73
+      ],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/69"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.master-of-myriad-forms",
+    "kind": "optional-feature",
+    "name": "Master of Myriad Forms",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 5,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "additionalSpells": [
+      {
+        "innate": {
+          "_": [
+            "alter self|srd52"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You can cast {@spell Alter Self|SRD52} without expending a spell slot."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-073"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        73
+      ],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/70"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.misty-visions",
+    "kind": "optional-feature",
+    "name": "Misty Visions",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 2,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "additionalSpells": [
+      {
+        "innate": {
+          "_": [
+            "silent image|srd52"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You can cast {@spell Silent Image|SRD52} without expending a spell slot."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "candidatePage": 74,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/71"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.one-with-shadows",
+    "kind": "optional-feature",
+    "name": "One with Shadows",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 5,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "additionalSpells": [
+      {
+        "innate": {
+          "_": [
+            "invisibility|srd52"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "While you're in an area of {@variantrule Dim Light|SRD52} or {@variantrule Darkness|SRD52}, you can cast {@spell Invisibility|SRD52} on yourself without expending a spell slot."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "candidatePage": 74,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/72"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.otherworldly-leap",
+    "kind": "optional-feature",
+    "name": "Otherworldly Leap",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 2,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "additionalSpells": [
+      {
+        "innate": {
+          "_": [
+            "jump|srd52"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You can cast {@spell Jump|SRD52} on yourself without expending a spell slot."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "candidatePage": 74,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/73"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.pact-of-the-blade",
+    "kind": "optional-feature",
+    "name": "Pact of the Blade",
+    "featureType": [
+      "EI"
+    ],
+    "entries": [
+      "As a {@variantrule Bonus Action|SRD52}, you can conjure a pact weapon in your hand—a Simple or Martial Melee weapon of your choice with which you bond—or create a bond with a magic weapon you touch; you can't bond with a magic weapon if someone else is attuned to it or another Warlock is bonded with it. Until the bond ends, you have proficiency with the weapon, and you can use it as a {@variantrule Spellcasting Focus|SRD52}.",
+      "Whenever you attack with the bonded weapon, you can use your Charisma modifier for the attack and damage rolls instead of using Strength or Dexterity; and you can cause the weapon to deal Necrotic, Psychic, or Radiant damage or its normal damage type.",
+      "Your bond with the weapon ends if you use this feature's {@variantrule Bonus Action|SRD52} again, if the weapon is more than 5 feet away from you for 1 minute or more, or if you die. A conjured weapon disappears when the bond ends."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "candidatePage": 74,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/74"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.pact-of-the-chain",
+    "kind": "optional-feature",
+    "name": "Pact of the Chain",
+    "featureType": [
+      "EI"
+    ],
+    "additionalSpells": [
+      {
+        "ability": "cha",
+        "innate": {
+          "_": [
+            "find familiar|srd52"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You learn the {@spell Find Familiar|SRD52} spell and can cast it as a {@action Magic|SRD52} action without expending a spell slot.",
+      "When you cast the spell, you choose one of the normal forms for your familiar or one of the following special forms: {@creature Imp|SRD52}, {@creature Pseudodragon|SRD52}, {@creature Quasit|SRD52}, {@creature Skeleton|SRD52}, {@creature Sphinx of Wonder|SRD52}, {@creature Sprite|SRD52}, or {@creature Venomous Snake|SRD52} (see “Monsters” for the familiar's stat block).",
+      "Additionally, when you take the {@action Attack|SRD52} action, you can forgo one of your own attacks to allow your familiar to make one attack of its own with its {@variantrule Reaction|SRD52}."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "candidatePage": 74,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/75"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.pact-of-the-tome",
+    "kind": "optional-feature",
+    "name": "Pact of the Tome",
+    "featureType": [
+      "EI"
+    ],
+    "additionalSpells": [
+      {
+        "ability": "cha",
+        "known": {
+          "_": [
+            {
+              "choose": "level=0",
+              "count": 3
+            }
+          ]
+        },
+        "prepared": {
+          "_": [
+            {
+              "choose": "level=1|components & miscellaneous=ritual",
+              "count": 2
+            }
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "Stitching together strands of shadow, you conjure forth a book in your hand at the end of a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}. This Book of Shadows (you determine its appearance) contains eldritch magic that only you can access, granting you the benefits below. The book disappears if you conjure another book with this feature or if you die.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Cantrips and Rituals",
+            "entries": [
+              "When the book appears, choose three {@filter cantrips|spells|level=0}, and choose two {@filter level 1 spells|spells|level=1|components & miscellaneous=ritual} that have the {@variantrule Ritual|SRD52} tag. The spells can be from any class's spell list, and they must be spells you don't already have prepared. While the book is on your person, you have the chosen spells prepared, and they function as Warlock spells for you."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spellcasting Focus",
+            "entries": [
+              "You can use the book as a {@variantrule Spellcasting Focus|SRD52}."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "candidatePage": 74,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/76"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.quickened-spell",
+    "kind": "optional-feature",
+    "name": "Quickened Spell",
+    "featureType": [
+      "MM"
+    ],
+    "consumes": {
+      "name": "Sorcery Point",
+      "amount": 2
+    },
+    "entries": [
+      "When you cast a spell that has a casting time of an action, you can spend 2 Sorcery Points to change the casting time to a {@variantrule Bonus Action|SRD52} for this casting. You can't modify a spell in this way if you've already cast a level 1+ spell on the current turn, nor can you cast a level 1+ spell on this turn after modifying a spell in this way."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-067"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        67
+      ],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/77"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.repelling-blast",
+    "kind": "optional-feature",
+    "name": "Repelling Blast",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "spell": [
+          {
+            "choose": "level=0|class=Warlock|spell attack=m;r;o",
+            "entry": "a Warlock Cantrip That Deals Damage via an Attack Roll",
+            "entrySummary": "Warlock Cantrip That Deals Damage via an Attack Roll"
+          }
+        ],
+        "level": {
+          "level": 2,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "entries": [
+      "Choose one of your known {@filter Warlock cantrips|spells|level=0|class=Warlock|spell attack=m;r;o} that requires an attack roll. When you hit a Large or smaller creature with that cantrip, you can push the creature up to 10 feet straight away from you.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Repeatable",
+            "entries": [
+              "You can gain this invocation more than once. Each time you do so, choose a different eligible cantrip."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "candidatePage": 74,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/78"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.subtle-spell",
+    "kind": "optional-feature",
+    "name": "Subtle Spell",
+    "featureType": [
+      "MM"
+    ],
+    "consumes": {
+      "name": "Sorcery Point"
+    },
+    "entries": [
+      "When you cast a spell, you can spend 1 Sorcery Point to cast it without any Verbal, Somatic, or Material components, except Material components that are consumed by the spell or that have a cost specified in the spell."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-067"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        67
+      ],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/79"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.thirsting-blade",
+    "kind": "optional-feature",
+    "name": "Thirsting Blade",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 5,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        },
+        "optionalfeature": [
+          "pact of the blade|srd52"
+        ]
+      }
+    ],
+    "entries": [
+      "You gain the Extra Attack feature for your pact weapon only. With that feature, you can attack twice with the weapon instead of once when you take the {@action Attack|SRD52} action on your turn."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "optional-feature.pact-of-the-blade",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "candidatePage": 74,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/80"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.twinned-spell",
+    "kind": "optional-feature",
+    "name": "Twinned Spell",
+    "featureType": [
+      "MM"
+    ],
+    "consumes": {
+      "name": "Sorcery Point"
+    },
+    "entries": [
+      "When you cast a spell, such as {@spell Charm Person|SRD52}, that can be cast with a higher-level spell slot to target an additional creature, you can spend 1 Sorcery Point to increase the spell's effective level by 1."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-067"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        67
+      ],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/81"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.visions-of-distant-realms",
+    "kind": "optional-feature",
+    "name": "Visions of Distant Realms",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 9,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "additionalSpells": [
+      {
+        "innate": {
+          "_": [
+            "arcane eye|srd52"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You can cast {@spell Arcane Eye|SRD52} without expending a spell slot."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "candidatePage": 74,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/82"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.whispers-of-the-grave",
+    "kind": "optional-feature",
+    "name": "Whispers of the Grave",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 7,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "additionalSpells": [
+      {
+        "innate": {
+          "_": [
+            "speak with dead|srd52"
+          ]
+        }
+      }
+    ],
+    "entries": [
+      "You can cast {@spell Speak with Dead|SRD52} without expending a spell slot."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "candidatePage": 74,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/83"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  },
+  {
+    "id": "optional-feature.witch-sight",
+    "kind": "optional-feature",
+    "name": "Witch Sight",
+    "featureType": [
+      "EI"
+    ],
+    "prerequisite": [
+      {
+        "level": {
+          "level": 15,
+          "class": {
+            "name": "Warlock",
+            "source": "SRD52",
+            "visibleStats": true
+          }
+        }
+      }
+    ],
+    "senses": [
+      {
+        "truesight": 30
+      }
+    ],
+    "entries": [
+      "You have {@sense Truesight|SRD52} with a range of 30 feet."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "candidatePage": 74,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "optionalfeatures.json",
+        "pointer": "/optionalfeature/84"
+      },
+      "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
+    }
+  }
+]
