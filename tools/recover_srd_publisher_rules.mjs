@@ -136,6 +136,82 @@ function legacySentientMagicItems(pageMap,metadata){
  ],catalogReferences:refs.sort(),source:metadata([251,252])};
 }
 
+function legacyMonsterProcedures(pageMap,metadata){
+ // The two-column publisher layout includes a four-column XP table on p.258.
+ // Strip only that table's numeric rows, retaining any facing-column prose.
+ const columns=page=>{
+  const left=[],right=[];
+  for(const line of page.textLayout.split("\n")){
+   if(!line.trim()||line.includes("System Reference Document 5.1"))continue;
+   if(/^ {50,}/.test(line)){right.push(line.trim());continue;}
+   if(page.page===258){
+    const m=line.match(/^\s*\d+(?:\/\d+)?\s+(?:0 or 10|[\d,]+)\s{2,}\d+\s+[\d,]+(?:\s{2,}(\S.*))?$/);
+    if(m){if(m[1])right.push(m[1]);continue;}
+    if(/^Challenge\s{2,}XP\s{2,}Challenge\s{2,}XP/.test(line)){
+     const header=line.match(/^Challenge\s{2,}XP\s{2,}Challenge\s{2,}XP\s{2,}(\S.*)$/);
+     if(header)right.push(header[1]);continue;
+    }
+   }
+   const parts=line.trim().split(/ {4,}/);
+   if(parts.length>2)throw Error("Unexpected legacy monster column layout "+page.page);
+   left.push(parts[0]);if(parts.length===2)right.push(parts[1]);
+  }
+  return {left,right};
+ };
+ const clean=lines=>lines.join(" ").replace(/\u00ad/g,"").replace(/[-\u2010\u2011]{2,}/g,"-").replace(/-\s+(?=level\b)/g,"-").replace(/\s+/g," ").trim();
+ const section=(lines,start,end)=>{
+  const i=lines.indexOf(start),j=end===undefined?lines.length:lines.indexOf(end,i+1);
+  if(i<0||j<=i)throw Error("Missing monster section boundary "+start);
+  return lines.slice(i+1,j);
+ };
+ const paras=(lines,starts=[])=>{
+  const offsets=[0,...starts.map(s=>lines.findIndex(l=>l.startsWith(s))),lines.length];
+  if(offsets.some((v,i)=>i&&v<=offsets[i-1]))throw Error("Unexpected monster paragraph boundary "+starts.join(", "));
+  return offsets.slice(0,-1).map((i,j)=>clean(lines.slice(i,offsets[j+1])));
+ };
+ const node=(name,entries)=>({type:"entries",name,entries});
+ const row=(id,name,nums,entries,refs)=>({id,kind:"rule",name,entries,catalogReferences:[...new Set([...nums.map(n=>pageMap.get(n).id),...refs])].sort(),source:metadata(nums)});
+ const p258=columns(pageMap.get(258)),p259=columns(pageMap.get(259)),p260=columns(pageMap.get(260));
+ const challenge=[
+  ...paras(section(p258.left,"Challenge","Experience Points"),["Monsters that are significantly weaker","Some monsters present"]),
+  node("Experience Points",paras(section(p258.left,"Experience Points","Experience Points by Challenge Rating"),["Unless something tells you otherwise"]))
+ ];
+ const spellcasting=[
+  ...paras(section(p258.right,"Special Traits","Innate Spellcasting")),
+  node("Innate Spellcasting",paras(section(p258.right,"Innate Spellcasting","Spellcasting"),["An innate spell","A monster’s innate spells"])),
+  node("Spellcasting",paras(section(p258.right,"Spellcasting"),["The monster has a list","A monster can cast a spell","You can change the spells"])),
+  node("Psionics",paras(section(p259.left,"Psionics","Actions")))
+ ];
+ const actions=[
+  ...paras(section(p259.left,"Actions","Melee and Ranged Attacks")),
+  node("Melee and Ranged Attacks",paras(section(p259.left,"Melee and Ranged Attacks","Multiattack"),["Creature vs. Target.","Hit.","Miss."])),
+  node("Multiattack",paras(section(p259.left,"Multiattack","Ammunition"))),
+  node("Ammunition",paras(section(p259.left,"Ammunition")))
+ ];
+ const reactions=paras(section(p259.right,"Reactions","Limited Usage"));
+ const limited=paras(section(p259.right,"Limited Usage","Grapple Rules for Monsters"),["X/Day.","Recharge X–Y.","For example, “Recharge 5–6”","Recharge after a Short or Long Rest."]);
+ const grapple=paras(section(p259.right,"Grapple Rules for Monsters","Equipment"),["A creature grappled by the monster"]);
+ const legendary=p260.left.indexOf("Legendary Creatures");
+ if(legendary<=0)throw Error("Missing equipment continuation boundary");
+ const equipment=paras([...section(p259.right,"Equipment"),...p260.left.slice(0,legendary)],["You can equip monsters","If a spellcasting monster"]);
+ // Fail closed if a column transition drops the end of the reviewed sections.
+ if(!challenge[3].entries.at(-1).endsWith("worth the XP noted in its stat block.")||
+    !spellcasting[2].entries.at(-1).endsWith("challenge rating.")||
+    !actions.at(-1).entries[0].endsWith("bow or crossbow.")||
+    !limited.at(-1).endsWith("to use it again.")||
+    !grapple.at(-1).endsWith("modifier.")||
+    !equipment.at(-1).endsWith("stat block."))throw Error("Incomplete monster procedures");
+ return [
+  row("rule.monster-challenge","Monster Challenge",[258],challenge,["table.experience-points-by-challenge-rating","table.proficiency-bonus-by-challenge-rating"]),
+  row("rule.monster-special-traits","Monster Special Traits",[258,259],spellcasting,["rule.monster-challenge","rule.casting-a-spell","rule.attunement","rule.customizing-npcs","spell.levitate","spell.lightning-bolt","class.cleric","class.druid"]),
+  row("rule.monster-actions","Monster Actions",[259],actions,["rule.actions-in-combat","rule.making-an-attack","reaction-option.opportunity-attack"]),
+  row("rule.monster-reactions","Monster Reactions",[259],reactions,["rule.the-order-of-combat"]),
+  row("rule.monster-limited-usage","Monster Limited Usage",[259],limited,["rule.resting"]),
+  row("rule.grapple-rules-for-monsters","Grapple Rules for Monsters",[259],grapple,["condition.grappled","skill.athletics","skill.acrobatics","attack-option.grapple","combat-option.escape-a-grapple"]),
+  row("rule.monster-equipment","Monster Equipment",[259,260],equipment,["rule.armor","rule.weapons","rule.casting-a-spell","rule.customizing-npcs"])
+ ];
+}
+
 function recoverPublisherRules(manifest,pages,tag,knownIds,items){
  const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
  const pageMap=new Map(pages.map(p=>[p.page,p]));
@@ -156,6 +232,7 @@ function recoverPublisherRules(manifest,pages,tag,knownIds,items){
   rows.push(...legacyPublisherTables(pageMap,metadata,items));
   rows.push(...legacyPublisherRules(pageMap,metadata));
   rows.push(legacySentientMagicItems(pageMap,metadata));
+  rows.push(...legacyMonsterProcedures(pageMap,metadata));
  }else{
   // The expanded upstream candidate matches the complete official glossary entry.
   // Keep its provenance separate from pointers into the original pinned corpus.

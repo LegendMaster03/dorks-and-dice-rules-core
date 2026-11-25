@@ -1190,5 +1190,254 @@
       ],
       "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
     }
+  },
+  {
+    "id": "rule.monster-challenge",
+    "kind": "rule",
+    "name": "Monster Challenge",
+    "entries": [
+      "A monster’s challenge rating tells you how great a threat the monster is. An appropriately equipped and well-rested party of four adventurers should be able to defeat a monster that has a challenge rating equal to its level without suffering any deaths. For example, a party of four 3rd-level characters should find a monster with a challenge rating of 3 to be a worthy challenge, but not a deadly one.",
+      "Monsters that are significantly weaker than 1st-level characters have a challenge rating lower than 1. Monsters with a challenge rating of 0 are insignificant except in large numbers; those with no effective attacks are worth no experience points, while those that have attacks are worth 10 XP each.",
+      "Some monsters present a greater challenge than even a typical 20th-level party can handle. These monsters have a challenge rating of 21 or higher and are specifically designed to test player skill.",
+      {
+        "type": "entries",
+        "name": "Experience Points",
+        "entries": [
+          "The number of experience points (XP) a monster is worth is based on its challenge rating. Typically, XP is awarded for defeating the monster, although the GM may also award XP for neutralizing the threat posed by the monster in some other manner.",
+          "Unless something tells you otherwise, a monster summoned by a spell or other magical ability is worth the XP noted in its stat block."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-258",
+      "table.experience-points-by-challenge-rating",
+      "table.proficiency-bonus-by-challenge-rating"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        258
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "rule.monster-special-traits",
+    "kind": "rule",
+    "name": "Monster Special Traits",
+    "entries": [
+      "Special traits (which appear after a monster’s challenge rating but before any actions or reactions) are characteristics that are likely to be relevant in a combat encounter and that require some explanation.",
+      {
+        "type": "entries",
+        "name": "Innate Spellcasting",
+        "entries": [
+          "A monster with the innate ability to cast spells has the Innate Spellcasting special trait. Unless noted otherwise, an innate spell of 1st level or higher is always cast at its lowest possible level and can’t be cast at a higher level. If a monster has a cantrip where its level matters and no level is given, use the monster’s challenge rating.",
+          "An innate spell can have special rules or restrictions. For example, a drow mage can innately cast the levitate spell, but the spell has a “self only” restriction, which means that the spell affects only the drow mage.",
+          "A monster’s innate spells can’t be swapped out with other spells. If a monster’s innate spells don’t require attack rolls, no attack bonus is given for them."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spellcasting",
+        "entries": [
+          "A monster with the Spellcasting special trait has a spellcaster level and spell slots, which it uses to cast its spells of 1st level and higher (as explained in the Player’s Handbook). The spellcaster level is also used for any cantrips included in the feature.",
+          "The monster has a list of spells known or prepared from a specific class. The list might also include spells from a feature in that class, such as the Divine Domain feature of the cleric or the Druid Circle feature of the druid. The monster is considered a member of that class when attuning to or using a magic item that requires membership in the class or access to its spell list.",
+          "A monster can cast a spell from its list at a higher level if it has the spell slot to do so. For example, a drow mage with the 3rd-level lightning bolt spell can cast it as a 5th-level spell by using one of its 5th-level spell slots.",
+          "You can change the spells that a monster knows or has prepared, replacing any spell on its spell list with a spell of the same level and from the same class list. If you do so, you might cause the monster to be a greater or lesser threat than suggested by its challenge rating."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Psionics",
+        "entries": [
+          "A monster that casts spells using only the power of its mind has the psionics tag added to its Spellcasting or Innate Spellcasting special trait. This tag carries no special rules of its own, but other parts of the game might refer to it. A monster that has this tag typically doesn’t require any components to cast its spells."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.cleric",
+      "class.druid",
+      "rule.attunement",
+      "rule.casting-a-spell",
+      "rule.customizing-npcs",
+      "rule.monster-challenge",
+      "rulebook.page-258",
+      "rulebook.page-259",
+      "spell.levitate",
+      "spell.lightning-bolt"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        258,
+        259
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "rule.monster-actions",
+    "kind": "rule",
+    "name": "Monster Actions",
+    "entries": [
+      "When a monster takes its action, it can choose from the options in the Actions section of its stat block or use one of the actions available to all creatures, such as the Dash or Hide action, as described in the Player’s Handbook.",
+      {
+        "type": "entries",
+        "name": "Melee and Ranged Attacks",
+        "entries": [
+          "The most common actions that a monster will take in combat are melee and ranged attacks. These can be spell attacks or weapon attacks, where the “weapon” might be a manufactured item or a natural weapon, such as a claw or tail spike. For more information on different kinds of attacks, see the Player’s Handbook.",
+          "Creature vs. Target. The target of a melee or ranged attack is usually either one creature or one target, the difference being that a “target” can be a creature or an object.",
+          "Hit. Any damage dealt or other effects that occur as a result of an attack hitting a target are described after the “Hit” notation. You have the option of taking average damage or rolling the damage; for this reason, both the average damage and the die expression are presented.",
+          "Miss. If an attack has an effect that occurs on a miss, that information is presented after the “Miss:” notation."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Multiattack",
+        "entries": [
+          "A creature that can make multiple attacks on its turn has the Multiattack action. A creature can’t use Multiattack when making an opportunity attack, which must be a single melee attack."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Ammunition",
+        "entries": [
+          "A monster carries enough ammunition to make its ranged attacks. You can assume that a monster has 2d4 pieces of ammunition for a thrown weapon attack, and 2d10 pieces of ammunition for a projectile weapon such as a bow or crossbow."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "reaction-option.opportunity-attack",
+      "rule.actions-in-combat",
+      "rule.making-an-attack",
+      "rulebook.page-259"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        259
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "rule.monster-reactions",
+    "kind": "rule",
+    "name": "Monster Reactions",
+    "entries": [
+      "If a monster can do something special with its reaction, that information is contained here. If a creature has no special reaction, this section is absent."
+    ],
+    "catalogReferences": [
+      "rule.the-order-of-combat",
+      "rulebook.page-259"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        259
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "rule.monster-limited-usage",
+    "kind": "rule",
+    "name": "Monster Limited Usage",
+    "entries": [
+      "Some special abilities have restrictions on the number of times they can be used.",
+      "X/Day. The notation “X/Day” means a special ability can be used X number of times and that a monster must finish a long rest to regain expended uses. For example, “1/Day” means a special ability can be used once and that the monster must finish a long rest to use it again.",
+      "Recharge X–Y. The notation “Recharge X–Y” means a monster can use a special ability once and that the ability then has a random chance of recharging during each subsequent round of combat. At the start of each of the monster’s turns, roll a d6. If the roll is one of the numbers in the recharge notation, the monster regains the use of the special ability. The ability also recharges when the monster finishes a short or long rest.",
+      "For example, “Recharge 5–6” means a monster can use the special ability once. Then, at the start of the monster’s turn, it regains the use of that ability if it rolls a 5 or 6 on a d6.",
+      "Recharge after a Short or Long Rest. This notation means that a monster can use a special ability once and then must finish a short or long rest to use it again."
+    ],
+    "catalogReferences": [
+      "rule.resting",
+      "rulebook.page-259"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        259
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "rule.grapple-rules-for-monsters",
+    "kind": "rule",
+    "name": "Grapple Rules for Monsters",
+    "entries": [
+      "Many monsters have special attacks that allow them to quickly grapple prey. When a monster hits with such an attack, it doesn’t need to make an additional ability check to determine whether the grapple succeeds, unless the attack says otherwise.",
+      "A creature grappled by the monster can use its action to try to escape. To do so, it must succeed on a Strength (Athletics) or Dexterity (Acrobatics) check against the escape DC in the monster’s stat block. If no escape DC is given, assume the DC is 10 + the monster’s Strength (Athletics) modifier."
+    ],
+    "catalogReferences": [
+      "attack-option.grapple",
+      "combat-option.escape-a-grapple",
+      "condition.grappled",
+      "rulebook.page-259",
+      "skill.acrobatics",
+      "skill.athletics"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        259
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "rule.monster-equipment",
+    "kind": "rule",
+    "name": "Monster Equipment",
+    "entries": [
+      "A stat block rarely refers to equipment, other than armor or weapons used by a monster. A creature that customarily wears clothes, such as a humanoid, is assumed to be dressed appropriately.",
+      "You can equip monsters with additional gear and trinkets however you like, and you decide how much of a monster’s equipment is recoverable after the creature is slain and whether any of that equipment is still usable. A battered suit of armor made for a monster is rarely usable by someone else, for instance.",
+      "If a spellcasting monster needs material components to cast its spells, assume that it has the material components it needs to cast the spells in its stat block."
+    ],
+    "catalogReferences": [
+      "rule.armor",
+      "rule.casting-a-spell",
+      "rule.customizing-npcs",
+      "rule.weapons",
+      "rulebook.page-259",
+      "rulebook.page-260"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        259,
+        260
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
   }
 ]
