@@ -1,0 +1,38 @@
+# Opt-in branch-scoped capture for the actual native reference HTTP fixture handoff.
+# The source package is already checked into this repository. No deployed or saved-character data is read.
+name: Wiki Origin reference fixture capture
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/wiki-origin-reference-fixture-capture.yml'
+      - 'src/RulesCore.Host/NativeOriginReferenceEndpoints.cs'
+      - 'src/RulesCore.Host/NativeOriginDiscoveryEndpoints.cs'
+      - 'tests/RulesCore.Host.Tests/NativePrivateReferenceApiTests.cs'
+permissions:
+  contents: read
+jobs:
+  capture:
+    if: github.head_ref == 'feature/wiki-origin-reference-contracts'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Capture exact-head authenticated HTTP fixture envelopes
+        env:
+          ORIGIN_REFERENCE_FIXTURE_DIRECTORY: ${{ runner.temp }}/origin-reference-fixtures
+        run: |
+          dotnet test tests/RulesCore.Host.Tests/RulesCore.Host.Tests.csproj -c Release --filter FullyQualifiedName~OriginReferenceReadsUseActualExpandedSnapshotAndExactFingerprint
+          test -s "$ORIGIN_REFERENCE_FIXTURE_DIRECTORY/source-ancestry.elf.wood.json"
+          python3 -c 'import json,pathlib,sys,collections; root=pathlib.Path(sys.argv[1]); data=[json.loads(p.read_text()) for p in root.glob("*.json")]; assert len(data)>10; assert len({x["fingerprint"] for x in data})==1; print("ORIGIN_FIXTURE_FINGERPRINT",data[0]["fingerprint"]); [print("ORIGIN_INVENTORY", x["family"], json.dumps(dict(collections.Counter((r["kind"]+":"+str(r["status"] or r["rulesStatus"])) for r in x["rows"])),sort_keys=True)) for x in data if "family" in x]' "$ORIGIN_REFERENCE_FIXTURE_DIRECTORY"
+          git rev-parse HEAD > "$ORIGIN_REFERENCE_FIXTURE_DIRECTORY/core-commit.txt"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wiki-origin-reference-fixtures-${{ github.event.pull_request.head.sha }}
+          path: ${{ runner.temp }}/origin-reference-fixtures/
+          retention-days: 7
+          if-no-files-found: error

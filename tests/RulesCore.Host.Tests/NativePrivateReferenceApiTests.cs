@@ -143,6 +143,8 @@ public sealed class NativePrivateReferenceApiTests
             Path.Combine(root!.FullName, "data", "rulesets"), "first-party-001"));
         host.App.Services.GetRequiredService<NativeCatalogRegistry>().GetStore("first-party-001").Publish(catalog);
         const string prefix = "/api/private/rulesets/first-party-001/origins/";
+        var capture = Environment.GetEnvironmentVariable("ORIGIN_REFERENCE_FIXTURE_DIRECTORY");
+        if (!string.IsNullOrWhiteSpace(capture)) Directory.CreateDirectory(capture);
         async Task<JsonElement> Read(string path)
         {
             using var response = await host.Client.SendAsync(host.TicketRequest(
@@ -152,6 +154,10 @@ public sealed class NativePrivateReferenceApiTests
             Assert.Equal(catalog.Fingerprint, body.GetProperty("fingerprint").GetString());
             Assert.Equal("first-party-001", body.GetProperty("rulesetId").GetString());
             Assert.Equal(1, body.GetProperty("contractVersion").GetInt32());
+            // Optional fixture capture uses the actual authenticated HTTP envelope, not raw disk JSON.
+            if (!string.IsNullOrWhiteSpace(capture))
+                await File.WriteAllTextAsync(Path.Combine(capture, path.Replace('/', '-') + ".json"),
+                    body.GetRawText());
             return body;
         }
         var tree = await Read("hierarchy/biological");
@@ -187,6 +193,10 @@ public sealed class NativePrivateReferenceApiTests
             x.GetProperty("reference").GetProperty("methodId").GetString() == "rite-of-rebirth" &&
             x.GetProperty("stage").GetString() == "post-origination" && !x.GetProperty("createsNewIndividual").GetBoolean());
         Assert.True((await Read("hierarchy/characteristics")).GetProperty("complete").GetBoolean());
+        Assert.True((await Read("hierarchy/upbringing")).GetProperty("complete").GetBoolean());
+        Assert.True((await Read("hierarchy/backgrounds")).GetProperty("complete").GetBoolean());
+        Assert.True((await Read("hierarchy/construct-components")).GetProperty("complete").GetBoolean());
+        Assert.True((await Read("hierarchy/construct-options")).GetProperty("complete").GetBoolean());
         Assert.Equal(30, wood.GetProperty("lineage")[0].GetProperty("definition").GetProperty("walkingSpeedFeet").GetInt32());
         Assert.Equal(35, wood.GetProperty("lineage")[1].GetProperty("definition").GetProperty("walkingSpeedFeet").GetInt32());
         Assert.True(wood.GetProperty("lineage")[1].GetProperty("definition").GetProperty("overridesAncestorWalkingSpeed").GetBoolean());
@@ -221,6 +231,28 @@ public sealed class NativePrivateReferenceApiTests
         Assert.Equal(HttpStatusCode.NotFound, foreign.StatusCode);
         Assert.Equal(HttpStatusCode.Unauthorized,
             (await host.Client.GetAsync(prefix + "hierarchy/biological?fingerprint=" + catalog.Fingerprint)).StatusCode);
+    }
+
+    [Fact]
+    public async Task OriginReferenceFamiliesFailRatherThanTruncate()
+    {
+        await using var host = await TestHost.StartAsync(new SiteHandler(_ => Identity()));
+        var directory = Path.Combine(host.Root, "first-party-001", "native");
+        for (var i = 0; i < 257; i++)
+            File.WriteAllText(Path.Combine(directory, $"upbringing-{i}.json"), JsonSerializer.Serialize(new
+            {
+                id = $"upbringing.fixture-{i}", name = $"Fixture {i}",
+                kind = "upbringing", selectable = true
+            }));
+        var catalog = NativeCatalogLoader.Load(NativeRulesetLayout.Resolve(host.Root, "first-party-001"));
+        host.App.Services.GetRequiredService<NativeCatalogRegistry>().GetStore("first-party-001").Publish(catalog);
+        var path = "/api/private/rulesets/first-party-001/origins/hierarchy/upbringing?fingerprint=" + catalog.Fingerprint;
+        using var response = await host.Client.SendAsync(host.TicketRequest(path));
+        Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
+        Assert.Equal("origin_reference_family_limit",
+            (await response.Content.ReadFromJsonAsync<JsonElement>()).GetProperty("error").GetString());
+        using var duplicate = await host.Client.SendAsync(host.TicketRequest(path + "&fingerprint=" + catalog.Fingerprint));
+        Assert.Equal(HttpStatusCode.BadRequest, duplicate.StatusCode);
     }
 
     [Fact]
