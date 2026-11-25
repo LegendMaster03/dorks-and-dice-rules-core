@@ -1,0 +1,96 @@
+{
+  "officialHeadings": 95,
+  "unmatchedOfficial": [],
+  "edition": "srd-5.2.1",
+  "section": "Animals",
+  "expected": 95,
+  "extracted": 95,
+  "unresolved": [],
+  "differences": [],
+  "boundaries": [
+    {
+      "page": 344,
+      "split": 67
+    },
+    {
+      "page": 345,
+      "split": 69
+    },
+    {
+      "page": 346,
+      "split": 67
+    },
+    {
+      "page": 347,
+      "split": 66
+    },
+    {
+      "page": 348,
+      "split": 66
+    },
+    {
+      "page": 349,
+      "split": 67
+    },
+    {
+      "page": 350,
+      "split": 67
+    },
+    {
+      "page": 351,
+      "split": 69
+    },
+    {
+      "page": 352,
+      "split": 67
+    },
+    {
+      "page": 353,
+      "split": 67
+    },
+    {
+      "page": 354,
+      "split": 67
+    },
+    {
+      "page": 355,
+      "split": 67
+    },
+    {
+      "page": 356,
+      "split": 70
+    },
+    {
+      "page": 357,
+      "split": 67
+    },
+    {
+      "page": 358,
+      "split": 68
+    },
+    {
+      "page": 359,
+      "split": 67
+    },
+    {
+      "page": 360,
+      "split": 68
+    },
+    {
+      "page": 361,
+      "split": 67
+    },
+    {
+      "page": 362,
+      "split": 68
+    },
+    {
+      "page": 363,
+      "split": 67
+    },
+    {
+      "page": 364,
+      "split": 69
+    }
+  ]
+}

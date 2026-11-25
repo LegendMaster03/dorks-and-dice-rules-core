@@ -1,0 +1,1888 @@
+[
+  {
+    "id": "class.ranger",
+    "kind": "class",
+    "name": "Ranger",
+    "primaryAbility": [
+      {
+        "dex": true,
+        "wis": true
+      }
+    ],
+    "hd": {
+      "number": 1,
+      "faces": 10
+    },
+    "proficiency": [
+      "str",
+      "dex"
+    ],
+    "spellcastingAbility": "wis",
+    "casterProgression": "artificer",
+    "preparedSpellsProgression": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      6,
+      7,
+      7,
+      9,
+      9,
+      10,
+      10,
+      11,
+      11,
+      12,
+      12,
+      14,
+      14,
+      15,
+      15
+    ],
+    "preparedSpellsChange": "restLong",
+    "additionalSpells": [
+      {
+        "prepared": {
+          "1": [
+            "hunter's mark|srd52"
+          ]
+        }
+      }
+    ],
+    "featProgression": [
+      {
+        "name": "Fighting Style",
+        "category": [
+          "FS",
+          "FS:R"
+        ],
+        "progression": {
+          "2": 1
+        }
+      },
+      {
+        "name": "Epic Boon",
+        "category": [
+          "EB"
+        ],
+        "progression": {
+          "19": 1
+        }
+      }
+    ],
+    "startingProficiencies": {
+      "armor": [
+        "light",
+        "medium",
+        "shield"
+      ],
+      "weapons": [
+        "simple",
+        "martial"
+      ],
+      "skills": [
+        {
+          "choose": {
+            "from": [
+              "animal handling",
+              "athletics",
+              "insight",
+              "investigation",
+              "nature",
+              "perception",
+              "stealth",
+              "survival"
+            ],
+            "count": 3
+          }
+        }
+      ]
+    },
+    "startingEquipment": {
+      "additionalFromBackground": true,
+      "defaultData": [
+        {
+          "A": [
+            {
+              "item": "studded leather armor|srd52"
+            },
+            {
+              "item": "scimitar|srd52"
+            },
+            {
+              "item": "shortsword|srd52"
+            },
+            {
+              "item": "longbow|srd52"
+            },
+            {
+              "item": "arrows (20)|srd52"
+            },
+            {
+              "item": "quiver|srd52"
+            },
+            {
+              "item": "sprig of mistletoe|srd52"
+            },
+            {
+              "item": "explorer's pack|srd52"
+            },
+            {
+              "value": 700
+            }
+          ],
+          "B": [
+            {
+              "value": 15000
+            }
+          ]
+        }
+      ],
+      "entries": [
+        "{@i Choose A or B:} (A) {@item Studded Leather Armor|SRD52}, {@item Scimitar|SRD52}, {@item Shortsword|SRD52}, {@item Longbow|SRD52}, {@item Arrows (20)|SRD52|20 Arrows}, {@item Quiver|SRD52}, {@item Druidic Focus|SRD52} ({@item sprig of mistletoe|SRD52}), {@item Explorer's Pack|SRD52}, and 7 GP; or (B) 150 GP"
+      ]
+    },
+    "multiclassing": {
+      "proficienciesGained": {
+        "weapons": [
+          "martial"
+        ],
+        "armor": [
+          "light",
+          "medium",
+          "shield"
+        ],
+        "skills": [
+          {
+            "choose": {
+              "from": [
+                "animal handling",
+                "athletics",
+                "insight",
+                "investigation",
+                "nature",
+                "perception",
+                "stealth",
+                "survival"
+              ],
+              "count": 1
+            }
+          }
+        ]
+      }
+    },
+    "classTableGroups": [
+      {
+        "colLabels": [
+          "Favored Enemy"
+        ],
+        "rows": [
+          [
+            2
+          ],
+          [
+            2
+          ],
+          [
+            2
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            3
+          ],
+          [
+            3
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            4
+          ],
+          [
+            5
+          ],
+          [
+            5
+          ],
+          [
+            5
+          ],
+          [
+            5
+          ],
+          [
+            6
+          ],
+          [
+            6
+          ],
+          [
+            6
+          ],
+          [
+            6
+          ]
+        ]
+      },
+      {
+        "colLabels": [
+          "{@filter Prepared Spells|spells|level=!0|class=Ranger}"
+        ],
+        "rows": [
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ],
+          [
+            5
+          ],
+          [
+            6
+          ],
+          [
+            6
+          ],
+          [
+            7
+          ],
+          [
+            7
+          ],
+          [
+            9
+          ],
+          [
+            9
+          ],
+          [
+            10
+          ],
+          [
+            10
+          ],
+          [
+            11
+          ],
+          [
+            11
+          ],
+          [
+            12
+          ],
+          [
+            12
+          ],
+          [
+            14
+          ],
+          [
+            14
+          ],
+          [
+            15
+          ],
+          [
+            15
+          ]
+        ]
+      },
+      {
+        "title": "Spell Slots per Spell Level",
+        "colLabels": [
+          "{@filter 1st|spells|level=1|class=ranger}",
+          "{@filter 2nd|spells|level=2|class=ranger}",
+          "{@filter 3rd|spells|level=3|class=ranger}",
+          "{@filter 4th|spells|level=4|class=ranger}",
+          "{@filter 5th|spells|level=5|class=ranger}"
+        ],
+        "rowsSpellProgression": [
+          [
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            2,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            2,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            2,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            2,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            1,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            1,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            2,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            2,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2
+          ]
+        ]
+      }
+    ],
+    "classFeatures": [
+      "Spellcasting|Ranger|SRD52|1",
+      "Favored Enemy|Ranger|SRD52|1",
+      "Weapon Mastery|Ranger|SRD52|1",
+      "Deft Explorer|Ranger|SRD52|2",
+      "Fighting Style|Ranger|SRD52|2",
+      {
+        "classFeature": "Ranger Subclass|Ranger|SRD52|3",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Ranger|SRD52|4",
+      "Extra Attack|Ranger|SRD52|5",
+      "Roving|Ranger|SRD52|6",
+      {
+        "classFeature": "Subclass Feature|Ranger|SRD52|7",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Ranger|SRD52|8",
+      "Expertise|Ranger|SRD52|9",
+      "Tireless|Ranger|SRD52|10",
+      {
+        "classFeature": "Subclass Feature|Ranger|SRD52|11",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Ranger|SRD52|12",
+      "Relentless Hunter|Ranger|SRD52|13",
+      "Nature's Veil|Ranger|SRD52|14",
+      {
+        "classFeature": "Subclass Feature|Ranger|SRD52|15",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Ranger|SRD52|16",
+      "Precise Hunter|Ranger|SRD52|17",
+      "Feral Senses|Ranger|SRD52|18",
+      "Epic Boon|Ranger|SRD52|19",
+      "Foe Slayer|Ranger|SRD52|20"
+    ],
+    "subclassTitle": "Ranger Subclass",
+    "catalogReferences": [
+      "baseitem.arrows-20",
+      "baseitem.longbow",
+      "baseitem.scimitar",
+      "baseitem.shortsword",
+      "baseitem.studded-leather-armor",
+      "class-feature.ranger.ability-score-improvement.12",
+      "class-feature.ranger.ability-score-improvement.16",
+      "class-feature.ranger.ability-score-improvement.4",
+      "class-feature.ranger.ability-score-improvement.8",
+      "class-feature.ranger.deft-explorer.2",
+      "class-feature.ranger.epic-boon.19",
+      "class-feature.ranger.expertise.9",
+      "class-feature.ranger.extra-attack.5",
+      "class-feature.ranger.favored-enemy.1",
+      "class-feature.ranger.feral-senses.18",
+      "class-feature.ranger.fighting-style.2",
+      "class-feature.ranger.foe-slayer.20",
+      "class-feature.ranger.natures-veil.14",
+      "class-feature.ranger.precise-hunter.17",
+      "class-feature.ranger.ranger-subclass.3",
+      "class-feature.ranger.relentless-hunter.13",
+      "class-feature.ranger.roving.6",
+      "class-feature.ranger.spellcasting.1",
+      "class-feature.ranger.subclass-feature.11",
+      "class-feature.ranger.subclass-feature.15",
+      "class-feature.ranger.subclass-feature.7",
+      "class-feature.ranger.tireless.10",
+      "class-feature.ranger.weapon-mastery.1",
+      "item.explorer-s-pack",
+      "item.quiver",
+      "item.sprig-of-mistletoe",
+      "rulebook.page-057",
+      "rulebook.page-060",
+      "skill.animal-handling",
+      "skill.athletics",
+      "skill.insight",
+      "skill.investigation",
+      "skill.nature",
+      "skill.perception",
+      "skill.stealth",
+      "skill.survival",
+      "spell.aid",
+      "spell.alarm",
+      "spell.animal-friendship",
+      "spell.animal-messenger",
+      "spell.barkskin",
+      "spell.commune-with-nature",
+      "spell.conjure-animals",
+      "spell.conjure-woodland-beings",
+      "spell.cure-wounds",
+      "spell.darkvision",
+      "spell.daylight",
+      "spell.detect-magic",
+      "spell.detect-poison-and-disease",
+      "spell.dispel-magic",
+      "spell.dominate-beast",
+      "spell.enhance-ability",
+      "spell.ensnaring-strike",
+      "spell.entangle",
+      "spell.find-traps",
+      "spell.fog-cloud",
+      "spell.freedom-of-movement",
+      "spell.goodberry",
+      "spell.greater-restoration",
+      "spell.gust-of-wind",
+      "spell.hunter-s-mark",
+      "spell.jump",
+      "spell.lesser-restoration",
+      "spell.locate-animals-or-plants",
+      "spell.locate-creature",
+      "spell.locate-object",
+      "spell.longstrider",
+      "spell.magic-weapon",
+      "spell.meld-into-stone",
+      "spell.nondetection",
+      "spell.pass-without-trace",
+      "spell.plant-growth",
+      "spell.protection-from-energy",
+      "spell.protection-from-poison",
+      "spell.revivify",
+      "spell.silence",
+      "spell.speak-with-animals",
+      "spell.speak-with-plants",
+      "spell.spike-growth",
+      "spell.stoneskin",
+      "spell.tree-stride",
+      "spell.water-breathing",
+      "spell.water-walk",
+      "spell.wind-wall"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        57
+      ],
+      "candidatePage": 57,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/class/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending",
+      "spellList": {
+        "pages": [
+          60
+        ],
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/sources.json",
+        "pointer": "/SRD52",
+        "verification": "publisher class-list membership verified; not a feature grant or executable spellcasting policy"
+      }
+    },
+    "spellList": [
+      {
+        "level": 1,
+        "spellIds": [
+          "spell.alarm",
+          "spell.animal-friendship",
+          "spell.cure-wounds",
+          "spell.detect-magic",
+          "spell.detect-poison-and-disease",
+          "spell.ensnaring-strike",
+          "spell.entangle",
+          "spell.fog-cloud",
+          "spell.goodberry",
+          "spell.hunter-s-mark",
+          "spell.jump",
+          "spell.longstrider",
+          "spell.speak-with-animals"
+        ]
+      },
+      {
+        "level": 2,
+        "spellIds": [
+          "spell.aid",
+          "spell.animal-messenger",
+          "spell.barkskin",
+          "spell.darkvision",
+          "spell.enhance-ability",
+          "spell.find-traps",
+          "spell.gust-of-wind",
+          "spell.lesser-restoration",
+          "spell.locate-animals-or-plants",
+          "spell.locate-object",
+          "spell.magic-weapon",
+          "spell.pass-without-trace",
+          "spell.protection-from-poison",
+          "spell.silence",
+          "spell.spike-growth"
+        ]
+      },
+      {
+        "level": 3,
+        "spellIds": [
+          "spell.conjure-animals",
+          "spell.daylight",
+          "spell.dispel-magic",
+          "spell.meld-into-stone",
+          "spell.nondetection",
+          "spell.plant-growth",
+          "spell.protection-from-energy",
+          "spell.revivify",
+          "spell.speak-with-plants",
+          "spell.water-breathing",
+          "spell.water-walk",
+          "spell.wind-wall"
+        ]
+      },
+      {
+        "level": 4,
+        "spellIds": [
+          "spell.conjure-woodland-beings",
+          "spell.dominate-beast",
+          "spell.freedom-of-movement",
+          "spell.locate-creature",
+          "spell.stoneskin"
+        ]
+      },
+      {
+        "level": 5,
+        "spellIds": [
+          "spell.commune-with-nature",
+          "spell.greater-restoration",
+          "spell.tree-stride"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "subclass.ranger.hunter",
+    "kind": "subclass",
+    "name": "Hunter",
+    "shortName": "Hunter",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "subclassFeatures": [
+      "Hunter|Ranger|SRD52|Hunter|SRD52|3",
+      "Defensive Tactics|Ranger|SRD52|Hunter|SRD52|7",
+      "Superior Hunter's Prey|Ranger|SRD52|Hunter|SRD52|11",
+      "Superior Hunter's Defense|Ranger|SRD52|Hunter|SRD52|15"
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-061",
+      "subclass-feature.ranger.hunter.defensive-tactics.7",
+      "subclass-feature.ranger.hunter.hunter.3",
+      "subclass-feature.ranger.hunter.superior-hunters-defense.15",
+      "subclass-feature.ranger.hunter.superior-hunters-prey.11"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        61
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/subclass/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.favored-enemy.1",
+    "kind": "class-feature",
+    "name": "Favored Enemy",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "You always have the {@spell Hunter's Mark|SRD52} spell prepared. You can cast it twice without expending a spell slot, and you regain all expended uses of this ability when you finish a {@variantrule Long Rest|SRD52}.",
+      "The number of times you can cast the spell without a spell slot increases when you reach certain Ranger levels, as shown in the Favored Enemy column of the Ranger Features table."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 120,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/23"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.spellcasting.1",
+    "kind": "class-feature",
+    "name": "Spellcasting",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "You have learned to channel the magical essence of nature to cast spells. See {@book chapter 7|SRD52|7} for the rules on spellcasting. The information below details how you use those rules with Ranger spells, which appear in the {@filter Ranger spell list|spells|class=Ranger} later in the class's description.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Spell Slots",
+            "entries": [
+              "The Ranger Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a {@variantrule Long Rest|SRD52}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Prepared Spells of Level 1+",
+            "entries": [
+              "You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose two {@filter level 1 Ranger spells|spells|class=Ranger|level=1}. {@spell Cure Wounds|SRD52} and {@spell Ensnaring Strike|SRD52} are recommended.",
+              "The number of spells on your list increases as you gain Ranger levels, as shown in the Prepared Spells column of the Ranger Features table. Whenever that number increases, choose additional Ranger spells until the number of spells on your list matches the number in the Ranger Features table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 5 Ranger, your list of prepared spells can include six Ranger spells of level 1 or 2 in any combination.",
+              "If another Ranger feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Ranger spells for you."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Changing Your Prepared Spells",
+            "entries": [
+              "Whenever you finish a {@variantrule Long Rest|SRD52}, you can replace one spell on your list with another Ranger spell for which you have spell slots."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spellcasting Ability",
+            "entries": [
+              "Wisdom is your spellcasting ability for your Ranger spells."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spellcasting Focus",
+            "entries": [
+              "You can use a {@item Druidic Focus|SRD52} as a {@variantrule Spellcasting Focus|SRD52} for your Ranger spells."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-057"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        57
+      ],
+      "candidatePage": 119,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/24"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.weapon-mastery.1",
+    "kind": "class-feature",
+    "name": "Weapon Mastery",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "Your training with weapons allows you to use the {@variantrule weapon mastery properties|SRD52|mastery properties} of two kinds of {@filter weapons|items|type=simple weapon;martial weapon} of your choice with which you have proficiency, such as {@item Longbow|SRD52|Longbows} and {@item Shortsword|SRD52|Shortswords}.",
+      "Whenever you finish a {@variantrule Long Rest|SRD52}, you can change the kinds of weapons you chose. For example, you could switch to using the {@variantrule weapon mastery properties|SRD52|mastery properties} of {@item Scimitar|SRD52|Scimitars} and {@item Longsword|SRD52|Longswords}."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 120,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/25"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.deft-explorer.2",
+    "kind": "class-feature",
+    "name": "Deft Explorer",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 2,
+    "entries": [
+      "Thanks to your travels, you gain the following benefits.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Expertise",
+            "entries": [
+              "Choose one of your skill proficiencies with which you lack {@variantrule Expertise|SRD52}. You gain {@variantrule Expertise|SRD52} in that skill."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Languages",
+            "entries": [
+              "You know two languages of your choice from the language tables in {@book chapter 2|SRD52|2|Choose Languages}."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 120,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/26"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.fighting-style.2",
+    "kind": "class-feature",
+    "name": "Fighting Style",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 2,
+    "entries": [
+      "You gain a {@filter Fighting Style feat|feats|category=FS} of your choice. Instead of choosing one of those feats, you can choose the option below.",
+      {
+        "type": "entries",
+        "name": "Druidic Warrior",
+        "entries": [
+          "You learn two Druid cantrips of your choice (see the Druid class’s section for a list of Druid spells). Guidance and Starry Wisp are recommended. The chosen cantrips count as Ranger spells for you, and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you can replace one of these cantrips with another Druid cantrip."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.druid",
+      "class.ranger",
+      "feat.archery",
+      "feat.defense",
+      "feat.great-weapon-fighting",
+      "feat.two-weapon-fighting",
+      "rulebook.page-058",
+      "rulebook.page-059",
+      "spell.guidance",
+      "spell.starry-wisp"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58,
+        59
+      ],
+      "candidatePage": 120,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/27"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    },
+    "fightingStyleChoice": {
+      "count": 1,
+      "featIds": [
+        "feat.archery",
+        "feat.defense",
+        "feat.great-weapon-fighting",
+        "feat.two-weapon-fighting"
+      ],
+      "distinct": true,
+      "replaceFeatOnClassLevel": false,
+      "alternative": {
+        "name": "Druidic Warrior",
+        "spellChoice": {
+          "choose": "level=0|class=Druid",
+          "count": 2
+        },
+        "spellcastingAbility": "wis",
+        "countsAsClass": "Ranger",
+        "recommendedSpellIds": [
+          "spell.guidance",
+          "spell.starry-wisp"
+        ],
+        "replaceOneOnClassLevel": true
+      }
+    }
+  },
+  {
+    "id": "class-feature.ranger.ranger-subclass.3",
+    "kind": "class-feature",
+    "name": "Ranger Subclass",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "You gain a Ranger subclass of your choice. A subclass is a specialization that grants you features at certain Ranger levels. For the rest of your career, you gain each of your subclass's features that are of your Ranger level or lower."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 120,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/28"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.ability-score-improvement.4",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 4,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify. You gain this feature again at Ranger levels 8, 12, and 16."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 120,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/29"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.extra-attack.5",
+    "kind": "class-feature",
+    "name": "Extra Attack",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 5,
+    "entries": [
+      "You can attack twice instead of once whenever you take the {@action Attack|SRD52} action on your turn."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 120,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/30"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.roving.6",
+    "kind": "class-feature",
+    "name": "Roving",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 6,
+    "entries": [
+      "Your {@variantrule Speed|SRD52} increases by 10 feet while you aren't wearing Heavy armor. You also have a {@variantrule Climb Speed|SRD52} and a {@variantrule Swim Speed|SRD52} equal to your {@variantrule Speed|SRD52}."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/31"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.subclass-feature.7",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 7,
+    "entries": [
+      "You gain a feature from your Ranger Subclass."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/32"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.ability-score-improvement.8",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 8,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/33"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.expertise.9",
+    "kind": "class-feature",
+    "name": "Expertise",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 9,
+    "entries": [
+      "Choose two of your skill proficiencies with which you lack {@variantrule Expertise|SRD52}. You gain {@variantrule Expertise|SRD52} in those skills."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/34"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.tireless.10",
+    "kind": "class-feature",
+    "name": "Tireless",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 10,
+    "entries": [
+      "Primal forces now help fuel you on your journeys, granting you the following benefits.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Temporary Hit Points",
+            "entries": [
+              "As a {@action Magic|SRD52} action, you can give yourself a number of {@variantrule Temporary Hit Points|SRD52} equal to {@dice 1d8} plus your Wisdom modifier (minimum of 1). You can use this action a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Decrease Exhaustion",
+            "entries": [
+              "Whenever you finish a {@variantrule Short Rest|SRD52}, your {@condition Exhaustion|SRD52} level, if any, decreases by 1."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/35"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.subclass-feature.11",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 11,
+    "entries": [
+      "You gain a feature from your Ranger Subclass."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/36"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.ability-score-improvement.12",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 12,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/37"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.relentless-hunter.13",
+    "kind": "class-feature",
+    "name": "Relentless Hunter",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 13,
+    "entries": [
+      "Taking damage can't break your {@status Concentration|SRD52} on Hunter's Mark."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/38"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.natures-veil.14",
+    "kind": "class-feature",
+    "name": "Nature's Veil",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 14,
+    "entries": [
+      "You invoke spirits of nature to magically hide yourself. As a {@variantrule Bonus Action|SRD52}, you can give yourself the {@condition Invisible|SRD52} condition until the end of your next turn.",
+      "You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/39"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.subclass-feature.15",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 15,
+    "entries": [
+      "You gain a feature from your Ranger Subclass."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/40"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.ability-score-improvement.16",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 16,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/41"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.precise-hunter.17",
+    "kind": "class-feature",
+    "name": "Precise Hunter",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 17,
+    "entries": [
+      "You have {@variantrule Advantage|SRD52} on attack rolls against the creature currently marked by your Hunter's Mark."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/42"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.feral-senses.18",
+    "kind": "class-feature",
+    "name": "Feral Senses",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 18,
+    "entries": [
+      "Your connection to the forces of nature grants you {@sense Blindsight|SRD52} with a range of 30 feet."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/43"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.epic-boon.19",
+    "kind": "class-feature",
+    "name": "Epic Boon",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 19,
+    "entries": [
+      "You gain an {@filter Epic Boon feat|feats|category=EB} or another {@5etools feat|feats.html} of your choice for which you qualify. {@feat Boon of Dimensional Travel|SRD52} is recommended."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/44"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.ranger.foe-slayer.20",
+    "kind": "class-feature",
+    "name": "Foe Slayer",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "level": 20,
+    "entries": [
+      "The damage die of your Hunter's Mark is a {@damage d10} rather than a {@damage d6}."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 121,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/classFeature/45"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.ranger.hunter.hunter.3",
+    "kind": "subclass-feature",
+    "name": "Hunter",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "subclassShortName": "Hunter",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "{@i Protect Nature and People from Destruction}",
+      "You stalk prey in the wilds and elsewhere, using your abilities as a Hunter to protect nature and people everywhere from forces that would destroy them.",
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Hunter's Prey|Ranger|SRD52|Hunter|SRD52|3"
+      },
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Hunter's Lore|Ranger|SRD52|Hunter|SRD52|3"
+      }
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-058",
+      "subclass-feature.ranger.hunter.hunters-lore.3",
+      "subclass-feature.ranger.hunter.hunters-prey.3",
+      "subclass.ranger.hunter"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        58
+      ],
+      "candidatePage": 127,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/subclassFeature/16"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.ranger.hunter.hunters-lore.3",
+    "kind": "subclass-feature",
+    "name": "Hunter's Lore",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "subclassShortName": "Hunter",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "You can call on the forces of nature to reveal certain strengths and weaknesses of your prey. While a creature is marked by your Hunter's Mark, you know whether that creature has any Immunities, Resistances, or Vulnerabilities, and if the creature has any, you know what they are."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-061",
+      "subclass.ranger.hunter"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        61
+      ],
+      "candidatePage": 127,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/subclassFeature/17"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.ranger.hunter.hunters-prey.3",
+    "kind": "subclass-feature",
+    "name": "Hunter's Prey",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "subclassShortName": "Hunter",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "You gain one of the following feature options of your choice. Whenever you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}, you can replace the chosen option with the other one.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Colossus Slayer",
+            "entries": [
+              "Your tenacity can wear down even the most resilient foes. When you hit a creature with a weapon, the weapon deals an extra {@damage 1d8} damage to the target if it's missing any of its {@variantrule Hit Points|SRD52}. You can deal this extra damage only once per turn."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Horde Breaker",
+            "entries": [
+              "Once on each of your turns when you make an attack with a weapon, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target, that is within the weapon's range, and that you haven't attacked this turn."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-061",
+      "subclass.ranger.hunter"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        61
+      ],
+      "candidatePage": 127,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/subclassFeature/18"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.ranger.hunter.defensive-tactics.7",
+    "kind": "subclass-feature",
+    "name": "Defensive Tactics",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "subclassShortName": "Hunter",
+    "subclassSource": "SRD52",
+    "level": 7,
+    "header": 2,
+    "entries": [
+      "You gain one of the following feature options of your choice. Whenever you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}, you can replace the chosen option with the other one.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Escape the Horde",
+            "entries": [
+              "{@action Opportunity Attack|SRD52|Opportunity Attacks} have {@variantrule Disadvantage|SRD52} against you."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Multiattack Defense",
+            "entries": [
+              "When a creature hits you with an attack roll, that creature has {@variantrule Disadvantage|SRD52} on all other attack rolls against you this turn."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-061",
+      "subclass.ranger.hunter"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        61
+      ],
+      "candidatePage": 127,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/subclassFeature/19"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.ranger.hunter.superior-hunters-prey.11",
+    "kind": "subclass-feature",
+    "name": "Superior Hunter's Prey",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "subclassShortName": "Hunter",
+    "subclassSource": "SRD52",
+    "level": 11,
+    "header": 2,
+    "entries": [
+      "Once per turn when you deal damage to a creature marked by your Hunter's Mark, you can also deal that spell's extra damage to a different creature that you can see within 30 feet of the first creature."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-061",
+      "subclass.ranger.hunter"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        61
+      ],
+      "candidatePage": 127,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/subclassFeature/20"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.ranger.hunter.superior-hunters-defense.15",
+    "kind": "subclass-feature",
+    "name": "Superior Hunter's Defense",
+    "className": "Ranger",
+    "classSource": "SRD52",
+    "subclassShortName": "Hunter",
+    "subclassSource": "SRD52",
+    "level": 15,
+    "header": 2,
+    "entries": [
+      "When you take damage, you can take a {@variantrule Reaction|SRD52} to give yourself {@variantrule Resistance|SRD52} to that damage and any other damage of the same type until the end of the current turn."
+    ],
+    "catalogReferences": [
+      "class.ranger",
+      "rulebook.page-061",
+      "subclass.ranger.hunter"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        61
+      ],
+      "candidatePage": 127,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-ranger.json",
+        "pointer": "/subclassFeature/21"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  }
+]

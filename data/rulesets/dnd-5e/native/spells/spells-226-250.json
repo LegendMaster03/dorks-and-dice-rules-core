@@ -1,0 +1,2248 @@
+[
+  {
+    "id": "spell.prayer-of-healing",
+    "kind": "spell",
+    "name": "Prayer of Healing",
+    "level": 2,
+    "school": "V",
+    "officialTextLayout": "Prayer of Healing\n2nd---level evocation\nCasting Time: 10 minutes\nRange: 30 feet\nComponents: V\nDuration: Instantaneous\nUp to six creatures of your choice that you can see\nwithin range each regain hit points equal to 2d8 +\nyour spellcasting ability modifier. This spell has no\neffect on undead or constructs.\n  At Higher Levels. When you cast this spell using a\nspell slot of 3rd level or higher, the healing increases\nby 1d8 for each slot level above 2nd.",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "30 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-170"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        170
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/227"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 10,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "Up to six creatures of your choice that you can see within range each regain hit points equal to {@dice 2d8} + your spellcasting ability modifier. This spell has no effect on undead or constructs."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 3rd level or higher, the healing increases by {@scaledice 2d8|2-9|1d8} for each slot level above 2nd."
+        ]
+      }
+    ],
+    "miscTags": [
+      "HL",
+      "SGT"
+    ],
+    "areaTags": [
+      "MT"
+    ],
+    "affectsCreatureType": [
+      "aberration",
+      "beast",
+      "celestial",
+      "dragon",
+      "elemental",
+      "fey",
+      "fiend",
+      "giant",
+      "humanoid",
+      "monstrosity",
+      "ooze",
+      "plant"
+    ]
+  },
+  {
+    "id": "spell.prestidigitation",
+    "kind": "spell",
+    "name": "Prestidigitation",
+    "level": 0,
+    "school": "T",
+    "officialTextLayout": "Prestidigitation\nTransmutation cantrip\nCasting Time: 1 action\nRange: 10 feet\nComponents: V, S\nDuration: Up to 1 hour\nThis spell is a minor magical trick that novice\nspellcasters use for practice. You create one of the\nfollowing magical effects within range:\n\n• You create an instantaneous, harmless sensory\n      effect, such as a shower of sparks, a puff of wind,\n      faint musical notes, or an odd odor.\n• You instantaneously light or snuff out a candle, a\n      torch, or a small campfire.\n• You instantaneously clean or soil an object no\n      larger than 1 cubic foot.\n• You chill, warm, or flavor up to 1 cubic foot of\n      nonliving material for 1 hour.\n• You make a color, a small mark, or a symbol\n      appear on an object or a surface for 1 hour.\n• You create a nonmagical trinket or an illusory\n      image that can fit in your hand and that lasts until\n      the end of your next turn.\nIf you cast this spell multiple times, you can have up\nto three of its non---instantaneous effects active at a\ntime, and you can dismiss such an effect as an action.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "10 feet",
+      "Components": "V, S",
+      "Duration": "Up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-170"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        170
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/228"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 10
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1,
+          "upTo": true
+        }
+      }
+    ],
+    "entries": [
+      "This spell is a minor magical trick that novice spellcasters use for practice. You create one of the following magical effects within range:",
+      {
+        "type": "list",
+        "items": [
+          "You create an instantaneous, harmless sensory effect, such as a shower of sparks, a puff of wind, faint musical notes, or an odd odor.",
+          "You instantaneously light or snuff out a candle, a torch, or a small campfire.",
+          "You instantaneously clean or soil an object no larger than 1 cubic foot.",
+          "You chill, warm, or flavor up to 1 cubic foot of nonliving material for 1 hour.",
+          "You make a color, a small mark, or a symbol appear on an object or a surface for 1 hour.",
+          "You create a nonmagical trinket or an illusory image that can fit in your hand and that lasts until the end of your next turn."
+        ]
+      },
+      "If you cast this spell multiple times, you can have up to three of its non-instantaneous effects active at a time, and you can dismiss such an effect as an action."
+    ],
+    "miscTags": [
+      "OBJ"
+    ]
+  },
+  {
+    "id": "spell.prismatic-spray",
+    "kind": "spell",
+    "name": "Prismatic Spray",
+    "level": 7,
+    "school": "V",
+    "officialTextLayout": "Prismatic Spray\n7th---level evocation\nCasting Time: 1 action\nRange: Self (60---foot cone)\nComponents: V, S\nDuration: Instantaneous\nEight multicolored rays of light flash from your hand.\nEach ray is a different color and has a different\npower and purpose. Each creature in a 60---foot cone\nmust make a Dexterity saving throw. For each target,\nroll a d8 to determine which color ray affects it.\n      1. Red. The target takes 10d6 fire damage on a\nfailed save, or half as much damage on a successful\none.\n      2. Orange. The target takes 10d6 acid damage on\na failed save, or half as much damage on a successful\none.\n      3. Yellow. The target takes 10d6 lightning damage\non a failed save, or half as much damage on a\nsuccessful one.\n      4. Green. The target takes 10d6 poison damage on\na failed save, or half as much damage on a successful\none.\n      5. Blue. The target takes 10d6 cold damage on a\nfailed save, or half as much damage on a successful\none.\n      6. Indigo. On a failed save, the target is restrained.\nIt must then make a Constitution saving throw at the\nend of each of its turns. If it successfully saves three\ntimes, the spell ends. If it fails its save three times, it\npermanently turns to stone and is subjected to the\npetrified condition. The successes and failures don’t\nneed to be consecutive; keep track of both until the\ntarget collects three of a kind.\n\n\n\n\n\n    7. Violet. On a failed save, the target is blinded. It\nmust then make a Wisdom saving throw at the start\nof your next turn. A successful save ends the\nblindness. If it fails that save, the creature is\ntransported to another plane of existence of the GM’s\nchoosing and is no longer blinded. (Typically, a\ncreature that is on a plane that isn’t its home plane is\nbanished home, while other creatures are usually\ncast into the Astral or Ethereal planes.)\n    8. Special. The target is struck by two rays. Roll\ntwice more, rerolling any 8.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self (60---foot cone)",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-170",
+      "rulebook.page-171"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        170,
+        171
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/229"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "cone",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "Eight multicolored rays of light flash from your hand. Each ray is a different color and has a different power and purpose. Each creature in a 60-foot cone must make a Dexterity saving throw. For each target, roll a {@dice d8} to determine which color ray affects it.",
+      {
+        "type": "entries",
+        "name": "1-Red",
+        "entries": [
+          "The target takes {@damage 10d6} fire damage on a failed save, or half as much damage on a successful one."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "2-Orange",
+        "entries": [
+          "The target takes {@damage 10d6} acid damage on a failed save, or half as much damage on a successful one."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "3-Yellow",
+        "entries": [
+          "The target takes {@damage 10d6} lightning damage on a failed save, or half as much damage on a successful one."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "4-Green",
+        "entries": [
+          "The target takes {@damage 10d6} poison damage on a failed save, or half as much damage on a successful one."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "5-Blue",
+        "entries": [
+          "The target takes {@damage 10d6} cold damage on a failed save, or half as much damage on a successful one."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "6-Indigo",
+        "entries": [
+          "On a failed save, the target is {@condition restrained}. It must then make a Constitution saving throw at the end of each of its turns. If it successfully saves three times, the spell ends. If it fails its save three times, it permanently turns to stone and is subjected to the {@condition petrified} condition. The successes and failures don't need to be consecutive, keep track of both until the target collects three of a kind."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "7-Violet",
+        "entries": [
+          "On a failed save, the target is {@condition blinded}. It must then make a Wisdom saving throw at the start of your next turn. A successful save ends the blindness. If it fails that save, the creature is transported to another plane of existence of the DM's choosing and is no longer {@condition blinded}. (Typically, a creature that is on a plane that isn't its home plane is banished home, while other creatures are usually cast into the Astral or Ethereal planes.)"
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "8-Special",
+        "entries": [
+          "The target is struck by two rays. Roll twice more, rerolling any 8."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "poison"
+    ],
+    "savingThrow": [
+      "dexterity",
+      "constitution",
+      "wisdom"
+    ],
+    "miscTags": [
+      "PRM"
+    ],
+    "areaTags": [
+      "N"
+    ],
+    "conditionInflict": [
+      "blinded",
+      "petrified",
+      "restrained"
+    ]
+  },
+  {
+    "id": "spell.prismatic-wall",
+    "kind": "spell",
+    "name": "Prismatic Wall",
+    "level": 9,
+    "school": "A",
+    "officialTextLayout": "Prismatic Wall\n9th---level abjuration\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: 10 minutes\nA shimmering, multicolored plane of light forms a\nvertical opaque wall—up to 90 feet long, 30 feet high,\nand 1 inch thick—centered on a point you can see\nwithin range. Alternatively, you can shape the wall\ninto a sphere up to 30 feet in diameter centered on a\npoint you choose within range. The wall remains in\nplace for the duration. If you position the wall so that\nit passes through a space occupied by a creature, the\nspell fails, and your action and the spell slot are\nwasted.\n  The wall sheds bright light out to a range of 100\nfeet and dim light for an additional 100 feet. You and\ncreatures you designate at the time you cast the spell\ncan pass through and remain near the wall without\nharm. If another creature that can see the wall\nmoves to within 20 feet of it or starts its turn there,\nthe creature must succeed on a Constitution saving\nthrow or become blinded for 1 minute.\n  The wall consists of seven layers, each with a\ndifferent color. When a creature attempts to reach\ninto or pass through the wall, it does so one layer at\na time through all the wall’s layers. As it passes or\nreaches through each layer, the creature must make\na Dexterity saving throw or be affected by that\nlayer’s properties as described below.\n  The wall can be destroyed, also one layer at a time,\nin order from red to violet, by means specific to each\nlayer. Once a layer is destroyed, it remains so for the\nduration of the spell. A rod of cancellation destroys a\nprismatic wall, but an antimagic field has no effect on\nit.\n      1. Red. The creature takes 10d6 fire damage on a\nfailed save, or half as much damage on a successful\none. While this layer is in place, nonmagical ranged\n\nattacks can’t pass through the wall. The layer can be\ndestroyed by dealing at least 25 cold damage to it.\n      2. Orange. The creature takes 10d6 acid damage\non a failed save, or half as much damage on a\nsuccessful one. While this layer is in place, magical\nranged attacks can’t pass through the wall. The layer\nis destroyed by a strong wind.\n      3. Yellow. The creature takes 10d6 lightning\ndamage on a failed save, or half as much damage on\na successful one. This layer can be destroyed by\ndealing at least 60 force damage to it.\n      4. Green. The creature takes 10d6 poison damage\non a failed save, or half as much damage on a\nsuccessful one. A passwall spell, or another spell of\nequal or greater level that can open a portal on a\nsolid surface, destroys this layer.\n      5. Blue. The creature takes 10d6 cold damage on a\nfailed save, or half as much damage on a successful\none. This layer can be destroyed by dealing at least\n25 fire damage to it.\n      6. Indigo. On a failed save, the creature is\nrestrained. It must then make a Constitution saving\nthrow at the end of each of its turns. If it successfully\nsaves three times, the spell ends. If it fails its save\nthree times, it permanently turns to stone and is\nsubjected to the petrified condition. The successes\nand failures don’t need to be consecutive; keep track\nof both until the creature collects three of a kind.\n  While this layer is in place, spells can’t be cast\nthrough the wall. The layer is destroyed by bright\nlight shed by a daylight spell or a similar spell of\nequal or higher level.\n      7. Violet. On a failed save, the creature is blinded.\nIt must then make a Wisdom saving throw at the\nstart of your next turn. A successful save ends the\nblindness. If it fails that save, the creature is\ntransported to another plane of the GM’s choosing\nand is no longer blinded. (Typically, a creature that\nis on a plane that isn’t its home plane is banished\nhome, while other creatures are usually cast into the\nAstral or Ethereal planes.) This layer is destroyed by\na dispel magic spell or a similar spell of equal or\nhigher level that can end spells and magical effects.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-171"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        171
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/230"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        }
+      }
+    ],
+    "entries": [
+      "A shimmering, multicolored plane of light forms a vertical opaque wall—up to 90 feet long, 30 feet high, and 1 inch thick—centered on a point you can see within range. Alternatively, you can shape the wall into a sphere up to 30 feet in diameter centered on a point you choose within range. The wall remains in place for the duration. If you position the wall so that it passes through a space occupied by a creature, the spell fails, and your action and the spell slot are wasted.",
+      "The wall sheds bright light out to a range of 100 feet and dim light for an additional 100 feet. You and creatures you designate at the time you cast the spell can pass through and remain near the wall without harm. If another creature that can see the wall moves to within 20 feet of it or starts its turn there, the creature must succeed on a Constitution saving throw or become {@condition blinded} for 1 minute.",
+      "The wall consists of seven layers, each with a different color. When a creature attempts to reach into or pass through the wall, it does so one layer at a time through all the wall's layers. As it passes or reaches through each layer, the creature must make a Dexterity saving throw or be affected by that layer's properties as described below.",
+      "The wall can be destroyed, also one layer at a time, in order from red to violet, by means specific to each layer. Once a layer is destroyed, it remains so for the duration of the spell. A rod of cancellation destroys a prismatic wall, but an {@spell antimagic field} has no effect on it.",
+      {
+        "type": "entries",
+        "name": "Red",
+        "entries": [
+          "The creature takes {@damage 10d6} fire damage on a failed save, or half as much damage on a successful one. While this layer is in place, nonmagical ranged attacks can't pass through the wall. The layer can be destroyed by dealing at least 25 cold damage to it."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Orange",
+        "entries": [
+          "The creature takes {@damage 10d6} acid damage on a failed save, or half as much damage on a successful one. While this layer is in place, magical ranged attacks can't pass through the wall. The layer is destroyed by a strong wind."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Yellow",
+        "entries": [
+          "The creature takes {@damage 10d6} lightning damage on a failed save, or half as much damage on a successful one. This layer can be destroyed by dealing at least 60 force damage to it."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Green",
+        "entries": [
+          "The creature takes {@damage 10d6} poison damage on a failed save, or half as much damage on a successful one. A {@spell passwall} spell, or another spell of equal or greater level that can open a portal on a solid surface, destroys this layer."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Blue",
+        "entries": [
+          "The creature takes {@damage 10d6} cold damage on a failed save, or half as much damage on a successful one. This layer can be destroyed by dealing at least 25 fire damage to it."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Indigo",
+        "entries": [
+          "On a failed save, the creature is {@condition restrained}. It must then make a Constitution saving throw at the end of each of its turns. If it successfully saves three times, the spell ends. If it fails its save three times, it permanently turns to stone and is subjected to the {@condition petrified} condition. The successes and failures don't need to be consecutive; keep track of both until the creature collects three of a kind.",
+          "While this layer is in place, spells can't be cast through the wall. The layer is destroyed by bright light shed by a {@spell daylight} spell or a similar spell of equal or higher level."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Violet",
+        "entries": [
+          "On a failed save, the creature is {@condition blinded}. It must then make a Wisdom saving throw at the start of your next turn. A successful save ends the blindness. If it fails that save, the creature is transported to another plane of the GM's choosing and is no longer {@condition blinded}. (Typically, a creature that is on a plane that isn't its home plane is banished home, while other creatures are usually cast into the Astral or Ethereal planes.) This layer is destroyed by a {@spell dispel magic} spell or a similar spell of equal or higher level that can end spells and magical effects."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "acid",
+      "cold",
+      "fire",
+      "force",
+      "lightning",
+      "poison"
+    ],
+    "savingThrow": [
+      "constitution",
+      "dexterity",
+      "wisdom"
+    ],
+    "miscTags": [
+      "LGT",
+      "PRM",
+      "SGT"
+    ],
+    "areaTags": [
+      "W"
+    ],
+    "conditionInflict": [
+      "blinded",
+      "petrified",
+      "restrained"
+    ]
+  },
+  {
+    "id": "spell.private-sanctum",
+    "kind": "spell",
+    "name": "Private Sanctum",
+    "level": 4,
+    "school": "A",
+    "officialTextLayout": "Private Sanctum\n4th---level abjuration\nCasting Time: 10 minutes\nRange: 120 feet\nComponents: V, S, M (a thin sheet of lead, a piece of\n  opaque glass, a wad of cotton or cloth, and\n  powdered chrysolite)\nDuration: 24 hours\n\n\n\n\n\nYou make an area within range magically secure.\nThe area is a cube that can be as small as 5 feet to as\nlarge as 100 feet on each side. The spell lasts for the\nduration or until you use an action to dismiss it.\n  When you cast the spell, you decide what sort of\nsecurity the spell provides, choosing any or all of the\nfollowing properties:\n• Sound can’t pass through the barrier at the edge of\n  the warded area.\n• The barrier of the warded area appears dark and\n  foggy, preventing vision (including darkvision)\n  through it.\n• Sensors created by divination spells can’t appear\n  inside the protected area or pass through the\n  barrier at its perimeter.\n• Creatures in the area can’t be targeted by\n  divination spells.\n• Nothing can teleport into or out of the warded\n  area.\n• Planar travel is blocked within the warded area.\n  Casting this spell on the same spot every day for a\nyear makes this effect permanent.\n  At Higher Levels. When you cast this spell using a\nspell slot of 5th level or higher, you can increase the\nsize of the cube by 100 feet for each slot level\nbeyond 4th. Thus you could protect a cube that can\nbe up to 200 feet on one side by using a spell slot of\n5th level.",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "120 feet",
+      "Components": "V, S, M (a thin sheet of lead, a piece of",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-171",
+      "rulebook.page-172"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        171,
+        172
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/207"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 10,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a thin sheet of lead, a piece of opaque glass, a wad of cotton or cloth, and powdered chrysolite"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 24
+        }
+      }
+    ],
+    "entries": [
+      "You make an area within range magically secure. The area is a cube that can be as small as 5 feet to as large as 100 feet on each side. The spell lasts for the duration or until you use an action to dismiss it.",
+      "When you cast the spell, you decide what sort of security the spell provides, choosing any or all of the following properties:",
+      {
+        "type": "list",
+        "items": [
+          "Sound can't pass through the barrier at the edge of the warded area.",
+          "The barrier of the warded area appears dark and foggy, preventing vision (including {@sense darkvision}) through it.",
+          "Sensors created by divination spells can't appear inside the protected area or pass through the barrier at its perimeter.",
+          "Creatures in the area can't be targeted by divination spells.",
+          "Nothing can teleport into or out of the warded area.",
+          "Planar travel is blocked within the warded area."
+        ]
+      },
+      "Casting this spell on the same spot every day for a year makes this effect permanent."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 5th level or higher, you can increase the size of the cube by 100 feet for each slot level beyond 4th. Thus you could protect a cube that can be up to 200 feet on one side by using a spell slot of 5th level."
+        ]
+      }
+    ],
+    "miscTags": [
+      "PIR",
+      "PRM"
+    ],
+    "areaTags": [
+      "C"
+    ]
+  },
+  {
+    "id": "spell.produce-flame",
+    "kind": "spell",
+    "name": "Produce Flame",
+    "level": 0,
+    "school": "C",
+    "officialTextLayout": "Produce Flame\nConjuration cantrip\nCasting Time: 1 action\nRange: Self\nComponents: V, S\nDuration: 10 minutes\nA flickering flame appears in your hand. The flame\nremains there for the duration and harms neither\nyou nor your equipment. The flame sheds bright\nlight in a 10---foot radius and dim light for an\nadditional 10 feet. The spell ends if you dismiss it as\nan action or if you cast it again.\n  You can also attack with the flame, although doing\nso ends the spell. When you cast this spell, or as an\naction on a later turn, you can hurl the flame at a\ncreature within 30 feet of you. Make a ranged spell\nattack. On a hit, the target takes 1d8 fire damage.\n  This spell’s damage increases by 1d8 when you\nreach 5th level (2d8), 11th level (3d8), and 17th\nlevel (4d8).",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-172"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        172
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/231"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        }
+      }
+    ],
+    "entries": [
+      "A flickering flame appears in your hand. The flame remains there for the duration and harms neither you nor your equipment. The flame sheds bright light in a 10-foot radius and dim light for an additional 10 feet. The spell ends if you dismiss it as an action or if you cast it again.",
+      "You can also attack with the flame, although doing so ends the spell. When you cast this spell, or as an action on a later turn, you can hurl the flame at a creature within 30 feet of you. Make a ranged spell attack. On a hit, the target takes {@damage 1d8} fire damage.",
+      "This spell's damage increases by {@damage 1d8} when you reach 5th level ({@damage 2d8}), 11th level ({@damage 3d8}), and 17th level ({@damage 4d8})."
+    ],
+    "scalingLevelDice": {
+      "label": "fire damage",
+      "scaling": {
+        "1": "1d8",
+        "5": "2d8",
+        "11": "3d8",
+        "17": "4d8"
+      }
+    },
+    "damageInflict": [
+      "fire"
+    ],
+    "miscTags": [
+      "LGT",
+      "SCL"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "spellAttack": [
+      "R"
+    ]
+  },
+  {
+    "id": "spell.programmed-illusion",
+    "kind": "spell",
+    "name": "Programmed Illusion",
+    "level": 6,
+    "school": "I",
+    "officialTextLayout": "Programmed Illusion\n6th---level illusion\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S, M (a bit of fleece and jade dust\n  worth at least 25 gp)\nDuration: Until dispelled\nYou create an illusion of an object, a creature, or\nsome other visible phenomenon within range that\nactivates when a specific condition occurs. The\nillusion is imperceptible until then. It must be no\nlarger than a 30---foot cube, and you decide when you\ncast the spell how the illusion behaves and what\nsounds it makes. This scripted performance can last\nup to 5 minutes.\n  When the condition you specify occurs, the illusion\nsprings into existence and performs in the manner\nyou described. Once the illusion finishes performing,\nit disappears and remains dormant for 10 minutes.\nAfter this time, the illusion can be activated again.\n  The triggering condition can be as general or as\ndetailed as you like, though it must be based on\nvisual or audible conditions that occur within 30 feet\nof the area. For example, you could create an illusion\nof yourself to appear and warn off others who\nattempt to open a trapped door, or you could set the\nillusion to trigger only when a creature says the\ncorrect word or phrase.\n  Physical interaction with the image reveals it to be\nan illusion, because things can pass through it. A\ncreature that uses its action to examine the image\ncan determine that it is an illusion with a successful\nIntelligence (Investigation) check against your spell\nsave DC. If a creature discerns the illusion for what it\nis, the creature can see through the image, and any\nnoise it makes sounds hollow to the creature.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "120 feet",
+      "Components": "V, S, M (a bit of fleece and jade dust",
+      "Duration": "Until dispelled"
+    },
+    "catalogReferences": [
+      "rulebook.page-172"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        172
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/232"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a bit of fleece and jade dust worth at least 25 gp",
+        "cost": 2500
+      }
+    },
+    "duration": [
+      {
+        "type": "permanent",
+        "ends": [
+          "dispel"
+        ]
+      }
+    ],
+    "entries": [
+      "You create an illusion of an object, a creature, or some other visible phenomenon within range that activates when a specific condition occurs. The illusion is imperceptible until then. It must be no larger than a 30-foot cube, and you decide when you cast the spell how the illusion behaves and what sounds it makes. This scripted performance can last up to 5 minutes.",
+      "When the condition you specify occurs, the illusion springs into existence and performs in the manner you described. Once the illusion finishes performing, it disappears and remains dormant for 10 minutes. After this time, the illusion can be activated again.",
+      "The triggering condition can be as general or as detailed as you like, though it must be based on visual or audible conditions that occur within 30 feet of the area. For example, you could create an illusion of yourself to appear and warn off others who attempt to open a trapped door, or you could set the illusion to trigger only when a creature says the correct word or phrase.",
+      "Physical interaction with the image reveals it to be an illusion, because things can pass through it. A creature that uses its action to examine the image can determine that it is an illusion with a successful Intelligence ({@skill Investigation}) check against your spell save DC. If a creature discerns the illusion for what it is, the creature can see through the image, and any noise it makes sounds hollow to the creature."
+    ],
+    "abilityCheck": [
+      "intelligence"
+    ]
+  },
+  {
+    "id": "spell.project-image",
+    "kind": "spell",
+    "name": "Project Image",
+    "level": 7,
+    "school": "I",
+    "officialTextLayout": "Project Image\n7th---level illusion\nCasting Time: 1 action\nRange: 500 miles\nComponents: V, S, M (a small replica of you made\n  from materials worth at least 5 gp)\nDuration: Concentration, up to 1 day\nYou create an illusory copy of yourself that lasts for\nthe duration. The copy can appear at any location\nwithin range that you have seen before, regardless of\nintervening obstacles. The illusion looks and sounds\nlike you but is intangible. If the illusion takes any\ndamage, it disappears, and the spell ends.\n\n\n\n\n\n  You can use your action to move this illusion up to\ntwice your speed, and make it gesture, speak, and\nbehave in whatever way you choose. It mimics your\nmannerisms perfectly.\n  You can see through its eyes and hear through its\nears as if you were in its space. On your turn as a\nbonus action, you can switch from using its senses to\nusing your own, or back again. While you are using\nits senses, you are blinded and deafened in regard to\nyour own surroundings.\n  Physical interaction with the image reveals it to be\nan illusion, because things can pass through it. A\ncreature that uses its action to examine the image\ncan determine that it is an illusion with a successful\nIntelligence (Investigation) check against your spell\nsave DC. If a creature discerns the illusion for what it\nis, the creature can see through the image, and any\nnoise it makes sounds hollow to the creature.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "500 miles",
+      "Components": "V, S, M (a small replica of you made",
+      "Duration": "Concentration, up to 1 day"
+    },
+    "catalogReferences": [
+      "rulebook.page-172",
+      "rulebook.page-173"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        172,
+        173
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/233"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "miles",
+        "amount": 500
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a small replica of you made from materials worth at least 5 gp",
+        "cost": 500
+      }
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "day",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You create an illusory copy of yourself that lasts for the duration. The copy can appear at any location within range that you have seen before, regardless of intervening obstacles. The illusion looks and sounds like you but is intangible. If the illusion takes any damage, it disappears, and the spell ends.",
+      "You can use your action to move this illusion up to twice your speed, and make it gesture, speak, and behave in whatever way you choose. It mimics your mannerisms perfectly.",
+      "You can see through its eyes and hear through its ears as if you were in its space. On your turn as a bonus action, you can switch from using its senses to using your own, or back again. While you are using its senses, you are {@condition blinded} and {@condition deafened} in regard to your own surroundings.",
+      "Physical interaction with the image reveals it to be an illusion, because things can pass through it. A creature that uses its action to examine the image can determine that it is an illusion with a successful Intelligence ({@skill Investigation}) check against your spell save DC. If a creature discerns the illusion for what it is, the creature can see through the image, and any noise it makes sounds hollow to the creature."
+    ],
+    "miscTags": [
+      "SGT",
+      "UBA"
+    ],
+    "conditionInflict": [
+      "blinded",
+      "deafened"
+    ],
+    "abilityCheck": [
+      "intelligence"
+    ]
+  },
+  {
+    "id": "spell.protection-from-energy",
+    "kind": "spell",
+    "name": "Protection from Energy",
+    "level": 3,
+    "school": "A",
+    "officialTextLayout": "Protection from Energy\n3rd---level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Concentration, up to 1 hour\nFor the duration, the willing creature you touch has\nresistance to one damage type of your choice: acid,\ncold, fire, lightning, or thunder.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-173"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        173
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/234"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "For the duration, the willing creature you touch has resistance to one damage type of your choice: acid, cold, fire, lightning, or thunder."
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "damageResist": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "thunder"
+    ]
+  },
+  {
+    "id": "spell.protection-from-evil-and-good",
+    "kind": "spell",
+    "name": "Protection from Evil and Good",
+    "level": 1,
+    "school": "A",
+    "officialTextLayout": "Protection from Evil and Good\n1st---level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (holy water or powdered silver\n  and iron, which the spell consumes)\nDuration: Concentration up to 10 minutes\nUntil the spell ends, one willing creature you touch is\nprotected against certain types of creatures:\naberrations, celestials, elementals, fey, fiends, and\nundead.\n  The protection grants several benefits. Creatures\nof those types have disadvantage on attack rolls\nagainst the target. The target also can’t be charmed,\nfrightened, or possessed by them. If the target is\nalready charmed, frightened, or possessed by such a\ncreature, the target has advantage on any new\nsaving throw against the relevant effect.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S, M (holy water or powdered silver",
+      "Duration": "Concentration up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-173"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        173
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/235"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "holy water or powdered silver and iron, which the spell consumes",
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "Until the spell ends, one willing creature you touch is protected against certain types of creatures: aberrations, celestials, elementals, fey, fiends, and undead.",
+      "The protection grants several benefits. Creatures of those types have disadvantage on attack rolls against the target. The target also can't be {@condition charmed}, {@condition frightened}, or possessed by them. If the target is already {@condition charmed}, {@condition frightened}, or possessed by such a creature, the target has advantage on any new saving throw against the relevant effect."
+    ],
+    "miscTags": [
+      "ADV"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "affectsCreatureType": [
+      "aberration",
+      "celestial",
+      "elemental",
+      "fey",
+      "fiend",
+      "undead"
+    ]
+  },
+  {
+    "id": "spell.protection-from-poison",
+    "kind": "spell",
+    "name": "Protection from Poison",
+    "level": 2,
+    "school": "A",
+    "officialTextLayout": "Protection from Poison\n2nd---level abjuration\nCasting Time: 1 action\n\nRange: Touch\nComponents: V, S\nDuration: 1 hour\nYou touch a creature. If it is poisoned, you neutralize\nthe poison. If more than one poison afflicts the target,\nyou neutralize one poison that you know is present,\nor you neutralize one at random.\n  For the duration, the target has advantage on\nsaving throws against being poisoned, and it has\nresistance to poison damage.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-173"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        173
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/236"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You touch a creature. If it is {@condition poisoned}, you neutralize the poison. If more than one poison afflicts the target, you neutralize one poison that you know is present, or you neutralize one at random.",
+      "For the duration, the target has advantage on saving throws against being {@condition poisoned}, and it has resistance to poison damage."
+    ],
+    "miscTags": [
+      "ADV"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "damageResist": [
+      "poison"
+    ]
+  },
+  {
+    "id": "spell.purify-food-and-drink",
+    "kind": "spell",
+    "name": "Purify Food and Drink",
+    "level": 1,
+    "school": "T",
+    "officialTextLayout": "Purify Food and Drink\n1st---level transmutation (ritual)\nCasting Time: 1 action\nRange: 10 feet\nComponents: V, S\nDuration: Instantaneous\nAll nonmagical food and drink within a 5---foot---radius\nsphere centered on a point of your choice within\nrange is purified and rendered free of poison and\ndisease.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "10 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-173"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        173
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/237"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 10
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "All nonmagical food and drink within a 5-foot-radius sphere centered on a point of your choice within range is purified and rendered free of poison and disease."
+    ],
+    "areaTags": [
+      "S"
+    ],
+    "meta": {
+      "ritual": true
+    }
+  },
+  {
+    "id": "spell.raise-dead",
+    "kind": "spell",
+    "name": "Raise Dead",
+    "level": 5,
+    "school": "N",
+    "officialTextLayout": "Raise Dead\n5th---level necromancy\nCasting Time: 1 hour\nRange: Touch\nComponents: V, S, M (a diamond worth at least 500\n  gp, which the spell consumes)\nDuration: Instantaneous\nYou return a dead creature you touch to life,\nprovided that it has been dead no longer than 10\ndays. If the creature’s soul is both willing and at\nliberty to rejoin the body, the creature returns to life\nwith 1 hit point.\n  This spell also neutralizes any poisons and cures\nnonmagical diseases that affected the creature at the\ntime it died. This spell doesn’t, however, remove\nmagical diseases, curses, or similar effects; if these\naren’t first removed prior to casting the spell, they\ntake effect when the creature returns to life. The\nspell can’t return an undead creature to life.\n  This spell closes all mortal wounds, but it doesn’t\nrestore missing body parts. If the creature is lacking\nbody parts or organs integral for its survival—its\nhead, for instance—the spell automatically fails.\n  Coming back from the dead is an ordeal. The\ntarget takes a −4 penalty to all attack rolls, saving\nthrows, and ability checks. Every time the target\nfinishes a long rest, the penalty is reduced by 1 until\nit disappears.",
+    "header": {
+      "Casting Time": "1 hour",
+      "Range": "Touch",
+      "Components": "V, S, M (a diamond worth at least 500",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-173"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        173
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/238"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "hour"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a diamond worth at least 500 gp, which the spell consumes",
+        "cost": 50000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You return a dead creature you touch to life, provided that it has been dead no longer than 10 days. If the creature's soul is both willing and at liberty to rejoin the body, the creature returns to life with 1 hit point.",
+      "This spell also neutralizes any poisons and cures nonmagical diseases that affected the creature at the time it died. This spell doesn't, however, remove magical diseases, curses, or similar effects; if these aren't first removed prior to casting the spell, they take effect when the creature returns to life. The spell can't return an undead creature to life.",
+      "This spell closes all mortal wounds, but it doesn't restore missing body parts. If the creature is lacking body parts or organs integral for its survival—its head, for instance—the spell automatically fails.",
+      "Coming back from the dead is an ordeal. The target takes a −4 penalty to all attack rolls, saving throws, and ability checks. Every time the target finishes a long rest, the penalty is reduced by 1 until it disappears."
+    ],
+    "miscTags": [
+      "HL"
+    ],
+    "affectsCreatureType": [
+      "aberration",
+      "beast",
+      "celestial",
+      "construct",
+      "dragon",
+      "elemental",
+      "fey",
+      "fiend",
+      "giant",
+      "humanoid",
+      "monstrosity",
+      "ooze",
+      "plant"
+    ]
+  },
+  {
+    "id": "spell.ray-of-enfeeblement",
+    "kind": "spell",
+    "name": "Ray of Enfeeblement",
+    "level": 2,
+    "school": "N",
+    "officialTextLayout": "Ray of Enfeeblement\n2nd---level necromancy\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Concentration, up to 1 minute\nA black beam of enervating energy springs from\nyour finger toward a creature within range. Make a\nranged spell attack against the target. On a hit, the\ntarget deals only half damage with weapon attacks\nthat use Strength until the spell ends.\n  At the end of each of the target’s turns, it can make\na Constitution saving throw against the spell. On a\nsuccess, the spell ends.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-174"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        174
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/240"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "A black beam of enervating energy springs from your finger toward a creature within range. Make a ranged spell attack against the target. On a hit, the target deals only half damage with weapon attacks that use Strength until the spell ends.",
+      "At the end of each of the target's turns, it can make a Constitution saving throw against the spell. On a success, the spell ends."
+    ],
+    "savingThrow": [
+      "constitution"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "spellAttack": [
+      "R"
+    ]
+  },
+  {
+    "id": "spell.ray-of-frost",
+    "kind": "spell",
+    "name": "Ray of Frost",
+    "level": 0,
+    "school": "V",
+    "officialTextLayout": "Ray of Frost\nEvocation cantrip\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nA frigid beam of blue---white light streaks toward a\ncreature within range. Make a ranged spell attack\nagainst the target. On a hit, it takes 1d8 cold damage,\nand its speed is reduced by 10 feet until the start of\nyour next turn.\n  The spell’s damage increases by 1d8 when you\nreach 5th level (2d8), 11th level (3d8), and 17th\nlevel (4d8).",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-174"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        174
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/241"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A frigid beam of blue-white light streaks toward a creature within range. Make a ranged spell attack against the target. On a hit, it takes {@damage 1d8} cold damage, and its speed is reduced by 10 feet until the start of your next turn.",
+      "The spell's damage increases by {@damage 1d8} when you reach 5th level ({@damage 2d8}), 11th level ({@damage 3d8}), and 17th level ({@damage 4d8})."
+    ],
+    "scalingLevelDice": {
+      "label": "cold damage",
+      "scaling": {
+        "1": "1d8",
+        "5": "2d8",
+        "11": "3d8",
+        "17": "4d8"
+      }
+    },
+    "damageInflict": [
+      "cold"
+    ],
+    "miscTags": [
+      "SCL"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "spellAttack": [
+      "R"
+    ]
+  },
+  {
+    "id": "spell.regenerate",
+    "kind": "spell",
+    "name": "Regenerate",
+    "level": 7,
+    "school": "T",
+    "officialTextLayout": "Regenerate\n7th---level transmutation\nCasting Time: 1 minute\nRange: Touch\nComponents: V, S, M (a prayer wheel and holy\n  water)\nDuration: 1 hour\nYou touch a creature and stimulate its natural\nhealing ability. The target regains 4d8 + 15 hit points.\nFor the duration of the spell, the target regains 1 hit\npoint at the start of each of its turns (10 hit points\neach minute).\n  The target’s severed body members (fingers, legs,\ntails, and so on), if any, are restored after 2 minutes.\nIf you have the severed part and hold it to the stump,\nthe spell instantaneously causes the limb to knit to\nthe stump.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "Touch",
+      "Components": "V, S, M (a prayer wheel and holy",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-174"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        174
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/242"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a prayer wheel and holy water"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You touch a creature and stimulate its natural healing ability. The target regains {@dice 4d8 + 15} hit points. For the duration of the spell, the target regains 1 hit point at the start of each of its turns (10 hit points each minute).",
+      "The target's severed body members (fingers, legs, tails, and so on), if any, are restored after 2 minutes. If you have the severed part and hold it to the stump, the spell instantaneously causes the limb to knit to the stump."
+    ],
+    "miscTags": [
+      "HL"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  },
+  {
+    "id": "spell.reincarnate",
+    "kind": "spell",
+    "name": "Reincarnate",
+    "level": 5,
+    "school": "T",
+    "officialTextLayout": "Reincarnate\n5th---level transmutation\nCasting Time: 1 hour\nRange: Touch\nComponents: V, S, M (rare oils and unguents worth\n  at least 1,000 gp, which the spell consumes)\nDuration: Instantaneous\nYou touch a dead humanoid or a piece of a dead\nhumanoid. Provided that the creature has been dead\nno longer than 10 days, the spell forms a new adult\nbody for it and then calls the soul to enter that body.\nIf the target’s soul isn’t free or willing to do so, the\nspell fails.\n  The magic fashions a new body for the creature to\ninhabit, which likely causes the creature’s race to\nchange. The GM rolls a d100 and consults the\nfollowing table to determine what form the creature\ntakes when restored to life, or the GM chooses a\nform.\nd100      Race\n01–04     Dragonborn\n05–13     Dwarf, hill\n14–21     Dwarf, mountain\n22–25     Elf, dark\n26–34     Elf, high\n35–42     Elf, wood\n43–46     Gnome, forest\n47–52     Gnome, rock\n53–56     Half--elf\n57–60     Half--orc\n61–68     Halfling, lightfoot\n69–76     Halfling, stout\n77–96     Human\n97–00     Tiefling\n\n  The reincarnated creature recalls its former life\nand experiences. It retains the capabilities it had in\nits original form, except it exchanges its original race\nfor the new one and changes its racial traits\naccordingly.",
+    "header": {
+      "Casting Time": "1 hour",
+      "Range": "Touch",
+      "Components": "V, S, M (rare oils and unguents worth",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-174"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        174
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/243"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "hour"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "rare oils and unguents worth at least 1,000 gp, which the spell consumes",
+        "cost": 100000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You touch a dead humanoid or a piece of a dead humanoid. Provided that the creature has been dead no longer than 10 days, the spell forms a new adult body for it and then calls the soul to enter that body. If the target's soul isn't free or willing to do so, the spell fails.",
+      "The magic fashions a new body for the creature to inhabit, which likely causes the creature's race to change. The DM rolls a {@dice d100} and consults the following table to determine what form the creature takes when restored to life, or the DM chooses a form.",
+      {
+        "type": "table",
+        "caption": "Reincarnate Races",
+        "colLabels": [
+          "{@dice d100}",
+          "Race"
+        ],
+        "colStyles": [
+          "col-1 text-center no-wrap",
+          "col-11"
+        ],
+        "rows": [
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 1,
+                "max": 4,
+                "pad": true
+              }
+            },
+            "{@race Dragonborn|SRD51}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 5,
+                "max": 13,
+                "pad": true
+              }
+            },
+            "{@race Dwarf|SRD51|Dwarf, hill}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 14,
+                "max": 21
+              }
+            },
+            "Dwarf, mountain"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 22,
+                "max": 25
+              }
+            },
+            "Elf, dark"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 26,
+                "max": 34
+              }
+            },
+            "{@race Elf|SRD51|Elf, high}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 35,
+                "max": 42
+              }
+            },
+            "Elf, wood"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 43,
+                "max": 46
+              }
+            },
+            "Gnome, forest"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 47,
+                "max": 52
+              }
+            },
+            "{@race Gnome|SRD51|Gnome, rock}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 53,
+                "max": 56
+              }
+            },
+            "{@race Half-Elf|SRD51}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 57,
+                "max": 60
+              }
+            },
+            "{@race Half-Orc|SRD51}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 61,
+                "max": 68
+              }
+            },
+            "{@race Halfling|SRD51|Halfling, lightfoot}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 69,
+                "max": 76
+              }
+            },
+            "Halfling, stout"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 77,
+                "max": 96
+              }
+            },
+            "{@race Human|SRD51}"
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 97,
+                "max": 0,
+                "pad": true
+              }
+            },
+            "{@race Tiefling|SRD51}"
+          ]
+        ]
+      },
+      "The reincarnated creature recalls its former life and experiences. It retains the capabilities it had in its original form, except it exchanges its original race for the new one and changes its racial traits accordingly."
+    ],
+    "miscTags": [
+      "HL",
+      "RO"
+    ],
+    "affectsCreatureType": [
+      "humanoid"
+    ]
+  },
+  {
+    "id": "spell.remove-curse",
+    "kind": "spell",
+    "name": "Remove Curse",
+    "level": 3,
+    "school": "A",
+    "officialTextLayout": "Remove Curse\n3rd---level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Instantaneous\nAt your touch, all curses affecting one creature or\nobject end. If the object is a cursed magic item, its\ncurse remains, but the spell breaks its owner’s\n\n\n\n\n\nattunement to the object so it can be removed or\ndiscarded.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-174",
+      "rulebook.page-175"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        174,
+        175
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/244"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "At your touch, all curses affecting one creature or object end. If the object is a cursed magic item, its curse remains, but the spell breaks its owner's attunement to the object so it can be removed or discarded."
+    ],
+    "miscTags": [
+      "OBJ"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  },
+  {
+    "id": "spell.resilient-sphere",
+    "kind": "spell",
+    "name": "Resilient Sphere",
+    "level": 4,
+    "school": "V",
+    "officialTextLayout": "Resilient Sphere\n4th---level evocation\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a hemispherical piece of clear\n  crystal and a matching hemispherical piece of gum\n  arabic)\nDuration: Concentration, up to 1 minute\nA sphere of shimmering force encloses a creature or\nobject of Large size or smaller within range. An\nunwilling creature must make a Dexterity saving\nthrow. On a failed save, the creature is enclosed for\nthe duration.\n  Nothing—not physical objects, energy, or other\nspell effects—can pass through the barrier, in or out,\nthough a creature in the sphere can breathe there.\nThe sphere is immune to all damage, and a creature\nor object inside can’t be damaged by attacks or\neffects originating from outside, nor can a creature\ninside the sphere damage anything outside it.\n  The sphere is weightless and just large enough to\ncontain the creature or object inside. An enclosed\ncreature can use its action to push against the\nsphere’s walls and thus roll the sphere at up to half\nthe creature’s speed. Similarly, the globe can be\npicked up and moved by other creatures.\n  A disintegrate spell targeting the globe destroys it\nwithout harming anything inside it.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a hemispherical piece of clear",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-175"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        175
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/213"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a hemispherical piece of clear crystal and a matching hemispherical piece of gum arabic"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "A sphere of shimmering force encloses a creature or object of Large size or smaller within range. An unwilling creature must make a Dexterity saving throw. On a failed save, the creature is enclosed for the duration.",
+      "Nothing—not physical objects, energy, or other spell effects—can pass through the barrier, in or out, though a creature in the sphere can breathe there. The sphere is immune to all damage, and a creature or object inside can't be damaged by attacks or effects originating from outside, nor can a creature inside the sphere damage anything outside it.",
+      "The sphere is weightless and just large enough to contain the creature or object inside. An enclosed creature can use its action to push against the sphere's walls and thus roll the sphere at up to half the creature's speed. Similarly, the globe can be picked up and moved by other creatures.",
+      "A {@spell disintegrate} spell targeting the globe destroys it without harming anything inside it."
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "miscTags": [
+      "OBJ"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "damageImmune": [
+      "acid",
+      "bludgeoning",
+      "cold",
+      "fire",
+      "force",
+      "lightning",
+      "necrotic",
+      "piercing",
+      "poison",
+      "psychic",
+      "radiant",
+      "slashing",
+      "thunder"
+    ]
+  },
+  {
+    "id": "spell.resistance",
+    "kind": "spell",
+    "name": "Resistance",
+    "level": 0,
+    "school": "A",
+    "officialTextLayout": "Resistance\nAbjuration cantrip\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (a miniature cloak)\nDuration: Concentration, up to 1 minute\nYou touch one willing creature. Once before the spell\nends, the target can roll a d4 and add the number\nrolled to one saving throw of its choice. It can roll the\ndie before or after making the saving throw. The\nspell then ends.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S, M (a miniature cloak)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-175"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        175
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/245"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a miniature cloak"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You touch one willing creature. Once before the spell ends, the target can roll a {@dice d4} and add the number rolled to one saving throw of its choice. It can roll the die before or after making the saving throw. The spell then ends."
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  },
+  {
+    "id": "spell.resurrection",
+    "kind": "spell",
+    "name": "Resurrection",
+    "level": 7,
+    "school": "N",
+    "officialTextLayout": "Resurrection\n7th---level necromancy\nCasting Time: 1 hour\nRange: Touch\nComponents: V, S, M (a diamond worth at least\n  1,000 gp, which the spell consumes)\nDuration: Instantaneous\n\nYou touch a dead creature that has been dead for no\nmore than a century, that didn’t die of old age, and\nthat isn’t undead. If its soul is free and willing, the\ntarget returns to life with all its hit points.\n  This spell neutralizes any poisons and cures\nnormal diseases afflicting the creature when it died.\nIt doesn’t, however, remove magical diseases, curses,\nand the like; if such effects aren’t removed prior to\ncasting the spell, they afflict the target on its return\nto life.\n  This spell closes all mortal wounds and restores\nany missing body parts.\n  Coming back from the dead is an ordeal. The\ntarget takes a −4 penalty to all attack rolls, saving\nthrows, and ability checks. Every time the target\nfinishes a long rest, the penalty is reduced by 1 until\nit disappears.\n  Casting this spell to restore life to a creature that\nhas been dead for one year or longer taxes you\ngreatly. Until you finish a long rest, you can’t cast\nspells again, and you have disadvantage on all attack\nrolls, ability checks, and saving throws.",
+    "header": {
+      "Casting Time": "1 hour",
+      "Range": "Touch",
+      "Components": "V, S, M (a diamond worth at least",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-175"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        175
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/246"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "hour"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a diamond worth at least 1,000 gp, which the spell consumes",
+        "cost": 100000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You touch a dead creature that has been dead for no more than a century, that didn't die of old age, and that isn't undead. If its soul is free and willing, the target returns to life with all its hit points.",
+      "This spell neutralizes any poisons and cures normal diseases afflicting the creature when it died. It doesn't, however, remove magical diseases, curses, and the like; if such effects aren't removed prior to casting the spell, they afflict the target on its return to life.",
+      "This spell closes all mortal wounds and restores any missing body parts.",
+      "Coming back from the dead is an ordeal. The target takes a −4 penalty to all attack rolls, saving throws, and ability checks. Every time the target finishes a long rest, the penalty is reduced by 1 until it disappears.",
+      "Casting this spell to restore life to a creature that has been dead for one year or longer taxes you greatly. Until you finish a long rest, you can't cast spells again, and you have disadvantage on all attack rolls, ability checks, and saving throws."
+    ],
+    "miscTags": [
+      "HL"
+    ],
+    "affectsCreatureType": [
+      "aberration",
+      "beast",
+      "celestial",
+      "construct",
+      "dragon",
+      "elemental",
+      "fey",
+      "fiend",
+      "giant",
+      "humanoid",
+      "monstrosity",
+      "ooze",
+      "plant"
+    ]
+  },
+  {
+    "id": "spell.reverse-gravity",
+    "kind": "spell",
+    "name": "Reverse Gravity",
+    "level": 7,
+    "school": "T",
+    "officialTextLayout": "Reverse Gravity\n7th---level transmutation\nCasting Time: 1 action\nRange: 100 feet\nComponents: V, S, M (a lodestone and iron filings)\nDuration: Concentration, up to 1 minute\nThis spell reverses gravity in a 50---foot---radius, 100---\nfoot high cylinder centered on a point within range.\nAll creatures and objects that aren’t somehow\nanchored to the ground in the area fall upward and\nreach the top of the area when you cast this spell. A\ncreature can make a Dexterity saving throw to grab\nonto a fixed object it can reach, thus avoiding the fall.\n  If some solid object (such as a ceiling) is\nencountered in this fall, falling objects and creatures\nstrike it just as they would during a normal\ndownward fall. If an object or creature reaches the\ntop of the area without striking anything, it remains\nthere, oscillating slightly, for the duration.\n  At the end of the duration, affected objects and\ncreatures fall back down.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "100 feet",
+      "Components": "V, S, M (a lodestone and iron filings)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-175"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        175
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/247"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 100
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a lodestone and iron filings"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "This spell reverses gravity in a 50-foot-radius, 100-foot-high cylinder centered on a point within range. All creatures and objects that aren't somehow anchored to the ground in the area fall upward and reach the top of the area when you cast this spell. A creature can make a Dexterity saving throw to grab onto a fixed object it can reach, thus avoiding the fall.",
+      "If some solid object (such as a ceiling) is encountered in this fall, falling objects and creatures strike it just as they would during a normal downward fall. If an object or creature reaches the top of the area without striking anything, it remains there, oscillating slightly, for the duration.",
+      "At the end of the duration, affected objects and creatures fall back down."
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "miscTags": [
+      "OBJ"
+    ],
+    "areaTags": [
+      "Y"
+    ]
+  },
+  {
+    "id": "spell.revivify",
+    "kind": "spell",
+    "name": "Revivify",
+    "level": 3,
+    "school": "N",
+    "officialTextLayout": "Revivify\n3rd---level necromancy\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (diamonds worth 300 gp,\n  which the spell consumes)\nDuration: Instantaneous\n\n\n\n\n\nYou touch a creature that has died within the last\nminute. That creature returns to life with 1 hit point.\nThis spell can’t return to life a creature that has died\nof old age, nor can it restore any missing body parts.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S, M (diamonds worth 300 gp,",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-175",
+      "rulebook.page-176"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        175,
+        176
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/248"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "diamonds worth 300 gp, which the spell consumes",
+        "cost": 30000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You touch a creature that has died within the last minute. That creature returns to life with 1 hit point. This spell can't return to life a creature that has died of old age, nor can it restore any missing body parts."
+    ],
+    "miscTags": [
+      "HL"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  },
+  {
+    "id": "spell.rope-trick",
+    "kind": "spell",
+    "name": "Rope Trick",
+    "level": 2,
+    "school": "T",
+    "officialTextLayout": "Rope Trick\n2nd---level transmutation\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (powdered corn extract and a\n  twisted loop of parchment)\nDuration: 1 hour\nYou touch a length of rope that is up to 60 feet long.\nOne end of the rope then rises into the air until the\nwhole rope hangs perpendicular to the ground. At\nthe upper end of the rope, an invisible entrance\nopens to an extradimensional space that lasts until\nthe spell ends.\n  The extradimensional space can be reached by\nclimbing to the top of the rope. The space can hold as\nmany as eight Medium or smaller creatures. The\nrope can be pulled into the space, making the rope\ndisappear from view outside the space.\n  Attacks and spells can’t cross through the entrance\ninto or out of the extradimensional space, but those\ninside can see out of it as if through a 3---foot---by---5---\nfoot window centered on the rope.\n  Anything inside the extradimensional space drops\nout when the spell ends.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S, M (powdered corn extract and a",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-176"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        176
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/249"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "powdered corn extract and a twisted loop of parchment"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You touch a length of rope that is up to 60 feet long. One end of the rope then rises into the air until the whole rope hangs perpendicular to the ground. At the upper end of the rope, an invisible entrance opens to an extradimensional space that lasts until the spell ends.",
+      "The extradimensional space can be reached by climbing to the top of the rope. The space can hold as many as eight Medium or smaller creatures. The rope can be pulled into the space, making the rope disappear from view outside the space.",
+      "Attacks and spells can't cross through the entrance into or out of the extradimensional space, but those inside can see out of it as if through a 3-foot-by-5-foot window centered on the rope.",
+      "Anything inside the extradimensional space drops out when the spell ends."
+    ]
+  },
+  {
+    "id": "spell.sacred-flame",
+    "kind": "spell",
+    "name": "Sacred Flame",
+    "level": 0,
+    "school": "V",
+    "officialTextLayout": "Sacred Flame\nEvocation cantrip\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nFlame---like radiance descends on a creature that you\ncan see within range. The target must succeed on a\nDexterity saving throw or take 1d8 radiant damage.\nThe target gains no benefit from cover for this saving\nthrow.\n  The spell’s damage increases by 1d8 when you\nreach 5th level (2d8), 11th level (3d8), and 17th\nlevel (4d8).",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-176"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        176
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/250"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "Flame-like radiance descends on a creature that you can see within range. The target must succeed on a Dexterity saving throw or take {@damage 1d8} radiant damage. The target gains no benefit from cover for this saving throw.",
+      "The spell's damage increases by {@damage 1d8} when you reach 5th level ({@damage 2d8}), 11th level ({@damage 3d8}), and 17th level ({@damage 4d8})."
+    ],
+    "scalingLevelDice": {
+      "label": "radiant damage",
+      "scaling": {
+        "1": "1d8",
+        "5": "2d8",
+        "11": "3d8",
+        "17": "4d8"
+      }
+    },
+    "damageInflict": [
+      "radiant"
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "miscTags": [
+      "SCL",
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  }
+]

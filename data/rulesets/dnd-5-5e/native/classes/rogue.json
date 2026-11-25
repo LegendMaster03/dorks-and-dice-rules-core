@@ -1,0 +1,1953 @@
+[
+  {
+    "id": "class.rogue",
+    "kind": "class",
+    "name": "Rogue",
+    "primaryAbility": [
+      {
+        "dex": true
+      }
+    ],
+    "hd": {
+      "number": 1,
+      "faces": 8
+    },
+    "proficiency": [
+      "dex",
+      "int"
+    ],
+    "featProgression": [
+      {
+        "name": "Epic Boon",
+        "category": [
+          "EB"
+        ],
+        "progression": {
+          "19": 1
+        }
+      }
+    ],
+    "startingProficiencies": {
+      "armor": [
+        "light"
+      ],
+      "weapons": [
+        "simple",
+        "Martial weapons that have the {@filter Finesse or Light|items|type=martial weapon|property=finesse;light} property"
+      ],
+      "weaponProficiencies": [
+        {
+          "simple": true,
+          "all": {
+            "fromFilter": "type=martial weapon|property=light;finesse"
+          }
+        }
+      ],
+      "tools": [
+        "{@item Thieves' Tools|SRD52}"
+      ],
+      "toolProficiencies": [
+        {
+          "thieves' tools": true
+        }
+      ],
+      "skills": [
+        {
+          "choose": {
+            "from": [
+              "acrobatics",
+              "athletics",
+              "deception",
+              "insight",
+              "intimidation",
+              "investigation",
+              "perception",
+              "persuasion",
+              "sleight of hand",
+              "stealth"
+            ],
+            "count": 4
+          }
+        }
+      ]
+    },
+    "startingEquipment": {
+      "additionalFromBackground": true,
+      "defaultData": [
+        {
+          "A": [
+            {
+              "item": "leather armor|srd52"
+            },
+            {
+              "item": "dagger|srd52",
+              "quantity": 2
+            },
+            {
+              "item": "shortsword|srd52"
+            },
+            {
+              "item": "shortbow|srd52"
+            },
+            {
+              "item": "arrows (20)|srd52"
+            },
+            {
+              "item": "quiver|srd52"
+            },
+            {
+              "item": "thieves' tools|srd52"
+            },
+            {
+              "item": "burglar's pack|srd52"
+            },
+            {
+              "value": 800
+            }
+          ],
+          "B": [
+            {
+              "value": 10000
+            }
+          ]
+        }
+      ],
+      "entries": [
+        "{@i Choose A or B:} (A) {@item Leather Armor|SRD52}, 2 {@item Dagger|SRD52|Daggers}, {@item Shortsword|SRD52}, {@item Shortbow|SRD52}, {@item Arrows (20)|SRD52|20 Arrows}, {@item Quiver|SRD52}, {@item Thieves' Tools|SRD52}, {@item Burglar's Pack|SRD52}, and 8 GP; or (B) 100 GP"
+      ]
+    },
+    "multiclassing": {
+      "proficienciesGained": {
+        "armor": [
+          "light"
+        ],
+        "tools": [
+          "{@item Thieves' Tools|SRD52}"
+        ],
+        "toolProficiencies": [
+          {
+            "thieves' tools": true
+          }
+        ],
+        "skills": [
+          {
+            "choose": {
+              "from": [
+                "acrobatics",
+                "athletics",
+                "deception",
+                "insight",
+                "intimidation",
+                "investigation",
+                "perception",
+                "persuasion",
+                "sleight of hand",
+                "stealth"
+              ],
+              "count": 1
+            }
+          }
+        ]
+      }
+    },
+    "classTableGroups": [
+      {
+        "colLabels": [
+          "Sneak Attack"
+        ],
+        "rows": [
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 2,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 2,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 3,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 3,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 4,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 4,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 5,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 5,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 6,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 6,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 7,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 7,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 8,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 8,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 9,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 9,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 10,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 10,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            }
+          ]
+        ]
+      }
+    ],
+    "classFeatures": [
+      "Expertise|Rogue|SRD52|1",
+      "Sneak Attack|Rogue|SRD52|1",
+      "Thieves' Cant|Rogue|SRD52|1",
+      "Weapon Mastery|Rogue|SRD52|1",
+      "Cunning Action|Rogue|SRD52|2",
+      {
+        "classFeature": "Rogue Subclass|Rogue|SRD52|3",
+        "gainSubclassFeature": true
+      },
+      "Steady Aim|Rogue|SRD52|3",
+      "Ability Score Improvement|Rogue|SRD52|4",
+      "Cunning Strike|Rogue|SRD52|5",
+      "Uncanny Dodge|Rogue|SRD52|5",
+      "Expertise|Rogue|SRD52|6",
+      "Evasion|Rogue|SRD52|7",
+      "Reliable Talent|Rogue|SRD52|7",
+      "Ability Score Improvement|Rogue|SRD52|8",
+      {
+        "classFeature": "Subclass Feature|Rogue|SRD52|9",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Rogue|SRD52|10",
+      "Improved Cunning Strike|Rogue|SRD52|11",
+      "Ability Score Improvement|Rogue|SRD52|12",
+      {
+        "classFeature": "Subclass Feature|Rogue|SRD52|13",
+        "gainSubclassFeature": true
+      },
+      "Devious Strikes|Rogue|SRD52|14",
+      "Slippery Mind|Rogue|SRD52|15",
+      "Ability Score Improvement|Rogue|SRD52|16",
+      {
+        "classFeature": "Subclass Feature|Rogue|SRD52|17",
+        "gainSubclassFeature": true
+      },
+      "Elusive|Rogue|SRD52|18",
+      "Epic Boon|Rogue|SRD52|19",
+      "Stroke of Luck|Rogue|SRD52|20"
+    ],
+    "subclassTitle": "Rogue Subclass",
+    "catalogReferences": [
+      "baseitem.arrows-20",
+      "baseitem.dagger",
+      "baseitem.leather-armor",
+      "baseitem.shortbow",
+      "baseitem.shortsword",
+      "class-feature.rogue.ability-score-improvement.10",
+      "class-feature.rogue.ability-score-improvement.12",
+      "class-feature.rogue.ability-score-improvement.16",
+      "class-feature.rogue.ability-score-improvement.4",
+      "class-feature.rogue.ability-score-improvement.8",
+      "class-feature.rogue.cunning-action.2",
+      "class-feature.rogue.cunning-strike.5",
+      "class-feature.rogue.devious-strikes.14",
+      "class-feature.rogue.elusive.18",
+      "class-feature.rogue.epic-boon.19",
+      "class-feature.rogue.evasion.7",
+      "class-feature.rogue.expertise.1",
+      "class-feature.rogue.expertise.6",
+      "class-feature.rogue.improved-cunning-strike.11",
+      "class-feature.rogue.reliable-talent.7",
+      "class-feature.rogue.rogue-subclass.3",
+      "class-feature.rogue.slippery-mind.15",
+      "class-feature.rogue.sneak-attack.1",
+      "class-feature.rogue.steady-aim.3",
+      "class-feature.rogue.stroke-of-luck.20",
+      "class-feature.rogue.subclass-feature.13",
+      "class-feature.rogue.subclass-feature.17",
+      "class-feature.rogue.subclass-feature.9",
+      "class-feature.rogue.thieves-cant.1",
+      "class-feature.rogue.uncanny-dodge.5",
+      "class-feature.rogue.weapon-mastery.1",
+      "item.burglar-s-pack",
+      "item.quiver",
+      "item.thieves-tools",
+      "rulebook.page-061",
+      "skill.acrobatics",
+      "skill.athletics",
+      "skill.deception",
+      "skill.insight",
+      "skill.intimidation",
+      "skill.investigation",
+      "skill.perception",
+      "skill.persuasion",
+      "skill.sleight-of-hand",
+      "skill.stealth"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        61
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/class/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass.rogue.thief",
+    "kind": "subclass",
+    "name": "Thief",
+    "shortName": "Thief",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "subclassFeatures": [
+      "Thief|Rogue|SRD52|Thief|SRD52|3",
+      "Supreme Sneak|Rogue|SRD52|Thief|SRD52|9",
+      "Use Magic Device|Rogue|SRD52|Thief|SRD52|13",
+      "Thief's Reflexes|Rogue|SRD52|Thief|SRD52|17"
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-064",
+      "subclass-feature.rogue.thief.supreme-sneak.9",
+      "subclass-feature.rogue.thief.thief.3",
+      "subclass-feature.rogue.thief.thiefs-reflexes.17",
+      "subclass-feature.rogue.thief.use-magic-device.13"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64
+      ],
+      "candidatePage": 64,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/subclass/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.expertise.1",
+    "kind": "class-feature",
+    "name": "Expertise",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "You gain {@variantrule Expertise|SRD52} in two of your skill proficiencies of your choice. {@skill Sleight of Hand|SRD52} and {@skill Stealth|SRD52} are recommended if you have proficiency in them.",
+      "At Rogue level 6, you gain {@variantrule Expertise|SRD52} in two more of your skill proficiencies of your choice."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-061"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        61
+      ],
+      "candidatePage": 128,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/22"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.sneak-attack.1",
+    "kind": "class-feature",
+    "name": "Sneak Attack",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "You know how to strike subtly and exploit a foe's distraction. Once per turn, you can deal an extra {@damage 1d6} damage to one creature you hit with an attack roll if you have {@variantrule Advantage|SRD52} on the roll and the attack uses a Finesse or a Ranged weapon. The extra damage's type is the same as the weapon's type.",
+      "You don't need {@variantrule Advantage|SRD52} on the attack roll if at least one of your allies is within 5 feet of the target, the ally doesn't have the {@condition Incapacitated|SRD52} condition, and you don't have {@variantrule Disadvantage|SRD52} on the attack roll.",
+      "The extra damage increases as you gain Rogue levels, as shown in the Sneak Attack column of the Rogue Features table."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-061"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        61
+      ],
+      "candidatePage": 128,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/23"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.thieves-cant.1",
+    "kind": "class-feature",
+    "name": "Thieves' Cant",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "You picked up various languages in the communities where you plied your roguish talents. You know Thieves' Cant and one other language of your choice, which you choose from the language tables in {@book chapter 2|SRD52|2|Choose Languages}."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 128,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/24"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.weapon-mastery.1",
+    "kind": "class-feature",
+    "name": "Weapon Mastery",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "Your training with weapons allows you to use the {@variantrule weapon mastery properties|SRD52|mastery properties} of two kinds of {@filter weapons|items|type=simple weapon;martial weapon} of your choice with which you have proficiency, such as {@item Dagger|SRD52|Daggers} and {@item Shortbow|SRD52|Shortbows}.",
+      "Whenever you finish a {@variantrule Long Rest|SRD52}, you can change the kinds of weapons you chose. For example, you could switch to using the {@variantrule weapon mastery properties|SRD52|mastery properties} of {@item Scimitar|SRD52|Scimitars} and {@item Shortsword|SRD52|Shortswords}."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 128,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/25"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.cunning-action.2",
+    "kind": "class-feature",
+    "name": "Cunning Action",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 2,
+    "entries": [
+      "Your quick thinking and agility allow you to move and act quickly. On your turn, you can take one of the following actions as a {@variantrule Bonus Action|SRD52}: {@action Dash|SRD52}, {@action Disengage|SRD52}, or {@action Hide|SRD52}."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 129,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/26"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.rogue-subclass.3",
+    "kind": "class-feature",
+    "name": "Rogue Subclass",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "You gain a Rogue subclass of your choice. A subclass is a specialization that grants you features at certain Rogue levels. For the rest of your career, you gain each of your subclass's features that are of your Rogue level or lower."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 129,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/27"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.steady-aim.3",
+    "kind": "class-feature",
+    "name": "Steady Aim",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "As a {@variantrule Bonus Action|SRD52}, you give yourself {@variantrule Advantage|SRD52} on your next attack roll on the current turn. You can use this feature only if you haven't moved during this turn, and after you use it, your {@variantrule Speed|SRD52} is 0 until the end of the current turn."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 129,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/28"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.ability-score-improvement.4",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 4,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify. You gain this feature again at Rogue levels 8, 10, 12, and 16."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 129,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/29"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.cunning-strike.5",
+    "kind": "class-feature",
+    "name": "Cunning Strike",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 5,
+    "entries": [
+      "You've developed cunning ways to use your Sneak Attack. When you deal Sneak Attack damage, you can add one of the following Cunning Strike effects. Each effect has a die cost, which is the number of Sneak Attack damage dice you must forgo to add the effect. You remove the die before rolling, and the effect occurs immediately after the attack's damage is dealt. For example, if you add the Poison effect, remove {@dice 1d6} from the Sneak Attack's damage before rolling.",
+      "If a Cunning Strike effect requires a saving throw, the DC equals 8 plus your Dexterity modifier and {@variantrule Proficiency|SRD52|Proficiency Bonus}.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "refClassFeature",
+            "classFeature": "Poison (Cost: 1d6)|Rogue|SRD52|5|SRD52"
+          },
+          {
+            "type": "refClassFeature",
+            "classFeature": "Trip (Cost: 1d6)|Rogue|SRD52|5|SRD52"
+          },
+          {
+            "type": "refClassFeature",
+            "classFeature": "Withdraw (Cost: 1d6)|Rogue|SRD52|5|SRD52"
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class-feature.rogue.poison-cost-1d6.5",
+      "class-feature.rogue.trip-cost-1d6.5",
+      "class-feature.rogue.withdraw-cost-1d6.5",
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 129,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/30"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.poison-cost-1d6.5",
+    "kind": "class-feature",
+    "name": "Poison (Cost: 1d6)",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 5,
+    "entries": [
+      "You add a toxin to your strike, forcing the target to make a Constitution saving throw. On a failed save, the target has the {@condition Poisoned|SRD52} condition for 1 minute. At the end of each of its turns, the {@condition Poisoned|SRD52} target repeats the save, ending the effect on itself on a success.",
+      "To use this effect, you must have a {@item Poisoner's Kit|SRD52} on your person."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-063"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        63
+      ],
+      "candidatePage": 129,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/31"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.trip-cost-1d6.5",
+    "kind": "class-feature",
+    "name": "Trip (Cost: 1d6)",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 5,
+    "entries": [
+      "If the target is Large or smaller, it must succeed on a Dexterity saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-063"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        63
+      ],
+      "candidatePage": 129,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/32"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.uncanny-dodge.5",
+    "kind": "class-feature",
+    "name": "Uncanny Dodge",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 5,
+    "entries": [
+      "When an attacker that you can see hits you with an attack roll, you can take a {@variantrule Reaction|SRD52} to halve the attack's damage against you (round down)."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 129,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/33"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.withdraw-cost-1d6.5",
+    "kind": "class-feature",
+    "name": "Withdraw (Cost: 1d6)",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 5,
+    "entries": [
+      "Immediately after the attack, you move up to half your {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-063"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        63
+      ],
+      "candidatePage": 129,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/34"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.expertise.6",
+    "kind": "class-feature",
+    "name": "Expertise",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 6,
+    "entries": [
+      "You gain {@variantrule Expertise|SRD52} in two of your Skill Proficiencies of your choice."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-061"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        61
+      ],
+      "candidatePage": 129,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/35"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.evasion.7",
+    "kind": "class-feature",
+    "name": "Evasion",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 7,
+    "entries": [
+      "You can nimbly dodge out of the way of certain dangers. When you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail. You can't use this feature if you have the {@condition Incapacitated|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 129,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/36"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.reliable-talent.7",
+    "kind": "class-feature",
+    "name": "Reliable Talent",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 7,
+    "entries": [
+      "Whenever you make an ability check that uses one of your skill or tool proficiencies, you can treat a {@dice d20} roll of 9 or lower as a 10."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 130,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/37"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.ability-score-improvement.8",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 8,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 130,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/38"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.subclass-feature.9",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 9,
+    "entries": [
+      "You gain a feature from your Rogue Subclass."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 130,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/39"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.ability-score-improvement.10",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 10,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 130,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/40"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.improved-cunning-strike.11",
+    "kind": "class-feature",
+    "name": "Improved Cunning Strike",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 11,
+    "entries": [
+      "You can use up to two Cunning Strike effects when you deal Sneak Attack damage, paying the die cost for each effect."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 130,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/41"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.ability-score-improvement.12",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 12,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/42"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.subclass-feature.13",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 13,
+    "entries": [
+      "You gain a feature from your Rogue Subclass."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/43"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.daze-cost-2d6.14",
+    "kind": "class-feature",
+    "name": "Daze (Cost: 2d6)",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 14,
+    "entries": [
+      "The target must succeed on a Constitution saving throw, or on its next turn, it can do only one of the following: move or take an action or a {@variantrule Bonus Action|SRD52}."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-063"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        63
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/44"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.devious-strikes.14",
+    "kind": "class-feature",
+    "name": "Devious Strikes",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 14,
+    "entries": [
+      "You've practiced new ways to use your Sneak Attack deviously. The following effects are now among your Cunning Strike options.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "refClassFeature",
+            "classFeature": "Daze (Cost: 2d6)|Rogue|SRD52|14|SRD52"
+          },
+          {
+            "type": "refClassFeature",
+            "classFeature": "Knock Out (Cost: 6d6)|Rogue|SRD52|14|SRD52"
+          },
+          {
+            "type": "refClassFeature",
+            "classFeature": "Obscure (Cost: 3d6)|Rogue|SRD52|14|SRD52"
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class-feature.rogue.daze-cost-2d6.14",
+      "class-feature.rogue.knock-out-cost-6d6.14",
+      "class-feature.rogue.obscure-cost-3d6.14",
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/45"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.knock-out-cost-6d6.14",
+    "kind": "class-feature",
+    "name": "Knock Out (Cost: 6d6)",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 14,
+    "entries": [
+      "The target must succeed on a Constitution saving throw, or it has the {@condition Unconscious|SRD52} condition for 1 minute or until it takes any damage. The {@condition Unconscious|SRD52} target repeats the save at the end of each of its turns, ending the effect on itself on a success."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-063"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        63
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/46"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.obscure-cost-3d6.14",
+    "kind": "class-feature",
+    "name": "Obscure (Cost: 3d6)",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 14,
+    "entries": [
+      "The target must succeed on a Dexterity saving throw, or it has the {@condition Blinded|SRD52} condition until the end of its next turn."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-063"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        63
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/47"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.slippery-mind.15",
+    "kind": "class-feature",
+    "name": "Slippery Mind",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 15,
+    "entries": [
+      "Your cunning mind is exceptionally difficult to control. You gain proficiency in Wisdom and Charisma saving throws."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/48"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.ability-score-improvement.16",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 16,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/49"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.subclass-feature.17",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 17,
+    "entries": [
+      "You gain a feature from your Rogue Subclass."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/50"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.elusive.18",
+    "kind": "class-feature",
+    "name": "Elusive",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 18,
+    "entries": [
+      "You're so evasive that attackers rarely gain the upper hand against you. No attack roll can have {@variantrule Advantage|SRD52} against you unless you have the {@condition Incapacitated|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/51"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.epic-boon.19",
+    "kind": "class-feature",
+    "name": "Epic Boon",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 19,
+    "entries": [
+      "You gain an {@filter Epic Boon feat|feats|category=EB} or another {@5etools feat|feats.html} of your choice for which you qualify. {@feat Boon of the Night Spirit|SRD52} is recommended."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/52"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.rogue.stroke-of-luck.20",
+    "kind": "class-feature",
+    "name": "Stroke of Luck",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "level": 20,
+    "entries": [
+      "You have a marvelous knack for succeeding when you need to. If you fail a {@variantrule D20 Test|SRD52}, you can turn the roll into a 20.",
+      "Once you use this feature, you can't use it again until you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 131,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/classFeature/53"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.rogue.thief.fast-hands.3",
+    "kind": "subclass-feature",
+    "name": "Fast Hands",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "subclassShortName": "Thief",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "As a {@variantrule Bonus Action|SRD52}, you can do one of the following.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Sleight of Hand",
+            "entries": [
+              "Make a Dexterity ({@skill Sleight of Hand|SRD52}) check to pick a lock or disarm a trap with {@item Thieves' Tools|SRD52} or to pick a pocket."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Use an Object",
+            "entries": [
+              "Take the {@action Utilize|SRD52} action, or take the {@action Magic|SRD52} action to use a magic item that requires that action."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-064",
+      "subclass.rogue.thief"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64
+      ],
+      "candidatePage": 137,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/subclassFeature/6"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.rogue.thief.second-story-work.3",
+    "kind": "subclass-feature",
+    "name": "Second-Story Work",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "subclassShortName": "Thief",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "You've trained to get into especially hard-to-reach places, granting you these benefits.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Climber",
+            "entries": [
+              "You gain a {@variantrule Climb Speed|SRD52} equal to your {@variantrule Speed|SRD52}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Jumper",
+            "entries": [
+              "You can determine your jump distance using your Dexterity rather than your Strength."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-064",
+      "subclass.rogue.thief"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64
+      ],
+      "candidatePage": 137,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/subclassFeature/7"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.rogue.thief.thief.3",
+    "kind": "subclass-feature",
+    "name": "Thief",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "subclassShortName": "Thief",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "{@i Hunt for Treasure as a Classic Adventurer}",
+      "A mix of burglar, treasure hunter, and explorer, you are the epitome of an adventurer. In addition to improving your agility and stealth, you gain abilities useful for delving into ruins and getting maximum benefit from the magic items you find there.",
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Fast Hands|Rogue|SRD52|Thief|SRD52|3"
+      },
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Second-Story Work|Rogue|SRD52|Thief|SRD52|3"
+      }
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-062",
+      "subclass-feature.rogue.thief.fast-hands.3",
+      "subclass-feature.rogue.thief.second-story-work.3",
+      "subclass.rogue.thief"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        62
+      ],
+      "candidatePage": 137,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/subclassFeature/8"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.rogue.thief.supreme-sneak.9",
+    "kind": "subclass-feature",
+    "name": "Supreme Sneak",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "subclassShortName": "Thief",
+    "subclassSource": "SRD52",
+    "level": 9,
+    "header": 2,
+    "entries": [
+      "You gain the following Cunning Strike option.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Stealth Attack (Cost: 1d6)",
+            "entries": [
+              "If you have the {@action Hide|SRD52} action's {@condition Invisible|SRD52} condition, this attack doesn't end that condition on you if you end the turn behind {@variantrule Cover|SRD52|Three-Quarters Cover} or {@variantrule Cover|SRD52|Total Cover}."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-064",
+      "subclass.rogue.thief"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64
+      ],
+      "candidatePage": 137,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/subclassFeature/9"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.rogue.thief.use-magic-device.13",
+    "kind": "subclass-feature",
+    "name": "Use Magic Device",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "subclassShortName": "Thief",
+    "subclassSource": "SRD52",
+    "level": 13,
+    "header": 2,
+    "entries": [
+      "You've learned how to maximize use of magic items, granting you the following benefits.",
+      {
+        "type": "entries",
+        "name": "Attunement",
+        "entries": [
+          "You can attune to up to four magic items at once."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Charges",
+        "entries": [
+          "Whenever you use a magic item property that expends charges, roll {@dice 1d6}. On a roll of 6, you use the property without expending the charges."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Scrolls",
+        "entries": [
+          "You can use any {@item Spell Scroll|SRD52}, using Intelligence as your spellcasting ability for the spell. If the spell is a cantrip or a level 1 spell, you can cast it reliably. If the scroll contains a higher-level spell, you must first succeed on an Intelligence ({@skill Arcana|SRD52}) check ({@dc 10} plus the spell's level). On a successful check, you cast the spell from the scroll. On a failed check, the scroll disintegrates."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-064",
+      "subclass.rogue.thief"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64
+      ],
+      "candidatePage": 137,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/subclassFeature/10"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.rogue.thief.thiefs-reflexes.17",
+    "kind": "subclass-feature",
+    "name": "Thief's Reflexes",
+    "className": "Rogue",
+    "classSource": "SRD52",
+    "subclassShortName": "Thief",
+    "subclassSource": "SRD52",
+    "level": 17,
+    "header": 2,
+    "entries": [
+      "You are adept at laying ambushes and quickly escaping danger. You can take two turns during the first round of any combat. You take your first turn at your normal {@variantrule Initiative|SRD52} and your second turn at your {@variantrule Initiative|SRD52} minus 10."
+    ],
+    "catalogReferences": [
+      "class.rogue",
+      "rulebook.page-064",
+      "subclass.rogue.thief"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64
+      ],
+      "candidatePage": 137,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-rogue.json",
+        "pointer": "/subclassFeature/11"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  }
+]

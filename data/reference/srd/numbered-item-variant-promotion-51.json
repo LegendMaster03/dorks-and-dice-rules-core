@@ -1,0 +1,35 @@
+{
+  "edition": "srd-5.1",
+  "templateCount": 12,
+  "counts": {
+    "Ammunition": 12,
+    "Armor": 36,
+    "Shield": 3,
+    "Weapon": 108
+  },
+  "mergedTemplates": [],
+  "deferred": [],
+  "excludedBases": [
+    {
+      "name": "Arrows (20)",
+      "reason": "Ammunition pack; numbered magic item is one piece, not a whole pack."
+    },
+    {
+      "name": "Blowgun Needles (50)",
+      "reason": "Ammunition pack; numbered magic item is one piece, not a whole pack."
+    },
+    {
+      "name": "Crossbow Bolts (20)",
+      "reason": "Ammunition pack; numbered magic item is one piece, not a whole pack."
+    },
+    {
+      "name": "Sling Bullets (20)",
+      "reason": "Ammunition pack; numbered magic item is one piece, not a whole pack."
+    },
+    {
+      "name": "Net",
+      "reason": "Legacy net has no damage roll and is excluded by the source enhancement template."
+    }
+  ],
+  "nativeCount": 159
+}

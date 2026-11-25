@@ -7,8 +7,16 @@ if (!File.Exists(Path.Combine(repository, "RulesCore.slnx")))
     return 2;
 }
 
+// Retain the established no-argument first-party digest output for release
+// compatibility. Explicit arguments allow independent package diagnostics.
+if (args.Length is not (0 or 2))
+{
+    Console.Error.WriteLine("Usage: NativeCatalogFingerprint [contentRoot rulesetId]");
+    return 2;
+}
 var location = NativeRulesetLayout.Resolve(
-    Path.Combine(repository, "data", "rulesets"), "first-party-001");
+    args.Length == 0 ? Path.Combine(repository, "data", "rulesets") : args[0],
+    args.Length == 0 ? "first-party-001" : args[1]);
 var catalog = NativeCatalogLoader.Load(location);
 
 // No static inventory gate: content is intentionally added, revised and removed

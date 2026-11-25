@@ -1,0 +1,1899 @@
+[
+  {
+    "id": "item.1-arrow",
+    "kind": "item",
+    "name": "+1 Arrow",
+    "baseItem": "Arrow|SRD52",
+    "baseItemId": "baseitem.arrow",
+    "variantOf": "magic-variant.1-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.05,
+    "arrow": true,
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "magic-variant.1-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/30"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/3"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-bolt",
+    "kind": "item",
+    "name": "+1 Bolt",
+    "baseItem": "Bolt|SRD52",
+    "baseItemId": "baseitem.bolt",
+    "variantOf": "magic-variant.1-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.075,
+    "bolt": true,
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "magic-variant.1-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/30"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/14"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-needle",
+    "kind": "item",
+    "name": "+1 Needle",
+    "baseItem": "Needle|SRD52",
+    "baseItemId": "baseitem.needle",
+    "variantOf": "magic-variant.1-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.02,
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.needle",
+      "magic-variant.1-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/30"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/109"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-sling-bullet",
+    "kind": "item",
+    "name": "+1 Sling Bullet",
+    "baseItem": "Sling Bullet|SRD52",
+    "baseItemId": "baseitem.sling-bullet",
+    "variantOf": "magic-variant.1-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.075,
+    "rarity": "uncommon",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.sling-bullet",
+      "magic-variant.1-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/30"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/153"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-arrow",
+    "kind": "item",
+    "name": "+2 Arrow",
+    "baseItem": "Arrow|SRD52",
+    "baseItemId": "baseitem.arrow",
+    "variantOf": "magic-variant.2-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.05,
+    "arrow": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "magic-variant.2-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/35"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/3"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-bolt",
+    "kind": "item",
+    "name": "+2 Bolt",
+    "baseItem": "Bolt|SRD52",
+    "baseItemId": "baseitem.bolt",
+    "variantOf": "magic-variant.2-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.075,
+    "bolt": true,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "magic-variant.2-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/35"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/14"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-needle",
+    "kind": "item",
+    "name": "+2 Needle",
+    "baseItem": "Needle|SRD52",
+    "baseItemId": "baseitem.needle",
+    "variantOf": "magic-variant.2-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.02,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.needle",
+      "magic-variant.2-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/35"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/109"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-sling-bullet",
+    "kind": "item",
+    "name": "+2 Sling Bullet",
+    "baseItem": "Sling Bullet|SRD52",
+    "baseItemId": "baseitem.sling-bullet",
+    "variantOf": "magic-variant.2-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.075,
+    "rarity": "rare",
+    "bonusWeapon": "+2",
+    "entries": [
+      "You have a +2 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.sling-bullet",
+      "magic-variant.2-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/35"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/153"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.3-arrow",
+    "kind": "item",
+    "name": "+3 Arrow",
+    "baseItem": "Arrow|SRD52",
+    "baseItemId": "baseitem.arrow",
+    "variantOf": "magic-variant.3-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.05,
+    "arrow": true,
+    "rarity": "very rare",
+    "bonusWeapon": "+3",
+    "entries": [
+      "You have a +3 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "magic-variant.3-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/39"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/3"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.3-bolt",
+    "kind": "item",
+    "name": "+3 Bolt",
+    "baseItem": "Bolt|SRD52",
+    "baseItemId": "baseitem.bolt",
+    "variantOf": "magic-variant.3-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.075,
+    "bolt": true,
+    "rarity": "very rare",
+    "bonusWeapon": "+3",
+    "entries": [
+      "You have a +3 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "magic-variant.3-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/39"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/14"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.3-needle",
+    "kind": "item",
+    "name": "+3 Needle",
+    "baseItem": "Needle|SRD52",
+    "baseItemId": "baseitem.needle",
+    "variantOf": "magic-variant.3-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.02,
+    "rarity": "very rare",
+    "bonusWeapon": "+3",
+    "entries": [
+      "You have a +3 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.needle",
+      "magic-variant.3-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/39"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/109"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.3-sling-bullet",
+    "kind": "item",
+    "name": "+3 Sling Bullet",
+    "baseItem": "Sling Bullet|SRD52",
+    "baseItemId": "baseitem.sling-bullet",
+    "variantOf": "magic-variant.3-ammunition",
+    "type": "A|SRD52",
+    "weight": 0.075,
+    "rarity": "very rare",
+    "bonusWeapon": "+3",
+    "entries": [
+      "You have a +3 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity."
+    ],
+    "catalogReferences": [
+      "baseitem.sling-bullet",
+      "magic-variant.3-ammunition",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/39"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/153"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-breastplate",
+    "kind": "item",
+    "name": "+1 Breastplate",
+    "baseItem": "Breastplate|SRD52",
+    "baseItemId": "baseitem.breastplate",
+    "variantOf": "magic-variant.1-armor",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 14,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.breastplate",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/17"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-chain-mail",
+    "kind": "item",
+    "name": "+1 Chain Mail",
+    "baseItem": "Chain Mail|SRD52",
+    "baseItemId": "baseitem.chain-mail",
+    "variantOf": "magic-variant.1-armor",
+    "type": "HA|SRD52",
+    "weight": 55,
+    "ac": 16,
+    "strength": "13",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-mail",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/27"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-chain-shirt",
+    "kind": "item",
+    "name": "+1 Chain Shirt",
+    "baseItem": "Chain Shirt|SRD52",
+    "baseItemId": "baseitem.chain-shirt",
+    "variantOf": "magic-variant.1-armor",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 13,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-shirt",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/29"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-half-plate-armor",
+    "kind": "item",
+    "name": "+1 Half Plate Armor",
+    "baseItem": "Half Plate Armor|SRD52",
+    "baseItemId": "baseitem.half-plate-armor",
+    "variantOf": "magic-variant.1-armor",
+    "type": "MA|SRD52",
+    "weight": 40,
+    "ac": 15,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.half-plate-armor",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/66"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-hide-armor",
+    "kind": "item",
+    "name": "+1 Hide Armor",
+    "baseItem": "Hide Armor|SRD52",
+    "baseItemId": "baseitem.hide-armor",
+    "variantOf": "magic-variant.1-armor",
+    "type": "MA|SRD52",
+    "weight": 12,
+    "ac": 12,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.hide-armor",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/74"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-leather-armor",
+    "kind": "item",
+    "name": "+1 Leather Armor",
+    "baseItem": "Leather Armor|SRD52",
+    "baseItemId": "baseitem.leather-armor",
+    "variantOf": "magic-variant.1-armor",
+    "type": "LA|SRD52",
+    "weight": 10,
+    "ac": 11,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.leather-armor",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/84"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-padded-armor",
+    "kind": "item",
+    "name": "+1 Padded Armor",
+    "baseItem": "Padded Armor|SRD52",
+    "baseItemId": "baseitem.padded-armor",
+    "variantOf": "magic-variant.1-armor",
+    "type": "LA|SRD52",
+    "weight": 8,
+    "ac": 11,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.padded-armor",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/115"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-plate-armor",
+    "kind": "item",
+    "name": "+1 Plate Armor",
+    "baseItem": "Plate Armor|SRD52",
+    "baseItemId": "baseitem.plate-armor",
+    "variantOf": "magic-variant.1-armor",
+    "type": "HA|SRD52",
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/125"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-ring-mail",
+    "kind": "item",
+    "name": "+1 Ring Mail",
+    "baseItem": "Ring Mail|SRD52",
+    "baseItemId": "baseitem.ring-mail",
+    "variantOf": "magic-variant.1-armor",
+    "type": "HA|SRD52",
+    "weight": 40,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.ring-mail",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/133"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-scale-mail",
+    "kind": "item",
+    "name": "+1 Scale Mail",
+    "baseItem": "Scale Mail|SRD52",
+    "baseItemId": "baseitem.scale-mail",
+    "variantOf": "magic-variant.1-armor",
+    "type": "MA|SRD52",
+    "weight": 45,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/137"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-splint-armor",
+    "kind": "item",
+    "name": "+1 Splint Armor",
+    "baseItem": "Splint Armor|SRD52",
+    "baseItemId": "baseitem.splint-armor",
+    "variantOf": "magic-variant.1-armor",
+    "type": "HA|SRD52",
+    "weight": 60,
+    "ac": 17,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.splint-armor",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/161"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.1-studded-leather-armor",
+    "kind": "item",
+    "name": "+1 Studded Leather Armor",
+    "baseItem": "Studded Leather Armor|SRD52",
+    "baseItemId": "baseitem.studded-leather-armor",
+    "variantOf": "magic-variant.1-armor",
+    "type": "LA|SRD52",
+    "weight": 13,
+    "ac": 12,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "entries": [
+      "You have a +1 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.studded-leather-armor",
+      "magic-variant.1-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/31"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/165"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-breastplate",
+    "kind": "item",
+    "name": "+2 Breastplate",
+    "baseItem": "Breastplate|SRD52",
+    "baseItemId": "baseitem.breastplate",
+    "variantOf": "magic-variant.2-armor",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 14,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.breastplate",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/17"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-chain-mail",
+    "kind": "item",
+    "name": "+2 Chain Mail",
+    "baseItem": "Chain Mail|SRD52",
+    "baseItemId": "baseitem.chain-mail",
+    "variantOf": "magic-variant.2-armor",
+    "type": "HA|SRD52",
+    "weight": 55,
+    "ac": 16,
+    "strength": "13",
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-mail",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/27"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-chain-shirt",
+    "kind": "item",
+    "name": "+2 Chain Shirt",
+    "baseItem": "Chain Shirt|SRD52",
+    "baseItemId": "baseitem.chain-shirt",
+    "variantOf": "magic-variant.2-armor",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 13,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-shirt",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/29"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-half-plate-armor",
+    "kind": "item",
+    "name": "+2 Half Plate Armor",
+    "baseItem": "Half Plate Armor|SRD52",
+    "baseItemId": "baseitem.half-plate-armor",
+    "variantOf": "magic-variant.2-armor",
+    "type": "MA|SRD52",
+    "weight": 40,
+    "ac": 15,
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.half-plate-armor",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/66"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-hide-armor",
+    "kind": "item",
+    "name": "+2 Hide Armor",
+    "baseItem": "Hide Armor|SRD52",
+    "baseItemId": "baseitem.hide-armor",
+    "variantOf": "magic-variant.2-armor",
+    "type": "MA|SRD52",
+    "weight": 12,
+    "ac": 12,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.hide-armor",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/74"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-leather-armor",
+    "kind": "item",
+    "name": "+2 Leather Armor",
+    "baseItem": "Leather Armor|SRD52",
+    "baseItemId": "baseitem.leather-armor",
+    "variantOf": "magic-variant.2-armor",
+    "type": "LA|SRD52",
+    "weight": 10,
+    "ac": 11,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.leather-armor",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/84"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-padded-armor",
+    "kind": "item",
+    "name": "+2 Padded Armor",
+    "baseItem": "Padded Armor|SRD52",
+    "baseItemId": "baseitem.padded-armor",
+    "variantOf": "magic-variant.2-armor",
+    "type": "LA|SRD52",
+    "weight": 8,
+    "ac": 11,
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.padded-armor",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/115"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-plate-armor",
+    "kind": "item",
+    "name": "+2 Plate Armor",
+    "baseItem": "Plate Armor|SRD52",
+    "baseItemId": "baseitem.plate-armor",
+    "variantOf": "magic-variant.2-armor",
+    "type": "HA|SRD52",
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/125"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-ring-mail",
+    "kind": "item",
+    "name": "+2 Ring Mail",
+    "baseItem": "Ring Mail|SRD52",
+    "baseItemId": "baseitem.ring-mail",
+    "variantOf": "magic-variant.2-armor",
+    "type": "HA|SRD52",
+    "weight": 40,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.ring-mail",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/133"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-scale-mail",
+    "kind": "item",
+    "name": "+2 Scale Mail",
+    "baseItem": "Scale Mail|SRD52",
+    "baseItemId": "baseitem.scale-mail",
+    "variantOf": "magic-variant.2-armor",
+    "type": "MA|SRD52",
+    "weight": 45,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/137"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-splint-armor",
+    "kind": "item",
+    "name": "+2 Splint Armor",
+    "baseItem": "Splint Armor|SRD52",
+    "baseItemId": "baseitem.splint-armor",
+    "variantOf": "magic-variant.2-armor",
+    "type": "HA|SRD52",
+    "weight": 60,
+    "ac": 17,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.splint-armor",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/161"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.2-studded-leather-armor",
+    "kind": "item",
+    "name": "+2 Studded Leather Armor",
+    "baseItem": "Studded Leather Armor|SRD52",
+    "baseItemId": "baseitem.studded-leather-armor",
+    "variantOf": "magic-variant.2-armor",
+    "type": "LA|SRD52",
+    "weight": 13,
+    "ac": 12,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "You have a +2 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.studded-leather-armor",
+      "magic-variant.2-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/36"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/165"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.3-breastplate",
+    "kind": "item",
+    "name": "+3 Breastplate",
+    "baseItem": "Breastplate|SRD52",
+    "baseItemId": "baseitem.breastplate",
+    "variantOf": "magic-variant.3-armor",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 14,
+    "armor": true,
+    "rarity": "legendary",
+    "bonusAc": "+3",
+    "entries": [
+      "You have a +3 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.breastplate",
+      "magic-variant.3-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/40"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/17"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.3-chain-mail",
+    "kind": "item",
+    "name": "+3 Chain Mail",
+    "baseItem": "Chain Mail|SRD52",
+    "baseItemId": "baseitem.chain-mail",
+    "variantOf": "magic-variant.3-armor",
+    "type": "HA|SRD52",
+    "weight": 55,
+    "ac": 16,
+    "strength": "13",
+    "stealth": true,
+    "armor": true,
+    "rarity": "legendary",
+    "bonusAc": "+3",
+    "entries": [
+      "You have a +3 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-mail",
+      "magic-variant.3-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/40"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/27"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.3-chain-shirt",
+    "kind": "item",
+    "name": "+3 Chain Shirt",
+    "baseItem": "Chain Shirt|SRD52",
+    "baseItemId": "baseitem.chain-shirt",
+    "variantOf": "magic-variant.3-armor",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 13,
+    "armor": true,
+    "rarity": "legendary",
+    "bonusAc": "+3",
+    "entries": [
+      "You have a +3 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-shirt",
+      "magic-variant.3-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/40"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/29"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  },
+  {
+    "id": "item.3-half-plate-armor",
+    "kind": "item",
+    "name": "+3 Half Plate Armor",
+    "baseItem": "Half Plate Armor|SRD52",
+    "baseItemId": "baseitem.half-plate-armor",
+    "variantOf": "magic-variant.3-armor",
+    "type": "MA|SRD52",
+    "weight": 40,
+    "ac": 15,
+    "stealth": true,
+    "armor": true,
+    "rarity": "legendary",
+    "bonusAc": "+3",
+    "entries": [
+      "You have a +3 bonus to AC while wearing this armor."
+    ],
+    "catalogReferences": [
+      "baseitem.half-plate-armor",
+      "magic-variant.3-armor",
+      "rulebook.page-210"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        210
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/40"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/66"
+        }
+      ],
+      "structuredStatus": "Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."
+    }
+  }
+]

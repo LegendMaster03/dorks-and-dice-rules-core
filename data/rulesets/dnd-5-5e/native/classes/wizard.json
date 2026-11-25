@@ -1,0 +1,2008 @@
+[
+  {
+    "id": "class.wizard",
+    "kind": "class",
+    "name": "Wizard",
+    "primaryAbility": [
+      {
+        "int": true
+      }
+    ],
+    "hd": {
+      "number": 1,
+      "faces": 6
+    },
+    "proficiency": [
+      "int",
+      "wis"
+    ],
+    "spellcastingAbility": "int",
+    "casterProgression": "full",
+    "preparedSpellsProgression": [
+      4,
+      5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      16,
+      17,
+      18,
+      19,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "preparedSpellsChange": "restLong",
+    "cantripProgression": [
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "spellsKnownProgressionFixed": [
+      6,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "spellsKnownProgressionFixedAllowLowerLevel": true,
+    "featProgression": [
+      {
+        "name": "Epic Boon",
+        "category": [
+          "EB"
+        ],
+        "progression": {
+          "19": 1
+        }
+      }
+    ],
+    "startingProficiencies": {
+      "weapons": [
+        "simple"
+      ],
+      "skills": [
+        {
+          "choose": {
+            "from": [
+              "arcana",
+              "history",
+              "insight",
+              "investigation",
+              "medicine",
+              "nature",
+              "religion"
+            ],
+            "count": 2
+          }
+        }
+      ]
+    },
+    "startingEquipment": {
+      "additionalFromBackground": true,
+      "defaultData": [
+        {
+          "A": [
+            {
+              "item": "dagger|srd52",
+              "quantity": 2
+            },
+            {
+              "item": "quarterstaff|srd52"
+            },
+            {
+              "item": "robe|srd52"
+            },
+            {
+              "special": "Spellbook"
+            },
+            {
+              "item": "scholar's pack|srd52"
+            },
+            {
+              "value": 500
+            }
+          ],
+          "B": [
+            {
+              "value": 5500
+            }
+          ]
+        }
+      ],
+      "entries": [
+        "{@i Choose A or B:} (A) 2 {@item Dagger|SRD52|Daggers}, {@item Arcane Focus|SRD52} ({@item Quarterstaff|SRD52}), {@item Robe|SRD52}, Spellbook, {@item Scholar's Pack|SRD52}, and 5 GP; or (B) 55 GP"
+      ]
+    },
+    "multiclassing": {},
+    "classTableGroups": [
+      {
+        "colLabels": [
+          "{@filter Cantrips|spells|level=0|class=Wizard}",
+          "{@filter Prepared Spells|spells|level=!0|class=Wizard}"
+        ],
+        "rows": [
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            4,
+            10
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            4,
+            12
+          ],
+          [
+            4,
+            14
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            5,
+            16
+          ],
+          [
+            5,
+            16
+          ],
+          [
+            5,
+            17
+          ],
+          [
+            5,
+            18
+          ],
+          [
+            5,
+            19
+          ],
+          [
+            5,
+            21
+          ],
+          [
+            5,
+            22
+          ],
+          [
+            5,
+            23
+          ],
+          [
+            5,
+            24
+          ],
+          [
+            5,
+            25
+          ]
+        ]
+      },
+      {
+        "title": "Spell Slots per Spell Level",
+        "colLabels": [
+          "{@filter 1st|spells|level=1|class=Wizard}",
+          "{@filter 2nd|spells|level=2|class=Wizard}",
+          "{@filter 3rd|spells|level=3|class=Wizard}",
+          "{@filter 4th|spells|level=4|class=Wizard}",
+          "{@filter 5th|spells|level=5|class=Wizard}",
+          "{@filter 6th|spells|level=6|class=Wizard}",
+          "{@filter 7th|spells|level=7|class=Wizard}",
+          "{@filter 8th|spells|level=8|class=Wizard}",
+          "{@filter 9th|spells|level=9|class=Wizard}"
+        ],
+        "rowsSpellProgression": [
+          [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            3,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            1,
+            1
+          ]
+        ]
+      }
+    ],
+    "classFeatures": [
+      "Spellcasting|Wizard|SRD52|1",
+      "Ritual Adept|Wizard|SRD52|1",
+      "Arcane Recovery|Wizard|SRD52|1",
+      "Scholar|Wizard|SRD52|2",
+      {
+        "classFeature": "Wizard Subclass|Wizard|SRD52|3",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Wizard|SRD52|4",
+      "Memorize Spell|Wizard|SRD52|5",
+      {
+        "classFeature": "Subclass Feature|Wizard|SRD52|6",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Wizard|SRD52|8",
+      {
+        "classFeature": "Subclass Feature|Wizard|SRD52|10",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Wizard|SRD52|12",
+      {
+        "classFeature": "Subclass Feature|Wizard|SRD52|14",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Wizard|SRD52|16",
+      "Spell Mastery|Wizard|SRD52|18",
+      "Epic Boon|Wizard|SRD52|19",
+      "Signature Spells|Wizard|SRD52|20"
+    ],
+    "subclassTitle": "Wizard Subclass",
+    "catalogReferences": [
+      "baseitem.dagger",
+      "baseitem.quarterstaff",
+      "class-feature.wizard.ability-score-improvement.12",
+      "class-feature.wizard.ability-score-improvement.16",
+      "class-feature.wizard.ability-score-improvement.4",
+      "class-feature.wizard.ability-score-improvement.8",
+      "class-feature.wizard.arcane-recovery.1",
+      "class-feature.wizard.epic-boon.19",
+      "class-feature.wizard.memorize-spell.5",
+      "class-feature.wizard.ritual-adept.1",
+      "class-feature.wizard.scholar.2",
+      "class-feature.wizard.signature-spells.20",
+      "class-feature.wizard.spell-mastery.18",
+      "class-feature.wizard.spellcasting.1",
+      "class-feature.wizard.subclass-feature.10",
+      "class-feature.wizard.subclass-feature.14",
+      "class-feature.wizard.subclass-feature.6",
+      "class-feature.wizard.wizard-subclass.3",
+      "item.robe",
+      "item.scholar-s-pack",
+      "rulebook.page-077",
+      "rulebook.page-079",
+      "rulebook.page-080",
+      "rulebook.page-081",
+      "rulebook.page-082",
+      "skill.arcana",
+      "skill.history",
+      "skill.insight",
+      "skill.investigation",
+      "skill.medicine",
+      "skill.nature",
+      "skill.religion",
+      "spell.acid-arrow",
+      "spell.acid-splash",
+      "spell.alarm",
+      "spell.alter-self",
+      "spell.animate-dead",
+      "spell.animate-objects",
+      "spell.antimagic-field",
+      "spell.antipathy-sympathy",
+      "spell.arcane-eye",
+      "spell.arcane-hand",
+      "spell.arcane-lock",
+      "spell.arcane-sword",
+      "spell.arcanist-s-magic-aura",
+      "spell.astral-projection",
+      "spell.augury",
+      "spell.banishment",
+      "spell.befuddlement",
+      "spell.bestow-curse",
+      "spell.black-tentacles",
+      "spell.blight",
+      "spell.blindness-deafness",
+      "spell.blink",
+      "spell.blur",
+      "spell.burning-hands",
+      "spell.chain-lightning",
+      "spell.charm-monster",
+      "spell.charm-person",
+      "spell.chill-touch",
+      "spell.chromatic-orb",
+      "spell.circle-of-death",
+      "spell.clairvoyance",
+      "spell.clone",
+      "spell.cloudkill",
+      "spell.color-spray",
+      "spell.comprehend-languages",
+      "spell.cone-of-cold",
+      "spell.confusion",
+      "spell.conjure-elemental",
+      "spell.conjure-minor-elementals",
+      "spell.contact-other-plane",
+      "spell.contingency",
+      "spell.continual-flame",
+      "spell.control-water",
+      "spell.control-weather",
+      "spell.counterspell",
+      "spell.create-undead",
+      "spell.creation",
+      "spell.dancing-lights",
+      "spell.darkness",
+      "spell.darkvision",
+      "spell.delayed-blast-fireball",
+      "spell.demiplane",
+      "spell.detect-magic",
+      "spell.detect-thoughts",
+      "spell.dimension-door",
+      "spell.disguise-self",
+      "spell.disintegrate",
+      "spell.dispel-magic",
+      "spell.divination",
+      "spell.dominate-monster",
+      "spell.dominate-person",
+      "spell.dragon-s-breath",
+      "spell.dream",
+      "spell.elementalism",
+      "spell.enhance-ability",
+      "spell.enlarge-reduce",
+      "spell.etherealness",
+      "spell.expeditious-retreat",
+      "spell.eyebite",
+      "spell.fabricate",
+      "spell.faithful-hound",
+      "spell.false-life",
+      "spell.fear",
+      "spell.feather-fall",
+      "spell.find-familiar",
+      "spell.finger-of-death",
+      "spell.fire-bolt",
+      "spell.fire-shield",
+      "spell.fireball",
+      "spell.flaming-sphere",
+      "spell.flesh-to-stone",
+      "spell.floating-disk",
+      "spell.fly",
+      "spell.fog-cloud",
+      "spell.forcecage",
+      "spell.foresight",
+      "spell.freezing-sphere",
+      "spell.gaseous-form",
+      "spell.gate",
+      "spell.geas",
+      "spell.gentle-repose",
+      "spell.globe-of-invulnerability",
+      "spell.glyph-of-warding",
+      "spell.grease",
+      "spell.greater-invisibility",
+      "spell.guards-and-wards",
+      "spell.gust-of-wind",
+      "spell.hallucinatory-terrain",
+      "spell.haste",
+      "spell.hideous-laughter",
+      "spell.hold-monster",
+      "spell.hold-person",
+      "spell.hypnotic-pattern",
+      "spell.ice-knife",
+      "spell.ice-storm",
+      "spell.identify",
+      "spell.illusory-script",
+      "spell.imprisonment",
+      "spell.incendiary-cloud",
+      "spell.instant-summons",
+      "spell.invisibility",
+      "spell.irresistible-dance",
+      "spell.jump",
+      "spell.knock",
+      "spell.legend-lore",
+      "spell.levitate",
+      "spell.light",
+      "spell.lightning-bolt",
+      "spell.locate-creature",
+      "spell.locate-object",
+      "spell.longstrider",
+      "spell.mage-armor",
+      "spell.mage-hand",
+      "spell.magic-circle",
+      "spell.magic-jar",
+      "spell.magic-missile",
+      "spell.magic-mouth",
+      "spell.magic-weapon",
+      "spell.magnificent-mansion",
+      "spell.major-image",
+      "spell.mass-suggestion",
+      "spell.maze",
+      "spell.mending",
+      "spell.message",
+      "spell.meteor-swarm",
+      "spell.mind-blank",
+      "spell.mind-spike",
+      "spell.minor-illusion",
+      "spell.mirage-arcane",
+      "spell.mirror-image",
+      "spell.mislead",
+      "spell.misty-step",
+      "spell.modify-memory",
+      "spell.move-earth",
+      "spell.nondetection",
+      "spell.passwall",
+      "spell.phantasmal-killer",
+      "spell.phantom-steed",
+      "spell.planar-binding",
+      "spell.plane-shift",
+      "spell.poison-spray",
+      "spell.polymorph",
+      "spell.power-word-kill",
+      "spell.power-word-stun",
+      "spell.prestidigitation",
+      "spell.prismatic-spray",
+      "spell.prismatic-wall",
+      "spell.private-sanctum",
+      "spell.programmed-illusion",
+      "spell.project-image",
+      "spell.protection-from-energy",
+      "spell.protection-from-evil-and-good",
+      "spell.ray-of-enfeeblement",
+      "spell.ray-of-frost",
+      "spell.ray-of-sickness",
+      "spell.remove-curse",
+      "spell.resilient-sphere",
+      "spell.reverse-gravity",
+      "spell.rope-trick",
+      "spell.scorching-ray",
+      "spell.scrying",
+      "spell.secret-chest",
+      "spell.see-invisibility",
+      "spell.seeming",
+      "spell.sending",
+      "spell.sequester",
+      "spell.shapechange",
+      "spell.shatter",
+      "spell.shield",
+      "spell.shocking-grasp",
+      "spell.silent-image",
+      "spell.simulacrum",
+      "spell.sleep",
+      "spell.sleet-storm",
+      "spell.slow",
+      "spell.speak-with-dead",
+      "spell.spider-climb",
+      "spell.stinking-cloud",
+      "spell.stone-shape",
+      "spell.stoneskin",
+      "spell.suggestion",
+      "spell.summon-dragon",
+      "spell.sunbeam",
+      "spell.sunburst",
+      "spell.symbol",
+      "spell.telekinesis",
+      "spell.telepathic-bond",
+      "spell.teleport",
+      "spell.teleportation-circle",
+      "spell.thunderwave",
+      "spell.time-stop",
+      "spell.tiny-hut",
+      "spell.tongues",
+      "spell.true-polymorph",
+      "spell.true-seeing",
+      "spell.true-strike",
+      "spell.unseen-servant",
+      "spell.vampiric-touch",
+      "spell.vitriolic-sphere",
+      "spell.wall-of-fire",
+      "spell.wall-of-force",
+      "spell.wall-of-ice",
+      "spell.wall-of-stone",
+      "spell.water-breathing",
+      "spell.web",
+      "spell.weird",
+      "spell.wish"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 77,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/class/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending",
+      "spellList": {
+        "pages": [
+          79,
+          80,
+          81,
+          82
+        ],
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/sources.json",
+        "pointer": "/SRD52",
+        "verification": "publisher class-list membership verified; not a feature grant or executable spellcasting policy"
+      }
+    },
+    "spellList": [
+      {
+        "level": 0,
+        "spellIds": [
+          "spell.acid-splash",
+          "spell.chill-touch",
+          "spell.dancing-lights",
+          "spell.elementalism",
+          "spell.fire-bolt",
+          "spell.light",
+          "spell.mage-hand",
+          "spell.mending",
+          "spell.message",
+          "spell.minor-illusion",
+          "spell.poison-spray",
+          "spell.prestidigitation",
+          "spell.ray-of-frost",
+          "spell.shocking-grasp",
+          "spell.true-strike"
+        ]
+      },
+      {
+        "level": 1,
+        "spellIds": [
+          "spell.alarm",
+          "spell.burning-hands",
+          "spell.charm-person",
+          "spell.chromatic-orb",
+          "spell.color-spray",
+          "spell.comprehend-languages",
+          "spell.detect-magic",
+          "spell.disguise-self",
+          "spell.expeditious-retreat",
+          "spell.false-life",
+          "spell.feather-fall",
+          "spell.find-familiar",
+          "spell.floating-disk",
+          "spell.fog-cloud",
+          "spell.grease",
+          "spell.hideous-laughter",
+          "spell.ice-knife",
+          "spell.identify",
+          "spell.illusory-script",
+          "spell.jump",
+          "spell.longstrider",
+          "spell.mage-armor",
+          "spell.magic-missile",
+          "spell.protection-from-evil-and-good",
+          "spell.ray-of-sickness",
+          "spell.shield",
+          "spell.silent-image",
+          "spell.sleep",
+          "spell.thunderwave",
+          "spell.unseen-servant"
+        ]
+      },
+      {
+        "level": 2,
+        "spellIds": [
+          "spell.acid-arrow",
+          "spell.alter-self",
+          "spell.arcane-lock",
+          "spell.arcanist-s-magic-aura",
+          "spell.augury",
+          "spell.blindness-deafness",
+          "spell.blur",
+          "spell.continual-flame",
+          "spell.darkness",
+          "spell.darkvision",
+          "spell.detect-thoughts",
+          "spell.dragon-s-breath",
+          "spell.enhance-ability",
+          "spell.enlarge-reduce",
+          "spell.flaming-sphere",
+          "spell.gentle-repose",
+          "spell.gust-of-wind",
+          "spell.hold-person",
+          "spell.invisibility",
+          "spell.knock",
+          "spell.levitate",
+          "spell.locate-object",
+          "spell.magic-mouth",
+          "spell.magic-weapon",
+          "spell.mind-spike",
+          "spell.mirror-image",
+          "spell.misty-step",
+          "spell.ray-of-enfeeblement",
+          "spell.rope-trick",
+          "spell.scorching-ray",
+          "spell.see-invisibility",
+          "spell.shatter",
+          "spell.spider-climb",
+          "spell.suggestion",
+          "spell.web"
+        ]
+      },
+      {
+        "level": 3,
+        "spellIds": [
+          "spell.animate-dead",
+          "spell.bestow-curse",
+          "spell.blink",
+          "spell.clairvoyance",
+          "spell.counterspell",
+          "spell.dispel-magic",
+          "spell.fear",
+          "spell.fireball",
+          "spell.fly",
+          "spell.gaseous-form",
+          "spell.glyph-of-warding",
+          "spell.haste",
+          "spell.hypnotic-pattern",
+          "spell.lightning-bolt",
+          "spell.magic-circle",
+          "spell.major-image",
+          "spell.nondetection",
+          "spell.phantom-steed",
+          "spell.protection-from-energy",
+          "spell.remove-curse",
+          "spell.sending",
+          "spell.sleet-storm",
+          "spell.slow",
+          "spell.speak-with-dead",
+          "spell.stinking-cloud",
+          "spell.tiny-hut",
+          "spell.tongues",
+          "spell.vampiric-touch",
+          "spell.water-breathing"
+        ]
+      },
+      {
+        "level": 4,
+        "spellIds": [
+          "spell.arcane-eye",
+          "spell.banishment",
+          "spell.black-tentacles",
+          "spell.blight",
+          "spell.charm-monster",
+          "spell.confusion",
+          "spell.conjure-minor-elementals",
+          "spell.control-water",
+          "spell.dimension-door",
+          "spell.divination",
+          "spell.fabricate",
+          "spell.faithful-hound",
+          "spell.fire-shield",
+          "spell.greater-invisibility",
+          "spell.hallucinatory-terrain",
+          "spell.ice-storm",
+          "spell.locate-creature",
+          "spell.phantasmal-killer",
+          "spell.polymorph",
+          "spell.private-sanctum",
+          "spell.resilient-sphere",
+          "spell.secret-chest",
+          "spell.stone-shape",
+          "spell.stoneskin",
+          "spell.vitriolic-sphere",
+          "spell.wall-of-fire"
+        ]
+      },
+      {
+        "level": 5,
+        "spellIds": [
+          "spell.animate-objects",
+          "spell.arcane-hand",
+          "spell.cloudkill",
+          "spell.cone-of-cold",
+          "spell.conjure-elemental",
+          "spell.contact-other-plane",
+          "spell.creation",
+          "spell.dominate-person",
+          "spell.dream",
+          "spell.geas",
+          "spell.hold-monster",
+          "spell.legend-lore",
+          "spell.mislead",
+          "spell.modify-memory",
+          "spell.passwall",
+          "spell.planar-binding",
+          "spell.scrying",
+          "spell.seeming",
+          "spell.summon-dragon",
+          "spell.telekinesis",
+          "spell.telepathic-bond",
+          "spell.teleportation-circle",
+          "spell.wall-of-force",
+          "spell.wall-of-stone"
+        ]
+      },
+      {
+        "level": 6,
+        "spellIds": [
+          "spell.chain-lightning",
+          "spell.circle-of-death",
+          "spell.contingency",
+          "spell.create-undead",
+          "spell.disintegrate",
+          "spell.eyebite",
+          "spell.flesh-to-stone",
+          "spell.freezing-sphere",
+          "spell.globe-of-invulnerability",
+          "spell.guards-and-wards",
+          "spell.instant-summons",
+          "spell.irresistible-dance",
+          "spell.magic-jar",
+          "spell.mass-suggestion",
+          "spell.move-earth",
+          "spell.programmed-illusion",
+          "spell.sunbeam",
+          "spell.true-seeing",
+          "spell.wall-of-ice"
+        ]
+      },
+      {
+        "level": 7,
+        "spellIds": [
+          "spell.arcane-sword",
+          "spell.delayed-blast-fireball",
+          "spell.etherealness",
+          "spell.finger-of-death",
+          "spell.forcecage",
+          "spell.magnificent-mansion",
+          "spell.mirage-arcane",
+          "spell.plane-shift",
+          "spell.prismatic-spray",
+          "spell.project-image",
+          "spell.reverse-gravity",
+          "spell.sequester",
+          "spell.simulacrum",
+          "spell.symbol",
+          "spell.teleport"
+        ]
+      },
+      {
+        "level": 8,
+        "spellIds": [
+          "spell.antimagic-field",
+          "spell.antipathy-sympathy",
+          "spell.befuddlement",
+          "spell.clone",
+          "spell.control-weather",
+          "spell.demiplane",
+          "spell.dominate-monster",
+          "spell.incendiary-cloud",
+          "spell.maze",
+          "spell.mind-blank",
+          "spell.power-word-stun",
+          "spell.sunburst"
+        ]
+      },
+      {
+        "level": 9,
+        "spellIds": [
+          "spell.astral-projection",
+          "spell.foresight",
+          "spell.gate",
+          "spell.imprisonment",
+          "spell.meteor-swarm",
+          "spell.power-word-kill",
+          "spell.prismatic-wall",
+          "spell.shapechange",
+          "spell.time-stop",
+          "spell.true-polymorph",
+          "spell.weird",
+          "spell.wish"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "subclass.wizard.evoker",
+    "kind": "subclass",
+    "name": "Evoker",
+    "shortName": "Evoker",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "additionalSpells": [
+      {
+        "spellbook": {
+          "3": [
+            {
+              "choose": "level=1;2|class=Wizard|school=V"
+            },
+            {
+              "choose": "level=1;2|class=Wizard|school=V"
+            }
+          ],
+          "5": [
+            {
+              "choose": "level=1;2;3|class=Wizard|school=V"
+            }
+          ],
+          "7": [
+            {
+              "choose": "level=1;2;3;4|class=Wizard|school=V"
+            }
+          ],
+          "9": [
+            {
+              "choose": "level=1;2;3;4;5|class=Wizard|school=V"
+            }
+          ],
+          "11": [
+            {
+              "choose": "level=1;2;3;4;5;6|class=Wizard|school=V"
+            }
+          ],
+          "13": [
+            {
+              "choose": "level=1;2;3;4;5;6;7|class=Wizard|school=V"
+            }
+          ],
+          "15": [
+            {
+              "choose": "level=1;2;3;4;5;6;7;8|class=Wizard|school=V"
+            }
+          ],
+          "17": [
+            {
+              "choose": "level=1;2;3;4;5;6;7;8;9|class=Wizard|school=V"
+            }
+          ]
+        }
+      }
+    ],
+    "subclassFeatures": [
+      "Evoker|Wizard|SRD52|Evoker|SRD52|3",
+      "Sculpt Spells|Wizard|SRD52|Evoker|SRD52|6",
+      "Empowered Evocation|Wizard|SRD52|Evoker|SRD52|10",
+      "Overchannel|Wizard|SRD52|Evoker|SRD52|14"
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077",
+      "rulebook.page-078",
+      "rulebook.page-082",
+      "subclass-feature.wizard.evoker.empowered-evocation.10",
+      "subclass-feature.wizard.evoker.evoker.3",
+      "subclass-feature.wizard.evoker.overchannel.14",
+      "subclass-feature.wizard.evoker.sculpt-spells.6"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77,
+        78,
+        82
+      ],
+      "candidatePage": 82,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/subclass/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.arcane-recovery.1",
+    "kind": "class-feature",
+    "name": "Arcane Recovery",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "You can regain some of your magical energy by studying your spellbook. When you finish a {@variantrule Short Rest|SRD52}, you can choose expended spell slots to recover. The spell slots can have a combined level equal to no more than half your Wizard level (round up), and none of the slots can be level 6 or higher. For example, if you're a level 4 Wizard, you can recover up to two levels' worth of spell slots, regaining either one level 2 spell slot or two level 1 spell slots.",
+      "Once you use this feature, you can't do so again until you finish a {@variantrule Long Rest|SRD52}."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 155,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/13"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.ritual-adept.1",
+    "kind": "class-feature",
+    "name": "Ritual Adept",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "You can cast any spell as a {@variantrule Ritual|SRD52} if that spell has the {@variantrule Ritual|SRD52} tag and the spell is in your spellbook. You needn't have the spell prepared, but you must read from the book to cast a spell in this way."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 155,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/14"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.spellcasting.1",
+    "kind": "class-feature",
+    "name": "Spellcasting",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "As a student of arcane magic, you have learned to cast spells. See {@book chapter 7|SRD52|7} for the rules on spellcasting. The information below details how you use those rules with Wizard spells, which appear in the {@filter Wizard spell list|spells|class=Wizard} later in the class's description.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Cantrips",
+            "entries": [
+              "You know three Wizard cantrips of your choice. {@spell Light|SRD52}, {@spell Mage Hand|SRD52}, and {@spell Ray of Frost|SRD52} are recommended. Whenever you finish a {@variantrule Long Rest|SRD52}, you can replace one of your cantrips from this feature with another Wizard cantrip of your choice.",
+              "When you reach Wizard levels 4 and 10, you learn another Wizard cantrip of your choice, as shown in the Cantrips column of the Wizard Features table."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spellbook",
+            "entries": [
+              "Your wizardly apprenticeship culminated in the creation of a unique book: your spellbook. It is a Tiny object that weighs 3 pounds, contains 100 pages, and can be read only by you or someone casting {@spell Identify|SRD52}. You determine the book's appearance and materials, such as a gilt-edged tome or a collection of vellum bound with twine.",
+              "The book contains the level 1+ spells you know. It starts with six level 1 Wizard spells of your choice. {@spell Detect Magic|SRD52}, {@spell Feather Fall|SRD52}, {@spell Mage Armor|SRD52}, {@spell Magic Missile|SRD52}, {@spell Sleep|SRD52}, and {@spell Thunderwave|SRD52} are recommended.",
+              "Whenever you gain a Wizard level after 1, add two Wizard spells of your choice to your spellbook. Each of these spells must be of a level for which you have spell slots, as shown in the Wizard Features table. The spells are the culmination of arcane research you do regularly."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spell Slots",
+            "entries": [
+              "The Wizard Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a {@variantrule Long Rest|SRD52}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Prepared Spells of Level 1+",
+            "entries": [
+              "You prepare the list of level 1+ spells that are available for you to cast with this feature. To do so, choose four spells from your spellbook. The chosen spells must be of a level for which you have spell slots.",
+              "The number of spells on your list increases as you gain Wizard levels, as shown in the Prepared Spells column of the Wizard Features table. Whenever that number increases, choose additional Wizard spells until the number of spells on your list matches the number in the table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 3 Wizard, your list of prepared spells can include six spells of levels 1 and 2 in any combination, chosen from your spellbook.",
+              "If another Wizard feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Wizard spells for you."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Changing Your Prepared Spells",
+            "entries": [
+              "Whenever you finish a {@variantrule Long Rest|SRD52}, you can change your list of prepared spells, replacing any of the spells there with spells from your spellbook."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spellcasting Ability",
+            "entries": [
+              "Intelligence is your spellcasting ability for your Wizard spells."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spellcasting Focus",
+            "entries": [
+              "You can use an {@item Arcane Focus|SRD52} or your spellbook as a {@variantrule Spellcasting Focus|SRD52} for your Wizard spells."
+            ]
+          },
+          {
+            "type": "inset",
+            "name": "Expanding and Replacing a Spellbook",
+            "entries": [
+              "The spells you add to your spellbook as you gain levels reflect your ongoing magical research, but you might find other spells during your adventures that you can add to the book. You could discover a Wizard spell on a {@item Spell Scroll|SRD52}, for example, and then copy it into your spellbook.",
+              {
+                "type": "entries",
+                "name": "Copying a Spell into the Book",
+                "entries": [
+                  "When you find a level 1+ Wizard spell, you can copy it into your spellbook if it's of a level you can prepare and if you have time to copy it. For each level of the spell, the transcription takes 2 hours and costs 50 GP. Afterward you can prepare the spell like the other spells in your spellbook."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Copying the Book",
+                "entries": [
+                  "You can copy a spell from your spellbook into another book. This is like copying a new spell into your spellbook but faster, since you already know how to cast the spell. You need spend only 1 hour and 10 GP for each level of the copied spell.",
+                  "If you lose your spellbook, you can use the same procedure to transcribe the Wizard spells that you have prepared into a new spellbook. Filling out the remainder of the new book requires you to find new spells to do so. For this reason, many wizards keep a backup spellbook."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 165,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/15"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.scholar.2",
+    "kind": "class-feature",
+    "name": "Scholar",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 2,
+    "entries": [
+      "While studying magic, you also specialized in another field of study. Choose one of the following skills in which you have proficiency: {@skill Arcana|SRD52}, {@skill History|SRD52}, {@skill Investigation|SRD52}, {@skill Medicine|SRD52}, {@skill Nature|SRD52}, or {@skill Religion|SRD52}. You have {@variantrule Expertise|SRD52} in the chosen skill."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 166,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/16"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.wizard-subclass.3",
+    "kind": "class-feature",
+    "name": "Wizard Subclass",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "You gain a Wizard subclass of your choice. A subclass is a specialization that grants you features at certain Wizard levels. For the rest of your career, you gain each of your subclass's features that are of your Wizard level or lower."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/17"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.ability-score-improvement.4",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 4,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify. You gain this feature again at Wizard levels 8, 12, and 16."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/18"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.memorize-spell.5",
+    "kind": "class-feature",
+    "name": "Memorize Spell",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 5,
+    "entries": [
+      "Whenever you finish a {@variantrule Short Rest|SRD52}, you can study your spellbook and replace one of the level 1+ Wizard spells you have prepared for your Spellcasting feature with another level 1+ spell from the book."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/19"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.subclass-feature.6",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 6,
+    "entries": [
+      "You gain a feature from your Wizard Subclass."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/20"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.ability-score-improvement.8",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 8,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} Feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/21"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.subclass-feature.10",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 10,
+    "entries": [
+      "You gain a feature from your Wizard Subclass."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/22"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.ability-score-improvement.12",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 12,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} Feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/23"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.subclass-feature.14",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 14,
+    "entries": [
+      "You gain a feature from your Wizard Subclass."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/24"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.ability-score-improvement.16",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 16,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} Feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/25"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.spell-mastery.18",
+    "kind": "class-feature",
+    "name": "Spell Mastery",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 18,
+    "entries": [
+      "You have achieved such mastery over certain spells that you can cast them at will. Choose a level 1 and a level 2 spell in your spellbook that have a casting time of an action. You always have those spells prepared, and you can cast them at their lowest level without expending a spell slot. To cast either spell at a higher level, you must expend a spell slot.",
+      "Whenever you finish a {@variantrule Long Rest|SRD52}, you can study your spellbook and replace one of those spells with an eligible spell of the same level from the book."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/26"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.epic-boon.19",
+    "kind": "class-feature",
+    "name": "Epic Boon",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 19,
+    "entries": [
+      "You gain an {@filter Epic Boon feat|feats|category=EB} or another {@5etools feat|feats.html} of your choice for which you qualify. {@feat Boon of Spell Recall|SRD52} is recommended."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/27"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.wizard.signature-spells.20",
+    "kind": "class-feature",
+    "name": "Signature Spells",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "level": 20,
+    "entries": [
+      "Choose two level 3 spells in your spellbook as your signature spells. You always have these spells prepared, and you can cast each of them once at level 3 without expending a spell slot. When you do so, you can't cast them in this way again until you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}. To cast either spell at a higher level, you must expend a spell slot."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-077"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        77
+      ],
+      "candidatePage": 167,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/classFeature/28"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.wizard.evoker.evoker.3",
+    "kind": "subclass-feature",
+    "name": "Evoker",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "subclassShortName": "Evoker",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "{@i Create Explosive Elemental Effects}",
+      "Your studies focus on magic that creates powerful elemental effects such as bitter cold, searing flame, rolling thunder, crackling lightning, and burning acid. Some Evokers find employment in military forces, serving as artillery to blast armies from afar. Others use their power to protect others, while some seek their own gain.",
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Evocation Savant|Wizard|SRD52|Evoker|SRD52|3"
+      },
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Potent Cantrip|Wizard|SRD52|Evoker|SRD52|3"
+      }
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-078",
+      "subclass-feature.wizard.evoker.evocation-savant.3",
+      "subclass-feature.wizard.evoker.potent-cantrip.3",
+      "subclass.wizard.evoker"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        78
+      ],
+      "candidatePage": 174,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/subclassFeature/6"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.wizard.evoker.evocation-savant.3",
+    "kind": "subclass-feature",
+    "name": "Evocation Savant",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "subclassShortName": "Evoker",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "header": 1,
+    "entries": [
+      "Choose two {@filter Wizard spells from the Evocation school|spells|level=1;2|class=Wizard|school=V}, each of which must be no higher than level 2, and add them to your spellbook for free.",
+      "In addition, whenever you gain access to a new level of spell slots in this class, you can add one Wizard spell from the Evocation school to your spellbook for free. The chosen spell must be of a level for which you have spell slots."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-078",
+      "rulebook.page-082",
+      "subclass.wizard.evoker"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        78,
+        82
+      ],
+      "candidatePage": 174,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/subclassFeature/7"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.wizard.evoker.potent-cantrip.3",
+    "kind": "subclass-feature",
+    "name": "Potent Cantrip",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "subclassShortName": "Evoker",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "header": 1,
+    "entries": [
+      "Your damaging cantrips affect even creatures that avoid the brunt of the effect. When you cast a cantrip at a creature and you miss with the attack roll or the target succeeds on a saving throw against the cantrip, the target takes half the cantrip's damage (if any) but suffers no additional effect from the cantrip."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-082",
+      "subclass.wizard.evoker"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        82
+      ],
+      "candidatePage": 174,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/subclassFeature/8"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.wizard.evoker.sculpt-spells.6",
+    "kind": "subclass-feature",
+    "name": "Sculpt Spells",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "subclassShortName": "Evoker",
+    "subclassSource": "SRD52",
+    "level": 6,
+    "header": 2,
+    "entries": [
+      "You can create pockets of relative safety within the effects of your evocations. When you cast an Evocation spell that affects other creatures that you can see, you can choose a number of them equal to 1 plus the spell's level. The chosen creatures automatically succeed on their saving throws against the spell, and they take no damage if they would normally take half damage on a successful save."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-082",
+      "subclass.wizard.evoker"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        82
+      ],
+      "candidatePage": 174,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/subclassFeature/9"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.wizard.evoker.empowered-evocation.10",
+    "kind": "subclass-feature",
+    "name": "Empowered Evocation",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "subclassShortName": "Evoker",
+    "subclassSource": "SRD52",
+    "level": 10,
+    "header": 2,
+    "entries": [
+      "Whenever you cast a Wizard spell from the Evocation school, you can add your Intelligence modifier to one damage roll of that spell."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-082",
+      "subclass.wizard.evoker"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        82
+      ],
+      "candidatePage": 174,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/subclassFeature/10"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.wizard.evoker.overchannel.14",
+    "kind": "subclass-feature",
+    "name": "Overchannel",
+    "className": "Wizard",
+    "classSource": "SRD52",
+    "subclassShortName": "Evoker",
+    "subclassSource": "SRD52",
+    "level": 14,
+    "header": 2,
+    "entries": [
+      "You can increase the power of your spells. When you cast a Wizard spell with a spell slot of levels 1–5 that deals damage, you can deal maximum damage with that spell on the turn you cast it.",
+      "The first time you do so, you suffer no adverse effect. If you use this feature again before you finish a {@variantrule Long Rest|SRD52}, you take {@damage 2d12} Necrotic damage for each level of the spell slot immediately after you cast it. This damage ignores {@variantrule Resistance|SRD52} and {@variantrule Immunity|SRD52}.",
+      "Each time you use this feature again before finishing a {@variantrule Long Rest|SRD52}, the Necrotic damage per spell level increases by {@damage 1d12}."
+    ],
+    "catalogReferences": [
+      "class.wizard",
+      "rulebook.page-082",
+      "subclass.wizard.evoker"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        82
+      ],
+      "candidatePage": 174,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-wizard.json",
+        "pointer": "/subclassFeature/11"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  }
+]

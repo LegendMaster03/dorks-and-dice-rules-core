@@ -1,0 +1,3349 @@
+[
+  {
+    "id": "item.spell-scroll-level-9",
+    "kind": "item",
+    "name": "Spell Scroll (Level 9)",
+    "type": "SC|SRD52",
+    "rarity": "legendary",
+    "entries": [
+      "A Spell Scroll bears the words of a single spell, written in a mystical cipher. If the spell is on your spell list, you can read the scroll and cast its spell without Material components. Otherwise, the scroll is unintelligible. Casting the spell by reading the scroll requires the spell's normal casting time. Once the spell is cast, the scroll crumbles to dust. If the casting is interrupted, the scroll isn't lost.",
+      "If the spell is on your spell list but of a higher level than you can normally cast, you make a {@dc 19} ability check using your spellcasting ability to determine whether you cast the spell. On a failed check, the spell disappears from the scroll with no other effect.",
+      "If the spell requires a saving throw or an attack roll, the spell save DC is 19, and the attack bonus is {@hit 11}.",
+      {
+        "type": "entries",
+        "name": "Copying a Scroll into a Spellbook",
+        "entries": [
+          "A Wizard spell on a Spell Scroll can be copied into a spellbook. When a level 9 spell is copied in this way, the copier must succeed on a {@dc 19} Intelligence ({@skill Arcana|SRD52}). On a successful check, the spell is copied. Whether the check succeeds or fails, the Spell Scroll is destroyed."
+        ]
+      }
+    ],
+    "spellScrollLevel": 9,
+    "catalogReferences": [
+      "skill.arcana"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/828"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.spellguard-shield",
+    "kind": "item",
+    "name": "Spellguard Shield",
+    "baseItem": "shield|srd52",
+    "type": "S|SRD52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 6,
+    "ac": 2,
+    "entries": [
+      "While holding this Shield, you have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects, and spell attack rolls have {@variantrule Disadvantage|SRD52} against you."
+    ],
+    "catalogReferences": [
+      "baseitem.shield"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 244,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/831"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.sphere-of-annihilation",
+    "kind": "item",
+    "name": "Sphere of Annihilation",
+    "rarity": "legendary",
+    "wondrous": true,
+    "entries": [
+      "This 2-foot-diameter black sphere is a hole in the multiverse, hovering in space and stabilized by a magical field surrounding it.",
+      "The sphere obliterates all matter it passes through and all matter that passes through it. Artifacts are the exception. Unless an Artifact is susceptible to damage from a Sphere of Annihilation, it passes through the sphere unscathed. Anything else that touches the sphere but isn't wholly engulfed and obliterated by it takes {@damage 8d10} Force damage.",
+      {
+        "type": "entries",
+        "name": "Controlling the Sphere",
+        "entries": [
+          "A Sphere of Annihilation is stationary until someone takes control of it. If you are within 60 feet of a sphere, you can take a {@action Magic|SRD52} action to make a {@dc 25} Intelligence ({@skill Arcana|SRD52}) check. On a successful check, you control the sphere until the start of your next turn, and if it was under another creature's control, that creature loses control of the sphere. On a failed check, the sphere moves 10 feet toward you in a straight line.",
+          "While in control of the sphere, you can take a {@variantrule Bonus Action|SRD52} to cause it to move in one direction of your choice, up to a number of feet equal to 5 times your Intelligence modifier (minimum 5 feet). Any creature whose space the sphere enters must succeed on a {@dc 19} Dexterity saving throw or be touched by it, taking {@damage 8d10} Force damage. A creature reduced to 0 {@variantrule Hit Points|SRD52} by this damage is obliterated, leaving its possessions behind but no other physical remains."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Sphere Interactions",
+        "entries": [
+          "If the sphere comes into contact with a planar portal (such as that created by the {@spell Gate|SRD52} spell) or an extradimensional space (such as that within a Portable Hole), the DM determines randomly what happens using the following table.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "colLabels": [
+              "1d100",
+              "Result"
+            ],
+            "rows": [
+              [
+                "01-50",
+                "The sphere is destroyed."
+              ],
+              [
+                "51-85",
+                "The sphere moves through the portal or into the extradimensional space."
+              ],
+              [
+                "86-00",
+                "A spatial rift sends the sphere and each creature and object within 180 feet of the sphere to a random plane of existence."
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "skill.arcana",
+      "spell.gate"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 244,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/833"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.sprig-of-mistletoe",
+    "kind": "item",
+    "name": "Sprig of Mistletoe",
+    "type": "SCF|SRD52",
+    "scfType": "druid",
+    "rarity": "none",
+    "value": 100,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 97,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/835"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.spyglass",
+    "kind": "item",
+    "name": "Spyglass",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 100000,
+    "entries": [
+      "Objects viewed through a Spyglass are magnified to twice their size."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/837"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.stabling-per-day",
+    "kind": "item",
+    "name": "Stabling (per day)",
+    "type": "TAH|SRD52",
+    "rarity": "none",
+    "value": 5,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 100,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/839"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-charming",
+    "kind": "item",
+    "name": "Staff of Charming",
+    "type": "M|SRD52",
+    "rarity": "rare",
+    "reqAttune": "by a bard, cleric, druid, sorcerer, warlock, or wizard",
+    "reqAttuneTags": [
+      {
+        "class": "bard"
+      },
+      {
+        "class": "cleric"
+      },
+      {
+        "class": "druid"
+      },
+      {
+        "class": "sorcerer"
+      },
+      {
+        "class": "warlock"
+      },
+      {
+        "class": "wizard"
+      }
+    ],
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d8 + 2}",
+    "charges": 10,
+    "staff": true,
+    "entries": [
+      "This staff has 10 charges. While holding the staff, you can use any of its properties:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Cast Spell",
+            "entries": [
+              "You can expend 1 of the staff's charges to cast {@spell Charm Person|SRD52}, {@spell Command|SRD52}, or {@spell Comprehend Languages|SRD52} from it using your spell save DC."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Reflect Enchantment",
+            "entries": [
+              "If you succeed on a saving throw against an Enchantment spell that targets only you, you can take a {@variantrule Reaction|SRD52} to expend 1 charge from the staff and turn the spell back on its caster as if you had cast the spell."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Resist Enchantment",
+            "entries": [
+              "If you fail a saving throw against an Enchantment spell that targets only you, you can turn your failed save into a successful one. You can't use this property of the staff again until the next dawn."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The staff regains {@dice 1d8 + 2} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, the staff crumbles to dust and is destroyed."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "charm person|srd52",
+          "command|srd52",
+          "comprehend languages|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.charm-person",
+      "spell.command",
+      "spell.comprehend-languages"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 245,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/841"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-fire",
+    "kind": "item",
+    "name": "Staff of Fire",
+    "type": "M|SRD52",
+    "resist": [
+      "fire"
+    ],
+    "rarity": "very rare",
+    "reqAttune": "by a druid, sorcerer, warlock, or wizard",
+    "reqAttuneTags": [
+      {
+        "class": "druid"
+      },
+      {
+        "class": "sorcerer"
+      },
+      {
+        "class": "warlock"
+      },
+      {
+        "class": "wizard"
+      }
+    ],
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 4}",
+    "charges": 10,
+    "staff": true,
+    "entries": [
+      "You have {@variantrule Resistance|SRD52} to Fire damage while you hold this staff.",
+      {
+        "type": "entries",
+        "name": "Spells",
+        "entries": [
+          "The staff has 10 charges. While holding the staff, you can cast one of the spells on the following table from it, using your spell save DC. The table indicates how many charges you must expend to cast the spell.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "colLabels": [
+              "Spell",
+              "Charge Cost"
+            ],
+            "rows": [
+              [
+                "{@spell Burning Hands|SRD52}",
+                "1"
+              ],
+              [
+                "{@spell Fireball|SRD52}",
+                "3"
+              ],
+              [
+                "{@spell Wall of Fire|SRD52}",
+                "4"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The staff regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, the staff crumbles into cinders and is destroyed."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "burning hands|srd52"
+        ],
+        "3": [
+          "fireball|srd52"
+        ],
+        "4": [
+          "wall of fire|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.burning-hands",
+      "spell.fireball",
+      "spell.wall-of-fire"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 245,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/843"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-frost",
+    "kind": "item",
+    "name": "Staff of Frost",
+    "type": "M|SRD52",
+    "resist": [
+      "cold"
+    ],
+    "rarity": "very rare",
+    "reqAttune": "by a druid, sorcerer, warlock, or wizard",
+    "reqAttuneTags": [
+      {
+        "class": "druid"
+      },
+      {
+        "class": "sorcerer"
+      },
+      {
+        "class": "warlock"
+      },
+      {
+        "class": "wizard"
+      }
+    ],
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 4}",
+    "charges": 10,
+    "staff": true,
+    "entries": [
+      "You have {@variantrule Resistance|SRD52} to Cold damage while you hold this staff.",
+      {
+        "type": "entries",
+        "name": "Spells",
+        "entries": [
+          "The staff has 10 charges. While holding the staff, you can cast one of the spells on the following table from it, using your spell save DC. The table indicates how many charges you must expend to cast the spell.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "colLabels": [
+              "Spell",
+              "Charge Cost"
+            ],
+            "rows": [
+              [
+                "{@spell Cone of Cold|SRD52}",
+                "5"
+              ],
+              [
+                "{@spell Fog Cloud|SRD52}",
+                "1"
+              ],
+              [
+                "{@spell Ice Storm|SRD52}",
+                "4"
+              ],
+              [
+                "{@spell Wall of Ice|SRD52}",
+                "4"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The staff regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, the staff turns to water and is destroyed."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "fog cloud|srd52"
+        ],
+        "4": [
+          "ice storm|srd52",
+          "wall of ice|srd52"
+        ],
+        "5": [
+          "cone of cold|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.cone-of-cold",
+      "spell.fog-cloud",
+      "spell.ice-storm",
+      "spell.wall-of-ice"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 245,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/845"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-healing",
+    "kind": "item",
+    "name": "Staff of Healing",
+    "type": "M|SRD52",
+    "rarity": "rare",
+    "reqAttune": "by a bard, cleric, or druid",
+    "reqAttuneTags": [
+      {
+        "class": "bard"
+      },
+      {
+        "class": "cleric"
+      },
+      {
+        "class": "druid"
+      }
+    ],
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 4}",
+    "charges": 10,
+    "staff": true,
+    "entries": [
+      "This staff has 10 charges. While holding the staff, you can cast one of the spells on the following table from it, using your spellcasting ability modifier. The table indicates how many charges you must expend to cast the spell.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-10",
+          "col-2 text-center"
+        ],
+        "colLabels": [
+          "Spell",
+          "Charge Cost"
+        ],
+        "rows": [
+          [
+            "{@spell Cure Wounds|SRD52}",
+            "1 charge per spell level (maximum 4 for a level 4 spell)"
+          ],
+          [
+            "{@spell Lesser Restoration|SRD52}",
+            "2"
+          ],
+          [
+            "{@spell Mass Cure Wounds|SRD52}",
+            "5"
+          ]
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The staff regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, the staff vanishes in a flash of light, lost forever."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "will": [
+        "cure wounds|srd52"
+      ],
+      "charges": {
+        "2": [
+          "lesser restoration|srd52"
+        ],
+        "5": [
+          "mass cure wounds|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.cure-wounds",
+      "spell.lesser-restoration",
+      "spell.mass-cure-wounds"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 245,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/847"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-power",
+    "kind": "item",
+    "name": "Staff of Power",
+    "type": "M|SRD52",
+    "rarity": "very rare",
+    "reqAttune": "by a sorcerer, warlock, or wizard",
+    "reqAttuneTags": [
+      {
+        "class": "sorcerer"
+      },
+      {
+        "class": "warlock"
+      },
+      {
+        "class": "wizard"
+      }
+    ],
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "bonusWeapon": "+2",
+    "bonusSpellAttack": "+2",
+    "bonusAc": "+2",
+    "bonusSavingThrow": "+2",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 2d8 + 4}",
+    "charges": 20,
+    "staff": true,
+    "entries": [
+      "This staff has 20 charges and can be wielded as a magic Quarterstaff that grants a +2 bonus to attack rolls and damage rolls made with it. While holding it, you gain a +2 bonus to {@variantrule Armor Class|SRD52}, saving throws, and spell attack rolls.",
+      {
+        "type": "entries",
+        "name": "Spells",
+        "entries": [
+          "While holding the staff , you can cast one of the spells on the following table from it, using your spell save DC. The table indicates how many charges you must expend to cast the spell.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "colLabels": [
+              "Spell",
+              "Charge Cost"
+            ],
+            "rows": [
+              [
+                "{@spell Cone of Cold|SRD52}",
+                "5"
+              ],
+              [
+                "{@spell Fireball|SRD52} (level 5 version)",
+                "5"
+              ],
+              [
+                "{@spell Globe of Invulnerability|SRD52}",
+                "6"
+              ],
+              [
+                "{@spell Hold Monster|SRD52}",
+                "5"
+              ],
+              [
+                "{@spell Levitate|SRD52}",
+                "2"
+              ],
+              [
+                "{@spell Lightning Bolt|SRD52} (level 5 version)",
+                "5"
+              ],
+              [
+                "{@spell Magic Missile|SRD52}",
+                "1"
+              ],
+              [
+                "{@spell Ray of Enfeeblement|SRD52}",
+                "1"
+              ],
+              [
+                "{@spell Wall of Force|SRD52}",
+                "5"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The staff regains {@dice 2d8 + 4} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, the staff retains its +2 bonus to attack rolls and damage rolls but loses all other properties. On a 20, the staff regains {@dice 1d8 + 2} charges."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Retributive Strike",
+        "entries": [
+          "You can take a {@action Magic|SRD52} action to break the staff over your knee or against a solid surface. The staff is destroyed and releases its magic in an explosion that fills a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from itself. You have a {@chance 50} chance to instantly travel to a random plane of existence, avoiding the explosion. If you fail to avoid the effect, you take Force damage equal to 16 times the number of charges in the staff. Each other creature in the area makes a {@dc 17} Dexterity saving throw. On a failed save, a creature takes Force damage equal to 4 times the number of charges in the staff. On a successful save, a creature takes half as much damage."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "magic missile|srd52",
+          "ray of enfeeblement|srd52"
+        ],
+        "2": [
+          "levitate|srd52"
+        ],
+        "5": [
+          "cone of cold|srd52",
+          "fireball|srd52",
+          "hold monster|srd52",
+          "lightning bolt|srd52",
+          "wall of force|srd52"
+        ],
+        "6": [
+          "globe of invulnerability|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.cone-of-cold",
+      "spell.fireball",
+      "spell.globe-of-invulnerability",
+      "spell.hold-monster",
+      "spell.levitate",
+      "spell.lightning-bolt",
+      "spell.magic-missile",
+      "spell.ray-of-enfeeblement",
+      "spell.wall-of-force"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 245,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/849"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-striking",
+    "kind": "item",
+    "name": "Staff of Striking",
+    "type": "M|SRD52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "bonusWeapon": "+3",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 4}",
+    "charges": 10,
+    "staff": true,
+    "entries": [
+      "This staff can be wielded as a magic Quarterstaff that grants a +3 bonus to attack rolls and damage rolls made with it.",
+      "The staff has 10 charges. When you hit with a melee attack using it, you can expend up to 3 charges. For each charge you expend, the target takes an extra {@damage 1d6} Force damage.",
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The staff regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, the staff becomes a nonmagical Quarterstaff."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/851"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-swarming-insects",
+    "kind": "item",
+    "name": "Staff of Swarming Insects",
+    "type": "M|SRD52",
+    "rarity": "rare",
+    "reqAttune": "by a bard, cleric, druid, sorcerer, warlock, or wizard",
+    "reqAttuneTags": [
+      {
+        "class": "bard"
+      },
+      {
+        "class": "cleric"
+      },
+      {
+        "class": "druid"
+      },
+      {
+        "class": "sorcerer"
+      },
+      {
+        "class": "warlock"
+      },
+      {
+        "class": "wizard"
+      }
+    ],
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 4}",
+    "charges": 10,
+    "staff": true,
+    "entries": [
+      "This staff has 10 charges.",
+      {
+        "type": "entries",
+        "name": "Insect Cloud",
+        "entries": [
+          "While holding the staff , you can take a {@action Magic|SRD52} action and expend 1 charge to cause a swarm of harmless flying insects to fill a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. The insects remain for 10 minutes, making the area {@variantrule Heavily Obscured|SRD52} for creatures other than you. A strong wind (like that created by {@spell Gust of Wind|SRD52}) disperses the swarm and ends the effect."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spells",
+        "entries": [
+          "While holding the staff, you can cast one of the spells on the following table from it, using your spell save DC and spell attack modifier. The table indicates how many charges you must expend to cast the spell.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "colLabels": [
+              "Spell",
+              "Charge Cost"
+            ],
+            "rows": [
+              [
+                "{@spell Giant Insect|SRD52}",
+                "4"
+              ],
+              [
+                "{@spell Insect Plague|SRD52}",
+                "5"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The staff regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, a swarm of insects consumes and destroys the staff, then disperses."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "4": [
+          "giant insect|srd52"
+        ],
+        "5": [
+          "insect plague|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.giant-insect",
+      "spell.gust-of-wind",
+      "spell.insect-plague"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 246,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/853"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-the-magi",
+    "kind": "item",
+    "name": "Staff of the Magi",
+    "type": "M|SRD52",
+    "rarity": "legendary",
+    "reqAttune": "by a sorcerer, warlock, or wizard",
+    "reqAttuneTags": [
+      {
+        "class": "sorcerer"
+      },
+      {
+        "class": "warlock"
+      },
+      {
+        "class": "wizard"
+      }
+    ],
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "bonusWeapon": "+2",
+    "bonusSpellAttack": "+2",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 4d6 + 2}",
+    "charges": 50,
+    "staff": true,
+    "entries": [
+      "This staff has 50 charges and can be wielded as a magic Quarterstaff that grants a +2 bonus to attack rolls and damage rolls made with it. While you hold it, you gain a +2 bonus to spell attack rolls.",
+      {
+        "type": "entries",
+        "name": "Spell Absorption",
+        "entries": [
+          "While holding the staff , you have {@variantrule Advantage|SRD52} on saving throws against spells. In addition, you can take a {@variantrule Reaction|SRD52} when another creature casts a spell that targets only you. If you do, the staff absorbs the magic of the spell, canceling its effect and gaining a number of charges equal to the absorbed spell's level. However, if doing so brings the staff's total number of charges above 50, the staff explodes as if you activated its Retributive Strike (see below)."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spells",
+        "entries": [
+          "While holding the staff, you can cast one of the spells on the following table from it, using your spell save DC. The table indicates how many charges you must expend to cast the spell.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "colLabels": [
+              "Spell",
+              "Charge Cost"
+            ],
+            "rows": [
+              [
+                "{@spell Arcane Lock|SRD52}",
+                "0"
+              ],
+              [
+                "{@spell Conjure Elemental|SRD52}",
+                "7"
+              ],
+              [
+                "{@spell Detect Magic|SRD52}",
+                "0"
+              ],
+              [
+                "{@spell Dispel Magic|SRD52}",
+                "3"
+              ],
+              [
+                "{@spell Enlarge/Reduce|SRD52}",
+                "0"
+              ],
+              [
+                "{@spell Fireball|SRD52} (level 7 version)",
+                "7"
+              ],
+              [
+                "{@spell Flaming Sphere|SRD52}",
+                "2"
+              ],
+              [
+                "{@spell Ice Storm|SRD52}",
+                "4"
+              ],
+              [
+                "{@spell Invisibility|SRD52}",
+                "2"
+              ],
+              [
+                "{@spell Knock|SRD52}",
+                "2"
+              ],
+              [
+                "{@spell Light|SRD52}",
+                "0"
+              ],
+              [
+                "{@spell Lightning Bolt|SRD52} (level 7 version)",
+                "7"
+              ],
+              [
+                "{@spell Mage Hand|SRD52}",
+                "0"
+              ],
+              [
+                "{@spell Passwall|SRD52}",
+                "5"
+              ],
+              [
+                "{@spell Plane Shift|SRD52}",
+                "7"
+              ],
+              [
+                "{@spell Protection from Evil and Good|SRD52}",
+                "0"
+              ],
+              [
+                "{@spell Telekinesis|SRD52}",
+                "5"
+              ],
+              [
+                "{@spell Wall of Fire|SRD52}",
+                "4"
+              ],
+              [
+                "{@spell Web|SRD52}",
+                "2"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The staff regains {@dice 4d6 + 2} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 20, the staff regains {@dice 1d12 + 1} charges."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Retributive Strike",
+        "entries": [
+          "You can take a {@action Magic|SRD52} action to break the staff over your knee or against a solid surface. The staff is destroyed and releases its magic in an explosion that fills a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from itself. You have a {@chance 50} chance to instantly travel to a random plane of existence, avoiding the explosion. If you fail to avoid the effect, you take Force damage equal to 16 times the number of charges in the staff. Each other creature in the area makes a {@dc 17} Dexterity saving throw. On a failed save, a creature takes Force damage equal to 6 times the number of charges in the staff. On a successful save, a creature takes half as much damage."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "0": [
+          "arcane lock|srd52",
+          "detect magic|srd52",
+          "enlarge/reduce|srd52",
+          "light|srd52",
+          "mage hand|srd52",
+          "protection from evil and good|srd52"
+        ],
+        "2": [
+          "flaming sphere|srd52",
+          "invisibility|srd52",
+          "knock|srd52",
+          "web|srd52"
+        ],
+        "3": [
+          "dispel magic|srd52"
+        ],
+        "4": [
+          "ice storm|srd52",
+          "wall of fire|srd52"
+        ],
+        "5": [
+          "passwall|srd52",
+          "telekinesis|srd52"
+        ],
+        "7": [
+          "conjure elemental|srd52",
+          "fireball|srd52",
+          "lightning bolt|srd52",
+          "plane shift|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.arcane-lock",
+      "spell.conjure-elemental",
+      "spell.detect-magic",
+      "spell.dispel-magic",
+      "spell.enlarge-reduce",
+      "spell.fireball",
+      "spell.flaming-sphere",
+      "spell.ice-storm",
+      "spell.invisibility",
+      "spell.knock",
+      "spell.light",
+      "spell.lightning-bolt",
+      "spell.mage-hand",
+      "spell.passwall",
+      "spell.plane-shift",
+      "spell.protection-from-evil-and-good",
+      "spell.telekinesis",
+      "spell.wall-of-fire",
+      "spell.web"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 246,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/855"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-the-python",
+    "kind": "item",
+    "name": "Staff of the Python",
+    "type": "M|SRD52",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "staff": true,
+    "entries": [
+      "As a {@action Magic|SRD52} action, you can throw this staff so that it lands in an unoccupied space within 10 feet of you, causing the staff to become a {@creature Giant Constrictor Snake|SRD52} in that space. The snake is under your control and shares your {@variantrule Initiative|SRD52} count, taking its turn immediately after yours.",
+      "On your turn, you can mentally command the snake (no action required) if it is within 60 feet of you and you don't have the {@condition Incapacitated|SRD52} condition. You decide what action the snake takes and where it moves during its turn, or you can issue it a general command, such as to attack your enemies or guard a location. Absent commands from you, the snake defends itself.",
+      "As a {@variantrule Bonus Action|SRD52}, you can command the snake to revert to staff form in its current space, and you can't use the staff's property again for 1 hour. If the snake is reduced to 0 {@variantrule Hit Points|SRD52}, it dies and reverts to its staff form; the staff then shatters and is destroyed. If the snake reverts to staff form before losing all its {@variantrule Hit Points|SRD52}, it regains all of them."
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "item-mastery.topple",
+      "item-property.v",
+      "monster.giant-constrictor-snake"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 247,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/857"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-the-woodlands",
+    "kind": "item",
+    "name": "Staff of the Woodlands",
+    "type": "M|SRD52",
+    "rarity": "rare",
+    "reqAttune": "by a druid",
+    "reqAttuneTags": [
+      {
+        "class": "druid"
+      }
+    ],
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "bonusWeapon": "+2",
+    "bonusSpellAttack": "+2",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6}",
+    "charges": 6,
+    "staff": true,
+    "entries": [
+      "This staff has 6 charges and can be wielded as a magic Quarterstaff that grants a +2 bonus to attack rolls and damage rolls made with it. While holding it, you have a +2 bonus to spell attack rolls.",
+      {
+        "type": "entries",
+        "name": "Spells",
+        "entries": [
+          "While holding the staff, you can cast one of the spells on the following table from it, using your spell save DC. The table indicates how many charges you must expend to cast the spell.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "colLabels": [
+              "Spell",
+              "Charge Cost"
+            ],
+            "rows": [
+              [
+                "{@spell Animal Friendship|SRD52}",
+                "1"
+              ],
+              [
+                "{@spell Awaken|SRD52}",
+                "5"
+              ],
+              [
+                "{@spell Barkskin|SRD52}",
+                "2"
+              ],
+              [
+                "{@spell Locate Animals or Plants|SRD52}",
+                "2"
+              ],
+              [
+                "{@spell Pass without Trace|SRD52}",
+                "2"
+              ],
+              [
+                "{@spell Speak with Animals|SRD52}",
+                "1"
+              ],
+              [
+                "{@spell Speak with Plants|SRD52}",
+                "3"
+              ],
+              [
+                "{@spell Wall of Thorns|SRD52}",
+                "6"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Tree Form",
+        "entries": [
+          "You can take a {@action Magic|SRD52} action to plant one end of the staff in earth in an unoccupied space and expend 1 charge to transform the staff into a healthy tree. The tree is 60 feet tall and has a 5-foot-diameter trunk, and its branches at the top spread out in a 20-foot radius. The tree appears ordinary but radiates a faint aura of Transmutation magic that can be discerned with the {@spell Detect Magic|SRD52} spell. While touching the tree and using a {@action Magic|SRD52} action, you return the staff to its normal form. Any creature in the tree falls when the tree reverts to a staff."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The staff regains {@dice 1d6} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, the staff loses its properties and becomes a nonmagical Quarterstaff."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "animal friendship|srd52",
+          "speak with animals|srd52"
+        ],
+        "2": [
+          "barkskin|srd52",
+          "locate animals or plants|srd52",
+          "pass without trace|srd52"
+        ],
+        "3": [
+          "speak with plants|srd52"
+        ],
+        "5": [
+          "awaken|srd52"
+        ],
+        "6": [
+          "wall of thorns|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.animal-friendship",
+      "spell.awaken",
+      "spell.barkskin",
+      "spell.detect-magic",
+      "spell.locate-animals-or-plants",
+      "spell.pass-without-trace",
+      "spell.speak-with-animals",
+      "spell.speak-with-plants",
+      "spell.wall-of-thorns"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 247,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/859"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-thunder-and-lightning",
+    "kind": "item",
+    "name": "Staff of Thunder and Lightning",
+    "type": "M|SRD52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "bonusWeapon": "+2",
+    "staff": true,
+    "entries": [
+      "This staff can be wielded as a magic Quarterstaff that grants a +2 bonus to attack rolls and damage rolls made with it. It also has the following additional properties. Once one of these properties is used, it can't be used again until the next dawn.",
+      {
+        "type": "entries",
+        "name": "Lightning",
+        "entries": [
+          "When you hit with a melee attack using the staff, you can cause the target to take an extra {@damage 2d6} Lightning damage (no action required)."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Thunder",
+        "entries": [
+          "When you hit with a melee attack using the staff, you can cause the staff to emit a crack of thunder audible out to 300 feet (no action required). The target you hit must succeed on a {@dc 17} Constitution saving throw or have the {@condition Stunned|SRD52} condition until the end of your next turn."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Thunder and Lightning",
+        "entries": [
+          "Immediately after you hit with a melee attack using the staff, you can take a {@variantrule Bonus Action|SRD52} to use the Lightning and Thunder properties (see above) at the same time. Doing so doesn't expend the daily use of those properties, only the use of this one."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Lightning Strike",
+        "entries": [
+          "You can take a {@action Magic|SRD52} action to cause a bolt of lightning to leap from the staff's tip in a {@variantrule Line [Area of Effect]|SRD52|Line} that is 5 feet wide and 120 feet long. Each creature in that {@variantrule Line [Area of Effect]|SRD52|Line} makes a {@dc 17} Dexterity saving throw, taking {@damage 9d6} Lightning damage on a failed save or half as much damage on a successful one."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Thunderclap",
+        "entries": [
+          "You can take a {@action Magic|SRD52} action to cause the staff to produce a thunderclap audible out to 600 feet. Every creature within a 60-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you makes a {@dc 17} Constitution saving throw. On a failed save, a creature takes {@damage 2d6} Thunder damage and has the {@condition Deafened|SRD52} condition for 1 minute. On a successful save, a creature takes half as much damage only."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.deafened",
+      "condition.stunned",
+      "item-mastery.topple",
+      "item-property.v"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 247,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/861"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.staff-of-withering",
+    "kind": "item",
+    "name": "Staff of Withering",
+    "type": "M|SRD52",
+    "rarity": "rare",
+    "reqAttune": "by a cleric, druid, or warlock",
+    "reqAttuneTags": [
+      {
+        "class": "cleric"
+      },
+      {
+        "class": "druid"
+      },
+      {
+        "class": "warlock"
+      }
+    ],
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "staff": true,
+    "entries": [
+      "This staff has 3 charges and regains {@dice 1d3} expended charges daily at dawn.",
+      "The staff can be wielded as a magic Quarterstaff. On a hit, it deals damage as a normal Quarterstaff , and you can expend 1 charge to deal an extra {@damage 2d10} Necrotic damage to the target and force it to make a {@dc 15} Constitution saving throw. On a failed save, the target has {@variantrule Disadvantage|SRD52} for 1 hour on any ability check or saving throw that uses Strength or Constitution."
+    ],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 248,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/863"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.stone-of-controlling-earth-elementals",
+    "kind": "item",
+    "name": "Stone of Controlling Earth Elementals",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "While touching this 5-pound stone to the ground, you can take a {@action Magic|SRD52} action to summon an {@creature Earth Elemental|SRD52}. The elemental appears in an unoccupied space you choose within 30 feet of yourself, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}. The stone can't be used this way again until the next dawn."
+    ],
+    "catalogReferences": [
+      "monster.earth-elemental"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 248,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/866"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.stone-of-good-luck",
+    "kind": "item",
+    "name": "Stone of Good Luck",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "bonusSavingThrow": "+1",
+    "bonusAbilityCheck": "+1",
+    "entries": [
+      "While this polished agate is on your person, you gain a +1 bonus to ability checks and saving throws."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 248,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/868"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.string",
+    "kind": "item",
+    "name": "String",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 10,
+    "entries": [
+      "String is 10 feet long. You can tie a knot in it as a {@action Utilize|SRD52} action."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/869"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.sun-blade",
+    "kind": "item",
+    "name": "Sun Blade",
+    "baseItem": "longsword|srd52",
+    "type": "M|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "R",
+    "dmg2": "1d10",
+    "bonusWeapon": "+2",
+    "entries": [
+      "This item appears to be a sword hilt.",
+      {
+        "type": "entries",
+        "name": "Blade of Radiance",
+        "entries": [
+          "While grasping the hilt, you can take a {@variantrule Bonus Action|SRD52} to cause a blade of pure radiance to spring into existence or make the blade disappear. While the blade exists, this magic weapon functions as a Longsword with {@itemProperty F|SRD52|Finesse}. If you are proficient with Longswords or Shortswords, you are proficient with the Sun Blade.",
+          "You gain a +2 bonus to attack rolls and damage rolls made with this weapon, which deals Radiant damage instead of Slashing damage. When you hit an Undead with it, that target takes an extra {@damage 1d8} Radiant damage."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Sunlight",
+        "entries": [
+          "The sword's luminous blade emits {@variantrule Bright Light|SRD52} in a 15-foot radius and {@variantrule Dim Light|SRD52} for an additional 15 feet. The light is sunlight. While the blade persists, you can take a {@action Magic|SRD52} action to expand or reduce its radius of {@variantrule Bright Light|SRD52} and {@variantrule Dim Light|SRD52} by 5 feet each, to a maximum of 30 feet each or a minimum of 10 feet each."
+        ]
+      }
+    ],
+    "light": [
+      {
+        "bright": 15,
+        "dim": 30
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-mastery.sap",
+      "item-property.f",
+      "item-property.v"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 248,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/871"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.talisman-of-pure-good",
+    "kind": "item",
+    "name": "Talisman of Pure Good",
+    "rarity": "legendary",
+    "reqAttune": "by a cleric or paladin",
+    "reqAttuneTags": [
+      {
+        "class": "cleric"
+      },
+      {
+        "class": "paladin"
+      }
+    ],
+    "wondrous": true,
+    "weight": 1,
+    "bonusSpellAttack": "+2",
+    "charges": 7,
+    "entries": [
+      "This talisman is a mighty symbol of goodness. A Fiend or an Undead that touches the talisman takes {@damage 8d6} Radiant damage and takes the damage again each time it ends its turn holding or carrying the talisman.",
+      {
+        "type": "entries",
+        "name": "Holy Symbol",
+        "entries": [
+          "You can use the talisman as a Holy Symbol. You gain a +2 bonus to spell attack rolls while you wear or hold it."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Pure Rebuke",
+        "entries": [
+          "The talisman has 7 charges. While wearing or holding the talisman, you can take a {@action Magic|SRD52} action to expend 1 charge and target one creature you can see on the ground within 120 feet of yourself. A flaming fissure opens under the target, and the target makes a {@dc 20} Dexterity saving throw. If the target is a Fiend or an Undead, it has {@variantrule Disadvantage|SRD52} on the save. On a failed save, the target falls into the fissure and is destroyed, leaving no remains. On a successful save, the target isn't cast into the fissure but takes {@damage 4d6} Psychic damage from the ordeal. In either case, the fissure then closes, leaving no trace of its existence. When you expend the last charge, the talisman disperses into motes of golden light and is destroyed."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 248,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/873"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.talisman-of-the-sphere",
+    "kind": "item",
+    "name": "Talisman of the Sphere",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "While holding or wearing this talisman, you have {@variantrule Advantage|SRD52} on any Intelligence ({@skill Arcana|SRD52}) check you make to control a {@item Sphere of Annihilation|SRD52}. In addition, when you start your turn in control of a {@item Sphere of Annihilation|SRD52}, you can take a {@action Magic|SRD52} action to move it 10 feet plus a number of additional feet equal to 10 times your Intelligence modifier. This movement doesn't have to be in a straight line."
+    ],
+    "catalogReferences": [
+      "item.sphere-of-annihilation",
+      "skill.arcana"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 249,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/875"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.talisman-of-ultimate-evil",
+    "kind": "item",
+    "name": "Talisman of Ultimate Evil",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 1,
+    "bonusSpellAttack": "+2",
+    "charges": 6,
+    "entries": [
+      "This item symbolizes unrepentant evil. A creature that isn't a Fiend or an Undead that touches the talisman takes {@damage 8d6} Necrotic damage and takes the damage again each time it ends its turn holding or carrying the talisman.",
+      {
+        "type": "entries",
+        "name": "Holy Symbol",
+        "entries": [
+          "You can use the talisman as a Holy Symbol. You gain a +2 bonus to spell attack rolls while you wear or hold it."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Ultimate End",
+        "entries": [
+          "The talisman has 6 charges. While wearing or holding the talisman, you can take a {@action Magic|SRD52} action to expend 1 charge and target one creature you can see on the ground within 120 feet of yourself. A flaming fissure opens under the target, and the target makes a {@dc 20} Dexterity saving throw. If the target is a Celestial, it has {@variantrule Disadvantage|SRD52} on the save. On a failed save, the target falls into the fissure and is destroyed, leaving no remains. On a successful save, the target isn't cast into the fissure but takes {@damage 4d6} Psychic damage from the ordeal. In either case, the fissure then closes, leaving no trace of its existence. When you expend the last charge, the talisman dissolves into foul-smelling slime and is destroyed."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 249,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/877"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.tent",
+    "kind": "item",
+    "name": "Tent",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 20,
+    "value": 200,
+    "entries": [
+      "A Tent sleeps up to two Small or Medium creatures."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/879"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.thieves-tools",
+    "kind": "item",
+    "name": "Thieves' Tools",
+    "type": "T|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 2500,
+    "entries": [
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "name": "Ability:",
+            "type": "item",
+            "entries": [
+              "Dexterity"
+            ]
+          },
+          {
+            "name": "Utilize:",
+            "type": "item",
+            "entries": [
+              "Pick a lock ({@dc 15}), or disarm a trap ({@dc 15})"
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/881"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.three-dragon-ante-set",
+    "kind": "item",
+    "name": "Three-Dragon Ante Set",
+    "type": "GS|SRD52",
+    "rarity": "none",
+    "value": 100,
+    "entries": [
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "name": "Ability:",
+            "type": "item",
+            "entries": [
+              "Wisdom"
+            ]
+          },
+          {
+            "name": "Utilize:",
+            "type": "item",
+            "entries": [
+              "Discern whether someone is cheating ({@dc 10}), or win the game ({@dc 20})"
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/882"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.thunderous-greatclub",
+    "kind": "item",
+    "name": "Thunderous Greatclub",
+    "baseItem": "greatclub|srd52",
+    "type": "M|SRD52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 10,
+    "weaponCategory": "simple",
+    "property": [
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "entries": [
+      "While you are attuned to this magic weapon, your Strength is 20 unless your Strength is already equal to or greater than that score. The weapon deals an extra {@damage 1d8} Thunder damage to any creature it hits and an extra {@damage 3d8} Thunder damage to objects it hits that aren't being worn or carried.",
+      "The weapon has the following additional properties.",
+      {
+        "type": "entries",
+        "name": "Clap of Thunder",
+        "entries": [
+          "As a {@action Magic|SRD52} action, you can strike the weapon against a hard surface to create a loud clap of thunder audible out to 300 feet. You also create a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone} of thunderous energy. Each creature in the {@variantrule Cone [Area of Effect]|SRD52|Cone} must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition. Nonmagical objects in the {@variantrule Cone [Area of Effect]|SRD52|Cone} that aren't being worn or carried take {@damage 3d8} Thunder damage."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Earthquake",
+        "entries": [
+          "As a {@action Magic|SRD52} action, you can strike the weapon against the ground to create an intense seismic disturbance in a 50-foot-radius circle centered on the point of impact. Structures in contact with the ground in that area take 50 Bludgeoning damage, and each creature on the ground in that area must succeed on a {@dc 20} Dexterity saving throw or have the {@condition Prone|SRD52} condition. If that creature is also {@status Concentration|SRD52|Concentrating}, it must succeed on a {@dc 20} Constitution saving throw or its {@status Concentration|SRD52} is broken. In addition, you can cause a 30-foot-deep, 10-foot-wide fissure to open up on the ground anywhere in the area. Any creature on a spot where the fissure opens must make a {@dc 20} Dexterity saving throw, falling into the fissure on a failed save or moving with the fissure's edge on a successful one. Any structure on a spot where the fissure opens collapses into the fissure. Once you use this property, it can't be used again until the next dawn."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.greatclub",
+      "condition.prone",
+      "item-mastery.push",
+      "item-property.2h"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 249,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/883"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.tinderbox",
+    "kind": "item",
+    "name": "Tinderbox",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 50,
+    "entries": [
+      "A Tinderbox is a small container holding flint, fire steel, and tinder (usually dry cloth soaked in light oil) used to kindle a fire. Using it to light a {@item Candle|SRD52}, {@item Lamp|SRD52}, {@item Hooded Lantern|SRD52|Lantern}, or {@item Torch|SRD52}—or anything else with exposed fuel—takes a {@variantrule Bonus Action|SRD52}. Lighting any other fire takes 1 minute."
+    ],
+    "catalogReferences": [
+      "item.candle",
+      "item.hooded-lantern",
+      "item.lamp",
+      "item.torch"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/885"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.tome-of-clear-thought",
+    "kind": "item",
+    "name": "Tome of Clear Thought",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 5,
+    "ability": {
+      "int": 2
+    },
+    "entries": [
+      "This book contains memory and logic exercises, and its words are charged with magic. If you spend 48 hours over a period of 6 days or fewer studying the book's contents and practicing its guidelines, your Intelligence increases by 2, to a maximum of 30. The manual then loses its magic, but regains it in a century."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 249,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/887"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.tome-of-leadership-and-influence",
+    "kind": "item",
+    "name": "Tome of Leadership and Influence",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 5,
+    "ability": {
+      "cha": 2
+    },
+    "entries": [
+      "This book contains guidelines for influencing and charming others, and its words are charged with magic. If you spend 48 hours over a period of 6 days or fewer studying the book's contents and practicing its guidelines, your Charisma increases by 2, to a maximum of 30. The manual then loses its magic, but regains it in a century."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 249,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/889"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.tome-of-understanding",
+    "kind": "item",
+    "name": "Tome of Understanding",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 5,
+    "ability": {
+      "wis": 2
+    },
+    "entries": [
+      "This book contains intuition and insight exercises, and its words are charged with magic. If you spend 48 hours over a period of 6 days or fewer studying the book's contents and practicing its guidelines, your Wisdom increases by 2, to a maximum of 30. The manual then loses its magic, but regains it in a century."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 250,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/891"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.torch",
+    "kind": "item",
+    "name": "Torch",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 1,
+    "entries": [
+      "A Torch burns for 1 hour, casting {@variantrule Bright Light|SRD52} in a 20-foot radius and {@variantrule Dim Light|SRD52} for an additional 20 feet. When you take the {@action Attack|SRD52} action, you can attack with the Torch, using it as a Simple Melee weapon. On a hit, the target takes 1 Fire damage."
+    ],
+    "light": [
+      {
+        "bright": 20,
+        "dim": 40
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 225,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/893"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.torpor",
+    "kind": "item",
+    "name": "Torpor",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 60000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to Torpor poison must succeed on a {@dc 15} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for {@dice 4d6} hours. The creature's {@variantrule Speed|SRD52} is halved while the creature is {@condition Poisoned|SRD52} in this way."
+    ],
+    "poisonTypes": [
+      "ingested"
+    ],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 198,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/895"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.traveler-s-clothes",
+    "kind": "item",
+    "name": "Traveler's Clothes",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 4,
+    "value": 200,
+    "entries": [
+      "Traveler's Clothes are resilient garments designed for travel in various environments."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/898"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.trident-of-fish-command",
+    "kind": "item",
+    "name": "Trident of Fish Command",
+    "baseItem": "trident|srd52",
+    "type": "M|SRD52",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "range": "20/60",
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "dmg2": "1d10",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "entries": [
+      "This magic weapon has 3 charges, and it regains {@dice 1d3} expended charges daily at dawn. While you carry it, you can expend 1 charge to cast {@spell Dominate Beast|SRD52} (save {@dc 15}) from it on a Beast that has a {@variantrule Swim Speed|SRD52}."
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "dominate beast|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "baseitem.trident",
+      "item-mastery.topple",
+      "item-property.t",
+      "item-property.v",
+      "spell.dominate-beast"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 250,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/900"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.trinket",
+    "kind": "item",
+    "name": "Trinket",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "entries": [
+      "When you make your character, you can roll once on the Trinkets table to gain a Tiny trinket, a simple item lightly touched by mystery. The GM might also use this table. It can help stock a room in a dungeon or fill a creature's pockets.",
+      {
+        "type": "table",
+        "caption": "Trinkets",
+        "colLabels": [
+          "{@dice 1d100}",
+          "Trinket"
+        ],
+        "colStyles": [
+          "col-2 text-center",
+          "col-10"
+        ],
+        "rows": [
+          [
+            "01",
+            "A mummified goblin hand"
+          ],
+          [
+            "02",
+            "A crystal that faintly glows in moonlight"
+          ],
+          [
+            "03",
+            "A gold coin minted in an unknown land"
+          ],
+          [
+            "04",
+            "A diary written in a language you don't know"
+          ],
+          [
+            "05",
+            "A brass ring that never tarnishes"
+          ],
+          [
+            "06",
+            "An old chess piece made from glass"
+          ],
+          [
+            "07",
+            "A pair of knucklebone dice, each with a skull symbol on the side that would normally show six pips"
+          ],
+          [
+            "08",
+            "A small idol depicting a nightmarish creature that gives you unsettling dreams when you sleep near it"
+          ],
+          [
+            "09",
+            "A lock of someone's hair"
+          ],
+          [
+            "10",
+            "The deed for a parcel of land in a realm unknown to you"
+          ],
+          [
+            "11",
+            "A 1-ounce block made from an unknown material"
+          ],
+          [
+            "12",
+            "A small cloth doll skewered with needles"
+          ],
+          [
+            "13",
+            "A tooth from an unknown beast"
+          ],
+          [
+            "14",
+            "An enormous scale, perhaps from a dragon"
+          ],
+          [
+            "15",
+            "A bright-green feather"
+          ],
+          [
+            "16",
+            "An old divination card bearing your likeness"
+          ],
+          [
+            "17",
+            "A glass orb filled with moving smoke"
+          ],
+          [
+            "18",
+            "A 1-pound egg with a bright-red shell"
+          ],
+          [
+            "19",
+            "A pipe that blows bubbles"
+          ],
+          [
+            "20",
+            "A glass jar containing a bit of flesh floating in pickling fluid"
+          ],
+          [
+            "21",
+            "A gnome-crafted music box that plays a song you dimly remember from your childhood"
+          ],
+          [
+            "22",
+            "A wooden statuette of a smug halfling"
+          ],
+          [
+            "23",
+            "A brass orb etched with strange runes"
+          ],
+          [
+            "24",
+            "A multicolored stone disk"
+          ],
+          [
+            "25",
+            "A silver icon of a raven"
+          ],
+          [
+            "26",
+            "A bag containing forty-seven teeth, one of which is rotten"
+          ],
+          [
+            "27",
+            "A shard of obsidian that always feels warm to the touch"
+          ],
+          [
+            "28",
+            "A dragon's talon strung on a leather necklace"
+          ],
+          [
+            "29",
+            "A pair of old socks"
+          ],
+          [
+            "30",
+            "A blank book whose pages refuse to hold ink, chalk, graphite, or any other marking"
+          ],
+          [
+            "31",
+            "A silver badge that is a five-pointed star"
+          ],
+          [
+            "32",
+            "A knife that belonged to a relative"
+          ],
+          [
+            "33",
+            "A glass vial filled with nail clippings"
+          ],
+          [
+            "34",
+            "A rectangular metal device with two tiny metal cups on one end that throws sparks when wet"
+          ],
+          [
+            "35",
+            "A white, sequined glove sized for a human"
+          ],
+          [
+            "36",
+            "A vest with one hundred tiny pockets"
+          ],
+          [
+            "37",
+            "A weightless stone"
+          ],
+          [
+            "38",
+            "A sketch of a goblin"
+          ],
+          [
+            "39",
+            "An empty glass vial that smells of perfume"
+          ],
+          [
+            "40",
+            "A gemstone that looks like a lump of coal when examined by anyone but you"
+          ],
+          [
+            "41",
+            "A scrap of cloth from an old banner"
+          ],
+          [
+            "42",
+            "A rank insignia from a lost legionnaire"
+          ],
+          [
+            "43",
+            "A silver bell without a clapper"
+          ],
+          [
+            "44",
+            "A mechanical canary inside a lamp"
+          ],
+          [
+            "45",
+            "A miniature chest carved to look like it has numerous feet on the bottom"
+          ],
+          [
+            "46",
+            "A dead sprite inside a clear glass bottle"
+          ],
+          [
+            "47",
+            "A metal can that has no opening but sounds as if it is filled with liquid, sand, spiders, or broken glass (your choice)"
+          ],
+          [
+            "48",
+            "A glass orb filled with water, in which swims a clockwork goldfish"
+          ],
+          [
+            "49",
+            "A silver spoon with an M engraved on the handle"
+          ],
+          [
+            "50",
+            "A whistle made from gold-colored wood"
+          ],
+          [
+            "51",
+            "A dead scarab beetle the size of your hand"
+          ],
+          [
+            "52",
+            "Two toy soldiers, one missing a head"
+          ],
+          [
+            "53",
+            "A small box filled with different-sized buttons"
+          ],
+          [
+            "54",
+            "A candle that can't be lit"
+          ],
+          [
+            "55",
+            "A miniature cage with no door"
+          ],
+          [
+            "56",
+            "An old key"
+          ],
+          [
+            "57",
+            "An indecipherable treasure map"
+          ],
+          [
+            "58",
+            "A hilt from a broken sword"
+          ],
+          [
+            "59",
+            "A rabbit's foot"
+          ],
+          [
+            "60",
+            "A glass eye"
+          ],
+          [
+            "61",
+            "A cameo of a hideous person"
+          ],
+          [
+            "62",
+            "A silver skull the size of a coin"
+          ],
+          [
+            "63",
+            "An alabaster mask"
+          ],
+          [
+            "64",
+            "A cone of sticky black incense that stinks"
+          ],
+          [
+            "65",
+            "A nightcap that gives you pleasant dreams when you wear it"
+          ],
+          [
+            "66",
+            "A single caltrop made from bone"
+          ],
+          [
+            "67",
+            "A gold monocle frame without the lens"
+          ],
+          [
+            "68",
+            "A 1-inch cube, each side a different color"
+          ],
+          [
+            "69",
+            "A crystal doorknob"
+          ],
+          [
+            "70",
+            "A packet filled with pink dust"
+          ],
+          [
+            "71",
+            "A fragment of a beautiful song, written as musical notes on two pieces of parchment"
+          ],
+          [
+            "72",
+            "A silver teardrop earring containing a real teardrop"
+          ],
+          [
+            "73",
+            "An eggshell painted with scenes of misery in disturbing detail"
+          ],
+          [
+            "74",
+            "A fan that, when unfolded, shows a sleepy cat"
+          ],
+          [
+            "75",
+            "A set of bone pipes"
+          ],
+          [
+            "76",
+            "A four-leaf clover pressed inside a book discussing manners and etiquette"
+          ],
+          [
+            "77",
+            "A sheet of parchment upon which is drawn a mechanical contraption"
+          ],
+          [
+            "78",
+            "An ornate scabbard that fits no blade you have found"
+          ],
+          [
+            "79",
+            "An invitation to a party where a murder happened"
+          ],
+          [
+            "80",
+            "A bronze pentacle with an etching of a rat's head in its center"
+          ],
+          [
+            "81",
+            "A purple handkerchief embroidered with the name of an archmage"
+          ],
+          [
+            "82",
+            "Half a floor plan for a temple, a castle, or another structure"
+          ],
+          [
+            "83",
+            "A bit of folded cloth that, when unfolded, turns into a stylish cap"
+          ],
+          [
+            "84",
+            "A receipt of deposit at a bank in a far-off city"
+          ],
+          [
+            "85",
+            "A diary with seven missing pages"
+          ],
+          [
+            "86",
+            "An empty silver snuffbox bearing the inscription \"dreams\" on its lid"
+          ],
+          [
+            "87",
+            "An iron holy symbol devoted to an unknown god"
+          ],
+          [
+            "88",
+            "A book about a legendary hero's rise and fall, with the last chapter missing"
+          ],
+          [
+            "89",
+            "A vial of dragon blood"
+          ],
+          [
+            "90",
+            "An ancient arrow of elven design"
+          ],
+          [
+            "91",
+            "A needle that never bends"
+          ],
+          [
+            "92",
+            "An ornate brooch of dwarven design"
+          ],
+          [
+            "93",
+            "An empty wine bottle bearing a pretty label that says, \"The Wizard of Wines Winery, Red Dragon Crush, 331422-W\""
+          ],
+          [
+            "94",
+            "A mosaic tile with a multicolored, glazed surface"
+          ],
+          [
+            "95",
+            "A petrified mouse"
+          ],
+          [
+            "96",
+            "A black pirate flag adorned with a dragon's skull and crossbones"
+          ],
+          [
+            "97",
+            "A tiny mechanical crab or spider that moves about when it's not being observed"
+          ],
+          [
+            "98",
+            "A glass jar containing lard with a label that reads, \"Griffon Grease\""
+          ],
+          [
+            "99",
+            "A wooden box with a ceramic bottom that holds a living worm with a head on each end of its body"
+          ],
+          [
+            "00",
+            "A metal urn containing the ashes of a hero"
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-026",
+      "rulebook.page-027"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26,
+        27
+      ],
+      "candidatePage": 26,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/901"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.truth-serum",
+    "kind": "item",
+    "name": "Truth Serum",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 15000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to Truth Serum must succeed on a {@dc 11} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 1 hour. The {@condition Poisoned|SRD52} creature can't knowingly communicate a lie."
+    ],
+    "poisonTypes": [
+      "ingested"
+    ],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 198,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/903"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.universal-solvent",
+    "kind": "item",
+    "name": "Universal Solvent",
+    "rarity": "legendary",
+    "wondrous": true,
+    "entries": [
+      "This tube holds milky liquid with a strong alcohol smell. When found, a tube contains {@dice 1d6 + 1} ounces.",
+      "You can take a {@action Utilize|SRD52} action to pour 1 or more ounces of solvent from the tube onto a surface within reach. Each ounce instantly dissolves up to 1 square foot of adhesive it touches, including Sovereign Glue."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 244,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/906"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.vial",
+    "kind": "item",
+    "name": "Vial",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 100,
+    "entries": [
+      "A Vial holds up to 4 ounces."
+    ],
+    "containerCapacity": {
+      "weight": [
+        0.25
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/908"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wagon",
+    "kind": "item",
+    "name": "Wagon",
+    "type": "VEH|SRD52",
+    "rarity": "none",
+    "weight": 400,
+    "value": 3500,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 100,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/910"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wand-of-binding",
+    "kind": "item",
+    "name": "Wand of Binding",
+    "type": "WD|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 1}",
+    "charges": 7,
+    "entries": [
+      "This wand has 7 charges.",
+      {
+        "type": "entries",
+        "name": "Spells",
+        "entries": [
+          "While holding the wand, you can cast one of the spells (save {@dc 17}) on the following table from it. The table indicates how many charges you must expend to cast the spell.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "colLabels": [
+              "Spell",
+              "Charge Cost"
+            ],
+            "rows": [
+              [
+                "{@spell Hold Monster|SRD52}",
+                "5"
+              ],
+              [
+                "{@spell Hold Person|SRD52}",
+                "2"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into ashes and is destroyed."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "2": [
+          "hold person|srd52"
+        ],
+        "5": [
+          "hold monster|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.hold-monster",
+      "spell.hold-person"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 250,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/912"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wand-of-enemy-detection",
+    "kind": "item",
+    "name": "Wand of Enemy Detection",
+    "type": "WD|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 1}",
+    "charges": 7,
+    "entries": [
+      "This wand has 7 charges. While holding it, you can take a {@action Magic|SRD52} action to expend 1 charge. For 1 minute, you know the direction of the nearest creature {@variantrule Hostile [Attitude]|SRD52|Hostile} to you within 60 feet, but not its distance from you. The wand can sense the presence of {@variantrule Hostile [Attitude]|SRD52|Hostile} creatures that are {@condition Invisible|SRD52}, ethereal, disguised, or hidden, as well as those in plain sight. The effect ends if you stop holding the wand.",
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into ashes and is destroyed."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 250,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/914"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wand-of-fear",
+    "kind": "item",
+    "name": "Wand of Fear",
+    "type": "WD|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 1}",
+    "charges": 7,
+    "entries": [
+      "This wand has 7 charges.",
+      {
+        "type": "entries",
+        "name": "Spells",
+        "entries": [
+          "While holding the wand, you can cast one of the spells (save {@dc 15}) on the following table from it. The table indicates how many charges you must expend to cast the spell.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "colLabels": [
+              "Spell",
+              "Charge Cost"
+            ],
+            "rows": [
+              [
+                "{@spell Command|SRD52} (\"flee\" or \"grovel\" only)",
+                "1"
+              ],
+              [
+                "{@spell Fear|SRD52} (60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone})",
+                "3"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into ashes and is destroyed."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "command|srd52"
+        ],
+        "3": [
+          "fear|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.command",
+      "spell.fear"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 250,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/916"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wand-of-fireballs",
+    "kind": "item",
+    "name": "Wand of Fireballs",
+    "type": "WD|SRD52",
+    "rarity": "rare",
+    "reqAttune": "by a spellcaster",
+    "reqAttuneTags": [
+      {
+        "spellcasting": true
+      }
+    ],
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 1}",
+    "charges": 7,
+    "entries": [
+      "This wand has 7 charges. While holding it, you can expend no more than 3 charges to cast {@spell Fireball|SRD52} (save {@dc 15}) from it. For 1 charge, you cast the level 3 version of the spell. You can increase the spell's level by 1 for each additional charge you expend.",
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into ashes and is destroyed."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "fireball|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.fireball"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/918"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wand-of-lightning-bolts",
+    "kind": "item",
+    "name": "Wand of Lightning Bolts",
+    "type": "WD|SRD52",
+    "rarity": "rare",
+    "reqAttune": "by a spellcaster",
+    "reqAttuneTags": [
+      {
+        "spellcasting": true
+      }
+    ],
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 1}",
+    "charges": 7,
+    "entries": [
+      "This wand has 7 charges. While holding it, you can expend no more than 3 charges to cast {@spell Lightning Bolt|SRD52} (save {@dc 15}) from it. For 1 charge, you cast the level 3 version of the spell. You can increase the spell's level by 1 for each additional charge you expend.",
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into ashes and is destroyed."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "lightning bolt|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.lightning-bolt"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 251,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/920"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wand-of-magic-detection",
+    "kind": "item",
+    "name": "Wand of Magic Detection",
+    "type": "WD|SRD52",
+    "rarity": "uncommon",
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "entries": [
+      "This wand has 3 charges. While holding it, you can expend 1 charge to cast {@spell Detect Magic|SRD52} from it. The wand regains {@dice 1d3} expended charges daily at dawn."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "detect magic|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.detect-magic"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 251,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/922"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wand-of-magic-missiles",
+    "kind": "item",
+    "name": "Wand of Magic Missiles",
+    "type": "WD|SRD52",
+    "rarity": "uncommon",
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 1}",
+    "charges": 7,
+    "entries": [
+      "This wand has 7 charges. While holding it, you can expend no more than 3 charges to cast {@spell Magic Missile|SRD52} from it. For 1 charge, you cast the level 1 version of the spell. You can increase the spell's level by 1 for each additional charge you expend.",
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into ashes and is destroyed."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "magic missile|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.magic-missile"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 251,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/924"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wand-of-paralysis",
+    "kind": "item",
+    "name": "Wand of Paralysis",
+    "type": "WD|SRD52",
+    "rarity": "rare",
+    "reqAttune": "by a spellcaster",
+    "reqAttuneTags": [
+      {
+        "spellcasting": true
+      }
+    ],
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 1}",
+    "charges": 7,
+    "entries": [
+      "This wand has 7 charges. While holding it, you can take a {@action Magic|SRD52} action to expend 1 charge to cause a thin blue ray to streak from the tip toward a creature you can see within 60 feet of yourself. The target must succeed on a {@dc 15} Constitution saving throw or have the {@condition Paralyzed|SRD52} condition for 1 minute. At the end of each of the target's turns, it repeats the save, ending the effect on itself on a success.",
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into ashes and is destroyed."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.paralyzed"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 251,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/926"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  }
+]

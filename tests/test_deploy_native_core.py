@@ -110,6 +110,23 @@ class DeploymentBoundaryTests(unittest.TestCase):
             with self.subTest(log=log), self.assertRaises(RuntimeError):
                 release.require_catalog_fingerprint(log, expected)
 
+    def test_registration_and_exact_package_fingerprints(self):
+        config = self.config()
+        for service in config["services"].values():
+            service["environment"]["Rulesets__AdditionalRulesetsCsv"] = "dnd-5e,fate-condensed"
+        release.validate_compose(config)
+        config["services"]["rules-core-private"]["environment"]["Rulesets__AdditionalRulesetsCsv"] = "dnd-5-5e"
+        with self.assertRaisesRegex(RuntimeError, "registration drift"):
+            release.validate_compose(config)
+        expected = {"first-party-001": "a" * 64, "dnd-5e": "b" * 64}
+        log = "\n".join(f"Native rules catalog ready: ruleset {key}, records 2, fingerprint {value}"
+                        for key, value in expected.items())
+        release.require_ruleset_fingerprints(log, expected)
+        for bad in (log.splitlines()[0], log.replace("b" * 64, "c" * 64),
+                    log + "\nNative rules catalog unavailable: ruleset dnd-5e"):
+            with self.assertRaises(RuntimeError):
+                release.require_ruleset_fingerprints(bad, expected)
+
     def test_image_must_match_commit_and_be_unprivileged(self):
         sha = "c" * 40
         image = {"Config": {"User": "1654",
@@ -154,7 +171,10 @@ class DeploymentBoundaryTests(unittest.TestCase):
             args = diff.call_args.args[0]
             self.assertEqual(args[:5], ["git", "diff", "--quiet", prior, current])
             self.assertIn("src/RulesCore.Host/", args)
+            self.assertIn("src/RulesCore.Mechanics/", args)
+            self.assertIn("tools/stage_runtime_catalogs.sh", args)
             self.assertIn("Dockerfile", args)
+            self.assertIn("Dockerfile.content-update", args)
             self.assertNotIn("data/rulesets/", args)
 
             diff.return_value.returncode = 1
@@ -196,8 +216,9 @@ class DeploymentBoundaryTests(unittest.TestCase):
         contents = (Path(__file__).parents[1] / "Dockerfile.content-update"
                     ).read_text(encoding="utf-8")
         self.assertIn("FROM ${RULES_CORE_BASE_IMAGE}", contents)
-        self.assertIn("rm -rf /app/data/rulesets/first-party-001/native", contents)
-        self.assertIn("COPY data/rulesets/first-party-001/native/", contents)
+        self.assertIn("RUN rm -rf /app/data/rulesets\n", contents)
+        self.assertIn("COPY --from=catalogs /staged-catalogs/ /app/data/rulesets/", contents)
+        self.assertIn("RUN sh /stage_runtime_catalogs.sh", contents)
         self.assertIn("USER $APP_UID", contents)
         self.assertNotIn("dotnet publish", contents)
 

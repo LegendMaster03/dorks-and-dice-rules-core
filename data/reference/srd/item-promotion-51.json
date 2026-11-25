@@ -1,0 +1,499 @@
+{
+  "edition": "srd-5.1",
+  "counts": {
+    "item": 493,
+    "itemGroup": 6,
+    "baseitem": 91,
+    "itemProperty": 10,
+    "magicvariant": 30
+  },
+  "excluded": [
+    {
+      "path": "items.json",
+      "pointer": "/item/159",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items.json",
+      "pointer": "/item/230",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items.json",
+      "pointer": "/item/310",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items.json",
+      "pointer": "/item/360",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items.json",
+      "pointer": "/item/499",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items.json",
+      "pointer": "/item/556",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items.json",
+      "pointer": "/item/880",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/0",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/18",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/20",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/22",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/24",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/32",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/34",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/55",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/79",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/85",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/101",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/116",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/126",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/156",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/166",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/178",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/182",
+      "field": "additionalEntries",
+      "reason": "supplemental tool/vehicle prose not verified as SRD; base fields retained"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/4",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/6",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/18",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/0",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/1",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/3",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/5",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/7",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/9",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/11",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/13",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/15",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/17",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/19",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/21",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/23",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/25",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/27",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/29",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/31",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/33",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/35",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/37",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/39",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/41",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/43",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/45",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/47",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/49",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/51",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/53",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/55",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/57",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/60",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/62",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/64",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/0",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/3",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/6",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/8",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    }
+  ],
+  "corrections": [
+    {
+      "id": "item.bag-of-holding",
+      "reason": "Use official Handy Haversack name"
+    },
+    {
+      "id": "item.crawler-mucus-contact",
+      "reason": "Official SRD 5.1 p.204 uses crawler, not Carrion Crawler; retain incapacitated condition and remove the unsupported creature link."
+    },
+    {
+      "id": "item.deck-of-illusions",
+      "reason": "Reconcile all 33 legacy illusion table rows with SRD 5.1 p.216; preserve the published Beholder example and restore Succubus or incubus display."
+    },
+    {
+      "id": "item.deck-of-many-things",
+      "reason": "Verify all 22 playing-card mappings and named effect sections against SRD 5.1 pp.216–218; remove non-SRD A Question of Enmity inset."
+    },
+    {
+      "id": "item.mace-of-smiting",
+      "reason": "Restore the published 2d6/4d6 critical-hit damage on SRD 5.1 p.229; remove the non-publisher editorial note."
+    },
+    {
+      "id": "item.orb-of-dragonkind",
+      "reason": "Remove non-SRD setting names and foreign creature link; retain official artifact mechanics"
+    },
+    {
+      "id": "item.portable-hole",
+      "reason": "Use official Handy Haversack name"
+    },
+    {
+      "id": "item.spell-scroll-1st-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-2nd-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-3rd-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-4th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-5th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-6th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-7th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-8th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-9th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-cantrip",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item-group.gaming-set",
+      "reason": "Remove gaming set variants absent from the 5.1 tools table"
+    },
+    {
+      "id": "item-property.2h",
+      "reason": "Restore original SRD 5.1 weapon property wording; do not import later errata."
+    },
+    {
+      "id": "item-property.a",
+      "reason": "Restore original SRD 5.1 weapon property wording; do not import later errata."
+    },
+    {
+      "id": "item-property.h",
+      "reason": "Restore original SRD 5.1 weapon property wording; do not import later errata."
+    },
+    {
+      "id": "item-property.r",
+      "reason": "Restore original SRD 5.1 weapon property wording; do not import later errata."
+    },
+    {
+      "id": "magic-variant.arrow-of-slaying",
+      "reason": "Restore legacy slaying ammunition's piercing damage, flexible target grouping and alternate ammunition guidance; remove imported modern random creature-type table."
+    },
+    {
+      "id": "magic-variant.defender",
+      "reason": "Remove unconditional AC bonus: transfer part of the +3 weapon bonus only when the published condition applies."
+    },
+    {
+      "id": "magic-variant.sword-of-life-stealing",
+      "reason": "Restore published 3d6 extra damage and matching temporary hit points instead of fixed 10; remove editorial note."
+    },
+    {
+      "id": "magic-variant.sword-of-sharpness",
+      "reason": "Restore published 4d6 slashing damage instead of fixed 14; remove editorial note."
+    },
+    {
+      "id": "magic-variant.vicious-weapon",
+      "reason": "Restore published 2d6 damage on a natural 20 instead of fixed 7 in both template and inherited entries; remove editorial note."
+    },
+    {
+      "id": "item.apparatus-of-the-crab",
+      "reason": "Reconcile publisher Apparatus of the Crab name and typed vehicle statistics; preserve one canonical item identity, omit unverified terrain metadata."
+    },
+    {
+      "id": "item-group.armor-of-resistance",
+      "reason": "Recover the published ten damage choices, link the ten generic templates and derive 120 eligible armor configurations; retain conditional resistance and attunement."
+    }
+  ],
+  "publisherOnly": [
+    "item-group.armor-of-resistance"
+  ],
+  "unresolvedReferences": [],
+  "resolvedReferenceCount": 1262,
+  "mergedOccurrences": [
+    {
+      "id": "item.apparatus-of-the-crab",
+      "path": "vehicles.json",
+      "pointer": "/vehicle/0",
+      "reason": "Verified vehicle profile integrated with canonical magic item; duplicate prose not separately imported."
+    }
+  ],
+  "nativeCount": 761,
+  "expandedArmorResistance": {
+    "groups": 1,
+    "templates": 10,
+    "concrete": 120,
+    "nativeCount": 131,
+    "groupId": "item-group.armor-of-resistance",
+    "pages": [
+      208,
+      209
+    ]
+  }
+}

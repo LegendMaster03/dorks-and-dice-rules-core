@@ -1,0 +1,24 @@
+{
+  "status": "named publisher-source spell extraction; inventory and level/school parity verified; not semantic table or mechanics certification",
+  "sourceExtractionRun": "https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/45511460114",
+  "sources": [
+    {
+      "package": "dnd-5e",
+      "edition": "srd-5.1",
+      "spellRecords": 319,
+      "missingCandidateNames": [],
+      "additionalOfficialNames": [],
+      "levelOrSchoolDifferences": [],
+      "malformedHeaders": []
+    },
+    {
+      "package": "dnd-5-5e",
+      "edition": "srd-5.2.1",
+      "spellRecords": 339,
+      "missingCandidateNames": [],
+      "additionalOfficialNames": [],
+      "levelOrSchoolDifferences": [],
+      "malformedHeaders": []
+    }
+  ]
+}

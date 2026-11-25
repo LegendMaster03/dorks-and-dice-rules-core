@@ -1,0 +1,707 @@
+[
+  {
+    "id": "monster.giant-rat-diseased",
+    "kind": "monster",
+    "name": "Giant Rat (Diseased)",
+    "size": [
+      "S"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 7,
+      "formula": "2d6"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 7,
+    "dex": 15,
+    "con": 11,
+    "int": 2,
+    "wis": 10,
+    "cha": 4,
+    "senses": [
+      "darkvision 60 ft."
+    ],
+    "passive": 10,
+    "cr": "1/8",
+    "trait": [
+      {
+        "name": "Keen Smell",
+        "entries": [
+          "The rat has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+        ]
+      },
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The rat has advantage on an attack roll against a creature if at least one of the rat's allies is within 5 feet of the creature and the ally isn't {@condition incapacitated}."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d4 + 2}) piercing damage. If the target is a creature, it must succeed on a {@dc 10} Constitution saving throw or contract a disease. Until the disease is cured, the target can't regain hit points except by magical means, and the target's hit point maximum decreases by 3 ({@dice 1d6}) every 24 hours. If the target's hit point maximum drops to 0 as a result of this disease, the target dies."
+        ]
+      }
+    ],
+    "variantOf": "monster.giant-rat",
+    "catalogReferences": [
+      "condition.incapacitated",
+      "monster.giant-rat",
+      "rulebook.page-378",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        378
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/131"
+      },
+      "candidatePage": 378,
+      "structuredStatus": "Publisher p.378 explicitly supplies diseased rat variant; base CR retained.",
+      "adaptation": "Finite source-backed legacy variant derived from edition-local parent.",
+      "variantPointer": "/monster/131/_versions/0"
+    }
+  },
+  {
+    "id": "monster.warhorse-chain-mail-barding",
+    "kind": "monster",
+    "name": "Warhorse (Chain Mail Barding)",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 16,
+        "from": [
+          "Chain Mail barding"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 60
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 13,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "passive": 11,
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Trampling Charge",
+        "entries": [
+          "If the horse moves at least 20 feet straight toward a creature and then hits it with a hooves attack on the same turn, that target must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the horse can make another attack with its hooves against it as a bonus action."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
+        ]
+      }
+    ],
+    "variantOf": "monster.warhorse",
+    "barding": {
+      "baseArmorId": "baseitem.chain-mail",
+      "costMultiplier": 4,
+      "weightMultiplier": 2
+    },
+    "catalogReferences": [
+      "baseitem.chain-mail",
+      "condition.prone",
+      "monster.warhorse",
+      "rulebook.page-064",
+      "rulebook.page-071",
+      "rulebook.page-072",
+      "rulebook.page-392"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/294"
+      },
+      "candidatePage": 392,
+      "structuredStatus": "Derived equipment configuration from official armor and barding rules; not a separate published monster block.",
+      "adaptation": "Finite source-backed legacy variant derived from edition-local parent.",
+      "variantPointer": "/monster/294/_versions/0"
+    }
+  },
+  {
+    "id": "monster.warhorse-leather-barding",
+    "kind": "monster",
+    "name": "Warhorse (Leather Barding)",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 12,
+        "from": [
+          "Leather Armor barding"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 60
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 13,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "passive": 11,
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Trampling Charge",
+        "entries": [
+          "If the horse moves at least 20 feet straight toward a creature and then hits it with a hooves attack on the same turn, that target must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the horse can make another attack with its hooves against it as a bonus action."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
+        ]
+      }
+    ],
+    "variantOf": "monster.warhorse",
+    "barding": {
+      "baseArmorId": "baseitem.leather-armor",
+      "costMultiplier": 4,
+      "weightMultiplier": 2
+    },
+    "catalogReferences": [
+      "baseitem.leather-armor",
+      "condition.prone",
+      "monster.warhorse",
+      "rulebook.page-064",
+      "rulebook.page-071",
+      "rulebook.page-072",
+      "rulebook.page-392"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/294"
+      },
+      "candidatePage": 392,
+      "structuredStatus": "Derived equipment configuration from official armor and barding rules; not a separate published monster block.",
+      "adaptation": "Finite source-backed legacy variant derived from edition-local parent.",
+      "variantPointer": "/monster/294/_versions/1"
+    }
+  },
+  {
+    "id": "monster.warhorse-plate-barding",
+    "kind": "monster",
+    "name": "Warhorse (Plate Barding)",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 18,
+        "from": [
+          "Plate Armor barding"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 60
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 13,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "passive": 11,
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Trampling Charge",
+        "entries": [
+          "If the horse moves at least 20 feet straight toward a creature and then hits it with a hooves attack on the same turn, that target must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the horse can make another attack with its hooves against it as a bonus action."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
+        ]
+      }
+    ],
+    "variantOf": "monster.warhorse",
+    "barding": {
+      "baseArmorId": "baseitem.plate-armor",
+      "costMultiplier": 4,
+      "weightMultiplier": 2
+    },
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "condition.prone",
+      "monster.warhorse",
+      "rulebook.page-064",
+      "rulebook.page-071",
+      "rulebook.page-072",
+      "rulebook.page-392"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/294"
+      },
+      "candidatePage": 392,
+      "structuredStatus": "Derived equipment configuration from official armor and barding rules; not a separate published monster block.",
+      "adaptation": "Finite source-backed legacy variant derived from edition-local parent.",
+      "variantPointer": "/monster/294/_versions/2"
+    }
+  },
+  {
+    "id": "monster.warhorse-ring-mail-barding",
+    "kind": "monster",
+    "name": "Warhorse (Ring Mail Barding)",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 14,
+        "from": [
+          "Ring Mail barding"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 60
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 13,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "passive": 11,
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Trampling Charge",
+        "entries": [
+          "If the horse moves at least 20 feet straight toward a creature and then hits it with a hooves attack on the same turn, that target must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the horse can make another attack with its hooves against it as a bonus action."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
+        ]
+      }
+    ],
+    "variantOf": "monster.warhorse",
+    "barding": {
+      "baseArmorId": "baseitem.ring-mail",
+      "costMultiplier": 4,
+      "weightMultiplier": 2
+    },
+    "catalogReferences": [
+      "baseitem.ring-mail",
+      "condition.prone",
+      "monster.warhorse",
+      "rulebook.page-064",
+      "rulebook.page-071",
+      "rulebook.page-072",
+      "rulebook.page-392"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/294"
+      },
+      "candidatePage": 392,
+      "structuredStatus": "Derived equipment configuration from official armor and barding rules; not a separate published monster block.",
+      "adaptation": "Finite source-backed legacy variant derived from edition-local parent.",
+      "variantPointer": "/monster/294/_versions/3"
+    }
+  },
+  {
+    "id": "monster.warhorse-scale-mail-barding",
+    "kind": "monster",
+    "name": "Warhorse (Scale Mail Barding)",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 15,
+        "from": [
+          "Scale Mail barding"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 60
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 13,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "passive": 11,
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Trampling Charge",
+        "entries": [
+          "If the horse moves at least 20 feet straight toward a creature and then hits it with a hooves attack on the same turn, that target must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the horse can make another attack with its hooves against it as a bonus action."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
+        ]
+      }
+    ],
+    "variantOf": "monster.warhorse",
+    "barding": {
+      "baseArmorId": "baseitem.scale-mail",
+      "costMultiplier": 4,
+      "weightMultiplier": 2
+    },
+    "catalogReferences": [
+      "baseitem.scale-mail",
+      "condition.prone",
+      "monster.warhorse",
+      "rulebook.page-064",
+      "rulebook.page-071",
+      "rulebook.page-072",
+      "rulebook.page-392"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/294"
+      },
+      "candidatePage": 392,
+      "structuredStatus": "Derived equipment configuration from official armor and barding rules; not a separate published monster block.",
+      "adaptation": "Finite source-backed legacy variant derived from edition-local parent.",
+      "variantPointer": "/monster/294/_versions/4"
+    }
+  },
+  {
+    "id": "monster.warhorse-splint-barding",
+    "kind": "monster",
+    "name": "Warhorse (Splint Barding)",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 17,
+        "from": [
+          "Splint Armor barding"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 60
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 13,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "passive": 11,
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Trampling Charge",
+        "entries": [
+          "If the horse moves at least 20 feet straight toward a creature and then hits it with a hooves attack on the same turn, that target must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the horse can make another attack with its hooves against it as a bonus action."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
+        ]
+      }
+    ],
+    "variantOf": "monster.warhorse",
+    "barding": {
+      "baseArmorId": "baseitem.splint-armor",
+      "costMultiplier": 4,
+      "weightMultiplier": 2
+    },
+    "catalogReferences": [
+      "baseitem.splint-armor",
+      "condition.prone",
+      "monster.warhorse",
+      "rulebook.page-064",
+      "rulebook.page-071",
+      "rulebook.page-072",
+      "rulebook.page-392"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/294"
+      },
+      "candidatePage": 392,
+      "structuredStatus": "Derived equipment configuration from official armor and barding rules; not a separate published monster block.",
+      "adaptation": "Finite source-backed legacy variant derived from edition-local parent.",
+      "variantPointer": "/monster/294/_versions/5"
+    }
+  },
+  {
+    "id": "monster.warhorse-studded-leather-barding",
+    "kind": "monster",
+    "name": "Warhorse (Studded Leather Barding)",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 13,
+        "from": [
+          "Studded Leather Armor barding"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 60
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 13,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "passive": 11,
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Trampling Charge",
+        "entries": [
+          "If the horse moves at least 20 feet straight toward a creature and then hits it with a hooves attack on the same turn, that target must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the horse can make another attack with its hooves against it as a bonus action."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
+        ]
+      }
+    ],
+    "variantOf": "monster.warhorse",
+    "barding": {
+      "baseArmorId": "baseitem.studded-leather-armor",
+      "costMultiplier": 4,
+      "weightMultiplier": 2
+    },
+    "catalogReferences": [
+      "baseitem.studded-leather-armor",
+      "condition.prone",
+      "monster.warhorse",
+      "rulebook.page-064",
+      "rulebook.page-071",
+      "rulebook.page-072",
+      "rulebook.page-392"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        64,
+        71,
+        72,
+        392
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/294"
+      },
+      "candidatePage": 392,
+      "structuredStatus": "Derived equipment configuration from official armor and barding rules; not a separate published monster block.",
+      "adaptation": "Finite source-backed legacy variant derived from edition-local parent.",
+      "variantPointer": "/monster/294/_versions/6"
+    }
+  }
+]

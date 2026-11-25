@@ -1,0 +1,95 @@
+{
+  "id": "dnd-5e",
+  "kind": "ruleset-package",
+  "schemaVersion": 1,
+  "nativeRoot": "native/",
+  "workingRoot": "working/",
+  "runtimeContentRoot": "native/",
+  "name": "D&D SRD 5.1",
+  "coverageStatus": "official-pdf-page-reference; reviewed skills and conditions; structured SRD spells, bestiary and item catalogs; structured character origins; structured classes and features; structured feats and optional features; structured core actions, languages and senses; structured supplementary rules; remaining categories incomplete",
+  "license": "CC-BY-4.0",
+  "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+  "officialPageImport": {
+    "release": "srd-5.1",
+    "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+    "pdfPages": 403,
+    "firstGameplayPage": 3,
+    "pageRecords": 401,
+    "representation": "pdf-layout-extract"
+  },
+  "officialSpellImport": {
+    "release": "srd-5.1",
+    "spellRecords": 319,
+    "representation": "publisher-column-layout",
+    "structuredFields": [
+      "name",
+      "level",
+      "school",
+      "time",
+      "range",
+      "components",
+      "duration",
+      "entries"
+    ],
+    "headerRepresentation": "first line per casting field; full text in officialTextLayout",
+    "structuredRepresentation": "pinned 5e.tools-shaped SRD JSON; identity verified, body review pending"
+  },
+  "structuredBestiaryImport": {
+    "sourceRecords": 323,
+    "nativeRecords": 323,
+    "publisherOnly": [],
+    "representation": "pinned edition-specific 5e.tools-shaped stat blocks; full body review pending"
+  },
+  "structuredItemImport": {
+    "nativeRecords": 761,
+    "representation": "Pinned edition-specific concrete items, base equipment, groups, templates and weapon rules; publisher-verified expanded Armor of Resistance templates and configurations; remaining full fidelity review pending",
+    "publisherOnly": [
+      "item-group.armor-of-resistance"
+    ]
+  },
+  "structuredOriginsImport": {
+    "nativeRecords": 14,
+    "representation": "pinned edition-specific character creation definitions; publisher page locators; full body and reference review pending"
+  },
+  "structuredClassImport": {
+    "nativeRecords": 361,
+    "representation": "pinned edition-specific class/subclass progressions and feature definitions; explicit feature references resolved; full publisher body and semantic review pending"
+  },
+  "structuredFeatureImport": {
+    "nativeRecords": 50,
+    "representation": "pinned edition-specific feats and optional features; structured prerequisites and known source corrections; full body review pending"
+  },
+  "structuredGeneralImport": {
+    "nativeRecords": 32,
+    "representation": "edition-specific core actions, languages and senses; supplementary action and other general rule categories pending"
+  },
+  "structuredSupplementaryImport": {
+    "nativeRecords": 27,
+    "representation": "edition-specific glossary, supplementary options, environmental rules, diseases/contagions, traps, tables and statuses; publisher locators; full semantic and body review pending"
+  },
+  "structuredDeityImport": {
+    "nativeRecords": 67,
+    "representation": "Four official fantasy-historical pantheons; complete publisher table row reconciliation."
+  },
+  "structuredBestiaryVariants": {
+    "nativeRecords": 8,
+    "sourceVersionOccurrences": 25,
+    "excluded": 17,
+    "representation": "One explicitly published variant and seven source-listed barding configurations derived from published armor rules."
+  },
+  "publisherRecoveredRules": {
+    "nativeRecords": 38,
+    "representation": "Publisher-only structured equipment groups, rule sections and tables with local catalog references; remaining publisher coverage review pending."
+  },
+  "numberedItemVariantImport": {
+    "nativeRecords": 159,
+    "templateCount": 12,
+    "representation": "Derived edition-local numbered armor, shield, weapon and individual ammunition enhancements; parent template and base item references."
+  },
+  "structuredBookRuleImport": {
+    "nativeRecords": 69,
+    "tables": 23,
+    "rules": 46,
+    "representation": "Individually selected nested book rules and tables; all pinned embedded table occurrences projected or separately represented; equipment table rows reconciled against publisher and typed equipment definitions; full general-rule and body fidelity pending."
+  }
+}

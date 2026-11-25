@@ -1,0 +1,2714 @@
+[
+  {
+    "id": "item.adamantine-breastplate",
+    "kind": "item",
+    "name": "Adamantine Breastplate",
+    "baseItem": "Breastplate|SRD52",
+    "baseItemId": "baseitem.breastplate",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 14,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any {@variantrule Critical Hit|SRD52} against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.breastplate",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/43"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/17"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-chain-mail",
+    "kind": "item",
+    "name": "Adamantine Chain Mail",
+    "baseItem": "Chain Mail|SRD52",
+    "baseItemId": "baseitem.chain-mail",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "HA|SRD52",
+    "weight": 55,
+    "ac": 16,
+    "strength": "13",
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any {@variantrule Critical Hit|SRD52} against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-mail",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/43"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/27"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-chain-shirt",
+    "kind": "item",
+    "name": "Adamantine Chain Shirt",
+    "baseItem": "Chain Shirt|SRD52",
+    "baseItemId": "baseitem.chain-shirt",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 13,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any {@variantrule Critical Hit|SRD52} against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-shirt",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/43"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/29"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-half-plate-armor",
+    "kind": "item",
+    "name": "Adamantine Half Plate Armor",
+    "baseItem": "Half Plate Armor|SRD52",
+    "baseItemId": "baseitem.half-plate-armor",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "MA|SRD52",
+    "weight": 40,
+    "ac": 15,
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any {@variantrule Critical Hit|SRD52} against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.half-plate-armor",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/43"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/66"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-plate-armor",
+    "kind": "item",
+    "name": "Adamantine Plate Armor",
+    "baseItem": "Plate Armor|SRD52",
+    "baseItemId": "baseitem.plate-armor",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "HA|SRD52",
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any {@variantrule Critical Hit|SRD52} against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/43"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/125"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-ring-mail",
+    "kind": "item",
+    "name": "Adamantine Ring Mail",
+    "baseItem": "Ring Mail|SRD52",
+    "baseItemId": "baseitem.ring-mail",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "HA|SRD52",
+    "weight": 40,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any {@variantrule Critical Hit|SRD52} against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.ring-mail",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/43"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/133"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-scale-mail",
+    "kind": "item",
+    "name": "Adamantine Scale Mail",
+    "baseItem": "Scale Mail|SRD52",
+    "baseItemId": "baseitem.scale-mail",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "MA|SRD52",
+    "weight": 45,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any {@variantrule Critical Hit|SRD52} against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/43"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/137"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-splint-armor",
+    "kind": "item",
+    "name": "Adamantine Splint Armor",
+    "baseItem": "Splint Armor|SRD52",
+    "baseItemId": "baseitem.splint-armor",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "HA|SRD52",
+    "weight": 60,
+    "ac": 17,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any {@variantrule Critical Hit|SRD52} against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.splint-armor",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/43"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/161"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.arrow-of-slaying",
+    "kind": "item",
+    "name": "Arrow of Slaying",
+    "baseItem": "Arrow|SRD52",
+    "baseItemId": "baseitem.arrow",
+    "variantOf": "magic-variant.ammunition-of-slaying",
+    "type": "A|SRD52",
+    "weight": 0.05,
+    "arrow": true,
+    "rarity": "very rare",
+    "entries": [
+      "This magic ammunition is meant to slay creatures of a particular type, which the DM chooses or determines randomly by rolling on the table below. If a creature of that type takes damage from the ammunition, the creature makes a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} Force damage on a failed save or half as much extra damage on a successful one.",
+      "After dealing its extra damage to a creature, the ammunition becomes nonmagical.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-10"
+        ],
+        "colLabels": [
+          "1d100",
+          "Creature Type"
+        ],
+        "rows": [
+          [
+            "01-10",
+            "Aberrations"
+          ],
+          [
+            "11-15",
+            "Beasts"
+          ],
+          [
+            "16-20",
+            "Celestials"
+          ],
+          [
+            "21-25",
+            "Constructs"
+          ],
+          [
+            "26-35",
+            "Dragons"
+          ],
+          [
+            "36-45",
+            "Elementals"
+          ],
+          [
+            "46-50",
+            "Humanoids"
+          ],
+          [
+            "51-60",
+            "Fey"
+          ],
+          [
+            "61-70",
+            "Fiends"
+          ],
+          [
+            "71-75",
+            "Giants"
+          ],
+          [
+            "76-80",
+            "Monstrosities"
+          ],
+          [
+            "81-85",
+            "Oozes"
+          ],
+          [
+            "86-90",
+            "Plants"
+          ],
+          [
+            "91-00",
+            "Undead"
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "item.quiver",
+      "magic-variant.ammunition-of-slaying",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/44"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/3"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.bolt-of-slaying",
+    "kind": "item",
+    "name": "Bolt of Slaying",
+    "baseItem": "Bolt|SRD52",
+    "baseItemId": "baseitem.bolt",
+    "variantOf": "magic-variant.ammunition-of-slaying",
+    "type": "A|SRD52",
+    "weight": 0.075,
+    "bolt": true,
+    "rarity": "very rare",
+    "entries": [
+      "This magic ammunition is meant to slay creatures of a particular type, which the DM chooses or determines randomly by rolling on the table below. If a creature of that type takes damage from the ammunition, the creature makes a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} Force damage on a failed save or half as much extra damage on a successful one.",
+      "After dealing its extra damage to a creature, the ammunition becomes nonmagical.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-10"
+        ],
+        "colLabels": [
+          "1d100",
+          "Creature Type"
+        ],
+        "rows": [
+          [
+            "01-10",
+            "Aberrations"
+          ],
+          [
+            "11-15",
+            "Beasts"
+          ],
+          [
+            "16-20",
+            "Celestials"
+          ],
+          [
+            "21-25",
+            "Constructs"
+          ],
+          [
+            "26-35",
+            "Dragons"
+          ],
+          [
+            "36-45",
+            "Elementals"
+          ],
+          [
+            "46-50",
+            "Humanoids"
+          ],
+          [
+            "51-60",
+            "Fey"
+          ],
+          [
+            "61-70",
+            "Fiends"
+          ],
+          [
+            "71-75",
+            "Giants"
+          ],
+          [
+            "76-80",
+            "Monstrosities"
+          ],
+          [
+            "81-85",
+            "Oozes"
+          ],
+          [
+            "86-90",
+            "Plants"
+          ],
+          [
+            "91-00",
+            "Undead"
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "item.crossbow-bolt-case",
+      "magic-variant.ammunition-of-slaying",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/44"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/14"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.needle-of-slaying",
+    "kind": "item",
+    "name": "Needle of Slaying",
+    "baseItem": "Needle|SRD52",
+    "baseItemId": "baseitem.needle",
+    "variantOf": "magic-variant.ammunition-of-slaying",
+    "type": "A|SRD52",
+    "weight": 0.02,
+    "rarity": "very rare",
+    "entries": [
+      "This magic ammunition is meant to slay creatures of a particular type, which the DM chooses or determines randomly by rolling on the table below. If a creature of that type takes damage from the ammunition, the creature makes a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} Force damage on a failed save or half as much extra damage on a successful one.",
+      "After dealing its extra damage to a creature, the ammunition becomes nonmagical.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-10"
+        ],
+        "colLabels": [
+          "1d100",
+          "Creature Type"
+        ],
+        "rows": [
+          [
+            "01-10",
+            "Aberrations"
+          ],
+          [
+            "11-15",
+            "Beasts"
+          ],
+          [
+            "16-20",
+            "Celestials"
+          ],
+          [
+            "21-25",
+            "Constructs"
+          ],
+          [
+            "26-35",
+            "Dragons"
+          ],
+          [
+            "36-45",
+            "Elementals"
+          ],
+          [
+            "46-50",
+            "Humanoids"
+          ],
+          [
+            "51-60",
+            "Fey"
+          ],
+          [
+            "61-70",
+            "Fiends"
+          ],
+          [
+            "71-75",
+            "Giants"
+          ],
+          [
+            "76-80",
+            "Monstrosities"
+          ],
+          [
+            "81-85",
+            "Oozes"
+          ],
+          [
+            "86-90",
+            "Plants"
+          ],
+          [
+            "91-00",
+            "Undead"
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.needle",
+      "item.pouch",
+      "magic-variant.ammunition-of-slaying",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/44"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/109"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.sling-bullet-of-slaying",
+    "kind": "item",
+    "name": "Sling Bullet of Slaying",
+    "baseItem": "Sling Bullet|SRD52",
+    "baseItemId": "baseitem.sling-bullet",
+    "variantOf": "magic-variant.ammunition-of-slaying",
+    "type": "A|SRD52",
+    "weight": 0.075,
+    "rarity": "very rare",
+    "entries": [
+      "This magic ammunition is meant to slay creatures of a particular type, which the DM chooses or determines randomly by rolling on the table below. If a creature of that type takes damage from the ammunition, the creature makes a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} Force damage on a failed save or half as much extra damage on a successful one.",
+      "After dealing its extra damage to a creature, the ammunition becomes nonmagical.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-10"
+        ],
+        "colLabels": [
+          "1d100",
+          "Creature Type"
+        ],
+        "rows": [
+          [
+            "01-10",
+            "Aberrations"
+          ],
+          [
+            "11-15",
+            "Beasts"
+          ],
+          [
+            "16-20",
+            "Celestials"
+          ],
+          [
+            "21-25",
+            "Constructs"
+          ],
+          [
+            "26-35",
+            "Dragons"
+          ],
+          [
+            "36-45",
+            "Elementals"
+          ],
+          [
+            "46-50",
+            "Humanoids"
+          ],
+          [
+            "51-60",
+            "Fey"
+          ],
+          [
+            "61-70",
+            "Fiends"
+          ],
+          [
+            "71-75",
+            "Giants"
+          ],
+          [
+            "76-80",
+            "Monstrosities"
+          ],
+          [
+            "81-85",
+            "Oozes"
+          ],
+          [
+            "86-90",
+            "Plants"
+          ],
+          [
+            "91-00",
+            "Undead"
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.sling-bullet",
+      "item.pouch",
+      "magic-variant.ammunition-of-slaying",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/44"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/153"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.firearm-bullet-of-slaying",
+    "kind": "item",
+    "name": "Firearm Bullet of Slaying",
+    "baseItem": "Firearm Bullet|SRD52",
+    "baseItemId": "baseitem.firearm-bullet",
+    "variantOf": "magic-variant.ammunition-of-slaying",
+    "type": "A|SRD52",
+    "weight": 0.2,
+    "bulletFirearm": true,
+    "rarity": "very rare",
+    "entries": [
+      "This magic ammunition is meant to slay creatures of a particular type, which the DM chooses or determines randomly by rolling on the table below. If a creature of that type takes damage from the ammunition, the creature makes a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} Force damage on a failed save or half as much extra damage on a successful one.",
+      "After dealing its extra damage to a creature, the ammunition becomes nonmagical.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-10"
+        ],
+        "colLabels": [
+          "1d100",
+          "Creature Type"
+        ],
+        "rows": [
+          [
+            "01-10",
+            "Aberrations"
+          ],
+          [
+            "11-15",
+            "Beasts"
+          ],
+          [
+            "16-20",
+            "Celestials"
+          ],
+          [
+            "21-25",
+            "Constructs"
+          ],
+          [
+            "26-35",
+            "Dragons"
+          ],
+          [
+            "36-45",
+            "Elementals"
+          ],
+          [
+            "46-50",
+            "Humanoids"
+          ],
+          [
+            "51-60",
+            "Fey"
+          ],
+          [
+            "61-70",
+            "Fiends"
+          ],
+          [
+            "71-75",
+            "Giants"
+          ],
+          [
+            "76-80",
+            "Monstrosities"
+          ],
+          [
+            "81-85",
+            "Oozes"
+          ],
+          [
+            "86-90",
+            "Plants"
+          ],
+          [
+            "91-00",
+            "Undead"
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.firearm-bullet",
+      "magic-variant.ammunition-of-slaying",
+      "rulebook.page-091",
+      "rulebook.page-096",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/44"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/48"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed.",
+      "upstreamStructuredSource": {
+        "provider": "5etools-mirror-3/5etools-src",
+        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
+        "path": "data/items-base.json",
+        "pointer": "/baseitem/59"
+      }
+    }
+  },
+  {
+    "id": "item.breastplate-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Breastplate of Vulnerability (Bludgeoning)",
+    "baseItem": "Breastplate|SRD52",
+    "baseItemId": "baseitem.breastplate",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 14,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.breastplate",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/17"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.chain-mail-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Chain Mail of Vulnerability (Bludgeoning)",
+    "baseItem": "Chain Mail|SRD52",
+    "baseItemId": "baseitem.chain-mail",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "HA|SRD52",
+    "weight": 55,
+    "ac": 16,
+    "strength": "13",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.chain-mail",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/27"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.chain-shirt-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Chain Shirt of Vulnerability (Bludgeoning)",
+    "baseItem": "Chain Shirt|SRD52",
+    "baseItemId": "baseitem.chain-shirt",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 13,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.chain-shirt",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/29"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.half-plate-armor-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Half Plate Armor of Vulnerability (Bludgeoning)",
+    "baseItem": "Half Plate Armor|SRD52",
+    "baseItemId": "baseitem.half-plate-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "MA|SRD52",
+    "weight": 40,
+    "ac": 15,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.half-plate-armor",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/66"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.hide-armor-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Hide Armor of Vulnerability (Bludgeoning)",
+    "baseItem": "Hide Armor|SRD52",
+    "baseItemId": "baseitem.hide-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "MA|SRD52",
+    "weight": 12,
+    "ac": 12,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.hide-armor",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/74"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.leather-armor-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Leather Armor of Vulnerability (Bludgeoning)",
+    "baseItem": "Leather Armor|SRD52",
+    "baseItemId": "baseitem.leather-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "LA|SRD52",
+    "weight": 10,
+    "ac": 11,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.leather-armor",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/84"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.padded-armor-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Padded Armor of Vulnerability (Bludgeoning)",
+    "baseItem": "Padded Armor|SRD52",
+    "baseItemId": "baseitem.padded-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "LA|SRD52",
+    "weight": 8,
+    "ac": 11,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.padded-armor",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/115"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.plate-armor-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Plate Armor of Vulnerability (Bludgeoning)",
+    "baseItem": "Plate Armor|SRD52",
+    "baseItemId": "baseitem.plate-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "HA|SRD52",
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/125"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.ring-mail-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Ring Mail of Vulnerability (Bludgeoning)",
+    "baseItem": "Ring Mail|SRD52",
+    "baseItemId": "baseitem.ring-mail",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "HA|SRD52",
+    "weight": 40,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.ring-mail",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/133"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.scale-mail-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Scale Mail of Vulnerability (Bludgeoning)",
+    "baseItem": "Scale Mail|SRD52",
+    "baseItemId": "baseitem.scale-mail",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "MA|SRD52",
+    "weight": 45,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/137"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.splint-armor-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Splint Armor of Vulnerability (Bludgeoning)",
+    "baseItem": "Splint Armor|SRD52",
+    "baseItemId": "baseitem.splint-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "HA|SRD52",
+    "weight": 60,
+    "ac": 17,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.splint-armor",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/161"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.studded-leather-armor-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Studded Leather Armor of Vulnerability (Bludgeoning)",
+    "baseItem": "Studded Leather Armor|SRD52",
+    "baseItemId": "baseitem.studded-leather-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-bludgeoning",
+    "type": "LA|SRD52",
+    "weight": 13,
+    "ac": 12,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Piercing and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.studded-leather-armor",
+      "magic-variant.armor-of-vulnerability-bludgeoning",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/45"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/165"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.breastplate-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Breastplate of Vulnerability (Piercing)",
+    "baseItem": "Breastplate|SRD52",
+    "baseItemId": "baseitem.breastplate",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 14,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.breastplate",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/17"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.chain-mail-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Chain Mail of Vulnerability (Piercing)",
+    "baseItem": "Chain Mail|SRD52",
+    "baseItemId": "baseitem.chain-mail",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "HA|SRD52",
+    "weight": 55,
+    "ac": 16,
+    "strength": "13",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.chain-mail",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/27"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.chain-shirt-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Chain Shirt of Vulnerability (Piercing)",
+    "baseItem": "Chain Shirt|SRD52",
+    "baseItemId": "baseitem.chain-shirt",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 13,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.chain-shirt",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/29"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.half-plate-armor-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Half Plate Armor of Vulnerability (Piercing)",
+    "baseItem": "Half Plate Armor|SRD52",
+    "baseItemId": "baseitem.half-plate-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "MA|SRD52",
+    "weight": 40,
+    "ac": 15,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.half-plate-armor",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/66"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.hide-armor-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Hide Armor of Vulnerability (Piercing)",
+    "baseItem": "Hide Armor|SRD52",
+    "baseItemId": "baseitem.hide-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "MA|SRD52",
+    "weight": 12,
+    "ac": 12,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.hide-armor",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/74"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.leather-armor-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Leather Armor of Vulnerability (Piercing)",
+    "baseItem": "Leather Armor|SRD52",
+    "baseItemId": "baseitem.leather-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "LA|SRD52",
+    "weight": 10,
+    "ac": 11,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.leather-armor",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/84"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.padded-armor-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Padded Armor of Vulnerability (Piercing)",
+    "baseItem": "Padded Armor|SRD52",
+    "baseItemId": "baseitem.padded-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "LA|SRD52",
+    "weight": 8,
+    "ac": 11,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.padded-armor",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/115"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.plate-armor-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Plate Armor of Vulnerability (Piercing)",
+    "baseItem": "Plate Armor|SRD52",
+    "baseItemId": "baseitem.plate-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "HA|SRD52",
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/125"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.ring-mail-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Ring Mail of Vulnerability (Piercing)",
+    "baseItem": "Ring Mail|SRD52",
+    "baseItemId": "baseitem.ring-mail",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "HA|SRD52",
+    "weight": 40,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.ring-mail",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/133"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.scale-mail-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Scale Mail of Vulnerability (Piercing)",
+    "baseItem": "Scale Mail|SRD52",
+    "baseItemId": "baseitem.scale-mail",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "MA|SRD52",
+    "weight": 45,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/137"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.splint-armor-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Splint Armor of Vulnerability (Piercing)",
+    "baseItem": "Splint Armor|SRD52",
+    "baseItemId": "baseitem.splint-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "HA|SRD52",
+    "weight": 60,
+    "ac": 17,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.splint-armor",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/161"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.studded-leather-armor-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Studded Leather Armor of Vulnerability (Piercing)",
+    "baseItem": "Studded Leather Armor|SRD52",
+    "baseItemId": "baseitem.studded-leather-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-piercing",
+    "type": "LA|SRD52",
+    "weight": 13,
+    "ac": 12,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.studded-leather-armor",
+      "magic-variant.armor-of-vulnerability-piercing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/46"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/165"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.breastplate-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Breastplate of Vulnerability (Slashing)",
+    "baseItem": "Breastplate|SRD52",
+    "baseItemId": "baseitem.breastplate",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 14,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.breastplate",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/17"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.chain-mail-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Chain Mail of Vulnerability (Slashing)",
+    "baseItem": "Chain Mail|SRD52",
+    "baseItemId": "baseitem.chain-mail",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "HA|SRD52",
+    "weight": 55,
+    "ac": 16,
+    "strength": "13",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.chain-mail",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/27"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.chain-shirt-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Chain Shirt of Vulnerability (Slashing)",
+    "baseItem": "Chain Shirt|SRD52",
+    "baseItemId": "baseitem.chain-shirt",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 13,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.chain-shirt",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/29"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  }
+]

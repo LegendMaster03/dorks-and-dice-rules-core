@@ -1,0 +1,953 @@
+{
+  "edition": "srd-5.1",
+  "tables": [
+    {
+      "id": "table.character-advancement",
+      "pointer": "/data/3/entries/5",
+      "page": 56,
+      "rowCount": 20
+    },
+    {
+      "id": "table.multiclassing-prerequisites",
+      "pointer": "/data/3/entries/6/entries/3/entries/1",
+      "page": 56,
+      "rowCount": 12
+    },
+    {
+      "id": "table.multiclassing-proficiencies",
+      "pointer": "/data/3/entries/6/entries/7/entries/1",
+      "page": 57,
+      "rowCount": 12
+    },
+    {
+      "id": "table.multiclass-spellcaster-spell-slots-per-spell-level",
+      "pointer": "/data/3/entries/6/entries/8/entries/4/entries/4",
+      "page": 58,
+      "rowCount": 20
+    },
+    {
+      "id": "table.standard-exchange-rates",
+      "pointer": "/data/4/entries/6",
+      "page": 62,
+      "rowCount": 5
+    },
+    {
+      "id": "table.ability-scores-and-modifiers",
+      "pointer": "/data/6/entries/4/entries/5",
+      "page": 76,
+      "rowCount": 8
+    },
+    {
+      "id": "table.typical-difficulty-classes",
+      "pointer": "/data/6/entries/7/entries/2",
+      "page": 77,
+      "rowCount": 6
+    },
+    {
+      "id": "table.travel-pace",
+      "pointer": "/data/7/entries/1/entries/2/entries/2/entries/4",
+      "page": 84,
+      "rowCount": 3
+    },
+    {
+      "id": "table.size-categories",
+      "pointer": "/data/8/entries/1/entries/9/entries/2",
+      "page": 92,
+      "rowCount": 6
+    },
+    {
+      "id": "table.standard-languages",
+      "pointer": "/data/3/entries/8/entries/3",
+      "page": 59,
+      "rowCount": 8
+    },
+    {
+      "id": "table.exotic-languages",
+      "pointer": "/data/3/entries/8/entries/4",
+      "page": 59,
+      "rowCount": 8
+    },
+    {
+      "id": "table.container-capacity",
+      "pointer": "/data/4/entries/10/entries/3",
+      "page": 69,
+      "rowCount": 13,
+      "pages": [
+        69,
+        70
+      ]
+    },
+    {
+      "id": "table.trade-goods",
+      "pointer": "/data/4/entries/13/entries/2",
+      "page": 72,
+      "rowCount": 13
+    },
+    {
+      "id": "table.lifestyle-expenses",
+      "pointer": "/data/4/entries/14/entries/1/entries/3",
+      "page": 72,
+      "rowCount": 7
+    },
+    {
+      "id": "table.services",
+      "pointer": "/data/4/entries/14/entries/4/entries/3",
+      "page": 74,
+      "rowCount": 9
+    },
+    {
+      "id": "table.armor",
+      "pointer": "/data/4/entries/8/entries/6",
+      "page": 63,
+      "rowCount": 17,
+      "pages": [
+        63,
+        64
+      ]
+    },
+    {
+      "id": "table.weapons",
+      "pointer": "/data/4/entries/9/entries/4",
+      "page": 65,
+      "rowCount": 41,
+      "pages": [
+        65,
+        66
+      ]
+    },
+    {
+      "id": "table.adventuring-gear",
+      "pointer": "/data/4/entries/10/entries/2",
+      "page": 68,
+      "rowCount": 103,
+      "pages": [
+        68,
+        69
+      ],
+      "sourceRowCount": 108
+    },
+    {
+      "id": "table.tools",
+      "pointer": "/data/4/entries/11/entries/1",
+      "page": 70,
+      "rowCount": 39,
+      "sourceRowCount": 41
+    },
+    {
+      "id": "table.mounts-and-other-animals",
+      "pointer": "/data/4/entries/12/entries/4",
+      "page": 71,
+      "rowCount": 8,
+      "pages": [
+        71,
+        72
+      ]
+    },
+    {
+      "id": "table.tack-harness-and-drawn-vehicles",
+      "pointer": "/data/4/entries/12/entries/5",
+      "page": 71,
+      "rowCount": 15,
+      "pages": [
+        71,
+        72
+      ]
+    },
+    {
+      "id": "table.waterborne-vehicles",
+      "pointer": "/data/4/entries/12/entries/6",
+      "page": 72,
+      "rowCount": 6
+    },
+    {
+      "id": "table.food-drink-and-lodging",
+      "pointer": "/data/4/entries/14/entries/3/entries/1",
+      "page": 73,
+      "rowCount": 24,
+      "pages": [
+        73,
+        74
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule.multiclassing",
+      "pointer": "/data/3/entries/6",
+      "pages": [
+        56,
+        57,
+        58
+      ]
+    },
+    {
+      "id": "rule.advantage-and-disadvantage",
+      "pointer": "/data/6/entries/5",
+      "pages": [
+        76,
+        77
+      ]
+    },
+    {
+      "id": "rule.proficiency-bonus",
+      "pointer": "/data/6/entries/6",
+      "pages": [
+        77
+      ]
+    },
+    {
+      "id": "rule.saving-throws",
+      "pointer": "/data/6/entries/9",
+      "pages": [
+        83
+      ]
+    },
+    {
+      "id": "rule.resting",
+      "pointer": "/data/7/entries/3",
+      "pages": [
+        87
+      ]
+    },
+    {
+      "id": "rule.cover",
+      "pointer": "/data/8/entries/4",
+      "pages": [
+        96
+      ]
+    },
+    {
+      "id": "rule.mounted-combat",
+      "pointer": "/data/8/entries/6",
+      "pages": [
+        99
+      ]
+    },
+    {
+      "id": "rule.underwater-combat",
+      "pointer": "/data/8/entries/7",
+      "pages": [
+        99
+      ]
+    },
+    {
+      "id": "rule.attunement",
+      "pointer": "/data/12/entries/1",
+      "pages": [
+        206
+      ]
+    },
+    {
+      "id": "rule.wearing-and-wielding-items",
+      "pointer": "/data/12/entries/2",
+      "pages": [
+        206
+      ]
+    },
+    {
+      "id": "rule.activating-an-item",
+      "pointer": "/data/12/entries/3",
+      "pages": [
+        206,
+        207
+      ]
+    },
+    {
+      "id": "rule.ability-scores-and-modifiers",
+      "pointer": "/data/6/entries/4",
+      "pages": [
+        76
+      ]
+    },
+    {
+      "id": "rule.time",
+      "pointer": "/data/7/entries/0",
+      "pages": [
+        84
+      ]
+    },
+    {
+      "id": "rule.movement",
+      "pointer": "/data/7/entries/1",
+      "pages": [
+        84,
+        85
+      ]
+    },
+    {
+      "id": "rule.between-adventures",
+      "pointer": "/data/7/entries/4",
+      "pages": [
+        88,
+        89
+      ]
+    },
+    {
+      "id": "rule.what-is-a-spell",
+      "pointer": "/data/9/entries/2",
+      "pages": [
+        100,
+        101
+      ]
+    },
+    {
+      "id": "rule.ability-checks",
+      "pointer": "/data/6/entries/7",
+      "pages": [
+        77,
+        78,
+        79
+      ]
+    },
+    {
+      "id": "rule.the-environment",
+      "pointer": "/data/7/entries/2",
+      "pages": [
+        86,
+        87
+      ]
+    },
+    {
+      "id": "rule.the-order-of-combat",
+      "pointer": "/data/8/entries/0",
+      "pages": [
+        90,
+        91
+      ]
+    },
+    {
+      "id": "rule.actions-in-combat",
+      "pointer": "/data/8/entries/2",
+      "pages": [
+        93,
+        94
+      ]
+    },
+    {
+      "id": "rule.movement-and-position",
+      "pointer": "/data/8/entries/1",
+      "pages": [
+        91,
+        92
+      ]
+    },
+    {
+      "id": "rule.making-an-attack",
+      "pointer": "/data/8/entries/3",
+      "pages": [
+        94,
+        95,
+        96
+      ]
+    },
+    {
+      "id": "rule.damage-and-healing",
+      "pointer": "/data/8/entries/5",
+      "pages": [
+        96,
+        97,
+        98,
+        99
+      ]
+    },
+    {
+      "id": "rule.casting-a-spell",
+      "pointer": "/data/9/entries/3",
+      "pages": [
+        101,
+        102,
+        103,
+        104
+      ]
+    },
+    {
+      "id": "rule.using-each-ability",
+      "pointer": "/data/6/entries/8",
+      "pages": [
+        79,
+        80,
+        81,
+        82,
+        83
+      ]
+    },
+    {
+      "id": "rule.alignment",
+      "pointer": "/data/3/entries/7",
+      "pages": [
+        58,
+        59
+      ]
+    },
+    {
+      "id": "rule.languages",
+      "pointer": "/data/3/entries/8",
+      "pages": [
+        59
+      ]
+    },
+    {
+      "id": "rule.inspiration",
+      "pointer": "/data/3/entries/9",
+      "pages": [
+        59,
+        60
+      ]
+    },
+    {
+      "id": "rule.backgrounds",
+      "pointer": "/data/3/entries/10",
+      "pages": [
+        60
+      ]
+    },
+    {
+      "id": "rule.beyond-1st-level",
+      "pointer": "/data/3",
+      "pages": [
+        56
+      ],
+      "entryRange": [
+        0,
+        6
+      ]
+    },
+    {
+      "id": "rule.equipment",
+      "pointer": "/data/4",
+      "pages": [
+        62
+      ],
+      "entryRange": [
+        0,
+        7
+      ]
+    },
+    {
+      "id": "rule.selling-treasure",
+      "pointer": "/data/4/entries/7",
+      "pages": [
+        62
+      ]
+    },
+    {
+      "id": "rule.mounts-and-vehicles",
+      "pointer": "/data/4/entries/12",
+      "pages": [
+        71,
+        72
+      ]
+    },
+    {
+      "id": "rule.trade-goods",
+      "pointer": "/data/4/entries/13",
+      "pages": [
+        72
+      ]
+    },
+    {
+      "id": "rule.expenses",
+      "pointer": "/data/4/entries/14",
+      "pages": [
+        72,
+        73,
+        74
+      ]
+    },
+    {
+      "id": "rule.armor",
+      "pointer": "/data/4/entries/8",
+      "pages": [
+        62,
+        63,
+        64
+      ]
+    },
+    {
+      "id": "rule.weapons",
+      "pointer": "/data/4/entries/9",
+      "pages": [
+        64,
+        65,
+        66
+      ]
+    },
+    {
+      "id": "rule.adventuring-gear",
+      "pointer": "/data/4/entries/10",
+      "pages": [
+        66,
+        67,
+        68,
+        69,
+        70
+      ]
+    },
+    {
+      "id": "rule.tools",
+      "pointer": "/data/4/entries/11",
+      "pages": [
+        70,
+        71
+      ]
+    },
+    {
+      "id": "rule.racial-traits",
+      "pointer": "/data/1/entries/0",
+      "pages": [
+        3
+      ]
+    },
+    {
+      "id": "rule.customizing-npcs",
+      "pointer": "/data/44/entries/1",
+      "pages": [
+        395
+      ]
+    },
+    {
+      "id": "rule.magic-items",
+      "pointer": "/data/12",
+      "pages": [
+        206
+      ],
+      "entryRange": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "rule.appendix-ph-c-the-planes-of-existence",
+      "pointer": "/data/42",
+      "pages": [
+        363,
+        364,
+        365
+      ]
+    },
+    {
+      "id": "rule.feats",
+      "pointer": "/data/5",
+      "pages": [
+        75
+      ],
+      "entryRange": [
+        0,
+        3
+      ]
+    },
+    {
+      "id": "rule.spellcasting",
+      "pointer": "/data/9",
+      "pages": [
+        100
+      ],
+      "entryRange": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": "rule.conditions",
+      "pointer": "/data/40",
+      "pages": [
+        358
+      ],
+      "entryRange": [
+        0,
+        4
+      ]
+    }
+  ],
+  "corrections": [
+    {
+      "id": "table.adventuring-gear",
+      "reason": "Restore published p.69 gear ordering and labels; move climber's and mess kits, remove duplicate healer's kit and four tool-only kit rows; retain their canonical definitions and Tools table memberships.",
+      "pages": [
+        69
+      ]
+    },
+    {
+      "id": "table.tools",
+      "reason": "Exclude two gaming-set rows absent from the official Tools table; restore singular headings and remove stray punctuation in cartographer's tools price. Retain the publisher's vehicle-proficiency footnote.",
+      "pages": [
+        70
+      ]
+    },
+    {
+      "id": "table.tack-harness-and-drawn-vehicles",
+      "reason": "Use published Feed (per day) label and link the existing item; Barding is an armor price/weight multiplier, not a standalone equipment identity.",
+      "pages": [
+        71,
+        72
+      ]
+    },
+    {
+      "id": "rule.multiclassing",
+      "reason": "Remove non-SRD Eldritch Knight/Arcane Trickster spell-slot contributions; retain legacy half-caster rounding down and modern rounding up as printed. Normalize book navigation; canonicalize nested tables."
+    },
+    {
+      "id": "rule.advantage-and-disadvantage",
+      "reason": "Restore the original reroll-only wording and unrestricted Inspiration wording from pp.76–77; remove later source additions."
+    },
+    {
+      "id": "rule.resting",
+      "reason": "Restore published short-rest healing wording and long-rest sleep/light-activity wording from p.87; do not import later errata into the pinned SRD."
+    },
+    {
+      "id": "rule.attunement",
+      "reason": "Restore explicit class membership prerequisite from p.206 and the publisher's spellcasting-class monster exception."
+    },
+    {
+      "id": "rule.wearing-and-wielding-items",
+      "reason": "Restore published size/anatomy and paired-item wording on p.206."
+    },
+    {
+      "id": "rule.activating-an-item",
+      "reason": "Restore publisher pp.206–207 activation, consumable, command-word, spell-level and charge wording; retain the published Use an Item label with the local Use an Object action reference."
+    },
+    {
+      "id": "rule.movement",
+      "reason": "Restore published forced-march navigation and high-jump formula without later minimum-0 errata; remove absent commercial navigation (pp.84–85)."
+    },
+    {
+      "id": "rule.between-adventures",
+      "reason": "Correct source punctuation and GM terminology to publisher pp.88–89."
+    },
+    {
+      "id": "rule.what-is-a-spell",
+      "reason": "Restore Wish example, bard/sorcerer examples, Warlock spell-slot exception and appendix label on p.100."
+    },
+    {
+      "id": "rule.ability-checks",
+      "reason": "Reconcile the grouped skill list with all 18 canonical skill definitions; restore published variant example and navigation; preserve passive formula as text (pp.77–79)."
+    },
+    {
+      "id": "rule.the-environment",
+      "reason": "Remove absent commercial navigation, restore appendix labels and correct object-interaction transcription (pp.86–87)."
+    },
+    {
+      "id": "rule.the-order-of-combat",
+      "reason": "Restore publisher GM terminology and remove later chapter navigation (pp.90–91)."
+    },
+    {
+      "id": "rule.movement-and-position",
+      "reason": "Restore publisher five Large creatures example and appendix/navigation wording (pp.91–92)."
+    },
+    {
+      "id": "rule.making-an-attack",
+      "reason": "Use existing canonical attack options, corrected against pp.95–96, instead of duplicating their procedures; restore publisher attack navigation."
+    },
+    {
+      "id": "rule.damage-and-healing",
+      "reason": "Restore the published nonnegative damage floor and appendix label; link canonical stabilization procedure (pp.96–99)."
+    },
+    {
+      "id": "rule.casting-a-spell",
+      "reason": "Restore school introduction and publisher navigation; remove later equal-potency recency rule (pp.101–104)."
+    },
+    {
+      "id": "rule.using-each-ability",
+      "reason": "Reuse all 18 canonical skill descriptions after exact normalized body checks; restore publisher environmental navigation (pp.79–83)."
+    },
+    {
+      "id": "rule.alignment",
+      "reason": "Restore publisher-specific fictional multiverse alignment paragraphs and remove later source rewrites (pp.58–59)."
+    },
+    {
+      "id": "rule.languages",
+      "reason": "Restore publisher standard-language selection rule (p.59)."
+    },
+    {
+      "id": "rule.inspiration",
+      "reason": "Restore publisher GM terminology (pp.59–60)."
+    },
+    {
+      "id": "rule.backgrounds",
+      "reason": "Restore publisher introduction and navigation; reference the existing Acolyte definition (p.60)."
+    },
+    {
+      "id": "rule.mounts-and-vehicles",
+      "reason": "Restore publisher barding table navigation (p.71)."
+    },
+    {
+      "id": "rule.expenses",
+      "reason": "Replace source-specific spell filter navigation with published spell-level labels (p.74)."
+    },
+    {
+      "id": "rule.armor",
+      "reason": "Reuse canonical armor descriptions after exact comparison and retain proficiency, AC, speed, stealth and don/doff rules (pp.62–64)."
+    },
+    {
+      "id": "rule.weapons",
+      "reason": "Reuse canonical weapon properties and special weapon definitions; reconcile original property wording (pp.64–66)."
+    },
+    {
+      "id": "rule.adventuring-gear",
+      "reason": "Use existing item/group/pack identities rather than duplicate their descriptive bodies; retain potion administration action cost (pp.66–70)."
+    },
+    {
+      "id": "rule.tools",
+      "reason": "Reuse canonical concrete tool identities; preserve group proficiency guidance and omit the commercial card-game example (pp.70–71)."
+    },
+    {
+      "id": "rule.customizing-npcs",
+      "reason": "Remove two non-publisher DMG navigation references while preserving all published customization rules (p.395)."
+    },
+    {
+      "id": "rule.appendix-ph-c-the-planes-of-existence",
+      "reason": "Restore the published Elysium alignment parenthetical; check all 24 prose paragraphs against the sequential publisher columns (pp.363–365)."
+    }
+  ],
+  "nativeCount": 69,
+  "tableInventory": {
+    "total": 30,
+    "counts": {
+      "projected": 23,
+      "existing-catalog-representation": 7,
+      "pending-review": 0
+    },
+    "occurrences": [
+      {
+        "pointer": "/data/3/entries/5",
+        "caption": "Character Advancement",
+        "context": "Beyond 1st Level",
+        "rows": 20,
+        "disposition": "projected",
+        "nativeId": "table.character-advancement"
+      },
+      {
+        "pointer": "/data/3/entries/6/entries/3/entries/1",
+        "caption": "Multiclassing Prerequisites",
+        "context": "Prerequisites",
+        "rows": 12,
+        "disposition": "projected",
+        "nativeId": "table.multiclassing-prerequisites"
+      },
+      {
+        "pointer": "/data/3/entries/6/entries/7/entries/1",
+        "caption": "Multiclassing Proficiencies",
+        "context": "Proficiencies",
+        "rows": 12,
+        "disposition": "projected",
+        "nativeId": "table.multiclassing-proficiencies"
+      },
+      {
+        "pointer": "/data/3/entries/6/entries/8/entries/4/entries/4",
+        "caption": "Multiclass Spellcaster: Spell Slots per Spell Level",
+        "context": "Spellcasting",
+        "rows": 20,
+        "disposition": "projected",
+        "nativeId": "table.multiclass-spellcaster-spell-slots-per-spell-level"
+      },
+      {
+        "pointer": "/data/3/entries/8/entries/3",
+        "caption": "Standard Languages",
+        "context": "Languages",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.standard-languages"
+      },
+      {
+        "pointer": "/data/3/entries/8/entries/4",
+        "caption": "Exotic Languages",
+        "context": "Languages",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.exotic-languages"
+      },
+      {
+        "pointer": "/data/4/entries/6",
+        "caption": "Standard Exchange Rates",
+        "context": "Equipment",
+        "rows": 5,
+        "disposition": "projected",
+        "nativeId": "table.standard-exchange-rates"
+      },
+      {
+        "pointer": "/data/4/entries/8/entries/6",
+        "caption": "Armor",
+        "context": "Armor",
+        "rows": 17,
+        "disposition": "projected",
+        "nativeId": "table.armor"
+      },
+      {
+        "pointer": "/data/4/entries/8/entries/7/entries/2",
+        "caption": "Donning and Doffing Armor",
+        "context": "Getting Into and Out of Armor",
+        "rows": 4,
+        "disposition": "existing-catalog-representation",
+        "representation": "table.donning-and-doffing-armor"
+      },
+      {
+        "pointer": "/data/4/entries/9/entries/4",
+        "caption": "Weapons",
+        "context": "Weapons",
+        "rows": 41,
+        "disposition": "projected",
+        "nativeId": "table.weapons"
+      },
+      {
+        "pointer": "/data/4/entries/10/entries/2",
+        "caption": "Adventuring Gear",
+        "context": "Adventuring Gear",
+        "rows": 108,
+        "disposition": "projected",
+        "nativeId": "table.adventuring-gear"
+      },
+      {
+        "pointer": "/data/4/entries/10/entries/3",
+        "caption": "Container Capacity",
+        "context": "Adventuring Gear",
+        "rows": 13,
+        "disposition": "projected",
+        "nativeId": "table.container-capacity"
+      },
+      {
+        "pointer": "/data/4/entries/11/entries/1",
+        "caption": "Tools",
+        "context": "Tools",
+        "rows": 41,
+        "disposition": "projected",
+        "nativeId": "table.tools"
+      },
+      {
+        "pointer": "/data/4/entries/12/entries/4",
+        "caption": "Mounts and Other Animals",
+        "context": "Mounts and Vehicles",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.mounts-and-other-animals"
+      },
+      {
+        "pointer": "/data/4/entries/12/entries/5",
+        "caption": "Tack, Harness, and Drawn Vehicles",
+        "context": "Mounts and Vehicles",
+        "rows": 15,
+        "disposition": "projected",
+        "nativeId": "table.tack-harness-and-drawn-vehicles"
+      },
+      {
+        "pointer": "/data/4/entries/12/entries/6",
+        "caption": "Waterborne Vehicles",
+        "context": "Mounts and Vehicles",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.waterborne-vehicles"
+      },
+      {
+        "pointer": "/data/4/entries/13/entries/2",
+        "caption": "Trade Goods",
+        "context": "Trade Goods",
+        "rows": 13,
+        "disposition": "projected",
+        "nativeId": "table.trade-goods"
+      },
+      {
+        "pointer": "/data/4/entries/14/entries/1/entries/3",
+        "caption": "Lifestyle Expenses",
+        "context": "Lifestyle Expenses",
+        "rows": 7,
+        "disposition": "projected",
+        "nativeId": "table.lifestyle-expenses"
+      },
+      {
+        "pointer": "/data/4/entries/14/entries/3/entries/1",
+        "caption": "Food, Drink, and Lodging",
+        "context": "Food, Drink, and Lodging",
+        "rows": 24,
+        "disposition": "projected",
+        "nativeId": "table.food-drink-and-lodging"
+      },
+      {
+        "pointer": "/data/4/entries/14/entries/4/entries/3",
+        "caption": "Services",
+        "context": "Services",
+        "rows": 9,
+        "disposition": "projected",
+        "nativeId": "table.services"
+      },
+      {
+        "pointer": "/data/6/entries/4/entries/5",
+        "caption": "Ability Scores and Modifiers",
+        "context": "Ability Scores and Modifiers",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.ability-scores-and-modifiers"
+      },
+      {
+        "pointer": "/data/6/entries/7/entries/2",
+        "caption": "Typical Difficulty Classes",
+        "context": "Ability Checks",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.typical-difficulty-classes"
+      },
+      {
+        "pointer": "/data/6/entries/7/entries/6/entries/3",
+        "caption": null,
+        "context": "Skills",
+        "rows": 5,
+        "disposition": "existing-catalog-representation",
+        "representation": "18 native skill definitions; ability grouping verified"
+      },
+      {
+        "pointer": "/data/7/entries/1/entries/2/entries/2/entries/4",
+        "caption": "Travel Pace",
+        "context": "Travel Pace",
+        "rows": 3,
+        "disposition": "projected",
+        "nativeId": "table.travel-pace"
+      },
+      {
+        "pointer": "/data/8/entries/1/entries/9/entries/2",
+        "caption": "Size Categories",
+        "context": "Creature Size",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.size-categories"
+      },
+      {
+        "pointer": "/data/40/entries/7/entries/1",
+        "caption": null,
+        "context": "Exhaustion",
+        "rows": 6,
+        "disposition": "existing-catalog-representation",
+        "representation": "condition.exhaustion (identical six-row nested table)"
+      },
+      {
+        "pointer": "/data/41/entries/1/entries/1",
+        "caption": "Celtic Deities",
+        "context": "The Celtic Pantheon",
+        "rows": 14,
+        "disposition": "existing-catalog-representation",
+        "representation": "deity catalog: Celtic pantheon"
+      },
+      {
+        "pointer": "/data/41/entries/2/entries/1",
+        "caption": "Greek Deities",
+        "context": "The Greek Pantheon",
+        "rows": 19,
+        "disposition": "existing-catalog-representation",
+        "representation": "deity catalog: Greek pantheon"
+      },
+      {
+        "pointer": "/data/41/entries/3/entries/3",
+        "caption": "Egyptian Deities",
+        "context": "The Egyptian Pantheon",
+        "rows": 14,
+        "disposition": "existing-catalog-representation",
+        "representation": "deity catalog: Egyptian pantheon"
+      },
+      {
+        "pointer": "/data/41/entries/4/entries/2",
+        "caption": "Norse Deities",
+        "context": "The Norse Pantheon",
+        "rows": 20,
+        "disposition": "existing-catalog-representation",
+        "representation": "deity catalog: Norse pantheon"
+      }
+    ]
+  }
+}

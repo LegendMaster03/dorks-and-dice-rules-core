@@ -1,0 +1,325 @@
+[
+  {
+    "id": "monster.avatar-of-death",
+    "kind": "monster",
+    "name": "Avatar of Death",
+    "size": [
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      20
+    ],
+    "hp": {
+      "special": "Half the hit point maximum of its summoner"
+    },
+    "speed": {
+      "walk": 60,
+      "fly": {
+        "number": 60,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "str": 16,
+    "dex": 16,
+    "con": 16,
+    "int": 16,
+    "wis": 16,
+    "cha": 16,
+    "initiative": {
+      "modifier": 3,
+      "score": 13
+    },
+    "save": {
+      "str": "+3",
+      "dex": "+3",
+      "con": "+3",
+      "int": "+3",
+      "wis": "+3",
+      "cha": "+3"
+    },
+    "proficiencyBonus": {
+      "special": "Equals its summoner's"
+    },
+    "senses": [
+      "truesight 60 ft."
+    ],
+    "passive": 13,
+    "immune": [
+      "necrotic",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "unconscious"
+    ],
+    "languages": [
+      "All languages known to its summoner"
+    ],
+    "challenge": {
+      "rating": null,
+      "xp": 0
+    },
+    "trait": [
+      {
+        "name": "Incorporeal Movement",
+        "entries": [
+          "The avatar can move through other creatures and objects as if they were difficult terrain. It takes 5 ({@damage 1d10}) force damage if it ends its turn inside an object."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The avatar makes a number of Reaping Scythe attacks equal to half the summoner's proficiency bonus (rounded up)."
+        ]
+      },
+      {
+        "name": "Reaping Scythe",
+        "entries": [
+          "Melee Attack Roll: Automatic hit, reach 5 ft. Hit: 7 ({@damage 1d8 + 3}) slashing damage plus 4 ({@damage 1d8}) necrotic damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-232",
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "condition.unconscious"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        232
+      ],
+      "section": "Mysterious Deck — Avatar of Death",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "Direct publisher stat-block transcription; missing from pinned structured bestiary (S52-018)."
+    }
+  },
+  {
+    "id": "monster.priest-acolyte",
+    "kind": "monster",
+    "name": "Priest Acolyte",
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "cleric"
+      ]
+    },
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d8 + 2"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 14,
+    "dex": 10,
+    "con": 12,
+    "int": 10,
+    "wis": 14,
+    "cha": 11,
+    "skill": {
+      "medicine": "+4",
+      "religion": "+2"
+    },
+    "passive": 12,
+    "languages": [
+      "Common"
+    ],
+    "cr": "1/4",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The priest casts one of the following spells, using Wisdom as the spellcasting ability:"
+        ],
+        "will": [
+          "{@spell Light|SRD52}",
+          "{@spell Thaumaturgy|SRD52}"
+        ],
+        "ability": "wis",
+        "displayAs": "action"
+      },
+      {
+        "name": "Divine Aid (1/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The priest casts {@spell Bless|SRD52}, {@spell Healing Word|SRD52}, or {@spell Sanctuary|SRD52}, using the same spellcasting ability as Spellcasting."
+        ],
+        "ability": "wis",
+        "displayAs": "bonus",
+        "sharedUses": {
+          "period": "day",
+          "count": 1
+        },
+        "choices": [
+          "{@spell Bless|SRD52}",
+          "{@spell Healing Word|SRD52}",
+          "{@spell Sanctuary|SRD52}"
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Mace",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Bludgeoning damage plus 2 ({@damage 1d4}) Radiant damage."
+        ]
+      },
+      {
+        "name": "Radiant Flame",
+        "entries": [
+          "{@atkr r} {@hit 4}, range 60 ft. {@h}7 ({@damage 2d6}) Radiant damage."
+        ]
+      }
+    ],
+    "gear": [
+      "chain shirt|srd52",
+      "holy symbol|srd52",
+      "mace|srd52"
+    ],
+    "challenge": {
+      "rating": "1/4",
+      "xp": 50
+    },
+    "initiative": {
+      "modifier": 0,
+      "score": 10
+    },
+    "save": {
+      "str": "+2",
+      "dex": "+0",
+      "con": "+1",
+      "int": "+0",
+      "wis": "+2",
+      "cha": "+0"
+    },
+    "proficiencyBonus": 2,
+    "catalogReferences": [
+      "rulebook.page-316",
+      "spell.light",
+      "spell.thaumaturgy",
+      "spell.bless",
+      "spell.sanctuary",
+      "spell.healing-word"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        316
+      ],
+      "section": "Monster stat blocks",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/230"
+      },
+      "adaptation": "Stat-block fields reviewed against official page; third-party media and derived tags omitted; explicit local spell references added."
+    }
+  },
+  {
+    "id": "monster.giant-fly",
+    "kind": "monster",
+    "name": "Giant Fly",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60
+    },
+    "str": 14,
+    "dex": 13,
+    "con": 13,
+    "int": 2,
+    "wis": 10,
+    "cha": 3,
+    "save": {
+      "str": "+2",
+      "dex": "+1",
+      "con": "+1",
+      "int": "-4",
+      "wis": "+0",
+      "cha": "-4"
+    },
+    "initiative": {
+      "modifier": 1,
+      "score": 11
+    },
+    "proficiencyBonus": 2,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "cr": {
+      "cr": "0",
+      "xp": 0
+    },
+    "challenge": {
+      "rating": "0",
+      "xp": 0
+    },
+    "catalogReferences": [
+      "rulebook.page-222"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        222
+      ],
+      "section": "Figurine of Wondrous Power — Giant Fly",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "Direct publisher stat-block transcription; missing from pinned structured bestiary."
+    }
+  }
+]

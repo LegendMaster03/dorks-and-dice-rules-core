@@ -16,6 +16,9 @@ public sealed record RulesCoreSettings(
     NativeRulesetLocation Ruleset,
     ApiSurfaceMode Surface)
 {
+    // Additional packages are opt-in and use the same authoritative root.
+    public IReadOnlyList<NativeRulesetLocation> AdditionalRulesets { get; init; } = [];
+
     public static RulesCoreSettings Read(IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(configuration);
@@ -33,8 +36,27 @@ public sealed record RulesCoreSettings(
                 "RulesCore:ApiSurface must be PublicOnly or PrivateOnly.")
         };
 
-        return new RulesCoreSettings(
-            NativeRulesetLayout.Resolve(contentRoot, rulesetId),
-            surface);
+        var defaultLocation = NativeRulesetLayout.Resolve(contentRoot, rulesetId);
+        var seen = new HashSet<string>(StringComparer.Ordinal) { rulesetId };
+        var additional = new List<NativeRulesetLocation>();
+        var indexed = configuration.GetSection("Rulesets:AdditionalRulesets").GetChildren().ToArray();
+        var csv = configuration["Rulesets:AdditionalRulesetsCsv"];
+        if (indexed.Length != 0 && csv is not null)
+            throw new ArgumentException("Configure additional rulesets using either indexed entries or CSV, not both.");
+        var ids = csv is not null
+            ? (csv.Length == 0 ? [] : csv.Split(','))
+            : indexed.Select(entry => entry.Value ?? "").ToArray();
+        foreach (var id in ids)
+        {
+            var location = NativeRulesetLayout.Resolve(contentRoot, id);
+            if (!seen.Add(location.RulesetId))
+                throw new ArgumentException("Duplicate configured ruleset: " + location.RulesetId);
+            additional.Add(location);
+        }
+
+        return new RulesCoreSettings(defaultLocation, surface)
+        {
+            AdditionalRulesets = additional.AsReadOnly()
+        };
     }
 }

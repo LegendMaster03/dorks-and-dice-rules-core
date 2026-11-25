@@ -1,0 +1,1674 @@
+{
+  "edition": "srd-5.1",
+  "sourceCounts": {
+    "class": 12,
+    "subclass": 12,
+    "classFeature": 254,
+    "subclassFeature": 83
+  },
+  "nativeCounts": {
+    "class": 12,
+    "subclass": 12,
+    "classFeature": 254,
+    "subclassFeature": 83
+  },
+  "corrections": [
+    {
+      "id": "class.bard",
+      "reason": "Official SRD 5.1 pp.11,13: Magical Secrets chooses two cantrips or spells from any class at each acquisition level, bounded by the Bard spell-slot progression. Use the eight published class lists; restore the missing explicit level-18 filter.",
+      "pages": [
+        11,
+        13
+      ]
+    },
+    {
+      "id": "subclass.bard.lore",
+      "reason": "Official SRD 5.1 pp.11,13: Magical Secrets chooses two cantrips or spells from any class at each acquisition level, bounded by the Bard spell-slot progression. Use the eight published class lists; restore the missing explicit level-18 filter.",
+      "pages": [
+        11,
+        13
+      ]
+    },
+    {
+      "id": "subclass-feature.cleric.life.life-domain.1",
+      "reason": "Preserve seven deity examples printed on official SRD 5.1 p.17 as plain text; the SRD does not publish standalone entries for them.",
+      "pages": [
+        17
+      ]
+    },
+    {
+      "id": "subclass.druid.land",
+      "reason": "Remove non-SRD Underdark terrain and correct Swamp spell name in structured grants.",
+      "pages": [
+        21,
+        22
+      ]
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reason": "Remove Underdark terrain and reconcile Swamp spell table with official SRD 5.1.",
+      "pages": [
+        21,
+        22
+      ]
+    },
+    {
+      "id": "class-feature.warlock.pact-magic.1",
+      "reason": "Official SRD 5.1 Pact Magic example uses thunderwave, not witch bolt.",
+      "pages": [
+        47
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "path": "class/class-barbarian.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    },
+    {
+      "path": "class/class-bard.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    },
+    {
+      "path": "class/class-cleric.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    },
+    {
+      "path": "class/class-druid.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    },
+    {
+      "path": "class/class-fighter.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    },
+    {
+      "path": "class/class-monk.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    },
+    {
+      "path": "class/class-paladin.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    },
+    {
+      "path": "class/class-ranger.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    },
+    {
+      "path": "class/class-rogue.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    },
+    {
+      "path": "class/class-sorcerer.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    },
+    {
+      "path": "class/class-warlock.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    },
+    {
+      "path": "class/class-wizard.json",
+      "pointer": "/_meta",
+      "reason": "source metadata, not a class or feature definition"
+    }
+  ],
+  "publisherNameLocatorMissing": [
+    {
+      "id": "class-feature.barbarian.brutal-critical-1-die.9",
+      "candidatePage": 46,
+      "reason": "No literal name locator in class chapter; may be a progression placeholder."
+    },
+    {
+      "id": "class-feature.barbarian.brutal-critical-2-dice.13",
+      "candidatePage": 46,
+      "reason": "No literal name locator in class chapter; may be a progression placeholder."
+    },
+    {
+      "id": "class-feature.barbarian.brutal-critical-3-dice.17",
+      "candidatePage": 46,
+      "reason": "No literal name locator in class chapter; may be a progression placeholder."
+    },
+    {
+      "id": "class-feature.bard.song-of-rest-d6.2",
+      "candidatePage": 51,
+      "reason": "No literal name locator in class chapter; may be a progression placeholder."
+    },
+    {
+      "id": "class-feature.bard.bard-college-feature.6",
+      "candidatePage": 51,
+      "reason": "No literal name locator in class chapter; may be a progression placeholder."
+    },
+    {
+      "id": "class-feature.bard.bard-college-feature.14",
+      "candidatePage": 51,
+      "reason": "No literal name locator in class chapter; may be a progression placeholder."
+    },
+    {
+      "id": "class-feature.cleric.destroy-undead-cr-1.8",
+      "candidatePage": 56,
+      "reason": "No literal name locator in class chapter; may be a progression placeholder."
+    },
+    {
+      "id": "class-feature.sorcerer.sorcerous-origin-feature.6",
+      "candidatePage": 99,
+      "reason": "No literal name locator in class chapter; may be a progression placeholder."
+    },
+    {
+      "id": "class-feature.sorcerer.sorcerous-origin-feature.14",
+      "candidatePage": 99,
+      "reason": "No literal name locator in class chapter; may be a progression placeholder."
+    },
+    {
+      "id": "class-feature.sorcerer.sorcerous-origin-feature.18",
+      "candidatePage": 99,
+      "reason": "No literal name locator in class chapter; may be a progression placeholder."
+    }
+  ],
+  "unresolvedInlineReferences": [
+    {
+      "id": "class.barbarian",
+      "reference": "item|greataxe|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.barbarian",
+      "reference": "item|handaxe|srd51|handaxes",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.barbarian",
+      "reference": "item|explorer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.barbarian",
+      "reference": "item|javelin|srd51|javelins",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.barbarian.rage.1",
+      "reference": "condition|unconscious",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.barbarian.danger-sense.2",
+      "reference": "condition|blinded",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.barbarian.danger-sense.2",
+      "reference": "condition|deafened",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.barbarian.danger-sense.2",
+      "reference": "condition|incapacitated",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.barbarian.extra-attack.5",
+      "reference": "action|Attack",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.barbarian.feral-instinct.7",
+      "reference": "condition|incapacitated",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.barbarian.persistent-rage.15",
+      "reference": "condition|unconscious",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.barbarian.berserker.frenzy.3",
+      "reference": "condition|exhaustion",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.barbarian.berserker.mindless-rage.6",
+      "reference": "condition|charmed",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.barbarian.berserker.mindless-rage.6",
+      "reference": "condition|frightened",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.barbarian.berserker.intimidating-presence.10",
+      "reference": "condition|frightened",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|hand crossbow|srd51|hand crossbows",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|longsword|srd51|longswords",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|rapier|srd51|rapiers",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|shortsword|srd51|shortswords",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|musical instrument|SRD51|musical instruments",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|rapier|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|longsword|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|diplomat's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|entertainer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|lute|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|Leather armor|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|dagger|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.bard",
+      "reference": "item|musical instrument|SRD51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.bard.spellcasting.1",
+      "reference": "spell|cure wounds",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.bard.spellcasting.1",
+      "reference": "item|musical instrument|SRD51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.bard.countercharm.6",
+      "reference": "condition|frightened",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.bard.countercharm.6",
+      "reference": "condition|charmed",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.bard.countercharm.6",
+      "reference": "condition|incapacitated",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.bard.lore.cutting-words.3",
+      "reference": "condition|charmed",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.cleric",
+      "reference": "item|mace|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.cleric",
+      "reference": "item|warhammer|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.cleric",
+      "reference": "item|scale mail|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.cleric",
+      "reference": "item|leather armor|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.cleric",
+      "reference": "item|chain mail|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.cleric",
+      "reference": "item|light crossbow|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.cleric",
+      "reference": "item|Crossbow Bolts (20)|srd51|20 bolts",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.cleric",
+      "reference": "item|priest's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.cleric",
+      "reference": "item|explorer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.cleric",
+      "reference": "item|shield|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.cleric",
+      "reference": "item|holy symbol|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.cleric.spellcasting.1",
+      "reference": "spell|cure wounds",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.cleric.spellcasting.1",
+      "reference": "item|holy symbol|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.cleric.channel-divinity-turn-undead.2",
+      "reference": "action|Dash",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.cleric.channel-divinity-turn-undead.2",
+      "reference": "action|Dodge",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.cleric.life.life-domain.1",
+      "reference": "spell|bless",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.cleric.life.life-domain.1",
+      "reference": "spell|cure wounds",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.cleric.life.life-domain.1",
+      "reference": "spell|lesser restoration",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.cleric.life.life-domain.1",
+      "reference": "spell|spiritual weapon",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.cleric.life.life-domain.1",
+      "reference": "spell|beacon of hope",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.cleric.life.life-domain.1",
+      "reference": "spell|revivify",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.cleric.life.life-domain.1",
+      "reference": "spell|death ward",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.cleric.life.life-domain.1",
+      "reference": "spell|guardian of faith",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.cleric.life.life-domain.1",
+      "reference": "spell|mass cure wounds",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.cleric.life.life-domain.1",
+      "reference": "spell|raise dead",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|club|srd51|clubs",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|dagger|srd51|daggers",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|dart|srd51|darts",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|javelin|srd51|javelins",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|mace|srd51|maces",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|quarterstaff|srd51|quarterstaffs",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|scimitar|srd51|scimitars",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|sickle|srd51|sickles",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|sling|srd51|slings",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|spear|srd51|spears",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|Herbalism kit|SRD51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|shield|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|scimitar|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|Leather armor|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|explorer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.druid",
+      "reference": "item|druidic focus|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.druid.druidic.1",
+      "reference": "language|Druidic",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.druid.druidic.1",
+      "reference": "skill|Perception",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.druid.spellcasting.1",
+      "reference": "spell|cure wounds",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.druid.spellcasting.1",
+      "reference": "item|druidic focus|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.druid.wild-shape.2",
+      "reference": "condition|unconscious",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.druid.wild-shape.2",
+      "reference": "spell|call lightning",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.druid.wild-shape.2",
+      "reference": "sense|darkvision",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-of-the-land.2",
+      "reference": "language|Druidic",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|hold person",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|spike growth",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|sleet storm",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|slow",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|freedom of movement",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|ice storm",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|commune with nature",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|cone of cold",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|mirror image",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|misty step",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|water breathing",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|water walk",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|control water",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|conjure elemental",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|scrying",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|blur",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|silence",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|create food and water",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|protection from energy",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|blight",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|hallucinatory terrain",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|insect plague",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|wall of stone",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|barkskin",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|spider climb",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|call lightning",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|plant growth",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|divination",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|tree stride",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|invisibility",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|pass without trace",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|daylight",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|haste",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|dream",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|lightning bolt",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|meld into stone",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|stone shape",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|stoneskin",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|passwall",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|acid arrow",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|darkness",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|stinking cloud",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reference": "spell|locate creature",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.lands-stride.6",
+      "reference": "spell|entangle",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.natures-ward.10",
+      "reference": "condition|charmed",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.druid.land.natures-ward.10",
+      "reference": "condition|frightened",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.fighter",
+      "reference": "item|chain mail|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.fighter",
+      "reference": "item|leather armor|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.fighter",
+      "reference": "item|longbow|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.fighter",
+      "reference": "item|arrows (20)|srd51|20 arrows",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.fighter",
+      "reference": "item|shield|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.fighter",
+      "reference": "item|light crossbow|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.fighter",
+      "reference": "item|crossbow bolts (20)|srd51|20 bolts",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.fighter",
+      "reference": "item|handaxe|srd51|handaxes",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.fighter",
+      "reference": "item|dungeoneer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.fighter",
+      "reference": "item|explorer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.fighter.extra-attack.5",
+      "reference": "action|Attack",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.fighter.extra-attack-2.11",
+      "reference": "action|Attack",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.fighter.extra-attack-3.20",
+      "reference": "action|Attack",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.monk",
+      "reference": "item|shortsword|srd51|shortswords",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.monk",
+      "reference": "item|artisan's tools|SRD51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.monk",
+      "reference": "item|musical instrument|SRD51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.monk",
+      "reference": "item|shortsword|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.monk",
+      "reference": "item|dungeoneer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.monk",
+      "reference": "item|explorer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.monk",
+      "reference": "item|dart|srd51|darts",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.martial-arts.1",
+      "reference": "item|shortsword|srd51|shortswords",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.martial-arts.1",
+      "reference": "item|shield|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.martial-arts.1",
+      "reference": "action|Attack",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.flurry-of-blows.2",
+      "reference": "action|Attack",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.patient-defense.2",
+      "reference": "action|Dodge",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.step-of-the-wind.2",
+      "reference": "action|Disengage",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.step-of-the-wind.2",
+      "reference": "action|Dash",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.extra-attack.5",
+      "reference": "action|Attack",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.stunning-strike.5",
+      "reference": "condition|stunned",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.evasion.7",
+      "reference": "spell|fireball",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.stillness-of-mind.7",
+      "reference": "condition|charmed",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.stillness-of-mind.7",
+      "reference": "condition|frightened",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.empty-body.18",
+      "reference": "condition|invisible",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.monk.empty-body.18",
+      "reference": "spell|astral projection",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.monk.open-hand.open-hand-technique.3",
+      "reference": "condition|prone",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.monk.open-hand.tranquility.11",
+      "reference": "spell|sanctuary",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.paladin",
+      "reference": "item|shield|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.paladin",
+      "reference": "item|javelin|srd51|javelins",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.paladin",
+      "reference": "item|priest's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.paladin",
+      "reference": "item|explorer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.paladin",
+      "reference": "item|Chain mail|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.paladin",
+      "reference": "item|holy symbol|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.paladin.divine-sense.1",
+      "reference": "spell|hallow",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.paladin.spellcasting.2",
+      "reference": "spell|cure wounds",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.paladin.spellcasting.2",
+      "reference": "item|holy symbol|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.paladin.extra-attack.5",
+      "reference": "action|Attack",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.paladin.aura-of-courage.10",
+      "reference": "condition|frightened",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.oath-spells.3",
+      "reference": "spell|protection from evil and good",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.oath-spells.3",
+      "reference": "spell|sanctuary",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.oath-spells.3",
+      "reference": "spell|lesser restoration",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.oath-spells.3",
+      "reference": "spell|zone of truth",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.oath-spells.3",
+      "reference": "spell|beacon of hope",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.oath-spells.3",
+      "reference": "spell|dispel magic",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.oath-spells.3",
+      "reference": "spell|freedom of movement",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.oath-spells.3",
+      "reference": "spell|guardian of faith",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.oath-spells.3",
+      "reference": "spell|commune",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.oath-spells.3",
+      "reference": "spell|flame strike",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.sacred-weapon.3",
+      "reference": "condition|unconscious",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.turn-the-unholy.3",
+      "reference": "action|Dash",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.turn-the-unholy.3",
+      "reference": "action|Dodge",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.aura-of-devotion.7",
+      "reference": "condition|charmed",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.paladin.devotion.purity-of-spirit.15",
+      "reference": "spell|protection from evil and good",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.ranger",
+      "reference": "item|scale mail|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.ranger",
+      "reference": "item|leather armor|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.ranger",
+      "reference": "item|shortsword|srd51|shortswords",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.ranger",
+      "reference": "item|dungeoneer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.ranger",
+      "reference": "item|explorer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.ranger",
+      "reference": "item|longbow|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.ranger",
+      "reference": "item|quiver|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.ranger",
+      "reference": "item|arrows (20)|srd51|20 arrows",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.ranger.favored-enemy.1",
+      "reference": "creature|gnoll||gnolls",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.ranger.favored-enemy.1",
+      "reference": "creature|orc||orcs",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.ranger.favored-enemy.1",
+      "reference": "skill|Survival",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.ranger.spellcasting.2",
+      "reference": "spell|animal friendship",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.ranger.extra-attack.5",
+      "reference": "action|Attack",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.ranger.lands-stride.8",
+      "reference": "spell|entangle",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.ranger.hide-in-plain-sight.10",
+      "reference": "skill|Stealth",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.ranger.vanish.14",
+      "reference": "action|Hide",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.ranger.feral-senses.18",
+      "reference": "condition|invisible",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.ranger.feral-senses.18",
+      "reference": "condition|blinded",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.ranger.feral-senses.18",
+      "reference": "condition|deafened",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.ranger.hunter.steel-will.7",
+      "reference": "condition|frightened",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.ranger.hunter.evasion.15",
+      "reference": "spell|lightning bolt",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|hand crossbow|srd51|hand crossbows",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|longsword|srd51|longswords",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|rapier|srd51|rapiers",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|shortsword|srd51|shortswords",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|thieves' tools|SRD51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|rapier|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|shortsword|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|shortbow|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|quiver|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|arrows (20)|srd51|20 arrows",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|burglar's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|dungeoneer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|explorer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|Leather armor|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|dagger|srd51|daggers",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.rogue",
+      "reference": "item|thieves' tools|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.rogue.expertise.1",
+      "reference": "item|thieves' tools|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.rogue.sneak-attack.1",
+      "reference": "condition|incapacitated",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.rogue.cunning-action.2",
+      "reference": "action|Dash",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.rogue.cunning-action.2",
+      "reference": "action|Disengage",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.rogue.cunning-action.2",
+      "reference": "action|Hide",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.rogue.expertise.6",
+      "reference": "item|thieves' tools|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.rogue.evasion.7",
+      "reference": "spell|ice storm",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.rogue.blindsense.14",
+      "reference": "condition|invisible",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.rogue.elusive.18",
+      "reference": "condition|incapacitated",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.rogue.thief.fast-hands.3",
+      "reference": "skill|Sleight of Hand",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.rogue.thief.fast-hands.3",
+      "reference": "item|thieves' tools|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.rogue.thief.fast-hands.3",
+      "reference": "action|Use an Object",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.rogue.thief.supreme-sneak.9",
+      "reference": "skill|Stealth",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.sorcerer",
+      "reference": "item|dagger|srd51|daggers",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.sorcerer",
+      "reference": "item|dart|srd51|darts",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.sorcerer",
+      "reference": "item|sling|srd51|slings",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.sorcerer",
+      "reference": "item|quarterstaff|srd51|quarterstaffs",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.sorcerer",
+      "reference": "item|light crossbow|srd51|light crossbows",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.sorcerer",
+      "reference": "item|light crossbow|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.sorcerer",
+      "reference": "item|crossbow bolts (20)|srd51|20 bolts",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.sorcerer",
+      "reference": "item|component pouch|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.sorcerer",
+      "reference": "item|arcane focus|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.sorcerer",
+      "reference": "item|dungeoneer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.sorcerer",
+      "reference": "item|explorer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.sorcerer.spellcasting.1",
+      "reference": "spell|burning hands",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.sorcerer.spellcasting.1",
+      "reference": "item|arcane focus|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.sorcerer.draconic.dragon-ancestor.1",
+      "reference": "language|Draconic",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.sorcerer.draconic.draconic-presence.18",
+      "reference": "condition|frightened",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.sorcerer.draconic.draconic-presence.18",
+      "reference": "condition|charmed",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.warlock",
+      "reference": "item|light crossbow|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.warlock",
+      "reference": "item|crossbow bolts (20)|srd51|20 bolts",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.warlock",
+      "reference": "item|component pouch|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.warlock",
+      "reference": "item|arcane focus|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.warlock",
+      "reference": "item|scholar's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.warlock",
+      "reference": "item|dungeoneer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.warlock",
+      "reference": "item|Leather armor|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.warlock",
+      "reference": "item|dagger|srd51|daggers",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.warlock.pact-magic.1",
+      "reference": "spell|thunderwave",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.warlock.pact-magic.1",
+      "reference": "item|arcane focus|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.warlock.fiend.the-fiend.1",
+      "reference": "spell|burning hands",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.warlock.fiend.the-fiend.1",
+      "reference": "spell|command",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.warlock.fiend.the-fiend.1",
+      "reference": "spell|blindness/deafness",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.warlock.fiend.the-fiend.1",
+      "reference": "spell|scorching ray",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.warlock.fiend.the-fiend.1",
+      "reference": "spell|fireball",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.warlock.fiend.the-fiend.1",
+      "reference": "spell|stinking cloud",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.warlock.fiend.the-fiend.1",
+      "reference": "spell|fire shield",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.warlock.fiend.the-fiend.1",
+      "reference": "spell|wall of fire",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.warlock.fiend.the-fiend.1",
+      "reference": "spell|flame strike",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "subclass-feature.warlock.fiend.the-fiend.1",
+      "reference": "spell|hallow",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|dagger|srd51|daggers",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|dart|srd51|darts",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|sling|srd51|slings",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|quarterstaff|srd51|quarterstaffs",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|light crossbow|srd51|light crossbows",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|quarterstaff|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|dagger|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|component pouch|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|arcane focus|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|scholar's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|explorer's pack|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class.wizard",
+      "reference": "item|spellbook|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.wizard.spellcasting.1",
+      "reference": "spell|magic missile",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.wizard.spellcasting.1",
+      "reference": "item|arcane focus|srd51",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "class-feature.wizard.spellcasting.1",
+      "reference": "skill|Arcana",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    }
+  ],
+  "resolvedProgressionReferences": 337,
+  "referenceStatus": "Explicit feature progression references verified; other semantic references and full body fidelity pending.",
+  "nativeCount": 361,
+  "classSpellLists": {
+    "counts": {
+      "Bard": 112,
+      "Cleric": 105,
+      "Druid": 105,
+      "Paladin": 31,
+      "Ranger": 37,
+      "Sorcerer": 120,
+      "Warlock": 64,
+      "Wizard": 204
+    },
+    "total": 778,
+    "excludedSourceMemberships": [
+      {
+        "className": "Monk",
+        "spell": "Astral Projection",
+        "reason": "Feature-specific access, not a published base class list"
+      }
+    ],
+    "status": "Publisher class-list membership reconciled; feature grants, preparation and spell execution are separate."
+  },
+  "literalSpellRelationships": {
+    "grantOccurrences": 87,
+    "prerequisiteOccurrences": 0,
+    "addedCatalogLinks": 74,
+    "unresolvedSelectors": 15
+  },
+  "literalCharacterRelationships": {
+    "literalOccurrences": 253,
+    "namedVariantOccurrences": 0,
+    "addedCatalogLinks": 220
+  }
+}

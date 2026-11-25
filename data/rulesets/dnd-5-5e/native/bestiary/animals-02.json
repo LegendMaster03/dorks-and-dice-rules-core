@@ -1,0 +1,1866 @@
+[
+  {
+    "id": "monster.elephant",
+    "kind": "monster",
+    "name": "Elephant",
+    "size": [
+      "H"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 76,
+      "formula": "8d12 + 24"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 22,
+    "dex": 9,
+    "con": 17,
+    "int": 3,
+    "wis": 11,
+    "cha": 6,
+    "save": {
+      "str": "+6",
+      "dex": "-1",
+      "con": "+3",
+      "int": "-4",
+      "wis": "+0",
+      "cha": "-2"
+    },
+    "initiative": {
+      "modifier": -1,
+      "score": 9
+    },
+    "proficiencyBonus": 2,
+    "cr": "4",
+    "challenge": {
+      "rating": "4",
+      "xp": 1100
+    },
+    "passive": 10,
+    "officialTextLayout": "Elephant\nHuge Beast, Unaligned\nAC 12                            Initiative −1 (9)\nHP 76 (8d12 + 24)\nSpeed 40 ft.\nMOD SAVE             MOD SAVE          MOD SAVE\nStr 22 +6 +6          Dex 9 −1 −1         Con 17 +3 +3\nInt 3 −4 −4           Wis 11 +0 +0        Cha 6 −2 −2\nSenses Passive Perception 10\nLanguages None\nCR 4 (XP 1,100; PB +2)\nActions\nMultiattack. The elephant makes two Gore attacks.\nGore. Melee Attack Roll: +8, reach 5 ft. Hit: 15 (2d8\n+ 6) Piercing damage. If the target is a Huge or smaller\ncreature and the elephant moved 20+ feet straight to-\nward it immediately before the hit, the target has the\nProne condition.\nBonus Actions\nTrample. Dexterity Saving Throw: DC 16, one creature\nwithin 5 feet that has the Prone condition. Failure: 17\n(2d10 + 6) Bludgeoning damage. Success: Half damage.",
+    "catalogReferences": [
+      "rulebook.page-348"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        348
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/96"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The elephant makes two Gore attacks."
+        ]
+      },
+      {
+        "name": "Gore",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 5 ft. {@h}15 ({@damage 2d8 + 6}) Piercing damage. If the target is a Huge or smaller creature and the elephant moved 20+ feet straight toward it immediately before the hit, the target has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Trample",
+        "entries": [
+          "{@actSave dex} {@dc 16}, one creature within 5 feet that has the {@condition Prone|SRD52} condition. {@actSaveFail} 17 ({@damage 2d10 + 6}) Bludgeoning damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.elk",
+    "kind": "monster",
+    "name": "Elk",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      10
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d10"
+    },
+    "speed": {
+      "walk": 50
+    },
+    "str": 16,
+    "dex": 10,
+    "con": 11,
+    "int": 2,
+    "wis": 10,
+    "cha": 6,
+    "save": {
+      "str": "+3",
+      "dex": "+0",
+      "con": "+0",
+      "int": "-4",
+      "wis": "+0",
+      "cha": "-2"
+    },
+    "initiative": {
+      "modifier": 0,
+      "score": 10
+    },
+    "proficiencyBonus": 2,
+    "cr": "1/4",
+    "challenge": {
+      "rating": "1/4",
+      "xp": 50
+    },
+    "skill": {
+      "perception": "+2"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "officialTextLayout": "Elk\nLarge Beast, Unaligned\nAC 10                              Initiative +0 (10)\nHP 11 (2d10)\nSpeed 50 ft.\nMOD SAVE              MOD SAVE          MOD SAVE\nStr 16 +3 +3          Dex 10 +0 +0          Con 11 +0 +0\nInt 2 −4 −4           Wis 10 +0 +0          Cha 6 −2 −2\nSkills Perception +2\nSenses Darkvision 60 ft.; Passive Perception 12\nLanguages None\nCR 1/4 (XP 50; PB +2)\nActions\nRam. Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6\n+ 3) Bludgeoning damage. If the target is a Large or\nsmaller creature and the elk moved 20+ feet straight\ntoward it immediately before the hit, the target takes an\nextra 3 (1d6) Bludgeoning damage and has the Prone\ncondition.",
+    "catalogReferences": [
+      "rulebook.page-348"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        348
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/97"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Ram",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Bludgeoning damage. If the target is a Large or smaller creature and the elk moved 20+ feet straight toward it immediately before the hit, the target takes an extra 3 ({@damage 1d6}) Bludgeoning damage and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.flying-snake",
+    "kind": "monster",
+    "name": "Flying Snake",
+    "size": [
+      "T"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 5,
+      "formula": "2d4"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60,
+      "swim": 30
+    },
+    "str": 4,
+    "dex": 15,
+    "con": 11,
+    "int": 2,
+    "wis": 12,
+    "cha": 5,
+    "save": {
+      "str": "-3",
+      "dex": "+2",
+      "con": "+0",
+      "int": "-4",
+      "wis": "+1",
+      "cha": "-3"
+    },
+    "initiative": {
+      "modifier": 2,
+      "score": 12
+    },
+    "proficiencyBonus": 2,
+    "cr": "1/8",
+    "challenge": {
+      "rating": "1/8",
+      "xp": 25
+    },
+    "senses": [
+      "Blindsight 10 ft."
+    ],
+    "passive": 11,
+    "officialTextLayout": "Flying Snake\nTiny Monstrosity, Unaligned\nAC 14                              Initiative +2 (12)\nHP 5 (2d4)\nSpeed 30 ft., Fly 60 ft., Swim 30 ft.\nMOD SAVE              MOD SAVE          MOD SAVE\nStr 4 −3 −3           Dex 15 +2 +2          Con 11 +0 +0\nInt 2 −4 −4           Wis 12 +1 +1          Cha 5 −3 −3\nSenses Blindsight 10 ft.; Passive Perception 11\nLanguages None\nCR 1/8 (XP 25; PB +2)\nTraits\nFlyby. The snake doesn’t provoke an Opportunity At-\ntack when it flies out of an enemy’s reach.\nActions\nBite. Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing\ndamage plus 5 (2d4) Poison damage.",
+    "catalogReferences": [
+      "rulebook.page-348"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        348
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/104"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Flyby",
+        "entries": [
+          "The snake doesn't provoke an {@action Opportunity Attack|SRD52} when it flies out of an enemy's reach."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}1 Piercing damage plus 5 ({@damage 2d4}) Poison damage."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.frog",
+    "kind": "monster",
+    "name": "Frog",
+    "size": [
+      "T"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 1,
+      "formula": "1d4 - 1"
+    },
+    "speed": {
+      "walk": 20,
+      "swim": 20
+    },
+    "str": 1,
+    "dex": 13,
+    "con": 8,
+    "int": 1,
+    "wis": 8,
+    "cha": 3,
+    "save": {
+      "str": "-5",
+      "dex": "+1",
+      "con": "-1",
+      "int": "-5",
+      "wis": "-1",
+      "cha": "-4"
+    },
+    "initiative": {
+      "modifier": 1,
+      "score": 11
+    },
+    "proficiencyBonus": 2,
+    "cr": "0",
+    "challenge": {
+      "rating": "0",
+      "xp": 10
+    },
+    "skill": {
+      "perception": "+1",
+      "stealth": "+3"
+    },
+    "senses": [
+      "Darkvision 30 ft."
+    ],
+    "passive": 11,
+    "officialTextLayout": "Frog\nTiny Beast, Unaligned\nAC 11                           Initiative +1 (11)\nHP 1 (1d4 − 1)\nSpeed 20 ft., Swim 20 ft.\nMOD SAVE              MOD SAVE          MOD SAVE\nStr 1 −5 −5           Dex 13 +1 +1          Con 8 −1 −1\nInt 1 −5 −5           Wis 8 −1 −1           Cha 3 −4 −4\nSkills Perception +1, Stealth +3\nSenses Darkvision 30 ft.; Passive Perception 11\nLanguages None\nCR 0 (XP 10; PB +2)\nTraits\nAmphibious. The frog can breathe air and water.\nStanding Leap. The frog’s Long Jump is up to 10 feet\nand its High Jump is up to 5 feet with or without a run-\nning start.\nActions\nBite. Melee Attack Roll: +3, reach 5 ft. Hit: 1 Piercing\ndamage.",
+    "catalogReferences": [
+      "rulebook.page-348",
+      "rulebook.page-349"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        348,
+        349
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/105"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The frog can breathe air and water."
+        ]
+      },
+      {
+        "name": "Standing Leap",
+        "entries": [
+          "The frog's {@variantrule Long Jump|SRD52} is up to 10 feet and its {@variantrule High Jump|SRD52} is up to 5 feet with or without a running start."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}1 Piercing damage."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-ape",
+    "kind": "monster",
+    "name": "Giant Ape",
+    "size": [
+      "H"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 168,
+      "formula": "16d12 + 64"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40
+    },
+    "str": 23,
+    "dex": 14,
+    "con": 18,
+    "int": 5,
+    "wis": 12,
+    "cha": 7,
+    "save": {
+      "str": "+6",
+      "dex": "+2",
+      "con": "+4",
+      "int": "-3",
+      "wis": "+1",
+      "cha": "-2"
+    },
+    "initiative": {
+      "modifier": 5,
+      "score": 15
+    },
+    "proficiencyBonus": 3,
+    "cr": "7",
+    "challenge": {
+      "rating": "7",
+      "xp": 2900
+    },
+    "skill": {
+      "athletics": "+9",
+      "perception": "+4",
+      "survival": "+4"
+    },
+    "passive": 14,
+    "officialTextLayout": "Giant Ape\nHuge Beast, Unaligned\nAC 12                            Initiative +5 (15)\nHP 168 (16d12 + 64)\nSpeed 40 ft., Climb 40 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 23 +6 +6         Dex 14 +2 +2         Con 18 +4 +4\nInt 5 −3 −3          Wis 12 +1 +1         Cha 7 −2 −2\nSkills Athletics +9, Perception +4, Survival +4\nSenses Passive Perception 14\nLanguages None\nCR 7 (XP 2,900; PB +3)\nActions\nMultiattack. The ape makes two Fist attacks.\nFist. Melee Attack Roll: +9, reach 10 ft. Hit: 22 (3d10\n+ 6) Bludgeoning damage.\nBoulder Toss (Recharge 6). The ape hurls a boulder\nat a point it can see within 90 feet. Dexterity Saving\nThrow: DC 17, each creature in a 5-foot-radius Sphere\ncentered on that point. Failure: 24 (7d6) Bludgeoning\ndamage. If the target is a Large or smaller creature, it\nhas the Prone condition. Success: Half damage only.\nBonus Actions\nLeap. The ape jumps up to 30 feet by spending 10 feet\nof movement.",
+    "catalogReferences": [
+      "rulebook.page-349"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        349
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/112"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The ape makes two Fist attacks."
+        ]
+      },
+      {
+        "name": "Fist",
+        "entries": [
+          "{@atkr m} {@hit 9}, reach 10 ft. {@h}22 ({@damage 3d10 + 6}) Bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Boulder Toss {@recharge}",
+        "entries": [
+          "The ape hurls a boulder at a point it can see within 90 feet. {@actSave dex} {@dc 17}, each creature in a 5-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on that point. {@actSaveFail} 24 ({@damage 7d6}) Bludgeoning damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition. {@actSaveSuccess} Half damage only."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Leap",
+        "entries": [
+          "The ape jumps up to 30 feet by spending 10 feet of movement."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-badger",
+    "kind": "monster",
+    "name": "Giant Badger",
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 15,
+      "formula": "2d8 + 6"
+    },
+    "speed": {
+      "walk": 30,
+      "burrow": 10
+    },
+    "str": 13,
+    "dex": 10,
+    "con": 17,
+    "int": 2,
+    "wis": 12,
+    "cha": 5,
+    "save": {
+      "str": "+1",
+      "dex": "+0",
+      "con": "+3",
+      "int": "-4",
+      "wis": "+1",
+      "cha": "-3"
+    },
+    "initiative": {
+      "modifier": 0,
+      "score": 10
+    },
+    "proficiencyBonus": 2,
+    "cr": "1/4",
+    "challenge": {
+      "rating": "1/4",
+      "xp": 50
+    },
+    "skill": {
+      "perception": "+3"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 13,
+    "resist": [
+      "poison"
+    ],
+    "officialTextLayout": "Giant Badger\nMedium Beast, Unaligned\nAC 13                             Initiative +0 (10)\nHP 15 (2d8 + 6)\nSpeed 30 ft., Burrow 10 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 13 +1 +1         Dex 10 +0 +0         Con 17 +3 +3\nInt 2 −4 −4          Wis 12 +1 +1         Cha 5 −3 −3\nSkills Perception +3\nResistances Poison\nSenses Darkvision 60 ft.; Passive Perception 13\nLanguages None\nCR 1/4 (XP 50; PB +2)\nActions\nBite. Melee Attack Roll: +3, reach 5 ft. Hit: 6 (2d4 + 1)\nPiercing damage.",
+    "catalogReferences": [
+      "rulebook.page-349"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        349
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/113"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}6 ({@damage 2d4 + 1}) Piercing damage."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-bat",
+    "kind": "monster",
+    "name": "Giant Bat",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 22,
+      "formula": "4d10"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": 60
+    },
+    "str": 15,
+    "dex": 16,
+    "con": 11,
+    "int": 2,
+    "wis": 12,
+    "cha": 6,
+    "save": {
+      "str": "+2",
+      "dex": "+3",
+      "con": "+0",
+      "int": "-4",
+      "wis": "+1",
+      "cha": "-2"
+    },
+    "initiative": {
+      "modifier": 3,
+      "score": 13
+    },
+    "proficiencyBonus": 2,
+    "cr": "1/4",
+    "challenge": {
+      "rating": "1/4",
+      "xp": 50
+    },
+    "senses": [
+      "Blindsight 120 ft."
+    ],
+    "passive": 11,
+    "officialTextLayout": "Giant Bat\nLarge Beast, Unaligned\nAC 13                            Initiative +3 (13)\nHP 22 (4d10)\nSpeed 10 ft., Fly 60 ft.\nMOD SAVE             MOD SAVE            MOD SAVE\nStr 15 +2 +2          Dex 16 +3 +3        Con 11 +0 +0\nInt 2 −4 −4           Wis 12 +1 +1        Cha 6 −2 −2\nSenses Blindsight 120 ft.; Passive Perception 11\nLanguages None\nCR 1/4 (XP 50; PB +2)\nActions\nBite. Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3)\nPiercing damage.",
+    "catalogReferences": [
+      "rulebook.page-349"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        349
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/114"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Piercing damage."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-boar",
+    "kind": "monster",
+    "name": "Giant Boar",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 42,
+      "formula": "5d10 + 15"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 17,
+    "dex": 10,
+    "con": 16,
+    "int": 2,
+    "wis": 7,
+    "cha": 5,
+    "save": {
+      "str": "+5",
+      "dex": "+0",
+      "con": "+3",
+      "int": "-4",
+      "wis": "-2",
+      "cha": "-3"
+    },
+    "initiative": {
+      "modifier": 0,
+      "score": 10
+    },
+    "proficiencyBonus": 2,
+    "cr": "2",
+    "challenge": {
+      "rating": "2",
+      "xp": 450
+    },
+    "passive": 8,
+    "officialTextLayout": "Giant Boar\nLarge Beast, Unaligned\nAC 13                            Initiative +0 (10)\nHP 42 (5d10 + 15)\nSpeed 40 ft.\nMOD SAVE             MOD SAVE            MOD SAVE\nStr 17 +3 +5          Dex 10 +0 +0        Con 16 +3 +3\nInt 2 −4 −4           Wis 7 −2 −2         Cha 5 −3 −3\nSenses Passive Perception 8\nLanguages None\nCR 2 (XP 450; PB +2)\nTraits\nBloodied Fury. The boar has Advantage on melee at-\ntack rolls while it is Bloodied.\nActions\nGore. Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6\n+ 3) Piercing damage. If the target is a Large or smaller\ncreature and the boar moved 20+ feet straight toward it\nimmediately before the hit, the target takes an extra 7\n(2d6) Piercing damage and has the Prone condition.",
+    "catalogReferences": [
+      "rulebook.page-349"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        349
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/115"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Bloodied Fury",
+        "entries": [
+          "The boar has {@variantrule Advantage|SRD52} on melee attack rolls while it is {@status Bloodied|SRD52}."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Gore",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Piercing damage. If the target is a Large or smaller creature and the boar moved 20+ feet straight toward it immediately before the hit, the target takes an extra 7 ({@damage 2d6}) Piercing damage and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-centipede",
+    "kind": "monster",
+    "name": "Giant Centipede",
+    "size": [
+      "S"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 9,
+      "formula": "2d6 + 2"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 5,
+    "dex": 14,
+    "con": 12,
+    "int": 1,
+    "wis": 7,
+    "cha": 3,
+    "save": {
+      "str": "-3",
+      "dex": "+2",
+      "con": "+1",
+      "int": "-5",
+      "wis": "-2",
+      "cha": "-4"
+    },
+    "initiative": {
+      "modifier": 2,
+      "score": 12
+    },
+    "proficiencyBonus": 2,
+    "cr": "1/4",
+    "challenge": {
+      "rating": "1/4",
+      "xp": 50
+    },
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 8,
+    "officialTextLayout": "Giant Centipede\nSmall Beast, Unaligned\nAC 14                            Initiative +2 (12)\nHP 9 (2d6 + 2)\nSpeed 30 ft., Climb 30 ft.\nMOD SAVE            MOD SAVE            MOD SAVE\nStr 5     −3 −3      Dex 14 +2 +2        Con 12 +1 +1\nInt 1     −5 −5      Wis 7 −2 −2         Cha 3 −4 −4\nSenses Blindsight 30 ft.; Passive Perception 8\nLanguages None\nCR 1/4 (XP 50; PB +2)\nActions\nBite. Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4 + 2)\nPiercing damage, and the target has the Poisoned con-\ndition until the start of the centipede’s next turn.",
+    "catalogReferences": [
+      "rulebook.page-349",
+      "rulebook.page-350"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        349,
+        350
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/116"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}4 ({@damage 1d4 + 2}) Piercing damage, and the target has the {@condition Poisoned|SRD52} condition until the start of the centipede's next turn."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-constrictor-snake",
+    "kind": "monster",
+    "name": "Giant Constrictor Snake",
+    "size": [
+      "H"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 60,
+      "formula": "8d12 + 8"
+    },
+    "speed": {
+      "walk": 30,
+      "swim": 30
+    },
+    "str": 19,
+    "dex": 14,
+    "con": 12,
+    "int": 1,
+    "wis": 10,
+    "cha": 3,
+    "save": {
+      "str": "+4",
+      "dex": "+2",
+      "con": "+1",
+      "int": "-5",
+      "wis": "+0",
+      "cha": "-4"
+    },
+    "initiative": {
+      "modifier": 2,
+      "score": 12
+    },
+    "proficiencyBonus": 2,
+    "cr": "2",
+    "challenge": {
+      "rating": "2",
+      "xp": 450
+    },
+    "skill": {
+      "perception": "+2"
+    },
+    "senses": [
+      "Blindsight 10 ft."
+    ],
+    "passive": 12,
+    "officialTextLayout": "Giant Constrictor Snake\nHuge Beast, Unaligned\nAC 12                           Initiative +2 (12)\nHP 60 (8d12 + 8)\nSpeed 30 ft., Swim 30 ft.\nMOD SAVE            MOD SAVE            MOD SAVE\nStr 19 +4 +4         Dex 14 +2 +2        Con 12 +1 +1\nInt 1 −5 −5          Wis 10 +0 +0        Cha 3 −4 −4\nSkills Perception +2\nSenses Blindsight 10 ft.; Passive Perception 12\nLanguages None\nCR 2 (XP 450; PB +2)\nActions\nMultiattack. The snake makes one Bite attack and uses\nConstrict.\nBite. Melee Attack Roll: +6, reach 10 ft. Hit: 11 (2d6 +\n4) Piercing damage.\nConstrict. Strength Saving Throw: DC 14, one Large or\nsmaller creature the snake can see within 10 feet. Fail-\nure: 13 (2d8 + 4) Bludgeoning damage, and the target\nhas the Grappled condition (escape DC 14).",
+    "catalogReferences": [
+      "rulebook.page-350"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        350
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/117"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The snake makes one Bite attack and uses Constrict."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Constrict",
+        "entries": [
+          "{@actSave str} {@dc 14}, one Large or smaller creature the snake can see within 10 feet. {@actSaveFail} 13 ({@damage 2d8 + 4}) Bludgeoning damage, and the target has the {@condition Grappled|SRD52} condition (escape {@dc 14})."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-crab",
+    "kind": "monster",
+    "name": "Giant Crab",
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 13,
+      "formula": "3d8"
+    },
+    "speed": {
+      "walk": 30,
+      "swim": 30
+    },
+    "str": 13,
+    "dex": 13,
+    "con": 11,
+    "int": 1,
+    "wis": 9,
+    "cha": 3,
+    "save": {
+      "str": "+1",
+      "dex": "+1",
+      "con": "+0",
+      "int": "-5",
+      "wis": "-1",
+      "cha": "-4"
+    },
+    "initiative": {
+      "modifier": 1,
+      "score": 11
+    },
+    "proficiencyBonus": 2,
+    "cr": "1/8",
+    "challenge": {
+      "rating": "1/8",
+      "xp": 25
+    },
+    "skill": {
+      "stealth": "+3"
+    },
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 9,
+    "officialTextLayout": "Giant Crab\nMedium Beast, Unaligned\nAC 15                           Initiative +1 (11)\nHP 13 (3d8)\nSpeed 30 ft., Swim 30 ft.\nMOD SAVE            MOD SAVE            MOD SAVE\nStr 13 +1 +1         Dex 13 +1 +1        Con 11 +0 +0\nInt 1 −5 −5          Wis 9 −1 −1         Cha 3 −4 −4\nSkills Stealth +3\nSenses Blindsight 30 ft.; Passive Perception 9\nLanguages None\nCR 1/8 (XP 25; PB +2)\nTraits\nAmphibious. The crab can breathe air and water.\nActions\nClaw. Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1)\nBludgeoning damage. If the target is a Medium or\nsmaller creature, it has the Grappled condition (escape\nDC 11) from one of two claws.",
+    "catalogReferences": [
+      "rulebook.page-350"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        350
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/118"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The crab can breathe air and water."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}4 ({@damage 1d6 + 1}) Bludgeoning damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 11}) from one of two claws."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-crocodile",
+    "kind": "monster",
+    "name": "Giant Crocodile",
+    "size": [
+      "H"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 85,
+      "formula": "9d12 + 27"
+    },
+    "speed": {
+      "walk": 30,
+      "swim": 50
+    },
+    "str": 21,
+    "dex": 9,
+    "con": 17,
+    "int": 2,
+    "wis": 10,
+    "cha": 7,
+    "save": {
+      "str": "+5",
+      "dex": "-1",
+      "con": "+3",
+      "int": "-4",
+      "wis": "+0",
+      "cha": "-2"
+    },
+    "initiative": {
+      "modifier": -1,
+      "score": 9
+    },
+    "proficiencyBonus": 3,
+    "cr": "5",
+    "challenge": {
+      "rating": "5",
+      "xp": 1800
+    },
+    "skill": {
+      "stealth": "+5"
+    },
+    "passive": 10,
+    "officialTextLayout": "Giant Crocodile\nHuge Beast, Unaligned\nAC 14                           Initiative −1 (9)\nHP 85 (9d12 + 27)\nSpeed 30 ft., Swim 50 ft.\nMOD SAVE              MOD SAVE         MOD SAVE\nStr 21 +5 +5          Dex 9 −1 −1          Con 17 +3 +3\nInt 2 −4 −4           Wis 10 +0 +0         Cha 7 −2 −2\nSkills Stealth +5\nSenses Passive Perception 10\nLanguages None\nCR 5 (XP 1,800; PB +3)\nTraits\nHold Breath. The crocodile can hold its breath\nfor 1 hour.\nActions\nMultiattack. The crocodile makes one Bite attack and\none Tail attack.\nBite. Melee Attack Roll: +8, reach 5 ft. Hit: 21 (3d10\n+ 5) Piercing damage. If the target is a Large or smaller\ncreature, it has the Grappled condition (escape DC 15).\nWhile Grappled, the target has the Restrained condition\nand can’t be targeted by the crocodile’s Tail.\nTail. Melee Attack Roll: +8, reach 10 ft. Hit: 18 (3d8\n+ 5) Bludgeoning damage. If the target is a Large or\nsmaller creature, it has the Prone condition.",
+    "catalogReferences": [
+      "rulebook.page-350"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        350
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/119"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Hold Breath",
+        "entries": [
+          "The crocodile can hold its breath for 1 hour."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The crocodile makes one Bite attack and one Tail attack."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 5 ft. {@h}21 ({@damage 3d10 + 5}) Piercing damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 15}). While {@condition Grappled|SRD52}, the target has the {@condition Restrained|SRD52} condition and can't be targeted by the crocodile's Tail."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 10 ft. {@h}18 ({@damage 3d8 + 5}) Bludgeoning damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-eagle",
+    "kind": "monster",
+    "name": "Giant Eagle",
+    "size": [
+      "L"
+    ],
+    "type": "celestial",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 26,
+      "formula": "4d10 + 4"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": 80
+    },
+    "str": 16,
+    "dex": 17,
+    "con": 13,
+    "int": 8,
+    "wis": 14,
+    "cha": 10,
+    "save": {
+      "str": "+3",
+      "dex": "+3",
+      "con": "+1",
+      "int": "-1",
+      "wis": "+2",
+      "cha": "+0"
+    },
+    "initiative": {
+      "modifier": 3,
+      "score": 13
+    },
+    "proficiencyBonus": 2,
+    "cr": "1",
+    "challenge": {
+      "rating": "1",
+      "xp": 200
+    },
+    "skill": {
+      "perception": "+6"
+    },
+    "passive": 16,
+    "languages": [
+      "Celestial; understands Common and Primordial (Auran) but can't speak them"
+    ],
+    "resist": [
+      "necrotic",
+      "radiant"
+    ],
+    "officialTextLayout": "Giant Eagle\nLarge Celestial, Neutral Good\nAC 13                            Initiative +3 (13)\nHP 26 (4d10 + 4)\nSpeed 10 ft., Fly 80 ft.\nMOD SAVE              MOD SAVE         MOD SAVE\nStr 16 +3 +3          Dex 17 +3 +3         Con 13 +1 +1\nInt 8 −1 −1           Wis 14 +2 +2         Cha 10 +0 +0\nSkills Perception +6\nResistances Necrotic, Radiant\nSenses Passive Perception 16\nLanguages Celestial; understands Common and Primordial\n(Auran) but can’t speak them\nCR 1 (XP 200; PB +2)\nActions\nMultiattack. The eagle makes two Rend attacks.\nRend. Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3)\nSlashing damage plus 3 (1d6) Radiant damage.",
+    "catalogReferences": [
+      "rulebook.page-350",
+      "rulebook.page-351"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        350,
+        351
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/120"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The eagle makes two Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}5 ({@damage 1d4 + 3}) Slashing damage plus 3 ({@damage 1d6}) Radiant damage."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-elk",
+    "kind": "monster",
+    "name": "Giant Elk",
+    "size": [
+      "H"
+    ],
+    "type": "celestial",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 42,
+      "formula": "5d12 + 10"
+    },
+    "speed": {
+      "walk": 60
+    },
+    "str": 19,
+    "dex": 18,
+    "con": 14,
+    "int": 7,
+    "wis": 14,
+    "cha": 10,
+    "save": {
+      "str": "+6",
+      "dex": "+6",
+      "con": "+2",
+      "int": "-2",
+      "wis": "+2",
+      "cha": "+0"
+    },
+    "initiative": {
+      "modifier": 6,
+      "score": 16
+    },
+    "proficiencyBonus": 2,
+    "cr": "2",
+    "challenge": {
+      "rating": "2",
+      "xp": 450
+    },
+    "skill": {
+      "perception": "+4"
+    },
+    "senses": [
+      "Darkvision 90 ft."
+    ],
+    "passive": 14,
+    "languages": [
+      "Celestial; understands Common, Elvish, and Sylvan but can't speak them"
+    ],
+    "resist": [
+      "necrotic",
+      "radiant"
+    ],
+    "officialTextLayout": "Giant Elk\nHuge Celestial, Neutral Good\nAC 14                            Initiative +6 (16)\nHP 42 (5d12 + 10)\nSpeed 60 ft.\nMOD SAVE             MOD SAVE            MOD SAVE\nStr 19 +4 +6         Dex 18 +4 +6         Con 14 +2 +2\nInt 7 −2 −2          Wis 14 +2 +2         Cha 10 +0 +0\nSkills Perception +4\nResistances Necrotic, Radiant\nSenses Darkvision 90 ft.; Passive Perception 14\nLanguages Celestial; understands Common, Elvish, and\nSylvan but can’t speak them\nCR 2 (XP 450; PB +2)\nActions\nRam. Melee Attack Roll: +6, reach 10 ft. Hit: 11 (2d6\n+ 4) Bludgeoning damage plus 5 (2d4) Radiant damage.\nIf the target is a Huge or smaller creature and the elk\nmoved 20+ feet straight toward it immediately before\nthe hit, the target takes an extra 5 (2d4) Bludgeoning\ndamage and has the Prone condition.",
+    "catalogReferences": [
+      "rulebook.page-351"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        351
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/121"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Ram",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Bludgeoning damage plus 5 ({@damage 2d4}) Radiant damage. If the target is a Huge or smaller creature and the elk moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 ({@damage 2d4}) Bludgeoning damage and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-fire-beetle",
+    "kind": "monster",
+    "name": "Giant Fire Beetle",
+    "size": [
+      "S"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 4,
+      "formula": "1d6 + 1"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 8,
+    "dex": 10,
+    "con": 12,
+    "int": 1,
+    "wis": 7,
+    "cha": 3,
+    "save": {
+      "str": "-1",
+      "dex": "+0",
+      "con": "+1",
+      "int": "-5",
+      "wis": "-2",
+      "cha": "-4"
+    },
+    "initiative": {
+      "modifier": 0,
+      "score": 10
+    },
+    "proficiencyBonus": 2,
+    "cr": "0",
+    "challenge": {
+      "rating": "0",
+      "xp": 10
+    },
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 8,
+    "resist": [
+      "fire"
+    ],
+    "officialTextLayout": "Giant Fire Beetle\nSmall Beast, Unaligned\nAC 13                Initiative +0 (10)\nHP 4 (1d6 + 1)\nSpeed 30 ft., Climb 30 ft.\nMOD SAVE             MOD SAVE            MOD SAVE\nStr 8 −1 −1          Dex 10 +0 +0         Con 12 +1 +1\nInt 1 −5 −5          Wis 7 −2 −2          Cha 3 −4 −4\nResistances Fire\nSenses Blindsight 30 ft.; Passive Perception 8\nLanguages None\nCR 0 (XP 10; PB +2)\nTraits\nIllumination. The beetle sheds Bright Light in a 10-foot\nradius and Dim Light for an additional 10 feet.\nActions\nBite. Melee Attack Roll: +1, reach 5 ft. Hit: 1 Fire damage.",
+    "catalogReferences": [
+      "rulebook.page-351"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        351
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/122"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Illumination",
+        "entries": [
+          "The beetle sheds {@variantrule Bright Light|SRD52} in a 10-foot radius and {@variantrule Dim Light|SRD52} for an additional 10 feet."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 1}, reach 5 ft. {@h}1 Fire damage."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-frog",
+    "kind": "monster",
+    "name": "Giant Frog",
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 18,
+      "formula": "4d8"
+    },
+    "speed": {
+      "walk": 30,
+      "swim": 30
+    },
+    "str": 12,
+    "dex": 13,
+    "con": 11,
+    "int": 2,
+    "wis": 10,
+    "cha": 3,
+    "save": {
+      "str": "+1",
+      "dex": "+1",
+      "con": "+0",
+      "int": "-4",
+      "wis": "+0",
+      "cha": "-4"
+    },
+    "initiative": {
+      "modifier": 1,
+      "score": 11
+    },
+    "proficiencyBonus": 2,
+    "cr": "1/4",
+    "challenge": {
+      "rating": "1/4",
+      "xp": 50
+    },
+    "skill": {
+      "perception": "+2",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Darkvision 30 ft."
+    ],
+    "passive": 12,
+    "officialTextLayout": "Giant Frog\nMedium Beast, Unaligned\nAC 11                           Initiative +1 (11)\nHP 18 (4d8)\nSpeed 30 ft., Swim 30 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 12 +1 +1         Dex 13 +1 +1         Con 11 +0 +0\nInt 2 −4 −4          Wis 10 +0 +0         Cha 3 −4 −4\nSkills Perception +2, Stealth +4\nSenses Darkvision 30 ft.; Passive Perception 12\nLanguages None\nCR 1/4 (XP 50; PB +2)\nTraits\nAmphibious. The frog can breathe air and water.\nStanding Leap. The frog’s Long Jump is up to 20 feet\nand its High Jump is up to 10 feet with or without a\nrunning start.\nActions\nBite. Melee Attack Roll: +3, reach 5 ft. Hit: 5 (1d6 + 2)\nPiercing damage. If the target is a Medium or smaller\ncreature, it has the Grappled condition (escape DC 11).\nSwallow. The frog swallows a Small or smaller target it\nis grappling. While swallowed, the target isn’t Grappled\nbut has the Blinded and Restrained conditions, and it\nhas Total Cover against attacks and other effects outside\nthe frog. While swallowing the target, the frog can’t use\nBite, and if the frog dies, the swallowed target is no lon-\nger Restrained and can escape from the corpse using 5\nfeet of movement, exiting with the Prone condition.\nAt the end of the frog’s next turn, the swallowed target\ntakes 5 (2d4) Acid damage. If that damage doesn’t kill it,\nthe frog disgorges it, causing it to exit Prone.",
+    "catalogReferences": [
+      "rulebook.page-351"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        351
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/123"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The frog can breathe air and water."
+        ]
+      },
+      {
+        "name": "Standing Leap",
+        "entries": [
+          "The frog's {@variantrule Long Jump|SRD52} is up to 20 feet and its {@variantrule High Jump|SRD52} is up to 10 feet with or without a running start."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Piercing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 11})."
+        ]
+      },
+      {
+        "name": "Swallow",
+        "entries": [
+          "The frog swallows a Small or smaller target it is grappling. While swallowed, the target isn't {@condition Grappled|SRD52} but has the {@condition Blinded|SRD52} and {@condition Restrained|SRD52} conditions, and it has {@variantrule Cover|SRD52|Total Cover} against attacks and other effects outside the frog. While swallowing the target, the frog can't use Bite, and if the frog dies, the swallowed target is no longer {@condition Restrained|SRD52} and can escape from the corpse using 5 feet of movement, exiting with the {@condition Prone|SRD52} condition.",
+          "At the end of the frog's next turn, the swallowed target takes 5 ({@damage 2d4}) Acid damage. If that damage doesn't kill it, the frog disgorges it, causing it to exit {@condition Prone|SRD52}."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-goat",
+    "kind": "monster",
+    "name": "Giant Goat",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 30
+    },
+    "str": 17,
+    "dex": 13,
+    "con": 12,
+    "int": 3,
+    "wis": 12,
+    "cha": 6,
+    "save": {
+      "str": "+5",
+      "dex": "+1",
+      "con": "+1",
+      "int": "-4",
+      "wis": "+1",
+      "cha": "-2"
+    },
+    "initiative": {
+      "modifier": 1,
+      "score": 11
+    },
+    "proficiencyBonus": 2,
+    "cr": "1/2",
+    "challenge": {
+      "rating": "1/2",
+      "xp": 100
+    },
+    "skill": {
+      "perception": "+3"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 13,
+    "officialTextLayout": "Giant Goat\nLarge Beast, Unaligned\nAC 11                            Initiative +1 (11)\nHP 19 (3d10 + 3)\nSpeed 40 ft., Climb 30 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 17 +3 +5         Dex 13 +1 +1         Con 12 +1 +1\nInt 3 −4 −4          Wis 12 +1 +1         Cha 6 −2 −2\nSkills Perception +3\nSenses Darkvision 60 ft.; Passive Perception 13\nLanguages None\nCR 1/2 (XP 100; PB +2)\nActions\nRam. Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3)\nBludgeoning damage. If the target is a Large or smaller\ncreature and the goat moved 20+ feet straight toward it\nimmediately before the hit, the target takes an extra 5\n(2d4) Bludgeoning damage and has the Prone condition.",
+    "catalogReferences": [
+      "rulebook.page-351"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        351
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/124"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Ram",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Bludgeoning damage. If the target is a Large or smaller creature and the goat moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 ({@damage 2d4}) Bludgeoning damage and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-hyena",
+    "kind": "monster",
+    "name": "Giant Hyena",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 45,
+      "formula": "6d10 + 12"
+    },
+    "speed": {
+      "walk": 50
+    },
+    "str": 16,
+    "dex": 14,
+    "con": 14,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "save": {
+      "str": "+3",
+      "dex": "+2",
+      "con": "+2",
+      "int": "-4",
+      "wis": "+1",
+      "cha": "-2"
+    },
+    "initiative": {
+      "modifier": 2,
+      "score": 12
+    },
+    "proficiencyBonus": 2,
+    "cr": "1",
+    "challenge": {
+      "rating": "1",
+      "xp": 200
+    },
+    "skill": {
+      "perception": "+3"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 13,
+    "officialTextLayout": "Giant Hyena\nLarge Beast, Unaligned\nAC 12                Initiative +2 (12)\nHP 45 (6d10 + 12)\nSpeed 50 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 16 +3 +3         Dex 14 +2 +2         Con 14 +2 +2\nInt 2 −4 −4          Wis 12 +1 +1         Cha 7 −2 −2\nSkills Perception +3\nSenses Darkvision 60 ft.; Passive Perception 13\nLanguages None\nCR 1 (XP 200; PB +2)\nActions\nBite. Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6 + 3)\nPiercing damage.\nBonus Actions\nRampage (1/Day). Immediately after dealing damage\nto a creature that was already Bloodied, the hyena can\nmove up to half its Speed, and it makes one Bite attack.",
+    "catalogReferences": [
+      "rulebook.page-352"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        352
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/125"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Piercing damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Rampage (1/Day)",
+        "entries": [
+          "Immediately after dealing damage to a creature that was already {@status Bloodied|SRD52}, the hyena can move up to half its {@variantrule Speed|SRD52}, and it makes one Bite attack."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-lizard",
+    "kind": "monster",
+    "name": "Giant Lizard",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40
+    },
+    "str": 15,
+    "dex": 12,
+    "con": 13,
+    "int": 2,
+    "wis": 10,
+    "cha": 5,
+    "save": {
+      "str": "+2",
+      "dex": "+3",
+      "con": "+1",
+      "int": "-4",
+      "wis": "+0",
+      "cha": "-3"
+    },
+    "initiative": {
+      "modifier": 1,
+      "score": 11
+    },
+    "proficiencyBonus": 2,
+    "cr": "1/4",
+    "challenge": {
+      "rating": "1/4",
+      "xp": 50
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "officialTextLayout": "Giant Lizard\nLarge Beast, Unaligned\nAC 12                Initiative +1 (11)\nHP 19 (3d10 + 3)\nSpeed 40 ft., Climb 40 ft.\nMOD SAVE             MOD SAVE           MOD SAVE\nStr 15 +2 +2         Dex 12 +1 +3         Con 13 +1 +1\nInt 2 −4 −4          Wis 10 +0 +0         Cha 5 −3 −3\nSenses Darkvision 60 ft.; Passive Perception 10\nLanguages None\nCR 1/4 (XP 50; PB +2)\nTraits\nSpider Climb. The lizard can climb difficult surfaces,\nincluding along ceilings, without needing to make an\nability check.\nActions\nBite. Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2)\nPiercing damage.",
+    "catalogReferences": [
+      "rulebook.page-352"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        352
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/126"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The lizard can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}6 ({@damage 1d8 + 2}) Piercing damage."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monster.giant-octopus",
+    "kind": "monster",
+    "name": "Giant Octopus",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 45,
+      "formula": "7d10 + 7"
+    },
+    "speed": {
+      "walk": 10,
+      "swim": 60
+    },
+    "str": 17,
+    "dex": 13,
+    "con": 13,
+    "int": 5,
+    "wis": 10,
+    "cha": 4,
+    "save": {
+      "str": "+3",
+      "dex": "+1",
+      "con": "+1",
+      "int": "-3",
+      "wis": "+0",
+      "cha": "-3"
+    },
+    "initiative": {
+      "modifier": 1,
+      "score": 11
+    },
+    "proficiencyBonus": 2,
+    "cr": "1",
+    "challenge": {
+      "rating": "1",
+      "xp": 200
+    },
+    "skill": {
+      "perception": "+4",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "officialTextLayout": "Giant Octopus\nLarge Beast, Unaligned\nAC 11               Initiative +1 (11)\nHP 45 (7d10 + 7)\nSpeed 10 ft., Swim 60 ft.\nMOD SAVE\nStr 17 +3 +3\nMOD SAVE\nDex 13 +1 +1\nMOD SAVE\nCon 13 +1 +1\nInt 5 −3 −3          Wis 10 +0 +0         Cha 4 −3 −3\nSkills Perception +4, Stealth +5\nSenses Darkvision 60 ft.; Passive Perception 14\nLanguages None\nCR 1 (XP 200; PB +2)\nTraits\nWater Breathing. The octopus can breathe only under-\nwater. It can hold its breath for 1 hour outside water.\nActions\nTentacles. Melee Attack Roll: +5, reach 10 ft. Hit: 10\n(2d6 + 3) Bludgeoning damage. If the target is a Me-\ndium or smaller creature, it has the Grappled condition\n(escape DC 13) from all eight tentacles. While Grap-\npled, the target has the Restrained condition.\nReactions\nInk Cloud (1/Day). Trigger: The octopus takes damage\nwhile underwater. Response: The octopus releases ink\nthat fills a 10-foot Cube centered on itself, and the oc-\ntopus moves up to its Swim Speed. The Cube is Heavily\nObscured for 1 minute or until a strong current or simi-\nlar effect disperses the ink.",
+    "catalogReferences": [
+      "rulebook.page-352"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        352
+      ],
+      "section": "Animals",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/127"
+      },
+      "adaptation": "Direct publisher page-layout stat block; source candidate used for heading and section-entry identity comparison, not rule text.",
+      "structuredStatus": "publisher-stat-block-headers-and-core-fields-verified; structured entry body review pending"
+    },
+    "trait": [
+      {
+        "name": "Water Breathing",
+        "entries": [
+          "The octopus can breathe only underwater. It can hold its breath for 1 hour outside water."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Tentacles",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 10 ft. {@h}10 ({@damage 2d6 + 3}) Bludgeoning damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13}) from all eight tentacles. While {@condition Grappled|SRD52}, the target has the {@condition Restrained|SRD52} condition."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Ink Cloud (1/Day)",
+        "entries": [
+          "{@actTrigger} The octopus takes damage while underwater. {@actResponse} The octopus releases ink that fills a 10-foot {@variantrule Cube [Area of Effect]|SRD52|Cube} centered on itself, and the octopus moves up to its {@variantrule Swim Speed|SRD52}. The {@variantrule Cube [Area of Effect]|SRD52|Cube} is {@variantrule Heavily Obscured|SRD52} for 1 minute or until a strong current or similar effect disperses the ink."
+        ]
+      }
+    ]
+  }
+]

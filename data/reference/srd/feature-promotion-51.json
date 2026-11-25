@@ -1,0 +1,248 @@
+{
+  "edition": "srd-5.1",
+  "sourceCounts": {
+    "feat": 1,
+    "optional-feature": 49
+  },
+  "nativeCounts": {
+    "feat": 1,
+    "optional-feature": 49
+  },
+  "excluded": [],
+  "corrections": [
+    {
+      "id": "optional-feature.dueling",
+      "reason": "Exclude Bard fighting-style association outside SRD 5.1 College of Lore."
+    },
+    {
+      "id": "optional-feature.twinned-spell",
+      "pages": [
+        44
+      ],
+      "reason": "Official SRD 5.1 example uses ray of frost only; chromatic orb is not included."
+    },
+    {
+      "id": "optional-feature.two-weapon-fighting",
+      "reason": "Exclude Bard fighting-style association outside SRD 5.1 College of Lore."
+    }
+  ],
+  "publisherNameLocatorMissing": [],
+  "pendingReferences": [
+    {
+      "id": "feat.grappler",
+      "reference": "condition|grappled",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.grappler",
+      "reference": "condition|restrained",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.agonizing-blast",
+      "reference": "spell|eldritch blast",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.armor-of-shadows",
+      "reference": "spell|mage armor",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.ascendant-step",
+      "reference": "spell|levitate",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.beast-speech",
+      "reference": "spell|speak with animals",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.beguiling-influence",
+      "reference": "skill|Deception",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.beguiling-influence",
+      "reference": "skill|Persuasion",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.bewitching-whispers",
+      "reference": "spell|compulsion",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.chains-of-carceri",
+      "reference": "spell|hold monster",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.dreadful-word",
+      "reference": "spell|confusion",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.eldritch-sight",
+      "reference": "spell|detect magic",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.eldritch-spear",
+      "reference": "spell|eldritch blast",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.fiendish-vigor",
+      "reference": "spell|false life",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.gaze-of-two-minds",
+      "reference": "condition|blinded",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.gaze-of-two-minds",
+      "reference": "condition|deafened",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.mask-of-many-faces",
+      "reference": "spell|disguise self",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.master-of-myriad-forms",
+      "reference": "spell|alter self",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.minions-of-chaos",
+      "reference": "spell|conjure elemental",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.mire-the-mind",
+      "reference": "spell|slow",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.misty-visions",
+      "reference": "spell|silent image",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.one-with-shadows",
+      "reference": "condition|invisible",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.otherworldly-leap",
+      "reference": "spell|jump",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "spell|find familiar",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "creature|imp",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "creature|pseudodragon",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "creature|quasit",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "creature|sprite",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "action|Attack",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.repelling-blast",
+      "reference": "spell|eldritch blast",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.sculptor-of-flesh",
+      "reference": "spell|polymorph",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.sign-of-ill-omen",
+      "reference": "spell|bestow curse",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.thief-of-five-fates",
+      "reference": "spell|bane",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.thirsting-blade",
+      "reference": "action|Attack",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.twinned-spell",
+      "reference": "spell|magic missile",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.twinned-spell",
+      "reference": "spell|scorching ray",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.twinned-spell",
+      "reference": "spell|ray of frost",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.visions-of-distant-realms",
+      "reference": "spell|arcane eye",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.whispers-of-the-grave",
+      "reference": "spell|speak with dead",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    }
+  ],
+  "resolvedStructuredPrerequisites": 21,
+  "nativeCount": 50,
+  "metamagicMetadata": {
+    "options": 8,
+    "fixedCosts": 7,
+    "variableCosts": 1,
+    "combinationExceptions": [
+      "optional-feature.empowered-spell"
+    ]
+  },
+  "literalSpellRelationships": {
+    "grantOccurrences": 20,
+    "prerequisiteOccurrences": 3,
+    "addedCatalogLinks": 23,
+    "unresolvedSelectors": 2
+  },
+  "literalCharacterRelationships": {
+    "literalOccurrences": 2,
+    "namedVariantOccurrences": 0,
+    "addedCatalogLinks": 2
+  }
+}

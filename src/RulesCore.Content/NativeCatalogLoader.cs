@@ -84,7 +84,8 @@ public static class NativeCatalogLoader
             ValidateProperties(document.RootElement, "invalid_native_json");
             var relative = "native/" + Path.GetRelativePath(native, file)
                 .Replace(Path.DirectorySeparatorChar, '/');
-            if (relative.StartsWith("native/origination/construct-assembly/components/", StringComparison.Ordinal))
+            if (expected.RulesetId == "first-party-001" &&
+                relative.StartsWith("native/origination/construct-assembly/components/", StringComparison.Ordinal))
             {
                 // A component's stable identity and catalog category come from its
                 // type directory and filename. Expand them before ordinary catalog
@@ -101,15 +102,110 @@ public static class NativeCatalogLoader
 
         // References are authoritative in native files; the expanded view keeps
         // existing consumers of source.Definition.traits backward compatible.
-        var (resolvedEntities, traitReferences) = ResolveOriginTraitReferences(entities);
-        ValidateConditionReferences(resolvedEntities);
-        // Validate the complete group graph once at load. Coverage requests
-        // subsequently use the immutable snapshot and must not repair or
-        // reinterpret malformed catalog relationships on the fly.
-        ValidateEquipmentReferences(resolvedEntities);
+        var resolvedEntities = entities;
+        Dictionary<string, string>? traitReferences = null;
+        // These projections and relationship schemas belong to the first-party
+        // game, not the common entity envelope. Imported systems require their
+        // own source-specific reference validation before promotion.
+        if (expected.RulesetId == "first-party-001")
+        {
+            (resolvedEntities, traitReferences) = ResolveOriginTraitReferences(entities);
+            ValidateConditionReferences(resolvedEntities);
+            ValidateEquipmentReferences(resolvedEntities);
+        }
+        ValidateCatalogReferences(resolvedEntities);
+        ValidateImportedSource(manifestRoot, resolvedEntities);
         var fingerprint = Fingerprint(expected.RulesetId, schemaVersion, resolvedEntities);
         return new NativeCatalogSnapshot(expected.RulesetId, schemaVersion, fingerprint,
             resolvedEntities, traitReferences);
+    }
+
+    // Explicit catalogReferences are scoped to the currently loaded package.
+    // Free-form source markup is not a resolved native reference.
+    private static void ValidateCatalogReferences(IReadOnlyList<NativeRuleEntity> entities)
+    {
+        var ids = entities.Select(entity => entity.Id).ToHashSet(StringComparer.Ordinal);
+        foreach (var entity in entities)
+        {
+            if (!entity.Definition.TryGetProperty("catalogReferences", out var references)) continue;
+            if (references.ValueKind != JsonValueKind.Array)
+                throw Invalid("invalid_native_json", "catalogReferences must be an array.");
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var value in references.EnumerateArray())
+            {
+                var target = value.ValueKind == JsonValueKind.String ? value.GetString() : null;
+                if (target is null || !seen.Add(target) || !ids.Contains(target))
+                    throw Invalid("invalid_native_json", "Unknown or repeated package-local reference: " + entity.Id);
+            }
+        }
+    }
+
+    // The common loader does not impose D&D or Fate schemas on unrelated
+    // packages. These optional manifest declarations opt into source-specific
+    // structural checks, independently of the source-fidelity audit.
+    private static void ValidateImportedSource(JsonElement manifest, IReadOnlyList<NativeRuleEntity> entities)
+    {
+        static int Integer(JsonElement value, string key) =>
+            value.ValueKind == JsonValueKind.Object && value.TryGetProperty(key, out var field) &&
+            field.ValueKind == JsonValueKind.Number && field.TryGetInt32(out var number) ? number : -1;
+
+        if (manifest.TryGetProperty("officialPageImport", out var pages))
+        {
+            var start = Integer(pages, "firstGameplayPage");
+            var end = Integer(pages, "pdfPages");
+            var count = Integer(pages, "pageRecords");
+            var hash = ReadString(pages, "pdfSha256");
+            var release = ReadString(pages, "release");
+            if (start < 1 || end < start || count != (long)end - start + 1 ||
+                hash is null || !Regex.IsMatch(hash, "^[0-9a-f]{64}$") || string.IsNullOrWhiteSpace(release))
+                throw Invalid("invalid_manifest", "Invalid publisher page import declaration.");
+            var pageRecords = entities.Where(entity => entity.Category == "rulebook-page").ToArray();
+            if (pageRecords.Length != count)
+                throw Invalid("invalid_native_json", "Publisher page inventory is incomplete.");
+            var seen = new HashSet<int>();
+            foreach (var entity in pageRecords)
+            {
+                var number = Integer(entity.Definition, "page");
+                if (number < start || number > end || !seen.Add(number) ||
+                    entity.Id != $"rulebook.page-{number:D3}" ||
+                    string.IsNullOrWhiteSpace(ReadString(entity.Definition, "textLayout")) ||
+                    !entity.Definition.TryGetProperty("source", out var source) ||
+                    source.ValueKind != JsonValueKind.Object ||
+                    ReadString(source, "release") != release || ReadString(source, "pdfSha256") != hash)
+                    throw Invalid("invalid_native_json", "Publisher page provenance or identity is invalid.");
+            }
+        }
+
+        if (manifest.TryGetProperty("markdownImport", out var markdown))
+        {
+            var count = Integer(markdown, "sectionRecords");
+            var commit = ReadString(markdown, "commit");
+            var sections = entities.Where(entity => entity.Id.StartsWith("section.", StringComparison.Ordinal)).ToArray();
+            if (count < 1 || commit is null || !Regex.IsMatch(commit, "^[0-9a-f]{40}$"))
+                throw Invalid("invalid_manifest", "Invalid Markdown import declaration.");
+            if (sections.Length != count)
+                throw Invalid("invalid_native_json", "Markdown section inventory is incomplete.");
+            // The package may also contain separately authored structured rules.
+            var byId = sections.ToDictionary(entity => entity.Id, StringComparer.Ordinal);
+            foreach (var entity in sections)
+            {
+                var level = Integer(entity.Definition, "headingLevel");
+                if (level < 1 || level > 6 || string.IsNullOrWhiteSpace(ReadString(entity.Definition, "markdown")) ||
+                    !entity.Definition.TryGetProperty("parentId", out var parent) ||
+                    !entity.Definition.TryGetProperty("source", out var source) ||
+                    ReadString(source, "commit") != commit)
+                    throw Invalid("invalid_native_json", "Invalid Markdown section or provenance.");
+                if (parent.ValueKind == JsonValueKind.Null)
+                {
+                    if (level != 1) throw Invalid("invalid_native_json", "Markdown root must be a top-level heading.");
+                    continue;
+                }
+                if (parent.ValueKind != JsonValueKind.String || !byId.TryGetValue(parent.GetString()!, out var target) ||
+                    Integer(target.Definition, "headingLevel") >= level ||
+                    !entity.Id.StartsWith(target.Id + ".", StringComparison.Ordinal))
+                    throw Invalid("invalid_native_json", "Markdown section parent is invalid.");
+            }
+        }
     }
 
     /// <summary>

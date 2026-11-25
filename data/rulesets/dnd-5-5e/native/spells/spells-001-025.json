@@ -1,0 +1,2143 @@
+[
+  {
+    "id": "spell.acid-arrow",
+    "kind": "spell",
+    "name": "Acid Arrow",
+    "level": 2,
+    "school": "V",
+    "officialTextLayout": "Acid Arrow\nLevel 2 Evocation (Wizard)\nCasting Time: Action\nRange: 90 feet\nComponents: V, S, M (powdered rhubarb leaf)\nDuration: Instantaneous\nA shimmering green arrow streaks toward a target\nwithin range and bursts in a spray of acid. Make a\nranged spell attack against the target. On a hit, the\ntarget takes 4d4 Acid damage and 2d4 Acid dam-\nage at the end of its next turn. On a miss, the arrow\nsplashes the target with acid for half as much of the\ninitial damage only.\n  Using a Higher-Level Spell Slot. The damage\n(both initial and later) increases by 1d4 for each\nspell slot level above 2.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "90 feet",
+      "Components": "V, S, M (powdered rhubarb leaf)",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-107"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        107
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/202"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 90
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "powdered rhubarb leaf"
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A shimmering green arrow streaks toward a target within range and bursts in a spray of acid. Make a ranged spell attack against the target. On a hit, the target takes {@damage 4d4} Acid damage and {@damage 2d4} Acid damage at the end of its next turn. On a miss, the arrow splashes the target with acid for half as much of the initial damage only."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The damage (both initial and later) increases by {@scaledamage 4d4;2d4|2-9|1d4} for each spell slot level above 2."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "acid"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "spellAttack": [
+      "R"
+    ]
+  },
+  {
+    "id": "spell.acid-splash",
+    "kind": "spell",
+    "name": "Acid Splash",
+    "level": 0,
+    "school": "V",
+    "officialTextLayout": "Acid Splash\nEvocation Cantrip (Sorcerer, Wizard)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nYou create an acidic bubble at a point within range,\nwhere it explodes in a 5-foot-radius Sphere. Each\ncreature in that Sphere must succeed on a Dexterity\nsaving throw or take 1d6 Acid damage.\n  Cantrip Upgrade. The damage increases by 1d6\nwhen you reach levels 5 (2d6), 11 (3d6), and 17\n(4d6).",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-107"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        107
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/0"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You create an acidic bubble at a point within range, where it explodes in a 5-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere}. Each creature in that {@variantrule Sphere [Area of Effect]|SRD52|Sphere} must succeed on a Dexterity saving throw or take {@damage 1d6} Acid damage."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Cantrip Upgrade",
+        "entries": [
+          "The damage increases by {@damage 1d6} when you reach levels 5 ({@damage 2d6}), 11 ({@damage 3d6}), and 17 ({@damage 4d6})."
+        ]
+      }
+    ],
+    "scalingLevelDice": {
+      "label": "Acid damage",
+      "scaling": {
+        "1": "1d6",
+        "5": "2d6",
+        "11": "3d6",
+        "17": "4d6"
+      }
+    },
+    "damageInflict": [
+      "acid"
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "miscTags": [
+      "SCL"
+    ],
+    "areaTags": [
+      "MT"
+    ]
+  },
+  {
+    "id": "spell.aid",
+    "kind": "spell",
+    "name": "Aid",
+    "level": 2,
+    "school": "A",
+    "officialTextLayout": "Aid\nLevel 2 Abjuration (Bard, Cleric, Druid, Paladin,\nRanger)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S, M (a strip of white cloth)\nDuration: 8 hours\nChoose up to three creatures within range. Each\ntarget’s Hit Point maximum and current Hit Points\nincrease by 5 for the duration.\n  Using a Higher-Level Spell Slot. Each target’s Hit\nPoints increase by 5 for each spell slot level above 2.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a strip of white cloth)",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-107"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        107
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/1"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a strip of white cloth"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 8
+        }
+      }
+    ],
+    "entries": [
+      "Choose up to three creatures within range. Each target's {@variantrule Hit Points|SRD52|Hit Point} maximum and current {@variantrule Hit Points|SRD52} increase by 5 for the duration."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "Each target's {@variantrule Hit Points|SRD52} increase by 5 for each spell slot level above 2."
+        ]
+      }
+    ],
+    "miscTags": [
+      "HL"
+    ],
+    "areaTags": [
+      "MT"
+    ]
+  },
+  {
+    "id": "spell.alarm",
+    "kind": "spell",
+    "name": "Alarm",
+    "level": 1,
+    "school": "A",
+    "officialTextLayout": "Alarm\nLevel 1 Abjuration (Ranger, Wizard)\nCasting Time: 1 minute or Ritual\nRange: 30 feet\nComponents: V, S, M (a bell and silver wire)\nDuration: 8 hours\nYou set an alarm against intrusion. Choose a door,\na window, or an area within range that is no larger\nthan a 20-foot Cube. Until the spell ends, an alarm\n\nalerts you whenever a creature touches or enters\nthe warded area. When you cast the spell, you can\ndesignate creatures that won’t set off the alarm. You\nalso choose whether the alarm is audible or mental:\nAudible Alarm. The alarm produces the sound of\n a handbell for 10 seconds within 60 feet of the\n warded area.\nMental Alarm. You are alerted by a mental ping\n if you are within 1 mile of the warded area. This\n ping awakens you if you’re asleep.",
+    "header": {
+      "Casting Time": "1 minute or Ritual",
+      "Range": "30 feet",
+      "Components": "V, S, M (a bell and silver wire)",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-107"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        107
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/2"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a bell and silver wire"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 8
+        }
+      }
+    ],
+    "entries": [
+      "You set an alarm against intrusion. Choose a door, a window, or an area within range that is no larger than a 20-foot {@variantrule Cube [Area of Effect]|SRD52|Cube}. Until the spell ends, an alarm alerts you whenever a creature touches or enters the warded area. When you cast the spell, you can designate creatures that won't set off the alarm. You also choose whether the alarm is audible or mental:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Audible Alarm",
+            "entries": [
+              "The alarm produces the sound of a handbell for 10 seconds within 60 feet of the warded area."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Mental Alarm",
+            "entries": [
+              "You are alerted by a mental ping if you are within 1 mile of the warded area. This ping awakens you if you're asleep."
+            ]
+          }
+        ]
+      }
+    ],
+    "areaTags": [
+      "C"
+    ],
+    "meta": {
+      "ritual": true
+    }
+  },
+  {
+    "id": "spell.alter-self",
+    "kind": "spell",
+    "name": "Alter Self",
+    "level": 2,
+    "school": "T",
+    "officialTextLayout": "Alter Self\nLevel 2 Transmutation (Sorcerer, Wizard)\nCasting Time: Action\nRange: Self\nComponents: V, S\nDuration: Concentration, up to 1 hour\nYou alter your physical form. Choose one of the\nfollowing options. Its effects last for the duration,\nduring which you can take a Magic action to replace\nthe option you chose with a different one.\n   Aquatic Adaptation. You sprout gills and grow\nwebs between your fingers. You can breathe under-\nwater and gain a Swim Speed equal to your Speed.\n   Change Appearance. You alter your appear-\nance. You decide what you look like, including your\nheight, weight, facial features, sound of your voice,\nhair length, coloration, and other distinguishing\ncharacteristics. You can make yourself appear as\na member of another species, though none of your\nstatistics change. You can’t appear as a creature of a\ndifferent size, and your basic shape stays the same;\nif you’re bipedal, you can’t use this spell to become\nquadrupedal, for instance. For the duration, you can\ntake a Magic action to change your appearance in\nthis way again.\n   Natural Weapons. You grow claws (Slashing),\nfangs (Piercing), horns (Piercing), or hooves (Blud-\ngeoning). When you use your Unarmed Strike to\ndeal damage with that new growth, it deals 1d6\ndamage of the type in parentheses instead of deal-\ning the normal damage for your Unarmed Strike,\nand you use your spellcasting ability modifier\nfor the attack and damage rolls rather than using\nStrength.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-107"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        107
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/3"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You alter your physical form. Choose one of the following options. Its effects last for the duration, during which you can take a {@action Magic|SRD52} action to replace the option you chose with a different one.",
+      {
+        "type": "entries",
+        "name": "Aquatic Adaptation",
+        "entries": [
+          "You sprout gills and grow webs between your fingers. You can breathe underwater and gain a {@variantrule Swim Speed|SRD52} equal to your {@variantrule Speed|SRD52}."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Change Appearance",
+        "entries": [
+          "You alter your appearance. You decide what you look like, including your height, weight, facial features, sound of your voice, hair length, coloration, and other distinguishing characteristics. You can make yourself appear as a member of another species, though none of your statistics change. You can't appear as a creature of a different size, and your basic shape stays the same; if you're bipedal, you can't use this spell to become quadrupedal, for instance. For the duration, you can take a {@action Magic|SRD52} action to change your appearance in this way again."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Natural Weapons",
+        "entries": [
+          "You grow claws (Slashing), fangs (Piercing), horns (Piercing), or hooves (Bludgeoning). When you use your {@variantrule Unarmed Strike|SRD52} to deal damage with that new growth, it deals {@damage 1d6} damage of the type in parentheses instead of dealing the normal damage for your {@variantrule Unarmed Strike|SRD52}, and you use your spellcasting ability modifier for the attack and damage rolls rather than using Strength."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ]
+  },
+  {
+    "id": "spell.animal-friendship",
+    "kind": "spell",
+    "name": "Animal Friendship",
+    "level": 1,
+    "school": "E",
+    "officialTextLayout": "Animal Friendship\nLevel 1 Enchantment (Bard, Druid, Ranger)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S, M (a morsel of food)\nDuration: 24 hours\nTarget a Beast that you can see within range. The\ntarget must succeed on a Wisdom saving throw or\nhave the Charmed condition for the duration. If you\n\nor one of your allies deals damage to the target, the\nspells ends.\n  Using a Higher-Level Spell Slot. You can target\none additional Beast for each spell slot level above 1.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a morsel of food)",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-107",
+      "rulebook.page-108"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        107,
+        108
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/4"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a morsel of food"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 24
+        }
+      }
+    ],
+    "entries": [
+      "Target a Beast that you can see within range. The target must succeed on a Wisdom saving throw or have the {@condition Charmed|SRD52} condition for the duration. If you or one of your allies deals damage to the target, the spell ends."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "You can target one additional Beast for each spell slot level above 1."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "wisdom"
+    ],
+    "miscTags": [
+      "SCT",
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionInflict": [
+      "charmed"
+    ],
+    "affectsCreatureType": [
+      "beast"
+    ]
+  },
+  {
+    "id": "spell.animal-messenger",
+    "kind": "spell",
+    "name": "Animal Messenger",
+    "level": 2,
+    "school": "E",
+    "officialTextLayout": "Animal Messenger\nLevel 2 Enchantment (Bard, Druid, Ranger)\nCasting Time: Action or Ritual\nRange: 30 feet\nComponents: V, S, M (a morsel of food)\nDuration: 24 hours\nA Tiny Beast of your choice that you can see within\nrange must succeed on a Charisma saving throw,\nor it attempts to deliver a message for you (if the\ntarget’s Challenge Rating isn’t 0, it automatically\nsucceeds). You specify a location you have visited\nand a recipient who matches a general descrip-\ntion, such as “a person dressed in the uniform of\nthe town guard” or “a red-haired dwarf wearing a\npointed hat.” You also communicate a message of\nup to twenty-five words. The Beast travels for the\nduration toward the specified location, covering\nabout 25 miles per 24 hours or 50 miles if the Beast\ncan fly.\n  When the Beast arrives, it delivers your message\nto the creature that you described, mimicking your\ncommunication. If the Beast doesn’t reach its desti-\nnation before the spell ends, the message is lost, and\nthe Beast returns to where you cast the spell.\n  Using a Higher-Level Spell Slot. The spell’s dura-\ntion increases by 48 hours for each spell slot level\nabove 2.",
+    "header": {
+      "Casting Time": "Action or Ritual",
+      "Range": "30 feet",
+      "Components": "V, S, M (a morsel of food)",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-108"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        108
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/5"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a morsel of food"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 24
+        }
+      }
+    ],
+    "entries": [
+      "A {@filter Tiny Beast|bestiary|size=T|type=beast|miscellaneous=!swarm} of your choice that you can see within range must succeed on a Charisma saving throw, or it attempts to deliver a message for you (if the target's {@variantrule Challenge Rating|SRD52} isn't 0, it automatically succeeds). You specify a location you have visited and a recipient who matches a general description, such as \"a person dressed in the uniform of the town guard\" or \"a red-haired dwarf wearing a pointed hat.\" You also communicate a message of up to twenty-five words. The Beast travels for the duration toward the specified location, covering about 25 miles per 24 hours or 50 miles if the Beast can fly.",
+      "When the Beast arrives, it delivers your message to the creature that you described, mimicking your communication. If the Beast doesn't reach its destination before the spell ends, the message is lost, and the Beast returns to where you cast the spell."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The spell's duration increases by 48 hours for each spell slot level above 2."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "charisma"
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "meta": {
+      "ritual": true
+    },
+    "affectsCreatureType": [
+      "beast"
+    ]
+  },
+  {
+    "id": "spell.animal-shapes",
+    "kind": "spell",
+    "name": "Animal Shapes",
+    "level": 8,
+    "school": "T",
+    "officialTextLayout": "Animal Shapes\nLevel 8 Transmutation (Druid)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S\nDuration: 24 hours\nChoose any number of willing creatures that you\ncan see within range. Each target shape-shifts into\na Large or smaller Beast of your choice that has a\nChallenge Rating of 4 or lower. You can choose a dif-\nferent form for each target. On later turns, you can\ntake a Magic action to transform the targets again.\n  A target’s game statistics are replaced by the\nchosen Beast’s statistics, but the target retains its\ncreature type; Hit Points; Hit Point Dice; alignment;\nability to communicate; and Intelligence, Wisdom,\nand Charisma scores. The target’s actions are lim-\nited by the Beast form’s anatomy, and it can’t cast\nspells. The target’s equipment melds into the new\nform, and the target can’t use any of that equipment\nwhile in that form.\n  The target gains a number of Temporary Hit\nPoints equal to the Hit Points of the first form into\n\nwhich it shape-shifts. These Temporary Hit Points\nvanish if any remain when the spell ends. The trans-\nformation lasts for the duration or until the target\nends it as a Bonus Action.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-108"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        108
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/6"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 24
+        }
+      }
+    ],
+    "entries": [
+      "Choose any number of willing creatures that you can see within range. Each target shape-shifts into a Large or smaller Beast of your choice that has a {@variantrule Challenge Rating|SRD52} of 4 or lower. You can choose a different form for each target. On later turns, you can take a {@action Magic|SRD52} action to transform the targets again.",
+      "A target's game statistics are replaced by the chosen Beast's statistics, but the target retains its creature type; {@variantrule Hit Points|SRD52}; {@variantrule Hit Point Dice|SRD52}; alignment; ability to communicate; and Intelligence, Wisdom, and Charisma scores. The target's actions are limited by the Beast form's anatomy, and it can't cast spells. The target's equipment melds into the new form, and the target can't use any of that equipment while in that form.",
+      "The target gains a number of {@variantrule Temporary Hit Points|SRD52} equal to the {@variantrule Hit Points|SRD52} of the first form into which it shape-shifts. These {@variantrule Temporary Hit Points|SRD52} vanish if any remain when the spell ends. The transformation lasts for the duration or until the target ends it as a {@variantrule Bonus Action|SRD52}."
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "areaTags": [
+      "MT"
+    ]
+  },
+  {
+    "id": "spell.animate-dead",
+    "kind": "spell",
+    "name": "Animate Dead",
+    "level": 3,
+    "school": "N",
+    "officialTextLayout": "Animate Dead\nLevel 3 Necromancy (Cleric, Wizard)\nCasting Time: 1 minute\nRange: 10 feet\nComponents: V, S, M (a drop of blood, a piece of flesh,\n and a pinch of bone dust)\nDuration: Instantaneous\nChoose a pile of bones or a corpse of a Medium or\nSmall Humanoid within range. The target becomes\nan Undead creature: a Skeleton if you chose bones\nor a Zombie if you chose a corpse (see “Monsters”\nfor the stat blocks).\n  On each of your turns, you can take a Bonus Ac-\ntion to mentally command any creature you made\nwith this spell if the creature is within 60 feet of\nyou (if you control multiple creatures, you can\ncommand any of them at the same time, issuing the\nsame command to each one). You decide what action\nthe creature will take and where it will move on\nits next turn, or you can issue a general command,\nsuch as to guard a chamber or corridor. If you issue\nno commands, the creature takes the Dodge action\nand moves only to avoid harm. Once given an order,\nthe creature continues to follow it until its task is\ncomplete.\n  The creature is under your control for 24 hours,\nafter which it stops obeying any command you’ve\ngiven it. To maintain control of the creature for an-\nother 24 hours, you must cast this spell on the crea-\nture again before the current 24-hour period ends.\nThis use of the spell reasserts your control over up\nto four creatures you have animated with this spell\nrather than animating a new creature.\n  Using a Higher-Level Spell Slot. You animate or\nreassert control over two additional Undead crea-\ntures for each spell slot level above 3. Each of the\ncreatures must come from a different corpse or pile\nof bones.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "10 feet",
+      "Components": "V, S, M (a drop of blood, a piece of flesh,",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-108"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        108
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/7"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 10
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a drop of blood, a piece of flesh, and a pinch of bone dust"
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "Choose a pile of bones or a corpse of a Medium or Small Humanoid within range. The target becomes an Undead creature: a {@creature Skeleton|SRD52} if you chose bones or a {@creature Zombie|SRD52} if you chose a corpse (see “Monsters” for the stat blocks).",
+      "On each of your turns, you can take a {@variantrule Bonus Action|SRD52} to mentally command any creature you made with this spell if the creature is within 60 feet of you (if you control multiple creatures, you can command any of them at the same time, issuing the same command to each one). You decide what action the creature will take and where it will move on its next turn, or you can issue a general command, such as to guard a chamber or corridor. If you issue no commands, the creature takes the {@action Dodge|SRD52} action and moves only to avoid harm. Once given an order, the creature continues to follow it until its task is complete.",
+      "The creature is under your control for 24 hours, after which it stops obeying any command you've given it. To maintain control of the creature for another 24 hours, you must cast this spell on the creature again before the current 24-hour period ends. This use of the spell reasserts your control over up to four creatures you have animated with this spell rather than animating a new creature."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "You animate or reassert control over two additional Undead creatures for each spell slot level above 3. Each of the creatures must come from a different corpse or pile of bones."
+        ]
+      }
+    ],
+    "miscTags": [
+      "PRM",
+      "SMN",
+      "UBA"
+    ],
+    "affectsCreatureType": [
+      "humanoid"
+    ]
+  },
+  {
+    "id": "spell.animate-objects",
+    "kind": "spell",
+    "name": "Animate Objects",
+    "level": 5,
+    "school": "T",
+    "officialTextLayout": "Animate Objects\nLevel 5 Transmutation (Bard, Sorcerer, Wizard)\nCasting Time: Action\nRange: 120 feet\nComponents: V, S\nDuration: Concentration, up to 1 minute\nObjects animate at your command. Choose a num-\nber of nonmagical objects within range that aren’t\nbeing worn or carried, aren’t fixed to a surface, and\naren’t Gargantuan. The maximum number of objects\nis equal to your spellcasting ability modifier; for\nthis number, a Medium or smaller target counts as\n\none object, a Large target counts as two, and a Huge\ntarget counts as three.\n  Each target animates, sprouts legs, and becomes\na Construct that uses the Animated Object stat\nblock; this creature is under your control until the\nspell ends or until it is reduced to 0 Hit Points. Each\ncreature you make with this spell is an ally to you\nand your allies. In combat, it shares your Initiative\ncount and takes its turn immediately after yours.\n  Until the spell ends, you can take a Bonus Action\nto mentally command any creature you made with\nthis spell if the creature is within 500 feet of you (if\nyou control multiple creatures, you can command\nany of them at the same time, issuing the same\ncommand to each one). If you issue no commands,\nthe creature takes the Dodge action and moves only\nto avoid harm. When the creature drops to 0 Hit\nPoints, it reverts to its object form, and any remain-\ning damage carries over to that form.\n  Using a Higher-Level Spell Slot. The creature’s\nSlam damage increases by 1d4 (Medium or smaller),\n1d6 (Large), or 1d12 (Huge) for each spell slot level\nabove 5.\n\nAnimated Object\nHuge or Smaller Construct, Unaligned\nAC 15\nHP 10 (Medium or smaller), 20 (Large), 40 (Huge)\nSpeed 30 ft.\n          MOD SAVE           MOD SAVE              MOD SAVE\nStr 16 +3 +3         Dex 10 +0 +0       Con 10 +0 +0\nInt 3 −4 −4          Wis 3 −4 −4        Cha 1 −5 −5\n\nImmunities Poison, Psychic; Charmed, Exhaustion,\n  Frightened, Paralyzed, Poisoned\nSenses Blindsight 30 ft.; Passive Perception 6\nLanguages Understands the languages you know\nCR None (XP 0; PB equals your Proficiency Bonus)\n\nActions\nSlam. Melee Attack Roll: Bonus equals your spell attack\nmodifier, reach 5 ft. Hit: Force damage equal to 1d4\n+ 3 (Medium or smaller), 2d6 + 3 + your spellcasting\nability modifier (Large), or 2d12 + 3 + your spellcasting\nability modifier (Huge).",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-108",
+      "rulebook.page-109"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        108,
+        109
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/8"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "Objects animate at your command. Choose a number of nonmagical objects within range that aren't being worn or carried, aren't fixed to a surface, and aren't Gargantuan. The maximum number of objects is equal to your spellcasting ability modifier; for this number, a Medium or smaller target counts as one object, a Large target counts as two, and a Huge target counts as three.",
+      "Each target animates, sprouts legs, and becomes a Construct that uses the {@creature Animated Object|SRD52} stat block; this creature is under your control until the spell ends or until it is reduced to 0 {@variantrule Hit Points|SRD52}. Each creature you make with this spell is an ally to you and your allies. In combat, it shares your {@variantrule Initiative|SRD52} count and takes its turn immediately after yours.",
+      "Until the spell ends, you can take a {@variantrule Bonus Action|SRD52} to mentally command any creature you made with this spell if the creature is within 500 feet of you (if you control multiple creatures, you can command any of them at the same time, issuing the same command to each one). If you issue no commands, the creature takes the {@action Dodge|SRD52} action and moves only to avoid harm. When the creature drops to 0 {@variantrule Hit Points|SRD52}, it reverts to its object form, and any remaining damage carries over to that form."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The creature's Slam damage increases by {@damage 1d4} (Medium or smaller), {@damage 1d6} (Large), or {@damage 1d12} (Huge) for each spell slot level above 5."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ],
+    "miscTags": [
+      "OBJ",
+      "SMN",
+      "UBA"
+    ],
+    "areaTags": [
+      "MT"
+    ]
+  },
+  {
+    "id": "spell.antilife-shell",
+    "kind": "spell",
+    "name": "Antilife Shell",
+    "level": 5,
+    "school": "A",
+    "officialTextLayout": "Antilife Shell\nLevel 5 Abjuration (Druid)\nCasting Time: Action\nRange: Self\nComponents: V, S\nDuration: Concentration, up to 1 hour\nAn aura extends from you in a 10-foot Emanation\nfor the duration. The aura prevents creatures other\nthan Constructs and Undead from passing or reach-\ning through it. An affected creature can cast spells\n\nor make attacks with Ranged or Reach weapons\nthrough the barrier.\n  If you move so that an affected creature is forced\nto pass through the barrier, the spell ends.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-109"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        109
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/9"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "emanation",
+      "distance": {
+        "type": "feet",
+        "amount": 10
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "An aura extends from you in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} for the duration. The aura prevents creatures other than Constructs and Undead from passing or reaching through it. An affected creature can cast spells or make attacks with Ranged or Reach weapons through the barrier.",
+      "If you move so that an affected creature is forced to pass through the barrier, the spell ends."
+    ],
+    "areaTags": [
+      "S"
+    ],
+    "affectsCreatureType": [
+      "aberration",
+      "beast",
+      "celestial",
+      "dragon",
+      "elemental",
+      "fey",
+      "fiend",
+      "giant",
+      "humanoid",
+      "monstrosity",
+      "ooze",
+      "plant"
+    ]
+  },
+  {
+    "id": "spell.antimagic-field",
+    "kind": "spell",
+    "name": "Antimagic Field",
+    "level": 8,
+    "school": "A",
+    "officialTextLayout": "Antimagic Field\nLevel 8 Abjuration (Cleric, Wizard)\nCasting Time: Action\nRange: Self\nComponents: V, S, M (iron filings)\nDuration: Concentration, up to 1 hour\nAn aura of antimagic surrounds you in 10-foot Em-\nanation. No one can cast spells, take Magic actions,\nor create other magical effects inside the aura, and\nthose things can’t target or otherwise affect any-\nthing inside it. Magical properties of magic items\ndon’t work inside the aura or on anything inside it.\n  Areas of effect created by spells or other magic\ncan’t extend into the aura, and no one can teleport\ninto or out of it or use planar travel there. Portals\nclose temporarily while in the aura.\n  Ongoing spells, except those cast by an Artifact or\na deity, are suppressed in the area. While an effect\nis suppressed, it doesn’t function, but the time it\nspends suppressed counts against its duration.\n  Dispel Magic has no effect on the aura, and the au-\nras created by different Antimagic Field spells don’t\nnullify each other.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S, M (iron filings)",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-109"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        109
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/10"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "emanation",
+      "distance": {
+        "type": "feet",
+        "amount": 10
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "iron filings"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "An aura of antimagic surrounds you in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation}. No one can cast spells, take {@action Magic|SRD52} actions, or create other magical effects inside the aura, and those things can't target or otherwise affect anything inside it. Magical properties of magic items don't work inside the aura or on anything inside it.",
+      "Areas of effect created by spells or other magic can't extend into the aura, and no one can teleport into or out of it or use planar travel there. Portals close temporarily while in the aura.",
+      "Ongoing spells, except those cast by an Artifact or a deity, are suppressed in the area. While an effect is suppressed, it doesn't function, but the time it spends suppressed counts against its duration.",
+      "{@spell Dispel Magic|SRD52} has no effect on the aura, and the auras created by different {@spell Antimagic Field|SRD52} spells don't nullify each other."
+    ],
+    "miscTags": [
+      "OBJ"
+    ],
+    "areaTags": [
+      "S"
+    ]
+  },
+  {
+    "id": "spell.antipathy-sympathy",
+    "kind": "spell",
+    "name": "Antipathy/Sympathy",
+    "level": 8,
+    "school": "E",
+    "officialTextLayout": "Antipathy/Sympathy\nLevel 8 Enchantment (Bard, Druid, Wizard)\nCasting Time: 1 hour\nRange: 60 feet\nComponents: V, S, M (a mix of vinegar and honey)\nDuration: 10 days\nAs you cast the spell, choose whether it creates\nantipathy or sympathy, and target one creature or\nobject that is Huge or smaller. Then specify a kind of\ncreature, such as red dragons, goblins, or vampires.\nA creature of the chosen kind makes a Wisdom\nsaving throw when it comes within 120 feet of the\ntarget. Your choice of antipathy or sympathy deter-\nmines what happens to a creature when it fails that\nsave:\nAntipathy. The creature has the Frightened condi-\n tion. The Frightened creature must use its move-\n ment on its turns to get as far away as possible\n from the target, moving by the safest route.\nSympathy. The creature has the Charmed condi-\n tion. The Charmed creature must use its move-\n ment on its turns to get as close as possible to the\n target, moving by the safest route. If the creature\n is within 5 feet of the target, the creature can’t\n willingly move away. If the target damages the\n Charmed creature, that creature can make a\n\n Wisdom saving throw to end the effect, as de-\n scribed below.\n  Ending the Effect. If the Frightened or Charmed\ncreature ends its turn more than 120 feet away\nfrom the target, the creature makes a Wisdom sav-\ning throw. On a successful save, the creature is no\nlonger affected by the target. A creature that suc-\ncessfully saves against this effect is immune to it for\n1 minute, after which it can be affected again.",
+    "header": {
+      "Casting Time": "1 hour",
+      "Range": "60 feet",
+      "Components": "V, S, M (a mix of vinegar and honey)",
+      "Duration": "10 days"
+    },
+    "catalogReferences": [
+      "rulebook.page-109",
+      "rulebook.page-110"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        109,
+        110
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/11"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "hour"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a mix of vinegar and honey"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "day",
+          "amount": 10
+        }
+      }
+    ],
+    "entries": [
+      "As you cast the spell, choose whether it creates antipathy or sympathy, and target one creature or object that is Huge or smaller. Then specify a kind of creature, such as red dragons, goblins, or vampires. A creature of the chosen kind makes a Wisdom saving throw when it comes within 120 feet of the target. Your choice of antipathy or sympathy determines what happens to a creature when it fails that save:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Antipathy",
+            "entries": [
+              "The creature has the {@condition Frightened|SRD52} condition. The {@condition Frightened|SRD52} creature must use its movement on its turns to get as far away as possible from the target, moving by the safest route."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Sympathy",
+            "entries": [
+              "The creature has the {@condition Charmed|SRD52} condition. The {@condition Charmed|SRD52} creature must use its movement on its turns to get as close as possible to the target, moving by the safest route. If the creature is within 5 feet of the target, the creature can't willingly move away. If the target damages the {@condition Charmed|SRD52} creature, that creature can make a Wisdom saving throw to end the effect, as described below."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Ending the Effect",
+        "entries": [
+          "If the {@condition Frightened|SRD52} or {@condition Charmed|SRD52} creature ends its turn more than 120 feet away from the target, the creature makes a Wisdom saving throw. On a successful save, the creature is no longer affected by the target. A creature that successfully saves against this effect is immune to it for 1 minute, after which it can be affected again."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "wisdom"
+    ],
+    "miscTags": [
+      "OBJ"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionInflict": [
+      "frightened",
+      "charmed"
+    ]
+  },
+  {
+    "id": "spell.arcane-eye",
+    "kind": "spell",
+    "name": "Arcane Eye",
+    "level": 4,
+    "school": "D",
+    "officialTextLayout": "Arcane Eye\nLevel 4 Divination (Wizard)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S, M (a bit of bat fur)\nDuration: Concentration, up to 1 hour\nYou create an Invisible, invulnerable eye within\nrange that hovers for the duration. You mentally\nreceive visual information from the eye, which can\nsee in every direction. It also has Darkvision with a\nrange of 30 feet.\n  As a Bonus Action, you can move the eye up to 30\nfeet in any direction. A solid barrier blocks the eye’s\nmovement, but the eye can pass through an opening\nas small as 1 inch in diameter.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a bit of bat fur)",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-110"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        110
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/12"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a bit of bat fur"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You create an {@condition Invisible|SRD52}, invulnerable eye within range that hovers for the duration. You mentally receive visual information from the eye, which can see in every direction. It also has {@sense Darkvision|SRD52} with a range of 30 feet.",
+      "As a {@variantrule Bonus Action|SRD52}, you can move the eye up to 30 feet in any direction. A solid barrier blocks the eye's movement, but the eye can pass through an opening as small as 1 inch in diameter."
+    ],
+    "miscTags": [
+      "UBA"
+    ]
+  },
+  {
+    "id": "spell.arcane-hand",
+    "kind": "spell",
+    "name": "Arcane Hand",
+    "level": 5,
+    "school": "V",
+    "officialTextLayout": "Arcane Hand\nLevel 5 Evocation (Sorcerer, Wizard)\nCasting Time: Action\nRange: 120 feet\nComponents: V, S, M (an eggshell and a glove)\nDuration: Concentration, up to 1 minute\nYou create a Large hand of shimmering magical en-\nergy in an unoccupied space that you can see within\nrange. The hand lasts for the duration, and it moves\nat your command, mimicking the movements of\nyour own hand.\n  The hand is an object that has AC 20 and Hit\nPoints equal to your Hit Point maximum. If it drops\nto 0 Hit Points, the spell ends. The hand doesn’t oc-\ncupy its space.\n  When you cast the spell and as a Bonus Action on\nyour later turns, you can move the hand up to 60\nfeet and then cause one of the following effects:\nClenched Fist. The hand strikes a target within 5\n  feet of it. Make a melee spell attack. On a hit, the\n  target takes 5d8 Force damage.\nForceful Hand. The hand attempts to push a Huge\n  or smaller creature within 5 feet of it. The target\n  must succeed on a Strength saving throw, or the\n  hand pushes the target up to 5 feet plus a number\n  of feet equal to five times your spellcasting ability\n  modifier. The hand moves with the target, re-\n  maining within 5 feet of it.\n\nGrasping Hand. The hand attempts to grapple a\n  Huge or smaller creature within 5 feet of it. The\n  target must succeed on a Dexterity saving throw,\n  or the target has the Grappled condition, with an\n  escape DC equal to your spell save DC. While the\n  hand grapples the target, you can take a Bonus\n  Action to cause the hand to crush it, dealing Blud-\n  geoning damage to the target equal to 4d6 plus\n  your spellcasting ability modifier.\nInterposing Hand. The hand grants you Half Cover\n  against attacks and other effects that originate\n  from its space or that pass through it. In addi-\n  tion, its space counts as Difficult Terrain for your\n  enemies.\n  Using a Higher-Level Spell Slot. The damage of\nthe Clenched Fist increases by 2d8 and the damage\nof the Grasping Hand increases by 2d6 for each spell\nslot level above 5.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "V, S, M (an eggshell and a glove)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-110"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        110
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/24"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "an eggshell and a glove"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You create a Large hand of shimmering magical energy in an unoccupied space that you can see within range. The hand lasts for the duration, and it moves at your command, mimicking the movements of your own hand.",
+      "The hand is an object that has AC 20 and {@variantrule Hit Points|SRD52} equal to your {@variantrule Hit Points|SRD52|Hit Point} maximum. If it drops to 0 {@variantrule Hit Points|SRD52}, the spell ends. The hand doesn't occupy its space.",
+      "When you cast the spell and as a {@variantrule Bonus Action|SRD52} on your later turns, you can move the hand up to 60 feet and then cause one of the following effects:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Clenched Fist",
+            "entries": [
+              "The hand strikes a target within 5 feet of it. Make a melee spell attack. On a hit, the target takes {@damage 5d8} Force damage."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Forceful Hand",
+            "entries": [
+              "The hand attempts to push a Huge or smaller creature within 5 feet of it. The target must succeed on a Strength saving throw, or the hand pushes the target up to 5 feet plus a number of feet equal to five times your spellcasting ability modifier. The hand moves with the target, remaining within 5 feet of it."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Grasping Hand",
+            "entries": [
+              "The hand attempts to grapple a Huge or smaller creature within 5 feet of it. The target must succeed on a Dexterity saving throw, or the target has the {@condition Grappled|SRD52} condition, with an escape DC equal to your spell save DC. While the hand grapples the target, you can take a {@variantrule Bonus Action|SRD52} to cause the hand to crush it, dealing Bludgeoning damage to the target equal to {@damage 4d6} plus your spellcasting ability modifier."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Interposing Hand",
+            "entries": [
+              "The hand grants you Half {@variantrule Cover|SRD52} against attacks and other effects that originate from its space or that pass through it. In addition, its space counts as {@variantrule Difficult Terrain|SRD52} for your enemies."
+            ]
+          }
+        ]
+      }
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The damage of the Clenched Fist increases by {@scaledamage 5d8|5-9|2d8} and the damage of the Grasping Hand increases by {@scaledamage 4d6|5-9|2d6} for each spell slot level above 5."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "bludgeoning",
+      "force"
+    ],
+    "savingThrow": [
+      "dexterity",
+      "strength"
+    ],
+    "miscTags": [
+      "DFT",
+      "FMV",
+      "OBJ",
+      "SGT",
+      "UBA"
+    ],
+    "conditionInflict": [
+      "grappled"
+    ],
+    "spellAttack": [
+      "M"
+    ]
+  },
+  {
+    "id": "spell.arcane-lock",
+    "kind": "spell",
+    "name": "Arcane Lock",
+    "level": 2,
+    "school": "A",
+    "officialTextLayout": "Arcane Lock\nLevel 2 Abjuration (Wizard)\nCasting Time: Action\nRange: Touch\nComponents: V, S, M (gold dust worth 25+ GP, which\n the spell consumes)\nDuration: Until dispelled\nYou touch a closed door, window, gate, container,\nor hatch and magically lock it for the duration. This\nlock can’t be unlocked by any nonmagical means.\nYou and any creatures you designate when you cast\nthe spell can open and close the object despite the\nlock. You can also set a password that, when spoken\nwithin 5 feet of the object, unlocks it for 1 minute.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S, M (gold dust worth 25+ GP, which",
+      "Duration": "Until dispelled"
+    },
+    "catalogReferences": [
+      "rulebook.page-110"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        110
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/13"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "gold dust worth 25+ GP, which the spell consumes",
+        "cost": 2500,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "permanent",
+        "ends": [
+          "dispel"
+        ]
+      }
+    ],
+    "entries": [
+      "You touch a closed door, window, gate, container, or hatch and magically lock it for the duration. This lock can't be unlocked by any nonmagical means. You and any creatures you designate when you cast the spell can open and close the object despite the lock. You can also set a password that, when spoken within 5 feet of the object, unlocks it for 1 minute."
+    ],
+    "miscTags": [
+      "OBJ"
+    ]
+  },
+  {
+    "id": "spell.arcane-sword",
+    "kind": "spell",
+    "name": "Arcane Sword",
+    "level": 7,
+    "school": "V",
+    "officialTextLayout": "Arcane Sword\nLevel 7 Evocation (Bard, Wizard)\nCasting Time: Action\nRange: 90 feet\nComponents: V, S, M (a miniature sword worth\n 250+ GP)\nDuration: Concentration, up to 1 minute\nYou create a spectral sword that hovers within\nrange. It lasts for the duration.\n  When the sword appears, you make a melee spell\nattack against a target within 5 feet of the sword.\nOn a hit, the target takes Force damage equal to\n4d12 plus your spellcasting ability modifier.\n  On your later turns, you can take a Bonus Action\nto move the sword up to 30 feet to a spot you can\nsee and repeat the attack against the same target or\na different one.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "90 feet",
+      "Components": "V, S, M (a miniature sword worth",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-110"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        110
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/218"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 90
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a miniature sword worth 250+ GP",
+        "cost": 25000
+      }
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You create a spectral sword that hovers within range. It lasts for the duration.",
+      "When the sword appears, you make a melee spell attack against a target within 5 feet of the sword. On a hit, the target takes Force damage equal to {@damage 4d12} plus your spellcasting ability modifier.",
+      "On your later turns, you can take a {@variantrule Bonus Action|SRD52} to move the sword up to 30 feet to a spot you can see and repeat the attack against the same target or a different one."
+    ],
+    "damageInflict": [
+      "force"
+    ],
+    "miscTags": [
+      "SGT",
+      "UBA"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "spellAttack": [
+      "M"
+    ]
+  },
+  {
+    "id": "spell.arcanist-s-magic-aura",
+    "kind": "spell",
+    "name": "Arcanist's Magic Aura",
+    "level": 2,
+    "school": "I",
+    "officialTextLayout": "Arcanist’s Magic Aura\nLevel 2 Illusion (Wizard)\nCasting Time: Action\nRange: Touch\n\nComponents: V, S, M (a small square of silk)\nDuration: 24 hours\nWith a touch, you place an illusion on a willing crea-\nture or an object that isn’t being worn or carried. A\ncreature gains the Mask effect below, and an object\ngains the False Aura effect below. The effect lasts\nfor the duration. If you cast the spell on the same\ntarget every day for 30 days, the illusion lasts until\ndispelled.\n  Mask (Creature). Choose a creature type other\nthan the target’s actual type. Spells and other magi-\ncal effects treat the target as if it were a creature of\nthe chosen type.\n  False Aura (Object). You change the way the tar-\nget appears to spells and magical effects that detect\nmagical auras, such as Detect Magic. You can make\na nonmagical object appear magical, make a magic\nitem appear nonmagical, or change the object’s aura\nso that it appears to belong to a school of magic you\nchoose.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S, M (a small square of silk)",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-110",
+      "rulebook.page-111"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        110,
+        111
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/221"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a small square of silk"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 24
+        }
+      }
+    ],
+    "entries": [
+      "With a touch, you place an illusion on a willing creature or an object that isn't being worn or carried. A creature gains the Mask effect below, and an object gains the False Aura effect below. The effect lasts for the duration. If you cast the spell on the same target every day for 30 days, the illusion lasts until dispelled.",
+      {
+        "type": "entries",
+        "name": "Mask (Creature)",
+        "entries": [
+          "Choose a creature type other than the target's actual type. Spells and other magical effects treat the target as if it were a creature of the chosen type."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "False Aura (Object)",
+        "entries": [
+          "You change the way the target appears to spells and magical effects that detect magical auras, such as {@spell Detect Magic|SRD52}. You can make a nonmagical object appear magical, make a magic item appear nonmagical, or change the object's aura so that it appears to belong to a school of magic you choose."
+        ]
+      }
+    ],
+    "miscTags": [
+      "OBJ",
+      "PIR",
+      "PRM"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  },
+  {
+    "id": "spell.astral-projection",
+    "kind": "spell",
+    "name": "Astral Projection",
+    "level": 9,
+    "school": "N",
+    "officialTextLayout": "Astral Projection\nLevel 9 Necromancy (Cleric, Warlock, Wizard)\nCasting Time: 1 hour\nRange: 10 feet\nComponents: V, S, M (for each of the spell’s targets,\n one jacinth worth 1,000+ GP and one silver bar worth\n 100+ GP, all of which the spell consumes)\nDuration: Until dispelled\nYou and up to eight willing creatures within range\nproject your astral bodies into the Astral Plane\n(the spell ends instantly if you are already on that\nplane). Each target’s body is left behind in a state of\nsuspended animation; it has the Unconscious condi-\ntion, doesn’t need food or air, and doesn’t age.\n  A target’s astral form resembles its body in almost\nevery way, replicating its game statistics and pos-\nsessions. The principal difference is the addition of\na silvery cord that trails from between the shoulder\nblades of the astral form. The cord fades from view\nafter 1 foot. If the cord is cut—which happens only\nwhen an effect states that it does so—the target’s\nbody and astral form both die.\n  A target’s astral form can travel through the As-\ntral Plane. The moment an astral form leaves that\nplane, the target’s body and possessions travel\nalong the silver cord, causing the target to re-enter\nits body on the new plane.\n  Any damage or other effects that apply to an as-\ntral form have no effect on the target’s body and\nvice versa. If a target’s body or astral form drops to\n0 Hit Points, the spell ends for that target. The spell\nends for all the targets if you take a Magic action to\ndismiss it.\n\n  When the spell ends for a target who isn’t dead,\nthe target reappears in its body and exits the state\nof suspended animation.",
+    "header": {
+      "Casting Time": "1 hour",
+      "Range": "10 feet",
+      "Components": "V, S, M (for each of the spell’s targets,",
+      "Duration": "Until dispelled"
+    },
+    "catalogReferences": [
+      "rulebook.page-111"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        111
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/14"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "hour"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 10
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "for each of the spell's targets, one jacinth worth 1,000+ GP and one silver bar worth 100+ GP, all of which the spell consumes",
+        "cost": 100000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "permanent",
+        "ends": [
+          "dispel"
+        ]
+      }
+    ],
+    "entries": [
+      "You and up to eight willing creatures within range project your astral bodies into the Astral Plane (the spell ends instantly if you are already on that plane). Each target's body is left behind in a state of suspended animation; it has the {@condition Unconscious|SRD52} condition, doesn't need food or air, and doesn't age.",
+      "A target's astral form resembles its body in almost every way, replicating its game statistics and possessions. The principal difference is the addition of a silvery cord that trails from between the shoulder blades of the astral form. The cord fades from view after 1 foot. If the cord is cut—which happens only when an effect states that it does so—the target's body and astral form both die.",
+      "A target's astral form can travel through the Astral Plane. The moment an astral form leaves that plane, the target's body and possessions travel along the silver cord, causing the target to re-enter its body on the new plane.",
+      "Any damage or other effects that apply to an astral form have no effect on the target's body and vice versa. If a target's body or astral form drops to 0 {@variantrule Hit Points|SRD52}, the spell ends for that target. The spell ends for all the targets if you take a {@action Magic|SRD52} action to dismiss it.",
+      "When the spell ends for a target who isn't dead, the target reappears in its body and exits the state of suspended animation."
+    ],
+    "miscTags": [
+      "PRM",
+      "PS"
+    ],
+    "areaTags": [
+      "MT"
+    ],
+    "conditionInflict": [
+      "unconscious"
+    ]
+  },
+  {
+    "id": "spell.augury",
+    "kind": "spell",
+    "name": "Augury",
+    "level": 2,
+    "school": "D",
+    "officialTextLayout": "Augury\nLevel 2 Divination (Cleric, Druid, Wizard)\nCasting Time: 1 minute or Ritual\nRange: Self\nComponents: V, S, M (specially marked sticks, bones,\n cards, or other divinatory tokens worth 25+ GP)\nDuration: Instantaneous\nYou receive an omen from an otherworldly entity\nabout the results of a course of action that you plan\nto take within the next 30 minutes. The GM chooses\nthe omen from the Omens table.\n\nOmens\n Omen              For Results That Will Be …\nWeal              Good\nWoe               Bad\nWeal and woe      Good and bad\nIndifference      Neither good nor bad\n\nThe spell doesn’t account for circumstances, such as\nother spells, that might change the results.\n  If you cast the spell more than once before finish-\ning a Long Rest, there is a cumulative 25 percent\nchance for each casting after the first that you get\nno answer.",
+    "header": {
+      "Casting Time": "1 minute or Ritual",
+      "Range": "Self",
+      "Components": "V, S, M (specially marked sticks, bones,",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-111"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        111
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/15"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "specially marked sticks, bones, cards, or other divinatory tokens worth 25+ GP",
+        "cost": 2500
+      }
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You receive an omen from an otherworldly entity about the results of a course of action that you plan to take within the next 30 minutes. The DM chooses the omen from the Omens table.",
+      {
+        "type": "table",
+        "caption": "Omens",
+        "colStyles": [
+          "col-4",
+          "col-8"
+        ],
+        "colLabels": [
+          "Omen",
+          "For Results That Will Be..."
+        ],
+        "rows": [
+          [
+            "Weal",
+            "Good"
+          ],
+          [
+            "Woe",
+            "Bad"
+          ],
+          [
+            "Weal and woe",
+            "Good and bad"
+          ],
+          [
+            "Indifference",
+            "Neither good nor bad"
+          ]
+        ]
+      },
+      "The spell doesn't account for circumstances, such as other spells, that might change the results.",
+      "If you cast the spell more than once before finishing a {@variantrule Long Rest|SRD52}, there is a cumulative {@chance 25|||Random reading!|Regular reading} chance for each casting after the first that you get no answer."
+    ],
+    "meta": {
+      "ritual": true
+    }
+  },
+  {
+    "id": "spell.aura-of-life",
+    "kind": "spell",
+    "name": "Aura of Life",
+    "level": 4,
+    "school": "A",
+    "officialTextLayout": "Aura of Life\nLevel 4 Abjuration (Cleric, Paladin)\nCasting Time: Action\nRange: Self\nComponents: V\nDuration: Concentration, up to 10 minutes\nAn aura radiates from you in a 30-foot Emanation\nfor the duration. While in the aura, you and your\nallies have Resistance to Necrotic damage, and your\nHit Point maximums can’t be reduced. If an ally with\n0 Hit Points starts its turn in the aura, that ally re-\ngains 1 Hit Point.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-111"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        111
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/16"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "emanation",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "An aura radiates from you in a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} for the duration. While in the aura, you and your allies have {@variantrule Resistance|SRD52} to Necrotic damage, and your {@variantrule Hit Points|SRD52|Hit Point} maximums can't be reduced. If an ally with 0 {@variantrule Hit Points|SRD52} starts its turn in the aura, that ally regains 1 {@variantrule Hit Points|SRD52|Hit Point}."
+    ],
+    "miscTags": [
+      "HL"
+    ],
+    "areaTags": [
+      "S"
+    ],
+    "damageResist": [
+      "necrotic"
+    ]
+  },
+  {
+    "id": "spell.awaken",
+    "kind": "spell",
+    "name": "Awaken",
+    "level": 5,
+    "school": "T",
+    "officialTextLayout": "Awaken\nLevel 5 Transmutation (Bard, Druid)\nCasting Time: 8 hours\nRange: Touch\nComponents: V, S, M (an agate worth 1,000+ GP, which\n the spell consumes)\nDuration: Instantaneous\nYou spend the casting time tracing magical path-\nways within a precious gemstone, and then touch\nthe target. The target must be either a Beast or\nPlant creature with an Intelligence of 3 or less or a\nnatural plant that isn’t a creature. The target gains\n\nan Intelligence of 10 and the ability to speak one\nlanguage you know. If the target is a natural plant,\nit becomes a Plant creature and gains the ability to\nmove its limbs, roots, vines, creepers, and so forth,\nand it gains senses similar to a human’s. The GM\nchooses statistics appropriate for the awakened\nPlant, such as the statistics for the Awakened\nShrub or Awakened Tree in “Monsters.”\n   The awakened target has the Charmed condition\nfor 30 days or until you or your allies deal damage\nto it. When that condition ends, the awakened crea-\nture chooses its attitude toward you.",
+    "header": {
+      "Casting Time": "8 hours",
+      "Range": "Touch",
+      "Components": "V, S, M (an agate worth 1,000+ GP, which",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-111",
+      "rulebook.page-112"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        111,
+        112
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/17"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 8,
+        "unit": "hour"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "an agate worth 1,000+ GP, which the spell consumes",
+        "cost": 100000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You spend the casting time tracing magical pathways within a precious gemstone, and then touch the target. The target must be either a {@filter Beast|bestiary|type=beast|intelligence=[0;3]|miscellaneous=!swarm} or {@filter Plant|bestiary|type=plant|intelligence=[0;3]|miscellaneous=!swarm} creature with an Intelligence of 3 or less or a natural plant that isn't a creature. The target gains an Intelligence of 10 and the ability to speak one language you know. If the target is a natural plant, it becomes a Plant creature and gains the ability to move its limbs, roots, vines, creepers, and so forth, and it gains senses similar to a human's. The GM chooses statistics appropriate for the awakened Plant, such as the statistics for the {@creature Awakened Shrub|SRD52} or {@creature Awakened Tree|SRD52} in “Monsters.”",
+      "The awakened target has the {@condition Charmed|SRD52} condition for 30 days or until you or your allies deal damage to it. When that condition ends, the awakened creature chooses its attitude toward you."
+    ],
+    "miscTags": [
+      "PRM"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionInflict": [
+      "charmed"
+    ],
+    "affectsCreatureType": [
+      "beast",
+      "plant"
+    ]
+  },
+  {
+    "id": "spell.bane",
+    "kind": "spell",
+    "name": "Bane",
+    "level": 1,
+    "school": "E",
+    "officialTextLayout": "Bane\nLevel 1 Enchantment (Bard, Cleric, Warlock)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S, M (a drop of blood)\nDuration: Concentration, up to 1 minute\nUp to three creatures of your choice that you can\nsee within range must each make a Charisma saving\nthrow. Whenever a target that fails this save makes\nan attack roll or a saving throw before the spell\nends, the target must subtract 1d4 from the attack\nroll or save.\n  Using a Higher-Level Spell Slot. You can target\none additional creature for each spell slot level\nabove 1.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a drop of blood)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-112"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        112
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/18"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a drop of blood"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "Up to three creatures of your choice that you can see within range must each make a Charisma saving throw. Whenever a target that fails this save makes an attack roll or a saving throw before the spell ends, the target must subtract {@dice 1d4} from the attack roll or save."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "You can target one additional creature for each spell slot level above 1."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "charisma"
+    ],
+    "miscTags": [
+      "SCT",
+      "SGT"
+    ],
+    "areaTags": [
+      "MT"
+    ]
+  },
+  {
+    "id": "spell.banishment",
+    "kind": "spell",
+    "name": "Banishment",
+    "level": 4,
+    "school": "A",
+    "officialTextLayout": "Banishment\nLevel 4 Abjuration (Cleric, Paladin, Sorcerer, Warlock,\nWizard)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S, M (a pentacle)\nDuration: Concentration, up to 1 minute\nOne creature that you can see within range must\nsucceed on a Charisma saving throw or be trans-\nported to a harmless demiplane for the duration.\nWhile there, the target has the Incapacitated con-\ndition. When the spell ends, the target reappears in\nthe space it left or in the nearest unoccupied space\nif that space is occupied.\n   If the target is an Aberration, a Celestial, an Ele-\nmental, a Fey, or a Fiend, the target doesn’t return\nif the spell lasts for 1 minute. The target is instead\ntransported to a random location on a plane (GM’s\nchoice) associated with its creature type.\n   Using a Higher-Level Spell Slot. You can target\none additional creature for each spell slot level\nabove 4.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a pentacle)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-112"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        112
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/19"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a pentacle"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "One creature that you can see within range must succeed on a Charisma saving throw or be transported to a harmless demiplane for the duration. While there, the target has the {@condition Incapacitated|SRD52} condition. When the spell ends, the target reappears in the space it left or in the nearest unoccupied space if that space is occupied.",
+      "If the target is an Aberration, a Celestial, an Elemental, a Fey, or a Fiend, the target doesn't return if the spell lasts for 1 minute. The target is instead transported to a random location on a plane (DM's choice) associated with its creature type."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "You can target one additional creature for each spell slot level above 4."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "charisma"
+    ],
+    "miscTags": [
+      "SCT",
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionInflict": [
+      "incapacitated"
+    ]
+  },
+  {
+    "id": "spell.barkskin",
+    "kind": "spell",
+    "name": "Barkskin",
+    "level": 2,
+    "school": "T",
+    "officialTextLayout": "Barkskin\nLevel 2 Transmutation (Druid, Ranger)\nCasting Time: Bonus Action\nRange: Touch\n\nComponent: V, S, M (a handful of bark)\nDuration: 1 hour\nYou touch a willing creature. Until the spell ends,\nthe target’s skin assumes a bark-like appearance,\nand the target has an Armor Class of 17 if its AC is\nlower than that.",
+    "header": {
+      "Casting Time": "Bonus Action",
+      "Range": "Touch",
+      "Components": "V, S, M (a handful of bark)",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-112"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        112
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/20"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "bonus"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a handful of oak bark"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You touch a willing creature. Until the spell ends, the target's skin assumes a bark-like appearance, and the target has an {@variantrule Armor Class|SRD52} of 17 if its AC is lower than that."
+    ],
+    "miscTags": [
+      "MAC"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  }
+]

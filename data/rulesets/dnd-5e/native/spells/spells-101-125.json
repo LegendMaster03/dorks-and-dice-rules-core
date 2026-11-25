@@ -1,0 +1,1934 @@
+[
+  {
+    "id": "spell.etherealness",
+    "kind": "spell",
+    "name": "Etherealness",
+    "level": 7,
+    "school": "T",
+    "officialTextLayout": "Etherealness\n7th---level transmutation\nCasting Time: 1 action\nRange: Self\nComponents: V, S\nDuration: Up to 8 hours\nYou step into the border regions of the Ethereal\nPlane, in the area where it overlaps with your\ncurrent plane. You remain in the Border Ethereal for\nthe duration or until you use your action to dismiss\nthe spell. During this time, you can move in any\ndirection. If you move up or down, every foot of\nmovement costs an extra foot. You can see and hear\nthe plane you originated from, but everything there\nlooks gray, and you can’t see anything more than 60\nfeet away.\n  While on the Ethereal Plane, you can only affect\nand be affected by other creatures on that plane.\nCreatures that aren’t on the Ethereal Plane can’t\nperceive you and can’t interact with you, unless a\nspecial ability or magic has given them the ability to\ndo so.\n  You ignore all objects and effects that aren’t on the\nEthereal Plane, allowing you to move through\nobjects you perceive on the plane you originated\nfrom.\n\n\n\n\n\n  When the spell ends, you immediately return to\nthe plane you originated from in the spot you\ncurrently occupy. If you occupy the same spot as a\nsolid object or creature when this happens, you are\nimmediately shunted to the nearest unoccupied\nspace that you can occupy and take force damage\nequal to twice the number of feet you are moved.\n  This spell has no effect if you cast it while you are\non the Ethereal Plane or a plane that doesn’t border\nit, such as one of the Outer Planes.\n  At Higher Levels. When you cast this spell using a\nspell slot of 8th level or higher, you can target up to\nthree willing creatures (including you) for each slot\nlevel above 7th. The creatures must be within 10 feet\nof you when you cast the spell.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "Up to 8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-140",
+      "rulebook.page-141"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        140,
+        141
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/97"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 8,
+          "upTo": true
+        }
+      }
+    ],
+    "entries": [
+      "You step into the border regions of the Ethereal Plane, in the area where it overlaps with your current plane. You remain in the Border Ethereal for the duration or until you use your action to dismiss the spell. During this time, you can move in any direction. If you move up or down, every foot of movement costs an extra foot. You can see and hear the plane you originated from, but everything there looks gray, and you can't see anything more than 60 feet away.",
+      "While on the Ethereal Plane, you can only affect and be affected by other creatures on that plane. Creatures that aren't on the Ethereal Plane can't perceive you and can't interact with you, unless a special ability or magic has given them the ability to do so.",
+      "You ignore all objects and effects that aren't on the Ethereal Plane, allowing you to move through objects you perceive on the plane you originated from.",
+      "When the spell ends, you immediately return to the plane you originated from in the spot you currently occupy. If you occupy the same spot as a solid object or creature when this happens, you are immediately shunted to the nearest unoccupied space that you can occupy and take force damage equal to twice the number of feet you are moved.",
+      "This spell has no effect if you cast it while you are on the Ethereal Plane or a plane that doesn't border it, such as one of the Outer Planes."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 8th level or higher, you can target up to three willing creatures (including you) for each slot level above 7th. The creatures must be within 10 feet of you when you cast the spell."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "force"
+    ],
+    "miscTags": [
+      "PS",
+      "SCT"
+    ]
+  },
+  {
+    "id": "spell.expeditious-retreat",
+    "kind": "spell",
+    "name": "Expeditious Retreat",
+    "level": 1,
+    "school": "T",
+    "officialTextLayout": "Expeditious Retreat\n1st---level transmutation\nCasting Time: 1 bonus action\nRange: Self\nComponents: V, S\nDuration: Concentration, up to 10 minutes\nThis spell allows you to move at an incredible pace.\nWhen you cast this spell, and then as a bonus action\non each of your turns until the spell ends, you can\ntake the Dash action.",
+    "header": {
+      "Casting Time": "1 bonus action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-141"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        141
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/99"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "bonus"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "This spell allows you to move at an incredible pace. When you cast this spell, and then as a bonus action on each of your turns until the spell ends, you can take the {@action Dash} action."
+    ],
+    "miscTags": [
+      "UBA"
+    ]
+  },
+  {
+    "id": "spell.eyebite",
+    "kind": "spell",
+    "name": "Eyebite",
+    "level": 6,
+    "school": "N",
+    "officialTextLayout": "Eyebite\n6th---level necromancy\nCasting Time: 1 action\nRange: Self\nComponents: V, S\nDuration: Concentration, up to 1 minute\nFor the spell’s duration, your eyes become an inky\nvoid imbued with dread power. One creature of your\nchoice within 60 feet of you that you can see must\nsucceed on a Wisdom saving throw or be affected by\none of the following effects of your choice for the\nduration. On each of your turns until the spell ends,\nyou can use your action to target another creature\nbut can’t target a creature again if it has succeeded\non a saving throw against this casting of eyebite.\n  Asleep. The target falls unconscious. It wakes up if\nit takes any damage or if another creature uses its\naction to shake the sleeper awake.\n  Panicked. The target is frightened of you. On each\nof its turns, the frightened creature must take the\nDash action and move away from you by the safest\nand shortest available route, unless there is nowhere\nto move. If the target moves to a place at least 60 feet\n\naway from you where it can no longer see you, this\neffect ends.\n  Sickened. The target has disadvantage on attack\nrolls and ability checks. At the end of each of its\nturns, it can make another Wisdom saving throw. If\nit succeeds, the effect ends.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-141"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        141
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/100"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "For the spell's duration, your eyes become an inky void imbued with dread power. One creature of your choice within 60 feet of you that you can see must succeed on a Wisdom saving throw or be affected by one of the following effects of your choice for the duration. On each of your turns until the spell ends, you can use your action to target another creature but can't target a creature again if it has succeeded on a saving throw against this casting of eyebite.",
+      {
+        "type": "entries",
+        "name": "Asleep",
+        "entries": [
+          "The target falls {@condition unconscious}. It wakes up if it takes any damage or if another creature uses its action to shake the sleeper awake."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Panicked",
+        "entries": [
+          "The target is {@condition frightened} of you. On each of its turns, the {@condition frightened} creature must take the {@action Dash} action and move away from you by the safest and shortest available route, unless there is nowhere to move. If the target moves to a place at least 60 feet away from you where it can no longer see you, this effect ends."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Sickened",
+        "entries": [
+          "The target has disadvantage on attack rolls and ability checks. At the end of each of its turns, it can make another Wisdom saving throw. If it succeeds, the effect ends."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "wisdom"
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionInflict": [
+      "frightened",
+      "unconscious"
+    ]
+  },
+  {
+    "id": "spell.fabricate",
+    "kind": "spell",
+    "name": "Fabricate",
+    "level": 4,
+    "school": "T",
+    "officialTextLayout": "Fabricate\n4th---level transmutation\nCasting Time: 10 minutes\nRange: 120 feet\nComponents: V, S\nDuration: Instantaneous\nYou convert raw materials into products of the same\nmaterial. For example, you can fabricate a wooden\nbridge from a clump of trees, a rope from a patch of\nhemp, and clothes from flax or wool.\n  Choose raw materials that you can see within\nrange. You can fabricate a Large or smaller object\n(contained within a 10---foot cube, or eight connected\n5---foot cubes), given a sufficient quantity of raw\nmaterial. If you are working with metal, stone, or\nanother mineral substance, however, the fabricated\nobject can be no larger than Medium (contained\nwithin a single 5---foot cube). The quality of objects\nmade by the spell is commensurate with the quality\nof the raw materials.\n  Creatures or magic items can’t be created or\ntransmuted by this spell. You also can’t use it to\ncreate items that ordinarily require a high degree of\ncraftsmanship, such as jewelry, weapons, glass, or\narmor, unless you have proficiency with the type of\nartisan’s tools used to craft such objects.",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "120 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-141"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        141
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/101"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 10,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You convert raw materials into products of the same material. For example, you can fabricate a wooden bridge from a clump of trees, a rope from a patch of hemp, and clothes from flax or wool.",
+      "Choose raw materials that you can see within range. You can fabricate a Large or smaller object (contained within a 10-foot cube, or eight connected 5-foot cubes), given a sufficient quantity of raw material. If you are working with metal, stone, or another mineral substance, however, the fabricated object can be no larger than Medium (contained within a single 5-foot cube). The quality of objects made by the spell is commensurate with the quality of the raw materials.",
+      "Creatures or magic items can't be created or transmuted by this spell. You also can't use it to create items that ordinarily require a high degree of craftsmanship, such as jewelry, weapons, glass, or armor, unless you have proficiency with the type of artisan's tools used to craft such objects."
+    ],
+    "miscTags": [
+      "OBJ",
+      "PRM",
+      "SGT"
+    ]
+  },
+  {
+    "id": "spell.faerie-fire",
+    "kind": "spell",
+    "name": "Faerie Fire",
+    "level": 1,
+    "school": "V",
+    "officialTextLayout": "Faerie Fire\n1st---level evocation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V\nDuration: Concentration, up to 1 minute\nEach object in a 20---foot cube within range is\noutlined in blue, green, or violet light (your choice).\nAny creature in the area when the spell is cast is also\noutlined in light if it fails a Dexterity saving throw.\nFor the duration, objects and affected creatures shed\ndim light in a 10---foot radius.\n  Any attack roll against an affected creature or\nobject has advantage if the attacker can see it, and\nthe affected creature or object can’t benefit from\nbeing invisible.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-141"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        141
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/102"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "Each object in a 20-foot cube within range is outlined in blue, green, or violet light (your choice). Any creature in the area when the spell is cast is also outlined in light if it fails a Dexterity saving throw. For the duration, objects and affected creatures shed dim light in a 10-foot radius.",
+      "Any attack roll against an affected creature or object has advantage if the attacker can see it, and the affected creature or object can't benefit from being {@condition invisible}."
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "miscTags": [
+      "ADV",
+      "LGT"
+    ],
+    "areaTags": [
+      "C"
+    ]
+  },
+  {
+    "id": "spell.faithful-hound",
+    "kind": "spell",
+    "name": "Faithful Hound",
+    "level": 4,
+    "school": "C",
+    "officialTextLayout": "Faithful Hound\n4th---level conjuration\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a tiny silver whistle, a piece of\n  bone, and a thread)\nDuration: 8 hours\nYou conjure a phantom watchdog in an unoccupied\nspace that you can see within range, where it\nremains for the duration, until you dismiss it as an\naction, or until you move more than 100 feet away\nfrom it.\n  The hound is invisible to all creatures except you\nand can’t be harmed. When a Small or larger\ncreature comes within 30 feet of it without first\nspeaking the password that you specify when you\ncast this spell, the hound starts barking loudly. The\nhound sees invisible creatures and can see into the\nEthereal Plane. It ignores illusions.\n  At the start of each of your turns, the hound\nattempts to bite one creature within 5 feet of it that\nis hostile to you. The hound’s attack bonus is equal\nto your spellcasting ability modifier + your\nproficiency bonus. On a hit, it deals 4d8 piercing\ndamage.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a tiny silver whistle, a piece of",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-142"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        142
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/205"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a tiny silver whistle, a piece of bone, and a thread"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 8
+        }
+      }
+    ],
+    "entries": [
+      "You conjure a phantom watchdog in an unoccupied space that you can see within range, where it remains for the duration, until you dismiss it as an action, or until you move more than 100 feet away from it.",
+      "The hound is {@condition invisible} to all creatures except you and can't be harmed. When a Small or larger creature comes within 30 feet of it without first speaking the password that you specify when you cast this spell, the hound starts barking loudly. The hound sees {@condition invisible} creatures and can see into the Ethereal Plane. It ignores illusions.",
+      "At the start of each of your turns, the hound attempts to bite one creature within 5 feet of it that is hostile to you. The hound's attack bonus is equal to your spellcasting ability modifier + your proficiency bonus. On a hit, it deals {@damage 4d8} piercing damage."
+    ],
+    "damageInflict": [
+      "piercing"
+    ],
+    "miscTags": [
+      "SGT"
+    ]
+  },
+  {
+    "id": "spell.false-life",
+    "kind": "spell",
+    "name": "False Life",
+    "level": 1,
+    "school": "N",
+    "officialTextLayout": "False Life\n1st---level necromancy\nCasting Time: 1 action\nRange: Self\nComponents: V, S, M (a small amount of alcohol or\n  distilled spirits)\nDuration: 1 hour\nBolstering yourself with a necromantic facsimile of\nlife, you gain 1d4 + 4 temporary hit points for the\nduration.\n  At Higher Levels. When you cast this spell using a\nspell slot of 2nd level or higher, you gain 5 additional\ntemporary hit points for each slot level above 1st.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self",
+      "Components": "V, S, M (a small amount of alcohol or",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-142"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        142
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/103"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a small amount of alcohol or distilled spirits"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "Bolstering yourself with a necromantic facsimile of life, you gain {@dice 1d4 + 4} temporary hit points for the duration."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 2nd level or higher, you gain 5 additional temporary hit points for each slot level above 1st."
+        ]
+      }
+    ],
+    "miscTags": [
+      "THP"
+    ]
+  },
+  {
+    "id": "spell.fear",
+    "kind": "spell",
+    "name": "Fear",
+    "level": 3,
+    "school": "I",
+    "officialTextLayout": "Fear\n3rd---level illusion\nCasting Time: 1 action\nRange: Self (30---foot cone)\nComponents: V, S, M (a white feather or the heart of\n  a hen)\nDuration: Concentration, up to 1 minute\nYou project a phantasmal image of a creature’s\nworst fears. Each creature in a 30---foot cone must\nsucceed on a Wisdom saving throw or drop\n\nwhatever it is holding and become frightened for the\nduration.\n  While frightened by this spell, a creature must\ntake the Dash action and move away from you by the\nsafest available route on each of its turns, unless\nthere is nowhere to move. If the creature ends its\nturn in a location where it doesn’t have line of sight\nto you, the creature can make a Wisdom saving\nthrow. On a successful save, the spell ends for that\ncreature.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self (30---foot cone)",
+      "Components": "V, S, M (a white feather or the heart of",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-142"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        142
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/104"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "cone",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a white feather or the heart of a hen"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You project a phantasmal image of a creature's worst fears. Each creature in a 30-foot cone must succeed on a Wisdom saving throw or drop whatever it is holding and become {@condition frightened} for the duration.",
+      "While {@condition frightened} by this spell, a creature must take the {@action Dash} action and move away from you by the safest available route on each of its turns, unless there is nowhere to move. If the creature ends its turn in a location where it doesn't have line of sight to you, the creature can make a Wisdom saving throw. On a successful save, the spell ends for that creature."
+    ],
+    "savingThrow": [
+      "wisdom"
+    ],
+    "areaTags": [
+      "N"
+    ],
+    "conditionInflict": [
+      "frightened"
+    ]
+  },
+  {
+    "id": "spell.feather-fall",
+    "kind": "spell",
+    "name": "Feather Fall",
+    "level": 1,
+    "school": "T",
+    "officialTextLayout": "Feather Fall\n1st---level transmutation\nCasting Time: 1 reaction, which you take when you\n  or a creature within 60 feet of you falls\nRange: 60 feet\nComponents: V, M (a small feather or piece of\n  down)\nDuration: 1 minute\nChoose up to five falling creatures within range. A\nfalling creature’s rate of descent slows to 60 feet per\nround until the spell ends. If the creature lands\nbefore the spell ends, it takes no falling damage and\ncan land on its feet, and the spell ends for that\ncreature.",
+    "header": {
+      "Casting Time": "1 reaction, which you take when you",
+      "Range": "60 feet",
+      "Components": "V, M (a small feather or piece of",
+      "Duration": "1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-142"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        142
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/105"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "reaction",
+        "condition": "which you take when you or a creature within 60 feet of you falls"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "m": "a small feather or a piece of down"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "Choose up to five falling creatures within range. A falling creature's rate of descent slows to 60 feet per round until the spell ends. If the creature lands before the spell ends, it takes no falling damage and can land on its feet, and the spell ends for that creature."
+    ],
+    "areaTags": [
+      "MT"
+    ]
+  },
+  {
+    "id": "spell.feeblemind",
+    "kind": "spell",
+    "name": "Feeblemind",
+    "level": 8,
+    "school": "E",
+    "officialTextLayout": "Feeblemind\n8th---level enchantment\nCasting Time: 1 action\nRange: 150 feet\nComponents: V, S, M (a handful of clay, crystal, glass,\n  or mineral spheres)\nDuration: Instantaneous\nYou blast the mind of a creature that you can see\nwithin range, attempting to shatter its intellect and\npersonality. The target takes 4d6 psychic damage\nand must make an Intelligence saving throw.\n  On a failed save, the creature’s Intelligence and\nCharisma scores become 1. The creature can’t cast\nspells, activate magic items, understand language, or\ncommunicate in any intelligible way. The creature\ncan, however, identify its friends, follow them, and\neven protect them.\n  At the end of every 30 days, the creature can\nrepeat its saving throw against this spell. If it\nsucceeds on its saving throw, the spell ends.\n  The spell can also be ended by greater restoration,\nheal, or wish.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "150 feet",
+      "Components": "V, S, M (a handful of clay, crystal, glass,",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-142"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        142
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/106"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 150
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a handful of clay, crystal, glass, or mineral spheres"
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You blast the mind of a creature that you can see within range, attempting to shatter its intellect and personality. The target takes {@damage 4d6} psychic damage and must make an Intelligence saving throw.",
+      "On a failed save, the creature's Intelligence and Charisma scores become 1. The creature can't cast spells, activate magic items, understand language, or communicate in any intelligible way. The creature can, however, identify its friends, follow them, and even protect them.",
+      "At the end of every 30 days, the creature can repeat its saving throw against this spell. If it succeeds on its saving throw, the spell ends.",
+      "The spell can also be ended by {@spell greater restoration}, {@spell heal}, or {@spell wish}."
+    ],
+    "damageInflict": [
+      "psychic"
+    ],
+    "savingThrow": [
+      "intelligence"
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  },
+  {
+    "id": "spell.find-familiar",
+    "kind": "spell",
+    "name": "Find Familiar",
+    "level": 1,
+    "school": "C",
+    "officialTextLayout": "Find Familiar\n1st---level conjuration (ritual)\nCasting Time: 1 hour\nRange: 10 feet\nComponents: V, S, M (10 gp worth of charcoal,\nincense, and herbs that must be consumed by fire in\na brass brazier)\nDuration: Instantaneous\nYou gain the service of a familiar, a spirit that takes\nan animal form you choose: bat, cat, crab, frog (toad),\nhawk, lizard, octopus, owl, poisonous snake, fish\n(quipper), rat, raven, sea horse, spider, or weasel.\nAppearing in an unoccupied space within range, the\nfamiliar has the statistics of the chosen form, though\nit is a celestial, fey, or fiend (your choice) instead of a\nbeast.\n  Your familiar acts independently of you, but it\nalways obeys your commands. In combat, it rolls its\nown initiative and acts on its own turn. A familiar\ncan't attack, but it can take other actions as normal.\n  When the familiar drops to 0 hit points, it\ndisappears, leaving behind no physical form. It\nreappears after you cast this spell again\n  While your familiar is within 100 feet of you, you\ncan communicate with it telepathically. Additionally,\nas an action, you can see through your familiar's\neyes and hear what it hears until the start of your\nnext turn, gaining the benefits of any special senses\nthat the familiar has. During this time, you are deaf\nand blind with regard to your own senses.\n  As an action, you can temporarily dismiss your\nfamiliar. It disappears into a pocket dimension\nwhere it awaits your summons. Alternatively, you\ncan dismiss it forever. As an action while it is\ntemporarily dismissed, you can cause it to reappear\nin any unoccupied space within 30 feet of you.\n  You can't have more than one familiar at a time. If\nyou cast this spell while you already have a familiar,\nyou instead cause it to adopt a new form. Choose one\nof the forms from the above list. Your familiar\ntransforms into the chosen creature.\n  Finally, when you cast a spell with a range of touch,\nyour familiar can deliver the spell as if it had cast the\nspell. Your familiar must be within 100 feet of you,\nand it must use its reaction to deliver the spell when\nyou cast it. If the spell requires an attack roll, you use\nyour attack modifier for the roll.",
+    "header": {
+      "Casting Time": "1 hour",
+      "Range": "10 feet",
+      "Components": "V, S, M (10 gp worth of charcoal,",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-143"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        143
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/107"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "hour"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 10
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "10 gp worth of charcoal, incense, and herbs that must be consumed by fire in a brass brazier",
+        "cost": 1000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You gain the service of a familiar, a spirit that takes an animal form you choose: {@creature bat}, {@creature cat}, {@creature crab}, {@creature frog} (toad), {@creature hawk}, {@creature lizard}, {@creature octopus}, {@creature owl}, {@creature poisonous snake}, fish ({@creature quipper}), {@creature rat}, {@creature raven}, {@creature sea horse}, {@creature spider}, or {@creature weasel}. Appearing in an unoccupied space within range, the familiar has the statistics of the chosen form, though it is a celestial, fey, or fiend (your choice) instead of a beast.",
+      "Your familiar acts independently of you, but it always obeys your commands. In combat, it rolls its own initiative and acts on its own turn. A familiar can't attack, but it can take other actions as normal.",
+      "When the familiar drops to 0 hit points, it disappears, leaving behind no physical form. It reappears after you cast this spell again.",
+      "While your familiar is within 100 feet of you, you can communicate with it telepathically. Additionally, as an action, you can see through your familiar's eyes and hear what it hears until the start of your next turn, gaining the benefits of any special senses that the familiar has. During this time, you are {@condition deafened||deaf} and {@condition blinded||blind} with regard to your own senses.",
+      "As an action, you can temporarily dismiss your familiar. It disappears into a pocket dimension where it awaits your summons. Alternatively, you can dismiss it forever. As an action while it is temporarily dismissed, you can cause it to reappear in any unoccupied space within 30 feet of you.",
+      "You can't have more than one familiar at a time. If you cast this spell while you already have a familiar, you instead cause it to adopt a new form. Choose one of the forms from the above list. Your familiar transforms into the chosen creature.",
+      "Finally, when you cast a spell with a range of touch, your familiar can deliver the spell as if it had cast the spell. Your familiar must be within 100 feet of you, and it must use its reaction to deliver the spell when you cast it. If the spell requires an attack roll, you use your attack modifier for the roll."
+    ],
+    "miscTags": [
+      "PRM",
+      "SMN"
+    ],
+    "meta": {
+      "ritual": true
+    }
+  },
+  {
+    "id": "spell.find-steed",
+    "kind": "spell",
+    "name": "Find Steed",
+    "level": 2,
+    "school": "C",
+    "officialTextLayout": "Find Steed\n2nd---level conjuration\nCasting Time: 10 minutes\nRange: 30 feet\n\nComponents: V, S\nDuration: Instantaneous\nYou summon a spirit that assumes the form of an\nunusually intelligent, strong, and loyal steed,\ncreating a long---lasting bond with it. Appearing in an\nunoccupied space within range, the steed takes on a\nform that you choose: a warhorse, a pony, a camel,\nan elk, or a mastiff. (Your GM might allow other\nanimals to be summoned as steeds.) The steed has\nthe statistics of the chosen form, though it is a\ncelestial, fey, or fiend (your choice) instead of its\nnormal type. Additionally, if your steed has an\nIntelligence of 5 or less, its Intelligence becomes 6,\nand it gains the ability to understand one language of\nyour choice that you speak.\n  Your steed serves you as a mount, both in combat\nand out, and you have an instinctive bond with it\nthat allows you to fight as a seamless unit. While\nmounted on your steed, you can make any spell you\ncast that targets only you also target your steed.\n  When the steed drops to 0 hit points, it disappears,\nleaving behind no physical form. You can also\ndismiss your steed at any time as an action, causing\nit to disappear. In either case, casting this spell again\nsummons the same steed, restored to its hit point\nmaximum.\n  While your steed is within 1 mile of you, you can\ncommunicate with it telepathically.\n  You can’t have more than one steed bonded by\nthis spell at a time. As an action, you can release the\nsteed from its bond at any time, causing it to\ndisappear.",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "30 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-143"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        143
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/108"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 10,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You summon a spirit that assumes the form of an unusually intelligent, strong, and loyal steed, creating a long-lasting bond with it. Appearing in an unoccupied space within range, the steed takes on a form that you choose: a {@creature warhorse}, a {@creature pony}, a {@creature camel}, an {@creature elk}, or a {@creature mastiff}. (Your DM might allow other animals to be summoned as steeds.) The steed has the statistics of the chosen form, though it is a celestial, fey, or fiend (your choice) instead of its normal type. Additionally, if your steed has an Intelligence of 5 or less, its Intelligence becomes 6, and it gains the ability to understand one language of your choice that you speak.",
+      "Your steed serves you as a mount, both in combat and out, and you have an instinctive bond with it that allows you to fight as a seamless unit. While mounted on your steed, you can make any spell you cast that targets only you also target your steed.",
+      "When the steed drops to 0 hit points, it disappears, leaving behind no physical form. You can also dismiss your steed at any time as an action, causing it to disappear. In either case, casting this spell again summons the same steed, restored to its hit point maximum.",
+      "While your steed is within 1 mile of you, you can communicate with each other telepathically.",
+      "You can't have more than one steed bonded by this spell at a time. As an action, you can release the steed from its bond at any time, causing it to disappear."
+    ],
+    "miscTags": [
+      "PRM",
+      "SMN"
+    ]
+  },
+  {
+    "id": "spell.find-the-path",
+    "kind": "spell",
+    "name": "Find the Path",
+    "level": 6,
+    "school": "D",
+    "officialTextLayout": "Find the Path\n6th---level divination\nCasting Time: 1 minute\nRange: Self\nComponents: V, S, M (a set of divinatory tools—\n  such as bones, ivory sticks, cards, teeth, or carved\n  runes—worth 100 gp and an object from the\n  location you wish to find)\nDuration: Concentration, up to 1 day\nThis spell allows you to find the shortest, most direct\nphysical route to a specific fixed location that you\nare familiar with on the same plane of existence. If\nyou name a destination on another plane of\nexistence, a destination that moves (such as a mobile\nfortress), or a destination that isn’t specific (such as\n“a green dragon’s lair”), the spell fails.\n  For the duration, as long as you are on the same\nplane of existence as the destination, you know how\nfar it is and in what direction it lies. While you are\n\n\n\n\n\ntraveling there, whenever you are presented with a\nchoice of paths along the way, you automatically\ndetermine which path is the shortest and most direct\nroute (but not necessarily the safest route) to the\ndestination.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "Self",
+      "Components": "V, S, M (a set of divinatory tools—",
+      "Duration": "Concentration, up to 1 day"
+    },
+    "catalogReferences": [
+      "rulebook.page-143",
+      "rulebook.page-144"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        143,
+        144
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/109"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a set of divinatory tools—such as bones, ivory sticks, cards, teeth, or carved runes—worth 100 gp and an object from the location you wish to find",
+        "cost": 10000
+      }
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "day",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "This spell allows you to find the shortest, most direct physical route to a specific fixed location that you are familiar with on the same plane of existence. If you name a destination on another plane of existence, a destination that moves (such as a mobile fortress), or a destination that isn't specific (such as \"a green dragon's lair\"), the spell fails.",
+      "For the duration, as long as you are on the same plane of existence as the destination, you know how far it is and in what direction it lies. While you are traveling there, whenever you are presented with a choice of paths along the way, you automatically determine which path is the shortest and most direct route (but not necessarily the safest route) to the destination."
+    ]
+  },
+  {
+    "id": "spell.find-traps",
+    "kind": "spell",
+    "name": "Find Traps",
+    "level": 2,
+    "school": "D",
+    "officialTextLayout": "Find Traps\n2nd---level divination\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S\nDuration: Instantaneous\nYou sense the presence of any trap within range that\nis within line of sight. A trap, for the purpose of this\nspell, includes anything that would inflict a sudden\nor unexpected effect you consider harmful or\nundesirable, which was specifically intended as such\nby its creator. Thus, the spell would sense an area\naffected by the alarm spell, a glyph of warding, or a\nmechanical pit trap, but it would not reveal a natural\nweakness in the floor, an unstable ceiling, or a\nhidden sinkhole.\n  This spell merely reveals that a trap is present.\nYou don’t learn the location of each trap, but you do\nlearn the general nature of the danger posed by a\ntrap you sense.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "120 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-144"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        144
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/110"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You sense the presence of any trap within range that is within line of sight. A trap, for the purpose of this spell, includes anything that would inflict a sudden or unexpected effect you consider harmful or undesirable, which was specifically intended as such by its creator. Thus, the spell would sense an area affected by the {@spell alarm} spell, a {@spell glyph of warding}, or a mechanical pit trap, but it would not reveal a natural weakness in the floor, an unstable ceiling, or a hidden sinkhole.",
+      "This spell merely reveals that a trap is present. You don't learn the location of each trap, but you do learn the general nature of the danger posed by a trap you sense."
+    ],
+    "miscTags": [
+      "SGT"
+    ]
+  },
+  {
+    "id": "spell.finger-of-death",
+    "kind": "spell",
+    "name": "Finger of Death",
+    "level": 7,
+    "school": "N",
+    "officialTextLayout": "Finger of Death\n7th---level necromancy\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nYou send negative energy coursing through a\ncreature that you can see within range, causing it\nsearing pain. The target must make a Constitution\nsaving throw. It takes 7d8 + 30 necrotic damage on a\nfailed save, or half as much damage on a successful\none.\n  A humanoid killed by this spell rises at the start of\nyour next turn as a zombie that is permanently\nunder your command, following your verbal orders\nto the best of its ability.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-144"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        144
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/111"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You send negative energy coursing through a creature that you can see within range, causing it searing pain. The target must make a Constitution saving throw. It takes {@damage 7d8 + 30} necrotic damage on a failed save, or half as much damage on a successful one.",
+      "A humanoid killed by this spell rises at the start of your next turn as a {@creature zombie} that is permanently under your command, following your verbal orders to the best of its ability."
+    ],
+    "damageInflict": [
+      "necrotic"
+    ],
+    "savingThrow": [
+      "constitution"
+    ],
+    "miscTags": [
+      "PRM",
+      "SGT",
+      "SMN"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  },
+  {
+    "id": "spell.fireball",
+    "kind": "spell",
+    "name": "Fireball",
+    "level": 3,
+    "school": "V",
+    "officialTextLayout": "Fireball\n3rd---level evocation\nCasting Time: 1 action\nRange: 150 feet\nComponents: V, S, M (a tiny ball of bat guano and\n  sulfur)\nDuration: Instantaneous\n\nA bright streak flashes from your pointing finger to a\npoint you choose within range and then blossoms\nwith a low roar into an explosion of flame. Each\ncreature in a 20---foot---radius sphere centered on that\npoint must make a Dexterity saving throw. A target\ntakes 8d6 fire damage on a failed save, or half as\nmuch damage on a successful one.\n  The fire spreads around corners. It ignites\nflammable objects in the area that aren’t being worn\nor carried.\n  At Higher Levels. When you cast this spell using a\nspell slot of 4th level or higher, the damage increases\nby 1d6 for each slot level above 3rd.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "150 feet",
+      "Components": "V, S, M (a tiny ball of bat guano and",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-144"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        144
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/115"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 150
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a tiny ball of bat guano and sulfur"
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A bright streak flashes from your pointing finger to a point you choose within range and then blossoms with a low roar into an explosion of flame. Each creature in a 20-foot-radius sphere centered on that point must make a Dexterity saving throw. A target takes {@damage 8d6} fire damage on a failed save, or half as much damage on a successful one.",
+      "The fire spreads around corners. It ignites flammable objects in the area that aren't being worn or carried."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 4th level or higher, the damage increases by {@scaledamage 8d6|3-9|1d6} for each slot level above 3rd."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "fire"
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "miscTags": [
+      "OBJ"
+    ],
+    "areaTags": [
+      "S"
+    ]
+  },
+  {
+    "id": "spell.fire-bolt",
+    "kind": "spell",
+    "name": "Fire Bolt",
+    "level": 0,
+    "school": "V",
+    "officialTextLayout": "Fire Bolt\nEvocation cantrip\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S\nDuration: Instantaneous\nYou hurl a mote of fire at a creature or object within\nrange. Make a ranged spell attack against the target.\nOn a hit, the target takes 1d10 fire damage. A\nflammable object hit by this spell ignites if it isn't\nbeing worn or carried.\n  This spell's damage increases by 1d10 when you\nreach 5th level (2d10), 11th level (3d10), and 17th\nlevel (4d10).",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "120 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-144"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        144
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/112"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack against the target. On a hit, the target takes {@damage 1d10} fire damage. A flammable object hit by this spell ignites if it isn't being worn or carried.",
+      "This spell's damage increases by {@damage 1d10} when you reach 5th level ({@damage 2d10}), 11th level ({@damage 3d10}), and 17th level ({@damage 4d10})."
+    ],
+    "scalingLevelDice": {
+      "label": "fire damage",
+      "scaling": {
+        "1": "1d10",
+        "5": "2d10",
+        "11": "3d10",
+        "17": "4d10"
+      }
+    },
+    "damageInflict": [
+      "fire"
+    ],
+    "miscTags": [
+      "OBJ",
+      "SCL"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "spellAttack": [
+      "R"
+    ]
+  },
+  {
+    "id": "spell.fire-shield",
+    "kind": "spell",
+    "name": "Fire Shield",
+    "level": 4,
+    "school": "V",
+    "officialTextLayout": "Fire Shield\n4th---level evocation\nCasting Time: 1 action\nRange: Self\nComponents: V, S, M (a bit of phosphorus or a\n  firefly)\nDuration: 10 minutes\nThin and wispy flames wreathe your body for the\nduration, shedding bright light in a 10---foot radius\nand dim light for an additional 10 feet. You can end\nthe spell early by using an action to dismiss it.\n  The flames provide you with a warm shield or a\nchill shield, as you choose. The warm shield grants\nyou resistance to cold damage, and the chill shield\ngrants you resistance to fire damage.\n  In addition, whenever a creature within 5 feet of\nyou hits you with a melee attack, the shield erupts\nwith flame. The attacker takes 2d8 fire damage from\na warm shield, or 2d8 cold damage from a cold\nshield.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self",
+      "Components": "V, S, M (a bit of phosphorus or a",
+      "Duration": "10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-144"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        144
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/113"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a bit of phosphorus or a firefly"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        }
+      }
+    ],
+    "entries": [
+      "Thin and wispy flames wreathe your body for the duration, shedding bright light in a 10-foot radius and dim light for an additional 10 feet. You can end the spell early by using an action to dismiss it.",
+      "The flames provide you with a warm shield or a chill shield, as you choose. The warm shield grants you resistance to cold damage, and the chill shield grants you resistance to fire damage.",
+      "In addition, whenever a creature within 5 feet of you hits you with a melee attack, the shield erupts with flame. The attacker takes {@damage 2d8} fire damage from a warm shield, or {@damage 2d8} cold damage from a cold shield."
+    ],
+    "damageInflict": [
+      "cold",
+      "fire"
+    ],
+    "miscTags": [
+      "LGT"
+    ],
+    "damageResist": [
+      "cold",
+      "fire"
+    ]
+  },
+  {
+    "id": "spell.fire-storm",
+    "kind": "spell",
+    "name": "Fire Storm",
+    "level": 7,
+    "school": "V",
+    "officialTextLayout": "Fire Storm\n7th---level evocation\nCasting Time: 1 action\nRange: 150 feet\nComponents: V, S\nDuration: Instantaneous\nA storm made up of sheets of roaring flame appears\nin a location you choose within range. The area of\nthe storm consists of up to ten 10---foot cubes, which\nyou can arrange as you wish. Each cube must have at\nleast one face adjacent to the face of another cube.\nEach creature in the area must make a Dexterity\nsaving throw. It takes 7d10 fire damage on a failed\nsave, or half as much damage on a successful one.\n  The fire damages objects in the area and ignites\nflammable objects that aren’t being worn or carried.\nIf you choose, plant life in the area is unaffected by\nthis spell.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "150 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-145"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        145
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/114"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 150
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A storm made up of sheets of roaring flame appears in a location you choose within range. The area of the storm consists of up to ten 10-foot cubes, which you can arrange as you wish. Each cube must have at least one face adjacent to the face of another cube. Each creature in the area must make a Dexterity saving throw. It takes {@damage 7d10} fire damage on a failed save, or half as much damage on a successful one.",
+      "The fire damages objects in the area and ignites flammable objects that aren't being worn or carried. If you choose, plant life in the area is unaffected by this spell."
+    ],
+    "damageInflict": [
+      "fire"
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "miscTags": [
+      "OBJ"
+    ],
+    "areaTags": [
+      "C"
+    ]
+  },
+  {
+    "id": "spell.flame-blade",
+    "kind": "spell",
+    "name": "Flame Blade",
+    "level": 2,
+    "school": "V",
+    "officialTextLayout": "Flame Blade\n2nd---level evocation\nCasting Time: 1 bonus action\nRange: Self\nComponents: V, S, M (leaf of sumac)\nDuration: Concentration, up to 10 minutes\nYou evoke a fiery blade in your free hand. The blade\nis similar in size and shape to a scimitar, and it lasts\nfor the duration. If you let go of the blade, it\ndisappears, but you can evoke the blade again as a\nbonus action.\n  You can use your action to make a melee spell\nattack with the fiery blade. On a hit, the target takes\n3d6 fire damage.\n  The flaming blade sheds bright light in a 10---foot\nradius and dim light for an additional 10 feet.\n  At Higher Levels. When you cast this spell using a\nspell slot of 4th level or higher, the damage increases\nby 1d6 for every two slot levels above 2nd.",
+    "header": {
+      "Casting Time": "1 bonus action",
+      "Range": "Self",
+      "Components": "V, S, M (leaf of sumac)",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-145"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        145
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/116"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "bonus"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "leaf of sumac"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You evoke a fiery blade in your free hand. The blade is similar in size and shape to a scimitar, and it lasts for the duration. If you let go of the blade, it disappears, but you can evoke the blade again as a bonus action.",
+      "You can use your action to make a melee spell attack with the fiery blade. On a hit, the target takes {@damage 3d6} fire damage.",
+      "The flaming blade sheds bright light in a 10-foot radius and dim light for an additional 10 feet."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 4th level or higher, the damage increases by {@scaledamage 3d6|2,4,6,8|1d6} for every two slot levels above 2nd."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "fire"
+    ],
+    "miscTags": [
+      "LGT",
+      "UBA"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "spellAttack": [
+      "M"
+    ]
+  },
+  {
+    "id": "spell.flame-strike",
+    "kind": "spell",
+    "name": "Flame Strike",
+    "level": 5,
+    "school": "V",
+    "officialTextLayout": "Flame Strike\n5th---level evocation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S, M (pinch of sulfur)\nDuration: Instantaneous\nA vertical column of divine fire roars down from the\nheavens in a location you specify. Each creature in a\n10---foot---radius, 40---foot---high cylinder centered on a\npoint within range must make a Dexterity saving\nthrow. A creature takes 4d6 fire damage and 4d6\n\nradiant damage on a failed save, or half as much\ndamage on a successful one.\n  At Higher Levels. When you cast this spell using a\nspell slot of 6th level or higher, the fire damage or\nthe radiant damage (your choice) increases by 1d6\nfor each slot level above 5th.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S, M (pinch of sulfur)",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-145"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        145
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/117"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "pinch of sulfur"
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A vertical column of divine fire roars down from the heavens in a location you specify. Each creature in a 10-foot-radius, 40-foot-high cylinder centered on a point within range must make a Dexterity saving throw. A creature takes {@damage 4d6} fire damage and {@damage 4d6} radiant damage on a failed save, or half as much damage on a successful one."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 6th level or higher, the fire damage or the radiant damage (your choice) increases by {@scaledamage 4d6|5-9|1d6} for each slot level above 5th."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "fire",
+      "radiant"
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "areaTags": [
+      "Y"
+    ]
+  },
+  {
+    "id": "spell.flaming-sphere",
+    "kind": "spell",
+    "name": "Flaming Sphere",
+    "level": 2,
+    "school": "C",
+    "officialTextLayout": "Flaming Sphere\n2nd---level conjuration\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S, M (a bit of tallow, a pinch of\n  brimstone, and a dusting of powdered iron)\nDuration: Concentration, up to 1 minute\nA 5---foot---diameter sphere of fire appears in an\nunoccupied space of your choice within range and\nlasts for the duration. Any creature that ends its turn\nwithin 5 feet of the sphere must make a Dexterity\nsaving throw. The creature takes 2d6 fire damage on\na failed save, or half as much damage on a successful\none.\n  As a bonus action, you can move the sphere up to\n30 feet. If you ram the sphere into a creature, that\ncreature must make the saving throw against the\nsphere’s damage, and the sphere stops moving this\nturn.\n  When you move the sphere, you can direct it over\nbarriers up to 5 feet tall and jump it across pits up to\n10 feet wide. The sphere ignites flammable objects\nnot being worn or carried, and it sheds bright light in\na 20---foot radius and dim light for an additional 20\nfeet.\n  At Higher Levels. When you cast this spell using a\nspell slot of 3rd level or higher, the damage\nincreases by 1d6 for each slot level above 2nd.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S, M (a bit of tallow, a pinch of",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-145"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        145
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/118"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a bit of tallow, a pinch of brimstone, and a dusting of powdered iron"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "A 5-foot-diameter sphere of fire appears in an unoccupied space of your choice within range and lasts for the duration. Any creature that ends its turn within 5 feet of the sphere must make a Dexterity saving throw. The creature takes {@damage 2d6} fire damage on a failed save, or half as much damage on a successful one.",
+      "As a bonus action, you can move the sphere up to 30 feet. If you ram the sphere into a creature, that creature must make the saving throw against the sphere's damage, and the sphere stops moving this turn.",
+      "When you move the sphere, you can direct it over barriers up to 5 feet tall and jump it across pits up to 10 feet wide. The sphere ignites flammable objects not being worn or carried, and it sheds bright light in a 20-foot radius and dim light for an additional 20 feet."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by {@scaledamage 2d6|2-9|1d6} for each slot level above 2nd."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "fire"
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "miscTags": [
+      "LGT",
+      "OBJ",
+      "UBA"
+    ],
+    "areaTags": [
+      "S"
+    ]
+  },
+  {
+    "id": "spell.flesh-to-stone",
+    "kind": "spell",
+    "name": "Flesh to Stone",
+    "level": 6,
+    "school": "T",
+    "officialTextLayout": "Flesh to Stone\n6th---level transmutation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S, M (a pinch of lime, water, and\n  earth)\nDuration: Concentration, up to 1 minute\nYou attempt to turn one creature that you can see\nwithin range into stone. If the target’s body is made\nof flesh, the creature must make a Constitution\nsaving throw. On a failed save, it is restrained as its\nflesh begins to harden. On a successful save, the\ncreature isn’t affected.\n  A creature restrained by this spell must make\nanother Constitution saving throw at the end of each\n\n\n\n\n\nof its turns. If it successfully saves against this spell\nthree times, the spell ends. If it fails its saves three\ntimes, it is turned to stone and subjected to the\npetrified condition for the duration. The successes\nand failures don’t need to be consecutive; keep track\nof both until the target collects three of a kind.\n  If the creature is physically broken while petrified,\nit suffers from similar deformities if it reverts to its\noriginal state.\n  If you maintain your concentration on this spell\nfor the entire possible duration, the creature is\nturned to stone until the effect is removed.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S, M (a pinch of lime, water, and",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-145",
+      "rulebook.page-146"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        145,
+        146
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/119"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a pinch of lime, water, and earth"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You attempt to turn one creature that you can see within range into stone. If the target's body is made of flesh, the creature must make a Constitution saving throw. On a failed save, it is {@condition restrained} as its flesh begins to harden. On a successful save, the creature isn't affected.",
+      "A creature {@condition restrained} by this spell must make another Constitution saving throw at the end of each of its turns. If it successfully saves against this spell three times, the spell ends. If it fails its saves three times, it is turned to stone and subjected to the {@condition petrified} condition for the duration. The successes and failures don't need to be consecutive; keep track of both until the target collects three of a kind.",
+      "If the creature is physically broken while {@condition petrified}, it suffers from similar deformities if it reverts to its original state.",
+      "If you maintain your {@status concentration} on this spell for the entire possible duration, the creature is turned to stone until the effect is removed."
+    ],
+    "savingThrow": [
+      "constitution"
+    ],
+    "miscTags": [
+      "PRM",
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionInflict": [
+      "petrified",
+      "restrained"
+    ]
+  },
+  {
+    "id": "spell.floating-disk",
+    "kind": "spell",
+    "name": "Floating Disk",
+    "level": 1,
+    "school": "C",
+    "officialTextLayout": "Floating Disk\n1st---level conjuration (ritual)\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a drop of mercury)\nDuration: 1 hour\nThis spell creates a circular, horizontal plane of force,\n3 feet in diameter and 1 inch thick, that floats 3 feet\nabove the ground in an unoccupied space of your\nchoice that you can see within range. The disk\nremains for the duration, and can hold up to 500\npounds. If more weight is placed on it, the spell ends,\nand everything on the disk falls to the ground.\n  The disk is immobile while you are within 20 feet\nof it. If you move more than 20 feet away from it, the\ndisk follows you so that it remains within 20 feet of\nyou. It can move across uneven terrain, up or down\nstairs, slopes and the like, but it can’t cross an\nelevation change of 10 feet or more. For example, the\ndisk can’t move across a 10---foot---deep pit, nor could\nit leave such a pit if it was created at the bottom.\n  If you move more than 100 feet from the disk\n(typically because it can’t move around an obstacle\nto follow you), the spell ends.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a drop of mercury)",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-146"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        146
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/290"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a drop of mercury"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "This spell creates a circular, horizontal plane of force, 3 feet in diameter and 1 inch thick, that floats 3 feet above the ground in an unoccupied space of your choice that you can see within range. The disk remains for the duration, and can hold up to 500 pounds. If more weight is placed on it, the spell ends, and everything on the disk falls to the ground.",
+      "The disk is immobile while you are within 20 feet of it. If you move more than 20 feet away from it, the disk follows you so that it remains within 20 feet of you. It can move across uneven terrain, up or down stairs, slopes and the like, but it can't cross an elevation change of 10 feet or more. For example, the disk can't move across a 10-foot-deep pit, nor could it leave such a pit if it was created at the bottom.",
+      "If you move more than 100 feet from the disk (typically because it can't move around an obstacle to follow you), the spell ends."
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "meta": {
+      "ritual": true
+    }
+  },
+  {
+    "id": "spell.fly",
+    "kind": "spell",
+    "name": "Fly",
+    "level": 3,
+    "school": "T",
+    "officialTextLayout": "Fly\n3rd---level transmutation\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (a wing feather from any bird)\nDuration: Concentration, up to 10 minutes\nYou touch a willing creature. The target gains a\nflying speed of 60 feet for the duration. When the\nspell ends, the target falls if it is still aloft, unless it\ncan stop the fall.\n  At Higher Levels. When you cast this spell using a\nspell slot of 4th level or higher, you can target one\nadditional creature for each slot level above 3rd.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S, M (a wing feather from any bird)",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-146"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        146
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/120"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a wing feather from any bird"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You touch a willing creature. The target gains a flying speed of 60 feet for the duration. When the spell ends, the target falls if it is still aloft, unless it can stop the fall."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 4th level or higher, you can target one additional creature for each slot level above 3rd."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SCT"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  }
+]

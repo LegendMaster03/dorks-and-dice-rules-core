@@ -1,0 +1,1867 @@
+[
+  {
+    "id": "class.monk",
+    "kind": "class",
+    "name": "Monk",
+    "hd": {
+      "number": 1,
+      "faces": 8
+    },
+    "proficiency": [
+      "str",
+      "dex"
+    ],
+    "startingProficiencies": {
+      "weapons": [
+        "simple",
+        "{@item shortsword|srd51|shortswords}"
+      ],
+      "tools": [
+        "any one type of {@item artisan's tools|SRD51} or any one {@item musical instrument|SRD51} of your choice"
+      ],
+      "toolProficiencies": [
+        {
+          "anyArtisansTool": 1
+        },
+        {
+          "anyMusicalInstrument": 1
+        }
+      ],
+      "skills": [
+        {
+          "choose": {
+            "from": [
+              "acrobatics",
+              "athletics",
+              "history",
+              "insight",
+              "religion",
+              "stealth"
+            ],
+            "count": 2
+          }
+        }
+      ]
+    },
+    "startingEquipment": {
+      "additionalFromBackground": true,
+      "default": [
+        "(a) a {@item shortsword|srd51} or (b) any {@filter simple weapon|items|source=srd51|category=basic|type=simple weapon}",
+        "(a) a {@item dungeoneer's pack|srd51} or (b) an {@item explorer's pack|srd51}",
+        "10 {@item dart|srd51|darts}"
+      ],
+      "goldAlternative": "{@dice 5d4|5d4|Starting Gold}",
+      "defaultData": [
+        {
+          "a": [
+            "shortsword|srd51"
+          ],
+          "b": [
+            {
+              "equipmentType": "weaponSimple"
+            }
+          ]
+        },
+        {
+          "a": [
+            "dungeoneer's pack|srd51"
+          ],
+          "b": [
+            "explorer's pack|srd51"
+          ]
+        },
+        {
+          "_": [
+            {
+              "item": "dart|srd51",
+              "quantity": 10
+            }
+          ]
+        }
+      ]
+    },
+    "multiclassing": {
+      "requirements": {
+        "dex": 13,
+        "wis": 13
+      },
+      "proficienciesGained": {
+        "weapons": [
+          "simple",
+          "{@item shortsword|srd51|shortswords}"
+        ]
+      }
+    },
+    "classTableGroups": [
+      {
+        "colLabels": [
+          "Martial Arts",
+          "Ki Points",
+          "Unarmored Movement"
+        ],
+        "rows": [
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 4
+                }
+              ],
+              "rollable": true
+            },
+            0,
+            {
+              "type": "bonusSpeed",
+              "value": 0
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 4
+                }
+              ],
+              "rollable": true
+            },
+            2,
+            {
+              "type": "bonusSpeed",
+              "value": 10
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 4
+                }
+              ],
+              "rollable": true
+            },
+            3,
+            {
+              "type": "bonusSpeed",
+              "value": 10
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 4
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            {
+              "type": "bonusSpeed",
+              "value": 10
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            },
+            5,
+            {
+              "type": "bonusSpeed",
+              "value": 10
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            },
+            6,
+            {
+              "type": "bonusSpeed",
+              "value": 15
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            },
+            7,
+            {
+              "type": "bonusSpeed",
+              "value": 15
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            },
+            8,
+            {
+              "type": "bonusSpeed",
+              "value": 15
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            },
+            9,
+            {
+              "type": "bonusSpeed",
+              "value": 15
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            },
+            10,
+            {
+              "type": "bonusSpeed",
+              "value": 20
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 8
+                }
+              ],
+              "rollable": true
+            },
+            11,
+            {
+              "type": "bonusSpeed",
+              "value": 20
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 8
+                }
+              ],
+              "rollable": true
+            },
+            12,
+            {
+              "type": "bonusSpeed",
+              "value": 20
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 8
+                }
+              ],
+              "rollable": true
+            },
+            13,
+            {
+              "type": "bonusSpeed",
+              "value": 20
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 8
+                }
+              ],
+              "rollable": true
+            },
+            14,
+            {
+              "type": "bonusSpeed",
+              "value": 25
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 8
+                }
+              ],
+              "rollable": true
+            },
+            15,
+            {
+              "type": "bonusSpeed",
+              "value": 25
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 8
+                }
+              ],
+              "rollable": true
+            },
+            16,
+            {
+              "type": "bonusSpeed",
+              "value": 25
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 10
+                }
+              ],
+              "rollable": true
+            },
+            17,
+            {
+              "type": "bonusSpeed",
+              "value": 25
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 10
+                }
+              ],
+              "rollable": true
+            },
+            18,
+            {
+              "type": "bonusSpeed",
+              "value": 30
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 10
+                }
+              ],
+              "rollable": true
+            },
+            19,
+            {
+              "type": "bonusSpeed",
+              "value": 30
+            }
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 10
+                }
+              ],
+              "rollable": true
+            },
+            20,
+            {
+              "type": "bonusSpeed",
+              "value": 30
+            }
+          ]
+        ]
+      }
+    ],
+    "classFeatures": [
+      "Unarmored Defense|Monk||1",
+      "Martial Arts|Monk||1",
+      "Ki|Monk||2",
+      "Unarmored Movement|Monk||2",
+      "Deflect Missiles|Monk||3",
+      {
+        "classFeature": "Monastic Tradition|Monk||3",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Monk||4",
+      "Slow Fall|Monk||4",
+      "Extra Attack|Monk||5",
+      "Stunning Strike|Monk||5",
+      "Ki-Empowered Strikes|Monk||6",
+      {
+        "classFeature": "Monastic Tradition feature|Monk||6",
+        "gainSubclassFeature": true
+      },
+      "Evasion|Monk||7",
+      "Stillness of Mind|Monk||7",
+      "Ability Score Improvement|Monk||8",
+      "Unarmored Movement improvement|Monk||9",
+      "Purity of Body|Monk||10",
+      {
+        "classFeature": "Monastic Tradition feature|Monk||11",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Monk||12",
+      "Tongue of the Sun and Moon|Monk||13",
+      "Diamond Soul|Monk||14",
+      "Timeless Body|Monk||15",
+      "Ability Score Improvement|Monk||16",
+      {
+        "classFeature": "Monastic Tradition feature|Monk||17",
+        "gainSubclassFeature": true
+      },
+      "Empty Body|Monk||18",
+      "Ability Score Improvement|Monk||19",
+      "Perfect Self|Monk||20"
+    ],
+    "subclassTitle": "Monastic Tradition",
+    "catalogReferences": [
+      "baseitem.dart",
+      "baseitem.shortsword",
+      "class-feature.monk.ability-score-improvement.12",
+      "class-feature.monk.ability-score-improvement.16",
+      "class-feature.monk.ability-score-improvement.19",
+      "class-feature.monk.ability-score-improvement.4",
+      "class-feature.monk.ability-score-improvement.8",
+      "class-feature.monk.deflect-missiles.3",
+      "class-feature.monk.diamond-soul.14",
+      "class-feature.monk.empty-body.18",
+      "class-feature.monk.evasion.7",
+      "class-feature.monk.extra-attack.5",
+      "class-feature.monk.ki-empowered-strikes.6",
+      "class-feature.monk.ki.2",
+      "class-feature.monk.martial-arts.1",
+      "class-feature.monk.monastic-tradition-feature.11",
+      "class-feature.monk.monastic-tradition-feature.17",
+      "class-feature.monk.monastic-tradition-feature.6",
+      "class-feature.monk.monastic-tradition.3",
+      "class-feature.monk.perfect-self.20",
+      "class-feature.monk.purity-of-body.10",
+      "class-feature.monk.slow-fall.4",
+      "class-feature.monk.stillness-of-mind.7",
+      "class-feature.monk.stunning-strike.5",
+      "class-feature.monk.timeless-body.15",
+      "class-feature.monk.tongue-of-the-sun-and-moon.13",
+      "class-feature.monk.unarmored-defense.1",
+      "class-feature.monk.unarmored-movement-improvement.9",
+      "class-feature.monk.unarmored-movement.2",
+      "item.dungeoneer-s-pack",
+      "item.explorer-s-pack",
+      "rulebook.page-026",
+      "skill.acrobatics",
+      "skill.athletics",
+      "skill.history",
+      "skill.insight",
+      "skill.religion",
+      "skill.stealth"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 26,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/class/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass.monk.open-hand",
+    "kind": "subclass",
+    "name": "Way of the Open Hand",
+    "shortName": "Open Hand",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "additionalSpells": [
+      {
+        "innate": {
+          "11": {
+            "daily": {
+              "1": [
+                "sanctuary"
+              ]
+            }
+          }
+        },
+        "ability": "wis"
+      }
+    ],
+    "subclassFeatures": [
+      "Way of the Open Hand|Monk||Open Hand||3",
+      "Wholeness of Body|Monk||Open Hand||6",
+      "Tranquility|Monk||Open Hand||11",
+      "Quivering Palm|Monk||Open Hand||17"
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-028",
+      "spell.sanctuary",
+      "subclass-feature.monk.open-hand.quivering-palm.17",
+      "subclass-feature.monk.open-hand.tranquility.11",
+      "subclass-feature.monk.open-hand.way-of-the-open-hand.3",
+      "subclass-feature.monk.open-hand.wholeness-of-body.6"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        28
+      ],
+      "candidatePage": 28,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/subclass/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.martial-arts.1",
+    "kind": "class-feature",
+    "name": "Martial Arts",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 1,
+    "entries": [
+      "Your practice of martial arts gives you mastery of combat styles that use unarmed strikes and monk weapons, which are {@item shortsword|srd51|shortswords} and any {@filter simple melee weapons that don't have the two-handed or heavy property|items|source=srd51|category=basic|type=simple weapon;melee weapon=sand|property=!heavy;!two-handed}.",
+      "You gain the following benefits while you are unarmed or wielding only monk weapons and you aren't wearing armor or wielding a {@item shield|srd51}.",
+      {
+        "type": "list",
+        "items": [
+          "You can use Dexterity instead of Strength for the attack and damage rolls of your unarmed strikes and monk weapons.",
+          "You can roll a {@dice d4} in place of the normal damage of your unarmed strike or monk weapon. This die changes as you gain monk levels, as shown in the Martial Arts column of the Monk table.",
+          "When you use the {@action Attack} action with an unarmed strike or a monk weapon on your turn, you can make one unarmed strike as a bonus action. For example, if you take the {@action Attack} action and attack with a quarterstaff, you can also make an unarmed strike as a bonus action, assuming you haven't already taken a bonus action this turn."
+        ]
+      },
+      "Certain monasteries use specialized forms of the monk weapons. For example, you might use a club that is two lengths of wood connected by a short chain (called a nunchaku) or a sickle with a shorter, straighter blade (called a kama)."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.unarmored-defense.1",
+    "kind": "class-feature",
+    "name": "Unarmored Defense",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 1,
+    "entries": [
+      "Beginning at 1st level, while you are wearing no armor and not wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.flurry-of-blows.2",
+    "kind": "class-feature",
+    "name": "Flurry of Blows",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 2,
+    "header": 2,
+    "consumes": {
+      "name": "Ki"
+    },
+    "entries": [
+      "Immediately after you take the {@action Attack} action on your turn, you can spend 1 ki point to make two unarmed strikes as a bonus action."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-027"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        27
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/2"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.ki.2",
+    "kind": "class-feature",
+    "name": "Ki",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 2,
+    "entries": [
+      "Starting at 2nd level, your training allows you to harness the mystic energy of ki. Your access to this energy is represented by a number of ki points. Your monk level determines the number of points you have, as shown in the Ki Points column of the Monk table.",
+      "You can spend these points to fuel various ki features. You start knowing three such features: Flurry of Blows, Patient Defense, and Step of the Wind. You learn more ki features as you gain levels in this class.",
+      "When you spend a ki point, it is unavailable until you finish a short or long rest, at the end of which you draw all of your expended ki back into yourself. You must spend at least 30 minutes of the rest meditating to regain your ki points.",
+      "Some of your ki features require your target to make a saving throw to resist the feature's effects. The saving throw DC is calculated as follows:",
+      {
+        "type": "abilityDc",
+        "name": "Ki",
+        "attributes": [
+          "wis"
+        ]
+      },
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "refClassFeature",
+            "classFeature": "Flurry of Blows|Monk||2"
+          },
+          {
+            "type": "refClassFeature",
+            "classFeature": "Patient Defense|Monk||2"
+          },
+          {
+            "type": "refClassFeature",
+            "classFeature": "Step of the Wind|Monk||2"
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class-feature.monk.flurry-of-blows.2",
+      "class-feature.monk.patient-defense.2",
+      "class-feature.monk.step-of-the-wind.2",
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/3"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.patient-defense.2",
+    "kind": "class-feature",
+    "name": "Patient Defense",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 2,
+    "header": 2,
+    "consumes": {
+      "name": "Ki"
+    },
+    "entries": [
+      "You can spend 1 ki point to take the {@action Dodge} action as a bonus action on your turn."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-027"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        27
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/4"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.step-of-the-wind.2",
+    "kind": "class-feature",
+    "name": "Step of the Wind",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 2,
+    "header": 2,
+    "consumes": {
+      "name": "Ki"
+    },
+    "entries": [
+      "You can spend 1 ki point to take the {@action Disengage} or {@action Dash} action as a bonus action on your turn, and your jump distance is doubled for the turn."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-027"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        27
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/5"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.unarmored-movement.2",
+    "kind": "class-feature",
+    "name": "Unarmored Movement",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 2,
+    "entries": [
+      "Starting at 2nd level, your speed increases by 10 feet while you are not wearing armor or wielding a shield. This bonus increases when you reach certain monk levels, as shown in the Monk table.",
+      "At 9th level, you gain the ability to move along vertical surfaces and across liquids on your turn without falling during the move."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/6"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.deflect-missiles.3",
+    "kind": "class-feature",
+    "name": "Deflect Missiles",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 3,
+    "entries": [
+      "Starting at 3rd level, you can use your reaction to deflect or catch the missile when you are hit by a ranged weapon attack. When you do so, the damage you take from the attack is reduced by {@dice 1d10} + your Dexterity modifier + your monk level.",
+      "If you reduce the damage to 0, you can catch the missile if it is small enough for you to hold in one hand and you have at least one hand free. If you catch a missile in this way, you can spend 1 ki point to make a ranged attack (range 20/60 feet) with the weapon or piece of ammunition you just caught, as part of the same reaction. You make this attack with proficiency, regardless of your weapon proficiencies, and the missile counts as a monk weapon for the attack."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/7"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.monastic-tradition.3",
+    "kind": "class-feature",
+    "name": "Monastic Tradition",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 3,
+    "entries": [
+      "When you reach 3rd level, you commit yourself to a monastic tradition, chosen from the list of available traditions. Your tradition grants you features at 3rd level and again at 6th, 11th, and 17th level."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/8"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.ability-score-improvement.4",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 4,
+    "entries": [
+      "When you reach 4th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/9"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.slow-fall.4",
+    "kind": "class-feature",
+    "name": "Slow Fall",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 4,
+    "entries": [
+      "Beginning at 4th level, you can use your reaction when you fall to reduce any falling damage you take by an amount equal to five times your monk level."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/10"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.extra-attack.5",
+    "kind": "class-feature",
+    "name": "Extra Attack",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 5,
+    "entries": [
+      "Beginning at 5th level, you can attack twice, instead of once, whenever you take the {@action Attack} action on your turn."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/11"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.stunning-strike.5",
+    "kind": "class-feature",
+    "name": "Stunning Strike",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 5,
+    "consumes": {
+      "name": "Ki",
+      "amount": 1
+    },
+    "entries": [
+      "Starting at 5th level, you can interfere with the flow of ki in an opponent's body. When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be {@condition stunned} until the end of your next turn."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/12"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.ki-empowered-strikes.6",
+    "kind": "class-feature",
+    "name": "Ki-Empowered Strikes",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 6,
+    "entries": [
+      "Starting at 6th level, your unarmed strikes count as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-028"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        28
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/13"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.monastic-tradition-feature.6",
+    "kind": "class-feature",
+    "name": "Monastic Tradition feature",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 6,
+    "entries": [
+      "At 6th level, you gain one feature granted by your Monastic Tradition."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/14"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.evasion.7",
+    "kind": "class-feature",
+    "name": "Evasion",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 7,
+    "entries": [
+      "At 7th level, your instinctive agility lets you dodge out of the way of certain area effects, such as a blue dragon's lightning breath or a {@spell fireball} spell. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/15"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.stillness-of-mind.7",
+    "kind": "class-feature",
+    "name": "Stillness of Mind",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 7,
+    "entries": [
+      "Starting at 7th level, you can use your action to end one effect on yourself that is causing you to be {@condition charmed} or {@condition frightened}."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/16"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.ability-score-improvement.8",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 8,
+    "entries": [
+      "When you reach 8th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/17"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.unarmored-movement-improvement.9",
+    "kind": "class-feature",
+    "name": "Unarmored Movement improvement",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 9,
+    "entries": [
+      "At 9th level, you gain the ability to move along vertical surfaces and across liquids on your turn without falling during the move."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/18"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.purity-of-body.10",
+    "kind": "class-feature",
+    "name": "Purity of Body",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 10,
+    "entries": [
+      "At 10th level, your mastery of the ki flowing through you makes you immune to disease and poison."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/19"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.monastic-tradition-feature.11",
+    "kind": "class-feature",
+    "name": "Monastic Tradition feature",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 11,
+    "entries": [
+      "At 11th level, you gain one feature granted by your Monastic Tradition."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/20"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.ability-score-improvement.12",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 12,
+    "entries": [
+      "When you reach 12th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/21"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.tongue-of-the-sun-and-moon.13",
+    "kind": "class-feature",
+    "name": "Tongue of the Sun and Moon",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 13,
+    "entries": [
+      "Starting at 13th level, you learn to touch the ki of other minds so that you understand all spoken languages. Moreover, any creature that can understand a language can understand what you say."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/22"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.diamond-soul.14",
+    "kind": "class-feature",
+    "name": "Diamond Soul",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 14,
+    "consumes": {
+      "name": "Ki",
+      "amount": 1
+    },
+    "entries": [
+      "Beginning at 14th level, your mastery of ki grants you proficiency in all saving throws.",
+      "Additionally, whenever you make a saving throw and fail, you can spend 1 ki point to reroll it and take the second result."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/23"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.timeless-body.15",
+    "kind": "class-feature",
+    "name": "Timeless Body",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 15,
+    "entries": [
+      "At 15th level, your ki sustains you so that you suffer none of the frailty of old age, and you can't be aged magically. You can still die of old age, however. In addition, you no longer need food or water."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/24"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.ability-score-improvement.16",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 16,
+    "entries": [
+      "When you reach 16th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/25"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.monastic-tradition-feature.17",
+    "kind": "class-feature",
+    "name": "Monastic Tradition feature",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 17,
+    "entries": [
+      "At 17th level, you gain one feature granted by your Monastic Tradition."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/26"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.empty-body.18",
+    "kind": "class-feature",
+    "name": "Empty Body",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 18,
+    "consumes": {
+      "name": "Ki",
+      "amount": 4
+    },
+    "entries": [
+      "Beginning at 18th level, you can use your action to spend 4 ki points to become {@condition invisible} for 1 minute. During that time, you also have resistance to all damage but force damage.",
+      "Additionally, you can spend 8 ki points to cast the {@spell astral projection} spell, without needing material components. When you do so, you can't take any other creatures with you."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/27"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.ability-score-improvement.19",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 19,
+    "entries": [
+      "When you reach 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/28"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.monk.perfect-self.20",
+    "kind": "class-feature",
+    "name": "Perfect Self",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "level": 20,
+    "entries": [
+      "At 20th level, when you roll for initiative and have no ki points remaining, you regain 4 ki points."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-026"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        26
+      ],
+      "candidatePage": 76,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/classFeature/29"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.monk.open-hand.way-of-the-open-hand.3",
+    "kind": "subclass-feature",
+    "name": "Way of the Open Hand",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "subclassShortName": "Open Hand",
+    "subclassSource": "SRD51",
+    "level": 3,
+    "entries": [
+      "Monks of the Way of the Open Hand are the ultimate masters of martial arts combat, whether armed or unarmed. They learn techniques to push and trip their opponents, manipulate ki to heal damage to their bodies, and practice advanced meditation that can protect them from harm.",
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Open Hand Technique|Monk||Open Hand||3"
+      }
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-028",
+      "subclass-feature.monk.open-hand.open-hand-technique.3",
+      "subclass.monk.open-hand"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        28
+      ],
+      "candidatePage": 79,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/subclassFeature/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.monk.open-hand.open-hand-technique.3",
+    "kind": "subclass-feature",
+    "name": "Open Hand Technique",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "subclassShortName": "Open Hand",
+    "subclassSource": "SRD51",
+    "level": 3,
+    "header": 1,
+    "entries": [
+      "You can manipulate your enemy's ki when you harness your own. Whenever you hit a creature with one of the attacks granted by your Flurry of Blows, you can impose one of the following effects on that target.",
+      {
+        "type": "list",
+        "items": [
+          "It must succeed on a Dexterity saving throw or be knocked {@condition prone}.",
+          "It must make a Strength saving throw. If it fails, you can push it up to 15 feet away from you.",
+          "It can't take reactions until the end of your next turn."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-028",
+      "subclass.monk.open-hand"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        28
+      ],
+      "candidatePage": 79,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/subclassFeature/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.monk.open-hand.wholeness-of-body.6",
+    "kind": "subclass-feature",
+    "name": "Wholeness of Body",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "subclassShortName": "Open Hand",
+    "subclassSource": "SRD51",
+    "level": 6,
+    "header": 2,
+    "entries": [
+      "You gain the ability to heal yourself. As an action, you can regain hit points equal to three times your monk level. You must finish a long rest before you can use this feature again."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-028",
+      "subclass.monk.open-hand"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        28
+      ],
+      "candidatePage": 79,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/subclassFeature/2"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.monk.open-hand.tranquility.11",
+    "kind": "subclass-feature",
+    "name": "Tranquility",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "subclassShortName": "Open Hand",
+    "subclassSource": "SRD51",
+    "level": 11,
+    "header": 2,
+    "entries": [
+      "Beginning at 11th level, you can enter a special meditation that surrounds you with an aura of peace. At the end of a long rest, you gain the effect of a {@spell sanctuary} spell that lasts until the start of your next long rest (the spell can end early as normal). The saving throw DC for the spell equals 8 + your Wisdom modifier + your proficiency bonus."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-029",
+      "subclass.monk.open-hand"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        29
+      ],
+      "candidatePage": 79,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/subclassFeature/3"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.monk.open-hand.quivering-palm.17",
+    "kind": "subclass-feature",
+    "name": "Quivering Palm",
+    "className": "Monk",
+    "classSource": "SRD51",
+    "subclassShortName": "Open Hand",
+    "subclassSource": "SRD51",
+    "level": 17,
+    "header": 2,
+    "consumes": {
+      "name": "Ki",
+      "amount": 3
+    },
+    "entries": [
+      "You gain the ability to set up lethal vibrations in someone's body. When you hit a creature with an unarmed strike, you can spend 3 ki points to start these imperceptible vibrations, which last for a number of days equal to your monk level. The vibrations are harmless unless you use your action to end them. To do so, you and the target must be on the same plane of existence. When you use this action, the creature must make a Constitution saving throw. If it fails, it is reduced to 0 hit points. If it succeeds, it takes {@damage 10d10} necrotic damage.",
+      "You can have only one creature under the effect of this feature at a time. You can choose to end the vibrations harmlessly without using an action."
+    ],
+    "catalogReferences": [
+      "class.monk",
+      "rulebook.page-029",
+      "subclass.monk.open-hand"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        29
+      ],
+      "candidatePage": 79,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-monk.json",
+        "pointer": "/subclassFeature/4"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  }
+]

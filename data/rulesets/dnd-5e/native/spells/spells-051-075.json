@@ -1,0 +1,2216 @@
+[
+  {
+    "id": "spell.cone-of-cold",
+    "kind": "spell",
+    "name": "Cone of Cold",
+    "level": 5,
+    "school": "V",
+    "officialTextLayout": "Cone of Cold\n5th---level evocation\nCasting Time: 1 action\nRange: Self (60---foot cone)\nComponents: V, S, M (a small crystal or glass cone)\nDuration: Instantaneous\nA blast of cold air erupts from your hands. Each\ncreature in a 60---foot cone must make a Constitution\nsaving throw. A creature takes 8d8 cold damage on a\nfailed save, or half as much damage on a successful\none.\n  A creature killed by this spell becomes a frozen\nstatue until it thaws.\n  At Higher Levels. When you cast this spell using a\nspell slot of 6th level or higher, the damage increases\nby 1d8 for each slot level above 5th.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Self (60---foot cone)",
+      "Components": "V, S, M (a small crystal or glass cone)",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-127"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        127
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/46"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "cone",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a small crystal or glass cone"
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A blast of cold air erupts from your hands. Each creature in a 60-foot cone must make a Constitution saving throw. A creature takes {@damage 8d8} cold damage on a failed save, or half as much damage on a successful one.",
+      "A creature killed by this spell becomes a frozen statue until it thaws."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 6th level or higher, the damage increases by {@scaledamage 8d8|5-9|1d8} for each slot level above 5th."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "cold"
+    ],
+    "savingThrow": [
+      "constitution"
+    ],
+    "areaTags": [
+      "N"
+    ]
+  },
+  {
+    "id": "spell.confusion",
+    "kind": "spell",
+    "name": "Confusion",
+    "level": 4,
+    "school": "E",
+    "officialTextLayout": "Confusion\n4th---level enchantment\nCasting Time: 1 action\nRange: 90 feet\nComponents: V, S, M (three nut shells)\nDuration: Concentration, up to 1 minute\nThis spell assaults and twists creatures’ minds,\nspawning delusions and provoking uncontrolled\naction. Each creature in a 10---foot---radius sphere\ncentered on a point you choose within range must\nsucceed on a Wisdom saving throw when you cast\nthis spell or be affected by it.\n  An affected target can’t take reactions and must\nroll a d10 at the start of each of its turns to\ndetermine its behavior for that turn.\n  d10      Behavior\n   1       The creature uses all its movement to move in a\n              random direction. To determine the direction, roll\n              a d8 and assign a direction to each die face. The\n              creature doesn’t take an action this turn.\n  2–6      The creature doesn’t move or take actions this\n              turn.\n  7–8      The creature uses its action to make a melee\n              attack against a randomly determined creature\n\n              within its reach. If there is no creature within its\n              reach, the creature does nothing this turn.\n 9–10      The creature can act and move normally.\n\n  At the end of each of its turns, an affected target\ncan make a Wisdom saving throw. If it succeeds, this\neffect ends for that target.\n  At Higher Levels. When you cast this spell using a\nspell slot of 5th level or higher, the radius of the\nsphere increases by 5 feet for each slot level above\n4th.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "90 feet",
+      "Components": "V, S, M (three nut shells)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-127"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        127
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/47"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 90
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "three nut shells"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "This spell assaults and twists creatures' minds, spawning delusions and provoking uncontrolled action. Each creature in a 10-foot-radius sphere centered on a point you choose within range must succeed on a Wisdom saving throw when you cast this spell or be affected by it.",
+      "An affected target can't take reactions and must roll a {@dice d10} at the start of each of its turns to determine its behavior for that turn.",
+      {
+        "type": "table",
+        "caption": "Confusion Behavior",
+        "colLabels": [
+          "{@dice d10}",
+          "Behavior"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-11"
+        ],
+        "rows": [
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "exact": 1
+              }
+            },
+            "The creature uses all its movement to move in a random direction. To determine the direction, roll a {@dice d8} and assign a direction to each die face. The creature doesn't take an action this turn."
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 2,
+                "max": 6
+              }
+            },
+            "The creature doesn't move or take actions this turn."
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 7,
+                "max": 8
+              }
+            },
+            "The creature uses its action to make a melee attack against a randomly determined creature within its reach. If there is no creature within its reach, the creature does nothing this turn."
+          ],
+          [
+            {
+              "type": "cell",
+              "roll": {
+                "min": 9,
+                "max": 10
+              }
+            },
+            "The creature can act and move normally."
+          ]
+        ]
+      },
+      "At the end of each of its turns, an affected target can make a Wisdom saving throw. If it succeeds, this effect ends for that target."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 5th level or higher, the radius of the sphere increases by 5 feet for each slot level above 4th."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "wisdom"
+    ],
+    "miscTags": [
+      "RO"
+    ],
+    "areaTags": [
+      "S"
+    ]
+  },
+  {
+    "id": "spell.conjure-animals",
+    "kind": "spell",
+    "name": "Conjure Animals",
+    "level": 3,
+    "school": "C",
+    "officialTextLayout": "Conjure Animals\n3rd---level conjuration\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Concentration, up to 1 hour\nYou summon fey spirits that take the form of beasts\nand appear in unoccupied spaces that you can see\nwithin range. Choose one of the following options for\nwhat appears:\n• One beast of challenge rating 2 or lower\n• Two beasts of challenge rating 1 or lower\n• Four beasts of challenge rating 1/2 or lower\n• Eight beasts of challenge rating 1/4 or lower\nEach beast is also considered fey, and it disappears\nwhen it drops to 0 hit points or when the spell ends.\n     The summoned creatures are friendly to you and\nyour companions. Roll initiative for the summoned\ncreatures as a group, which has its own turns. They\nobey any verbal commands that you issue to them\n(no action required by you). If you don’t issue any\ncommands to them, they defend themselves from\nhostile creatures, but otherwise take no actions.\n     The GM has the creatures’ statistics.\n  At Higher Levels. When you cast this spell using\ncertain higher---level spell slots, you choose one of the\nsummoning options above, and more creatures\nappear: twice as many with a 5th---level slot, three\ntimes as many with a 7th---level slot, and four times as\nmany with a 9th---level slot.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-127"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        127
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/48"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You summon fey spirits that take the form of beasts and appear in unoccupied spaces that you can see within range. Choose one of the following options for what appears:",
+      {
+        "type": "list",
+        "items": [
+          "One {@filter beast of challenge rating 2 or lower|bestiary|challenge rating=[&0;&2]|type=beast|miscellaneous=!swarm}",
+          "Two {@filter beasts of challenge rating 1 or lower|bestiary|challenge rating=[&0;&1]|type=beast|miscellaneous=!swarm}",
+          "Four {@filter beasts of challenge rating 1/2 or lower|bestiary|challenge rating=[&0;&1/2]|type=beast|miscellaneous=!swarm}",
+          "Eight {@filter beasts of challenge rating 1/4 or lower|bestiary|challenge rating=[&0;&1/4]|type=beast|miscellaneous=!swarm}"
+        ]
+      },
+      "Each beast is also considered fey, and it disappears when it drops to 0 hit points or when the spell ends.",
+      "The summoned creatures are friendly to you and your companions. Roll initiative for the summoned creatures as a group, which has its own turns. They obey any verbal commands that you issue to them (no action required by you). If you don't issue any commands to them, they defend themselves from hostile creatures, but otherwise take no actions.",
+      "The DM has the creatures' statistics."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using certain higher-level spell slots, you choose one of the summoning options above, and more creatures appear: twice as many with a 5th-level slot, three times as many with a 7th-level slot, and four times as many with a 9th-level slot."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SGT",
+      "SMN"
+    ]
+  },
+  {
+    "id": "spell.conjure-celestial",
+    "kind": "spell",
+    "name": "Conjure Celestial",
+    "level": 7,
+    "school": "C",
+    "officialTextLayout": "Conjure Celestial\n7th---level conjuration\nCasting Time: 1 minute\nRange: 90 feet\nComponents: V, S\nDuration: Concentration, up to 1 hour\n\n\n\n\n\nYou summon a celestial of challenge rating 4 or\nlower, which appears in an unoccupied space that\nyou can see within range. The celestial disappears\nwhen it drops to 0 hit points or when the spell ends.\n  The celestial is friendly to you and your\ncompanions for the duration. Roll initiative for the\ncelestial, which has its own turns. It obeys any verbal\ncommands that you issue to it (no action required by\nyou), as long as they don’t violate its alignment. If\nyou don’t issue any commands to the celestial, it\ndefends itself from hostile creatures but otherwise\ntakes no actions.\n     The GM has the celestial’s statistics.\n  At Higher Levels. When you cast this spell using a\n9th---level spell slot, you summon a celestial of\nchallenge rating 5 or lower.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "90 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-127",
+      "rulebook.page-128"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        127,
+        128
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/49"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 90
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You summon a {@filter celestial of challenge rating 4 or lower|bestiary|challenge rating=[&0;&4]|type=celestial|miscellaneous=!swarm}, which appears in an unoccupied space that you can see within range. The celestial disappears when it drops to 0 hit points or when the spell ends.",
+      "The celestial is friendly to you and your companions for the duration. Roll initiative for the celestial, which has its own turns. It obeys any verbal commands that you issue to it (no action required by you), as long as they don't violate its alignment. If you don't issue any commands to the celestial, it defends itself from hostile creatures but otherwise takes no actions.",
+      "The DM has {@creature couatl||the celestial}'s statistics."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a 9th-level spell slot, you summon a {@filter celestial of challenge rating 5 or lower|bestiary|challenge rating=[&0;&5]|type=celestial|miscellaneous=!swarm}."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SGT",
+      "SMN"
+    ]
+  },
+  {
+    "id": "spell.conjure-elemental",
+    "kind": "spell",
+    "name": "Conjure Elemental",
+    "level": 5,
+    "school": "C",
+    "officialTextLayout": "Conjure Elemental\n5th---level conjuration\nCasting Time: 1 minute\nRange: 90 feet\nComponents: V, S, M (burning incense for air, soft\n  clay for earth, sulfur and phosphorus for fire, or\n  water and sand for water)\nDuration: Concentration, up to 1 hour\nYou call forth an elemental servant. Choose an area of\nair, earth, fire, or water that fills a 10---foot cube\nwithin range. An elemental of challenge rating 5 or\nlower appropriate to the area you chose appears in\nan unoccupied space within 10 feet of it. For\nexample, a fire elemental emerges from a bonfire,\nand an earth elemental rises up from the ground.\nThe elemental disappears when it drops to 0 hit\npoints or when the spell ends.\n  The elemental is friendly to you and your\ncompanions for the duration. Roll initiative for the\nelemental, which has its own turns. It obeys any\nverbal commands that you issue to it (no action\nrequired by you). If you don’t issue any commands\nto the elemental, it defends itself from hostile\ncreatures but otherwise takes no actions.\n  If your concentration is broken, the elemental\ndoesn’t disappear. Instead, you lose control of the\nelemental, it becomes hostile toward you and your\ncompanions, and it might attack. An uncontrolled\nelemental can’t be dismissed by you, and it\ndisappears 1 hour after you summoned it.\n     The GM has the elemental’s statistics.\n  At Higher Levels. When you cast this spell using a\nspell slot of 6th level or higher, the challenge rating\nincreases by 1 for each slot level above 5th.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "90 feet",
+      "Components": "V, S, M (burning incense for air, soft",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-128"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        128
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/50"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 90
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "burning incense for air, soft clay for earth, sulfur and phosphorus for fire, or water and sand for water"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You call forth an elemental servant. Choose an area of air, earth, fire, or water that fills a 10-foot cube within range. An {@filter elemental of challenge rating 5 or lower|bestiary|challenge rating=[&0;&5]|type=elemental|miscellaneous=!swarm} appropriate to the area you chose appears in an unoccupied space within 10 feet of it. For example, a {@creature fire elemental} emerges from a bonfire, and an {@creature earth elemental} rises up from the ground. The elemental disappears when it drops to 0 hit points or when the spell ends.",
+      "The elemental is friendly to you and your companions for the duration. Roll initiative for the elemental, which has its own turns. It obeys any verbal commands that you issue to it (no action required by you). If you don't issue any commands to the elemental, it defends itself from hostile creatures but otherwise takes no actions.",
+      "If your {@status concentration} is broken, the elemental doesn't disappear. Instead, you lose control of the elemental, it becomes hostile toward you and your companions, and it might attack. An uncontrolled elemental can't be dismissed by you, and it disappears 1 hour after you summoned it.",
+      "The DM has the elemental's statistics."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 6th level or higher, the challenge rating increases by 1 for each slot level above 5th."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SMN"
+    ]
+  },
+  {
+    "id": "spell.conjure-fey",
+    "kind": "spell",
+    "name": "Conjure Fey",
+    "level": 6,
+    "school": "C",
+    "officialTextLayout": "Conjure Fey\n6th---level conjuration\nCasting Time: 1 minute\nRange: 90 feet\nComponents: V, S\nDuration: Concentration, up to 1 hour\nYou summon a fey creature of challenge rating 6 or\nlower, or a fey spirit that takes the form of a beast of\nchallenge rating 6 or lower. It appears in an\nunoccupied space that you can see within range. The\nfey creature disappears when it drops to 0 hit points\nor when the spell ends.\n  The fey creature is friendly to you and your\ncompanions for the duration. Roll initiative for the\ncreature, which has its own turns. It obeys any\nverbal commands that you issue to it (no action\nrequired by you), as long as they don’t violate its\nalignment. If you don’t issue any commands to the\nfey creature, it defends itself from hostile creatures\nbut otherwise takes no actions.\n  If your concentration is broken, the fey creature\ndoesn’t disappear. Instead, you lose control of the\nfey creature, it becomes hostile toward you and your\ncompanions, and it might attack. An uncontrolled fey\ncreature can’t be dismissed by you, and it disappears\n1 hour after you summoned it.\n     The GM has the fey creature’s statistics.\n  At Higher Levels. When you cast this spell using a\nspell slot of 7th level or higher, the challenge rating\nincreases by 1 for each slot level above 6th.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "90 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-128"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        128
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/51"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 90
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You summon a {@filter fey creature of challenge rating 6 or lower|bestiary|challenge rating=[&0;&6]|type=fey|miscellaneous=!swarm}, or a fey spirit that takes the form of a {@filter beast of challenge rating 6 or lower|bestiary|challenge rating=[&0;&6]|type=beast|miscellaneous=!swarm}. It appears in an unoccupied space that you can see within range. The fey creature disappears when it drops to 0 hit points or when the spell ends.",
+      "The fey creature is friendly to you and your companions for the duration. Roll initiative for the creature, which has its own turns. It obeys any verbal commands that you issue to it (no action required by you), as long as they don't violate its alignment. If you don't issue any commands to the fey creature, it defends itself from hostile creatures but otherwise takes no actions.",
+      "If your {@status concentration} is broken, the fey creature doesn't disappear. Instead, you lose control of the fey creature, it becomes hostile toward you and your companions, and it might attack. An uncontrolled fey creature can't be dismissed by you, and it disappears 1 hour after you summoned it.",
+      "The DM has the fey creature's statistics."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 7th level or higher, the challenge rating increases by 1 for each slot level above 6th."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SGT",
+      "SMN"
+    ]
+  },
+  {
+    "id": "spell.conjure-minor-elementals",
+    "kind": "spell",
+    "name": "Conjure Minor Elementals",
+    "level": 4,
+    "school": "C",
+    "officialTextLayout": "Conjure Minor Elementals\n4th---level conjuration\nCasting Time: 1 minute\nRange: 90 feet\nComponents: V, S\nDuration: Concentration, up to 1 hour\nYou summon elementals that appear in unoccupied\nspaces that you can see within range. You choose\none the following options for what appears:\n• One elemental of challenge rating 2 or lower\n• Two elementals of challenge rating 1 or lower\n• Four elementals of challenge rating 1/2 or lower\n• Eight elementals of challenge rating 1/4 or lower.\nAn elemental summoned by this spell disappears\nwhen it drops to 0 hit points or when the spell ends.\n  The summoned creatures are friendly to you and\nyour companions. Roll initiative for the summoned\ncreatures as a group, which has its own turns. They\nobey any verbal commands that you issue to them\n\n\n\n\n\n(no action required by you). If you don’t issue any\ncommands to them, they defend themselves from\nhostile creatures, but otherwise take no actions.\n     The GM has the creatures’ statistics.\n  At Higher Levels. When you cast this spell using\ncertain higher---level spell slots, you choose one of the\nsummoning options above, and more creatures\nappear: twice as many with a 6th---level slot and three\ntimes as many with an 8th---level slot.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "90 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-128",
+      "rulebook.page-129"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        128,
+        129
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/52"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 90
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You summon elementals that appear in unoccupied spaces that you can see within range. You choose one of the following options for what appears:",
+      {
+        "type": "list",
+        "items": [
+          "One {@filter elemental of challenge rating 2 or lower|bestiary|challenge rating=[&0;&2]|type=elemental|miscellaneous=!swarm}",
+          "Two {@filter elementals of challenge rating 1 or lower|bestiary|challenge rating=[&0;&1]|type=elemental|miscellaneous=!swarm}",
+          "Four {@filter elementals of challenge rating 1/2 or lower|bestiary|challenge rating=[&0;&1/2]|type=elemental|miscellaneous=!swarm}",
+          "Eight {@filter elementals of challenge rating 1/4 or lower|bestiary|challenge rating=[&0;&1/4]|type=elemental|miscellaneous=!swarm}."
+        ]
+      },
+      "An elemental summoned by this spell disappears when it drops to 0 hit points or when the spell ends.",
+      "The summoned creatures are friendly to you and your companions. Roll initiative for the summoned creatures as a group, which has its own turns. They obey any verbal commands that you issue to them (no action required by you). If you don't issue any commands to them, they defend themselves from hostile creatures, but otherwise take no actions.",
+      "The DM has the creatures' statistics."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using certain higher-level spell slots, you choose one of the summoning options above, and more creatures appear: twice as many with a 6th-level slot and three times as many with an 8th-level slot."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SGT",
+      "SMN"
+    ]
+  },
+  {
+    "id": "spell.conjure-woodland-beings",
+    "kind": "spell",
+    "name": "Conjure Woodland Beings",
+    "level": 4,
+    "school": "C",
+    "officialTextLayout": "Conjure Woodland Beings\n4th---level conjuration\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S, M (one holly berry per creature\n  summoned)\nDuration: Concentration, up to 1 hour\nYou summon fey creatures that appear in\nunoccupied spaces that you can see within range.\nChoose one of the following options for what\nappears:\n• One fey creature of challenge rating 2 or lower\n• Two fey creatures of challenge rating 1 or lower\n• Four fey creatures of challenge rating 1/2 or lower\n• Eight fey creatures of challenge rating 1/4 or\n     lower\nA summoned creature disappears when it drops to 0\nhit points or when the spell ends.\n  The summoned creatures are friendly to you and\nyour companions. Roll initiative for the summoned\ncreatures as a group, which have their own turns.\nThey obey any verbal commands that you issue to\nthem (no action required by you). If you don’t issue\nany commands to them, they defend themselves\nfrom hostile creatures, but otherwise take no actions.\n     The GM has the creatures’ statistics.\n  At Higher Levels. When you cast this spell using\ncertain higher---level spell slots, you choose one of the\nsummoning options above, and more creatures\nappear: twice as many with a 6th---level slot and three\ntimes as many with an 8th---level slot.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S, M (one holly berry per creature",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-129"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        129
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/53"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "one holly berry per creature summoned"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You summon fey creatures that appear in unoccupied spaces that you can see within range. Choose one of the following options for what appears:",
+      {
+        "type": "list",
+        "items": [
+          "One {@filter fey creature of challenge rating 2 or lower|bestiary|challenge rating=[&0;&2]|type=fey|miscellaneous=!swarm}",
+          "Two {@filter fey creatures of challenge rating 1 or lower|bestiary|challenge rating=[&0;&1]|type=fey|miscellaneous=!swarm}",
+          "Four {@filter fey creatures of challenge rating 1/2 or lower|bestiary|challenge rating=[&0;&1/2]|type=fey|miscellaneous=!swarm}",
+          "Eight {@filter fey creatures of challenge rating 1/4 or lower|bestiary|challenge rating=[&0;&1/4]|type=fey|miscellaneous=!swarm}"
+        ]
+      },
+      "A summoned creature disappears when it drops to 0 hit points or when the spell ends.",
+      "The summoned creatures are friendly to you and your companions. Roll initiative for the summoned creatures as a group, which have their own turns. They obey any verbal commands that you issue to them (no action required by you). If you don't issue any commands to them, they defend themselves from hostile creatures, but otherwise take no actions.",
+      "The DM has the creatures' statistics."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using certain higher-level spell slots, you choose one of the summoning options above, and more creatures appear: twice as many with a 6th-level slot and three times as many with an 8th-level slot."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SGT",
+      "SMN"
+    ]
+  },
+  {
+    "id": "spell.contact-other-plane",
+    "kind": "spell",
+    "name": "Contact Other Plane",
+    "level": 5,
+    "school": "D",
+    "officialTextLayout": "Contact Other Plane\n5th---level divination (ritual)\nCasting Time: 1 minute\nRange: Self\nComponents: V\nDuration: 1 minute\nYou mentally contact a demigod, the spirit of a long---\ndead sage, or some other mysterious entity from\n\nanother plane. Contacting this extraplanar\nintelligence can strain or even break your mind.\nWhen you cast this spell, make a DC 15 Intelligence\nsaving throw. On a failure, you take 6d6 psychic\ndamage and are insane until you finish a long rest.\nWhile insane, you can’t take actions, can’t\nunderstand what other creatures say, can’t read, and\nspeak only in gibberish. A greater restoration spell\ncast on you ends this effect.\n  On a successful save, you can ask the entity up to\nfive questions. You must ask your questions before\nthe spell ends. The GM answers each question with\none word, such as “yes,” “no,” “maybe,” “never,”\n“irrelevant,” or “unclear” (if the entity doesn’t know\nthe answer to the question). If a one---word answer\nwould be misleading, the GM might instead offer a\nshort phrase as an answer.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "Self",
+      "Components": "V",
+      "Duration": "1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-129"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        129
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/54"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You mentally contact a demigod, the spirit of a long-dead sage, or some other mysterious entity from another plane. Contacting this extraplanar intelligence can strain or even break your mind. When you cast this spell, make a {@dc 15} Intelligence saving throw. On a failure, you take {@damage 6d6} psychic damage and are insane until you finish a long rest. While insane, you can't take actions, can't understand what other creatures say, can't read, and speak only in gibberish. A {@spell greater restoration} spell cast on you ends this effect.",
+      "On a successful save, you can ask the entity up to five questions. You must ask your questions before the spell ends. The DM answers each question with one word, such as \"yes,\" \"no,\" \"maybe,\" \"never,\" \"irrelevant,\" or \"unclear\" (if the entity doesn't know the answer to the question). If a one-word answer would be misleading, the DM might instead offer a short phrase as an answer."
+    ],
+    "damageInflict": [
+      "psychic"
+    ],
+    "savingThrow": [
+      "intelligence"
+    ],
+    "meta": {
+      "ritual": true
+    }
+  },
+  {
+    "id": "spell.contagion",
+    "kind": "spell",
+    "name": "Contagion",
+    "level": 5,
+    "school": "N",
+    "officialTextLayout": "Contagion\n5th---level necromancy\nCasting Time: 1 action\nRange: Touch\nComponent: V, S\nDuration: 7 days\nYour touch inflicts disease. Make a melee spell attack\nagainst a creature within your reach. On a hit, you\nafflict the creature with a disease of your choice\nfrom any of the ones described below.\n  At the end of each of the target’s turns, it must\nmake a Constitution saving throw. After failing three\nof these saving throws, the disease’s effects last for\nthe duration, and the creature stops making these\nsaves. After succeeding on three of these saving\nthrows, the creature recovers from the disease, and\nthe spell ends.\n  Since this spell induces a natural disease in its\ntarget, any effect that removes a disease or\notherwise ameliorates a disease’s effects apply to it.\n  Blinding Sickness. Pain grips the creature’s mind,\nand its eyes turn milky white. The creature has\ndisadvantage on Wisdom checks and Wisdom saving\nthrows and is blinded.\n  Filth Fever. A raging fever sweeps through the\ncreature’s body. The creature has disadvantage on\nStrength checks, Strength saving throws, and attack\nrolls that use Strength.\n  Flesh Rot. The creature’s flesh decays. The\ncreature has disadvantage on Charisma checks and\nvulnerability to all damage.\n  Mindfire. The creature’s mind becomes feverish.\nThe creature has disadvantage on Intelligence\nchecks and Intelligence saving throws, and the\n\n\n\n\n\ncreature behaves as if under the effects of the\nconfusion spell during combat.\n  Seizure. The creature is overcome with shaking.\nThe creature has disadvantage on Dexterity checks,\nDexterity saving throws, and attack rolls that use\nDexterity.\n  Slimy Doom. The creature begins to bleed\nuncontrollably. The creature has disadvantage on\nConstitution checks and Constitution saving throws.\nIn addition, whenever the creature takes damage, it\nis stunned until the end of its next turn.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "7 days"
+    },
+    "catalogReferences": [
+      "rulebook.page-129",
+      "rulebook.page-130"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        129,
+        130
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/55"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "day",
+          "amount": 7
+        }
+      }
+    ],
+    "entries": [
+      "Your touch inflicts disease. Make a melee spell attack against a creature within your reach. On a hit, you afflict the creature with a disease of your choice from any of the ones described below.",
+      "At the end of each of the target's turns, it must make a Constitution saving throw. After failing three of these saving throws, the disease's effects last for the duration, and the creature stops making these saves. After succeeding on three of these saving throws, the creature recovers from the disease, and the spell ends.",
+      "Since this spell induces a natural disease in its target, any effect that removes a disease or otherwise ameliorates a disease's effects apply to it.",
+      {
+        "type": "entries",
+        "name": "Blinding Sickness",
+        "entries": [
+          "Pain grips the creature's mind, and its eyes turn milky white. The creature has disadvantage on Wisdom checks and Wisdom saving throws and is {@condition blinded}."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Filth Fever",
+        "entries": [
+          "A raging fever sweeps through the creature's body. The creature has disadvantage on Strength checks, Strength saving throws, and attack rolls that use Strength."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Flesh Rot",
+        "entries": [
+          "The creature's flesh decays. The creature has disadvantage on Charisma checks and vulnerability to all damage."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Mindfire",
+        "entries": [
+          "The creature's mind becomes feverish. The creature has disadvantage on Intelligence checks and Intelligence saving throws, and the creature behaves as if under the effects of the {@spell confusion} spell during combat."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Seizure",
+        "entries": [
+          "The creature is overcome with shaking. The creature has disadvantage on Dexterity checks, Dexterity saving throws, and attack rolls that use Dexterity."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Slimy Doom",
+        "entries": [
+          "The creature begins to bleed uncontrollably. The creature has disadvantage on Constitution checks and Constitution saving throws. In addition, whenever the creature takes damage, it is {@condition stunned} until the end of its next turn."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "constitution"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionInflict": [
+      "blinded",
+      "stunned"
+    ],
+    "spellAttack": [
+      "M"
+    ]
+  },
+  {
+    "id": "spell.contingency",
+    "kind": "spell",
+    "name": "Contingency",
+    "level": 6,
+    "school": "V",
+    "officialTextLayout": "Contingency\n6th---level evocation\nCasting Time: 10 minutes\nRange: Self\nComponents: V, S, M (a statuette of yourself carved\n  from ivory and decorated with gems worth at least\n  1,500 gp)\nDuration: 10 days\nChoose a spell of 5th level or lower that you can cast,\nthat has a casting time of 1 action, and that can\ntarget you. You cast that spell—called the contingent\nspell—as part of casting contingency, expending\nspell slots for both, but the contingent spell doesn’t\ncome into effect. Instead, it takes effect when a\ncertain circumstance occurs. You describe that\ncircumstance when you cast the two spells. For\nexample, a contingency cast with water breathing\nmight stipulate that water breathing comes into\neffect when you are engulfed in water or a similar\nliquid.\n  The contingent spell takes effect immediately after\nthe circumstance is met for the first time, whether or\nnot you want it to, and then contingency ends.\n  The contingent spell takes effect only on you, even\nif it can normally target others. You can use only one\ncontingency spell at a time. If you cast this spell again,\nthe effect of another contingency spell on you ends.\nAlso, contingency ends on you if its material\ncomponent is ever not on your person.",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "Self",
+      "Components": "V, S, M (a statuette of yourself carved",
+      "Duration": "10 days"
+    },
+    "catalogReferences": [
+      "rulebook.page-130"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        130
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/56"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 10,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a statuette of yourself carved from ivory and decorated with gems worth at least 1,500 gp",
+        "cost": 150000
+      }
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "day",
+          "amount": 10
+        }
+      }
+    ],
+    "entries": [
+      "Choose a spell of 5th level or lower that you can cast, that has a casting time of 1 action, and that can target you. You cast that spell—called the contingent spell—as part of casting contingency, expending spell slots for both, but the contingent spell doesn't come into effect. Instead, it takes effect when a certain circumstance occurs. You describe that circumstance when you cast the two spells. For example, a contingency cast with {@spell water breathing} might stipulate that {@spell water breathing} comes into effect when you are engulfed in water or a similar liquid.",
+      "The contingent spell takes effect immediately after the circumstance is met for the first time, whether or not you want it to, and then contingency ends.",
+      "The contingent spell takes effect only on you, even if it can normally target others. You can use only one contingency spell at a time. If you cast this spell again, the effect of another contingency spell on you ends. Also, contingency ends on you if its material component is ever not on your person."
+    ]
+  },
+  {
+    "id": "spell.continual-flame",
+    "kind": "spell",
+    "name": "Continual Flame",
+    "level": 2,
+    "school": "V",
+    "officialTextLayout": "Continual Flame\n2nd---level evocation\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (ruby dust worth 50 gp, which\n  the spell consumes)\nDuration: Until dispelled\nA flame, equivalent in brightness to a torch, springs\nforth from an object that you touch. The effect looks\n\nlike a regular flame, but it creates no heat and\ndoesn’t use oxygen. A continual flame can be covered\nor hidden but not smothered or quenched.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S, M (ruby dust worth 50 gp, which",
+      "Duration": "Until dispelled"
+    },
+    "catalogReferences": [
+      "rulebook.page-130"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        130
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/57"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "ruby dust worth 50 gp, which the spell consumes",
+        "cost": 5000,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "permanent",
+        "ends": [
+          "dispel"
+        ]
+      }
+    ],
+    "entries": [
+      "A flame, equivalent in brightness to a torch, springs forth from an object that you touch. The effect looks like a regular flame, but it creates no heat and doesn't use oxygen. A continual flame can be covered or hidden but not smothered or quenched."
+    ],
+    "miscTags": [
+      "LGT",
+      "OBJ"
+    ]
+  },
+  {
+    "id": "spell.control-water",
+    "kind": "spell",
+    "name": "Control Water",
+    "level": 4,
+    "school": "T",
+    "officialTextLayout": "Control Water\n4th---level transmutation\nCasting Time: 1 action\nRange: 300 feet\nComponents: V, S, M (a drop of water and a pinch of\n  dust)\nDuration: Concentration, up to 10 minutes\nUntil the spell ends, you control any freestanding\nwater inside an area you choose that is a cube up to\n100 feet on a side. You can choose from any of the\nfollowing effects when you cast this spell. As an\naction on your turn, you can repeat the same effect\nor choose a different one.\n  Flood. You cause the water level of all standing\nwater in the area to rise by as much as 20 feet. If the\narea includes a shore, the flooding water spills over\nonto dry land.\n  If you choose an area in a large body of water, you\ninstead create a 20---foot tall wave that travels from\none side of the area to the other and then crashes\ndown. Any Huge or smaller vehicles in the wave’s\npath are carried with it to the other side. Any Huge\nor smaller vehicles struck by the wave have a 25\npercent chance of capsizing.\n  The water level remains elevated until the spell\nends or you choose a different effect. If this effect\nproduced a wave, the wave repeats on the start of\nyour next turn while the flood effect lasts.\n  Part Water. You cause water in the area to move\napart and create a trench. The trench extends across\nthe spell’s area, and the separated water forms a\nwall to either side. The trench remains until the spell\nends or you choose a different effect. The water then\nslowly fills in the trench over the course of the next\nround until the normal water level is restored.\n  Redirect Flow. You cause flowing water in the\narea to move in a direction you choose, even if the\nwater has to flow over obstacles, up walls, or in\nother unlikely directions. The water in the area\nmoves as you direct it, but once it moves beyond the\nspell’s area, it resumes its flow based on the terrain\nconditions. The water continues to move in the\ndirection you chose until the spell ends or you\nchoose a different effect.\n  Whirlpool. This effect requires a body of water at\nleast 50 feet square and 25 feet deep. You cause a\nwhirlpool to form in the center of the area. The\nwhirlpool forms a vortex that is 5 feet wide at the\n\n\n\n\n\nbase, up to 50 feet wide at the top, and 25 feet tall.\nAny creature or object in the water and within 25\nfeet of the vortex is pulled 10 feet toward it. A\ncreature can swim away from the vortex by making a\nStrength (Athletics) check against your spell save DC.\n  When a creature enters the vortex for the first\ntime on a turn or starts its turn there, it must make a\nStrength saving throw. On a failed save, the creature\ntakes 2d8 bludgeoning damage and is caught in the\nvortex until the spell ends. On a successful save, the\ncreature takes half damage, and isn’t caught in the\nvortex. A creature caught in the vortex can use its\naction to try to swim away from the vortex as\ndescribed above, but has disadvantage on the\nStrength (Athletics) check to do so.\n  The first time each turn that an object enters the\nvortex, the object takes 2d8 bludgeoning damage;\nthis damage occurs each round it remains in the\nvortex.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "300 feet",
+      "Components": "V, S, M (a drop of water and a pinch of",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-130",
+      "rulebook.page-131"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        130,
+        131
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/58"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 300
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a drop of water and a pinch of dust"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "Until the spell ends, you control any freestanding water inside an area you choose that is a cube up to 100 feet on a side. You can choose from any of the following effects when you cast this spell. As an action on your turn, you can repeat the same effect or choose a different one.",
+      {
+        "type": "entries",
+        "name": "Flood",
+        "entries": [
+          "You cause the water level of all standing water in the area to rise by as much as 20 feet. If the area includes a shore, the flooding water spills over onto dry land.",
+          "If you choose an area in a large body of water, you instead create a 20-foot tall wave that travels from one side of the area to the other and then crashes down. Any Huge or smaller vehicles in the wave's path are carried with it to the other side. Any Huge or smaller vehicles struck by the wave have a {@chance 25|||Capsizes!|No effect} chance of capsizing.",
+          "The water level remains elevated until the spell ends or you choose a different effect. If this effect produced a wave, the wave repeats on the start of your next turn while the flood effect lasts."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Part Water",
+        "entries": [
+          "You cause water in the area to move apart and create a trench. The trench extends across the spell's area, and the separated water forms a wall to either side. The trench remains until the spell ends or you choose a different effect. The water then slowly fills in the trench over the course of the next round until the normal water level is restored."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Redirect Flow",
+        "entries": [
+          "You cause flowing water in the area to move in a direction you choose, even if the water has to flow over obstacles, up walls, or in other unlikely directions. The water in the area moves as you direct it, but once it moves beyond the spell's area, it resumes its flow based on the terrain conditions. The water continues to move in the direction you chose until the spell ends or you choose a different effect."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Whirlpool",
+        "entries": [
+          "This effect requires a body of water at least 50 feet square and 25 feet deep. You cause a whirlpool to form in the center of the area. The whirlpool forms a vortex that is 5 feet wide at the base, up to 50 feet wide at the top, and 25 feet tall. Any creature or object in the water and within 25 feet of the vortex is pulled 10 feet toward it. A creature can swim away from the vortex by making a Strength ({@skill Athletics}) check against your spell save DC.",
+          "When a creature enters the vortex for the first time on a turn or starts its turn there, it must make a Strength saving throw. On a failed save, the creature takes {@damage 2d8} bludgeoning damage and is caught in the vortex until the spell ends. On a successful save, the creature takes half damage, and isn't caught in the vortex. A creature caught in the vortex can use its action to try to swim away from the vortex as described above, but has disadvantage on the Strength ({@skill Athletics}) check to do so.",
+          "The first time each turn that an object enters the vortex, the object takes {@damage 2d8} bludgeoning damage; this damage occurs each round it remains in the vortex."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "bludgeoning"
+    ],
+    "savingThrow": [
+      "strength"
+    ],
+    "miscTags": [
+      "FMV",
+      "OBJ"
+    ],
+    "areaTags": [
+      "C"
+    ],
+    "abilityCheck": [
+      "strength"
+    ]
+  },
+  {
+    "id": "spell.control-weather",
+    "kind": "spell",
+    "name": "Control Weather",
+    "level": 8,
+    "school": "T",
+    "officialTextLayout": "Control Weather\n8th---level transmutation\nCasting Time: 10 minutes\nRange: Self (5---mile radius)\nComponents: V, S, M (burning incense and bits of\n  earth and wood mixed in water)\nDuration: Concentration, up to 8 hours\nYou take control of the weather within 5 miles of you\nfor the duration. You must be outdoors to cast this\nspell. Moving to a place where you don’t have a clear\npath to the sky ends the spell early.\n  When you cast the spell, you change the current\nweather conditions, which are determined by the\nGM based on the climate and season. You can change\nprecipitation, temperature, and wind. It takes 1d4 ×\n10 minutes for the new conditions to take effect.\nOnce they do so, you can change the conditions again.\nWhen the spell ends, the weather gradually returns\nto normal.\n  When you change the weather conditions, find a\ncurrent condition on the following tables and change\nits stage by one, up or down. When changing the\nwind, you can change its direction.\n\nPrecipitation\nStage    Condition\n  1      Clear\n  2      Light clouds\n  3      Overcast or ground fog\n  4      Rain, hail, or snow\n  5      Torrential rain, driving hail, or blizzard\n\nTemperature\nStage     Condition\n  1       Unbearable heat\n  2       Hot\n  3       Warm\n  4       Cool\n  5       Cold\n  6       Arctic cold\n\nWind\nStage     Condition\n  1       Calm\n  2       Moderate wind\n  3       Strong wind\n  4       Gale\n  5       Storm",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "Self (5---mile radius)",
+      "Components": "V, S, M (burning incense and bits of",
+      "Duration": "Concentration, up to 8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-131"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        131
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/59"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 10,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "radius",
+      "distance": {
+        "type": "miles",
+        "amount": 5
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "burning incense and bits of earth and wood mixed in water"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 8
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You take control of the weather within 5 miles of you for the duration. You must be outdoors to cast this spell. Moving to a place where you don't have a clear path to the sky ends the spell early.",
+      "When you cast the spell, you change the current weather conditions, which are determined by the DM based on the climate and season. You can change precipitation, temperature, and wind. It takes {@dice 1d4 × 10} minutes for the new conditions to take effect. Once they do so, you can change the conditions again. When the spell ends, the weather gradually returns to normal.",
+      "When you change the weather conditions, find a current condition on the following tables and change its stage by one, up or down. When changing the wind, you can change its direction.",
+      {
+        "type": "table",
+        "caption": "Precipitation",
+        "colLabels": [
+          "Stage",
+          "Condition"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-11"
+        ],
+        "rows": [
+          [
+            "1",
+            "Clear"
+          ],
+          [
+            "2",
+            "Light clouds"
+          ],
+          [
+            "3",
+            "Overcast or ground fog"
+          ],
+          [
+            "4",
+            "Rain, hail, or snow"
+          ],
+          [
+            "5",
+            "Torrential rain, driving hail, or blizzard"
+          ]
+        ]
+      },
+      {
+        "type": "table",
+        "caption": "Temperature",
+        "colLabels": [
+          "Stage",
+          "Condition"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-11"
+        ],
+        "rows": [
+          [
+            "1",
+            "Unbearable heat"
+          ],
+          [
+            "2",
+            "Hot"
+          ],
+          [
+            "3",
+            "Warm"
+          ],
+          [
+            "4",
+            "Cool"
+          ],
+          [
+            "5",
+            "Cold"
+          ],
+          [
+            "6",
+            "Arctic cold"
+          ]
+        ]
+      },
+      {
+        "type": "table",
+        "caption": "Wind",
+        "colLabels": [
+          "Stage",
+          "Condition"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-11"
+        ],
+        "rows": [
+          [
+            "1",
+            "Calm"
+          ],
+          [
+            "2",
+            "Moderate wind"
+          ],
+          [
+            "3",
+            "Strong wind"
+          ],
+          [
+            "4",
+            "Gale"
+          ],
+          [
+            "5",
+            "Storm"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "spell.counterspell",
+    "kind": "spell",
+    "name": "Counterspell",
+    "level": 3,
+    "school": "A",
+    "officialTextLayout": "Counterspell\n3rd---level abjuration\nCasting Time: 1 reaction, which you take when you\nsee a creature within 60 feet of you casting a spell\nRange: 60 feet\nComponents: S\nDuration: Instantaneous\nYou attempt to interrupt a creature in the process of\ncasting a spell. If the creature is casting a spell of 3rd\nlevel or lower, its spell fails and has no effect. If it is\ncasting a spell of 4th level or higher, make an ability\ncheck using your spellcasting ability. The DC equals\n10 + the spell's level. On a success, the creature's\nspell fails and has no effect.\n  At Higher Levels. When you cast this spell using a\nspell slot of 4th level or higher, the interrupted spell\nhas no effect if its level is less than or equal to the\nlevel of the spell slot you used.",
+    "header": {
+      "Casting Time": "1 reaction, which you take when you",
+      "Range": "60 feet",
+      "Components": "S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-131"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        131
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/60"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "reaction",
+        "condition": "which you take when you see a creature within 60 feet of you casting a spell"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You attempt to interrupt a creature in the process of casting a spell. If the creature is casting a spell of 3rd level or lower, its spell fails and has no effect. If it is casting a spell of 4th level or higher, make an ability check using your spellcasting ability. The DC equals 10 + the spell's level. On a success, the creature's spell fails and has no effect."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 4th level or higher, the interrupted spell has no effect if its level is less than or equal to the level of the spell slot you used."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SGT"
+    ]
+  },
+  {
+    "id": "spell.create-food-and-water",
+    "kind": "spell",
+    "name": "Create Food and Water",
+    "level": 3,
+    "school": "C",
+    "officialTextLayout": "Create Food and Water\n3rd---level conjuration\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S\nDuration: Instantaneous\nYou create 45 pounds of food and 30 gallons of\nwater on the ground or in containers within range,\nenough to sustain up to fifteen humanoids or five\nsteeds for 24 hours. The food is bland but nourishing,\nand spoils if uneaten after 24 hours. The water is\nclean and doesn’t go bad.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-131"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        131
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/61"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You create 45 pounds of food and 30 gallons of water on the ground or in containers within range, enough to sustain up to fifteen humanoids or five steeds for 24 hours. The food is bland but nourishing, and spoils if uneaten after 24 hours. The water is clean and doesn't go bad."
+    ]
+  },
+  {
+    "id": "spell.create-or-destroy-water",
+    "kind": "spell",
+    "name": "Create or Destroy Water",
+    "level": 1,
+    "school": "T",
+    "officialTextLayout": "Create or Destroy Water\n1st---level transmutation\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a drop of water if creating\n  water or a few grains of sand if destroying it)\nDuration: Instantaneous\nYou either create or destroy water.\n  Create Water. You create up to 10 gallons of clean\nwater within range in an open container.\nAlternatively, the water falls as rain in a 30---foot cube\nwithin range, extinguishing exposed flames in the\narea.\n  Destroy Water. You destroy up to 10 gallons of\nwater in an open container within range.\nAlternatively, you destroy fog in a 30---foot cube\nwithin range.\n  At Higher Levels. When you cast this spell using a\nspell slot of 2nd level or higher, you create or\ndestroy 10 additional gallons of water, or the size of\nthe cube increases by 5 feet, for each slot level above\n1st.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a drop of water if creating",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-132"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        132
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/62"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a drop of water if creating water or a few grains of sand if destroying it"
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You either create or destroy water.",
+      {
+        "type": "entries",
+        "name": "Create Water",
+        "entries": [
+          "You create up to 10 gallons of clean water within range in an open container. Alternatively, the water falls as rain in a 30-foot cube within range, extinguishing exposed flames in the area."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Destroy Water",
+        "entries": [
+          "You destroy up to 10 gallons of water in an open container within range. Alternatively, you destroy fog in a 30-foot cube within range."
+        ]
+      }
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 2nd level or higher, you create or destroy 10 additional gallons of water, or the size of the cube increases by 5 feet, for each slot level above 1st."
+        ]
+      }
+    ],
+    "miscTags": [
+      "PRM"
+    ],
+    "areaTags": [
+      "C"
+    ]
+  },
+  {
+    "id": "spell.create-undead",
+    "kind": "spell",
+    "name": "Create Undead",
+    "level": 6,
+    "school": "N",
+    "officialTextLayout": "Create Undead\n6th---level necromancy\nCasting Time: 1 minute\nRange: 10 feet\nComponents: V, S, M (one clay pot filled with grave\n  dirt, one clay pot filled with brackish water, and\n  one 150 gp black onyx stone for each corpse)\nDuration: Instantaneous\nYou can cast this spell only at night. Choose up to\nthree corpses of Medium or Small humanoids within\nrange. Each corpse becomes a ghoul under your\ncontrol. (The GM has game statistics for these\ncreatures.)\n  As a bonus action on each of your turns, you can\nmentally command any creature you animated with\nthis spell if the creature is within 120 feet of you (if\nyou control multiple creatures, you can command\nany or all of them at the same time, issuing the same\ncommand to each one). You decide what action the\ncreature will take and where it will move during its\nnext turn, or you can issue a general command, such\nas to guard a particular chamber or corridor. If you\nissue no commands, the creature only defends itself\nagainst hostile creatures. Once given an order, the\ncreature continues to follow it until its task is\ncomplete.\n  The creature is under your control for 24 hours,\nafter which it stops obeying any command you have\n\ngiven it. To maintain control of the creature for\nanother 24 hours, you must cast this spell on the\ncreature before the current 24---hour period ends.\nThis use of the spell reasserts your control over up\nto three creatures you have animated with this spell,\nrather than animating new ones.\n  At Higher Levels. When you cast this spell using a\n7th---level spell slot, you can animate or reassert\ncontrol over four ghouls. When you cast this spell\nusing an 8th---level spell slot, you can animate or\nreassert control over five ghouls or two ghasts or\nwights. When you cast this spell using a 9th---level\nspell slot, you can animate or reassert control over\nsix ghouls, three ghasts or wights, or two mummies.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "10 feet",
+      "Components": "V, S, M (one clay pot filled with grave",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-132"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        132
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/63"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 10
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "one clay pot filled with grave dirt, one clay pot filled with brackish water, and one 150 gp black onyx stone for each corpse",
+        "cost": 15000
+      }
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You can cast this spell only at night. Choose up to three corpses of Medium or Small humanoids within range. Each corpse becomes a {@creature ghoul} under your control. (The DM has game statistics for these creatures.)",
+      "As a bonus action on each of your turns, you can mentally command any creature you animated with this spell if the creature is within 120 feet of you (if you control multiple creatures, you can command any or all of them at the same time, issuing the same command to each one). You decide what action the creature will take and where it will move during its next turn, or you can issue a general command, such as to guard a particular chamber or corridor. If you issue no commands, the creature only defends itself against hostile creatures. Once given an order, the creature continues to follow it until its task is complete.",
+      "The creature is under your control for 24 hours, after which it stops obeying any command you have given it. To maintain control of the creature for another 24 hours, you must cast this spell on the creature before the current 24-hour period ends. This use of the spell reasserts your control over up to three creatures you have animated with this spell, rather than animating new ones."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a 7th-level spell slot, you can animate or reassert control over four {@creature ghoul||ghouls}. When you cast this spell using an 8th-level spell slot, you can animate or reassert control over five {@creature ghoul||ghouls} or two {@creature ghast||ghasts} or {@creature wight||wights}. When you cast this spell using a 9th-level spell slot, you can animate or reassert control over six {@creature ghoul||ghouls}, three {@creature ghast||ghasts} or {@creature wight||wights}, or two {@creature mummy||mummies}."
+        ]
+      }
+    ],
+    "miscTags": [
+      "PRM",
+      "SMN",
+      "UBA"
+    ],
+    "affectsCreatureType": [
+      "humanoid"
+    ]
+  },
+  {
+    "id": "spell.creation",
+    "kind": "spell",
+    "name": "Creation",
+    "level": 5,
+    "school": "I",
+    "officialTextLayout": "Creation\n5th---level illusion\nCasting Time: 1 minute\nRange: 30 feet\nComponents: V, S, M (a tiny piece of matter of the\n  same type of the item you plan to create)\nDuration: Special\nYou pull wisps of shadow material from the\nShadowfell to create a nonliving object of vegetable\nmatter within range: soft goods, rope, wood, or\nsomething similar. You can also use this spell to\ncreate mineral objects such as stone, crystal, or\nmetal. The object created must be no larger than a 5---\nfoot cube, and the object must be of a form and\nmaterial that you have seen before.\n  The duration depends on the object’s material. If\nthe object is composed of multiple materials, use the\nshortest duration.\nMaterial                          Duration\nVegetable matter               1 day\nStone or crystal            12 hours\nPrecious metals                1 hour\nGems                              10 minutes\nAdamantine or mithral       1 minute\n\n  Using any material created by this spell as another\nspell’s material component causes that spell to fail.\n  At Higher Levels. When you cast this spell using a\nspell slot of 6th level or higher, the cube increases by\n5 feet for each slot level above 5th.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "30 feet",
+      "Components": "V, S, M (a tiny piece of matter of the",
+      "Duration": "Special"
+    },
+    "catalogReferences": [
+      "rulebook.page-132"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        132
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/64"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a tiny piece of matter of the same type of the item you plan to create"
+    },
+    "duration": [
+      {
+        "type": "special"
+      }
+    ],
+    "entries": [
+      "You pull wisps of shadow material from the Shadowfell to create a nonliving object of vegetable matter within range: soft goods, rope, wood, or something similar. You can also use this spell to create mineral objects such as stone, crystal, or metal. The object created must be no larger than a 5-foot cube, and the object must be of a form and material that you have seen before.",
+      "The duration depends on the object's material. If the object is composed of multiple materials, use the shortest duration.",
+      {
+        "type": "table",
+        "caption": "Creation",
+        "colLabels": [
+          "Material",
+          "Duration"
+        ],
+        "colStyles": [
+          "col-8",
+          "col-4"
+        ],
+        "rows": [
+          [
+            "Vegetable matter",
+            "1 day"
+          ],
+          [
+            "Stone or crystal",
+            "12 hours"
+          ],
+          [
+            "Precious metals",
+            "1 hour"
+          ],
+          [
+            "Gems",
+            "10 minutes"
+          ],
+          [
+            "Adamantine or mithral",
+            "1 minute"
+          ]
+        ]
+      },
+      "Using any material created by this spell as another spell's material component causes that spell to fail."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 6th level or higher, the cube increases by 5 feet for each slot level above 5th."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "spell.cure-wounds",
+    "kind": "spell",
+    "name": "Cure Wounds",
+    "level": 1,
+    "school": "V",
+    "officialTextLayout": "Cure Wounds\n1st---level evocation\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Instantaneous\n\n\n\n\n\nA creature you touch regains a number of hit points\nequal to 1d8 + your spellcasting ability modifier.\nThis spell has no effect on undead or constructs.\n  At Higher Levels. When you cast this spell using a\nspell slot of 2nd level or higher, the healing increases\nby 1d8 for each slot level above 1st.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-132",
+      "rulebook.page-133"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        132,
+        133
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/65"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A creature you touch regains a number of hit points equal to {@dice 1d8} + your spellcasting ability modifier. This spell has no effect on undead or constructs."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "At Higher Levels",
+        "entries": [
+          "When you cast this spell using a spell slot of 2nd level or higher, the healing increases by {@scaledice 1d8|1-9|1d8} for each slot level above 1st."
+        ]
+      }
+    ],
+    "miscTags": [
+      "HL"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "affectsCreatureType": [
+      "aberration",
+      "beast",
+      "celestial",
+      "dragon",
+      "elemental",
+      "fey",
+      "fiend",
+      "giant",
+      "humanoid",
+      "monstrosity",
+      "ooze",
+      "plant"
+    ]
+  },
+  {
+    "id": "spell.dancing-lights",
+    "kind": "spell",
+    "name": "Dancing Lights",
+    "level": 0,
+    "school": "V",
+    "officialTextLayout": "Dancing Lights\nEvocation cantrip\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S, M (a bit of phosphorus or\n  wychwood, or a glowworm)\nDuration: Concentration, up to 1 minute\nYou create up to four torch---sized lights within range,\nmaking them appear as torches, lanterns, or glowing\norbs that hover in the air for the duration. You can\nalso combine the four lights into one glowing\nvaguely humanoid form of Medium size. Whichever\nform you choose, each light sheds dim light in a 10---\nfoot radius.\n  As a bonus action on your turn, you can move the\nlights up to 60 feet to a new spot within range. A\nlight must be within 20 feet of another light created\nby this spell, and a light winks out if it exceeds the\nspell’s range.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "120 feet",
+      "Components": "V, S, M (a bit of phosphorus or",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-133"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        133
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/66"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a bit of phosphorus or wychwood, or a glowworm"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You create up to four torch-sized lights within range, making them appear as torches, lanterns, or glowing orbs that hover in the air for the duration. You can also combine the four lights into one glowing vaguely humanoid form of Medium size. Whichever form you choose, each light sheds dim light in a 10-foot radius.",
+      "As a bonus action on your turn, you can move the lights up to 60 feet to a new spot within range. A light must be within 20 feet of another light created by this spell, and a light winks out if it exceeds the spell's range."
+    ],
+    "miscTags": [
+      "LGT",
+      "UBA"
+    ]
+  },
+  {
+    "id": "spell.darkness",
+    "kind": "spell",
+    "name": "Darkness",
+    "level": 2,
+    "school": "V",
+    "officialTextLayout": "Darkness\n2nd---level evocation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, M (bat fur and a drop of pitch or\n  piece of coal)\nDuration: Concentration, up to 10 minutes\nMagical darkness spreads from a point you choose\nwithin range to fill a 15---foot---radius sphere for the\nduration. The darkness spreads around corners. A\ncreature with darkvision can’t see through this\ndarkness, and nonmagical light can’t illuminate it.\n  If the point you choose is on an object you are\nholding or one that isn’t being worn or carried, the\ndarkness emanates from the object and moves with\nit. Completely covering the source of the darkness\nwith an opaque object, such as a bowl or a helm,\nblocks the darkness.\n  If any of this spell’s area overlaps with an area of\nlight created by a spell of 2nd level or lower, the\nspell that created the light is dispelled.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, M (bat fur and a drop of pitch or",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-133"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        133
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/67"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "m": "bat fur and a drop of pitch or piece of coal"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "Magical darkness spreads from a point you choose within range to fill a 15-foot-radius sphere for the duration. The darkness spreads around corners. A creature with {@sense darkvision} can't see through this darkness, and nonmagical light can't illuminate it.",
+      "If the point you choose is on an object you are holding or one that isn't being worn or carried, the darkness emanates from the object and moves with it. Completely covering the source of the darkness with an opaque object, such as a bowl or a helm, blocks the darkness.",
+      "If any of this spell's area overlaps with an area of light created by a spell of 2nd level or lower, the spell that created the light is dispelled."
+    ],
+    "miscTags": [
+      "OBJ",
+      "OBS"
+    ],
+    "areaTags": [
+      "S"
+    ]
+  },
+  {
+    "id": "spell.darkvision",
+    "kind": "spell",
+    "name": "Darkvision",
+    "level": 2,
+    "school": "T",
+    "officialTextLayout": "Darkvision\n2nd---level transmutation\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (either a pinch of dried carrot\n  or an agate)\nDuration: 8 hours\nYou touch a willing creature to grant it the ability to\nsee in the dark. For the duration, that creature has\ndarkvision out to a range of 60 feet.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S, M (either a pinch of dried carrot",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-133"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        133
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/68"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "either a pinch of dried carrot or an agate"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 8
+        }
+      }
+    ],
+    "entries": [
+      "You touch a willing creature to grant it the ability to see in the dark. For the duration, that creature has {@sense darkvision} out to a range of 60 feet."
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  },
+  {
+    "id": "spell.daylight",
+    "kind": "spell",
+    "name": "Daylight",
+    "level": 3,
+    "school": "V",
+    "officialTextLayout": "Daylight\n3rd---level evocation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: 1 hour\nA 60---foot---radius sphere of light spreads out from a\npoint you choose within range. The sphere is bright\nlight and sheds dim light for an additional 60 feet.\n  If you chose a point on an object you are holding\nor one that isn’t being worn or carried, the light\nshines from the object and moves with it. Completely\ncovering the affected object with an opaque object,\nsuch as a bowl or a helm, blocks the light.\n  If any of this spell’s area overlaps with an area of\ndarkness created by a spell of 3rd level or lower, the\nspell that created the darkness is dispelled.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-133"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        133
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/69"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "A 60-foot-radius sphere of light spreads out from a point you choose within range. The sphere is bright light and sheds dim light for an additional 60 feet.",
+      "If you chose a point on an object you are holding or one that isn't being worn or carried, the light shines from the object and moves with it. Completely covering the affected object with an opaque object, such as a bowl or a helm, blocks the light.",
+      "If any of this spell's area overlaps with an area of darkness created by a spell of 3rd level or lower, the spell that created the darkness is dispelled."
+    ],
+    "miscTags": [
+      "LGT",
+      "OBJ"
+    ],
+    "areaTags": [
+      "S"
+    ]
+  },
+  {
+    "id": "spell.death-ward",
+    "kind": "spell",
+    "name": "Death Ward",
+    "level": 4,
+    "school": "A",
+    "officialTextLayout": "Death Ward\n4th---level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: 8 hours\nYou touch a creature and grant it a measure of\nprotection from death.\n  The first time the target would drop to 0 hit points\nas a result of taking damage, the target instead drops\nto 1 hit point, and the spell ends.\n  If the spell is still in effect when the target is\nsubjected to an effect that would kill it\ninstantaneously without dealing damage, that effect\nis instead negated against the target, and the spell\nends.",
+    "header": {
+      "Casting Time": "1 action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-133"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "pages": [
+        133
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd51.json",
+        "pointer": "/spell/70"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 8
+        }
+      }
+    ],
+    "entries": [
+      "You touch a creature and grant it a measure of protection from death.",
+      "The first time the target would drop to 0 hit points as a result of taking damage, the target instead drops to 1 hit point, and the spell ends.",
+      "If the spell is still in effect when the target is subjected to an effect that would kill it instantaneously without dealing damage, that effect is instead negated against the target, and the spell ends."
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  }
+]

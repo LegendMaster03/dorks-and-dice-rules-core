@@ -1,0 +1,2502 @@
+[
+  {
+    "id": "item.half-plate-armor-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Half Plate Armor of Vulnerability (Slashing)",
+    "baseItem": "Half Plate Armor|SRD52",
+    "baseItemId": "baseitem.half-plate-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "MA|SRD52",
+    "weight": 40,
+    "ac": 15,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.half-plate-armor",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/66"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.hide-armor-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Hide Armor of Vulnerability (Slashing)",
+    "baseItem": "Hide Armor|SRD52",
+    "baseItemId": "baseitem.hide-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "MA|SRD52",
+    "weight": 12,
+    "ac": 12,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.hide-armor",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/74"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.leather-armor-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Leather Armor of Vulnerability (Slashing)",
+    "baseItem": "Leather Armor|SRD52",
+    "baseItemId": "baseitem.leather-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "LA|SRD52",
+    "weight": 10,
+    "ac": 11,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.leather-armor",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/84"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.padded-armor-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Padded Armor of Vulnerability (Slashing)",
+    "baseItem": "Padded Armor|SRD52",
+    "baseItemId": "baseitem.padded-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "LA|SRD52",
+    "weight": 8,
+    "ac": 11,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.padded-armor",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/115"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.plate-armor-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Plate Armor of Vulnerability (Slashing)",
+    "baseItem": "Plate Armor|SRD52",
+    "baseItemId": "baseitem.plate-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "HA|SRD52",
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/125"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.ring-mail-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Ring Mail of Vulnerability (Slashing)",
+    "baseItem": "Ring Mail|SRD52",
+    "baseItemId": "baseitem.ring-mail",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "HA|SRD52",
+    "weight": 40,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.ring-mail",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/133"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.scale-mail-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Scale Mail of Vulnerability (Slashing)",
+    "baseItem": "Scale Mail|SRD52",
+    "baseItemId": "baseitem.scale-mail",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "MA|SRD52",
+    "weight": 45,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/137"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.splint-armor-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Splint Armor of Vulnerability (Slashing)",
+    "baseItem": "Splint Armor|SRD52",
+    "baseItemId": "baseitem.splint-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "HA|SRD52",
+    "weight": 60,
+    "ac": 17,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.splint-armor",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/161"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.studded-leather-armor-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Studded Leather Armor of Vulnerability (Slashing)",
+    "baseItem": "Studded Leather Armor|SRD52",
+    "baseItemId": "baseitem.studded-leather-armor",
+    "variantOf": "magic-variant.armor-of-vulnerability-slashing",
+    "type": "LA|SRD52",
+    "weight": 13,
+    "ac": 12,
+    "armor": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "entries": [
+      "While wearing this armor, you have {@variantrule Resistance|SRD52} to Slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when the {@spell Identify|SRD52} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic; removing the armor fails to end the curse. While cursed, you have {@variantrule Vulnerability|SRD52} to Bludgeoning and Piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.studded-leather-armor",
+      "magic-variant.armor-of-vulnerability-slashing",
+      "rulebook.page-211",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/47"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/165"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.berserker-battleaxe",
+    "kind": "item",
+    "name": "Berserker Battleaxe",
+    "baseItem": "Battleaxe|SRD52",
+    "baseItemId": "baseitem.battleaxe",
+    "variantOf": "magic-variant.berserker-axe",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. In addition, while you are attuned to this weapon, your {@variantrule Hit Points|SRD52|Hit Point} maximum increases by 1 for each level you have attained.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This weapon is cursed, and becoming attuned to it extends the curse to you. As long as you remain cursed, you are unwilling to part with the weapon, keeping it within reach at all times. You also have {@variantrule Disadvantage|SRD52} on attack rolls with weapons other than this one.",
+          "Whenever another creature damages you while the weapon is in your possession, you must succeed on a {@dc 15} Wisdom saving throw or go berserk. This berserk state ends when you start your turn and there are no creatures within 60 feet of you that you can see or hear.",
+          "While berserk, you regard the creature nearest to you that you can see or hear as your enemy. If there are multiple possible creatures, choose one at random. On each of your turns, you must move as close to the creature as possible and take the {@action Attack|SRD52} action, targeting the creature. If you're unable to get close enough to the creature to attack it with the weapon, your turn ends after you've used up all your available movement. If the creature dies or can no longer be seen or heard by you, the next nearest creature that you can see or hear becomes your new target."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.battleaxe",
+      "item-mastery.topple",
+      "item-property.v",
+      "magic-variant.berserker-axe",
+      "rulebook.page-213"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        213
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/48"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/9"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.berserker-greataxe",
+    "kind": "item",
+    "name": "Berserker Greataxe",
+    "baseItem": "Greataxe|SRD52",
+    "baseItemId": "baseitem.greataxe",
+    "variantOf": "magic-variant.berserker-axe",
+    "type": "M|SRD52",
+    "weight": 7,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. In addition, while you are attuned to this weapon, your {@variantrule Hit Points|SRD52|Hit Point} maximum increases by 1 for each level you have attained.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This weapon is cursed, and becoming attuned to it extends the curse to you. As long as you remain cursed, you are unwilling to part with the weapon, keeping it within reach at all times. You also have {@variantrule Disadvantage|SRD52} on attack rolls with weapons other than this one.",
+          "Whenever another creature damages you while the weapon is in your possession, you must succeed on a {@dc 15} Wisdom saving throw or go berserk. This berserk state ends when you start your turn and there are no creatures within 60 feet of you that you can see or hear.",
+          "While berserk, you regard the creature nearest to you that you can see or hear as your enemy. If there are multiple possible creatures, choose one at random. On each of your turns, you must move as close to the creature as possible and take the {@action Attack|SRD52} action, targeting the creature. If you're unable to get close enough to the creature to attack it with the weapon, your turn ends after you've used up all your available movement. If the creature dies or can no longer be seen or heard by you, the next nearest creature that you can see or hear becomes your new target."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.greataxe",
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.berserker-axe",
+      "rulebook.page-213"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        213
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/48"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/58"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.berserker-halberd",
+    "kind": "item",
+    "name": "Berserker Halberd",
+    "baseItem": "Halberd|SRD52",
+    "baseItemId": "baseitem.halberd",
+    "variantOf": "magic-variant.berserker-axe",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. In addition, while you are attuned to this weapon, your {@variantrule Hit Points|SRD52|Hit Point} maximum increases by 1 for each level you have attained.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This weapon is cursed, and becoming attuned to it extends the curse to you. As long as you remain cursed, you are unwilling to part with the weapon, keeping it within reach at all times. You also have {@variantrule Disadvantage|SRD52} on attack rolls with weapons other than this one.",
+          "Whenever another creature damages you while the weapon is in your possession, you must succeed on a {@dc 15} Wisdom saving throw or go berserk. This berserk state ends when you start your turn and there are no creatures within 60 feet of you that you can see or hear.",
+          "While berserk, you regard the creature nearest to you that you can see or hear as your enemy. If there are multiple possible creatures, choose one at random. On each of your turns, you must move as close to the creature as possible and take the {@action Attack|SRD52} action, targeting the creature. If you're unable to get close enough to the creature to attack it with the weapon, your turn ends after you've used up all your available movement. If the creature dies or can no longer be seen or heard by you, the next nearest creature that you can see or hear becomes your new target."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.halberd",
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.berserker-axe",
+      "rulebook.page-213"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        213
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/48"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/64"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dancing-greatsword",
+    "kind": "item",
+    "name": "Dancing Greatsword",
+    "baseItem": "Greatsword|SRD52",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.dancing-sword",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "You can take a {@variantrule Bonus Action|SRD52} to toss this magic weapon into the air. When you do so, the weapon begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of itself. The weapon uses your attack roll and adds your ability modifier to damage rolls.",
+      "While the weapon hovers, you can take a {@variantrule Bonus Action|SRD52} to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same {@variantrule Bonus Action|SRD52}, you can cause the weapon to attack one creature within 5 feet of the weapon.",
+      "After the hovering weapon attacks for the fourth time, it flies back to you and tries to return to your hand. If you have no hand free, the weapon falls to the ground in your space. If the weapon has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or are more than 30 feet away from it."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.dancing-sword",
+      "rulebook.page-217"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        217
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/49"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/62"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dancing-longsword",
+    "kind": "item",
+    "name": "Dancing Longsword",
+    "baseItem": "Longsword|SRD52",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.dancing-sword",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "You can take a {@variantrule Bonus Action|SRD52} to toss this magic weapon into the air. When you do so, the weapon begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of itself. The weapon uses your attack roll and adds your ability modifier to damage rolls.",
+      "While the weapon hovers, you can take a {@variantrule Bonus Action|SRD52} to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same {@variantrule Bonus Action|SRD52}, you can cause the weapon to attack one creature within 5 feet of the weapon.",
+      "After the hovering weapon attacks for the fourth time, it flies back to you and tries to return to your hand. If you have no hand free, the weapon falls to the ground in your space. If the weapon has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or are more than 30 feet away from it."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.dancing-sword",
+      "rulebook.page-217"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        217
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/49"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/94"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dancing-rapier",
+    "kind": "item",
+    "name": "Dancing Rapier",
+    "baseItem": "Rapier|SRD52",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.dancing-sword",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "You can take a {@variantrule Bonus Action|SRD52} to toss this magic weapon into the air. When you do so, the weapon begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of itself. The weapon uses your attack roll and adds your ability modifier to damage rolls.",
+      "While the weapon hovers, you can take a {@variantrule Bonus Action|SRD52} to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same {@variantrule Bonus Action|SRD52}, you can cause the weapon to attack one creature within 5 feet of the weapon.",
+      "After the hovering weapon attacks for the fourth time, it flies back to you and tries to return to your hand. If you have no hand free, the weapon falls to the ground in your space. If the weapon has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or are more than 30 feet away from it."
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "item-mastery.vex",
+      "item-property.f",
+      "magic-variant.dancing-sword",
+      "rulebook.page-217"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        217
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/49"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/131"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dancing-scimitar",
+    "kind": "item",
+    "name": "Dancing Scimitar",
+    "baseItem": "Scimitar|SRD52",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.dancing-sword",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "You can take a {@variantrule Bonus Action|SRD52} to toss this magic weapon into the air. When you do so, the weapon begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of itself. The weapon uses your attack roll and adds your ability modifier to damage rolls.",
+      "While the weapon hovers, you can take a {@variantrule Bonus Action|SRD52} to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same {@variantrule Bonus Action|SRD52}, you can cause the weapon to attack one creature within 5 feet of the weapon.",
+      "After the hovering weapon attacks for the fourth time, it flies back to you and tries to return to your hand. If you have no hand free, the weapon falls to the ground in your space. If the weapon has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or are more than 30 feet away from it."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.dancing-sword",
+      "rulebook.page-217"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        217
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/49"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/139"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dancing-shortsword",
+    "kind": "item",
+    "name": "Dancing Shortsword",
+    "baseItem": "Shortsword|SRD52",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.dancing-sword",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "You can take a {@variantrule Bonus Action|SRD52} to toss this magic weapon into the air. When you do so, the weapon begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of itself. The weapon uses your attack roll and adds your ability modifier to damage rolls.",
+      "While the weapon hovers, you can take a {@variantrule Bonus Action|SRD52} to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same {@variantrule Bonus Action|SRD52}, you can cause the weapon to attack one creature within 5 feet of the weapon.",
+      "After the hovering weapon attacks for the fourth time, it flies back to you and tries to return to your hand. If you have no hand free, the weapon falls to the ground in your space. If the weapon has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or are more than 30 feet away from it."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "item-mastery.vex",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.dancing-sword",
+      "rulebook.page-217"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        217
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/49"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/147"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-battleaxe",
+    "kind": "item",
+    "name": "Defender Battleaxe",
+    "baseItem": "Battleaxe|SRD52",
+    "baseItemId": "baseitem.battleaxe",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.battleaxe",
+      "item-mastery.topple",
+      "item-property.v",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/9"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-club",
+    "kind": "item",
+    "name": "Defender Club",
+    "baseItem": "Club|SRD52",
+    "baseItemId": "baseitem.club",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.club",
+      "item-mastery.slow",
+      "item-property.l",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/31"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-dagger",
+    "kind": "item",
+    "name": "Defender Dagger",
+    "baseItem": "Dagger|SRD52",
+    "baseItemId": "baseitem.dagger",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 1,
+    "weaponCategory": "simple",
+    "property": [
+      "F|SRD52",
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.dagger",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/41"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-flail",
+    "kind": "item",
+    "name": "Defender Flail",
+    "baseItem": "Flail|SRD52",
+    "baseItemId": "baseitem.flail",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.flail",
+      "item-mastery.sap",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/50"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-glaive",
+    "kind": "item",
+    "name": "Defender Glaive",
+    "baseItem": "Glaive|SRD52",
+    "baseItemId": "baseitem.glaive",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.glaive",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/54"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-greataxe",
+    "kind": "item",
+    "name": "Defender Greataxe",
+    "baseItem": "Greataxe|SRD52",
+    "baseItemId": "baseitem.greataxe",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 7,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.greataxe",
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/58"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-greatclub",
+    "kind": "item",
+    "name": "Defender Greatclub",
+    "baseItem": "Greatclub|SRD52",
+    "baseItemId": "baseitem.greatclub",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "simple",
+    "property": [
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.greatclub",
+      "item-mastery.push",
+      "item-property.2h",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/60"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-greatsword",
+    "kind": "item",
+    "name": "Defender Greatsword",
+    "baseItem": "Greatsword|SRD52",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/62"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-halberd",
+    "kind": "item",
+    "name": "Defender Halberd",
+    "baseItem": "Halberd|SRD52",
+    "baseItemId": "baseitem.halberd",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.halberd",
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/64"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-handaxe",
+    "kind": "item",
+    "name": "Defender Handaxe",
+    "baseItem": "Handaxe|SRD52",
+    "baseItemId": "baseitem.handaxe",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "range": "20/60",
+    "weapon": true,
+    "axe": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.handaxe",
+      "item-mastery.vex",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/70"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-javelin",
+    "kind": "item",
+    "name": "Defender Javelin",
+    "baseItem": "Javelin|SRD52",
+    "baseItemId": "baseitem.javelin",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "30/120",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.javelin",
+      "item-mastery.slow",
+      "item-property.t",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/78"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-lance",
+    "kind": "item",
+    "name": "Defender Lance",
+    "baseItem": "Lance|SRD52",
+    "baseItemId": "baseitem.lance",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      {
+        "uid": "2H|SRD52",
+        "note": "unless mounted"
+      }
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.lance",
+      "item-mastery.topple",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/82"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-light-hammer",
+    "kind": "item",
+    "name": "Defender Light Hammer",
+    "baseItem": "Light Hammer|SRD52",
+    "baseItemId": "baseitem.light-hammer",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.light-hammer",
+      "item-mastery.nick",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/90"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-longsword",
+    "kind": "item",
+    "name": "Defender Longsword",
+    "baseItem": "Longsword|SRD52",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/94"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-mace",
+    "kind": "item",
+    "name": "Defender Mace",
+    "baseItem": "Mace|SRD52",
+    "baseItemId": "baseitem.mace",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.mace",
+      "item-mastery.sap",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/100"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-maul",
+    "kind": "item",
+    "name": "Defender Maul",
+    "baseItem": "Maul|SRD52",
+    "baseItemId": "baseitem.maul",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.maul",
+      "item-mastery.topple",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/104"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-morningstar",
+    "kind": "item",
+    "name": "Defender Morningstar",
+    "baseItem": "Morningstar|SRD52",
+    "baseItemId": "baseitem.morningstar",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.morningstar",
+      "item-mastery.sap",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/106"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-pike",
+    "kind": "item",
+    "name": "Defender Pike",
+    "baseItem": "Pike|SRD52",
+    "baseItemId": "baseitem.pike",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 18,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.pike",
+      "item-mastery.push",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/121"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-quarterstaff",
+    "kind": "item",
+    "name": "Defender Quarterstaff",
+    "baseItem": "Quarterstaff|SRD52",
+    "baseItemId": "baseitem.quarterstaff",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmg2": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.quarterstaff",
+      "item-mastery.topple",
+      "item-property.v",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/129"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-rapier",
+    "kind": "item",
+    "name": "Defender Rapier",
+    "baseItem": "Rapier|SRD52",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "item-mastery.vex",
+      "item-property.f",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/131"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-scimitar",
+    "kind": "item",
+    "name": "Defender Scimitar",
+    "baseItem": "Scimitar|SRD52",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/139"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-shortsword",
+    "kind": "item",
+    "name": "Defender Shortsword",
+    "baseItem": "Shortsword|SRD52",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "item-mastery.vex",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/147"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-sickle",
+    "kind": "item",
+    "name": "Defender Sickle",
+    "baseItem": "Sickle|SRD52",
+    "baseItemId": "baseitem.sickle",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.sickle",
+      "item-mastery.nick",
+      "item-property.l",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/149"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  }
+]

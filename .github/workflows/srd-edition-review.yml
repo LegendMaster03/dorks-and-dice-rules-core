@@ -1,0 +1,134 @@
+name: SRD Edition Review Catalogs
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tools/stage_srd_editions.py'
+      - 'tools/build_srd_loader_fixtures.py'
+      - 'tests/NativeCatalogFingerprint/**'
+      - 'src/RulesCore.Content/**'
+      - 'tools/inventory_srd_editions.py'
+      - 'tools/audit_srd_upstream.py'
+      - 'tools/srd_upstream_crosswalk.py'
+      - 'tests/test_srd_upstream_audit.py'
+      - 'tools/report_srd_promotion.py'
+      - 'tools/audit_srd_native_references.py'
+      - 'tools/audit_srd_structured_relationships.py'
+      - 'tools/link_srd_spell_relationships.mjs'
+      - 'tools/link_srd_character_relationships.mjs'
+      - 'tests/test_srd_character_relationships.mjs'
+      - 'tests/test_srd_structured_relationships.py'
+      - 'tests/test_srd_native_reference_audit.py'
+      - 'tools/promote_srd_bestiary.mjs'
+      - 'tools/promote_srd_bestiary_variants.mjs'
+      - 'tools/recover_srd_publisher_rules.mjs'
+      - 'data/reference/srd/bestiary-variant-promotion-*.json'
+      - 'tools/promote_srd_items.mjs'
+      - 'tools/promote_srd_numbered_item_variants.mjs'
+      - 'data/reference/srd/numbered-item-variant-promotion-*.json'
+      - 'tools/promote_srd_origins.mjs'
+      - 'tools/promote_srd_classes.mjs'
+      - 'tools/promote_srd_features.mjs'
+      - 'tools/promote_srd_general.mjs'
+      - 'tools/promote_srd_book_rules.mjs'
+      - 'data/reference/srd/book-rule-promotion-*.json'
+      - 'tools/promote_srd_supplementary.mjs'
+      - 'tools/promote_srd_deities.mjs'
+      - 'data/reference/srd/deity-promotion-*.json'
+      - 'data/reference/srd/supplementary-promotion-*.json'
+      - 'data/reference/srd/general-promotion-*.json'
+      - 'data/reference/srd/feature-promotion-*.json'
+      - 'data/reference/srd/class-promotion-*.json'
+      - 'data/reference/srd/origins-promotion-*.json'
+      - 'data/reference/srd/item-promotion-*.json'
+      - 'data/reference/srd/bestiary-promotion-*.json'
+      - 'data/rulesets/dnd-5e/native/**'
+      - 'data/rulesets/dnd-5-5e/native/**'
+      - 'data/reference/srd/structured/**'
+      - 'data/reference/srd/structured-manifest.json'
+      - '.github/workflows/srd-edition-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-review-catalogs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build isolated edition review catalogs
+        run: python3 tools/stage_srd_editions.py --output build/srd-review
+      - name: Verify legacy deity table projection
+        run: node tools/promote_srd_deities.mjs --check
+      - name: Verify supplementary rule source projection
+        run: node tools/promote_srd_supplementary.mjs --check
+      - name: Verify selected structured book rules and tables
+        run: node tools/promote_srd_book_rules.mjs --check
+      - name: Verify structured general-rule source projection
+        run: node tools/promote_srd_general.mjs --check
+      - name: Verify structured feats and optional features source projection
+        run: node tools/promote_srd_features.mjs --check
+      - name: Verify structured class source projection
+        run: node tools/promote_srd_classes.mjs --check
+      - name: Test literal character relationship linker
+        run: node --test tests/test_srd_character_relationships.mjs
+      - name: Verify structured character origins source projection
+        run: node tools/promote_srd_origins.mjs --check
+      - name: Verify structured item source projection
+        run: node tools/promote_srd_items.mjs --check
+      - name: Verify structured bestiary source projection
+        run: node tools/promote_srd_bestiary.mjs --check
+      - name: Verify finite spell-summon variant projection
+        run: node tools/promote_srd_bestiary_variants.mjs --check
+      - name: Verify publisher-only group and rule recovery
+        run: node tools/recover_srd_publisher_rules.mjs --check
+      - name: Verify concrete numbered magic item variants
+        run: node tools/promote_srd_numbered_item_variants.mjs --check
+      - name: Reconcile native promotion coverage (diagnostic only)
+        run: python3 tools/report_srd_promotion.py --output build/srd-review/promotion-coverage.json
+      - name: Test expanded upstream comparison
+        run: python3 -m unittest discover -s tests -p test_srd_upstream_audit.py
+      - name: Checkout pinned upstream data for comparison only
+        uses: actions/checkout@v4
+        with:
+          repository: 5etools-mirror-3/5etools-src
+          ref: 2512db75eb48ef06f6190b086a82430887906dca
+          path: build/5etools-upstream
+          sparse-checkout: data
+          persist-credentials: false
+      - name: Verify expanded upstream occurrence dispositions
+        run: python3 tools/audit_srd_upstream.py --checkout build/5etools-upstream --output build/srd-review/upstream-comparison.json --require-classified-coverage
+      - name: Test semantic reference audit
+        run: python3 -m unittest discover -s tests -p test_srd_native_reference_audit.py
+      - name: Audit edition-local inline references (diagnostic only)
+        run: python3 tools/audit_srd_native_references.py --output build/srd-review/native-reference-audit.json
+      - name: Test structured relationship audit
+        run: python3 -m unittest discover -s tests -p test_srd_structured_relationships.py
+      - name: Verify literal structured character dependencies and inventory selectors
+        run: python3 tools/audit_srd_structured_relationships.py --output build/srd-review/structured-relationship-audit.json --require-literal-links --require-reviewed-selectors
+      - name: Publish review inventory to summary
+        run: |
+          echo '## Unreviewed SRD candidate inventory' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The artifact is reference-only; no runtime promotion.' >> "$GITHUB_STEP_SUMMARY"
+          python3 -c 'import json; d=json.load(open("build/srd-review/srd-review-summary.json")); print("\n".join("- {}: {} candidates".format(k, v["count"]) for k,v in d.items()))' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Validate complete candidate-sized isolated catalogs with the C# loader
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/build_srd_loader_fixtures.py
+          for id in dnd-5e dnd-5-5e; do
+            result=$(dotnet run --project tests/NativeCatalogFingerprint/NativeCatalogFingerprint.csproj --configuration Release -- build/srd-loader-fixtures "$id")
+            printf '%s\n' "$result"
+            grep -qx "RULESET_ID=$id" <<< "$result"
+            grep -qx 'CONTENT_FINGERPRINT_VALIDATED=true' <<< "$result"
+            expected=$(python3 -c 'import json,sys; print(json.load(open("build/srd-loader-fixtures/expected-counts.json"))[sys.argv[1]])' "$id")
+            grep -qx "NATIVE_ENTITY_COUNT=$expected" <<< "$result"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: srd-edition-review-catalogs
+          path: build/srd-review/
+          retention-days: 30
+          if-no-files-found: error

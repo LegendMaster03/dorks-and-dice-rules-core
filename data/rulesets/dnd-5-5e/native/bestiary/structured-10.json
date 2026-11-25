@@ -1,0 +1,1392 @@
+[
+  {
+    "id": "monster.young-brass-dragon",
+    "kind": "monster",
+    "name": "Young Brass Dragon",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 110,
+      "formula": "13d10 + 39"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 20,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 19,
+    "dex": 10,
+    "con": 17,
+    "int": 12,
+    "wis": 11,
+    "cha": 15,
+    "save": {
+      "dex": "+3",
+      "wis": "+3"
+    },
+    "skill": {
+      "perception": "+6",
+      "persuasion": "+5",
+      "stealth": "+3"
+    },
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 16,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "6",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace two attacks with a use of Sleep Breath."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}15 ({@damage 2d10 + 4}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 14}, each creature in a 40-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 38 ({@damage 11d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Sleep Breath",
+        "entries": [
+          "{@actSave con} {@dc 14}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, at which point it repeats the save. {@actSaveFail 2} The target has the {@condition Unconscious|SRD52} condition for 1 minute. This effect ends for the target if it takes damage or a creature within 5 feet of it takes an action to wake it."
+        ]
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.unconscious",
+      "rulebook.page-268"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        268
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/321"
+      },
+      "candidatePage": 268,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.young-bronze-dragon",
+    "kind": "monster",
+    "name": "Young Bronze Dragon",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 142,
+      "formula": "15d10 + 60"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 21,
+    "dex": 10,
+    "con": 19,
+    "int": 14,
+    "wis": 13,
+    "cha": 17,
+    "save": {
+      "dex": "+3",
+      "wis": "+4"
+    },
+    "skill": {
+      "insight": "+4",
+      "perception": "+7",
+      "stealth": "+3"
+    },
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 17,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "8",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Repulsion Breath."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 10 ft. {@h}16 ({@damage 2d10 + 5}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Lightning Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 15}, each creature in a 60-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 49 ({@damage 9d10}) Lightning damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Repulsion Breath",
+        "entries": [
+          "{@actSave str} {@dc 15}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target is pushed up to 40 feet straight away from the dragon and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "catalogReferences": [
+      "condition.prone",
+      "rulebook.page-270"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        270
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/322"
+      },
+      "candidatePage": 270,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.young-copper-dragon",
+    "kind": "monster",
+    "name": "Young Copper Dragon",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 119,
+      "formula": "14d10 + 42"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 19,
+    "dex": 12,
+    "con": 17,
+    "int": 16,
+    "wis": 13,
+    "cha": 15,
+    "save": {
+      "dex": "+4",
+      "wis": "+4"
+    },
+    "skill": {
+      "deception": "+5",
+      "perception": "+7",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 17,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "7",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Slowing Breath."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}15 ({@damage 2d10 + 4}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Acid Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 14}, each creature in a 40-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 40 ({@damage 9d8}) Acid damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Slowing Breath",
+        "entries": [
+          "{@actSave con} {@dc 14}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target can't take Reactions; its {@variantrule Speed|SRD52} is halved; and it can take either an action or a {@variantrule Bonus Action|SRD52} on its turn, not both. This effect lasts until the end of its next turn."
+        ]
+      }
+    ],
+    "immune": [
+      "acid"
+    ],
+    "catalogReferences": [
+      "rulebook.page-276"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        276
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/323"
+      },
+      "candidatePage": 276,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.young-gold-dragon",
+    "kind": "monster",
+    "name": "Young Gold Dragon",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 178,
+      "formula": "17d10 + 85"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 23,
+    "dex": 14,
+    "con": 21,
+    "int": 16,
+    "wis": 13,
+    "cha": 20,
+    "save": {
+      "dex": "+6",
+      "wis": "+5"
+    },
+    "skill": {
+      "insight": "+5",
+      "perception": "+9",
+      "persuasion": "+9",
+      "stealth": "+6"
+    },
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 19,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "10",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Weakening Breath."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 10}, reach 10 ft. {@h}17 ({@damage 2d10 + 6}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 17}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 55 ({@damage 10d10}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Weakening Breath",
+        "entries": [
+          "{@actSave str} {@dc 17}, each creature that isn't currently affected by this breath in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target has {@variantrule Disadvantage|SRD52} on Strength-based {@variantrule D20 Test|SRD52|D20 Tests} and subtracts 3 ({@dice 1d6}) from its damage rolls. It repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "rulebook.page-291"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        291
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/324"
+      },
+      "candidatePage": 291,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.young-green-dragon",
+    "kind": "monster",
+    "name": "Young Green Dragon",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 136,
+      "formula": "16d10 + 48"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 19,
+    "dex": 12,
+    "con": 17,
+    "int": 16,
+    "wis": 13,
+    "cha": 15,
+    "save": {
+      "dex": "+4",
+      "wis": "+4"
+    },
+    "skill": {
+      "deception": "+5",
+      "perception": "+7",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 17,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "8",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Slashing damage plus 7 ({@damage 2d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Poison Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 14}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 42 ({@damage 12d6}) Poison damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "rulebook.page-293"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        293
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/325"
+      },
+      "candidatePage": 293,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.young-red-dragon",
+    "kind": "monster",
+    "name": "Young Red Dragon",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 178,
+      "formula": "17d10 + 85"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 23,
+    "dex": 10,
+    "con": 21,
+    "int": 14,
+    "wis": 11,
+    "cha": 19,
+    "save": {
+      "dex": "+4",
+      "wis": "+4"
+    },
+    "skill": {
+      "perception": "+8",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 18,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "10",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 10}, reach 10 ft. {@h}13 ({@damage 2d6 + 6}) Slashing damage plus 3 ({@damage 1d6}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 17}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 56 ({@damage 16d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "rulebook.page-318"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        318
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/326"
+      },
+      "candidatePage": 318,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.young-silver-dragon",
+    "kind": "monster",
+    "name": "Young Silver Dragon",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 168,
+      "formula": "16d10 + 80"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 23,
+    "dex": 10,
+    "con": 21,
+    "int": 14,
+    "wis": 11,
+    "cha": 19,
+    "save": {
+      "dex": "+4",
+      "wis": "+4"
+    },
+    "skill": {
+      "history": "+6",
+      "perception": "+8",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 18,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "9",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Paralyzing Breath."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 10}, reach 10 ft. {@h}15 ({@damage 2d8 + 6}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 17}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 49 ({@damage 11d8}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Paralyzing Breath",
+        "entries": [
+          "{@actSave con} {@dc 17}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail 1} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, when it repeats the save. {@actSaveFail 2} The target has the {@condition Paralyzed|SRD52} condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      }
+    ],
+    "immune": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.paralyzed",
+      "rulebook.page-324"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        324
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/327"
+      },
+      "candidatePage": 324,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.young-white-dragon",
+    "kind": "monster",
+    "name": "Young White Dragon",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 123,
+      "formula": "13d10 + 52"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 20,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 18,
+    "dex": 10,
+    "con": 18,
+    "int": 6,
+    "wis": 11,
+    "cha": 12,
+    "save": {
+      "dex": "+3",
+      "wis": "+3"
+    },
+    "skill": {
+      "perception": "+6",
+      "stealth": "+3"
+    },
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 16,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "6",
+    "trait": [
+      {
+        "name": "Ice Walk",
+        "entries": [
+          "The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, {@variantrule Difficult Terrain|SRD52} composed of ice or snow doesn't cost it extra movement."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}9 ({@damage 2d4 + 4}) Slashing damage plus 2 ({@damage 1d4}) Cold damage."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 15}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 40 ({@damage 9d8}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "immune": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "rulebook.page-340"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        340
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/328"
+      },
+      "candidatePage": 340,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.zombie",
+    "kind": "monster",
+    "name": "Zombie",
+    "size": [
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      8
+    ],
+    "hp": {
+      "average": 15,
+      "formula": "2d8 + 6"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 13,
+    "dex": 6,
+    "con": 16,
+    "int": 3,
+    "wis": 6,
+    "cha": 5,
+    "save": {
+      "wis": "+0"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 8,
+    "languages": [
+      "understands Common plus one other language but can't speak"
+    ],
+    "cr": "1/4",
+    "trait": [
+      {
+        "name": "Undead Fortitude",
+        "entries": [
+          "If damage reduces the zombie to 0 {@variantrule Hit Points|SRD52}, it makes a Constitution saving throw ({@dc 5} plus the damage taken) unless the damage is Radiant or from a {@variantrule Critical Hit|SRD52}. On a successful save, the zombie drops to 1 {@variantrule Hit Points|SRD52|Hit Point} instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}5 ({@damage 1d8 + 1}) Bludgeoning damage."
+        ]
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.exhaustion",
+      "condition.poisoned",
+      "rulebook.page-343"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        343
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/329"
+      },
+      "candidatePage": 343,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.animated-object",
+    "kind": "monster",
+    "name": "Animated Object",
+    "size": [
+      "T",
+      "S",
+      "M",
+      "L",
+      "H"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "special": "10 (Medium or smaller), 20 (Large), 40 (Huge)"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 10,
+    "con": 10,
+    "int": 3,
+    "wis": 3,
+    "cha": 1,
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 6,
+    "languages": [
+      "understands the languages you know"
+    ],
+    "action": [
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 5 ft. {@h}Force damage equal to {@damage (summonSpellLevel - 4)d4 + 3|1d4 + 3}, {@damage (summonSpellLevel - 3)d6 + 3|2d6 + 3} + your spellcasting ability modifier (Large), or {@damage (summonSpellLevel - 3)d12 + 3|2d12 + 3} + your spellcasting ability modifier (Huge)."
+        ]
+      }
+    ],
+    "summonedBySpell": "Animate Objects|SRD52",
+    "summonedBySpellLevel": 5,
+    "pbNote": "equals your Proficiency Bonus",
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.poisoned",
+      "rulebook.page-109",
+      "spell.animate-objects"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        109
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/330"
+      },
+      "candidatePage": 109,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.draconic-spirit",
+    "kind": "monster",
+    "name": "Draconic Spirit",
+    "size": [
+      "L"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      {
+        "special": "14 + the spell's level"
+      }
+    ],
+    "hp": {
+      "special": "50 + 10 for each spell level above 5"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60,
+      "swim": 30
+    },
+    "str": 19,
+    "dex": 14,
+    "con": 17,
+    "int": 10,
+    "wis": 14,
+    "cha": 14,
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "Draconic",
+      "understands the languages you know"
+    ],
+    "trait": [
+      {
+        "name": "Shared Resistances",
+        "entries": [
+          "When you summon the spirit, choose one of its Resistances. You have {@variantrule Resistance|SRD52} to the chosen damage type until the spell ends."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The spirit makes a number of Rend attacks equal to half the spell's level (round down), and it uses Breath Weapon."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atk m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 10 feet. {@h}{@damage 1d6 + 4 + summonSpellLevel} Piercing damage."
+        ]
+      },
+      {
+        "name": "Breath Weapon",
+        "entries": [
+          "{@actSave dex} DC equals your spell save DC, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} {@damage 2d6} damage of a type this spirit has {@variantrule Resistance|SRD52} to (your choice when you cast the spell). {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "resist": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened",
+      "poisoned"
+    ],
+    "summonedBySpell": "Summon Dragon|SRD52",
+    "summonedBySpellLevel": 5,
+    "pbNote": "equals your Proficiency Bonus",
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.frightened",
+      "condition.poisoned",
+      "rulebook.page-166",
+      "spell.summon-dragon"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        166
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/331"
+      },
+      "candidatePage": 166,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.giant-insect",
+    "kind": "monster",
+    "name": "Giant Insect",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "special": "11 + the spell's level"
+      }
+    ],
+    "hp": {
+      "special": "30 + 10 for each spell level above 4"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": {
+        "number": 40,
+        "condition": "(Wasp only)"
+      }
+    },
+    "str": 17,
+    "dex": 13,
+    "con": 15,
+    "int": 4,
+    "wis": 14,
+    "cha": 3,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "understands the languages you know"
+    ],
+    "trait": [
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The insect can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The insect makes a number of attacks equal to half this spell's level (round down)."
+        ]
+      },
+      {
+        "name": "Poison Jab",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 10 ft. {@h}{@damage 1d6 + 3 + summonSpellLevel} Piercing damage plus {@damage 1d4} Poison damage."
+        ]
+      },
+      {
+        "name": "Web Bolt (Spider Only)",
+        "entries": [
+          "{@atkr r} {@hitYourSpellAttack Bonus equals your spell attack modifier}, range 60 ft. {@h}{@damage 1d10 + 3 + summonSpellLevel} Bludgeoning damage, and the target's {@variantrule Speed|SRD52} is reduced to 0 until the start of the insect's next turn."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Venomous Spew (Centipede Only)",
+        "entries": [
+          "{@actSave con} Your spell save DC, one creature the insect can see within 10 feet. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition until the start of the insect's next turn."
+        ]
+      }
+    ],
+    "summonedBySpell": "Giant Insect|SRD52",
+    "summonedBySpellLevel": 4,
+    "pbNote": "equals your Proficiency Bonus",
+    "catalogReferences": [
+      "condition.poisoned",
+      "rulebook.page-136",
+      "spell.giant-insect"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        136
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/332"
+      },
+      "candidatePage": 136,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.otherworldly-steed",
+    "kind": "monster",
+    "name": "Otherworldly Steed",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": {
+        "choose": [
+          "celestial",
+          "fey",
+          "fiend"
+        ]
+      }
+    },
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      {
+        "special": "10 + 1 per spell level"
+      }
+    ],
+    "hp": {
+      "special": "5 + 10 per spell level (the steed has a number of Hit Dice [d10s] equal to the spell's level)"
+    },
+    "speed": {
+      "walk": 60,
+      "fly": {
+        "number": 60,
+        "condition": "(requires level 4+ spell)"
+      }
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 14,
+    "int": 6,
+    "wis": 12,
+    "cha": 8,
+    "passive": 11,
+    "languages": [
+      "telepathy 1 mile (works only with you)"
+    ],
+    "trait": [
+      {
+        "name": "Life Bond",
+        "entries": [
+          "When you regain {@variantrule Hit Points|SRD52} from a level 1+ spell, the steed regains the same number of {@variantrule Hit Points|SRD52} if you're within 5 feet of it."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Otherworldly Slam",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 5 ft. {@h}{@damage 1d8 + summonSpellLevel} of Radiant (Celestial), Psychic (Fey), or Necrotic (Fiend) damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Fell Glare (Fiend Only; Recharges after a Long Rest)",
+        "entries": [
+          "{@actSave wis} DC equals your spell save DC, one creature within 60 feet the steed can see. {@actSaveFail} The target has the {@condition Frightened|SRD52} condition until the end of your next turn."
+        ]
+      },
+      {
+        "name": "Fey Step (Fey Only; Recharges after a Long Rest)",
+        "entries": [
+          "The steed teleports, along with its rider, to an unoccupied space of your choice up to 60 feet away from itself."
+        ]
+      },
+      {
+        "name": "Healing Touch (Celestial Only; Recharges after a Long Rest)",
+        "entries": [
+          "One creature within 5 feet of the steed regains a number of {@variantrule Hit Points|SRD52} equal to {@dice 2d8 + summonSpellLevel}."
+        ]
+      }
+    ],
+    "summonedBySpell": "Find Steed|SRD52",
+    "summonedBySpellLevel": 2,
+    "pbNote": "equals your Proficiency Bonus",
+    "catalogReferences": [
+      "condition.frightened",
+      "rulebook.page-131",
+      "spell.find-steed"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        131
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/333"
+      },
+      "candidatePage": 131,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  }
+]

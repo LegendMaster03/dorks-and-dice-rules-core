@@ -1,0 +1,1286 @@
+[
+  {
+    "id": "class.fighter",
+    "kind": "class",
+    "name": "Fighter",
+    "hd": {
+      "number": 1,
+      "faces": 10
+    },
+    "proficiency": [
+      "str",
+      "con"
+    ],
+    "optionalfeatureProgression": [
+      {
+        "name": "Fighting Style",
+        "featureType": [
+          "FS:F"
+        ],
+        "progression": {
+          "1": 1
+        }
+      }
+    ],
+    "startingProficiencies": {
+      "armor": [
+        "light",
+        "medium",
+        "heavy",
+        "shield"
+      ],
+      "weapons": [
+        "simple",
+        "martial"
+      ],
+      "skills": [
+        {
+          "choose": {
+            "from": [
+              "acrobatics",
+              "animal handling",
+              "athletics",
+              "history",
+              "insight",
+              "intimidation",
+              "perception",
+              "survival"
+            ],
+            "count": 2
+          }
+        }
+      ]
+    },
+    "startingEquipment": {
+      "additionalFromBackground": true,
+      "default": [
+        "(a) {@item chain mail|srd51} or (b) {@item leather armor|srd51}, {@item longbow|srd51}, and {@item arrows (20)|srd51|20 arrows}",
+        "(a) a {@filter martial weapon|items|source=srd51|category=basic|type=martial weapon} and a {@item shield|srd51} or (b) two {@filter martial weapons|items|source=srd51|category=basic|type=martial weapon}",
+        "(a) a {@item light crossbow|srd51} and {@item crossbow bolts (20)|srd51|20 bolts} or (b) two {@item handaxe|srd51|handaxes}",
+        "(a) a {@item dungeoneer's pack|srd51} or (b) an {@item explorer's pack|srd51}"
+      ],
+      "goldAlternative": "{@dice 5d4 × 10|5d4 × 10|Starting Gold}",
+      "defaultData": [
+        {
+          "a": [
+            "chain mail|srd51"
+          ],
+          "b": [
+            "leather armor|srd51",
+            "longbow|srd51",
+            "arrows (20)|srd51"
+          ]
+        },
+        {
+          "a": [
+            {
+              "equipmentType": "weaponMartial"
+            },
+            "shield|srd51"
+          ],
+          "b": [
+            {
+              "equipmentType": "weaponMartial",
+              "quantity": 2
+            }
+          ]
+        },
+        {
+          "a": [
+            "light crossbow|srd51",
+            "crossbow bolts (20)|srd51"
+          ],
+          "b": [
+            {
+              "item": "handaxe|srd51",
+              "quantity": 2
+            }
+          ]
+        },
+        {
+          "a": [
+            "dungeoneer's pack|srd51"
+          ],
+          "b": [
+            "explorer's pack|srd51"
+          ]
+        }
+      ]
+    },
+    "multiclassing": {
+      "requirements": {
+        "or": [
+          {
+            "str": 13,
+            "dex": 13
+          }
+        ]
+      },
+      "proficienciesGained": {
+        "armor": [
+          "light",
+          "medium",
+          "shield"
+        ],
+        "weapons": [
+          "simple",
+          "martial"
+        ]
+      }
+    },
+    "classFeatures": [
+      "Fighting Style|Fighter||1",
+      "Second Wind|Fighter||1",
+      "Action Surge|Fighter||2",
+      {
+        "classFeature": "Martial Archetype|Fighter||3",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Fighter||4",
+      "Extra Attack|Fighter||5",
+      "Ability Score Improvement|Fighter||6",
+      {
+        "classFeature": "Martial Archetype feature|Fighter||7",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Fighter||8",
+      "Indomitable|Fighter||9",
+      {
+        "classFeature": "Martial Archetype feature|Fighter||10",
+        "gainSubclassFeature": true
+      },
+      "Extra Attack (2)|Fighter||11",
+      "Ability Score Improvement|Fighter||12",
+      "Indomitable (two uses)|Fighter||13",
+      "Ability Score Improvement|Fighter||14",
+      {
+        "classFeature": "Martial Archetype feature|Fighter||15",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Fighter||16",
+      "Action Surge (two uses)|Fighter||17",
+      "Indomitable (three uses)|Fighter||17",
+      {
+        "classFeature": "Martial Archetype feature|Fighter||18",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Fighter||19",
+      "Extra Attack (3)|Fighter||20"
+    ],
+    "subclassTitle": "Martial Archetype",
+    "catalogReferences": [
+      "baseitem.arrows-20",
+      "baseitem.chain-mail",
+      "baseitem.crossbow-bolts-20",
+      "baseitem.handaxe",
+      "baseitem.leather-armor",
+      "baseitem.light-crossbow",
+      "baseitem.longbow",
+      "baseitem.shield",
+      "class-feature.fighter.ability-score-improvement.12",
+      "class-feature.fighter.ability-score-improvement.14",
+      "class-feature.fighter.ability-score-improvement.16",
+      "class-feature.fighter.ability-score-improvement.19",
+      "class-feature.fighter.ability-score-improvement.4",
+      "class-feature.fighter.ability-score-improvement.6",
+      "class-feature.fighter.ability-score-improvement.8",
+      "class-feature.fighter.action-surge-two-uses.17",
+      "class-feature.fighter.action-surge.2",
+      "class-feature.fighter.extra-attack-2.11",
+      "class-feature.fighter.extra-attack-3.20",
+      "class-feature.fighter.extra-attack.5",
+      "class-feature.fighter.fighting-style.1",
+      "class-feature.fighter.indomitable-three-uses.17",
+      "class-feature.fighter.indomitable-two-uses.13",
+      "class-feature.fighter.indomitable.9",
+      "class-feature.fighter.martial-archetype-feature.10",
+      "class-feature.fighter.martial-archetype-feature.15",
+      "class-feature.fighter.martial-archetype-feature.18",
+      "class-feature.fighter.martial-archetype-feature.7",
+      "class-feature.fighter.martial-archetype.3",
+      "class-feature.fighter.second-wind.1",
+      "item.dungeoneer-s-pack",
+      "item.explorer-s-pack",
+      "rulebook.page-024",
+      "skill.acrobatics",
+      "skill.animal-handling",
+      "skill.athletics",
+      "skill.history",
+      "skill.insight",
+      "skill.intimidation",
+      "skill.perception",
+      "skill.survival"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 24,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/class/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass.fighter.champion",
+    "kind": "subclass",
+    "name": "Champion",
+    "shortName": "Champion",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "optionalfeatureProgression": [
+      {
+        "name": "Fighting Style",
+        "featureType": [
+          "FS:F"
+        ],
+        "progression": {
+          "10": 1
+        }
+      }
+    ],
+    "subclassFeatures": [
+      "Champion|Fighter||Champion||3",
+      "Remarkable Athlete|Fighter||Champion||7",
+      "Additional Fighting Style|Fighter||Champion||10",
+      "Superior Critical|Fighter||Champion||15",
+      "Survivor|Fighter||Champion||18"
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-025",
+      "subclass-feature.fighter.champion.additional-fighting-style.10",
+      "subclass-feature.fighter.champion.champion.3",
+      "subclass-feature.fighter.champion.remarkable-athlete.7",
+      "subclass-feature.fighter.champion.superior-critical.15",
+      "subclass-feature.fighter.champion.survivor.18"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        25
+      ],
+      "candidatePage": 25,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclass/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.fighting-style.1",
+    "kind": "class-feature",
+    "name": "Fighting Style",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 1,
+    "entries": [
+      "You adopt a particular style of fighting as your specialty. Choose one of the following options. You can't take the same Fighting Style option more than once, even if you get to choose again.",
+      {
+        "type": "options",
+        "count": 1,
+        "entries": [
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Archery"
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Defense"
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Dueling"
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Great Weapon Fighting"
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Protection"
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Two-Weapon Fighting"
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "optional-feature.archery",
+      "optional-feature.defense",
+      "optional-feature.dueling",
+      "optional-feature.great-weapon-fighting",
+      "optional-feature.protection",
+      "optional-feature.two-weapon-fighting",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.second-wind.1",
+    "kind": "class-feature",
+    "name": "Second Wind",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 1,
+    "entries": [
+      "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to {@dice 1d10} + your fighter level.",
+      "Once you use this feature, you must finish a short or long rest before you can use it again."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.action-surge.2",
+    "kind": "class-feature",
+    "name": "Action Surge",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 2,
+    "entries": [
+      "Starting at 2nd level, you can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action.",
+      "Once you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/2"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.martial-archetype.3",
+    "kind": "class-feature",
+    "name": "Martial Archetype",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 3,
+    "entries": [
+      "At 3rd level, you choose an archetype from the list available that you strive to emulate in your combat styles and techniques. The archetype you choose grants you features at 3rd level and again at 7th, 10th, 15th, and 18th level."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/3"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.4",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 4,
+    "entries": [
+      "When you reach 4th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/4"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.extra-attack.5",
+    "kind": "class-feature",
+    "name": "Extra Attack",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 5,
+    "entries": [
+      "Beginning at 5th level, you can attack twice, instead of once, whenever you take the {@action Attack} action on your turn.",
+      "The number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/5"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.6",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 6,
+    "entries": [
+      "When you reach 6th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/6"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.martial-archetype-feature.7",
+    "kind": "class-feature",
+    "name": "Martial Archetype feature",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 7,
+    "entries": [
+      "At 7th level, you gain a feature granted by your Martial Archetype."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/7"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.8",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 8,
+    "entries": [
+      "When you reach 8th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/8"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.indomitable.9",
+    "kind": "class-feature",
+    "name": "Indomitable",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 9,
+    "entries": [
+      "Beginning at 9th level, you can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest.",
+      "You can use this feature twice between long rests starting at 13th level and three times between long rests starting at 17th level."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/9"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.martial-archetype-feature.10",
+    "kind": "class-feature",
+    "name": "Martial Archetype feature",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 10,
+    "entries": [
+      "At 10th level, you gain a feature granted by your Martial Archetype."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/10"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.extra-attack-2.11",
+    "kind": "class-feature",
+    "name": "Extra Attack (2)",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 11,
+    "entries": [
+      "At 11th level, you can attack three times whenever you take the {@action Attack} action on your turn."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/11"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.12",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 12,
+    "entries": [
+      "When you reach 12th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/12"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.indomitable-two-uses.13",
+    "kind": "class-feature",
+    "name": "Indomitable (two uses)",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 13,
+    "entries": [
+      "At 13th level, you can use Indomitable twice between long rests."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/13"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.14",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 14,
+    "entries": [
+      "When you reach 14th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/14"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.martial-archetype-feature.15",
+    "kind": "class-feature",
+    "name": "Martial Archetype feature",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 15,
+    "entries": [
+      "At 15th level, you gain a feature granted by your Martial Archetype."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/15"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.16",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 16,
+    "entries": [
+      "When you reach 16th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/16"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.action-surge-two-uses.17",
+    "kind": "class-feature",
+    "name": "Action Surge (two uses)",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 17,
+    "entries": [
+      "At 17th level, you can use Action Surge twice before a rest, but only once on the same turn."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/17"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.indomitable-three-uses.17",
+    "kind": "class-feature",
+    "name": "Indomitable (three uses)",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 17,
+    "entries": [
+      "At 17th level, you can use Indomitable three times between long rests."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/18"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.martial-archetype-feature.18",
+    "kind": "class-feature",
+    "name": "Martial Archetype feature",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 18,
+    "entries": [
+      "At 18th level, you gain a feature granted by your Martial Archetype."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/19"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.19",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 19,
+    "entries": [
+      "When you reach 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/20"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.extra-attack-3.20",
+    "kind": "class-feature",
+    "name": "Extra Attack (3)",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "level": 20,
+    "entries": [
+      "At 20th level, you can attack four times whenever you take the {@action Attack} action on your turn."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-024"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        24
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/21"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.champion.3",
+    "kind": "subclass-feature",
+    "name": "Champion",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD51",
+    "level": 3,
+    "entries": [
+      "The archetypal Champion focuses on the development of raw physical power honed to deadly perfection. Those who model themselves on this archetype combine rigorous training with physical excellence to deal devastating blows.",
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Improved Critical|Fighter||Champion||3"
+      }
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-025",
+      "subclass-feature.fighter.champion.improved-critical.3",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        25
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.improved-critical.3",
+    "kind": "subclass-feature",
+    "name": "Improved Critical",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD51",
+    "level": 3,
+    "header": 1,
+    "entries": [
+      "Beginning when you choose this archetype at 3rd level, your weapon attacks score a critical hit on a roll of 19 or 20."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-025",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        25
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.remarkable-athlete.7",
+    "kind": "subclass-feature",
+    "name": "Remarkable Athlete",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD51",
+    "level": 7,
+    "header": 2,
+    "entries": [
+      "Starting at 7th level, you can add half your proficiency bonus (round up) to any Strength, Dexterity, or Constitution check you make that doesn't already use your proficiency bonus.",
+      "In addition, when you make a running long jump, the distance you can cover increases by a number of feet equal to your Strength modifier."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-025",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        25
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/2"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.additional-fighting-style.10",
+    "kind": "subclass-feature",
+    "name": "Additional Fighting Style",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD51",
+    "level": 10,
+    "header": 2,
+    "entries": [
+      "At 10th level, you can choose a second option from the Fighting Style class feature."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-025",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        25
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/3"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.superior-critical.15",
+    "kind": "subclass-feature",
+    "name": "Superior Critical",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD51",
+    "level": 15,
+    "header": 2,
+    "entries": [
+      "Starting at 15th level, your weapon attacks score a critical hit on a roll of 18-20."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-025",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        25
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/4"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.survivor.18",
+    "kind": "subclass-feature",
+    "name": "Survivor",
+    "className": "Fighter",
+    "classSource": "SRD51",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD51",
+    "level": 18,
+    "header": 2,
+    "entries": [
+      "At 18th level, you attain the pinnacle of resilience in battle. At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don't gain this benefit if you have 0 hit points."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-025",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        25
+      ],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/5"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  }
+]

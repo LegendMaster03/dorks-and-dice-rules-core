@@ -43,7 +43,8 @@ public sealed class NativePublicApiTests
         }
 
         public static async Task<Fixture> StartAsync(bool approved = true, string surface = "PublicOnly",
-            bool invalidNative = false, bool wrongFingerprint = false, bool missingReview = false)
+            bool invalidNative = false, bool wrongFingerprint = false, bool missingReview = false,
+            bool additionalPackages = false)
         {
             var root = Path.Combine(Path.GetTempPath(), "phase3b-" + Guid.NewGuid().ToString("N"));
             var package = Path.Combine(root, Ruleset);
@@ -59,6 +60,22 @@ public sealed class NativePublicApiTests
                 """{"id":"rule.initiative","name":"Unapproved Working Rule","kind":"rule"}""");
             var fingerprint = invalidNative ? new string('a', 64) :
                 NativeCatalogLoader.Load(NativeRulesetLayout.Resolve(root, Ruleset)).Fingerprint;
+            var additionalFingerprint = "";
+            if (additionalPackages)
+            {
+                foreach (var id in new[] { "dnd-5e", "fate-condensed", "dnd-5-5e" })
+                {
+                    var location = NativeRulesetLayout.Resolve(root, id);
+                    Directory.CreateDirectory(location.NativeDirectory);
+                    File.WriteAllText(Path.Combine(root, id, "manifest.json"),
+                        $$"""{"id":"{{id}}","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/"}""");
+                    File.WriteAllText(Path.Combine(location.NativeDirectory, "base.json"),
+                        id == "dnd-5-5e" ? "{ broken" :
+                        """{"id":"rule.initiative","name":"Foreign Initiative","kind":"rule"}""");
+                    if (id == "dnd-5e")
+                        additionalFingerprint = NativeCatalogLoader.Load(location).Fingerprint;
+                }
+            }
             var app = RulesCoreApplication.Create([], builder =>
             {
                 builder.WebHost.UseUrls("http://127.0.0.1:0");
@@ -76,6 +93,17 @@ public sealed class NativePublicApiTests
                     ["RulesCore:PublicDistribution:Packages:first-party-001:AttributionStatement"] =
                         "Original test fixture; not a license assertion for the production catalog"
                 });
+                if (additionalPackages)
+                    builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+                    {
+                        ["Rulesets:AdditionalRulesets:0"] = "dnd-5e",
+                        ["Rulesets:AdditionalRulesets:1"] = "fate-condensed",
+                        ["Rulesets:AdditionalRulesets:2"] = "dnd-5-5e",
+                        ["RulesCore:PublicDistribution:Packages:dnd-5e:Enabled"] = "true",
+                        ["RulesCore:PublicDistribution:Packages:dnd-5e:ApprovedFingerprint"] = additionalFingerprint,
+                        ["RulesCore:PublicDistribution:Packages:dnd-5e:RightsReviewReference"] = "TEST-FIXTURE",
+                        ["RulesCore:PublicDistribution:Packages:dnd-5e:AttributionStatement"] = "Test fixture"
+                    });
             });
             await app.StartAsync();
             var server = app.Services.GetRequiredService<IServer>();
@@ -131,6 +159,27 @@ public sealed class NativePublicApiTests
         Assert.DoesNotContain("SourcePath", detail.ToString(), StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("shadow", all.ToString(), StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain(f.Root, detail.ToString(), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task PublicCatalogsUseExactPackageSelectionAndIndependentApproval()
+    {
+        await using var f = await Fixture.StartAsync(additionalPackages: true);
+        var list = await f.Client.GetFromJsonAsync<JsonElement>("/api/rulesets");
+        Assert.Equal(new[] { "dnd-5e", Ruleset }, list.GetProperty("rulesets")
+            .EnumerateArray().Select(item => item.GetProperty("id").GetString()).ToArray());
+        var foreign = await f.Client.GetFromJsonAsync<JsonElement>(
+            "/api/rulesets/dnd-5e/rules/rule.initiative");
+        Assert.Equal("Foreign Initiative", foreign.GetProperty("rule").GetProperty("name").GetString());
+        var native = await f.Client.GetFromJsonAsync<JsonElement>(Base + "/rule.initiative");
+        Assert.Equal("Initiative", native.GetProperty("rule").GetProperty("name").GetString());
+        foreach (var id in new[] { "fate-condensed", "dnd-5-5e", "unknown" })
+            Assert.Equal(HttpStatusCode.NotFound,
+                (await f.Client.GetAsync("/api/rulesets/" + id + "/rules")).StatusCode);
+        var registry = f.App.Services.GetRequiredService<NativeCatalogRegistry>();
+        Assert.True(registry.GetStore("fate-condensed").Current().IsReady);
+        Assert.False(registry.GetStore("dnd-5-5e").Current().IsReady);
+        Assert.Equal(HttpStatusCode.OK, (await f.Client.GetAsync("/ready")).StatusCode);
     }
 
     [Fact]

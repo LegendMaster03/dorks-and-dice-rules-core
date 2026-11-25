@@ -10,6 +10,10 @@ public sealed class NativeCatalogStore : INativeCatalogReadiness
 {
     private sealed record State(NativeCatalogSnapshot? Snapshot, string Reason);
 
+    private readonly string? _rulesetId;
+
+    public NativeCatalogStore(string? rulesetId = null) => _rulesetId = rulesetId;
+
     private State _state = new(null, "native_catalog_not_loaded");
 
     public NativeCatalogSnapshot? Snapshot => Volatile.Read(ref _state).Snapshot;
@@ -25,6 +29,8 @@ public sealed class NativeCatalogStore : INativeCatalogReadiness
     public void Publish(NativeCatalogSnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
+        if (_rulesetId is not null && snapshot.RulesetId != _rulesetId)
+            throw new ArgumentException("Snapshot belongs to another ruleset.", nameof(snapshot));
         Volatile.Write(ref _state, new State(snapshot, "ready"));
     }
 

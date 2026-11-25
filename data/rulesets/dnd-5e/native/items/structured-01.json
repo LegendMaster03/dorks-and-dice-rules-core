@@ -1,0 +1,2028 @@
+[
+  {
+    "id": "item.1-wand-of-the-war-mage",
+    "kind": "item",
+    "name": "+1 Wand of the War Mage",
+    "type": "WD|SRD51",
+    "rarity": "uncommon",
+    "reqAttune": "by a spellcaster",
+    "reqAttuneTags": [
+      {
+        "spellcasting": true
+      }
+    ],
+    "weight": 1,
+    "bonusSpellAttack": "+1",
+    "entries": [
+      "While you are holding this wand, you gain a +1 bonus to spell attack rolls. In addition, you ignore {@quickref Cover||3||half cover} when making a spell attack."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 249,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/0"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.2-wand-of-the-war-mage",
+    "kind": "item",
+    "name": "+2 Wand of the War Mage",
+    "type": "WD|SRD51",
+    "rarity": "rare",
+    "reqAttune": "by a spellcaster",
+    "reqAttuneTags": [
+      {
+        "spellcasting": true
+      }
+    ],
+    "weight": 1,
+    "bonusSpellAttack": "+2",
+    "entries": [
+      "While you are holding this wand, you gain a +2 bonus to spell attack rolls. In addition, you ignore {@quickref Cover||3||half cover} when making a spell attack."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 249,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/2"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.3-wand-of-the-war-mage",
+    "kind": "item",
+    "name": "+3 Wand of the War Mage",
+    "type": "WD|SRD51",
+    "rarity": "very rare",
+    "reqAttune": "by a spellcaster",
+    "reqAttuneTags": [
+      {
+        "spellcasting": true
+      }
+    ],
+    "weight": 1,
+    "bonusSpellAttack": "+3",
+    "entries": [
+      "While you are holding this wand, you gain a +3 bonus to spell attack rolls. In addition, you ignore {@quickref Cover||3||half cover} when making a spell attack."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 249,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/4"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.abacus",
+    "kind": "item",
+    "name": "Abacus",
+    "type": "G",
+    "rarity": "none",
+    "weight": 2,
+    "value": 200,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/6"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.acid-vial",
+    "kind": "item",
+    "name": "Acid (vial)",
+    "type": "G",
+    "rarity": "none",
+    "weight": 1,
+    "value": 2500,
+    "entries": [
+      "As an action, you can splash the contents of this vial onto a creature within 5 feet of you or throw the vial up to 20 feet, shattering it on impact. In either case, make a ranged attack against a creature or object, treating the acid as an improvised weapon. On a hit, the target takes {@damage 2d6} acid damage."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/8"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.alchemist-s-fire-flask",
+    "kind": "item",
+    "name": "Alchemist's Fire (flask)",
+    "type": "G",
+    "rarity": "none",
+    "weight": 1,
+    "value": 5000,
+    "entries": [
+      "This sticky, adhesive fluid ignites when exposed to air. As an action, you can throw this flask up to 20 feet, shattering it on impact. Make a ranged attack against a creature or object, treating the alchemist's fire as an improvised weapon. On a hit, the target takes {@damage 1d4} fire damage at the start of each of its turns. A creature can end this damage by using its action to make a {@dc 10} Dexterity check to extinguish the flames."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/11"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ale-gallon",
+    "kind": "item",
+    "name": "Ale (gallon)",
+    "type": "FD",
+    "rarity": "none",
+    "value": 20,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/12"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ale-mug",
+    "kind": "item",
+    "name": "Ale (mug)",
+    "type": "FD",
+    "rarity": "none",
+    "value": 4,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 73,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/13"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.amulet",
+    "kind": "item",
+    "name": "Amulet",
+    "type": "SCF",
+    "scfType": "holy",
+    "rarity": "none",
+    "weight": 1,
+    "value": 500,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 207,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/15"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.amulet-of-health",
+    "kind": "item",
+    "name": "Amulet of Health",
+    "rarity": "rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 1,
+    "ability": {
+      "static": {
+        "con": 19
+      }
+    },
+    "entries": [
+      "Your Constitution score is 19 while you wear this amulet. It has no effect on you if your Constitution score is already 19 or higher without it."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 207,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/17"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.amulet-of-proof-against-detection-and-location",
+    "kind": "item",
+    "name": "Amulet of Proof against Detection and Location",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "While wearing this amulet, you are hidden from {@filter divination|spells|school=D} magic. You can't be targeted by such magic or perceived through magical scrying sensors."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 207,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/19"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.amulet-of-the-planes",
+    "kind": "item",
+    "name": "Amulet of the Planes",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "While wearing this amulet, you can use an action to name a location that you are familiar with on another plane of existence. Then make a {@dc 15} Intelligence check. On a successful check, you cast the {@spell plane shift} spell. On a failure, you and each creature and object within 15 feet of you travel to a random destination. Roll a {@dice d100}. On a 1-60, you travel to a random location on the plane you named. On a 61-100, you travel to a randomly determined plane of existence."
+    ],
+    "attachedSpells": [
+      "plane shift"
+    ],
+    "catalogReferences": [
+      "spell.plane-shift"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 207,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/21"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.animated-shield",
+    "kind": "item",
+    "name": "Animated Shield",
+    "type": "S",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 6,
+    "ac": 2,
+    "entries": [
+      "While holding this shield, you can speak its command word as a bonus action to cause it to animate. The shield leaps into the air and hovers in your space to protect you as if you were wielding it, leaving your hands free. The shield remains animated for 1 minute, until you use a bonus action to end this effect, or until you are {@condition incapacitated} or die, at which point the shield falls to the ground or into your hand if you have one free."
+    ],
+    "catalogReferences": [
+      "condition.incapacitated"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 208,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/23"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.antitoxin-vial",
+    "kind": "item",
+    "name": "Antitoxin (vial)",
+    "type": "G",
+    "rarity": "none",
+    "value": 5000,
+    "entries": [
+      "A creature that drinks this vial of liquid gains advantage on saving throws against poison for 1 hour. It confers no benefit to undead or constructs."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/26"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.apparatus-of-the-crab",
+    "kind": "item",
+    "name": "Apparatus of the Crab",
+    "rarity": "legendary",
+    "wondrous": true,
+    "weight": 500,
+    "entries": [
+      "This item first appears to be a Large sealed iron barrel weighing 500 pounds. The barrel has a hidden catch, which can be found with a successful {@dc 20} Intelligence ({@skill Investigation}) check. Releasing the catch unlocks a hatch at one end of the barrel, allowing two Medium or smaller creatures to crawl inside. Ten levers are set in a row at the far end, each in a neutral position, able to move either up or down. When certain levers are used, the apparatus transforms to resemble a giant lobster.",
+      "The apparatus of the Crab is a Large object with the following statistics:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Armor Class:",
+            "entry": "20"
+          },
+          {
+            "type": "item",
+            "name": "Hit Points:",
+            "entry": "200"
+          },
+          {
+            "type": "item",
+            "name": "Speed:",
+            "entry": "30 ft., swim 30 ft. (or 0 ft. for both if the legs and tail aren't extended)"
+          },
+          {
+            "type": "item",
+            "name": "Damage Immunities:",
+            "entry": "poison, psychic"
+          }
+        ]
+      },
+      "To be used as a vehicle, the apparatus requires one pilot. While the apparatus's hatch is closed, the compartment is airtight and watertight. The compartment holds enough air for 10 hours of breathing, divided by the number of breathing creatures inside.",
+      "The apparatus floats on water. It can also go underwater to a depth of 900 feet. Below that, the vehicle takes {@damage 2d6} bludgeoning damage per minute from pressure.",
+      "A creature in the compartment can use an action to move as many as two of the apparatus's levers up or down. After each use, a lever goes back to its neutral position. Each lever, from left to right, functions as shown in the Apparatus of the Crab Levers table.",
+      {
+        "type": "table",
+        "caption": "Apparatus of the Crab Levers:",
+        "colLabels": [
+          "Lever",
+          "Up",
+          "Down"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-5-5",
+          "col-5-5"
+        ],
+        "rows": [
+          [
+            "1",
+            "Legs and tail extend, allowing the apparatus to walk and swim.",
+            "Legs and tail retract, reducing the apparatus's speed to 0 and making it unable to benefit from bonuses to speed."
+          ],
+          [
+            "2",
+            "Forward window shutter opens.",
+            "Forward window shutter closes."
+          ],
+          [
+            "3",
+            "Side window shutters open (two per side).",
+            "Side window shutters close (two per side)."
+          ],
+          [
+            "4",
+            "Two claws extend from the front sides of the apparatus.",
+            "The claws retract."
+          ],
+          [
+            "5",
+            "Each extended claw makes the following melee weapon attack: {@hit 8} to hit, reach 5 ft., one target. {@h} 7 ({@damage 2d6}) bludgeoning damage.",
+            "Each extended claw makes the following melee weapon attack: {@hit 8} to hit, reach 5 ft., one target. {@h} The target is {@condition grappled} (escape {@dc 15})."
+          ],
+          [
+            "6",
+            "The apparatus walks or swims forward.",
+            "The apparatus walks or swims backward."
+          ],
+          [
+            "7",
+            "The apparatus turns 90 degrees left.",
+            "The apparatus turns 90 degrees right."
+          ],
+          [
+            "8",
+            "Eyelike fixtures emit bright light in a 30-foot radius and dim light for an additional 30 feet.",
+            "The light turns off."
+          ],
+          [
+            "9",
+            "The apparatus sinks as much as 20 feet in liquid.",
+            "The apparatus rises up to 20 feet in liquid."
+          ],
+          [
+            "10",
+            "The rear hatch unseals and opens.",
+            "The rear hatch closes and seals."
+          ]
+        ]
+      }
+    ],
+    "light": [
+      {
+        "bright": 30,
+        "dim": 60
+      }
+    ],
+    "catalogReferences": [
+      "condition.grappled",
+      "rulebook.page-208",
+      "skill.investigation"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        208
+      ],
+      "candidatePage": 208,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/27"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending",
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "vehicles.json",
+          "pointer": "/vehicle/0"
+        }
+      ]
+    },
+    "vehicleProfile": {
+      "vehicleType": "OBJECT",
+      "size": [
+        "L"
+      ],
+      "capCrew": 1,
+      "capPassenger": 1,
+      "ac": 20,
+      "speed": {
+        "walk": 30,
+        "swim": {
+          "number": 30,
+          "condition": "(or 0 ft. for both if the legs and tail aren't extended)"
+        }
+      },
+      "hp": 200,
+      "immune": [
+        "poison",
+        "psychic"
+      ]
+    }
+  },
+  {
+    "id": "item.armor-of-invulnerability",
+    "kind": "item",
+    "name": "Armor of Invulnerability",
+    "baseItem": "plate armor|srd51",
+    "type": "HA",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "entries": [
+      "You have resistance to nonmagical damage while you wear this armor. Additionally, you can use an action to make yourself immune to nonmagical damage for 10 minutes or until you are no longer wearing the armor. Once this special action is used, it can't be used again until the next dawn."
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 208,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/29"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.armor-of-vulnerability-bludgeoning",
+    "kind": "item",
+    "name": "Armor of Vulnerability (Bludgeoning)",
+    "baseItem": "plate armor|srd51",
+    "type": "HA",
+    "resist": [
+      "bludgeoning"
+    ],
+    "vulnerable": [
+      "piercing",
+      "slashing"
+    ],
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "entries": [
+      "While wearing this armor, you have resistance to bludgeoning damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when an {@spell identify} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by the {@spell remove curse} spell or similar magic; removing the armor fails to end the curse. While cursed you have vulnerability to piercing and slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 209,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/31"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.armor-of-vulnerability-piercing",
+    "kind": "item",
+    "name": "Armor of Vulnerability (Piercing)",
+    "baseItem": "plate armor|srd51",
+    "type": "HA",
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "slashing"
+    ],
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "entries": [
+      "While wearing this armor, you have resistance to piercing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when an {@spell identify} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by the {@spell remove curse} spell or similar magic; removing the armor fails to end the curse. While cursed you have vulnerability to bludgeoning and slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 209,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/32"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.armor-of-vulnerability-slashing",
+    "kind": "item",
+    "name": "Armor of Vulnerability (Slashing)",
+    "baseItem": "plate armor|srd51",
+    "type": "HA",
+    "resist": [
+      "slashing"
+    ],
+    "vulnerable": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "entries": [
+      "While wearing this armor, you have resistance to slashing damage.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This armor is cursed, a fact that is revealed only when an {@spell identify} spell is cast on the armor or you attune to it. Attuning to the armor curses you until you are targeted by the {@spell remove curse} spell or similar magic; removing the armor fails to end the curse. While cursed you have vulnerability to bludgeoning and piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 209,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/33"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.arrow-catching-shield",
+    "kind": "item",
+    "name": "Arrow-Catching Shield",
+    "type": "S",
+    "rarity": "rare",
+    "reqAttune": true,
+    "weight": 6,
+    "ac": 2,
+    "bonusAc": "+2",
+    "entries": [
+      "You gain a +2 bonus to AC against ranged attacks while you wield this shield. This bonus is in addition to the shield's normal bonus to AC. In addition, whenever an attacker makes a ranged attack against a target within 5 feet of you, you can use your reaction to become the target of the attack instead."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 209,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/34"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.assassin-s-blood",
+    "kind": "item",
+    "name": "Assassin's Blood",
+    "type": "G",
+    "rarity": "none",
+    "value": 15000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to this poison must make a {@dc 10} Constitution saving throw. On a failed save, it takes 6 ({@damage 1d12}) poison damage and is {@condition poisoned} for 24 hours. On a successful save, the creature takes half damage and isn't {@condition poisoned}."
+    ],
+    "poisonTypes": [
+      "ingested"
+    ],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/36"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.backpack",
+    "kind": "item",
+    "name": "Backpack",
+    "type": "G",
+    "rarity": "none",
+    "weight": 5,
+    "value": 200,
+    "entries": [
+      "A backpack can hold one cubic foot or 30 pounds of gear. You can also strap items, such as a bedroll or a coil of rope, to the outside of a backpack."
+    ],
+    "containerCapacity": {
+      "weight": [
+        30
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 224,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/38"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bag-of-beans",
+    "kind": "item",
+    "name": "Bag of Beans",
+    "rarity": "rare",
+    "wondrous": true,
+    "weight": 0.5,
+    "entries": [
+      "Inside this heavy cloth bag are {@dice 3d4} dry beans. The bag weighs ½ pound plus ¼ pound for each bean it contains.",
+      "If you dump the bag's contents out on the ground, they explode in a 10-foot radius, extending from the beans. Each creature in the area, including you, must make a {@dc 15} Dexterity saving throw, taking {@damage 5d4} fire damage on a failed save, or half as much damage on a successful one. The fire ignites flammable objects in the area that aren't being worn or carried.",
+      "If you remove a bean from the bag, plant it in dirt or sand, and then water it, the bean produces an effect 1 minute later from the ground where it was planted. The DM can choose an effect from the following table, determine it randomly, or create an effect.",
+      {
+        "type": "table",
+        "colLabels": [
+          "{@dice d100}",
+          "Effect"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-11"
+        ],
+        "rows": [
+          [
+            "01",
+            "{@dice 5d4} toadstools sprout. If a creature eats a toadstool, roll any die. On an odd roll, the eater must succeed on a {@dc 15} Constitution saving throw or take {@damage 5d6} poison damage and become {@condition poisoned} for 1 hour. On an even roll, the eater gains {@dice 5d6} temporary hit points for 1 hour."
+          ],
+          [
+            "02-10",
+            "A geyser erupts and spouts water, beer, berry juice, tea, vinegar, wine, or oil (DM's choice) 30 feet into the air for {@dice 1d12} rounds."
+          ],
+          [
+            "11-20",
+            "A {@creature treant} sprouts. There's a {@chance 50} chance that the treant is chaotic evil and attacks."
+          ],
+          [
+            "21-30",
+            "An animate, immobile stone statue in your likeness rises. It makes verbal threats against you. If you leave it and others come near, it describes you as the most heinous of villains and directs the newcomers to find and attack you. If you are on the same plane of existence as the statue, it knows where you are. The statue becomes inanimate after 24 hours."
+          ],
+          [
+            "31-40",
+            "A campfire with blue flames springs forth and burns for 24 hours (or until it is extinguished)."
+          ],
+          [
+            "41-50",
+            "{@dice 1d6 + 6} {@creature shrieker||shriekers} sprout."
+          ],
+          [
+            "51-60",
+            "{@dice 1d4 + 8} bright pink toads crawl forth. Whenever a toad is touched, it transforms into a Large or smaller monster of the DM's choice. The monster remains for 1 minute, then disappears in a puff of bright pink smoke."
+          ],
+          [
+            "61-70",
+            "A hungry {@creature bulette} burrows up and attacks."
+          ],
+          [
+            "71-80",
+            "A fruit tree grows. It has {@dice 1d10 + 20} fruit, {@dice 1d8} of which act as randomly determined magic potions, while one acts as an ingested poison of the DM's choice. The tree vanishes after 1 hour. Picked fruit remains, retaining any magic for 30 days."
+          ],
+          [
+            "81-90",
+            "A nest of {@dice 1d4 + 3} eggs springs up. Any creature that eats an egg must make a {@dc 20} Constitution saving throw. On a successful save, a creature permanently increases its lowest ability score by 1, randomly choosing among equally low scores. On a failed save, the creature takes {@damage 10d6} force damage from an internal magical explosion."
+          ],
+          [
+            "91-99",
+            "A pyramid with a 60-foot-square base bursts upward. Inside is a sarcophagus containing a {@creature mummy lord}. The pyramid is treated as the {@creature mummy lord||mummy lord's} lair, and its sarcophagus contains treasure of the DM's choice."
+          ],
+          [
+            "00",
+            "A giant beanstalk sprouts, growing to a height of the DM's choice. The top leads where the DM chooses, such as to a great view, a {@creature cloud giant||cloud giant's} castle, or a different plane of existence."
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "monster.bulette",
+      "monster.cloud-giant",
+      "monster.mummy-lord",
+      "monster.shrieker",
+      "monster.treant"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 209,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/40"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bag-of-devouring",
+    "kind": "item",
+    "name": "Bag of Devouring",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 15,
+    "entries": [
+      "This bag superficially resembles a {@item bag of holding} but is a feeding orifice for a gigantic extradimensional creature. Turning the bag inside out closes the orifice.",
+      "The extradimensional creature attached to the bag can sense whatever is placed inside the bag. Animal or vegetable matter placed wholly in the bag is devoured and lost forever. When part of a living creature is placed in the bag, as happens when someone reaches inside it, there is a {@chance 50} chance that the creature is pulled inside the bag. A creature inside the bag can use its action to try to escape with a successful {@dc 15} Strength check. Another creature can use its action to reach into the bag to pull a creature out, doing so with a successful {@dc 20} Strength check (provided it isn't pulled inside the bag first). Any creature that starts its turn inside the bag is devoured, its body destroyed.",
+      "Inanimate objects can be stored in the bag, which can hold a cubic foot of such material. However, once each day, the bag swallows any objects inside it and spits them out into another plane of existence. The DM determines the time and plane.",
+      "If the bag is pierced or torn, it is destroyed, and anything contained within it is transported to a random location on the Astral Plane."
+    ],
+    "catalogReferences": [
+      "item.bag-of-holding"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/42"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bag-of-holding",
+    "kind": "item",
+    "name": "Bag of Holding",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "weight": 15,
+    "entries": [
+      "This bag has an interior space considerably larger than its outside dimensions, roughly 2 feet in diameter at the mouth and 4 feet deep. The bag can hold up to 500 pounds, not exceeding a volume of 64 cubic feet. The bag weighs 15 pounds, regardless of its contents. Retrieving an item from the bag requires an action.",
+      "If the bag is overloaded, pierced, or torn, it ruptures and is destroyed, and its contents are scattered in the Astral Plane. If the bag is turned inside out, its contents spill forth, unharmed, but the bag must be put right before it can be used again. Breathing creatures inside the bag can survive up to a number of minutes equal to 10 divided by the number of creatures (minimum 1 minute), after which time they begin to suffocate.",
+      "Placing a bag of holding inside an extradimensional space created by a {@item Handy Haversack}, {@item portable hole}, or similar item instantly destroys both items and opens a gate to the Astral Plane. The gate originates where the one item was placed inside the other. Any creature within 10 feet of the gate is sucked through it to a random location on the Astral Plane. The gate then closes. The gate is one-way only and can't be reopened."
+    ],
+    "containerCapacity": {
+      "weight": [
+        500
+      ],
+      "weightless": true
+    },
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [
+      "item.handy-haversack",
+      "item.portable-hole"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/44"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bag-of-tricks-gray",
+    "kind": "item",
+    "name": "Bag of Tricks, Gray",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "weight": 0.5,
+    "recharge": "dawn",
+    "entries": [
+      "This ordinary bag, made from gray cloth, appears empty. Reaching inside the bag, however, reveals the presence of a small, fuzzy object.",
+      "You can use an action to pull the fuzzy object from the bag and throw it up to 20 feet. When the object lands, it transforms into a creature you determine by rolling a {@dice d8} and consulting the table. The creature vanishes at the next dawn or when it is reduced to 0 hit points.",
+      "The creature is friendly to you and your companions, and it acts on your turn. You can use a bonus action to command how the creature moves and what action it takes on its next turn, or to give it general orders, such as to attack your enemies. In the absence of such orders, the creature acts in a fashion appropriate to its nature.",
+      "Once three fuzzy objects have been pulled from the bag, the bag can't be used again until the next dawn.",
+      {
+        "type": "table",
+        "colLabels": [
+          "{@dice d8}",
+          "Creature"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-11"
+        ],
+        "rows": [
+          [
+            "1",
+            "{@creature Weasel}"
+          ],
+          [
+            "2",
+            "{@creature Giant rat}"
+          ],
+          [
+            "3",
+            "{@creature Badger}"
+          ],
+          [
+            "4",
+            "{@creature Boar}"
+          ],
+          [
+            "5",
+            "{@creature Panther}"
+          ],
+          [
+            "6",
+            "{@creature Giant badger}"
+          ],
+          [
+            "7",
+            "{@creature Dire wolf}"
+          ],
+          [
+            "8",
+            "{@creature Giant elk}"
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "monster.badger",
+      "monster.boar",
+      "monster.dire-wolf",
+      "monster.giant-badger",
+      "monster.giant-elk",
+      "monster.giant-rat",
+      "monster.panther",
+      "monster.weasel"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/46"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bag-of-tricks-rust",
+    "kind": "item",
+    "name": "Bag of Tricks, Rust",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "weight": 0.5,
+    "recharge": "dawn",
+    "entries": [
+      "This ordinary bag, made from rust cloth, appears empty. Reaching inside the bag, however, reveals the presence of a small, fuzzy object.",
+      "You can use an action to pull the fuzzy object from the bag and throw it up to 20 feet. When the object lands, it transforms into a creature you determine by rolling a {@dice d8} and consulting the table. The creature vanishes at the next dawn or when it is reduced to 0 hit points.",
+      "The creature is friendly to you and your companions, and it acts on your turn. You can use a bonus action to command how the creature moves and what action it takes on its next turn, or to give it general orders, such as to attack your enemies. In the absence of such orders, the creature acts in a fashion appropriate to its nature.",
+      "Once three fuzzy objects have been pulled from the bag, the bag can't be used again until the next dawn.",
+      {
+        "type": "table",
+        "colLabels": [
+          "{@dice d8}",
+          "Creature"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-11"
+        ],
+        "rows": [
+          [
+            "1",
+            "{@creature Rat}"
+          ],
+          [
+            "2",
+            "{@creature Owl}"
+          ],
+          [
+            "3",
+            "{@creature Mastiff}"
+          ],
+          [
+            "4",
+            "{@creature Goat}"
+          ],
+          [
+            "5",
+            "{@creature Giant goat}"
+          ],
+          [
+            "6",
+            "{@creature Giant boar}"
+          ],
+          [
+            "7",
+            "{@creature Lion}"
+          ],
+          [
+            "8",
+            "{@creature Brown bear}"
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "monster.brown-bear",
+      "monster.giant-boar",
+      "monster.giant-goat",
+      "monster.goat",
+      "monster.lion",
+      "monster.mastiff",
+      "monster.owl",
+      "monster.rat"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/48"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bag-of-tricks-tan",
+    "kind": "item",
+    "name": "Bag of Tricks, Tan",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "weight": 0.5,
+    "recharge": "dawn",
+    "entries": [
+      "This ordinary bag, made from tan cloth, appears empty. Reaching inside the bag, however, reveals the presence of a small, fuzzy object.",
+      "You can use an action to pull the fuzzy object from the bag and throw it up to 20 feet. When the object lands, it transforms into a creature you determine by rolling a {@dice d8} and consulting the table. The creature vanishes at the next dawn or when it is reduced to 0 hit points.",
+      "The creature is friendly to you and your companions, and it acts on your turn. You can use a bonus action to command how the creature moves and what action it takes on its next turn, or to give it general orders, such as to attack your enemies. In the absence of such orders, the creature acts in a fashion appropriate to its nature.",
+      "Once three fuzzy objects have been pulled from the bag, the bag can't be used again until the next dawn.",
+      {
+        "type": "table",
+        "colLabels": [
+          "{@dice d8}",
+          "Creature"
+        ],
+        "colStyles": [
+          "col-1 text-center",
+          "col-11"
+        ],
+        "rows": [
+          [
+            "1",
+            "{@creature Jackal}"
+          ],
+          [
+            "2",
+            "{@creature Ape}"
+          ],
+          [
+            "3",
+            "{@creature Baboon}"
+          ],
+          [
+            "4",
+            "{@creature Axe beak}"
+          ],
+          [
+            "5",
+            "{@creature Black bear}"
+          ],
+          [
+            "6",
+            "{@creature Giant weasel}"
+          ],
+          [
+            "7",
+            "{@creature Giant hyena}"
+          ],
+          [
+            "8",
+            "{@creature Tiger}"
+          ]
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "monster.ape",
+      "monster.axe-beak",
+      "monster.baboon",
+      "monster.black-bear",
+      "monster.giant-hyena",
+      "monster.giant-weasel",
+      "monster.jackal",
+      "monster.tiger"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/50"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ball-bearing",
+    "kind": "item",
+    "name": "Ball Bearing",
+    "type": "G",
+    "rarity": "none",
+    "weight": 0.002,
+    "value": 0.1,
+    "entries": [
+      "Most commonly found inside a {@item Ball Bearings (Bag of 1,000)|srd51|bag of ball bearings}."
+    ],
+    "catalogReferences": [
+      "item.ball-bearings-bag-of-1-000"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/52"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ball-bearings-bag-of-1-000",
+    "kind": "item",
+    "name": "Ball Bearings (bag of 1,000)",
+    "type": "G",
+    "rarity": "none",
+    "weight": 2,
+    "value": 100,
+    "entries": [
+      "As an action, you can spill these tiny metal balls from their pouch to cover a level area 10 feet square. A creature moving across the covered area must succeed on a {@dc 10} Dexterity saving throw or fall {@condition prone}. A creature moving through the area at half speed doesn't need to make the saving throw."
+    ],
+    "packContents": [
+      {
+        "item": "ball bearing|srd51",
+        "quantity": 1000
+      }
+    ],
+    "atomicPackContents": true,
+    "catalogReferences": [
+      "condition.prone",
+      "item.ball-bearing"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/54"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.barrel",
+    "kind": "item",
+    "name": "Barrel",
+    "type": "G",
+    "rarity": "none",
+    "weight": 70,
+    "value": 200,
+    "entries": [
+      "A barrel can hold 40 gallons of liquid or 4 cubic feet of solids."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 208,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/55"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.basic-poison-vial",
+    "kind": "item",
+    "name": "Basic Poison (vial)",
+    "type": "G",
+    "rarity": "none",
+    "value": 10000,
+    "poison": true,
+    "entries": [
+      "You can use the poison in this vial to coat one slashing or piercing weapon or up to three pieces of ammunition. Applying the poison takes an action. A creature hit by the poisoned weapon or ammunition must make a {@dc 10} Constitution saving throw or take {@damage 1d4} poison damage. Once applied, the poison retains potency for 1 minute before drying."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 208,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/58"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.basket",
+    "kind": "item",
+    "name": "Basket",
+    "type": "G",
+    "rarity": "none",
+    "weight": 2,
+    "value": 40,
+    "entries": [
+      "A basket holds 2 cubic feet or 40 pounds of gear."
+    ],
+    "containerCapacity": {
+      "weight": [
+        40
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/59"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bead-of-force",
+    "kind": "item",
+    "name": "Bead of Force",
+    "rarity": "rare",
+    "wondrous": true,
+    "weight": 0.0625,
+    "entries": [
+      "This small black sphere measures ¾ of an inch in diameter and weighs an ounce. Typically, {@dice 1d4 + 4} {@italic beads of force} are found together.",
+      "You can use an action to throw the bead up to 60 feet. The bead explodes on impact and is destroyed. Each creature within a 10-foot radius of where the bead landed must succeed on a {@dc 15} Dexterity saving throw or take {@damage 5d4} force damage. A sphere of transparent force then encloses the area for 1 minute. Any creature that failed the save and is completely within the area is trapped inside this sphere. Creatures that succeeded on the save, or are partially within the area, are pushed away from the center of the sphere until they are no longer inside it. Only breathable air can pass through the sphere's wall. No attack or other effect can.",
+      "An enclosed creature can use its action to push against the sphere's wall, moving the sphere up to half the creature's walking speed. The sphere can be picked up, and its magic causes it to weigh only 1 pound, regardless of the weight of creatures inside."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/61"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bedroll",
+    "kind": "item",
+    "name": "Bedroll",
+    "type": "G",
+    "rarity": "none",
+    "weight": 7,
+    "value": 100,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 62,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/64"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bell",
+    "kind": "item",
+    "name": "Bell",
+    "type": "G",
+    "rarity": "none",
+    "value": 100,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/66"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.belt-of-cloud-giant-strength",
+    "kind": "item",
+    "name": "Belt of Cloud Giant Strength",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "wondrous": true,
+    "ability": {
+      "static": {
+        "str": 27
+      }
+    },
+    "entries": [
+      "While wearing this belt, your Strength score changes to 27. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/68"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.belt-of-dwarvenkind",
+    "kind": "item",
+    "name": "Belt of Dwarvenkind",
+    "resist": [
+      "poison"
+    ],
+    "rarity": "rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "ability": {
+      "con": 2
+    },
+    "grantsLanguage": true,
+    "entries": [
+      "While wearing this belt, you gain the following benefits:",
+      {
+        "type": "list",
+        "items": [
+          "Your Constitution score increases by 2, to a maximum of 20.",
+          "You have advantage on Charisma ({@skill Persuasion}) checks made to interact with dwarves."
+        ]
+      },
+      "In addition, while attuned to the belt, you have a {@chance 50} chance each day at dawn of growing a full beard if you're capable of growing one, or a visibly thicker beard if you already have one.",
+      "If you aren't a dwarf, you gain the following additional benefits while wearing the belt:",
+      {
+        "type": "list",
+        "items": [
+          "You have advantage on saving throws against poison, and you have resistance against poison damage.",
+          "You have {@sense darkvision} out to a range of 60 feet.",
+          "You can speak, read, and write Dwarvish."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "skill.persuasion"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/70"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.belt-of-fire-giant-strength",
+    "kind": "item",
+    "name": "Belt of Fire Giant Strength",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "ability": {
+      "static": {
+        "str": 25
+      }
+    },
+    "entries": [
+      "While wearing this belt, your Strength score changes to 25. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/72"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.belt-of-frost-giant-strength",
+    "kind": "item",
+    "name": "Belt of Frost Giant Strength",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "ability": {
+      "static": {
+        "str": 23
+      }
+    },
+    "entries": [
+      "While wearing this belt, your Strength score changes to 23. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/74"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.belt-of-hill-giant-strength",
+    "kind": "item",
+    "name": "Belt of Hill Giant Strength",
+    "rarity": "rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "ability": {
+      "static": {
+        "str": 21
+      }
+    },
+    "entries": [
+      "While wearing this belt, your Strength score changes to 21. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/76"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.belt-of-stone-giant-strength",
+    "kind": "item",
+    "name": "Belt of Stone Giant Strength",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "ability": {
+      "static": {
+        "str": 23
+      }
+    },
+    "entries": [
+      "While wearing this belt, your Strength score changes to 23. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/78"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.belt-of-storm-giant-strength",
+    "kind": "item",
+    "name": "Belt of Storm Giant Strength",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "wondrous": true,
+    "ability": {
+      "static": {
+        "str": 29
+      }
+    },
+    "entries": [
+      "While wearing this belt, your Strength score changes to 29. The item has no effect on you if your Strength without the belt is equal to or greater than the belt's score."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/80"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bit-and-bridle",
+    "kind": "item",
+    "name": "Bit and bridle",
+    "type": "TAH",
+    "rarity": "none",
+    "weight": 1,
+    "value": 200,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 72,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/82"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.black-dragon-scale-mail",
+    "kind": "item",
+    "name": "Black Dragon Scale Mail",
+    "type": "MA",
+    "resist": [
+      "acid"
+    ],
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 45,
+    "ac": 14,
+    "bonusAc": "+1",
+    "stealth": true,
+    "entries": [
+      "Dragon scale mail is made of the scales of one kind of dragon. Sometimes dragons collect their cast-off scales and gift them to humanoids. Other times, hunters carefully skin and preserve the hide of a dead dragon. In either case, dragon scale mail is highly valued. While wearing this armor, you gain a +1 bonus to AC, you have advantage on saving throws against the Frightful Presence and breath weapons of dragons, and you have resistance to acid damage.",
+      "Additionally, you can focus your senses as an action to magically discern the distance and direction to the closest black dragon within 30 miles of you. This special action can't be used again until the next dawn."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/83"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.blanket",
+    "kind": "item",
+    "name": "Blanket",
+    "type": "G",
+    "rarity": "none",
+    "weight": 3,
+    "value": 50,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 69,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/85"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.block-and-tackle",
+    "kind": "item",
+    "name": "Block and Tackle",
+    "type": "G",
+    "rarity": "none",
+    "weight": 5,
+    "value": 100,
+    "entries": [
+      "A set of pulleys with a cable threaded through them and a hook to attach to objects, a block and tackle allows you to hoist up to four times the weight you can normally lift."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/87"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.blue-dragon-scale-mail",
+    "kind": "item",
+    "name": "Blue Dragon Scale Mail",
+    "type": "MA",
+    "resist": [
+      "lightning"
+    ],
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 45,
+    "ac": 14,
+    "bonusAc": "+1",
+    "stealth": true,
+    "entries": [
+      "Dragon scale mail is made of the scales of one kind of dragon. Sometimes dragons collect their cast-off scales and gift them to humanoids. Other times, hunters carefully skin and preserve the hide of a dead dragon. In either case, dragon scale mail is highly valued. While wearing this armor, you gain a +1 bonus to AC, you have advantage on saving throws against the Frightful Presence and breath weapons of dragons, and you have resistance to lightning damage.",
+      "Additionally, you can focus your senses as an action to magically discern the distance and direction to the closest blue dragon within 30 miles of you. This special action can't be used again until the next dawn."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/89"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.book",
+    "kind": "item",
+    "name": "Book",
+    "type": "G",
+    "rarity": "none",
+    "weight": 5,
+    "value": 2500,
+    "entries": [
+      "A book might contain poetry, historical accounts, information pertaining to a particular field of lore, diagrams and notes on gnomish contraptions, or just about anything else that can be represented using text or pictures. A book of spells is a {@item spellbook|srd51}."
+    ],
+    "catalogReferences": [
+      "item.spellbook"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/91"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.boots-of-elvenkind",
+    "kind": "item",
+    "name": "Boots of Elvenkind",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "While you wear these boots, your steps make no sound, regardless of the surface you are moving across. You also have advantage on Dexterity ({@skill Stealth}) checks that rely on moving silently."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [
+      "skill.stealth"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 212,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/93"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  }
+]

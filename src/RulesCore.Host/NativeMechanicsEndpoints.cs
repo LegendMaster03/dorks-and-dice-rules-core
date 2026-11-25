@@ -35,7 +35,13 @@ public static class NativeMechanicsEndpoints
             var validator = invocation.HttpContext.RequestServices
                 .GetRequiredService<CharacterSheetMechanicsTicketValidator>();
             var failure = await validator.ValidateAsync(invocation.HttpContext, privateTunnel);
-            return failure is not null ? failure : await next(invocation);
+            if (failure is not null) return failure;
+            // Every existing route in this group is a first-party implementation.
+            // A configured foreign default must not inherit those capabilities.
+            var settings = invocation.HttpContext.RequestServices.GetRequiredService<RulesCoreSettings>();
+            if (settings.Ruleset.RulesetId != "first-party-001")
+                return Results.Json(new { error = "unsupported_mechanic" }, statusCode: 422);
+            return await next(invocation);
         });
 
         // Raw native definitions remain on the private, source-scoped surface.

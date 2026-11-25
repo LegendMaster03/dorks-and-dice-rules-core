@@ -1,0 +1,682 @@
+{
+  "edition": "srd-5.2.1",
+  "sourceCounts": {
+    "race": 9,
+    "background": 4
+  },
+  "nativeCounts": {
+    "species": 9,
+    "background": 4
+  },
+  "excluded": [
+    {
+      "path": "races.json",
+      "pointer": "/race/1/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/3/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/5/traitTags",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/5/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/7/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/8/traitTags",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/8/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/12/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/14/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/15/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/17/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "backgrounds.json",
+      "pointer": "/background/1/hasFluff",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "backgrounds.json",
+      "pointer": "/background/1/hasFluffImages",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "backgrounds.json",
+      "pointer": "/background/2/hasFluff",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "backgrounds.json",
+      "pointer": "/background/2/hasFluffImages",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "backgrounds.json",
+      "pointer": "/background/3/hasFluff",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "backgrounds.json",
+      "pointer": "/background/3/hasFluffImages",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "backgrounds.json",
+      "pointer": "/background/4/hasFluff",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "backgrounds.json",
+      "pointer": "/background/4/hasFluffImages",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    }
+  ],
+  "corrections": [
+    {
+      "id": "species.elf",
+      "reason": "SRD 5.2.1 p.85: High Elf starts with Prestidigitation; a different Wizard cantrip may replace the lineage cantrip after a Long Rest. Retain the source selector as a conditional replacement, not an initial choice."
+    },
+    {
+      "id": "species.elf",
+      "reason": "Official lineage table and grant text: the level-3 and level-5 spells are always prepared in addition to the once-per-Long-Rest slot-free casting. Preserve both modes for all named branches and nested versions."
+    },
+    {
+      "id": "species.gnome",
+      "reason": "SRD 5.2.1 p.85: Forest Gnome receives Speak with Animals as a starting lineage benefit, always prepared; preserve proficiency-bonus free casts per Long Rest instead of delaying acquisition to level 3."
+    },
+    {
+      "id": "species.tiefling",
+      "reason": "Official lineage table and grant text: the level-3 and level-5 spells are always prepared in addition to the once-per-Long-Rest slot-free casting. Preserve both modes for all named branches and nested versions."
+    }
+  ],
+  "mergedOccurrences": [],
+  "pendingReferences": [
+    {
+      "id": "species.dragonborn",
+      "reference": "variantrule|Damage|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dragonborn",
+      "reference": "variantrule|Resistance|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dragonborn",
+      "reference": "action|Attack|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dragonborn",
+      "reference": "variantrule|Cone [Area of Effect]|SRD52|Cone",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dragonborn",
+      "reference": "variantrule|Line [Area of Effect]|SRD52|Line",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dragonborn",
+      "reference": "variantrule|Proficiency|SRD52|Proficiency Bonus",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dragonborn",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dragonborn",
+      "reference": "sense|Darkvision|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dragonborn",
+      "reference": "variantrule|Bonus Action|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dragonborn",
+      "reference": "condition|Incapacitated|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dragonborn",
+      "reference": "variantrule|Fly Speed|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dragonborn",
+      "reference": "variantrule|Speed|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dwarf",
+      "reference": "sense|Darkvision|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dwarf",
+      "reference": "variantrule|Resistance|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dwarf",
+      "reference": "variantrule|Advantage|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dwarf",
+      "reference": "condition|Poisoned|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dwarf",
+      "reference": "variantrule|Hit Points|SRD52|Hit Point",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dwarf",
+      "reference": "variantrule|Bonus Action|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dwarf",
+      "reference": "sense|Tremorsense|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dwarf",
+      "reference": "variantrule|Proficiency|SRD52|Proficiency Bonus",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.dwarf",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "sense|Darkvision|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "spell|Dancing Lights|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "spell|Faerie Fire|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "spell|Darkness|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "spell|Prestidigitation|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "spell|Detect Magic|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "spell|Misty Step|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "variantrule|Speed|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "spell|Druidcraft|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "spell|Longstrider|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "spell|Pass without Trace|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "variantrule|Advantage|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.elf",
+      "reference": "condition|Charmed|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.gnome",
+      "reference": "sense|Darkvision|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.gnome",
+      "reference": "variantrule|Advantage|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.gnome",
+      "reference": "spell|Minor Illusion|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.gnome",
+      "reference": "spell|Speak with Animals|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.gnome",
+      "reference": "variantrule|Proficiency|SRD52|Proficiency Bonus",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.gnome",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.gnome",
+      "reference": "spell|Mending|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.gnome",
+      "reference": "spell|Prestidigitation|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.gnome",
+      "reference": "variantrule|Bonus Action|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.gnome",
+      "reference": "action|Utilize|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.goliath",
+      "reference": "variantrule|Proficiency|SRD52|Proficiency Bonus",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.goliath",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.goliath",
+      "reference": "variantrule|Bonus Action|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.goliath",
+      "reference": "variantrule|Speed|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.goliath",
+      "reference": "condition|Prone|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.goliath",
+      "reference": "variantrule|Reaction|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.goliath",
+      "reference": "variantrule|Advantage|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.goliath",
+      "reference": "condition|Grappled|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.halfling",
+      "reference": "variantrule|Advantage|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.halfling",
+      "reference": "condition|Frightened|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.halfling",
+      "reference": "variantrule|D20 Test|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.halfling",
+      "reference": "action|Hide|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.human",
+      "reference": "variantrule|Heroic Inspiration|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.human",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.orc",
+      "reference": "action|Dash|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.orc",
+      "reference": "variantrule|Bonus Action|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.orc",
+      "reference": "variantrule|Temporary Hit Points|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.orc",
+      "reference": "variantrule|Proficiency|SRD52|Proficiency Bonus",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.orc",
+      "reference": "variantrule|Short Rest|SRD52|Short",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.orc",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.orc",
+      "reference": "sense|Darkvision|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.orc",
+      "reference": "variantrule|Hit Points|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.orc",
+      "reference": "variantrule|Hit Points|SRD52|Hit Point",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "sense|Darkvision|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "variantrule|Resistance|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "spell|Poison Spray|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "spell|Ray of Sickness|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "spell|Hold Person|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "spell|Chill Touch|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "spell|False Life|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "spell|Ray of Enfeeblement|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "spell|Fire Bolt|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "spell|Hellish Rebuke|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "spell|Darkness|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "species.tiefling",
+      "reference": "spell|Thaumaturgy|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.acolyte",
+      "reference": "feat|Magic Initiate|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.acolyte",
+      "reference": "item|Calligrapher's Supplies|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.acolyte",
+      "reference": "item|Book|SRD52|Book (prayers)",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.acolyte",
+      "reference": "item|Holy Symbol|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.acolyte",
+      "reference": "item|Parchment|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.acolyte",
+      "reference": "item|Robe|srd52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.criminal",
+      "reference": "feat|Alert|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.criminal",
+      "reference": "item|Thieves' Tools|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.criminal",
+      "reference": "item|Dagger|SRD52|2 Daggers",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.criminal",
+      "reference": "item|Crowbar|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.criminal",
+      "reference": "item|Pouch|SRD52|2 Pouches",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.criminal",
+      "reference": "item|Traveler's Clothes|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.sage",
+      "reference": "feat|Magic Initiate|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.sage",
+      "reference": "item|Calligrapher's Supplies|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.sage",
+      "reference": "item|Quarterstaff|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.sage",
+      "reference": "item|Book|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.sage",
+      "reference": "item|Parchment|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.sage",
+      "reference": "item|Robe|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.soldier",
+      "reference": "feat|Savage Attacker|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.soldier",
+      "reference": "item|Gaming Set|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.soldier",
+      "reference": "item|Spear|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.soldier",
+      "reference": "item|Shortbow|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.soldier",
+      "reference": "item|Arrow|SRD52|20 Arrows",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.soldier",
+      "reference": "item|Healer's Kit|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.soldier",
+      "reference": "item|Quiver|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.soldier",
+      "reference": "item|Traveler's Clothes|SRD52",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    }
+  ],
+  "nativeCount": 13,
+  "limitations": [
+    "Full body and table fidelity pending; publisher page locators are not certification.",
+    "Nested _versions are preserved as source choice templates, not independently materialized records.",
+    "Unnamed legacy subrace extensions are folded into their parent with separate source pointers.",
+    "Semantic cross-category reference reconciliation and general character-creation rules pending."
+  ],
+  "literalSpellRelationships": {
+    "grantOccurrences": 71,
+    "prerequisiteOccurrences": 0,
+    "addedCatalogLinks": 23,
+    "unresolvedSelectors": 0
+  },
+  "literalCharacterRelationships": {
+    "literalOccurrences": 39,
+    "namedVariantOccurrences": 2,
+    "addedCatalogLinks": 25
+  }
+}

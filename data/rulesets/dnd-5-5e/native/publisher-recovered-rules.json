@@ -1,0 +1,73 @@
+[
+  {
+    "id": "rule.weapon-mastery-properties",
+    "kind": "rule",
+    "name": "Mastery Properties",
+    "aliases": [
+      "Weapon Mastery Properties"
+    ],
+    "entries": [
+      "Each weapon has a mastery property, which is usable only by a character who has a feature, such as Weapon Mastery, that unlocks the property for the character. The properties are defined below."
+    ],
+    "properties": [
+      "item-mastery.cleave",
+      "item-mastery.graze",
+      "item-mastery.nick",
+      "item-mastery.push",
+      "item-mastery.sap",
+      "item-mastery.slow",
+      "item-mastery.topple",
+      "item-mastery.vex"
+    ],
+    "catalogReferences": [
+      "item-mastery.cleave",
+      "item-mastery.graze",
+      "item-mastery.nick",
+      "item-mastery.push",
+      "item-mastery.sap",
+      "item-mastery.slow",
+      "item-mastery.topple",
+      "item-mastery.vex",
+      "rulebook.page-090"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        90
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "glossary.reach",
+    "kind": "glossary",
+    "name": "Reach",
+    "entries": [
+      "A creature has a reach of 5 feet unless a rule says otherwise."
+    ],
+    "catalogReferences": [
+      "rulebook.page-186"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        186
+      ],
+      "structuredStatus": "Expanded upstream SRD candidate; exact published glossary body verified.",
+      "expandedStructuredSource": {
+        "provider": "5etools-mirror-3/5etools-src",
+        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
+        "path": "data/variantrules.json",
+        "pointer": "/variantrule/179"
+      }
+    }
+  }
+]

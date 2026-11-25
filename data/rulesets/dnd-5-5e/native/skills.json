@@ -1,0 +1,542 @@
+[
+  {
+    "id": "skill.acrobatics",
+    "kind": "skill",
+    "name": "Acrobatics",
+    "ability": "dex",
+    "entries": [
+      "Stay on your feet in a tricky situation, or perform an acrobatic stunt."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/1"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.animal-handling",
+    "kind": "skill",
+    "name": "Animal Handling",
+    "ability": "wis",
+    "entries": [
+      "Calm or train an animal, or get an animal to behave in a certain way."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/3"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.arcana",
+    "kind": "skill",
+    "name": "Arcana",
+    "ability": "int",
+    "entries": [
+      "Recall lore about spells, magic items, and the planes of existence."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/5"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.athletics",
+    "kind": "skill",
+    "name": "Athletics",
+    "ability": "str",
+    "entries": [
+      "Jump farther than normal, stay afloat in rough water, or break something."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/7"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.deception",
+    "kind": "skill",
+    "name": "Deception",
+    "ability": "cha",
+    "entries": [
+      "Tell a convincing lie, or wear a disguise convincingly."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/9"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.history",
+    "kind": "skill",
+    "name": "History",
+    "ability": "int",
+    "entries": [
+      "Recall lore about historical events, people, nations, and cultures."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/11"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.insight",
+    "kind": "skill",
+    "name": "Insight",
+    "ability": "wis",
+    "entries": [
+      "Discern a person's mood and intentions."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/13"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.intimidation",
+    "kind": "skill",
+    "name": "Intimidation",
+    "ability": "cha",
+    "entries": [
+      "Awe or threaten someone into doing what you want."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/15"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.investigation",
+    "kind": "skill",
+    "name": "Investigation",
+    "ability": "int",
+    "entries": [
+      "Find obscure information in books, or deduce how something works."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/17"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.medicine",
+    "kind": "skill",
+    "name": "Medicine",
+    "ability": "wis",
+    "entries": [
+      "Diagnose an illness, or determine what killed the recently slain."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/19"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.nature",
+    "kind": "skill",
+    "name": "Nature",
+    "ability": "int",
+    "entries": [
+      "Recall lore about terrain, plants, animals, and weather."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/21"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.perception",
+    "kind": "skill",
+    "name": "Perception",
+    "ability": "wis",
+    "entries": [
+      "Using a combination of senses, notice something that's easy to miss."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/23"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.performance",
+    "kind": "skill",
+    "name": "Performance",
+    "ability": "cha",
+    "entries": [
+      "Act, tell a story, perform music, or dance."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/25"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.persuasion",
+    "kind": "skill",
+    "name": "Persuasion",
+    "ability": "cha",
+    "entries": [
+      "Honestly and graciously convince someone of something."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/27"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.religion",
+    "kind": "skill",
+    "name": "Religion",
+    "ability": "int",
+    "entries": [
+      "Recall lore about gods, religious rituals, and holy symbols."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/29"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.sleight-of-hand",
+    "kind": "skill",
+    "name": "Sleight of Hand",
+    "ability": "dex",
+    "entries": [
+      "Pick a pocket, conceal a handheld object, or perform legerdemain."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/31"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.stealth",
+    "kind": "skill",
+    "name": "Stealth",
+    "ability": "dex",
+    "entries": [
+      "Escape notice by moving quietly and hiding behind things."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/33"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  },
+  {
+    "id": "skill.survival",
+    "kind": "skill",
+    "name": "Survival",
+    "ability": "wis",
+    "entries": [
+      "Follow tracks, forage, find a trail, or avoid natural hazards."
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        9
+      ],
+      "section": "Playing the Game / Skills",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "skills.json",
+        "pointer": "/skill/35"
+      },
+      "adaptation": "reviewed structured entry against official PDF; original 5e.tools entry format retained"
+    },
+    "catalogReferences": [
+      "rulebook.page-009"
+    ]
+  }
+]

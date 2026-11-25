@@ -1,0 +1,2582 @@
+[
+  {
+    "id": "monster.grick",
+    "kind": "monster",
+    "name": "Grick",
+    "size": [
+      "M"
+    ],
+    "type": "aberration",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 54,
+      "formula": "12d8"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 14,
+    "dex": 14,
+    "con": 11,
+    "int": 3,
+    "wis": 14,
+    "cha": 5,
+    "skill": {
+      "stealth": "+4"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "cr": "2",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The grick makes one Beak attack and one Tentacles attack."
+        ]
+      },
+      {
+        "name": "Beak",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}9 ({@damage 2d6 + 2}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Tentacles",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}7 ({@damage 1d10 + 2}) Slashing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 12}) from all four tentacles."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.grappled",
+      "rulebook.page-295"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        295
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/153"
+      },
+      "candidatePage": 295,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.griffon",
+    "kind": "monster",
+    "name": "Griffon",
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 59,
+      "formula": "7d10 + 21"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 80
+    },
+    "str": 18,
+    "dex": 15,
+    "con": 16,
+    "int": 2,
+    "wis": 13,
+    "cha": 8,
+    "skill": {
+      "perception": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "cr": "2",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The griffon makes two Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}8 ({@damage 1d8 + 4}) Piercing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 14}) from both of the griffon's front claws."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.grappled",
+      "rulebook.page-295"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        295
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/154"
+      },
+      "candidatePage": 295,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.grimlock",
+    "kind": "monster",
+    "name": "Grimlock",
+    "size": [
+      "M"
+    ],
+    "type": "aberration",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d8 + 2"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 16,
+    "dex": 12,
+    "con": 12,
+    "int": 9,
+    "wis": 8,
+    "cha": 6,
+    "skill": {
+      "athletics": "+5",
+      "perception": "+3",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 13,
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Bone Cudgel",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Bludgeoning damage plus 2 ({@damage 1d4}) Psychic damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-296"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        296
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/155"
+      },
+      "candidatePage": 296,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.guard",
+    "kind": "monster",
+    "name": "Guard",
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      16
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d8 + 2"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 13,
+    "dex": 12,
+    "con": 12,
+    "int": 10,
+    "wis": 11,
+    "cha": 10,
+    "skill": {
+      "perception": "+2"
+    },
+    "passive": 12,
+    "languages": [
+      "Common"
+    ],
+    "cr": "1/8",
+    "action": [
+      {
+        "name": "Spear",
+        "entries": [
+          "{@atkr m,r} {@hit 3}, reach 5 ft. or range 20/60 ft. {@h}4 ({@damage 1d6 + 1}) Piercing damage."
+        ]
+      }
+    ],
+    "gear": [
+      "chain shirt|srd52",
+      "shield|srd52",
+      "spear|srd52"
+    ],
+    "catalogReferences": [
+      "rulebook.page-296"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        296
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/156"
+      },
+      "candidatePage": 296,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.guard-captain",
+    "kind": "monster",
+    "name": "Guard Captain",
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 75,
+      "formula": "10d8 + 30"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 18,
+    "dex": 14,
+    "con": 16,
+    "int": 12,
+    "wis": 14,
+    "cha": 13,
+    "skill": {
+      "athletics": "+6",
+      "perception": "+4"
+    },
+    "passive": 14,
+    "languages": [
+      "Common"
+    ],
+    "cr": "4",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The guard makes two attacks, using Javelin or Longsword in any combination."
+        ]
+      },
+      {
+        "name": "Javelin",
+        "entries": [
+          "{@atkr m,r} {@hit 6}, reach 5 ft. or range 30/120 ft. {@h}14 ({@damage 3d6 + 4}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Longsword",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}15 ({@damage 2d10 + 4}) Slashing damage."
+        ]
+      }
+    ],
+    "gear": [
+      "breastplate|srd52",
+      {
+        "item": "javelin|srd52",
+        "quantity": 6
+      },
+      "longsword|srd52",
+      "shield|srd52"
+    ],
+    "catalogReferences": [
+      "rulebook.page-296"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        296
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/157"
+      },
+      "candidatePage": 296,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.guardian-naga",
+    "kind": "monster",
+    "name": "Guardian Naga",
+    "size": [
+      "L"
+    ],
+    "type": "celestial",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 136,
+      "formula": "16d10 + 48"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "swim": 40
+    },
+    "str": 19,
+    "dex": 18,
+    "con": 16,
+    "int": 16,
+    "wis": 19,
+    "cha": 18,
+    "save": {
+      "dex": "+8",
+      "con": "+7",
+      "int": "+7",
+      "wis": "+8",
+      "cha": "+8"
+    },
+    "skill": {
+      "arcana": "+11",
+      "history": "+11",
+      "religion": "+11"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "languages": [
+      "Celestial",
+      "Common"
+    ],
+    "cr": "10",
+    "trait": [
+      {
+        "name": "Celestial Restoration",
+        "entries": [
+          "If the naga dies, it returns to life in {@dice 1d6} days and regains all its {@variantrule Hit Points|SRD52} unless {@spell Dispel Evil and Good|SRD52} is cast on its remains."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The naga makes two Bite attacks. It can replace any attack with a use of Poisonous Spittle."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 10 ft. {@h}17 ({@damage 2d12 + 4}) Piercing damage plus 22 ({@damage 4d10}) Poison damage."
+        ]
+      },
+      {
+        "name": "Poisonous Spittle",
+        "entries": [
+          "{@actSave con} {@dc 16}, one creature the naga can see within 60 feet. {@actSaveFail} 31 ({@damage 7d8}) Poison damage, and the target has the {@condition Blinded|SRD52} condition until the start of the naga's next turn. {@actSaveSuccess} Half damage only."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The naga casts one of the following spells, requiring no Somatic or Material components and using Wisdom as the spellcasting ability (spell save {@dc 16}):"
+        ],
+        "will": [
+          "{@spell Thaumaturgy|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Clairvoyance|SRD52}",
+            "{@spell Cure Wounds|SRD52} (level 6 version)",
+            "{@spell Flame Strike|SRD52} (level 6 version)",
+            "{@spell Geas|SRD52}",
+            "{@spell True Seeing|SRD52}"
+          ]
+        },
+        "ability": "wis",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "paralyzed",
+      "poisoned",
+      "restrained"
+    ],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.charmed",
+      "condition.paralyzed",
+      "condition.poisoned",
+      "condition.restrained",
+      "rulebook.page-296",
+      "spell.clairvoyance",
+      "spell.cure-wounds",
+      "spell.dispel-evil-and-good",
+      "spell.flame-strike",
+      "spell.geas",
+      "spell.thaumaturgy",
+      "spell.true-seeing"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        296
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/158"
+      },
+      "candidatePage": 296,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.half-dragon",
+    "kind": "monster",
+    "name": "Half-Dragon",
+    "size": [
+      "M"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 105,
+      "formula": "14d8 + 42"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 19,
+    "dex": 14,
+    "con": 16,
+    "int": 10,
+    "wis": 15,
+    "cha": 14,
+    "save": {
+      "dex": "+5",
+      "wis": "+5"
+    },
+    "skill": {
+      "athletics": "+7",
+      "perception": "+5",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Blindsight 10 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Draconic Origin",
+        "entries": [
+          "The half-dragon is related to a type of dragon associated with one of the following damage types (DM's choice): Acid, Cold, Fire, Lightning, or Poison. This choice affects other aspects of the stat block."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The half-dragon makes two Claw attacks."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}6 ({@damage 1d4 + 4}) Slashing damage plus 7 ({@damage 2d6}) damage of the type chosen for the Draconic Origin trait."
+        ]
+      },
+      {
+        "name": "Dragon's Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 14}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 28 ({@damage 8d6}) damage of the type chosen for the Draconic Origin trait. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Leap",
+        "entries": [
+          "The half-dragon jumps up to 30 feet by spending 10 feet of movement."
+        ]
+      }
+    ],
+    "resist": [
+      {
+        "special": "Damage type chosen for the Draconic Origin trait below"
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-297"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        297
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/159"
+      },
+      "candidatePage": 297,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.harpy",
+    "kind": "monster",
+    "name": "Harpy",
+    "size": [
+      "M"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 38,
+      "formula": "7d8 + 7"
+    },
+    "speed": {
+      "walk": 20,
+      "fly": 40
+    },
+    "str": 12,
+    "dex": 13,
+    "con": 12,
+    "int": 7,
+    "wis": 10,
+    "cha": 13,
+    "passive": 10,
+    "languages": [
+      "Common"
+    ],
+    "cr": "1",
+    "action": [
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}6 ({@damage 2d4 + 1}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Luring Song",
+        "entries": [
+          "The harpy sings a magical melody, which lasts until the harpy's {@status Concentration|SRD52} ends on it. {@actSave wis} {@dc 11}, each Humanoid and Giant in a 300-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the harpy when the song starts. {@actSaveFail} The target has the {@condition Charmed|SRD52} condition until the song ends and repeats the save at the end of each of its turns. While {@condition Charmed|SRD52}, the target has the {@condition Incapacitated|SRD52} condition and ignores the Luring Song of other harpies. If the target is more than 5 feet from the harpy, the target moves on its turn toward the harpy by the most direct route, trying to get within 5 feet of the harpy. It doesn't avoid {@action Opportunity Attack|SRD52|Opportunity Attacks}; however, before moving into damaging terrain (such as lava or a pit) and whenever it takes damage from a source other than the harpy, the target repeats the save. {@actSaveSuccess} The target is immune to this harpy's Luring Song for 24 hours."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.incapacitated",
+      "rulebook.page-297"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        297
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/160"
+      },
+      "candidatePage": 297,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.hell-hound",
+    "kind": "monster",
+    "name": "Hell Hound",
+    "size": [
+      "M"
+    ],
+    "type": "fiend",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 58,
+      "formula": "9d8 + 18"
+    },
+    "speed": {
+      "walk": 50
+    },
+    "str": 17,
+    "dex": 12,
+    "con": 14,
+    "int": 6,
+    "wis": 13,
+    "cha": 6,
+    "skill": {
+      "perception": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "languages": [
+      "understands Infernal but can't speak"
+    ],
+    "cr": "3",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The hound has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the hound's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The hound makes two Bite attacks."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Piercing damage plus 3 ({@damage 1d6}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 12}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 17 ({@damage 5d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "rulebook.page-297"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        297
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/162"
+      },
+      "candidatePage": 297,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.hezrou",
+    "kind": "monster",
+    "name": "Hezrou",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "demon"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 157,
+      "formula": "15d10 + 75"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 19,
+    "dex": 17,
+    "con": 20,
+    "int": 5,
+    "wis": 12,
+    "cha": 13,
+    "save": {
+      "str": "+7",
+      "con": "+8",
+      "wis": "+4"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 11,
+    "languages": [
+      "Abyssal; telepathy 120 ft."
+    ],
+    "cr": "8",
+    "trait": [
+      {
+        "name": "Demonic Restoration",
+        "entries": [
+          "If the hezrou dies outside the Abyss, its body dissolves into ichor, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Abyss."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The hezrou has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Stench",
+        "entries": [
+          "{@actSave con} {@dc 16}, any creature that starts its turn in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the hezrou. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition until the start of its next turn."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The hezrou makes three Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}6 ({@damage 1d4 + 4}) Slashing damage plus 9 ({@damage 2d8}) Poison damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Leap",
+        "entries": [
+          "The hezrou jumps up to 30 feet by spending 10 feet of movement."
+        ]
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "resist": [
+      "cold",
+      "fire",
+      "lightning"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "rulebook.page-298"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        298
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/163"
+      },
+      "candidatePage": 298,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.hill-giant",
+    "kind": "monster",
+    "name": "Hill Giant",
+    "size": [
+      "H"
+    ],
+    "type": "giant",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 105,
+      "formula": "10d12 + 40"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 21,
+    "dex": 8,
+    "con": 19,
+    "int": 5,
+    "wis": 9,
+    "cha": 6,
+    "skill": {
+      "perception": "+2"
+    },
+    "passive": 12,
+    "languages": [
+      "Giant"
+    ],
+    "cr": "5",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The giant makes two attacks, using Tree Club or Trash Lob in any combination."
+        ]
+      },
+      {
+        "name": "Tree Club",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 10 ft. {@h}18 ({@damage 3d8 + 5}) Bludgeoning damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Trash Lob",
+        "entries": [
+          "{@atkr r} {@hit 8}, range 60/240 ft. {@h}16 ({@damage 2d10 + 5}) Bludgeoning damage, and the target has the {@condition Poisoned|SRD52} condition until the end of its next turn."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "condition.prone",
+      "rulebook.page-298"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        298
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/164"
+      },
+      "candidatePage": 298,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.hippogriff",
+    "kind": "monster",
+    "name": "Hippogriff",
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 26,
+      "formula": "4d10 + 4"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 60
+    },
+    "str": 17,
+    "dex": 13,
+    "con": 13,
+    "int": 2,
+    "wis": 12,
+    "cha": 8,
+    "skill": {
+      "perception": "+5"
+    },
+    "passive": 15,
+    "cr": "1",
+    "trait": [
+      {
+        "name": "Flyby",
+        "entries": [
+          "The hippogriff doesn't provoke an {@action Opportunity Attack|SRD52} when it flies out of an enemy's reach."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The hippogriff makes two Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-298"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        298
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/165"
+      },
+      "candidatePage": 298,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.hobgoblin-captain",
+    "kind": "monster",
+    "name": "Hobgoblin Captain",
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "fey",
+      "tags": [
+        "goblinoid"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 58,
+      "formula": "9d8 + 18"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 15,
+    "dex": 14,
+    "con": 14,
+    "int": 12,
+    "wis": 10,
+    "cha": 13,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "Common",
+      "Goblin"
+    ],
+    "cr": "3",
+    "trait": [
+      {
+        "name": "Aura of Authority",
+        "entries": [
+          "While in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the hobgoblin, the hobgoblin and its allies have {@variantrule Advantage|SRD52} on attack rolls and saving throws, provided the hobgoblin doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The hobgoblin makes two attacks, using Greatsword or Longbow in any combination."
+        ]
+      },
+      {
+        "name": "Greatsword",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}9 ({@damage 2d6 + 2}) Slashing damage plus 3 ({@damage 1d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Longbow",
+        "entries": [
+          "{@atkr r} {@hit 4}, range 150/600 ft. {@h}6 ({@damage 1d8 + 2}) Piercing damage plus 5 ({@damage 2d4}) Poison damage."
+        ]
+      }
+    ],
+    "gear": [
+      "greatsword|srd52",
+      "half plate armor|srd52",
+      "longbow|srd52"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "rulebook.page-299"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        299
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/167"
+      },
+      "candidatePage": 299,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.hobgoblin-warrior",
+    "kind": "monster",
+    "name": "Hobgoblin Warrior",
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "fey",
+      "tags": [
+        "goblinoid"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d8 + 2"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 13,
+    "dex": 12,
+    "con": 12,
+    "int": 10,
+    "wis": 10,
+    "cha": 9,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "Common",
+      "Goblin"
+    ],
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The hobgoblin has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the hobgoblin's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Longsword",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}12 ({@damage 2d10 + 1}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Longbow",
+        "entries": [
+          "{@atkr r} {@hit 3}, range 150/600 ft. {@h}5 ({@damage 1d8 + 1}) Piercing damage plus 7 ({@damage 3d4}) Poison damage."
+        ]
+      }
+    ],
+    "gear": [
+      "half plate armor|srd52",
+      "longbow|srd52",
+      "longsword|srd52",
+      "shield|srd52"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "rulebook.page-298"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        298
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/168"
+      },
+      "candidatePage": 298,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.homunculus",
+    "kind": "monster",
+    "name": "Homunculus",
+    "size": [
+      "T"
+    ],
+    "type": "construct",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 4,
+      "formula": "1d4 + 2"
+    },
+    "speed": {
+      "walk": 20,
+      "fly": 40
+    },
+    "str": 4,
+    "dex": 15,
+    "con": 14,
+    "int": 10,
+    "wis": 10,
+    "cha": 7,
+    "save": {
+      "wis": "+2",
+      "cha": "+0"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "understands Common plus one other language but can't speak"
+    ],
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Telepathic Bond",
+        "entries": [
+          "While the homunculus is on the same plane of existence as its master, the two of them can communicate telepathically with each other."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}1 Piercing damage, and the target is subjected to the following effect. {@actSave con} {@dc 12}. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition until the end of the homunculus's next turn. {@actSaveFailBy 5} The target has the {@condition Poisoned|SRD52} condition for 1 minute. While {@condition Poisoned|SRD52}, the target has the {@condition Unconscious|SRD52} condition, which ends early if the target takes any damage."
+        ]
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.poisoned",
+      "condition.unconscious",
+      "rulebook.page-299"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        299
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/169"
+      },
+      "candidatePage": 299,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.horned-devil",
+    "kind": "monster",
+    "name": "Horned Devil",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 199,
+      "formula": "19d10 + 95"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 22,
+    "dex": 17,
+    "con": 21,
+    "int": 12,
+    "wis": 16,
+    "cha": 18,
+    "save": {
+      "str": "+10",
+      "dex": "+7",
+      "wis": "+7",
+      "cha": "+8"
+    },
+    "senses": [
+      "Darkvision 150 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
+    ],
+    "passive": 13,
+    "languages": [
+      "Infernal; telepathy 120 ft."
+    ],
+    "cr": "11",
+    "trait": [
+      {
+        "name": "Diabolical Restoration",
+        "entries": [
+          "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Nine Hells."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The devil makes three attacks, using Searing Fork or Hurl Flame in any combination. It can replace one attack with a use of Infernal Tail."
+        ]
+      },
+      {
+        "name": "Searing Fork",
+        "entries": [
+          "{@atkr m} {@hit 10}, reach 10 ft. {@h}15 ({@damage 2d8 + 6}) Piercing damage plus 9 ({@damage 2d8}) Fire damage."
+        ]
+      },
+      {
+        "name": "Hurl Flame",
+        "entries": [
+          "{@atkr r} {@hit 8}, range 150 ft. {@h}26 ({@damage 5d8 + 4}) Fire damage. If the target is a flammable object that isn't being worn or carried, it starts {@hazard burning|SRD52}."
+        ]
+      },
+      {
+        "name": "Infernal Tail",
+        "entries": [
+          "{@actSave dex} {@dc 17}, one creature the devil can see within 10 feet. {@actSaveFail} 10 ({@damage 1d8 + 6}) Necrotic damage, and the target receives an infernal wound if it doesn't have one. While wounded, the target loses 10 ({@dice 3d6}) {@variantrule Hit Points|SRD52} at the start of each of its turns. The wound closes after 1 minute, after a spell restores {@variantrule Hit Points|SRD52} to the target, or after the target or a creature within 5 feet of it takes an action to stanch the wound, doing so by succeeding on a {@dc 17} Wisdom ({@skill Medicine|SRD52}) check."
+        ]
+      }
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "rulebook.page-299",
+      "skill.medicine"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        299
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/170"
+      },
+      "candidatePage": 299,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.hydra",
+    "kind": "monster",
+    "name": "Hydra",
+    "size": [
+      "H"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 184,
+      "formula": "16d12 + 80"
+    },
+    "speed": {
+      "walk": 40,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 20,
+    "dex": 12,
+    "con": 20,
+    "int": 2,
+    "wis": 10,
+    "cha": 7,
+    "skill": {
+      "perception": "+6"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 16,
+    "cr": "8",
+    "trait": [
+      {
+        "name": "Hold Breath",
+        "entries": [
+          "The hydra can hold its breath for 1 hour."
+        ]
+      },
+      {
+        "name": "Multiple Heads",
+        "entries": [
+          "The hydra has five heads. Whenever the hydra takes 25 damage or more on a single turn, one of its heads dies. The hydra dies if all its heads are dead. At the end of each of its turns when it has at least one living head, the hydra grows two heads for each of its heads that died since its last turn, unless it has taken Fire damage since its last turn. The hydra regains 20 {@variantrule Hit Points|SRD52} when it grows new heads."
+        ]
+      },
+      {
+        "name": "Reactive Heads",
+        "entries": [
+          "For each head the hydra has beyond one, it gets an extra {@variantrule Reaction|SRD52} that can be used only for {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The hydra makes as many Bite attacks as it has heads."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 10 ft. {@h}10 ({@damage 1d10 + 5}) Piercing damage."
+        ]
+      }
+    ],
+    "conditionImmune": [
+      "blinded",
+      "charmed",
+      "deafened",
+      "frightened",
+      "stunned",
+      "unconscious"
+    ],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.charmed",
+      "condition.deafened",
+      "condition.frightened",
+      "condition.stunned",
+      "condition.unconscious",
+      "rulebook.page-300"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        300
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/172"
+      },
+      "candidatePage": 300,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ice-devil",
+    "kind": "monster",
+    "name": "Ice Devil",
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 228,
+      "formula": "24d10 + 96"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 21,
+    "dex": 14,
+    "con": 18,
+    "int": 18,
+    "wis": 15,
+    "cha": 18,
+    "save": {
+      "dex": "+7",
+      "con": "+9",
+      "wis": "+7",
+      "cha": "+9"
+    },
+    "skill": {
+      "insight": "+7",
+      "perception": "+7",
+      "persuasion": "+9"
+    },
+    "senses": [
+      "Blindsight 120 ft."
+    ],
+    "passive": 17,
+    "languages": [
+      "Infernal; telepathy 120 ft."
+    ],
+    "cr": "14",
+    "trait": [
+      {
+        "name": "Diabolical Restoration",
+        "entries": [
+          "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Nine Hells."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The devil makes three Ice Spear attacks. It can replace one attack with a Tail attack."
+        ]
+      },
+      {
+        "name": "Ice Spear",
+        "entries": [
+          "{@atkr m,r} {@hit 10}, reach 5 ft. or range 30/120 ft. {@h}14 ({@damage 2d8 + 5}) Piercing damage plus 10 ({@damage 3d6}) Cold damage. Until the end of its next turn, the target can't take a {@variantrule Bonus Action|SRD52} or {@variantrule Reaction|SRD52}, its {@variantrule Speed|SRD52} decreases by 10 feet, and it can move or take one action on its turn, not both. {@hom}The spear magically returns to the devil's hand immediately after a ranged attack."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atkr m} {@hit 10}, reach 10 ft. {@h}15 ({@damage 3d6 + 5}) Bludgeoning damage plus 18 ({@damage 4d8}) Cold damage."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Ice Wall {@recharge}",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The devil casts {@spell Wall of Ice|SRD52} (level 8 version), requiring no spell components and using Intelligence as the spellcasting ability (spell save {@dc 17})."
+        ],
+        "recharge": {
+          "6": [
+            "{@spell Wall of Ice|SRD52} (level 8 version)"
+          ]
+        },
+        "ability": "int",
+        "displayAs": "action",
+        "hidden": [
+          "recharge"
+        ]
+      }
+    ],
+    "immune": [
+      "cold",
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "rulebook.page-300",
+      "spell.wall-of-ice"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        300
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/174"
+      },
+      "candidatePage": 300,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ice-mephit",
+    "kind": "monster",
+    "name": "Ice Mephit",
+    "size": [
+      "S"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 21,
+      "formula": "6d6"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 30
+    },
+    "str": 7,
+    "dex": 13,
+    "con": 10,
+    "int": 9,
+    "wis": 11,
+    "cha": 12,
+    "skill": {
+      "perception": "+2",
+      "stealth": "+3"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "Primordial (Aquan, Auran)"
+    ],
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Death Burst",
+        "entries": [
+          "The mephit explodes when it dies. {@actSave con} {@dc 10}, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the mephit. {@actSaveFail} 5 ({@damage 2d4}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}3 ({@damage 1d4 + 1}) Slashing damage plus 2 ({@damage 1d4}) Cold damage."
+        ]
+      },
+      {
+        "name": "Frost Breath {@recharge}",
+        "entries": [
+          "{@actSave con} {@dc 10}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 7 ({@damage 3d4}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Fog Cloud (1/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The mephit casts {@spell Fog Cloud|SRD52}, requiring no spell components and using Charisma as the spellcasting ability."
+        ],
+        "daily": {
+          "1": [
+            "{@spell Fog Cloud|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action",
+        "hidden": [
+          "daily"
+        ]
+      }
+    ],
+    "immune": [
+      "cold",
+      "poison"
+    ],
+    "vulnerable": [
+      "fire"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.exhaustion",
+      "condition.poisoned",
+      "rulebook.page-307",
+      "spell.fog-cloud"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        307
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/175"
+      },
+      "candidatePage": 307,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.imp",
+    "kind": "monster",
+    "name": "Imp",
+    "size": [
+      "T"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 21,
+      "formula": "6d4 + 6"
+    },
+    "speed": {
+      "walk": 20,
+      "fly": 40
+    },
+    "str": 6,
+    "dex": 17,
+    "con": 13,
+    "int": 11,
+    "wis": 12,
+    "cha": 14,
+    "skill": {
+      "deception": "+4",
+      "insight": "+3",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 120 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
+    ],
+    "passive": 11,
+    "languages": [
+      "Common",
+      "Infernal"
+    ],
+    "cr": "1",
+    "trait": [
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The imp has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Sting",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Piercing damage plus 7 ({@damage 2d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Shape-Shift",
+        "entries": [
+          "The imp shape-shifts to resemble a rat ({@variantrule Speed|SRD52} 20 ft.), a raven (20 ft., Fly 60 ft.), or a spider (20 ft., Climb 20 ft.), or it returns to its true form. Its statistics are the same in each form, except for its {@variantrule Speed|SRD52}. Any equipment it is wearing or carrying isn't transformed."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Invisibility",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The imp casts {@spell Invisibility|SRD52} on itself, requiring no spell components and using Charisma as the spellcasting ability."
+        ],
+        "will": [
+          "{@spell Invisibility|SRD52}"
+        ],
+        "ability": "cha",
+        "displayAs": "action",
+        "hidden": [
+          "will"
+        ]
+      }
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "resist": [
+      "cold"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "rulebook.page-300",
+      "spell.invisibility"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        300
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/176"
+      },
+      "candidatePage": 300,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.incubus",
+    "kind": "monster",
+    "name": "Incubus",
+    "size": [
+      "M"
+    ],
+    "type": "fiend",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 66,
+      "formula": "12d8 + 12"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60
+    },
+    "str": 8,
+    "dex": 17,
+    "con": 13,
+    "int": 15,
+    "wis": 12,
+    "cha": 20,
+    "skill": {
+      "deception": "+9",
+      "insight": "+5",
+      "perception": "+5",
+      "persuasion": "+9",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "languages": [
+      "Abyssal",
+      "Common",
+      "Infernal; telepathy 60 ft."
+    ],
+    "cr": "4",
+    "trait": [
+      {
+        "name": "Succubus Form",
+        "entries": [
+          "When the incubus finishes a {@variantrule Long Rest|SRD52}, it can shape-shift into a {@creature Succubus|SRD52}, using that stat block instead of this one. Any equipment it's wearing or carrying isn't transformed."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The incubus makes two Restless Touch attacks."
+        ]
+      },
+      {
+        "name": "Restless Touch",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}15 ({@damage 3d6 + 5}) Psychic damage, and the target is cursed for 24 hours or until the incubus dies. Until the curse ends, the target gains no benefit from finishing Short Rests."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Nightmare {@recharge}",
+        "entries": [
+          "{@actSave wis} {@dc 15}, one creature the incubus can see within 60 feet. {@actSaveFail} If the target has 20 {@variantrule Hit Points|SRD52} or fewer, it has the {@condition Unconscious|SRD52} condition for 1 hour, until it takes damage, or until a creature within 5 feet of it takes an action to wake it. Otherwise, the target takes 18 ({@damage 4d8}) Psychic damage."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The incubus casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 15}):"
+        ],
+        "will": [
+          "{@spell Disguise Self|SRD52}",
+          "{@spell Etherealness|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Dream|SRD52}",
+            "{@spell Hypnotic Pattern|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "resist": [
+      "cold",
+      "fire",
+      "poison",
+      "psychic"
+    ],
+    "catalogReferences": [
+      "condition.unconscious",
+      "monster.succubus",
+      "rulebook.page-301",
+      "spell.disguise-self",
+      "spell.dream",
+      "spell.etherealness",
+      "spell.hypnotic-pattern"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        301
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/177"
+      },
+      "candidatePage": 301,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.invisible-stalker",
+    "kind": "monster",
+    "name": "Invisible Stalker",
+    "size": [
+      "L"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 97,
+      "formula": "13d10 + 26"
+    },
+    "speed": {
+      "walk": 50,
+      "fly": {
+        "number": 50,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 16,
+    "dex": 19,
+    "con": 14,
+    "int": 10,
+    "wis": 15,
+    "cha": 11,
+    "skill": {
+      "perception": "+8",
+      "stealth": "+10"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 18,
+    "languages": [
+      "Common",
+      "Primordial (Auran)"
+    ],
+    "cr": "6",
+    "trait": [
+      {
+        "name": "Air Form",
+        "entries": [
+          "The stalker can enter an enemy's space and stop there. It can move through a space as narrow as 1 inch without expending extra movement to do so."
+        ]
+      },
+      {
+        "name": "Invisibility",
+        "entries": [
+          "The stalker has the {@condition Invisible|SRD52} condition."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The stalker makes three Wind Swipe attacks. It can replace one attack with a use of Vortex."
+        ]
+      },
+      {
+        "name": "Wind Swipe",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Force damage."
+        ]
+      },
+      {
+        "name": "Vortex",
+        "entries": [
+          "{@actSave con} {@dc 14}, one Large or smaller creature in the stalker's space. {@actSaveFail} 7 ({@damage 1d8 + 3}) Thunder damage, and the target has the {@condition Grappled|SRD52} condition (escape {@dc 13}). Until the grapple ends, the target can't cast spells with a Verbal component and takes 7 ({@damage 2d6}) Thunder damage at the start of each of the stalker's turns."
+        ]
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "resist": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "prone",
+      "restrained",
+      "unconscious"
+    ],
+    "catalogReferences": [
+      "condition.exhaustion",
+      "condition.grappled",
+      "condition.invisible",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "condition.prone",
+      "condition.restrained",
+      "condition.unconscious",
+      "rulebook.page-301"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        301
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/178"
+      },
+      "candidatePage": 301,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.iron-golem",
+    "kind": "monster",
+    "name": "Iron Golem",
+    "size": [
+      "L"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      20
+    ],
+    "hp": {
+      "average": 252,
+      "formula": "24d10 + 120"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 24,
+    "dex": 9,
+    "con": 20,
+    "int": 3,
+    "wis": 11,
+    "cha": 1,
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "understands Common plus two other languages but can't speak"
+    ],
+    "cr": "16",
+    "trait": [
+      {
+        "name": "Fire Absorption",
+        "entries": [
+          "Whenever the golem is subjected to Fire damage, it regains a number of {@variantrule Hit Points|SRD52} equal to the Fire damage dealt."
+        ]
+      },
+      {
+        "name": "Immutable Form",
+        "entries": [
+          "The golem can't shape-shift."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The golem has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The golem makes two attacks, using Bladed Arm or Fiery Bolt in any combination."
+        ]
+      },
+      {
+        "name": "Bladed Arm",
+        "entries": [
+          "{@atkr m} {@hit 12}, reach 10 ft. {@h}20 ({@damage 3d8 + 7}) Slashing damage plus 10 ({@damage 3d6}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fiery Bolt",
+        "entries": [
+          "{@atkr r} {@hit 10}, range 120 ft. {@h}36 ({@damage 8d8}) Fire damage."
+        ]
+      },
+      {
+        "name": "Poison Breath {@recharge}",
+        "entries": [
+          "{@actSave con} {@dc 18}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 55 ({@damage 10d10}) Poison damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "immune": [
+      "fire",
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "rulebook.page-302"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        302
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/179"
+      },
+      "candidatePage": 302,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.knight",
+    "kind": "monster",
+    "name": "Knight",
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 52,
+      "formula": "8d8 + 16"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 11,
+    "con": 14,
+    "int": 11,
+    "wis": 11,
+    "cha": 15,
+    "save": {
+      "con": "+4",
+      "wis": "+2"
+    },
+    "passive": 10,
+    "languages": [
+      "Common plus one other language"
+    ],
+    "cr": "3",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The knight makes two attacks, using Greatsword or Heavy Crossbow in any combination."
+        ]
+      },
+      {
+        "name": "Greatsword",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Slashing damage plus 4 ({@damage 1d8}) Radiant damage."
+        ]
+      },
+      {
+        "name": "Heavy Crossbow",
+        "entries": [
+          "{@atkr r} {@hit 2}, range 100/400 ft. {@h}11 ({@damage 2d10}) Piercing damage plus 4 ({@damage 1d8}) Radiant damage."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Parry",
+        "entries": [
+          "{@actTrigger} The knight is hit by a melee attack roll while holding a weapon. {@actResponse} The knight adds 2 to its AC against that attack, possibly causing it to miss."
+        ]
+      }
+    ],
+    "conditionImmune": [
+      "frightened"
+    ],
+    "gear": [
+      "greatsword|srd52",
+      "heavy crossbow|srd52",
+      "plate armor|srd52"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "rulebook.page-302"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        302
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/182"
+      },
+      "candidatePage": 302,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.kobold-warrior",
+    "kind": "monster",
+    "name": "Kobold Warrior",
+    "size": [
+      "S"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 7,
+      "formula": "3d6 - 3"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 7,
+    "dex": 15,
+    "con": 9,
+    "int": 8,
+    "wis": 7,
+    "cha": 8,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 8,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "1/8",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The kobold has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the kobold's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Sunlight Sensitivity",
+        "entries": [
+          "While in sunlight, the kobold has {@variantrule Disadvantage|SRD52} on ability checks and attack rolls."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Dagger",
+        "entries": [
+          "{@atkr m,r} {@hit 4}, reach 5 ft. or range 20/60 ft. {@h}4 ({@damage 1d4 + 2}) Piercing damage."
+        ]
+      }
+    ],
+    "gear": [
+      {
+        "item": "dagger|srd52",
+        "quantity": 3
+      }
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "rulebook.page-302"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        302
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/183"
+      },
+      "candidatePage": 302,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  }
+]

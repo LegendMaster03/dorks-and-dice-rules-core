@@ -1,0 +1,1775 @@
+[
+  {
+    "id": "item.bracers-of-archery",
+    "kind": "item",
+    "name": "Bracers of Archery",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "grantsProficiency": true,
+    "bonusWeaponDamage": "+2",
+    "entries": [
+      "While wearing these bracers, you have proficiency with the {@item Longbow|SRD52} and {@item Shortbow|SRD52}, and you gain a +2 bonus to damage rolls made with such weapons."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [
+      "baseitem.longbow",
+      "baseitem.shortbow"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 214,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/106"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bracers-of-defense",
+    "kind": "item",
+    "name": "Bracers of Defense",
+    "rarity": "rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "bonusAc": "+2",
+    "entries": [
+      "While wearing these bracers, you gain a +2 bonus to {@variantrule Armor Class|SRD52} if you are wearing no armor and using no {@item Shield|SRD52}."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [
+      "baseitem.shield"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 214,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/108"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.brass-dragon-scale-mail",
+    "kind": "item",
+    "name": "Brass Dragon Scale Mail",
+    "baseItem": "scale mail|srd52",
+    "type": "MA|SRD52",
+    "resist": [
+      "fire"
+    ],
+    "detail1": "brass",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 45,
+    "ac": 14,
+    "bonusAc": "+1",
+    "stealth": true,
+    "entries": [
+      "{#itemEntry Dragon Scale Mail|SRD52}"
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 218,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/110"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.brazier-of-commanding-fire-elementals",
+    "kind": "item",
+    "name": "Brazier of Commanding Fire Elementals",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "While you are within 5 feet of this brazier, you can take a {@action Magic|SRD52} action to summon a {@creature Fire Elemental|SRD52}. The elemental appears in an unoccupied space as close to the brazier as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}. The brazier can't be used this way again until the next dawn."
+    ],
+    "catalogReferences": [
+      "monster.fire-elemental"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 214,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/112"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bread-loaf",
+    "kind": "item",
+    "name": "Bread (loaf)",
+    "type": "FD|SRD52",
+    "rarity": "none",
+    "value": 2,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 101,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/113"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bronze-dragon-scale-mail",
+    "kind": "item",
+    "name": "Bronze Dragon Scale Mail",
+    "baseItem": "scale mail|srd52",
+    "type": "MA|SRD52",
+    "resist": [
+      "lightning"
+    ],
+    "detail1": "bronze",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 45,
+    "ac": 14,
+    "bonusAc": "+1",
+    "stealth": true,
+    "entries": [
+      "{#itemEntry Dragon Scale Mail|SRD52}"
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 218,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/115"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.brooch-of-shielding",
+    "kind": "item",
+    "name": "Brooch of Shielding",
+    "resist": [
+      "force"
+    ],
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "entries": [
+      "While wearing this brooch, you have {@variantrule Resistance|SRD52} to Force damage, and you have {@variantrule Immunity|SRD52} to damage from the {@spell Magic Missile|SRD52} spell."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [
+      "spell.magic-missile"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 214,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/117"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.broom-of-flying",
+    "kind": "item",
+    "name": "Broom of Flying",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "entries": [
+      "This wooden broom functions like a mundane broom until you stand astride it and take a {@action Magic|SRD52} action to make it hover beneath you, at which time it can be ridden in the air. It has a {@variantrule Fly Speed|SRD52} of 50 feet. It can carry up to 400 pounds, but its {@variantrule Fly Speed|SRD52} becomes 30 feet while carrying over 200 pounds. The broom stops hovering when you land or when you're no longer riding it.",
+      "As a {@action Magic|SRD52} action, you can send the broom to travel alone to a destination within 1 mile of you if you name the location and are familiar with it. The broom comes back to you when you take a {@action Magic|SRD52} action and use a command word if the broom is still within 1 mile of you."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 214,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/119"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bucket",
+    "kind": "item",
+    "name": "Bucket",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 5,
+    "entries": [
+      "A Bucket holds up to half a cubic foot of contents."
+    ],
+    "containerCapacity": {
+      "volume": [
+        0.5
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/121"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.bullseye-lantern",
+    "kind": "item",
+    "name": "Bullseye Lantern",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 1000,
+    "entries": [
+      "A Bullseye Lantern burns Oil as fuel to cast {@variantrule Bright Light|SRD52} in a 60-foot Cone and {@variantrule Dim Light|SRD52} for an additional 60 feet."
+    ],
+    "light": [
+      {
+        "bright": 60,
+        "dim": 120,
+        "shape": "cone"
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 240,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/123"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.burglar-s-pack",
+    "kind": "item",
+    "name": "Burglar's Pack",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 42,
+    "value": 1600,
+    "entries": [
+      "A Burglar's Pack contains the following items: {@item Backpack|SRD52}, {@item Ball Bearings|SRD52}, {@item Bell|SRD52}, 10 {@item Candle|SRD52|Candles}, {@item Crowbar|SRD52}, {@item Hooded Lantern|SRD52}, 7 flasks of {@item Oil|SRD52}, 5 days of {@item Rations|SRD52}, {@item Rope|SRD52}, {@item Tinderbox|SRD52}, and {@item Waterskin|SRD52}."
+    ],
+    "packContents": [
+      "backpack|srd52",
+      "ball bearings|srd52",
+      "bell|srd52",
+      {
+        "item": "candle|srd52",
+        "quantity": 10
+      },
+      "crowbar|srd52",
+      "hooded lantern|srd52",
+      {
+        "item": "oil|srd52",
+        "quantity": 7
+      },
+      {
+        "item": "rations|srd52",
+        "quantity": 5
+      },
+      "rope|srd52",
+      "tinderbox|srd52",
+      "waterskin|srd52"
+    ],
+    "catalogReferences": [
+      "item.backpack",
+      "item.ball-bearings",
+      "item.bell",
+      "item.candle",
+      "item.crowbar",
+      "item.hooded-lantern",
+      "item.oil",
+      "item.rations",
+      "item.rope",
+      "item.tinderbox",
+      "item.waterskin",
+      "rulebook.page-095",
+      "rulebook.page-096"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        95,
+        96
+      ],
+      "candidatePage": 95,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/125"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.burnt-othur-fumes",
+    "kind": "item",
+    "name": "Burnt Othur Fumes",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 50000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to Burnt Othur Fumes must succeed on a {@dc 13} Constitution saving throw or take 10 ({@damage 3d6}) Poison damage, and it must repeat the save at the start of each of its turns. On each successive failed save, the creature takes 3 ({@damage 1d6}) Poison damage. After three successful saves, the poison ends."
+    ],
+    "poisonTypes": [
+      "inhaled"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 197,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/127"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.caltrops",
+    "kind": "item",
+    "name": "Caltrops",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 100,
+    "entries": [
+      "As a {@action Utilize|SRD52} action, you can spread Caltrops from their bag to cover a 5-foot-square area within 5 feet of yourself. A creature that enters this area for the first time on a turn must succeed on a {@dc 15} Dexterity saving throw or take 1 Piercing damage and have its {@variantrule Speed|SRD52} reduced to 0 until the start of its next turn. It takes 10 minutes to recover the Caltrops."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 225,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/129"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.camel",
+    "kind": "item",
+    "name": "Camel",
+    "type": "MNT|SRD52",
+    "rarity": "none",
+    "value": 5000,
+    "carryingCapacity": 450,
+    "speed": 50,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 225,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/132"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.candle",
+    "kind": "item",
+    "name": "Candle",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 1,
+    "entries": [
+      "For 1 hour, a lit Candle sheds {@variantrule Bright Light|SRD52} in a 5-foot radius and {@variantrule Dim Light|SRD52} for an additional 5 feet."
+    ],
+    "light": [
+      {
+        "bright": 5,
+        "dim": 10
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 214,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/134"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.candle-of-invocation",
+    "kind": "item",
+    "name": "Candle of Invocation",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "entries": [
+      "This candle's magic is activated when the candle is lit, which requires a {@action Magic|SRD52} action. After burning for 4 hours, the candle is destroyed. You can snuff it out early for use at a later time. Deduct the time it burned in increments of 1 minute from its total burn time.",
+      "While lit, the candle sheds {@variantrule Dim Light|SRD52} in a 30-foot radius. While you are within that light, you have {@variantrule Advantage|SRD52} on {@variantrule D20 Test|SRD52|D20 Tests}. In addition, a Cleric or Druid in the light can cast level 1 spells they have prepared without expending spell slots.",
+      "Alternatively, when you light the candle for the first time, you can cast {@spell Gate|SRD52} with it. Doing so destroys the candle. The portal created by the spell links to a particular Outer Plane chosen by the DM or determined by rolling on the following table.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-10"
+        ],
+        "colLabels": [
+          "1d100",
+          "Outer Plane"
+        ],
+        "rows": [
+          [
+            "01-05",
+            "{@book Abyss|SRD52|5|Abyss}"
+          ],
+          [
+            "06-10",
+            "{@book Acheron|SRD52|5|Acheron}"
+          ],
+          [
+            "11-17",
+            "{@book Arborea|SRD52|5|Arborea}"
+          ],
+          [
+            "18-25",
+            "{@book Arcadia|SRD52|5|Arcadia}"
+          ],
+          [
+            "26-33",
+            "{@book Beastlands|SRD52|5|Beastlands}"
+          ],
+          [
+            "34-41",
+            "{@book Bytopia|SRD52|5|Bytopia}"
+          ],
+          [
+            "42-46",
+            "{@book Carceri|SRD52|5|Carceri}"
+          ],
+          [
+            "47-54",
+            "{@book Elysium|SRD52|5|Elysium}"
+          ],
+          [
+            "55-59",
+            "{@book Gehenna|SRD52|5|Gehenna}"
+          ],
+          [
+            "60-64",
+            "{@book Hades|SRD52|5|Hades}"
+          ],
+          [
+            "65-69",
+            "{@book Limbo|SRD52|5|Limbo}"
+          ],
+          [
+            "70-77",
+            "{@book Mechanus|SRD52|5|Mechanus}"
+          ],
+          [
+            "78-85",
+            "{@book Mount Celestia|SRD52|5|Mount Celestia}"
+          ],
+          [
+            "86-90",
+            "{@book Nine Hells|SRD52|5|Nine Hells}"
+          ],
+          [
+            "91-95",
+            "{@book Pandemonium|SRD52|5|Pandemonium}"
+          ],
+          [
+            "96-00",
+            "{@book Ysgard|SRD52|5|Ysgard}"
+          ]
+        ]
+      }
+    ],
+    "light": [
+      {
+        "dim": 30
+      }
+    ],
+    "attachedSpells": {
+      "limited": {
+        "1": [
+          "gate|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.gate"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 214,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/136"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cape-of-the-mountebank",
+    "kind": "item",
+    "name": "Cape of the Mountebank",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "This cape smells faintly of brimstone. While wearing it, you can use it to cast {@spell Dimension Door|SRD52} as a {@action Magic|SRD52} action. This property can't be used again until the next dawn.",
+      "When you teleport with that spell, you leave behind a cloud of smoke. The space you left is {@variantrule Lightly Obscured|SRD52} by that smoke until the end of your next turn."
+    ],
+    "attachedSpells": {
+      "daily": {
+        "1": [
+          "dimension door|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.dimension-door"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/139"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.carpet-of-flying-3-ft-5-ft",
+    "kind": "item",
+    "name": "Carpet of Flying, 3 ft. × 5 ft.",
+    "rarity": "very rare",
+    "wondrous": true,
+    "entries": [
+      "You can make this carpet hover and fly by taking a {@action Magic|SRD52} action and using the carpet's command word. It moves according to your directions if you are within 30 feet of it.",
+      "A 3 ft. × 5 ft. carpet can carry up to 200 lb. at a fly speed of 80 feet. A carpet can carry up to twice the weight shown on the table, but its {@variantrule Fly Speed|SRD52} is halved if it carries more than its normal capacity."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/141"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.carpet-of-flying-4-ft-6-ft",
+    "kind": "item",
+    "name": "Carpet of Flying, 4 ft. × 6 ft.",
+    "rarity": "very rare",
+    "wondrous": true,
+    "entries": [
+      "You can make this carpet hover and fly by taking a {@action Magic|SRD52} action and using the carpet's command word. It moves according to your directions if you are within 30 feet of it.",
+      "A 4 ft. × 6 ft. carpet can carry up to 400 lb. at a fly speed of 60 feet. A carpet can carry up to twice the weight shown on the table, but its {@variantrule Fly Speed|SRD52} is halved if it carries more than its normal capacity."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/143"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.carpet-of-flying-5-ft-7-ft",
+    "kind": "item",
+    "name": "Carpet of Flying, 5 ft. × 7 ft.",
+    "rarity": "very rare",
+    "wondrous": true,
+    "entries": [
+      "You can make this carpet hover and fly by taking a {@action Magic|SRD52} action and using the carpet's command word. It moves according to your directions if you are within 30 feet of it.",
+      "A 5 ft. × 7 ft. carpet can carry up to 600 lb. at a fly speed of 40 feet. A carpet can carry up to twice the weight shown on the table, but its {@variantrule Fly Speed|SRD52} is halved if it carries more than its normal capacity."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/145"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.carpet-of-flying-6-ft-9-ft",
+    "kind": "item",
+    "name": "Carpet of Flying, 6 ft. × 9 ft.",
+    "rarity": "very rare",
+    "wondrous": true,
+    "entries": [
+      "You can make this carpet hover and fly by taking a {@action Magic|SRD52} action and using the carpet's command word. It moves according to your directions if you are within 30 feet of it.",
+      "A 6 ft. × 9 ft. carpet can carry up to 800 lb. at a fly speed of 30 feet. A carpet can carry up to twice the weight shown on the table, but its {@variantrule Fly Speed|SRD52} is halved if it carries more than its normal capacity."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/147"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.carriage",
+    "kind": "item",
+    "name": "Carriage",
+    "type": "VEH|SRD52",
+    "rarity": "none",
+    "weight": 600,
+    "value": 10000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 100,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/149"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.crawler-mucus-contact",
+    "kind": "item",
+    "name": "Crawler Mucus (Contact)",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 20000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to Crawler Mucus must succeed on a {@dc 13} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 1 minute. The creature also has the {@condition Paralyzed|SRD52} condition while {@condition Poisoned|SRD52} in this way. The creature repeats the save at the end of each of its turns, ending the effect on itself on a success."
+    ],
+    "poisonTypes": [
+      "contact"
+    ],
+    "catalogReferences": [
+      "condition.paralyzed",
+      "condition.poisoned",
+      "rulebook.page-197"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        197
+      ],
+      "candidatePage": 197,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/151"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cart",
+    "kind": "item",
+    "name": "Cart",
+    "type": "VEH|SRD52",
+    "rarity": "none",
+    "weight": 200,
+    "value": 1500,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 100,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/153"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.censer-of-controlling-air-elementals",
+    "kind": "item",
+    "name": "Censer of Controlling Air Elementals",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "While gently swinging this censer, you can take a {@action Magic|SRD52} action to summon an {@creature Air Elemental|SRD52}. The elemental appears in an unoccupied space as close to the censer as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}. The censer can't be used this way again until the next dawn."
+    ],
+    "catalogReferences": [
+      "monster.air-elemental"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/155"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.chain",
+    "kind": "item",
+    "name": "Chain",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 10,
+    "value": 500,
+    "entries": [
+      "As a {@action Utilize|SRD52} action, you can wrap a Chain around an unwilling creature within 5 feet of yourself that has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition if you succeed on a {@dc 13} Strength ({@skill Athletics|SRD52}) check. If the creature's legs are bound, the creature has the {@condition Restrained|SRD52} condition until it escapes. Escaping the Chain requires the creature to make a successful {@dc 18} Dexterity ({@skill Acrobatics|SRD52}) check as an action. Bursting the Chain requires a successful {@dc 20} Strength ({@skill Athletics|SRD52}) check as an action."
+    ],
+    "catalogReferences": [
+      "condition.grappled",
+      "condition.incapacitated",
+      "condition.restrained",
+      "skill.acrobatics",
+      "skill.athletics"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/156"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.chariot",
+    "kind": "item",
+    "name": "Chariot",
+    "type": "VEH|SRD52",
+    "rarity": "none",
+    "weight": 100,
+    "value": 25000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 100,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/160"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cheese-wedge",
+    "kind": "item",
+    "name": "Cheese (wedge)",
+    "type": "FD|SRD52",
+    "rarity": "none",
+    "value": 10,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 101,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/161"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.chest",
+    "kind": "item",
+    "name": "Chest",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 25,
+    "value": 500,
+    "entries": [
+      "A Chest holds up to 12 cubic feet of contents."
+    ],
+    "containerCapacity": {
+      "volume": [
+        12
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/163"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.chime-of-opening",
+    "kind": "item",
+    "name": "Chime of Opening",
+    "rarity": "rare",
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "This hollow metal tube measures about 1 foot long and weighs 1 pound. As a {@action Magic|SRD52} action, you can strike the chime to cast {@spell Knock|SRD52}. The spell's customary knocking sound is replaced by the clear, ringing tone of the chime, which is audible out to 300 feet. The chime can be used 10 times. After the tenth time, it cracks and becomes useless."
+    ],
+    "attachedSpells": [
+      "knock|srd52"
+    ],
+    "catalogReferences": [
+      "spell.knock"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/166"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.circlet-of-blasting",
+    "kind": "item",
+    "name": "Circlet of Blasting",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "While wearing this circlet, you can cast {@spell Scorching Ray|SRD52} with it ({@hit 5} to hit). The circlet can't cast this spell again until the next dawn."
+    ],
+    "attachedSpells": {
+      "daily": {
+        "1e": [
+          "scorching ray|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.scorching-ray"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/170"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.climber-s-kit",
+    "kind": "item",
+    "name": "Climber's Kit",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 12,
+    "value": 2500,
+    "entries": [
+      "A Climber's Kit includes boot tips, gloves, pitons, and a harness. As a {@action Utilize|SRD52} action, you can use the Climber's Kit to anchor yourself; when you do, you can't fall more than 25 feet from the anchor point, and you can't move more than 25 feet from there without undoing the anchor as a {@variantrule Bonus Action|SRD52}."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/172"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cloak-of-arachnida",
+    "kind": "item",
+    "name": "Cloak of Arachnida",
+    "resist": [
+      "poison"
+    ],
+    "rarity": "very rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "modifySpeed": {
+      "equal": {
+        "climb": "walk"
+      }
+    },
+    "entries": [
+      "This fine garment is made of black silk interwoven with faint, silvery threads. While wearing it, you gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Poison Resistance",
+        "entries": [
+          "You have {@variantrule Resistance|SRD52} to Poison damage."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spider Climb",
+        "entries": [
+          "You have a {@variantrule Climb Speed|SRD52} equal to your {@variantrule Speed|SRD52} and can move up, down, and across vertical surfaces and along ceilings, while leaving your hands free."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spider Walk",
+        "entries": [
+          "You can't be caught in webs of any sort and can move through webs as if they were {@variantrule Difficult Terrain|SRD52}."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Web",
+        "entries": [
+          "You can cast {@spell Web|SRD52} (save {@dc 13}). The web created by the spell fills twice its normal area. Once used, this property can't be used again until the next dawn."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "daily": {
+        "1e": [
+          "web|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.web"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/174"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cloak-of-displacement",
+    "kind": "item",
+    "name": "Cloak of Displacement",
+    "rarity": "rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "entries": [
+      "While you wear this cloak, it magically projects an illusion that makes you appear to be standing in a place near your actual location, causing any creature to have {@variantrule Disadvantage|SRD52} on attack rolls against you. If you take damage, the property ceases to function until the start of your next turn. This property is suppressed while your {@variantrule Speed|SRD52} is 0."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/176"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cloak-of-elvenkind",
+    "kind": "item",
+    "name": "Cloak of Elvenkind",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "entries": [
+      "While you wear this cloak, Wisdom ({@skill Perception|SRD52}) checks made to perceive you have {@variantrule Disadvantage|SRD52}, and you have {@variantrule Advantage|SRD52} on Dexterity ({@skill Stealth|SRD52}) checks."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [
+      "skill.perception",
+      "skill.stealth"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/178"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cloak-of-invisibility",
+    "kind": "item",
+    "name": "Cloak of Invisibility",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "wondrous": true,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "entries": [
+      "This cloak has 3 charges and regains {@dice 1d3} expended charges daily at dawn. While wearing the cloak, you can take a {@action Magic|SRD52} action to pull its hood over your head and expend 1 charge to give yourself the {@condition Invisible|SRD52} condition for 1 hour. The effect ends early if you pull the hood down (no action required) or cease wearing the hood."
+    ],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/179"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cloak-of-protection",
+    "kind": "item",
+    "name": "Cloak of Protection",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "bonusAc": "+1",
+    "bonusSavingThrow": "+1",
+    "entries": [
+      "You gain a +1 bonus to {@variantrule Armor Class|SRD52} and saving throws while you wear this cloak."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 216,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/181"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cloak-of-the-bat",
+    "kind": "item",
+    "name": "Cloak of the Bat",
+    "rarity": "rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "entries": [
+      "While wearing this cloak, you have {@variantrule Advantage|SRD52} on Dexterity ({@skill Stealth|SRD52}) checks. In an area of {@variantrule Dim Light|SRD52} or {@variantrule Darkness|SRD52}, you can grip the edges of the cloak and use it to gain a {@variantrule Fly Speed|SRD52} of 40 feet. If you ever fail to grip the cloak's edges while flying in this way, or if you are no longer in {@variantrule Dim Light|SRD52} or {@variantrule Darkness|SRD52}, you lose this {@variantrule Fly Speed|SRD52}.",
+      "While wearing the cloak in an area of {@variantrule Dim Light|SRD52} or {@variantrule Darkness|SRD52}, you can cast {@spell Polymorph|SRD52} on yourself, shape-shifting into a {@creature Bat|SRD52}. While in that form, you retain your Intelligence, Wisdom, and Charisma scores. The cloak can't be used this way again until the next dawn."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "attachedSpells": {
+      "daily": {
+        "1e": [
+          "polymorph|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "monster.bat",
+      "skill.stealth",
+      "spell.polymorph"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 216,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/183"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.cloak-of-the-manta-ray",
+    "kind": "item",
+    "name": "Cloak of the Manta Ray",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "modifySpeed": {
+      "static": {
+        "swim": 60
+      }
+    },
+    "entries": [
+      "While wearing this cloak, you can breathe underwater, and you have a {@variantrule Swim Speed|SRD52} of 60 feet."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 216,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/185"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.common-wine-bottle",
+    "kind": "item",
+    "name": "Common Wine (bottle)",
+    "type": "FD|SRD52",
+    "rarity": "none",
+    "value": 20,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/188"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.component-pouch",
+    "kind": "item",
+    "name": "Component Pouch",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 2500,
+    "entries": [
+      "A Component Pouch is watertight and filled with compartments that hold all the free Material components of your spells."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/191"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.copper",
+    "kind": "item",
+    "name": "Copper",
+    "type": "TG|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 50,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/193"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.copper-dragon-scale-mail",
+    "kind": "item",
+    "name": "Copper Dragon Scale Mail",
+    "baseItem": "scale mail|srd52",
+    "type": "MA|SRD52",
+    "resist": [
+      "acid"
+    ],
+    "detail1": "copper",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 45,
+    "ac": 14,
+    "bonusAc": "+1",
+    "stealth": true,
+    "entries": [
+      "{#itemEntry Dragon Scale Mail|SRD52}"
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 218,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/195"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.costume",
+    "kind": "item",
+    "name": "Costume",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 4,
+    "value": 500,
+    "entries": [
+      "While wearing a Costume, you have {@variantrule Advantage|SRD52} on any ability check you make to impersonate the person or type of person it represents."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/196"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.crossbow-bolt-case",
+    "kind": "item",
+    "name": "Crossbow Bolt Case",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 100,
+    "entries": [
+      "A {@item Crossbow Bolt Case|SRD52} holds up to 20 Bolts."
+    ],
+    "containerCapacity": {
+      "item": [
+        {
+          "bolt|srd52": 20
+        }
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/201"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.crowbar",
+    "kind": "item",
+    "name": "Crowbar",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 5,
+    "value": 200,
+    "entries": [
+      "Using a Crowbar gives you {@variantrule Advantage|SRD52} on Strength checks where the Crowbar's leverage can be applied."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 225,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/203"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.crystal-ball",
+    "kind": "item",
+    "name": "Crystal Ball",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 3,
+    "entries": [
+      "The typical crystal ball, a very rare item, is about 6 inches in diameter. While touching it, you can cast the {@spell Scrying|SRD52} spell (save {@dc 17}) with it."
+    ],
+    "attachedSpells": [
+      "scrying|srd52"
+    ],
+    "catalogReferences": [
+      "spell.scrying"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 216,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/205"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.crystal-ball-of-mind-reading",
+    "kind": "item",
+    "name": "Crystal Ball of Mind Reading",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 3,
+    "entries": [
+      "While touching this crystal orb, you can cast {@spell Scrying|SRD52} (save {@dc 17}) with it. In addition, you can cast {@spell Detect Thoughts|SRD52} (save {@dc 17}) targeting creatures you can see within 30 feet of the spell's sensor. You don't need to concentrate on this {@spell Detect Thoughts|SRD52} spell to maintain it during its duration, but it ends if the {@spell Scrying|SRD52} spell ends."
+    ],
+    "attachedSpells": [
+      "detect thoughts|srd52",
+      "scrying|srd52"
+    ],
+    "catalogReferences": [
+      "spell.detect-thoughts",
+      "spell.scrying"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 216,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/206"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.crystal-ball-of-telepathy",
+    "kind": "item",
+    "name": "Crystal Ball of Telepathy",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 3,
+    "entries": [
+      "While touching this crystal orb, you can cast {@spell Scrying|SRD52} (save {@dc 17}) with it. In addition, you can communicate telepathically with creatures you can see within 30 feet of the spell's sensor. You can also cast {@spell Suggestion|SRD52} (save {@dc 17}) through the sensor on one of those creatures. You don't need to concentrate on this {@spell Suggestion|SRD52} to maintain it during its duration, but it ends if {@spell Scrying|SRD52} ends. You can't cast {@spell Suggestion|SRD52} in this way again until the next dawn."
+    ],
+    "attachedSpells": {
+      "will": [
+        "scrying|srd52"
+      ],
+      "daily": {
+        "1e": [
+          "suggestion|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.scrying",
+      "spell.suggestion"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 216,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/207"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.crystal-ball-of-true-seeing",
+    "kind": "item",
+    "name": "Crystal Ball of True Seeing",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 3,
+    "entries": [
+      "While touching this crystal orb, you can cast {@spell Scrying|SRD52} (save {@dc 17}) with it. In addition, you have {@sense Truesight|SRD52} with a range of 120 feet centered on the spell's sensor."
+    ],
+    "attachedSpells": [
+      "scrying|srd52"
+    ],
+    "catalogReferences": [
+      "spell.scrying"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 216,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/208"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  }
+]

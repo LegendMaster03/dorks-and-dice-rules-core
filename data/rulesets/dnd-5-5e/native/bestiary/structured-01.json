@@ -1,0 +1,3938 @@
+[
+  {
+    "id": "monster.aboleth",
+    "kind": "monster",
+    "name": "Aboleth",
+    "size": [
+      "L"
+    ],
+    "type": "aberration",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 150,
+      "formula": "20d10 + 40"
+    },
+    "speed": {
+      "walk": 10,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 21,
+    "dex": 9,
+    "con": 15,
+    "int": 18,
+    "wis": 15,
+    "cha": 18,
+    "save": {
+      "dex": "+3",
+      "con": "+6",
+      "int": "+8",
+      "wis": "+6"
+    },
+    "skill": {
+      "history": "+12",
+      "perception": "+10"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 20,
+    "languages": [
+      "Deep Speech; telepathy 120 ft."
+    ],
+    "cr": {
+      "cr": "10",
+      "xpLair": 7200
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The aboleth can breathe air and water."
+        ]
+      },
+      {
+        "name": "Eldritch Restoration",
+        "entries": [
+          "If destroyed, the aboleth gains a new body in {@dice 5d10} days, reviving with all its {@variantrule Hit Points|SRD52} in the Far Realm or another location chosen by the DM."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the aboleth fails a saving throw, it can choose to succeed instead."
+        ]
+      },
+      {
+        "name": "Mucus Cloud",
+        "entries": [
+          "While underwater, the aboleth is surrounded by mucus. {@actSave con} {@dc 14}, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the aboleth at the end of the aboleth's turn. {@actSaveFail} The target is cursed. Until the curse ends, the target's skin becomes slimy, the target can breathe air and water, and it can't regain {@variantrule Hit Points|SRD52} unless it is underwater.",
+          "While the cursed creature is outside a body of water, the creature takes 6 ({@damage 1d12}) Acid damage at the end of every 10 minutes unless moisture is applied to its skin before those minutes have passed."
+        ]
+      },
+      {
+        "name": "Probing Telepathy",
+        "entries": [
+          "If a creature the aboleth can see communicates telepathically with the aboleth, the aboleth learns the creature's greatest desires."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The aboleth makes two Tentacle attacks and uses either Consume Memories or Dominate Mind if available."
+        ]
+      },
+      {
+        "name": "Tentacle",
+        "entries": [
+          "{@atkr m} {@hit 9}, reach 15 ft. {@h}12 ({@damage 2d6 + 5}) Bludgeoning damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 14}) from one of four tentacles."
+        ]
+      },
+      {
+        "name": "Consume Memories",
+        "entries": [
+          "{@actSave int} {@dc 16}, one creature within 30 feet that is {@condition Charmed|SRD52} or {@condition Grappled|SRD52} by the aboleth. {@actSaveFail} 10 ({@damage 3d6}) Psychic damage. {@actSaveSuccess} Half damage. {@actSaveSuccessOrFail} The aboleth gains the target's memories if the target is a Humanoid and is reduced to 0 {@variantrule Hit Points|SRD52} by this action."
+        ]
+      },
+      {
+        "name": "Dominate Mind (2/Day)",
+        "entries": [
+          "{@actSave wis} {@dc 16}, one creature the aboleth can see within 30 feet. {@actSaveFail} The target has the {@condition Charmed|SRD52} condition until the aboleth dies or is on a different plane of existence from the target. While {@condition Charmed|SRD52}, the target acts as an ally to the aboleth and is under its control while within 60 feet of it. In addition, the aboleth and the target can communicate telepathically with each other over any distance.",
+          "The target repeats the save whenever it takes damage as well as after every 24 hours it spends at least 1 mile away from the aboleth, ending the effect on itself on a success."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Lash",
+        "entries": [
+          "The aboleth makes one Tentacle attack."
+        ]
+      },
+      {
+        "name": "Psychic Drain",
+        "entries": [
+          "If the aboleth has at least one creature {@condition Charmed|SRD52} or {@condition Grappled|SRD52}, it uses Consume Memories and regains 5 ({@dice 1d10}) {@variantrule Hit Points|SRD52}."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.grappled",
+      "rulebook.page-258"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        258
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/0"
+      },
+      "candidatePage": 258,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-black-dragon",
+    "kind": "monster",
+    "name": "Adult Black Dragon",
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      19
+    ],
+    "hp": {
+      "average": 195,
+      "formula": "17d12 + 85"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 23,
+    "dex": 14,
+    "con": 21,
+    "int": 14,
+    "wis": 13,
+    "cha": 19,
+    "save": {
+      "dex": "+7",
+      "wis": "+6"
+    },
+    "skill": {
+      "perception": "+11",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 21,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "14",
+      "xpLair": 13000
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Acid Arrow|SRD52} (level 3 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 11}, reach 10 ft. {@h}13 ({@damage 2d6 + 6}) Slashing damage plus 4 ({@damage 1d8}) Acid damage."
+        ]
+      },
+      {
+        "name": "Acid Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 18}, each creature in a 60-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 54 ({@damage 12d8}) Acid damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Cloud of Insects",
+        "entries": [
+          "{@actSave dex} {@dc 17}, one creature the dragon can see within 120 feet. {@actSaveFail} 22 ({@damage 4d10}) Poison damage, and the target has {@variantrule Disadvantage|SRD52} on saving throws to maintain {@status Concentration|SRD52} until the end of its next turn. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Fear|SRD52}. The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon can move up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 17}, {@hit 9} to hit with spell attacks):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Fear|SRD52}",
+          "{@spell Acid Arrow|SRD52} (level 3 version)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Speak with Dead|SRD52}",
+            "{@spell Vitriolic Sphere|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "acid"
+    ],
+    "catalogReferences": [
+      "rulebook.page-264",
+      "spell.acid-arrow",
+      "spell.detect-magic",
+      "spell.fear",
+      "spell.speak-with-dead",
+      "spell.vitriolic-sphere"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        264
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/1"
+      },
+      "candidatePage": 264,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-blue-dragon",
+    "kind": "monster",
+    "name": "Adult Blue Dragon",
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      19
+    ],
+    "hp": {
+      "average": 212,
+      "formula": "17d12 + 102"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 30,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 25,
+    "dex": 10,
+    "con": 23,
+    "int": 16,
+    "wis": 15,
+    "cha": 20,
+    "save": {
+      "dex": "+5",
+      "wis": "+7"
+    },
+    "skill": {
+      "perception": "+12",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 22,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "16",
+      "xpLair": 18000
+    },
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Shatter|SRD52}."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 12}, reach 10 ft. {@h}16 ({@damage 2d8 + 7}) Slashing damage plus 5 ({@damage 1d10}) Lightning damage."
+        ]
+      },
+      {
+        "name": "Lightning Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 19}, each creature in a 90-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 60 ({@damage 11d10}) Lightning damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Cloaked Flight",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Invisibility|SRD52} on itself, and it can fly up to half its {@variantrule Fly Speed|SRD52}. The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Sonic Boom",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Shatter|SRD52}. The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Tail Swipe",
+        "entries": [
+          "The dragon makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 18}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Invisibility|SRD52}",
+          "{@spell Mage Hand|SRD52}",
+          "{@spell Shatter|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Scrying|SRD52}",
+            "{@spell Sending|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "catalogReferences": [
+      "rulebook.page-266",
+      "spell.detect-magic",
+      "spell.invisibility",
+      "spell.mage-hand",
+      "spell.scrying",
+      "spell.sending",
+      "spell.shatter"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        266
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/2"
+      },
+      "candidatePage": 266,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-brass-dragon",
+    "kind": "monster",
+    "name": "Adult Brass Dragon",
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 172,
+      "formula": "15d12 + 75"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 30,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 23,
+    "dex": 10,
+    "con": 21,
+    "int": 14,
+    "wis": 13,
+    "cha": 17,
+    "save": {
+      "dex": "+5",
+      "wis": "+6"
+    },
+    "skill": {
+      "history": "+7",
+      "perception": "+11",
+      "persuasion": "+8",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 21,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "13",
+      "xpLair": 11500
+    },
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Sleep Breath or (B) Spellcasting to cast {@spell Scorching Ray|SRD52}."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 11}, reach 10 ft. {@h}17 ({@damage 2d10 + 6}) Slashing damage plus 4 ({@damage 1d8}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 18}, each creature in a 60-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 45 ({@damage 10d8}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Sleep Breath",
+        "entries": [
+          "{@actSave con} {@dc 18}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, at which point it repeats the save. {@actSaveFail 2} The target has the {@condition Unconscious|SRD52} condition for 10 minutes. This effect ends for the target if it takes damage or a creature within 5 feet of it takes an action to wake it."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Blazing Light",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Scorching Ray|SRD52}."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      },
+      {
+        "name": "Scorching Sands",
+        "entries": [
+          "{@actSave dex} {@dc 16}, one creature the dragon can see within 120 feet. {@actSaveFail} 27 ({@damage 6d8}) Fire damage, and the target's {@variantrule Speed|SRD52} is halved until the end of its next turn. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 16}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Minor Illusion|SRD52}",
+          "{@spell Scorching Ray|SRD52}",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)",
+          "{@spell Speak with Animals|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Detect Thoughts|SRD52}",
+            "{@spell Control Weather|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.unconscious",
+      "rulebook.page-268",
+      "spell.control-weather",
+      "spell.detect-magic",
+      "spell.detect-thoughts",
+      "spell.minor-illusion",
+      "spell.scorching-ray",
+      "spell.shapechange",
+      "spell.speak-with-animals"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        268
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/3"
+      },
+      "candidatePage": 268,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-bronze-dragon",
+    "kind": "monster",
+    "name": "Adult Bronze Dragon",
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 212,
+      "formula": "17d12 + 102"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 25,
+    "dex": 10,
+    "con": 23,
+    "int": 16,
+    "wis": 15,
+    "cha": 20,
+    "save": {
+      "dex": "+5",
+      "wis": "+7"
+    },
+    "skill": {
+      "insight": "+7",
+      "perception": "+12",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 22,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "15",
+      "xpLair": 15000
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Repulsion Breath or (B) Spellcasting to cast {@spell Guiding Bolt|SRD52} (level 2 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 12}, reach 10 ft. {@h}16 ({@damage 2d8 + 7}) Slashing damage plus 5 ({@damage 1d10}) Lightning damage."
+        ]
+      },
+      {
+        "name": "Lightning Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 19}, each creature in a 90-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 55 ({@damage 10d10}) Lightning damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Repulsion Breath",
+        "entries": [
+          "{@actSave str} {@dc 19}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target is pushed up to 60 feet straight away from the dragon and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Guiding Light",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Guiding Bolt|SRD52} (level 2 version)."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      },
+      {
+        "name": "Thunderclap",
+        "entries": [
+          "{@actSave con} {@dc 17}, each creature in a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point the dragon can see within 90 feet. {@actSaveFail} 10 ({@damage 3d6}) Thunder damage, and the target has the {@condition Deafened|SRD52} condition until the end of its next turn."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 17}, {@hit 10} to hit with spell attacks):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Guiding Bolt|SRD52} (level 2 version)",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)",
+          "{@spell Speak with Animals|SRD52}",
+          "{@spell Thaumaturgy|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Detect Thoughts|SRD52}",
+            "{@spell Water Breathing|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "catalogReferences": [
+      "condition.deafened",
+      "condition.prone",
+      "rulebook.page-270",
+      "spell.detect-magic",
+      "spell.detect-thoughts",
+      "spell.guiding-bolt",
+      "spell.shapechange",
+      "spell.speak-with-animals",
+      "spell.thaumaturgy",
+      "spell.water-breathing"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        270
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/4"
+      },
+      "candidatePage": 270,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-copper-dragon",
+    "kind": "monster",
+    "name": "Adult Copper Dragon",
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 184,
+      "formula": "16d12 + 80"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 23,
+    "dex": 12,
+    "con": 21,
+    "int": 18,
+    "wis": 15,
+    "cha": 18,
+    "save": {
+      "dex": "+6",
+      "wis": "+7"
+    },
+    "skill": {
+      "deception": "+9",
+      "perception": "+12",
+      "stealth": "+6"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 22,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "14",
+      "xpLair": 13000
+    },
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Slowing Breath or (B) Spellcasting to cast {@spell Mind Spike|SRD52} (level 4 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 11}, reach 10 ft. {@h}17 ({@damage 2d10 + 6}) Slashing damage plus 4 ({@damage 1d8}) Acid damage."
+        ]
+      },
+      {
+        "name": "Acid Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 18}, each creature in an 60-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 54 ({@damage 12d8}) Acid damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Slowing Breath",
+        "entries": [
+          "{@actSave con} {@dc 18}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target can't take Reactions; its {@variantrule Speed|SRD52} is halved; and it can take either an action or a {@variantrule Bonus Action|SRD52} on its turn, not both. This effect lasts until the end of its next turn."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Giggling Magic",
+        "entries": [
+          "{@actSave cha} {@dc 17}, one creature the dragon can see within 90 feet. {@actSaveFail} 24 ({@damage 7d6}) Psychic damage. Until the end of its next turn, the target rolls {@dice 1d6} whenever it makes an ability check or attack roll and subtracts the number rolled from the {@variantrule D20 Test|SRD52}. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Mind Jolt",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Mind Spike|SRD52} (level 4 version). The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 17}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Mind Spike|SRD52} (level 4 version)",
+          "{@spell Minor Illusion|SRD52}",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Greater Restoration|SRD52}",
+            "{@spell Major Image|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "acid"
+    ],
+    "catalogReferences": [
+      "rulebook.page-276",
+      "spell.detect-magic",
+      "spell.greater-restoration",
+      "spell.major-image",
+      "spell.mind-spike",
+      "spell.minor-illusion",
+      "spell.shapechange"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        276
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/5"
+      },
+      "candidatePage": 276,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-gold-dragon",
+    "kind": "monster",
+    "name": "Adult Gold Dragon",
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      19
+    ],
+    "hp": {
+      "average": 243,
+      "formula": "18d12 + 126"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 27,
+    "dex": 14,
+    "con": 25,
+    "int": 16,
+    "wis": 15,
+    "cha": 24,
+    "save": {
+      "dex": "+8",
+      "wis": "+8"
+    },
+    "skill": {
+      "insight": "+8",
+      "perception": "+14",
+      "persuasion": "+13",
+      "stealth": "+8"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 24,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "17",
+      "xpLair": 20000
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Spellcasting to cast {@spell Guiding Bolt|SRD52} (level 2 version) or (B) Weakening Breath."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 14}, reach 10 ft. {@h}17 ({@damage 2d8 + 8}) Slashing damage plus 4 ({@damage 1d8}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 21}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 66 ({@damage 12d10}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Weakening Breath",
+        "entries": [
+          "{@actSave str} {@dc 21}, each creature that isn't currently affected by this breath in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target has {@variantrule Disadvantage|SRD52} on Strength-based {@variantrule D20 Test|SRD52|D20 Tests} and subtracts 3 ({@dice 1d6}) from its damage rolls. It repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Banish",
+        "entries": [
+          "{@actSave cha} {@dc 21}, one creature the dragon can see within 120 feet. {@actSaveFail} 10 ({@damage 3d6}) Force damage, and the target has the {@condition Incapacitated|SRD52} condition and is transported to a harmless demiplane until the start of the dragon's next turn, at which point it reappears in an unoccupied space of the dragon's choice within 120 feet of the dragon. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Guiding Light",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Guiding Bolt|SRD52} (level 2 version)."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 21}, {@hit 13} to hit with spell attacks):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Guiding Bolt|SRD52} (level 2 version)",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Flame Strike|SRD52}",
+            "{@spell Zone of Truth|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "rulebook.page-291",
+      "spell.detect-magic",
+      "spell.flame-strike",
+      "spell.guiding-bolt",
+      "spell.shapechange",
+      "spell.zone-of-truth"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        291
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/6"
+      },
+      "candidatePage": 291,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-green-dragon",
+    "kind": "monster",
+    "name": "Adult Green Dragon",
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      19
+    ],
+    "hp": {
+      "average": 207,
+      "formula": "18d12 + 90"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 23,
+    "dex": 12,
+    "con": 21,
+    "int": 18,
+    "wis": 15,
+    "cha": 18,
+    "save": {
+      "dex": "+6",
+      "wis": "+7"
+    },
+    "skill": {
+      "deception": "+9",
+      "perception": "+12",
+      "persuasion": "+9",
+      "stealth": "+6"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 22,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "15",
+      "xpLair": 15000
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Mind Spike|SRD52} (level 3 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 11}, reach 10 ft. {@h}15 ({@damage 2d8 + 6}) Slashing damage plus 7 ({@damage 2d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Poison Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 18}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 56 ({@damage 16d6}) Poison damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Mind Invasion",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Mind Spike|SRD52} (level 3 version)."
+        ]
+      },
+      {
+        "name": "Noxious Miasma",
+        "entries": [
+          "{@actSave con} {@dc 17}, each creature in a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point the dragon can see within 90 feet. {@actSaveFail} 7 ({@damage 2d6}) Poison damage, and the target takes a -2 penalty to AC until the end of its next turn. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 17}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Mind Spike|SRD52} (level 3 version)"
+        ],
+        "daily": {
+          "1": [
+            "{@spell Geas|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "rulebook.page-294",
+      "spell.detect-magic",
+      "spell.geas",
+      "spell.mind-spike"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        294
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/7"
+      },
+      "candidatePage": 294,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-red-dragon",
+    "kind": "monster",
+    "name": "Adult Red Dragon",
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      19
+    ],
+    "hp": {
+      "average": 256,
+      "formula": "19d12 + 133"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 27,
+    "dex": 10,
+    "con": 25,
+    "int": 16,
+    "wis": 13,
+    "cha": 23,
+    "save": {
+      "dex": "+6",
+      "wis": "+7"
+    },
+    "skill": {
+      "perception": "+13",
+      "stealth": "+6"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 23,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "17",
+      "xpLair": 20000
+    },
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Scorching Ray|SRD52}."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 14}, reach 10 ft. {@h}13 ({@damage 1d10 + 8}) Slashing damage plus 5 ({@damage 2d4}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 21}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 59 ({@damage 17d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Commanding Presence",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Command|SRD52} (level 2 version). The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Fiery Rays",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Scorching Ray|SRD52}. The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 20}, {@hit 12} to hit with spell attacks):"
+        ],
+        "will": [
+          "{@spell Command|SRD52} (level 2 version)",
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Scorching Ray|SRD52}"
+        ],
+        "daily": {
+          "1": [
+            "{@spell Fireball|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "rulebook.page-318",
+      "spell.command",
+      "spell.detect-magic",
+      "spell.fireball",
+      "spell.scorching-ray"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        318
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/8"
+      },
+      "candidatePage": 318,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-silver-dragon",
+    "kind": "monster",
+    "name": "Adult Silver Dragon",
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      19
+    ],
+    "hp": {
+      "average": 216,
+      "formula": "16d12 + 112"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 27,
+    "dex": 10,
+    "con": 25,
+    "int": 16,
+    "wis": 13,
+    "cha": 22,
+    "save": {
+      "dex": "+5",
+      "wis": "+6"
+    },
+    "skill": {
+      "history": "+8",
+      "perception": "+11",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 21,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "16",
+      "xpLair": 18000
+    },
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Paralyzing Breath or (B) Spellcasting to cast {@spell Ice Knife|SRD52}."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 13}, reach 10 ft. {@h}17 ({@damage 2d8 + 8}) Slashing damage plus 4 ({@damage 1d8}) Cold damage."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 20}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 54 ({@damage 12d8}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Paralyzing Breath",
+        "entries": [
+          "{@actSave con} {@dc 20}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail 1} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, when it repeats the save. {@actSaveFail 2} The target has the {@condition Paralyzed|SRD52} condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Chill",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Hold Monster|SRD52}. The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Cold Gale",
+        "entries": [
+          "{@actSave dex} {@dc 19}, each creature in a 60-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 14 ({@damage 4d6}) Cold damage, and the target is pushed up to 30 feet straight away from the dragon. {@actSaveSuccess} Half damage only. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 19}, {@hit 11} to hit with spell attacks):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Hold Monster|SRD52}",
+          "{@spell Ice Knife|SRD52}",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Ice Storm|SRD52} (level 5 version)",
+            "{@spell Zone of Truth|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.paralyzed",
+      "rulebook.page-324",
+      "spell.detect-magic",
+      "spell.hold-monster",
+      "spell.ice-knife",
+      "spell.ice-storm",
+      "spell.shapechange",
+      "spell.zone-of-truth"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        324
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/9"
+      },
+      "candidatePage": 324,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-white-dragon",
+    "kind": "monster",
+    "name": "Adult White Dragon",
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 200,
+      "formula": "16d12 + 96"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 30,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 22,
+    "dex": 10,
+    "con": 22,
+    "int": 8,
+    "wis": 12,
+    "cha": 12,
+    "save": {
+      "dex": "+5",
+      "wis": "+6"
+    },
+    "skill": {
+      "perception": "+11",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 21,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "13",
+      "xpLair": 11500
+    },
+    "trait": [
+      {
+        "name": "Ice Walk",
+        "entries": [
+          "The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, {@variantrule Difficult Terrain|SRD52} composed of ice or snow doesn't cost it extra movement."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 11}, reach 10 ft. {@h}13 ({@damage 2d6 + 6}) Slashing damage plus 4 ({@damage 1d8}) Cold damage."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 19}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 54 ({@damage 12d8}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Freezing Burst",
+        "entries": [
+          "{@actSave con} {@dc 14}, each creature in a 30-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point the dragon can see within 120 feet. {@actSaveFail} 7 ({@damage 2d6}) Cold damage, and the target's {@variantrule Speed|SRD52} is 0 until the end of the target's next turn. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Frightful Presence",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts {@spell Fear|SRD52}, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 14}). The dragon can't take this action again until the start of its next turn."
+        ],
+        "legendary": {
+          "1": [
+            "{@spell Fear|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "legendary",
+        "hidden": [
+          "legendary"
+        ]
+      }
+    ],
+    "immune": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "rulebook.page-340",
+      "spell.fear"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        340
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/10"
+      },
+      "candidatePage": 340,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.air-elemental",
+    "kind": "monster",
+    "name": "Air Elemental",
+    "size": [
+      "L"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 90,
+      "formula": "12d10 + 24"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": {
+        "number": 90,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "str": 14,
+    "dex": 20,
+    "con": 14,
+    "int": 6,
+    "wis": 10,
+    "cha": 6,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "Primordial (Auran)"
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Air Form",
+        "entries": [
+          "The elemental can enter a creature's space and stop there. It can move through a space as narrow as 1 inch without expending extra movement to do so."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The elemental makes two Thunderous Slam attacks."
+        ]
+      },
+      {
+        "name": "Thunderous Slam",
+        "entries": [
+          "{@atkr m} {@hit 8}, reach 10 ft. {@h}14 ({@damage 2d8 + 5}) Thunder damage."
+        ]
+      },
+      {
+        "name": "Whirlwind {@recharge 4}",
+        "entries": [
+          "{@actSave str} {@dc 13}, one Medium or smaller creature in the elemental's space. {@actSaveFail} 24 ({@damage 4d10 + 2}) Thunder damage, and the target is pushed up to 20 feet straight away from the elemental and has the {@condition Prone|SRD52} condition. {@actSaveSuccess} Half damage only."
+        ]
+      }
+    ],
+    "immune": [
+      "poison",
+      "thunder"
+    ],
+    "resist": [
+      "bludgeoning",
+      "lightning",
+      "piercing",
+      "slashing"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "prone",
+      "restrained",
+      "unconscious"
+    ],
+    "catalogReferences": [
+      "condition.exhaustion",
+      "condition.grappled",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "condition.prone",
+      "condition.restrained",
+      "condition.unconscious",
+      "rulebook.page-258"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        258
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/11"
+      },
+      "candidatePage": 258,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-black-dragon",
+    "kind": "monster",
+    "name": "Ancient Black Dragon",
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      22
+    ],
+    "hp": {
+      "average": 367,
+      "formula": "21d20 + 147"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 27,
+    "dex": 14,
+    "con": 25,
+    "int": 16,
+    "wis": 15,
+    "cha": 22,
+    "save": {
+      "dex": "+9",
+      "wis": "+9"
+    },
+    "skill": {
+      "perception": "+16",
+      "stealth": "+9"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 26,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "21",
+      "xpLair": 41000
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Acid Arrow|SRD52} (level 4 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 15}, reach 15 ft. {@h}17 ({@damage 2d8 + 8}) Slashing damage plus 9 ({@damage 2d8}) Acid damage."
+        ]
+      },
+      {
+        "name": "Acid Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 22}, each creature in a 90-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 67 ({@damage 15d8}) Acid damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Cloud of Insects",
+        "entries": [
+          "{@actSave dex} {@dc 21}, one creature the dragon can see within 120 feet. {@actSaveFail} 33 ({@damage 6d10}) Poison damage, and the target has {@variantrule Disadvantage|SRD52} on saving throws to maintain {@status Concentration|SRD52} until the end of its next turn. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Fear|SRD52}. The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 21}, {@hit 13} to hit with spell attacks):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Fear|SRD52}",
+          "{@spell Acid Arrow|SRD52} (level 4 version)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Create Undead|SRD52}",
+            "{@spell Speak with Dead|SRD52}",
+            "{@spell Vitriolic Sphere|SRD52} (level 5 version)"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "acid"
+    ],
+    "catalogReferences": [
+      "rulebook.page-265",
+      "spell.acid-arrow",
+      "spell.create-undead",
+      "spell.detect-magic",
+      "spell.fear",
+      "spell.speak-with-dead",
+      "spell.vitriolic-sphere"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        265
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/13"
+      },
+      "candidatePage": 265,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-blue-dragon",
+    "kind": "monster",
+    "name": "Ancient Blue Dragon",
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      22
+    ],
+    "hp": {
+      "average": 481,
+      "formula": "26d20 + 208"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 29,
+    "dex": 10,
+    "con": 27,
+    "int": 18,
+    "wis": 17,
+    "cha": 25,
+    "save": {
+      "dex": "+7",
+      "wis": "+10"
+    },
+    "skill": {
+      "perception": "+17",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 27,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "23",
+      "xpLair": 62000
+    },
+    "trait": [
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Shatter|SRD52} (level 3 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 16}, reach 15 ft. {@h}18 ({@damage 2d8 + 9}) Slashing damage plus 11 ({@damage 2d10}) Lightning damage."
+        ]
+      },
+      {
+        "name": "Lightning Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 23}, each creature in a 120-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 88 ({@damage 16d10}) Lightning damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Cloaked Flight",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Invisibility|SRD52} on itself, and it can fly up to half its {@variantrule Fly Speed|SRD52}. The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Sonic Boom",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Shatter|SRD52} (level 3 version). The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Tail Swipe",
+        "entries": [
+          "The dragon makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 22}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Invisibility|SRD52}",
+          "{@spell Mage Hand|SRD52}",
+          "{@spell Shatter|SRD52} (level 3 version)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Scrying|SRD52}",
+            "{@spell Sending|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "catalogReferences": [
+      "rulebook.page-267",
+      "spell.detect-magic",
+      "spell.invisibility",
+      "spell.mage-hand",
+      "spell.scrying",
+      "spell.sending",
+      "spell.shatter"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        267
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/14"
+      },
+      "candidatePage": 267,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-brass-dragon",
+    "kind": "monster",
+    "name": "Ancient Brass Dragon",
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      20
+    ],
+    "hp": {
+      "average": 332,
+      "formula": "19d20 + 133"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 27,
+    "dex": 10,
+    "con": 25,
+    "int": 16,
+    "wis": 15,
+    "cha": 22,
+    "save": {
+      "dex": "+6",
+      "wis": "+8"
+    },
+    "skill": {
+      "history": "+9",
+      "perception": "+14",
+      "persuasion": "+12",
+      "stealth": "+6"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 24,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "20",
+      "xpLair": 33000
+    },
+    "trait": [
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Sleep Breath or (B) Spellcasting to cast {@spell Scorching Ray|SRD52} (level 3 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 14}, reach 15 ft. {@h}19 ({@damage 2d10 + 8}) Slashing damage plus 7 ({@damage 2d6}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 21}, each creature in a 90-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 58 ({@damage 13d8}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Sleep Breath",
+        "entries": [
+          "{@actSave con} {@dc 21}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, at which point it repeats the save. {@actSaveFail 2} The target has the {@condition Unconscious|SRD52} condition for 10 minutes. This effect ends for the target if it takes damage or a creature within 5 feet of it takes an action to wake it."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Blazing Light",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Scorching Ray|SRD52} (level 3 version)."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      },
+      {
+        "name": "Scorching Sands",
+        "entries": [
+          "{@actSave dex} {@dc 20}, one creature the dragon can see within 120 feet. {@actSaveFail} 36 ({@damage 8d8}) Fire damage, and the target's {@variantrule Speed|SRD52} is halved until the end of its next turn. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 20}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Minor Illusion|SRD52}",
+          "{@spell Scorching Ray|SRD52} (level 3 version)",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)",
+          "{@spell Speak with Animals|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Control Weather|SRD52}",
+            "{@spell Detect Thoughts|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.unconscious",
+      "rulebook.page-269",
+      "spell.control-weather",
+      "spell.detect-magic",
+      "spell.detect-thoughts",
+      "spell.minor-illusion",
+      "spell.scorching-ray",
+      "spell.shapechange",
+      "spell.speak-with-animals"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        269
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/15"
+      },
+      "candidatePage": 269,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-bronze-dragon",
+    "kind": "monster",
+    "name": "Ancient Bronze Dragon",
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      22
+    ],
+    "hp": {
+      "average": 444,
+      "formula": "24d20 + 192"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 29,
+    "dex": 10,
+    "con": 27,
+    "int": 18,
+    "wis": 17,
+    "cha": 25,
+    "save": {
+      "dex": "+7",
+      "wis": "+10"
+    },
+    "skill": {
+      "insight": "+10",
+      "perception": "+17",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 27,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "22",
+      "xpLair": 50000
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Repulsion Breath or (B) Spellcasting to cast {@spell Guiding Bolt|SRD52} (level 2 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 16}, reach 15 ft. {@h}18 ({@damage 2d8 + 9}) Slashing damage plus 9 ({@damage 2d8}) Lightning damage."
+        ]
+      },
+      {
+        "name": "Lightning Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 23}, each creature in a 120-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 82 ({@damage 15d10}) Lightning damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Repulsion Breath",
+        "entries": [
+          "{@actSave str} {@dc 23}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target is pushed up to 60 feet straight away from the dragon and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Guiding Light",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Guiding Bolt|SRD52} (level 2 version)."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      },
+      {
+        "name": "Thunderclap",
+        "entries": [
+          "{@actSave con} {@dc 22}, each creature in a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point the dragon can see within 120 feet. {@actSaveFail} 13 ({@damage 3d8}) Thunder damage, and the target has the {@condition Deafened|SRD52} condition until the end of its next turn."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 22}, {@hit 14} to hit with spell attacks):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Guiding Bolt|SRD52} (level 2 version)",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)",
+          "{@spell Speak with Animals|SRD52}",
+          "{@spell Thaumaturgy|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Detect Thoughts|SRD52}",
+            "{@spell Control Water|SRD52}",
+            "{@spell Scrying|SRD52}",
+            "{@spell Water Breathing|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "catalogReferences": [
+      "condition.deafened",
+      "condition.prone",
+      "rulebook.page-271",
+      "spell.control-water",
+      "spell.detect-magic",
+      "spell.detect-thoughts",
+      "spell.guiding-bolt",
+      "spell.scrying",
+      "spell.shapechange",
+      "spell.speak-with-animals",
+      "spell.thaumaturgy",
+      "spell.water-breathing"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        271
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/16"
+      },
+      "candidatePage": 271,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-copper-dragon",
+    "kind": "monster",
+    "name": "Ancient Copper Dragon",
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      21
+    ],
+    "hp": {
+      "average": 367,
+      "formula": "21d20 + 147"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 27,
+    "dex": 12,
+    "con": 25,
+    "int": 20,
+    "wis": 17,
+    "cha": 22,
+    "save": {
+      "dex": "+8",
+      "wis": "+10"
+    },
+    "skill": {
+      "deception": "+13",
+      "perception": "+17",
+      "stealth": "+8"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 27,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "21",
+      "xpLair": 41000
+    },
+    "trait": [
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Slowing Breath or (B) Spellcasting to cast {@spell Mind Spike|SRD52} (level 5 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 15}, reach 15 ft. {@h}19 ({@damage 2d10 + 8}) Slashing damage plus 9 ({@damage 2d8}) Acid damage."
+        ]
+      },
+      {
+        "name": "Acid Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 22}, each creature in an 90-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 63 ({@damage 14d8}) Acid damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Slowing Breath",
+        "entries": [
+          "{@actSave con} {@dc 22}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target can't take Reactions; its {@variantrule Speed|SRD52} is halved; and it can take either an action or a {@variantrule Bonus Action|SRD52} on its turn, not both. This effect lasts until the end of its next turn."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Giggling Magic",
+        "entries": [
+          "{@actSave cha} {@dc 21}, one creature the dragon can see within 120 feet. {@actSaveFail} 31 ({@damage 9d6}) Psychic damage. Until the end of its next turn, the target rolls {@dice 1d8} whenever it makes an ability check or attack roll and subtracts the number rolled from the {@variantrule D20 Test|SRD52}. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Mind Jolt",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Mind Spike|SRD52} (level 5 version). The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 21}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Mind Spike|SRD52} (level 5 version)",
+          "{@spell Minor Illusion|SRD52}",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Greater Restoration|SRD52}",
+            "{@spell Major Image|SRD52}",
+            "{@spell Project Image|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "acid"
+    ],
+    "catalogReferences": [
+      "rulebook.page-277",
+      "spell.detect-magic",
+      "spell.greater-restoration",
+      "spell.major-image",
+      "spell.mind-spike",
+      "spell.minor-illusion",
+      "spell.project-image",
+      "spell.shapechange"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        277
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/17"
+      },
+      "candidatePage": 277,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-gold-dragon",
+    "kind": "monster",
+    "name": "Ancient Gold Dragon",
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      22
+    ],
+    "hp": {
+      "average": 546,
+      "formula": "28d20 + 252"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 30,
+    "dex": 14,
+    "con": 29,
+    "int": 18,
+    "wis": 17,
+    "cha": 28,
+    "save": {
+      "dex": "+9",
+      "wis": "+10"
+    },
+    "skill": {
+      "insight": "+10",
+      "perception": "+17",
+      "persuasion": "+16",
+      "stealth": "+9"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 27,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "24",
+      "xpLair": 75000
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Spellcasting to cast {@spell Guiding Bolt|SRD52} (level 4 version) or (B) Weakening Breath."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 17} to hit, reach 15 ft. {@h}19 ({@damage 2d8 + 10}) Slashing damage plus 9 ({@damage 2d8}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 24}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 71 ({@damage 13d10}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Weakening Breath",
+        "entries": [
+          "{@actSave str} {@dc 24}, each creature that isn't currently affected by this breath in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target has {@variantrule Disadvantage|SRD52} on Strength-based {@variantrule D20 Test|SRD52|D20 Tests} and subtracts 5 ({@dice 1d10}) from its damage rolls. It repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Banish",
+        "entries": [
+          "{@actSave cha} {@dc 24}, one creature the dragon can see within 120 feet. {@actSaveFail} 24 ({@damage 7d6}) Force damage, and the target has the {@condition Incapacitated|SRD52} condition and is transported to a harmless demiplane until the start of the dragon's next turn, at which point it reappears in an unoccupied space of the dragon's choice within 120 feet of the dragon. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Guiding Light",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Guiding Bolt|SRD52} (level 4 version)."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 24}, {@hit 16} to hit with spell attacks):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Guiding Bolt|SRD52} (level 4 version)",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Flame Strike|SRD52} (level 6 version)",
+            "{@spell Word of Recall|SRD52}",
+            "{@spell Zone of Truth|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "rulebook.page-292",
+      "spell.detect-magic",
+      "spell.flame-strike",
+      "spell.guiding-bolt",
+      "spell.shapechange",
+      "spell.word-of-recall",
+      "spell.zone-of-truth"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        292
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/18"
+      },
+      "candidatePage": 292,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-green-dragon",
+    "kind": "monster",
+    "name": "Ancient Green Dragon",
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      21
+    ],
+    "hp": {
+      "average": 402,
+      "formula": "23d20 + 161"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 27,
+    "dex": 12,
+    "con": 25,
+    "int": 20,
+    "wis": 17,
+    "cha": 22,
+    "save": {
+      "dex": "+8",
+      "wis": "+10"
+    },
+    "skill": {
+      "deception": "+13",
+      "perception": "+17",
+      "persuasion": "+13",
+      "stealth": "+8"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 27,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "22",
+      "xpLair": 50000
+    },
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Mind Spike|SRD52} (level 5 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 15}, reach 15 ft. {@h}17 ({@damage 2d8 + 8}) Slashing damage plus 10 ({@damage 3d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Poison Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 22}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 77 ({@damage 22d6}) Poison damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Mind Invasion",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Mind Spike|SRD52} (level 5 version)."
+        ]
+      },
+      {
+        "name": "Noxious Miasma",
+        "entries": [
+          "{@actSave con} {@dc 21}, each creature in a 30-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point the dragon can see within 90 feet. {@actSaveFail} 17 ({@damage 5d6}) Poison damage, and the target takes a -2 penalty to AC until the end of its next turn. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 21}):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Mind Spike|SRD52} (level 5 version)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Geas|SRD52}",
+            "{@spell Modify Memory|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "rulebook.page-294",
+      "spell.detect-magic",
+      "spell.geas",
+      "spell.mind-spike",
+      "spell.modify-memory"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        294
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/19"
+      },
+      "candidatePage": 294,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-red-dragon",
+    "kind": "monster",
+    "name": "Ancient Red Dragon",
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      22
+    ],
+    "hp": {
+      "average": 507,
+      "formula": "26d20 + 234"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 30,
+    "dex": 10,
+    "con": 29,
+    "int": 18,
+    "wis": 15,
+    "cha": 27,
+    "save": {
+      "dex": "+7",
+      "wis": "+9"
+    },
+    "skill": {
+      "perception": "+16",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 26,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "24",
+      "xpLair": 75000
+    },
+    "trait": [
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Scorching Ray|SRD52} (level 3 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 17}, reach 15 ft. {@h}19 ({@damage 2d8 + 10}) Slashing damage plus 10 ({@damage 3d6}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 24}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 91 ({@damage 26d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Commanding Presence",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Command|SRD52} (level 2 version). The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Fiery Rays",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Scorching Ray|SRD52} (level 3 version). The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 23}, {@hit 15} to hit with spell attacks):"
+        ],
+        "will": [
+          "{@spell Command|SRD52} (level 2 version)",
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Scorching Ray|SRD52} (level 3 version)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Fireball|SRD52} (level 6 version)",
+            "{@spell Scrying|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "rulebook.page-319",
+      "spell.command",
+      "spell.detect-magic",
+      "spell.fireball",
+      "spell.scorching-ray",
+      "spell.scrying"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        319
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/20"
+      },
+      "candidatePage": 319,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-silver-dragon",
+    "kind": "monster",
+    "name": "Ancient Silver Dragon",
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      22
+    ],
+    "hp": {
+      "average": 468,
+      "formula": "24d20 + 216"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 30,
+    "dex": 10,
+    "con": 29,
+    "int": 18,
+    "wis": 15,
+    "cha": 26,
+    "save": {
+      "dex": "+7",
+      "wis": "+9"
+    },
+    "skill": {
+      "history": "+11",
+      "perception": "+16",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 26,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "23",
+      "xpLair": 62000
+    },
+    "trait": [
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Paralyzing Breath or (B) Spellcasting to cast {@spell Ice Knife|SRD52} (level 2 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 17}, reach 15 ft. {@h}19 ({@damage 2d8 + 10}) Slashing damage plus 9 ({@damage 2d8}) Cold damage."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 24}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 67 ({@damage 15d8}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Paralyzing Breath",
+        "entries": [
+          "{@actSave con} {@dc 24}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail 1} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, when it repeats the save. {@actSaveFail 2} The target has the {@condition Paralyzed|SRD52} condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Chill",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Hold Monster|SRD52}. The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Cold Gale",
+        "entries": [
+          "{@actSave dex} {@dc 23}, each creature in a 60-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 14 ({@damage 4d6}) Cold damage, and the target is pushed up to 30 feet straight away from the dragon. {@actSaveSuccess} Half damage only. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 23}, {@hit 15} to hit with spell attacks):"
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Hold Monster|SRD52}",
+          "{@spell Ice Knife|SRD52} (level 2 version)",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Control Weather|SRD52}",
+            "{@spell Ice Storm|SRD52} (level 7 version)",
+            "{@spell Teleport|SRD52}",
+            "{@spell Zone of Truth|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "immune": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.paralyzed",
+      "rulebook.page-325",
+      "spell.control-weather",
+      "spell.detect-magic",
+      "spell.hold-monster",
+      "spell.ice-knife",
+      "spell.ice-storm",
+      "spell.shapechange",
+      "spell.teleport",
+      "spell.zone-of-truth"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        325
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/21"
+      },
+      "candidatePage": 325,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-white-dragon",
+    "kind": "monster",
+    "name": "Ancient White Dragon",
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      20
+    ],
+    "hp": {
+      "average": 333,
+      "formula": "18d20 + 144"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 26,
+    "dex": 10,
+    "con": 26,
+    "int": 10,
+    "wis": 13,
+    "cha": 18,
+    "save": {
+      "dex": "+6",
+      "wis": "+7"
+    },
+    "skill": {
+      "perception": "+13",
+      "stealth": "+6"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 23,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "20",
+      "xpLair": 33000
+    },
+    "trait": [
+      {
+        "name": "Ice Walk",
+        "entries": [
+          "The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, {@variantrule Difficult Terrain|SRD52} composed of ice or snow doesn't cost it extra movement."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 14}, reach 15 ft. {@h}17 ({@damage 2d8 + 8}) Slashing damage plus 7 ({@damage 2d6}) Cold damage."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 22}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 63 ({@damage 14d8}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Freezing Burst",
+        "entries": [
+          "{@actSave con} {@dc 20}, each creature in a 30-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point the dragon can see within 120 feet. {@actSaveFail} 14 ({@damage 4d6}) Cold damage, and the target's {@variantrule Speed|SRD52} is 0 until the end of the target's next turn. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "spellcasting": [
+      {
+        "name": "Frightful Presence",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts {@spell Fear|SRD52}, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 18}). The dragon can't take this action again until the start of its next turn."
+        ],
+        "legendary": {
+          "1": [
+            "{@spell Fear|SRD52}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "legendary",
+        "hidden": [
+          "legendary"
+        ]
+      }
+    ],
+    "immune": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "rulebook.page-341",
+      "spell.fear"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        341
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/22"
+      },
+      "candidatePage": 341,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.animated-armor",
+    "kind": "monster",
+    "name": "Animated Armor",
+    "size": [
+      "M"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 33,
+      "formula": "6d8 + 6"
+    },
+    "speed": {
+      "walk": 25
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 14,
+    "dex": 11,
+    "con": 13,
+    "int": 1,
+    "wis": 3,
+    "cha": 1,
+    "senses": [
+      "Blindsight 60 ft."
+    ],
+    "passive": 6,
+    "cr": "1",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The armor makes two Slam attacks."
+        ]
+      },
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Bludgeoning damage."
+        ]
+      }
+    ],
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "deafened",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.deafened",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "rulebook.page-259"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        259
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/23"
+      },
+      "candidatePage": 259,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.animated-flying-sword",
+    "kind": "monster",
+    "name": "Animated Flying Sword",
+    "size": [
+      "S"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 14,
+      "formula": "4d6"
+    },
+    "speed": {
+      "walk": 5,
+      "fly": {
+        "number": 50,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 12,
+    "dex": 15,
+    "con": 11,
+    "int": 1,
+    "wis": 5,
+    "cha": 1,
+    "save": {
+      "dex": "+4"
+    },
+    "senses": [
+      "Blindsight 60 ft."
+    ],
+    "passive": 7,
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Slash",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}6 ({@damage 1d8 + 2}) Slashing damage."
+        ]
+      }
+    ],
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "deafened",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.deafened",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "rulebook.page-259"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        259
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/24"
+      },
+      "candidatePage": 259,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.animated-rug-of-smothering",
+    "kind": "monster",
+    "name": "Animated Rug of Smothering",
+    "size": [
+      "L"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 27,
+      "formula": "5d10"
+    },
+    "speed": {
+      "walk": 10
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 17,
+    "dex": 14,
+    "con": 10,
+    "int": 1,
+    "wis": 3,
+    "cha": 1,
+    "senses": [
+      "Blindsight 60 ft."
+    ],
+    "passive": 6,
+    "cr": "2",
+    "action": [
+      {
+        "name": "Smother",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Bludgeoning damage. If the target is a Medium or smaller creature, the rug can give it the {@condition Grappled|SRD52} condition (escape {@dc 13}) instead of dealing damage. Until the grapple ends, the target has the {@condition Blinded|SRD52} and {@condition Restrained|SRD52} conditions, is suffocating, and takes 10 ({@damage 2d6 + 3}) Bludgeoning damage at the start of each of its turns. The rug can smother only one creature at a time.",
+          "While grappling the target, the rug can't take this action, the rug halves the damage it takes (round down), and the target takes the same amount of damage."
+        ]
+      }
+    ],
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "deafened",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.charmed",
+      "condition.deafened",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.grappled",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "condition.restrained",
+      "rulebook.page-259"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        259
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/25"
+      },
+      "candidatePage": 259,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  }
+]

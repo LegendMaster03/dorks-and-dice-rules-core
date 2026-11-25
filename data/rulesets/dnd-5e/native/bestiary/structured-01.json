@@ -1,0 +1,4027 @@
+[
+  {
+    "id": "monster.aboleth",
+    "kind": "monster",
+    "name": "Aboleth",
+    "size": [
+      "L"
+    ],
+    "type": "aberration",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 17,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 135,
+      "formula": "18d10 + 36"
+    },
+    "speed": {
+      "walk": 10,
+      "swim": 40
+    },
+    "str": 21,
+    "dex": 9,
+    "con": 15,
+    "int": 18,
+    "wis": 15,
+    "cha": 18,
+    "save": {
+      "con": "+6",
+      "int": "+8",
+      "wis": "+6"
+    },
+    "skill": {
+      "history": "+12",
+      "perception": "+10"
+    },
+    "senses": [
+      "darkvision 120 ft."
+    ],
+    "passive": 20,
+    "languages": [
+      "Deep Speech",
+      "telepathy 120 ft."
+    ],
+    "cr": "10",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The aboleth can breathe air and water."
+        ]
+      },
+      {
+        "name": "Mucous Cloud",
+        "entries": [
+          "While underwater, the aboleth is surrounded by transformative mucus. A creature that touches the aboleth or that hits it with a melee attack while within 5 feet of it must make a {@dc 14} Constitution saving throw. On a failure, the creature is diseased for {@dice 1d4} hours. The diseased creature can breathe only underwater."
+        ]
+      },
+      {
+        "name": "Probing Telepathy",
+        "entries": [
+          "If a creature communicates telepathically with the aboleth, the aboleth learns the creature's greatest desires if the aboleth can see the creature."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The aboleth makes three tentacle attacks."
+        ]
+      },
+      {
+        "name": "Tentacle",
+        "entries": [
+          "{@atk mw} {@hit 9} to hit, reach 10 ft., one target. {@h}12 ({@damage 2d6 + 5}) bludgeoning damage. If the target is a creature, it must succeed on a {@dc 14} Constitution saving throw or become diseased. The disease has no effect for 1 minute and can be removed by any magic that cures disease. After 1 minute, the diseased creature's skin becomes translucent and slimy, the creature can't regain hit points unless it is underwater, and the disease can be removed only by {@spell heal} or another disease-curing spell of 6th level or higher. When the creature is outside a body of water, it takes 6 ({@damage 1d12}) acid damage every 10 minutes unless moisture is applied to the skin before 10 minutes have passed."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 9} to hit, reach 10 ft., one target. {@h}15 ({@damage 3d6 + 5}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Enslave (3/Day)",
+        "entries": [
+          "The aboleth targets one creature it can see within 30 feet of it. The target must succeed on a {@dc 14} Wisdom saving throw or be magically {@condition charmed} by the aboleth until the aboleth dies or until it is on a different plane of existence from the target. The {@condition charmed} target is under the aboleth's control and can't take reactions, and the aboleth and the target can communicate telepathically with each other over any distance.",
+          "Whenever the {@condition charmed} target takes damage, the target can repeat the saving throw. On a success, the effect ends. No more than once every 24 hours, the target can also repeat the saving throw when it is at least 1 mile away from the aboleth."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The aboleth makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Swipe",
+        "entries": [
+          "The aboleth makes one tail attack."
+        ]
+      },
+      {
+        "name": "Psychic Drain (Costs 2 Actions)",
+        "entries": [
+          "One creature {@condition charmed} by the aboleth takes 10 ({@damage 3d6}) psychic damage, and the aboleth regains hit points equal to the damage the creature takes."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "rulebook.page-261",
+      "skill.perception",
+      "spell.heal"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        261
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/1"
+      },
+      "candidatePage": 261,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-black-dragon",
+    "kind": "monster",
+    "name": "Adult Black Dragon",
+    "size": [
+      "H"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 19,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 195,
+      "formula": "17d12 + 85"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "str": 23,
+    "dex": 14,
+    "con": 21,
+    "int": 14,
+    "wis": 13,
+    "cha": 17,
+    "save": {
+      "dex": "+7",
+      "con": "+10",
+      "wis": "+6",
+      "cha": "+8"
+    },
+    "skill": {
+      "perception": "+11",
+      "stealth": "+7"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 21,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "14",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 10 ft., one target. {@h}17 ({@damage 2d10 + 6}) piercing damage plus 4 ({@damage 1d8}) acid damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d6 + 6}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 15 ft., one target. {@h}15 ({@damage 2d8 + 6}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 16} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Acid Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales acid in a 60-foot line that is 5 feet wide. Each creature in that line must make a {@dc 18} Dexterity saving throw, taking 54 ({@damage 12d8}) acid damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 19} Dexterity saving throw or take 13 ({@damage 2d6 + 6}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "acid"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-281",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        281
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/3"
+      },
+      "candidatePage": 281,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-blue-dragon",
+    "kind": "monster",
+    "name": "Adult Blue Dragon",
+    "size": [
+      "H"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 19,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 225,
+      "formula": "18d12 + 108"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 30,
+      "fly": 80
+    },
+    "str": 25,
+    "dex": 10,
+    "con": 23,
+    "int": 16,
+    "wis": 15,
+    "cha": 19,
+    "save": {
+      "dex": "+5",
+      "con": "+11",
+      "wis": "+7",
+      "cha": "+9"
+    },
+    "skill": {
+      "perception": "+12",
+      "stealth": "+5"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 22,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "16",
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 12} to hit, reach 10 ft., one target. {@h}18 ({@damage 2d10 + 7}) piercing damage plus 5 ({@damage 1d10}) lightning damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 12} to hit, reach 5 ft., one target. {@h}14 ({@damage 2d6 + 7}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 12} to hit, reach 15 ft., one target. {@h}16 ({@damage 2d8 + 7}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 17} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Lightning Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales lightning in a 90-foot line that is 5 feet wide. Each creature in that line must make a {@dc 19} Dexterity saving throw, taking 66 ({@damage 12d10}) lightning damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 20} Dexterity saving throw or take 14 ({@damage 2d6 + 7}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-283",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        283
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/4"
+      },
+      "candidatePage": 283,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-brass-dragon",
+    "kind": "monster",
+    "name": "Adult Brass Dragon",
+    "size": [
+      "H"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      {
+        "ac": 18,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 172,
+      "formula": "15d12 + 75"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 40,
+      "fly": 80
+    },
+    "str": 23,
+    "dex": 10,
+    "con": 21,
+    "int": 14,
+    "wis": 13,
+    "cha": 17,
+    "save": {
+      "dex": "+5",
+      "con": "+10",
+      "wis": "+6",
+      "cha": "+8"
+    },
+    "skill": {
+      "history": "+7",
+      "perception": "+11",
+      "persuasion": "+8",
+      "stealth": "+5"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 21,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "13",
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 10 ft., one target. {@h}17 ({@damage 2d10 + 6}) piercing damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d6 + 6}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 15 ft., one target. {@h}15 ({@damage 2d8 + 6}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 16} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Breath Weapons {@recharge 5}",
+        "entries": [
+          "The dragon uses one of the following breath weapons.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Fire Breath",
+                "entry": "The dragon exhales fire in a 60-foot line that is 5 feet wide. Each creature in that line must make a {@dc 18} Dexterity saving throw, taking 45 ({@damage 13d6}) fire damage on a failed save, or half as much damage on a successful one."
+              },
+              {
+                "type": "item",
+                "name": "Sleep Breath",
+                "entry": "The dragon exhales sleep gas in a 60-foot cone. Each creature in that area must succeed on a {@dc 18} Constitution saving throw or fall {@condition unconscious} for 10 minutes. This effect ends for a creature if the creature takes damage or someone uses an action to wake it."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 19} Dexterity saving throw or take 13 ({@damage 2d6 + 6}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "condition.unconscious",
+      "rulebook.page-291",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        291
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/5"
+      },
+      "candidatePage": 291,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-bronze-dragon",
+    "kind": "monster",
+    "name": "Adult Bronze Dragon",
+    "size": [
+      "H"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      {
+        "ac": 19,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 212,
+      "formula": "17d12 + 102"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "str": 25,
+    "dex": 10,
+    "con": 23,
+    "int": 16,
+    "wis": 15,
+    "cha": 19,
+    "save": {
+      "dex": "+5",
+      "con": "+11",
+      "wis": "+7",
+      "cha": "+9"
+    },
+    "skill": {
+      "insight": "+7",
+      "perception": "+12",
+      "stealth": "+5"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 22,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "15",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 12} to hit, reach 10 ft., one target. {@h}18 ({@damage 2d10 + 7}) piercing damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 12} to hit, reach 5 ft., one target. {@h}14 ({@damage 2d6 + 7}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 12} to hit, reach 15 ft., one target. {@h}16 ({@damage 2d8 + 7}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 17} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Breath Weapons {@recharge 5}",
+        "entries": [
+          "The dragon uses one of the following breath weapons.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Lightning Breath",
+                "entry": "The dragon exhales lightning in a 90-foot line that is 5 feet wide. Each creature in that line must make a {@dc 19} Dexterity saving throw, taking 66 ({@damage 12d10}) lightning damage on a failed save, or half as much damage on a successful one."
+              },
+              {
+                "type": "item",
+                "name": "Repulsion Breath",
+                "entry": "The dragon exhales repulsion energy in a 30-foot cone. Each creature in that area must succeed on a {@dc 19} Strength saving throw. On a failed save, the creature is pushed 60 feet away from the dragon."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Change Shape",
+        "entries": [
+          "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).",
+          "In a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 20} Dexterity saving throw or take 14 ({@damage 2d6 + 7}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-294",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        294
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/6"
+      },
+      "candidatePage": 294,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-copper-dragon",
+    "kind": "monster",
+    "name": "Adult Copper Dragon",
+    "size": [
+      "H"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      {
+        "ac": 18,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 184,
+      "formula": "16d12 + 80"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "str": 23,
+    "dex": 12,
+    "con": 21,
+    "int": 18,
+    "wis": 15,
+    "cha": 17,
+    "save": {
+      "dex": "+6",
+      "con": "+10",
+      "wis": "+7",
+      "cha": "+8"
+    },
+    "skill": {
+      "deception": "+8",
+      "perception": "+12",
+      "stealth": "+6"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 22,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "14",
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 10 ft., one target. {@h}17 ({@damage 2d10 + 6}) piercing damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d6 + 6}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 15 ft., one target. {@h}15 ({@damage 2d8 + 6}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 16} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Breath Weapons {@recharge 5}",
+        "entries": [
+          "The dragon uses one of the following breath weapons.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Acid Breath",
+                "entry": "The dragon exhales acid in a 60-foot line that is 5 feet wide. Each creature in that line must make a {@dc 18} Dexterity saving throw, taking 54 ({@damage 12d8}) acid damage on a failed save, or half as much damage on a successful one."
+              },
+              {
+                "type": "item",
+                "name": "Slowing Breath",
+                "entry": "The dragon exhales gas in a 60-foot cone. Each creature in that area must succeed on a {@dc 18} Constitution saving throw. On a failed save, the creature can't use reactions, its speed is halved, and it can't make more than one attack on its turn. In addition, the creature can use either an action or a bonus action on its turn, but not both. These effects last for 1 minute. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself with a successful save."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 19} Dexterity saving throw or take 13 ({@damage 2d6 + 6}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "acid"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-296",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        296
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/7"
+      },
+      "candidatePage": 296,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-gold-dragon",
+    "kind": "monster",
+    "name": "Adult Gold Dragon",
+    "size": [
+      "H"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      {
+        "ac": 19,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 256,
+      "formula": "19d12 + 133"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "str": 27,
+    "dex": 14,
+    "con": 25,
+    "int": 16,
+    "wis": 15,
+    "cha": 24,
+    "save": {
+      "dex": "+8",
+      "con": "+13",
+      "wis": "+8",
+      "cha": "+13"
+    },
+    "skill": {
+      "insight": "+8",
+      "perception": "+14",
+      "persuasion": "+13",
+      "stealth": "+8"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 24,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "17",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 10 ft., one target. {@h}19 ({@damage 2d10 + 8}) piercing damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 5 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 15 ft., one target. {@h}17 ({@damage 2d8 + 8}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 21} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Breath Weapons {@recharge 5}",
+        "entries": [
+          "The dragon uses one of the following breath weapons.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Fire Breath",
+                "entry": "The dragon exhales fire in a 60-foot cone. Each creature in that area must make a {@dc 21} Dexterity saving throw, taking 66 ({@damage 12d10}) fire damage on a failed save, or half as much damage on a successful one."
+              },
+              {
+                "type": "item",
+                "name": "Weakening Breath",
+                "entry": "The dragon exhales gas in a 60-foot cone. Each creature in that area must succeed on a {@dc 21} Strength saving throw or have disadvantage on Strength-based attack rolls, Strength checks, and Strength saving throws for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Change Shape",
+        "entries": [
+          "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).",
+          "In a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 22} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-299",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        299
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/8"
+      },
+      "candidatePage": 299,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-green-dragon",
+    "kind": "monster",
+    "name": "Adult Green Dragon",
+    "size": [
+      "H"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 19,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 207,
+      "formula": "18d12 + 90"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "str": 23,
+    "dex": 12,
+    "con": 21,
+    "int": 18,
+    "wis": 15,
+    "cha": 17,
+    "save": {
+      "dex": "+6",
+      "con": "+10",
+      "wis": "+7",
+      "cha": "+8"
+    },
+    "skill": {
+      "deception": "+8",
+      "insight": "+7",
+      "perception": "+12",
+      "persuasion": "+8",
+      "stealth": "+6"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 22,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "15",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 10 ft., one target. {@h}17 ({@damage 2d10 + 6}) piercing damage plus 7 ({@damage 2d6}) poison damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d6 + 6}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 15 ft., one target. {@h}15 ({@damage 2d8 + 6}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 16} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Poison Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales poisonous gas in a 60-foot cone. Each creature in that area must make a {@dc 18} Constitution saving throw, taking 56 ({@damage 16d6}) poison damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 19} Dexterity saving throw or take 13 ({@damage 2d6 + 6}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.poisoned",
+      "condition.prone",
+      "rulebook.page-285",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        285
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/9"
+      },
+      "candidatePage": 285,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-red-dragon",
+    "kind": "monster",
+    "name": "Adult Red Dragon",
+    "size": [
+      "H"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 19,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 256,
+      "formula": "19d12 + 133"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "str": 27,
+    "dex": 10,
+    "con": 25,
+    "int": 16,
+    "wis": 13,
+    "cha": 21,
+    "save": {
+      "dex": "+6",
+      "con": "+13",
+      "wis": "+7",
+      "cha": "+11"
+    },
+    "skill": {
+      "perception": "+13",
+      "stealth": "+6"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 23,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "17",
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 10 ft., one target. {@h}19 ({@damage 2d10 + 8}) piercing damage plus 7 ({@damage 2d6}) fire damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 5 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 15 ft., one target. {@h}17 ({@damage 2d8 + 8}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 19} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales fire in a 60-foot cone. Each creature in that area must make a {@dc 21} Dexterity saving throw, taking 63 ({@damage 18d6}) fire damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 22} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-287",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        287
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/10"
+      },
+      "candidatePage": 287,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-silver-dragon",
+    "kind": "monster",
+    "name": "Adult Silver Dragon",
+    "size": [
+      "H"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      {
+        "ac": 19,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 243,
+      "formula": "18d12 + 126"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80
+    },
+    "str": 27,
+    "dex": 10,
+    "con": 25,
+    "int": 16,
+    "wis": 13,
+    "cha": 21,
+    "save": {
+      "dex": "+5",
+      "con": "+12",
+      "wis": "+6",
+      "cha": "+10"
+    },
+    "skill": {
+      "arcana": "+8",
+      "history": "+8",
+      "perception": "+11",
+      "stealth": "+5"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 21,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "16",
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 13} to hit, reach 10 ft., one target. {@h}19 ({@damage 2d10 + 8}) piercing damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 13} to hit, reach 5 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 13} to hit, reach 15 ft., one target. {@h}17 ({@damage 2d8 + 8}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 18} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Breath Weapons {@recharge 5}",
+        "entries": [
+          "The dragon uses one of the following breath weapons.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Cold Breath",
+                "entry": "The dragon exhales an icy blast in a 60-foot cone. Each creature in that area must make a {@dc 20} Constitution saving throw, taking 58 ({@damage 13d8}) cold damage on a failed save, or half as much damage on a successful one."
+              },
+              {
+                "type": "item",
+                "name": "Paralyzing Breath",
+                "entry": "The dragon exhales paralyzing gas in a 60-foot cone. Each creature in that area must succeed on a {@dc 20} Constitution saving throw or be {@condition paralyzed} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Change Shape",
+        "entries": [
+          "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).",
+          "In a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 22} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.prone",
+      "rulebook.page-302",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        302
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/11"
+      },
+      "candidatePage": 302,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.adult-white-dragon",
+    "kind": "monster",
+    "name": "Adult White Dragon",
+    "size": [
+      "H"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 18,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 200,
+      "formula": "16d12 + 96"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 30,
+      "fly": 80,
+      "swim": 40
+    },
+    "str": 22,
+    "dex": 10,
+    "con": 22,
+    "int": 8,
+    "wis": 12,
+    "cha": 12,
+    "save": {
+      "dex": "+5",
+      "con": "+11",
+      "wis": "+6",
+      "cha": "+6"
+    },
+    "skill": {
+      "perception": "+11",
+      "stealth": "+5"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 21,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "13",
+    "trait": [
+      {
+        "name": "Ice Walk",
+        "entries": [
+          "The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, {@quickref difficult terrain||3} composed of ice or snow doesn't cost it extra movement."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 10 ft., one target. {@h}17 ({@damage 2d10 + 6}) piercing damage plus 4 ({@damage 1d8}) cold damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d6 + 6}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 11} to hit, reach 15 ft., one target. {@h}15 ({@damage 2d8 + 6}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 14} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales an icy blast in a 60-foot cone. Each creature in that area must make a {@dc 19} Constitution saving throw, taking 54 ({@damage 12d8}) cold damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 19} Dexterity saving throw or take 13 ({@damage 2d6 + 6}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-289",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        289
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/12"
+      },
+      "candidatePage": 289,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.air-elemental",
+    "kind": "monster",
+    "name": "Air Elemental",
+    "size": [
+      "L"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 90,
+      "formula": "12d10 + 24"
+    },
+    "speed": {
+      "fly": {
+        "number": 90,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "str": 14,
+    "dex": 20,
+    "con": 14,
+    "int": 6,
+    "wis": 10,
+    "cha": 6,
+    "senses": [
+      "darkvision 60 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "Auran"
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Air Form",
+        "entries": [
+          "The elemental can enter a hostile creature's space and stop there. It can move through a space as narrow as 1 inch wide without squeezing."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The elemental makes two slam attacks."
+        ]
+      },
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atk mw} {@hit 8} to hit, reach 5 ft., one target. {@h}14 ({@damage 2d8 + 5}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Whirlwind {@recharge 4}",
+        "entries": [
+          "Each creature in the elemental's space must make a {@dc 13} Strength saving throw. On a failure, a target takes 15 ({@damage 3d8 + 2}) bludgeoning damage and is flung up 20 feet away from the elemental in a random direction and knocked {@condition prone}. If a thrown target strikes an object, such as a wall or floor, the target takes 3 ({@damage 1d6}) bludgeoning damage for every 10 feet it was thrown. If the target is thrown at another creature, that creature must succeed on a {@dc 13} Dexterity saving throw or take the same damage and be knocked {@condition prone}.",
+          "If the saving throw is successful, the target takes half the bludgeoning damage and isn't flung away or knocked {@condition prone}."
+        ]
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "resist": [
+      "lightning",
+      "thunder",
+      {
+        "resist": [
+          "bludgeoning",
+          "piercing",
+          "slashing"
+        ],
+        "note": "from nonmagical attacks",
+        "cond": true
+      }
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "prone",
+      "restrained",
+      "unconscious"
+    ],
+    "catalogReferences": [
+      "condition.exhaustion",
+      "condition.grappled",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "condition.prone",
+      "condition.restrained",
+      "condition.unconscious",
+      "rulebook.page-305"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        305
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/13"
+      },
+      "candidatePage": 305,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-black-dragon",
+    "kind": "monster",
+    "name": "Ancient Black Dragon",
+    "size": [
+      "G"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 22,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 367,
+      "formula": "21d20 + 147"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "str": 27,
+    "dex": 14,
+    "con": 25,
+    "int": 16,
+    "wis": 15,
+    "cha": 19,
+    "save": {
+      "dex": "+9",
+      "con": "+14",
+      "wis": "+9",
+      "cha": "+11"
+    },
+    "skill": {
+      "perception": "+16",
+      "stealth": "+9"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 26,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "21",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 15} to hit, reach 15 ft., one target. {@h}19 ({@damage 2d10 + 8}) piercing damage plus 9 ({@damage 2d8}) acid damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 15} to hit, reach 10 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 15} to hit, reach 20 ft., one target. {@h}17 ({@damage 2d8 + 8}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 19} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Acid Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales acid in a 90-foot line that is 10 feet wide. Each creature in that line must make a {@dc 22} Dexterity saving throw, taking 67 ({@damage 15d8}) acid damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 23} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "acid"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-280",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        280
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/14"
+      },
+      "candidatePage": 280,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-blue-dragon",
+    "kind": "monster",
+    "name": "Ancient Blue Dragon",
+    "size": [
+      "G"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 22,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 481,
+      "formula": "26d20 + 208"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 40,
+      "fly": 80
+    },
+    "str": 29,
+    "dex": 10,
+    "con": 27,
+    "int": 18,
+    "wis": 17,
+    "cha": 21,
+    "save": {
+      "dex": "+7",
+      "con": "+15",
+      "wis": "+10",
+      "cha": "+12"
+    },
+    "skill": {
+      "perception": "+17",
+      "stealth": "+7"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 27,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "23",
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 16} to hit, reach 15 ft., one target. {@h}20 ({@damage 2d10 + 9}) piercing damage plus 11 ({@damage 2d10}) lightning damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 16} to hit, reach 10 ft., one target. {@h}16 ({@damage 2d6 + 9}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 16} to hit, reach 20 ft., one target. {@h}18 ({@damage 2d8 + 9}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 20} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Lightning Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales lightning in a 120-foot line that is 10 feet wide. Each creature in that line must make a {@dc 23} Dexterity saving throw, taking 88 ({@damage 16d10}) lightning damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 24} Dexterity saving throw or take 16 ({@damage 2d6 + 9}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-282",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        282
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/15"
+      },
+      "candidatePage": 282,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-brass-dragon",
+    "kind": "monster",
+    "name": "Ancient Brass Dragon",
+    "size": [
+      "G"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      {
+        "ac": 20,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 297,
+      "formula": "17d20 + 119"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 40,
+      "fly": 80
+    },
+    "str": 27,
+    "dex": 10,
+    "con": 25,
+    "int": 16,
+    "wis": 15,
+    "cha": 19,
+    "save": {
+      "dex": "+6",
+      "con": "+13",
+      "wis": "+8",
+      "cha": "+10"
+    },
+    "skill": {
+      "history": "+9",
+      "perception": "+14",
+      "persuasion": "+10",
+      "stealth": "+6"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 24,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "20",
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 15 ft., one target. {@h}19 ({@damage 2d10 + 8}) piercing damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 10 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 20 ft., one target. {@h}17 ({@damage 2d8 + 8}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 18} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Breath Weapons {@recharge 5}",
+        "entries": [
+          "The dragon uses one of the following breath weapons:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Fire Breath",
+                "entry": "The dragon exhales fire in a 90-foot line that is 10 feet wide. Each creature in that line must make a {@dc 21} Dexterity saving throw, taking 56 ({@damage 16d6}) fire damage on a failed save, or half as much damage on a successful one."
+              },
+              {
+                "type": "item",
+                "name": "Sleep Breath",
+                "entry": "The dragon exhales sleep gas in a 90-foot cone. Each creature in that area must succeed on a {@dc 21} Constitution saving throw or fall {@condition unconscious} for 10 minutes. This effect ends for a creature if the creature takes damage or someone uses an action to wake it."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Change Shape",
+        "entries": [
+          "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).",
+          "In a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 22} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "condition.unconscious",
+      "rulebook.page-290",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        290
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/16"
+      },
+      "candidatePage": 290,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-bronze-dragon",
+    "kind": "monster",
+    "name": "Ancient Bronze Dragon",
+    "size": [
+      "G"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      {
+        "ac": 22,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 444,
+      "formula": "24d20 + 192"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "str": 29,
+    "dex": 10,
+    "con": 27,
+    "int": 18,
+    "wis": 17,
+    "cha": 21,
+    "save": {
+      "dex": "+7",
+      "con": "+15",
+      "wis": "+10",
+      "cha": "+12"
+    },
+    "skill": {
+      "insight": "+10",
+      "perception": "+17",
+      "stealth": "+7"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 27,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "22",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 16} to hit, reach 15 ft., one target. {@h}20 ({@damage 2d10 + 9}) piercing damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 16} to hit, reach 10 ft., one target. {@h}16 ({@damage 2d6 + 9}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 16} to hit, reach 20 ft., one target. {@h}18 ({@damage 2d8 + 9}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 20} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Breath Weapons {@recharge 5}",
+        "entries": [
+          "The dragon uses one of the following breath weapons.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Lightning Breath",
+                "entry": "The dragon exhales lightning in a 120-foot line that is 10 feet wide. Each creature in that line must make a {@dc 23} Dexterity saving throw, taking 88 ({@damage 16d10}) lightning damage on a failed save, or half as much damage on a successful one."
+              },
+              {
+                "type": "item",
+                "name": "Repulsion Breath",
+                "entry": "The dragon exhales repulsion energy in a 30-foot cone. Each creature in that area must succeed on a {@dc 23} Strength saving throw. On a failed save, the creature is pushed 60 feet away from the dragon."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Change Shape",
+        "entries": [
+          "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).",
+          "In a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 24} Dexterity saving throw or take 16 ({@damage 2d6 + 9}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-293",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        293
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/17"
+      },
+      "candidatePage": 293,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-copper-dragon",
+    "kind": "monster",
+    "name": "Ancient Copper Dragon",
+    "size": [
+      "G"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      {
+        "ac": 21,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 350,
+      "formula": "20d20 + 140"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "str": 27,
+    "dex": 12,
+    "con": 25,
+    "int": 20,
+    "wis": 17,
+    "cha": 19,
+    "save": {
+      "dex": "+8",
+      "con": "+14",
+      "wis": "+10",
+      "cha": "+11"
+    },
+    "skill": {
+      "deception": "+11",
+      "perception": "+17",
+      "stealth": "+8"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 27,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "21",
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 15} to hit, reach 15 ft., one target. {@h}19 ({@damage 2d10 + 8}) piercing damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 15} to hit, reach 10 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 15} to hit, reach 20 ft., one target. {@h}17 ({@damage 2d8 + 8}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 19} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Breath Weapons {@recharge 5}",
+        "entries": [
+          "The dragon uses one of the following breath weapons.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Acid Breath",
+                "entry": "The dragon exhales acid in a 90-foot line that is 10 feet wide. Each creature in that line must make a {@dc 22} Dexterity saving throw, taking 63 ({@damage 14d8}) acid damage on a failed save, or half as much damage on a successful one."
+              },
+              {
+                "type": "item",
+                "name": "Slowing Breath",
+                "entry": "The dragon exhales gas in a 90-foot cone. Each creature in that area must succeed on a {@dc 22} Constitution saving throw. On a failed save, the creature can't use reactions, its speed is halved, and it can't make more than one attack on its turn. In addition, the creature can use either an action or a bonus action on its turn, but not both. These effects last for 1 minute. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself with a successful save."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Change Shape",
+        "entries": [
+          "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).",
+          "In a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 23} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "acid"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-295",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        295
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/18"
+      },
+      "candidatePage": 295,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-gold-dragon",
+    "kind": "monster",
+    "name": "Ancient Gold Dragon",
+    "size": [
+      "G"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      {
+        "ac": 22,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 546,
+      "formula": "28d20 + 252"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "str": 30,
+    "dex": 14,
+    "con": 29,
+    "int": 18,
+    "wis": 17,
+    "cha": 28,
+    "save": {
+      "dex": "+9",
+      "con": "+16",
+      "wis": "+10",
+      "cha": "+16"
+    },
+    "skill": {
+      "insight": "+10",
+      "perception": "+17",
+      "persuasion": "+16",
+      "stealth": "+9"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 27,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "24",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 17} to hit, reach 15 ft., one target. {@h}21 ({@damage 2d10 + 10}) piercing damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 17} to hit, reach 10 ft., one target. {@h}17 ({@damage 2d6 + 10}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 17} to hit, reach 20 ft., one target. {@h}19 ({@damage 2d8 + 10}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 24} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Breath Weapons {@recharge 5}",
+        "entries": [
+          "The dragon uses one of the following breath weapons.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Fire Breath",
+                "entry": "The dragon exhales fire in a 90-foot cone. Each creature in that area must make a {@dc 24} Dexterity saving throw, taking 71 ({@damage 13d10}) fire damage on a failed save, or half as much damage on a successful one."
+              },
+              {
+                "type": "item",
+                "name": "Weakening Breath",
+                "entry": "The dragon exhales gas in a 90-foot cone. Each creature in that area must succeed on a {@dc 24} Strength saving throw or have disadvantage on Strength-based attack rolls, Strength checks, and Strength saving throws for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Change Shape",
+        "entries": [
+          "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).",
+          "In a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 25} Dexterity saving throw or take 17 ({@damage 2d6 + 10}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-298",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        298
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/19"
+      },
+      "candidatePage": 298,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-green-dragon",
+    "kind": "monster",
+    "name": "Ancient Green Dragon",
+    "size": [
+      "G"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 21,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 385,
+      "formula": "22d20 + 154"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "str": 27,
+    "dex": 12,
+    "con": 25,
+    "int": 20,
+    "wis": 17,
+    "cha": 19,
+    "save": {
+      "dex": "+8",
+      "con": "+14",
+      "wis": "+10",
+      "cha": "+11"
+    },
+    "skill": {
+      "deception": "+11",
+      "insight": "+10",
+      "perception": "+17",
+      "persuasion": "+11",
+      "stealth": "+8"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 27,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "22",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 15} to hit, reach 15 ft., one target. {@h}19 ({@damage 2d10 + 8}) piercing damage plus 10 ({@damage 3d6}) poison damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 15} to hit, reach 10 ft., one target. {@h}22 ({@damage 4d6 + 8}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 15} to hit, reach 20 ft., one target. {@h}17 ({@damage 2d8 + 8}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 19} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Poison Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales poisonous gas in a 90-foot cone. Each creature in that area must make a {@dc 22} Constitution saving throw, taking 77 ({@damage 22d6}) poison damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 23} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.poisoned",
+      "condition.prone",
+      "rulebook.page-284",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        284
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/20"
+      },
+      "candidatePage": 284,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-red-dragon",
+    "kind": "monster",
+    "name": "Ancient Red Dragon",
+    "size": [
+      "G"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 22,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 546,
+      "formula": "28d20 + 252"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "str": 30,
+    "dex": 10,
+    "con": 29,
+    "int": 18,
+    "wis": 15,
+    "cha": 23,
+    "save": {
+      "dex": "+7",
+      "con": "+16",
+      "wis": "+9",
+      "cha": "+13"
+    },
+    "skill": {
+      "perception": "+16",
+      "stealth": "+7"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 26,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "24",
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 17} to hit, reach 15 ft., one target. {@h}21 ({@damage 2d10 + 10}) piercing damage plus 14 ({@damage 4d6}) fire damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 17} to hit, reach 10 ft., one target. {@h}17 ({@damage 2d6 + 10}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 17} to hit, reach 20 ft., one target. {@h}19 ({@damage 2d8 + 10}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 21} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales fire in a 90-foot cone. Each creature in that area must make a {@dc 24} Dexterity saving throw, taking 91 ({@damage 26d6}) fire damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 25} Dexterity saving throw or take 17 ({@damage 2d6 + 10}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-286",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        286
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/21"
+      },
+      "candidatePage": 286,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-silver-dragon",
+    "kind": "monster",
+    "name": "Ancient Silver Dragon",
+    "size": [
+      "G"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      {
+        "ac": 22,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 487,
+      "formula": "25d20 + 225"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80
+    },
+    "str": 30,
+    "dex": 10,
+    "con": 29,
+    "int": 18,
+    "wis": 15,
+    "cha": 23,
+    "save": {
+      "dex": "+7",
+      "con": "+16",
+      "wis": "+9",
+      "cha": "+13"
+    },
+    "skill": {
+      "arcana": "+11",
+      "history": "+11",
+      "perception": "+16",
+      "stealth": "+7"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 26,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "23",
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 17} to hit, reach 15 ft., one target. {@h}21 ({@damage 2d10 + 10}) piercing damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 17} to hit, reach 10 ft., one target. {@h}17 ({@damage 2d6 + 10}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 17} to hit, reach 20 ft., one target. {@h}19 ({@damage 2d8 + 10}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 21} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Breath Weapons {@recharge 5}",
+        "entries": [
+          "The dragon uses one of the following breath weapons.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Cold Breath",
+                "entry": "The dragon exhales an icy blast in a 90-foot cone. Each creature in that area must make a {@dc 24} Constitution saving throw, taking 67 ({@damage 15d8}) cold damage on a failed save, or half as much damage on a successful one."
+              },
+              {
+                "type": "item",
+                "name": "Paralyzing Breath",
+                "entry": "The dragon exhales paralyzing gas in a 90-foot cone. Each creature in that area must succeed on a {@dc 24} Constitution saving throw or be {@condition paralyzed} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Change Shape",
+        "entries": [
+          "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).",
+          "In a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 25} Dexterity saving throw or take 17 ({@damage 2d6 + 10}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.prone",
+      "rulebook.page-301",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        301
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/22"
+      },
+      "candidatePage": 301,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ancient-white-dragon",
+    "kind": "monster",
+    "name": "Ancient White Dragon",
+    "size": [
+      "G"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 20,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 333,
+      "formula": "18d20 + 144"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "str": 26,
+    "dex": 10,
+    "con": 26,
+    "int": 10,
+    "wis": 13,
+    "cha": 14,
+    "save": {
+      "dex": "+6",
+      "con": "+14",
+      "wis": "+7",
+      "cha": "+8"
+    },
+    "skill": {
+      "perception": "+13",
+      "stealth": "+6"
+    },
+    "senses": [
+      "blindsight 60 ft.",
+      "darkvision 120 ft."
+    ],
+    "passive": 23,
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "20",
+    "trait": [
+      {
+        "name": "Ice Walk",
+        "entries": [
+          "The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, {@quickref difficult terrain||3} composed of ice or snow doesn't cost it extra movement."
+        ]
+      },
+      {
+        "name": "Legendary Resistance (3/Day)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 15 ft., one target. {@h}19 ({@damage 2d10 + 8}) piercing damage plus 9 ({@damage 2d8}) cold damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 10 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 20 ft., one target. {@h}17 ({@damage 2d8 + 8}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 16} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales an icy blast in a 90-foot cone. Each creature in that area must make a {@dc 22} Constitution saving throw, taking 72 ({@damage 16d8}) cold damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Tail Attack",
+        "entries": [
+          "The dragon makes a tail attack."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 22} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "immune": [
+      "cold"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-288",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        288
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/23"
+      },
+      "candidatePage": 288,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.androsphinx",
+    "kind": "monster",
+    "name": "Androsphinx",
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "ac": [
+      {
+        "ac": 17,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 199,
+      "formula": "19d10 + 95"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 60
+    },
+    "str": 22,
+    "dex": 10,
+    "con": 20,
+    "int": 16,
+    "wis": 18,
+    "cha": 23,
+    "save": {
+      "dex": "+6",
+      "con": "+11",
+      "int": "+9",
+      "wis": "+10"
+    },
+    "skill": {
+      "arcana": "+9",
+      "perception": "+10",
+      "religion": "+15"
+    },
+    "senses": [
+      "truesight 120 ft."
+    ],
+    "passive": 20,
+    "languages": [
+      "Common",
+      "Sphinx"
+    ],
+    "cr": "17",
+    "trait": [
+      {
+        "name": "Inscrutable",
+        "entries": [
+          "The sphinx is immune to any effect that would sense its emotions or read its thoughts, as well as any divination spell that it refuses. Wisdom ({@skill Insight}) checks made to ascertain the sphinx's intentions or sincerity have disadvantage."
+        ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The sphinx's weapon attacks are magical."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The sphinx makes two claw attacks."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 12} to hit, reach 5 ft., one target. {@h}17 ({@damage 2d10 + 6}) slashing damage."
+        ]
+      },
+      {
+        "name": "Roar (3/Day)",
+        "entries": [
+          "The sphinx emits a magical roar. Each time it roars before finishing a long rest, the roar is louder and the effect is different, as detailed below. Each creature within 500 feet of the sphinx and able to hear the roar must make a saving throw.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "First Roar",
+                "entry": "Each creature that fails a {@dc 18} Wisdom saving throw is {@condition frightened} for 1 minute. A {@condition frightened} creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+              },
+              {
+                "type": "item",
+                "name": "Second Roar",
+                "entry": "Each creature that fails a {@dc 18} Wisdom saving throw is {@condition deafened} and {@condition frightened} for 1 minute. A {@condition frightened} creature is {@condition paralyzed} and can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+              },
+              {
+                "type": "item",
+                "name": "Third Roar",
+                "entry": "Each creature makes a {@dc 18} Constitution saving throw. On a failed save, a creature takes 44 ({@damage 8d10}) thunder damage and is knocked {@condition prone}. On a successful save, the creature takes half as much damage and isn't knocked {@condition prone}."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "legendary": [
+      {
+        "name": "Claw Attack",
+        "entries": [
+          "The sphinx makes one claw attack."
+        ]
+      },
+      {
+        "name": "Teleport (Costs 2 Actions)",
+        "entries": [
+          "The sphinx magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see."
+        ]
+      },
+      {
+        "name": "Cast a Spell (Costs 3 Actions)",
+        "entries": [
+          "The sphinx casts a spell from its list of prepared spells, using a spell slot as normal."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The sphinx is a 12th-level spellcaster. Its spellcasting ability is Wisdom (spell save {@dc 18}, {@hit 10} to hit with spell attacks). It requires no material components to cast its spells. The sphinx has the following cleric spells prepared:"
+        ],
+        "spells": {
+          "0": {
+            "spells": [
+              "{@spell sacred flame}",
+              "{@spell spare the dying}",
+              "{@spell thaumaturgy}"
+            ]
+          },
+          "1": {
+            "slots": 4,
+            "spells": [
+              "{@spell command}",
+              "{@spell detect evil and good}",
+              "{@spell detect magic}"
+            ]
+          },
+          "2": {
+            "slots": 3,
+            "spells": [
+              "{@spell lesser restoration}",
+              "{@spell zone of truth}"
+            ]
+          },
+          "3": {
+            "slots": 3,
+            "spells": [
+              "{@spell dispel magic}",
+              "{@spell tongues}"
+            ]
+          },
+          "4": {
+            "slots": 3,
+            "spells": [
+              "{@spell banishment}",
+              "{@spell freedom of movement}"
+            ]
+          },
+          "5": {
+            "slots": 2,
+            "spells": [
+              "{@spell flame strike}",
+              "{@spell greater restoration}"
+            ]
+          },
+          "6": {
+            "slots": 1,
+            "spells": [
+              "{@spell heroes' feast}"
+            ]
+          }
+        },
+        "ability": "wis"
+      }
+    ],
+    "immune": [
+      "psychic",
+      {
+        "immune": [
+          "bludgeoning",
+          "piercing",
+          "slashing"
+        ],
+        "note": "from nonmagical attacks",
+        "cond": true
+      }
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened"
+    ],
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.deafened",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.prone",
+      "rulebook.page-347",
+      "skill.insight",
+      "spell.banishment",
+      "spell.command",
+      "spell.detect-evil-and-good",
+      "spell.detect-magic",
+      "spell.dispel-magic",
+      "spell.flame-strike",
+      "spell.freedom-of-movement",
+      "spell.greater-restoration",
+      "spell.heroes-feast",
+      "spell.lesser-restoration",
+      "spell.sacred-flame",
+      "spell.spare-the-dying",
+      "spell.thaumaturgy",
+      "spell.tongues",
+      "spell.zone-of-truth"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        347
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/24"
+      },
+      "candidatePage": 347,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.animated-armor",
+    "kind": "monster",
+    "name": "Animated Armor",
+    "size": [
+      "M"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 18,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 33,
+      "formula": "6d8 + 6"
+    },
+    "speed": {
+      "walk": 25
+    },
+    "str": 14,
+    "dex": 11,
+    "con": 13,
+    "int": 1,
+    "wis": 3,
+    "cha": 1,
+    "senses": [
+      "blindsight 60 ft. (blind beyond this radius)"
+    ],
+    "passive": 6,
+    "cr": "1",
+    "trait": [
+      {
+        "name": "Antimagic Susceptibility",
+        "entries": [
+          "The armor is {@condition incapacitated} while in the area of an {@spell antimagic field}. If targeted by {@spell dispel magic}, the armor must succeed on a Constitution saving throw against the caster's spell save DC or fall {@condition unconscious} for 1 minute."
+        ]
+      },
+      {
+        "name": "False Appearance",
+        "entries": [
+          "While the armor remains motionless, it is indistinguishable from a normal suit of armor."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The armor makes two melee attacks."
+        ]
+      },
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d6 + 2}) bludgeoning damage."
+        ]
+      }
+    ],
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "blinded",
+      "charmed",
+      "deafened",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.charmed",
+      "condition.deafened",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.incapacitated",
+      "condition.paralyzed",
+      "condition.petrified",
+      "condition.poisoned",
+      "condition.unconscious",
+      "rulebook.page-263",
+      "spell.antimagic-field",
+      "spell.dispel-magic"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        263
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/25"
+      },
+      "candidatePage": 263,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.ankheg",
+    "kind": "monster",
+    "name": "Ankheg",
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 14,
+        "from": [
+          "natural armor"
+        ]
+      },
+      {
+        "ac": 11,
+        "condition": "while prone"
+      }
+    ],
+    "hp": {
+      "average": 39,
+      "formula": "6d10 + 6"
+    },
+    "speed": {
+      "walk": 30,
+      "burrow": 10
+    },
+    "str": 17,
+    "dex": 11,
+    "con": 13,
+    "int": 1,
+    "wis": 13,
+    "cha": 6,
+    "senses": [
+      "darkvision 60 ft.",
+      "tremorsense 60 ft."
+    ],
+    "passive": 11,
+    "cr": "2",
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) slashing damage plus 3 ({@damage 1d6}) acid damage. If the target is a Large or smaller creature, it is {@condition grappled} (escape {@dc 13}). Until this grapple ends, the ankheg can bite only the {@condition grappled} creature and has advantage on attack rolls to do so."
+        ]
+      },
+      {
+        "name": "Acid Spray {@recharge}",
+        "entries": [
+          "The ankheg spits acid in a line that is 30 feet long and 5 feet wide, provided that it has no creature {@condition grappled}. Each creature in that line must make a {@dc 13} Dexterity saving throw, taking 10 ({@damage 3d6}) acid damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.grappled",
+      "rulebook.page-264"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        264
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/26"
+      },
+      "candidatePage": 264,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  }
+]

@@ -1,0 +1,493 @@
+{
+  "edition": "srd-5.2.1",
+  "sourceCounts": {
+    "feat": 20,
+    "optional-feature": 36
+  },
+  "nativeCounts": {
+    "feat": 17,
+    "optional-feature": 38
+  },
+  "excluded": [
+    {
+      "path": "feats.json",
+      "pointer": "/feat/14",
+      "name": "Magic Initiate",
+      "reason": "legacy mechanics duplicate tagged SRD52; select the modern categorized feat"
+    },
+    {
+      "path": "feats.json",
+      "pointer": "/feat/16",
+      "name": "Savage Attacker",
+      "reason": "legacy mechanics duplicate tagged SRD52; select the modern categorized feat"
+    },
+    {
+      "path": "feats.json",
+      "pointer": "/feat/18",
+      "name": "Skilled",
+      "reason": "legacy mechanics duplicate tagged SRD52; select the modern categorized feat"
+    }
+  ],
+  "corrections": [
+    {
+      "id": "optional-feature.agonizing-blast",
+      "pages": [
+        72
+      ],
+      "reason": "Normalize the published damaging Warlock cantrip prerequisite and distinct known-cantrip selection requirements, including weapon attack rolls where applicable; preserve repeatability and minimum range separately from the prerequisite."
+    },
+    {
+      "id": "optional-feature.eldritch-spear",
+      "pages": [
+        73
+      ],
+      "reason": "Normalize the published damaging Warlock cantrip prerequisite and distinct known-cantrip selection requirements, including weapon attack rolls where applicable; preserve repeatability and minimum range separately from the prerequisite."
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "pages": [
+        74
+      ],
+      "reason": "S52-017: remove non-SRD Slaad Tadpole, correct Monsters cross-reference, and remove ritual-only encoding; publisher grants spell as a Magic action without a spell slot. Timing retained in entries."
+    },
+    {
+      "id": "optional-feature.repelling-blast",
+      "pages": [
+        74
+      ],
+      "reason": "Normalize the published damaging Warlock cantrip prerequisite and distinct known-cantrip selection requirements, including weapon attack rolls where applicable; preserve repeatability and minimum range separately from the prerequisite."
+    }
+  ],
+  "publisherNameLocatorMissing": [],
+  "pendingReferences": [
+    {
+      "id": "feat.alert",
+      "reference": "variantrule|Initiative|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.alert",
+      "reference": "variantrule|Proficiency|SRD52|Proficiency Bonus",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.alert",
+      "reference": "condition|Incapacitated|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-dimensional-travel",
+      "reference": "action|Attack|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-dimensional-travel",
+      "reference": "action|Magic|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-fate",
+      "reference": "variantrule|D20 Test|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-fate",
+      "reference": "variantrule|Initiative|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-fate",
+      "reference": "variantrule|Short Rest|SRD52|Short",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-fate",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-irresistible-offense",
+      "reference": "variantrule|Resistance|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-the-night-spirit",
+      "reference": "variantrule|Dim Light|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-the-night-spirit",
+      "reference": "variantrule|Darkness|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-the-night-spirit",
+      "reference": "condition|Invisible|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-the-night-spirit",
+      "reference": "variantrule|Bonus Action|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-the-night-spirit",
+      "reference": "variantrule|Reaction|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-the-night-spirit",
+      "reference": "variantrule|Resistance|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.boon-of-truesight",
+      "reference": "sense|Truesight|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.defense",
+      "reference": "variantrule|Armor Class|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.grappler",
+      "reference": "variantrule|Unarmed Strike|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.grappler",
+      "reference": "action|Attack|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.grappler",
+      "reference": "variantrule|Advantage|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.grappler",
+      "reference": "condition|Grappled|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "feat.magic-initiate",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.armor-of-shadows",
+      "reference": "spell|Mage Armor|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.ascendant-step",
+      "reference": "spell|Levitate|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.devils-sight",
+      "reference": "variantrule|Dim Light|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.devils-sight",
+      "reference": "variantrule|Darkness|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.eldritch-mind",
+      "reference": "variantrule|Advantage|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.eldritch-mind",
+      "reference": "variantrule|Concentration|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.eldritch-smite",
+      "reference": "condition|Prone|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.extended-spell",
+      "reference": "variantrule|Advantage|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.fiendish-vigor",
+      "reference": "spell|False Life|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.fiendish-vigor",
+      "reference": "variantrule|Temporary Hit Points|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.gaze-of-two-minds",
+      "reference": "variantrule|Bonus Action|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.gift-of-the-depths",
+      "reference": "spell|Water Breathing|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.gift-of-the-depths",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.gift-of-the-protectors",
+      "reference": "variantrule|Hit Points|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.gift-of-the-protectors",
+      "reference": "variantrule|Hit Points|SRD52|Hit Point",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.gift-of-the-protectors",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.gift-of-the-protectors",
+      "reference": "action|Magic|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.heightened-spell",
+      "reference": "variantrule|Disadvantage|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.investment-of-the-chain-master",
+      "reference": "spell|Find Familiar|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.investment-of-the-chain-master",
+      "reference": "variantrule|Bonus Action|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.investment-of-the-chain-master",
+      "reference": "action|Attack|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.investment-of-the-chain-master",
+      "reference": "variantrule|Reaction|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.investment-of-the-chain-master",
+      "reference": "variantrule|Resistance|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.lifedrinker",
+      "reference": "variantrule|Hit Point Dice|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.lifedrinker",
+      "reference": "variantrule|Hit Points|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.lifedrinker",
+      "reference": "variantrule|Hit Points|SRD52|Hit Point",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.mask-of-many-faces",
+      "reference": "spell|Disguise Self|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.master-of-myriad-forms",
+      "reference": "spell|Alter Self|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.misty-visions",
+      "reference": "spell|Silent Image|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.one-with-shadows",
+      "reference": "variantrule|Dim Light|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.one-with-shadows",
+      "reference": "variantrule|Darkness|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.one-with-shadows",
+      "reference": "spell|Invisibility|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.otherworldly-leap",
+      "reference": "spell|Jump|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-blade",
+      "reference": "variantrule|Bonus Action|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-blade",
+      "reference": "variantrule|Spellcasting Focus|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "spell|Find Familiar|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "action|Magic|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "creature|Imp|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "creature|Pseudodragon|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "creature|Quasit|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "creature|Skeleton|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "creature|Sphinx of Wonder|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "creature|Sprite|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "creature|Venomous Snake|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "action|Attack|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-chain",
+      "reference": "variantrule|Reaction|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-tome",
+      "reference": "variantrule|Short Rest|SRD52|Short",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-tome",
+      "reference": "variantrule|Long Rest|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-tome",
+      "reference": "variantrule|Ritual|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.pact-of-the-tome",
+      "reference": "variantrule|Spellcasting Focus|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.quickened-spell",
+      "reference": "variantrule|Bonus Action|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.thirsting-blade",
+      "reference": "action|Attack|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.twinned-spell",
+      "reference": "spell|Charm Person|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.visions-of-distant-realms",
+      "reference": "spell|Arcane Eye|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.whispers-of-the-grave",
+      "reference": "spell|Speak with Dead|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    },
+    {
+      "id": "optional-feature.witch-sight",
+      "reference": "sense|Truesight|SRD52",
+      "reason": "cross-category or inline semantic reconciliation pending"
+    }
+  ],
+  "resolvedStructuredPrerequisites": 29,
+  "nativeCount": 55,
+  "expandedSourceCounts": {
+    "optional-feature": 2
+  },
+  "metamagicMetadata": {
+    "options": 10,
+    "fixedCosts": 10,
+    "variableCosts": 0,
+    "combinationExceptions": [
+      "optional-feature.empowered-spell",
+      "optional-feature.seeking-spell"
+    ]
+  },
+  "invocationRepeatability": {
+    "options": 28,
+    "repeatable": [
+      "optional-feature.agonizing-blast",
+      "optional-feature.eldritch-spear",
+      "optional-feature.lessons-of-the-first-ones",
+      "optional-feature.repelling-blast"
+    ]
+  },
+  "literalSpellRelationships": {
+    "grantOccurrences": 11,
+    "prerequisiteOccurrences": 0,
+    "addedCatalogLinks": 11,
+    "unresolvedSelectors": 17
+  },
+  "literalCharacterRelationships": {
+    "literalOccurrences": 0,
+    "namedVariantOccurrences": 0,
+    "addedCatalogLinks": 0
+  }
+}

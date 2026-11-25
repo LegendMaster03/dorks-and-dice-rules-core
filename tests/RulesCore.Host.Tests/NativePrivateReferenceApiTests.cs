@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RulesCore.Host;
+using RulesCore.Content;
 using Xunit;
 
 namespace RulesCore.Host.Tests;
@@ -48,7 +49,8 @@ public sealed class NativePrivateReferenceApiTests
             Root = root;
         }
 
-        public static async Task<TestHost> StartAsync(HttpMessageHandler site, string surface = "PrivateOnly")
+        public static async Task<TestHost> StartAsync(HttpMessageHandler site, string surface = "PrivateOnly",
+            bool foreign = false)
         {
             var root = Path.Combine(Path.GetTempPath(), "phase3a-" + Guid.NewGuid().ToString("N"));
             var package = Path.Combine(root, "first-party-001");
@@ -61,6 +63,28 @@ public sealed class NativePrivateReferenceApiTests
             File.WriteAllText(Path.Combine(package, "working", "unfinished.json"),
                 """{"id":"rule.unfinished","name":"Unfinished Rule","kind":"rule"}""");
 
+            var additional = new Dictionary<string, string?>();
+            if (foreign)
+            {
+                foreach (var (id, index) in new[] { ("dnd-5e", 0), ("dnd-5-5e", 1) })
+                {
+                    var location = NativeRulesetLayout.Resolve(root, id);
+                    Directory.CreateDirectory(location.NativeDirectory);
+                    File.WriteAllText(Path.Combine(root, id, "manifest.json"),
+                        $$"""{"id":"{{id}}","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/"}""");
+                    File.WriteAllText(Path.Combine(location.NativeDirectory, "base.json"),
+                        $$"""{"id":"rule.native","name":"{{id}} rule","kind":"rule"}""");
+                    additional["Rulesets:AdditionalRulesets:" + index] = id;
+                    if (index == 0)
+                    {
+                        var prefix = "RulesCore:PublicDistribution:Packages:" + id + ":";
+                        additional[prefix + "Enabled"] = "true";
+                        additional[prefix + "ApprovedFingerprint"] = NativeCatalogLoader.Load(location).Fingerprint;
+                        additional[prefix + "RightsReviewReference"] = "TEST-FIXTURE";
+                        additional[prefix + "AttributionStatement"] = "Test fixture only";
+                    }
+                }
+            }
             var app = RulesCoreApplication.Create([], builder =>
             {
                 builder.WebHost.UseUrls("http://127.0.0.1:0");
@@ -71,6 +95,7 @@ public sealed class NativePrivateReferenceApiTests
                     ["Rulesets:DefaultRuleset"] = "first-party-001",
                     ["ToolHost:BaseUrl"] = "https://site.test"
                 });
+                builder.Configuration.AddInMemoryCollection(additional);
             }, services =>
             {
                 if (surface == "PrivateOnly")
@@ -136,6 +161,23 @@ public sealed class NativePrivateReferenceApiTests
         Assert.Equal("Approved definition", detail.GetProperty("rule").GetProperty("definition")
             .GetProperty("description").GetString());
         Assert.Equal(3, calls);
+    }
+
+    [Fact]
+    public async Task WikiReadsOnlyFirstPartyAndIndependentlyApprovedForeignPackages()
+    {
+        await using var host = await TestHost.StartAsync(new SiteHandler(_ => Identity()), foreign: true);
+        using var listing = await host.Client.SendAsync(host.TicketRequest("/api/private/rulesets"));
+        Assert.Equal(HttpStatusCode.OK, listing.StatusCode);
+        var body = await listing.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal(new[] { "dnd-5e", "first-party-001" },
+            body.GetProperty("rulesets").EnumerateArray().Select(item => item.GetProperty("id").GetString()).ToArray());
+        using var detail = await host.Client.SendAsync(host.TicketRequest("/api/private/rulesets/dnd-5e/rules/rule.native"));
+        Assert.Equal(HttpStatusCode.OK, detail.StatusCode);
+        var rule = await detail.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("dnd-5e rule", rule.GetProperty("rule").GetProperty("name").GetString());
+        using var denied = await host.Client.SendAsync(host.TicketRequest("/api/private/rulesets/dnd-5-5e/rules/rule.native"));
+        Assert.Equal(HttpStatusCode.NotFound, denied.StatusCode);
     }
 
     [Theory]

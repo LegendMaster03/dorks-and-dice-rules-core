@@ -48,29 +48,37 @@ public static class NativePublicEndpoints
                     .GetRequiredService<CharacterSheetMechanicsTicketValidator>();
                 var failure = await validator.ValidateDirectConsumerCatalogAsync(invocation.HttpContext);
                 if (failure is not null) return failure;
+                if (invocation.HttpContext.RequestServices.GetRequiredService<RulesCoreSettings>()
+                        .Ruleset.RulesetId != "first-party-001")
+                    return Results.Json(new { error = "catalog_access_denied" }, statusCode: 403);
             }
             return await next(invocation);
         });
 
-        group.MapGet("", (HttpRequest request, NativeCatalogStore store, NativePublicDistributionPolicy policy) =>
+        group.MapGet("", (HttpRequest request, NativeCatalogRegistry registry, NativePublicDistributionPolicy policy) =>
         {
-            var snapshot = store.Snapshot;
-            if (snapshot is null) return Unavailable();
+            // Authentication grants the established first-party access, not
+            // access to unpublished foreign packages. Publicly approved foreign
+            // packages are equally discoverable through the authenticated route.
+            var snapshots = registry.RulesetIds.OrderBy(id => id, StringComparer.Ordinal)
+                .Select(id => registry.GetStore(id).Snapshot)
+                .OfType<NativeCatalogSnapshot>().ToArray();
+            if (snapshots.Length == 0) return Unavailable();
             if (request.Query.Count != 0) return Results.BadRequest(new { error = "invalid_query" });
-            PublicRulesetSummary[] visible = (authenticated || policy.Allows(snapshot))
-                ? [new PublicRulesetSummary(snapshot.RulesetId, snapshot.Count, snapshot.Fingerprint,
-                    new PublicRulesetCapabilities(true, false))]
-                : [];
+            var visible = snapshots.Where(snapshot => MayRead(snapshot, policy, authenticated))
+                .Select(snapshot => new PublicRulesetSummary(snapshot.RulesetId, snapshot.Count,
+                    snapshot.Fingerprint, new PublicRulesetCapabilities(true, false))).ToArray();
             return Results.Ok(new PublicRulesetsResponse(visible));
         });
 
         group.MapGet("/{rulesetId}/rules",
-            (string rulesetId, HttpRequest request, NativeCatalogStore store,
+            (string rulesetId, HttpRequest request, NativeCatalogRegistry registry, RulesCoreSettings settings,
                 NativePublicDistributionPolicy policy) =>
         {
-            var snapshot = store.Snapshot;
-            if (snapshot is null) return Unavailable();
             if (!ValidRulesetId(rulesetId)) return InvalidId();
+            var snapshot = SelectSnapshot(rulesetId, registry);
+            if (snapshot is null)
+                return rulesetId == settings.Ruleset.RulesetId ? Unavailable() : NotFound();
             if (!Matches(snapshot, policy, rulesetId, authenticated)) return NotFound();
 
             if (request.Query.Keys.Any(key => key is not ("q" or "category" or "limit" or "offset")) ||
@@ -91,13 +99,14 @@ public static class NativePublicEndpoints
         });
 
         group.MapGet("/{rulesetId}/rules/{ruleId}",
-            (string rulesetId, string ruleId, HttpRequest request, NativeCatalogStore store,
+            (string rulesetId, string ruleId, HttpRequest request, NativeCatalogRegistry registry, RulesCoreSettings settings,
                 NativePublicDistributionPolicy policy) =>
         {
-            var snapshot = store.Snapshot;
-            if (snapshot is null) return Unavailable();
             if (!ValidRulesetId(rulesetId) || ruleId.Length > 160 || !SafeRuleId.IsMatch(ruleId))
                 return InvalidId();
+            var snapshot = SelectSnapshot(rulesetId, registry);
+            if (snapshot is null)
+                return rulesetId == settings.Ruleset.RulesetId ? Unavailable() : NotFound();
             if (!Matches(snapshot, policy, rulesetId, authenticated)) return NotFound();
             if (request.Query.Count != 0) return Results.BadRequest(new { error = "invalid_query" });
             if (!snapshot.TryGetById(ruleId, out var rule) || rule is null)
@@ -107,10 +116,17 @@ public static class NativePublicEndpoints
         });
     }
 
+    private static NativeCatalogSnapshot? SelectSnapshot(string rulesetId, NativeCatalogRegistry registry) =>
+        registry.TryGetStore(rulesetId, out var store) ? store!.Snapshot : null;
+
+    internal static bool MayRead(NativeCatalogSnapshot snapshot, NativePublicDistributionPolicy policy,
+        bool authenticated) =>
+        (authenticated && snapshot.RulesetId == "first-party-001") || policy.Allows(snapshot);
+
     private static bool Matches(NativeCatalogSnapshot snapshot, NativePublicDistributionPolicy policy,
         string rulesetId, bool authenticated) =>
         string.Equals(rulesetId, snapshot.RulesetId, StringComparison.Ordinal) &&
-        (authenticated || policy.Allows(snapshot));
+        (MayRead(snapshot, policy, authenticated));
 
     private static bool ValidRulesetId(string id) => id.Length <= 80 && SafeRulesetId.IsMatch(id);
     private static IResult NotFound() => Results.NotFound(new { error = "ruleset_not_found" });

@@ -45,3 +45,61 @@ The automated text-overlap triage reviewed 6,301 source fragments against the 40
 The comparison is reproducible using \`tools/audit_srd_text_fidelity.py\` and \`.github/workflows/audit-srd-text.yml\` on branch \`audit/source-srd-text-parity-20261019\`. Its diagnostic workflow first passed at https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/39198758922.
 
 These findings do not resolve the full chapter/paragraph audit, complete table-cell verification, full monster/spell fidelity, or comprehensive licensing review. No wholesale narrative deletion is justified until source provenance is established and approved non-SRD homebrew is distinguished.
+
+## Legacy structured reference-audit corrections
+
+- S51-001 — Warlock Pact Magic example: replace Witch Bolt with Thunderwave (official p.47). Retain slot progression and spellcasting mechanics.
+- S51-002 — Circle of the Land: official pp.21–22 list seven terrains, not Underdark. Remove Underdark from both descriptive table/choice and structured grants; Swamp's 3rd-level pair is Acid Arrow and Darkness. Preserve all other terrain tables.
+- S51-003 — Twinned Spell: official p.44 uses Ray of Frost as the only eligible example; remove Chromatic Orb from the illustrative prose.
+
+The pinned source remains unchanged; these corrections are reproduced by class and feature projection generators.
+
+## Legacy unresolved inline target adjudication
+
+At the prior exact-head audit, all 13 missing SRD 5.1 inline targets were confined to five lycanthrope curse links, seven Life Domain deity links, and one poison creature link. The official page extraction confirms p.327–329 uses plain lycanthropy curse wording and the complete PDF extraction contains no Player Characters as Lycanthropes variant rule. All five stat blocks retain their published curse and save, without an invented player-character rule. P.17 contains all seven deity names in its examples, even though the SRD does not publish separate entries for them; keep the literal names and links to the eligible pantheon entries, not the unsupported commercial deity references. P.204 says crawler, not Carrion Crawler; the poison's condition and saving-throw rules are retained. These are source corrections to the existing generators and report records, not broader source-body certification. No imported identities or mechanics were changed.
+
+## Consolidated native publisher comparison
+
+The historical audit on commit f4162a5aaf2ed6c2aa120d902f2f3fe1b16af95b compared the entire pinned reference pack, including unpromoted narrative. The current `tools/audit_srd_native_fidelity.py` instead inventories promoted native rule prose, nested table cells and labels, retaining exact entity/JSON pointers and source-page evidence. Spell bodies receive complete normalized token-sequence comparisons against their independently extracted official layouts, preserving small substitutions, numeric changes and missing/extra text; other prose is matched against publisher raw-text page indexes, with source-local and elsewhere matches distinguished. Unknown markup, short unmatched cells and partial matches remain review candidates. Table-cell presence is not row/column parity; casting header structures, stat-block numeric fields, and omitted publisher content require separate verification. The existing official-source workflow generates the complete report from the hash-verified publisher PDFs. It is diagnostic, not a new runtime schema, automatic text rewrite, or rights approval. Publisher source and third-party pinned source files are unchanged.
+
+### First confirmed spell corrections
+
+- **SRD 5.1 Acid Splash (p.114):** remove the imported requirement to see each selected creature; the pinned publisher PDF requires only the stated range and separation. Remove the corresponding sight-target tag. The modern spell remains unchanged.
+- **SRD 5.2.1 Animate Dead (p.108):** restore the publisher cross-reference to the Monsters section for the Skeleton and Zombie stat blocks. No mechanical grant changes.
+
+Both native corrections are reproducible in the existing spell promotion generator. Their entire normalized spell bodies are covered by the native fidelity comparison. The remainder of the spell inventory and other content categories have not been certified.
+
+### Legacy spell body corrections — first batch
+
+Seven further legacy spell descriptions differ from the pinned CC SRD 5.1, largely because the structured source includes later errata. Restore the publisher's specific rules rather than treating that later text as authoritative for this package.
+
+| Spell | Publisher rule restored |
+|---|---|
+| Call Lightning | Cloud centered 100 feet directly above the caster; strike point within range |
+| Clone | Clone grows in a sealed vessel |
+| Color Spray | Blinded until the spell ends |
+| Contagion | Disease selected and inflicted on hit; three failures sustain disease, three successes recover; remove imported poisoned condition |
+| Disintegrate | Damage that reduces target to 0 HP disintegrates it |
+| Glyph of Warding | Surface area limitation and object-specific movement restriction as published |
+| Heroes' Feast | Up to twelve other creatures |
+
+The existing generator preserves the unchanged upstream source and verifies specific publisher evidence before applying these corrections. The complete normalized descriptions are checked by the fidelity tests. No executable spell mechanics are added.
+
+### Legacy spell body corrections — second batch, and modern Wish
+
+Restore published Levitate object eligibility, Magnificent Mansion expulsion, Moonbeam movement distance, Sanctuary termination, Simulacrum creature statistics, True Polymorph object transformation restrictions, True Resurrection wording, and Unseen Servant's unspecified size. Modern Wish removes the additional non-SRD City of Sigil/Lady of Pain restriction; the publisher's multiverse restriction remains. These are exact occurrence edits checked against publisher evidence, not arbitrary replacements across all entries. The former offline test comparing every spell body to uncorrected structured JSON conflicted with the source correction workflow and has been narrowed to the casting fields; reproducible generator checks and independent publisher text comparison cover the corrected bodies.
+
+### Modern spell cross-references and publisher source gap
+
+Restore the publisher's Monsters cross-references in Awaken, Create Undead, Find Familiar, Finger of Death, Phantom Steed and Polymorph. Replace the non-SRD named locations/person in Plane Shift with the printed generic examples. SRD 5.2.1 Telekinesis ends mid-sentence on p.168: visual inspection of the actual published PDF confirms that the next heading follows the simple-tool example immediately. This is a publisher-source omission, not a failed PDF extraction. Retain the printed fragment, exclude the unprinted structured-source continuation, and disclose the source gap in the record's structured status. Do not infer or silently import a missing rule from the commercial book. The exact published bodies of the eight edited spells are checked by the fidelity tests; the truncated Telekinesis source is not certified as a complete rule.
+
+## Inline markup and targeted publisher fidelity follow-up
+
+The exact-head review artifact for `073f158cdc5f97761155b109428605a15e5e216a` recorded 532 unclassified tags across the two editions. Background and disease tags now resolve as edition-local identity candidates; book/quick-reference navigation, display filters, nested card effects and external hyperlinks receive distinct diagnostic statuses. Display filters remain unexecuted and the nested effect label remains separate from its parent catalog identity. No native identity or cross-system dispatch changes.
+
+Three external hyperlink occurrences exposed source discrepancies. SRD 5.1 p.229 prints 2d6/4d6 for the Mace of Smiting; restore the dice instead of fixed 7/14 and remove the external editorial note. On p.248, the Vicious Weapon inherited entries already matched the publisher, but its top-level description retained the fixed damage and editorial note; align both descriptions. SRD 5.2.1 p.186 defines Player Character without the external hyperlink and includes a Character Creation cross-reference; restore the printed wording. Preserve all existing identities, source pointers and unrelated fields. These targeted corrections are not a certification of all publisher spell, stat-block or table text.
+
+
+### Additional SRD 5.1 spell fidelity corrections
+
+Find Familiar (p.143): restore the separate published dismissal paragraph and remove the later equipment-drop restriction and unofficial additional-form note. Prismatic Wall (p.171): restore the printed rod of cancellation exception and antimagic wording; keep the rod as a literal publisher reference, not a fabricated item definition. Sleet Storm (p.180): restore the publisher concentration-saving-throw trigger without adding a start-of-turn requirement. The generator verifies the source strings and publisher evidence; the modern edition and pinned corpus remain unchanged. These corrections do not certify all remaining spell or stat-block differences.

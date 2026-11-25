@@ -1,0 +1,2546 @@
+[
+  {
+    "id": "monster.ape",
+    "kind": "monster",
+    "name": "Ape",
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d8 + 6"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 16,
+    "dex": 14,
+    "con": 14,
+    "int": 6,
+    "wis": 12,
+    "cha": 7,
+    "skill": {
+      "athletics": "+5",
+      "perception": "+3"
+    },
+    "passive": 13,
+    "cr": "1/2",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The ape makes two fist attacks."
+        ]
+      },
+      {
+        "name": "Fist",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Rock",
+        "entries": [
+          "{@atk rw} {@hit 5} to hit, range 25/50 ft., one target. {@h}6 ({@damage 1d6 + 3}) bludgeoning damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-366"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        366
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/27"
+      },
+      "candidatePage": 366,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.archmage",
+    "kind": "monster",
+    "name": "Archmage",
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "any race"
+      ]
+    },
+    "alignment": [
+      "A"
+    ],
+    "ac": [
+      12,
+      {
+        "ac": 15,
+        "condition": "with {@spell mage armor}",
+        "braces": true
+      }
+    ],
+    "hp": {
+      "average": 99,
+      "formula": "18d8 + 18"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 10,
+    "dex": 14,
+    "con": 12,
+    "int": 20,
+    "wis": 15,
+    "cha": 16,
+    "save": {
+      "int": "+9",
+      "wis": "+6"
+    },
+    "skill": {
+      "arcana": "+13",
+      "history": "+13"
+    },
+    "passive": 12,
+    "languages": [
+      "any six languages"
+    ],
+    "cr": "12",
+    "trait": [
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The archmage has advantage on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Dagger",
+        "entries": [
+          "{@atk mw,rw} {@hit 6} to hit, reach 5 ft. or range 20/60 ft., one target. {@h}4 ({@damage 1d4 + 2}) piercing damage."
+        ]
+      }
+    ],
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The archmage is an 18th-level spellcaster. Its spellcasting ability is Intelligence (spell save {@dc 17}, {@hit 9} to hit with spell attacks). The archmage can cast {@spell disguise self} and {@spell invisibility} at will and has the following wizard spells prepared:"
+        ],
+        "will": [
+          "{@spell disguise self}",
+          "{@spell invisibility}"
+        ],
+        "spells": {
+          "0": {
+            "spells": [
+              "{@spell fire bolt}",
+              "{@spell light}",
+              "{@spell mage hand}",
+              "{@spell prestidigitation}",
+              "{@spell shocking grasp}"
+            ]
+          },
+          "1": {
+            "slots": 4,
+            "spells": [
+              "{@spell detect magic}",
+              "{@spell identify}",
+              "{@spell mage armor}*",
+              "{@spell magic missile}"
+            ]
+          },
+          "2": {
+            "slots": 3,
+            "spells": [
+              "{@spell detect thoughts}",
+              "{@spell mirror image}",
+              "{@spell misty step}"
+            ]
+          },
+          "3": {
+            "slots": 3,
+            "spells": [
+              "{@spell counterspell}",
+              "{@spell fly}",
+              "{@spell lightning bolt}"
+            ]
+          },
+          "4": {
+            "slots": 3,
+            "spells": [
+              "{@spell banishment}",
+              "{@spell fire shield}",
+              "{@spell stoneskin}*"
+            ]
+          },
+          "5": {
+            "slots": 3,
+            "spells": [
+              "{@spell cone of cold}",
+              "{@spell scrying}",
+              "{@spell wall of force}"
+            ]
+          },
+          "6": {
+            "slots": 1,
+            "spells": [
+              "{@spell globe of invulnerability}"
+            ]
+          },
+          "7": {
+            "slots": 1,
+            "spells": [
+              "{@spell teleport}"
+            ]
+          },
+          "8": {
+            "slots": 1,
+            "spells": [
+              "{@spell mind blank}*"
+            ]
+          },
+          "9": {
+            "slots": 1,
+            "spells": [
+              "{@spell time stop}"
+            ]
+          }
+        },
+        "footerEntries": [
+          "*The archmage casts these spells on itself before combat."
+        ],
+        "ability": "int",
+        "hidden": [
+          "will"
+        ]
+      }
+    ],
+    "resist": [
+      {
+        "special": "damage from spells"
+      },
+      {
+        "resist": [
+          "bludgeoning",
+          "piercing",
+          "slashing"
+        ],
+        "note": "(from stoneskin)",
+        "cond": true,
+        "preNote": "nonmagical"
+      }
+    ],
+    "attachedItems": [
+      "dagger|srd51"
+    ],
+    "catalogReferences": [
+      "rulebook.page-395",
+      "spell.banishment",
+      "spell.cone-of-cold",
+      "spell.counterspell",
+      "spell.detect-magic",
+      "spell.detect-thoughts",
+      "spell.disguise-self",
+      "spell.fire-bolt",
+      "spell.fire-shield",
+      "spell.fly",
+      "spell.globe-of-invulnerability",
+      "spell.identify",
+      "spell.invisibility",
+      "spell.light",
+      "spell.lightning-bolt",
+      "spell.mage-armor",
+      "spell.mage-hand",
+      "spell.magic-missile",
+      "spell.mind-blank",
+      "spell.mirror-image",
+      "spell.misty-step",
+      "spell.prestidigitation",
+      "spell.scrying",
+      "spell.shocking-grasp",
+      "spell.stoneskin",
+      "spell.teleport",
+      "spell.time-stop",
+      "spell.wall-of-force"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        395
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/28"
+      },
+      "candidatePage": 395,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.assassin",
+    "kind": "monster",
+    "name": "Assassin",
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "any race"
+      ]
+    },
+    "alignment": [
+      "L",
+      "NX",
+      "C",
+      "NY",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 15,
+        "from": [
+          "{@item studded leather armor|srd51|studded leather}"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 78,
+      "formula": "12d8 + 24"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 11,
+    "dex": 16,
+    "con": 14,
+    "int": 13,
+    "wis": 11,
+    "cha": 10,
+    "save": {
+      "dex": "+6",
+      "int": "+4"
+    },
+    "skill": {
+      "acrobatics": "+6",
+      "deception": "+3",
+      "perception": "+3",
+      "stealth": "+9"
+    },
+    "passive": 13,
+    "languages": [
+      "Thieves' cant plus any two languages"
+    ],
+    "cr": "8",
+    "trait": [
+      {
+        "name": "Assassinate",
+        "entries": [
+          "During its first turn, the assassin has advantage on attack rolls against any creature that hasn't taken a turn. Any hit the assassin scores against a {@status surprised} creature is a critical hit."
+        ]
+      },
+      {
+        "name": "Evasion",
+        "entries": [
+          "If the assassin is subjected to an effect that allows it to make a Dexterity saving throw to take only half damage, the assassin instead takes no damage if it succeeds on the saving throw, and only half damage if it fails."
+        ]
+      },
+      {
+        "name": "Sneak Attack (1/Turn)",
+        "entries": [
+          "The assassin deals an extra 14 ({@damage 4d6}) damage when it hits a target with a weapon attack and has advantage on the attack roll, or when the target is within 5 feet of an ally of the assassin that isn't {@condition incapacitated} and the assassin doesn't have disadvantage on the attack roll."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The assassin makes two shortsword attacks."
+        ]
+      },
+      {
+        "name": "Shortsword",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) piercing damage, and the target must make a {@dc 15} Constitution saving throw, taking 24 ({@damage 7d6}) poison damage on a failed save, or half as much damage on a successful one."
+        ]
+      },
+      {
+        "name": "Light Crossbow",
+        "entries": [
+          "{@atk rw} {@hit 6} to hit, range 80/320 ft., one target. {@h}7 ({@damage 1d8 + 3}) piercing damage, and the target must make a {@dc 15} Constitution saving throw, taking 24 ({@damage 7d6}) poison damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "resist": [
+      "poison"
+    ],
+    "attachedItems": [
+      "light crossbow|srd51",
+      "shortsword|srd51"
+    ],
+    "catalogReferences": [
+      "baseitem.studded-leather-armor",
+      "condition.incapacitated",
+      "rulebook.page-396"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        396
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/29"
+      },
+      "candidatePage": 396,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.awakened-shrub",
+    "kind": "monster",
+    "name": "Awakened Shrub",
+    "size": [
+      "S"
+    ],
+    "type": "plant",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      9
+    ],
+    "hp": {
+      "average": 10,
+      "formula": "3d6"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 3,
+    "dex": 8,
+    "con": 11,
+    "int": 10,
+    "wis": 10,
+    "cha": 6,
+    "passive": 10,
+    "languages": [
+      "one language known by its creator"
+    ],
+    "cr": "0",
+    "trait": [
+      {
+        "name": "False Appearance",
+        "entries": [
+          "While the shrub remains motionless, it is indistinguishable from a normal shrub."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Rake",
+        "entries": [
+          "{@atk mw} {@hit 1} to hit, reach 5 ft., one target. {@h}1 ({@damage 1d4 - 1}) slashing damage."
+        ]
+      }
+    ],
+    "resist": [
+      "piercing"
+    ],
+    "vulnerable": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "rulebook.page-366"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        366
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/30"
+      },
+      "candidatePage": 366,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.awakened-tree",
+    "kind": "monster",
+    "name": "Awakened Tree",
+    "size": [
+      "H"
+    ],
+    "type": "plant",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 13,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 59,
+      "formula": "7d12 + 14"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 19,
+    "dex": 6,
+    "con": 15,
+    "int": 10,
+    "wis": 10,
+    "cha": 7,
+    "passive": 10,
+    "languages": [
+      "one language known by its creator"
+    ],
+    "cr": "2",
+    "trait": [
+      {
+        "name": "False Appearance",
+        "entries": [
+          "While the tree remains motionless, it is indistinguishable from a normal tree."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 10 ft., one target. {@h}14 ({@damage 3d6 + 4}) bludgeoning damage."
+        ]
+      }
+    ],
+    "resist": [
+      "bludgeoning",
+      "piercing"
+    ],
+    "vulnerable": [
+      "fire"
+    ],
+    "catalogReferences": [
+      "rulebook.page-366"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        366
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/31"
+      },
+      "candidatePage": 366,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.axe-beak",
+    "kind": "monster",
+    "name": "Axe Beak",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 50
+    },
+    "str": 14,
+    "dex": 12,
+    "con": 12,
+    "int": 2,
+    "wis": 10,
+    "cha": 5,
+    "passive": 10,
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Beak",
+        "entries": [
+          "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d8 + 2}) slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-366"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        366
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/32"
+      },
+      "candidatePage": 366,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.azer",
+    "kind": "monster",
+    "name": "Azer",
+    "size": [
+      "M"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "ac": [
+      {
+        "ac": 17,
+        "from": [
+          "natural armor",
+          "{@item shield|srd51}"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 39,
+      "formula": "6d8 + 12"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 17,
+    "dex": 12,
+    "con": 15,
+    "int": 12,
+    "wis": 13,
+    "cha": 10,
+    "save": {
+      "con": "+4"
+    },
+    "passive": 11,
+    "languages": [
+      "Ignan"
+    ],
+    "cr": "2",
+    "trait": [
+      {
+        "name": "Heated Body",
+        "entries": [
+          "A creature that touches the azer or hits it with a melee attack while within 5 feet of it takes 5 ({@damage 1d10}) fire damage."
+        ]
+      },
+      {
+        "name": "Heated Weapons",
+        "entries": [
+          "When the azer hits with a metal melee weapon, it deals an extra 3 ({@damage 1d6}) fire damage (included in the attack)."
+        ]
+      },
+      {
+        "name": "Illumination",
+        "entries": [
+          "The azer sheds bright light in a 10-foot radius and dim light for an additional 10 feet."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Warhammer",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}7 ({@damage 1d8 + 3}) bludgeoning damage, or 8 ({@damage 1d10 + 3}) bludgeoning damage if used with two hands to make a melee attack, plus 3 ({@damage 1d6}) fire damage."
+        ]
+      }
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "attachedItems": [
+      "warhammer|srd51"
+    ],
+    "catalogReferences": [
+      "baseitem.shield",
+      "condition.poisoned",
+      "rulebook.page-265"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        265
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/33"
+      },
+      "candidatePage": 265,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.baboon",
+    "kind": "monster",
+    "name": "Baboon",
+    "size": [
+      "S"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 3,
+      "formula": "1d6"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 8,
+    "dex": 14,
+    "con": 11,
+    "int": 4,
+    "wis": 12,
+    "cha": 6,
+    "passive": 11,
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The baboon has advantage on an attack roll against a creature if at least one of the baboon's allies is within 5 feet of the creature and the ally isn't {@condition incapacitated}."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 1} to hit, reach 5 ft., one target. {@h}1 ({@damage 1d4 - 1}) piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "rulebook.page-367"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        367
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/34"
+      },
+      "candidatePage": 367,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.badger",
+    "kind": "monster",
+    "name": "Badger",
+    "size": [
+      "T"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      10
+    ],
+    "hp": {
+      "average": 3,
+      "formula": "1d4 + 1"
+    },
+    "speed": {
+      "walk": 20,
+      "burrow": 5
+    },
+    "str": 4,
+    "dex": 11,
+    "con": 12,
+    "int": 2,
+    "wis": 12,
+    "cha": 5,
+    "senses": [
+      "darkvision 30 ft."
+    ],
+    "passive": 11,
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Keen Smell",
+        "entries": [
+          "The badger has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 2} to hit, reach 5 ft., one target. {@h}1 piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-367",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        367
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/35"
+      },
+      "candidatePage": 367,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.balor",
+    "kind": "monster",
+    "name": "Balor",
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "demon"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 19,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 262,
+      "formula": "21d12 + 126"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80
+    },
+    "str": 26,
+    "dex": 15,
+    "con": 22,
+    "int": 20,
+    "wis": 16,
+    "cha": 22,
+    "save": {
+      "str": "+14",
+      "con": "+12",
+      "wis": "+9",
+      "cha": "+12"
+    },
+    "senses": [
+      "truesight 120 ft."
+    ],
+    "passive": 13,
+    "languages": [
+      "Abyssal",
+      "telepathy 120 ft."
+    ],
+    "cr": "19",
+    "trait": [
+      {
+        "name": "Death Throes",
+        "entries": [
+          "When the balor dies, it explodes, and each creature within 30 feet of it must make a {@dc 20} Dexterity saving throw, taking 70 ({@damage 20d6}) fire damage on a failed save, or half as much damage on a successful one. The explosion ignites flammable objects in that area that aren't being worn or carried, and it destroys the balor's weapons."
+        ]
+      },
+      {
+        "name": "Fire Aura",
+        "entries": [
+          "At the start of each of the balor's turns, each creature within 5 feet of it takes 10 ({@damage 3d6}) fire damage, and flammable objects in the aura that aren't being worn or carried ignite. A creature that touches the balor or hits it with a melee attack while within 5 feet of it takes 10 ({@damage 3d6}) fire damage."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The balor has advantage on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The balor's weapon attacks are magical."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The balor makes two attacks: one with its longsword and one with its whip."
+        ]
+      },
+      {
+        "name": "Longsword",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 10 ft., one target. {@h}21 ({@damage 3d8 + 8}) slashing damage plus 13 ({@damage 3d8}) lightning damage. If the balor scores a critical hit, it rolls damage dice three times, instead of twice."
+        ]
+      },
+      {
+        "name": "Whip",
+        "entries": [
+          "{@atk mw} {@hit 14} to hit, reach 30 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage plus 10 ({@damage 3d6}) fire damage, and the target must succeed on a {@dc 20} Strength saving throw or be pulled up to 25 feet toward the balor."
+        ]
+      },
+      {
+        "name": "Teleport",
+        "entries": [
+          "The balor magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see."
+        ]
+      }
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "resist": [
+      "cold",
+      "lightning",
+      {
+        "resist": [
+          "bludgeoning",
+          "piercing",
+          "slashing"
+        ],
+        "note": "from nonmagical attacks",
+        "cond": true
+      }
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "attachedItems": [
+      "longsword|srd51",
+      "whip|srd51"
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "rulebook.page-270"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        270
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/36"
+      },
+      "candidatePage": 270,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.bandit",
+    "kind": "monster",
+    "name": "Bandit",
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "any race"
+      ]
+    },
+    "alignment": [
+      "NX",
+      "C",
+      "G",
+      "NY",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 12,
+        "from": [
+          "{@item leather armor|srd51}"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d8 + 2"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 11,
+    "dex": 12,
+    "con": 12,
+    "int": 10,
+    "wis": 10,
+    "cha": 10,
+    "passive": 10,
+    "languages": [
+      "any one language (usually Common)"
+    ],
+    "cr": "1/8",
+    "action": [
+      {
+        "name": "Scimitar",
+        "entries": [
+          "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d6 + 1}) slashing damage."
+        ]
+      },
+      {
+        "name": "Light Crossbow",
+        "entries": [
+          "{@atk rw} {@hit 3} to hit, range 80/320 ft., one target. {@h}5 ({@damage 1d8 + 1}) piercing damage."
+        ]
+      }
+    ],
+    "attachedItems": [
+      "light crossbow|srd51",
+      "scimitar|srd51"
+    ],
+    "catalogReferences": [
+      "baseitem.leather-armor",
+      "rulebook.page-396"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        396
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/37"
+      },
+      "candidatePage": 396,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.bandit-captain",
+    "kind": "monster",
+    "name": "Bandit Captain",
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "any race"
+      ]
+    },
+    "alignment": [
+      "NX",
+      "C",
+      "G",
+      "NY",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 15,
+        "from": [
+          "{@item studded leather armor|srd51|studded leather}"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 65,
+      "formula": "10d8 + 20"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 15,
+    "dex": 16,
+    "con": 14,
+    "int": 14,
+    "wis": 11,
+    "cha": 14,
+    "save": {
+      "str": "+4",
+      "dex": "+5",
+      "wis": "+2"
+    },
+    "skill": {
+      "athletics": "+4",
+      "deception": "+4"
+    },
+    "passive": 10,
+    "languages": [
+      "any two languages"
+    ],
+    "cr": "2",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The captain makes three melee attacks: two with its scimitar and one with its dagger. Or the captain makes two ranged attacks with its daggers."
+        ]
+      },
+      {
+        "name": "Scimitar",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) slashing damage."
+        ]
+      },
+      {
+        "name": "Dagger",
+        "entries": [
+          "{@atk mw,rw} {@hit 5} to hit, reach 5 ft. or range 20/60 ft., one target. {@h}5 ({@damage 1d4 + 3}) piercing damage."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Parry",
+        "entries": [
+          "The captain adds 2 to its AC against one melee attack that would hit it. To do so, the captain must see the attacker and be wielding a melee weapon."
+        ]
+      }
+    ],
+    "attachedItems": [
+      "dagger|srd51",
+      "scimitar|srd51"
+    ],
+    "catalogReferences": [
+      "baseitem.studded-leather-armor",
+      "rulebook.page-397"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        397
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/38"
+      },
+      "candidatePage": 397,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.barbed-devil",
+    "kind": "monster",
+    "name": "Barbed Devil",
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 15,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 110,
+      "formula": "13d8 + 52"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 17,
+    "con": 18,
+    "int": 12,
+    "wis": 14,
+    "cha": 14,
+    "save": {
+      "str": "+6",
+      "con": "+7",
+      "wis": "+5",
+      "cha": "+5"
+    },
+    "skill": {
+      "deception": "+5",
+      "insight": "+5",
+      "perception": "+8"
+    },
+    "senses": [
+      "darkvision 120 ft."
+    ],
+    "passive": 18,
+    "languages": [
+      "Infernal",
+      "telepathy 120 ft."
+    ],
+    "cr": "5",
+    "trait": [
+      {
+        "name": "Barbed Hide",
+        "entries": [
+          "At the start of each of its turns, the barbed devil deals 5 ({@damage 1d10}) piercing damage to any creature grappling it."
+        ]
+      },
+      {
+        "name": "Devil's Sight",
+        "entries": [
+          "Magical darkness doesn't impede the devil's darkvision."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The devil has advantage on saving throws against spells and other magical effects."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The devil makes three melee attacks: one with its tail and two with its claws. Alternatively, it can use Hurl Flame twice."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) piercing damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) piercing damage."
+        ]
+      },
+      {
+        "name": "Hurl Flame",
+        "entries": [
+          "{@atk rs} {@hit 5} to hit, range 150 ft., one target. {@h}10 ({@damage 3d6}) fire damage. If the target is a flammable object that isn't being worn or carried, it also catches fire."
+        ]
+      }
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "resist": [
+      "cold",
+      {
+        "resist": [
+          "bludgeoning",
+          "piercing",
+          "slashing"
+        ],
+        "note": "from nonmagical attacks that aren't silvered",
+        "cond": true
+      }
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "rulebook.page-274"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        274
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/39"
+      },
+      "candidatePage": 274,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.basilisk",
+    "kind": "monster",
+    "name": "Basilisk",
+    "size": [
+      "M"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 15,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 52,
+      "formula": "8d8 + 16"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 16,
+    "dex": 8,
+    "con": 15,
+    "int": 2,
+    "wis": 8,
+    "cha": 7,
+    "senses": [
+      "darkvision 60 ft."
+    ],
+    "passive": 9,
+    "cr": "3",
+    "trait": [
+      {
+        "name": "Petrifying Gaze",
+        "entries": [
+          "If a creature starts its turn within 30 feet of the basilisk and the two of them can see each other, the basilisk can force the creature to make a {@dc 12} Constitution saving throw if the basilisk isn't {@condition incapacitated}. On a failed save, the creature magically begins to turn to stone and is {@condition restrained}. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is {@condition petrified} until freed by the {@spell greater restoration} spell or other magic.",
+          "A creature that isn't {@status surprised} can avert its eyes to avoid the saving throw at the start of its turn. If it does so, it can't see the basilisk until the start of its next turn, when it can avert its eyes again. If it looks at the basilisk in the meantime, it must immediately make the save.",
+          "If the basilisk sees its reflection within 30 feet of it in bright light, it mistakes itself for a rival and targets itself with its gaze."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) piercing damage plus 7 ({@damage 2d6}) poison damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.petrified",
+      "condition.restrained",
+      "rulebook.page-265",
+      "spell.greater-restoration"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        265
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/40"
+      },
+      "candidatePage": 265,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.bat",
+    "kind": "monster",
+    "name": "Bat",
+    "size": [
+      "T"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 1,
+      "formula": "1d4 - 1"
+    },
+    "speed": {
+      "walk": 5,
+      "fly": 30
+    },
+    "str": 2,
+    "dex": 15,
+    "con": 8,
+    "int": 2,
+    "wis": 12,
+    "cha": 4,
+    "senses": [
+      "blindsight 60 ft."
+    ],
+    "passive": 11,
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Echolocation",
+        "entries": [
+          "The bat can't use its blindsight while {@condition deafened}."
+        ]
+      },
+      {
+        "name": "Keen Hearing",
+        "entries": [
+          "The bat has advantage on Wisdom ({@skill Perception}) checks that rely on hearing."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 0} to hit, reach 5 ft., one creature. {@h}1 piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.deafened",
+      "rulebook.page-367",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        367
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/41"
+      },
+      "candidatePage": 367,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.bearded-devil",
+    "kind": "monster",
+    "name": "Bearded Devil",
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 13,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 52,
+      "formula": "8d8 + 16"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 15,
+    "con": 15,
+    "int": 9,
+    "wis": 11,
+    "cha": 11,
+    "save": {
+      "str": "+5",
+      "con": "+4",
+      "wis": "+2"
+    },
+    "senses": [
+      "darkvision 120 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "Infernal",
+      "telepathy 120 ft."
+    ],
+    "cr": "3",
+    "trait": [
+      {
+        "name": "Devil's Sight",
+        "entries": [
+          "Magical darkness doesn't impede the devil's darkvision."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The devil has advantage on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Steadfast",
+        "entries": [
+          "The devil can't be {@condition frightened} while it can see an allied creature within 30 feet of it."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The devil makes two attacks: one with its beard and one with its glaive."
+        ]
+      },
+      {
+        "name": "Beard",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 5 ft., one creature. {@h}6 ({@damage 1d8 + 2}) piercing damage, and the target must succeed on a {@dc 12} Constitution saving throw or be {@condition poisoned} for 1 minute. While {@condition poisoned} in this way, the target can't regain hit points. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+        ]
+      },
+      {
+        "name": "Glaive",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 10 ft., one target. {@h}8 ({@damage 1d10 + 3}) slashing damage. If the target is a creature other than an undead or a construct, it must succeed on a {@dc 12} Constitution saving throw or lose 5 ({@dice 1d10}) hit points at the start of each of its turns due to an infernal wound. Each time the devil hits the wounded target with this attack, the damage dealt by the wound increases by 5 ({@damage 1d10}). Any creature can take an action to stanch the wound with a successful {@dc 12} Wisdom ({@skill Medicine}) check. The wound also closes if the target receives magical healing."
+        ]
+      }
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "resist": [
+      "cold",
+      {
+        "resist": [
+          "bludgeoning",
+          "piercing",
+          "slashing"
+        ],
+        "note": "from nonmagical attacks that aren't silvered",
+        "cond": true
+      }
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "attachedItems": [
+      "glaive|srd51"
+    ],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.poisoned",
+      "rulebook.page-274",
+      "skill.medicine"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        274
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/42"
+      },
+      "candidatePage": 274,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.behir",
+    "kind": "monster",
+    "name": "Behir",
+    "size": [
+      "H"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 17,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 168,
+      "formula": "16d12 + 64"
+    },
+    "speed": {
+      "walk": 50,
+      "climb": 40
+    },
+    "str": 23,
+    "dex": 16,
+    "con": 18,
+    "int": 7,
+    "wis": 14,
+    "cha": 12,
+    "skill": {
+      "perception": "+6",
+      "stealth": "+7"
+    },
+    "senses": [
+      "darkvision 90 ft."
+    ],
+    "passive": 16,
+    "languages": [
+      "Draconic"
+    ],
+    "cr": "11",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The behir makes two attacks: one with its bite and one to constrict."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 10} to hit, reach 10 ft., one target. {@h}22 ({@damage 3d10 + 6}) piercing damage."
+        ]
+      },
+      {
+        "name": "Constrict",
+        "entries": [
+          "{@atk mw} {@hit 10} to hit, reach 5 ft., one Large or smaller creature. {@h}17 ({@damage 2d10 + 6}) bludgeoning damage plus 17 ({@damage 2d10 + 6}) slashing damage. The target is {@condition grappled} (escape {@dc 16}) if the behir isn't already constricting a creature, and the target is {@condition restrained} until this grapple ends."
+        ]
+      },
+      {
+        "name": "Lightning Breath {@recharge 5}",
+        "entries": [
+          "The behir exhales a line of lightning that is 20 feet long and 5 feet wide. Each creature in that line must make a {@dc 16} Dexterity saving throw, taking 66 ({@damage 12d10}) lightning damage on a failed save, or half as much damage on a successful one."
+        ]
+      },
+      {
+        "name": "Swallow",
+        "entries": [
+          "The behir makes one bite attack against a Medium or smaller target it is grappling. If the attack hits, the target is also swallowed, and the grapple ends. While swallowed, the target is {@condition blinded} and {@condition restrained}, it has {@quickref Cover||3||total cover} against attacks and other effects outside the behir, and it takes 21 ({@damage 6d6}) acid damage at the start of each of the behir's turns. A behir can have only one creature swallowed at a time.",
+          "If the behir takes 30 damage or more on a single turn from the swallowed creature, the behir must succeed on a {@dc 14} Constitution saving throw at the end of that turn or regurgitate the creature, which falls {@condition prone} in a space within 10 feet of the behir. If the behir dies, a swallowed creature is no longer {@condition restrained} by it and can escape from the corpse by using 15 feet of movement, exiting {@condition prone}."
+        ]
+      }
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.grappled",
+      "condition.prone",
+      "condition.restrained",
+      "rulebook.page-265"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        265
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/43"
+      },
+      "candidatePage": 265,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.berserker",
+    "kind": "monster",
+    "name": "Berserker",
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "any race"
+      ]
+    },
+    "alignment": [
+      "C",
+      "G",
+      "NY",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 13,
+        "from": [
+          "{@item hide armor|srd51}"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 67,
+      "formula": "9d8 + 27"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 12,
+    "con": 17,
+    "int": 9,
+    "wis": 11,
+    "cha": 9,
+    "passive": 10,
+    "languages": [
+      "any one language (usually Common)"
+    ],
+    "cr": "2",
+    "trait": [
+      {
+        "name": "Reckless",
+        "entries": [
+          "At the start of its turn, the berserker can gain advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage until the start of its next turn."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Greataxe",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}9 ({@damage 1d12 + 3}) slashing damage."
+        ]
+      }
+    ],
+    "attachedItems": [
+      "greataxe|srd51"
+    ],
+    "catalogReferences": [
+      "baseitem.hide-armor",
+      "rulebook.page-397"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        397
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/44"
+      },
+      "candidatePage": 397,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.black-bear",
+    "kind": "monster",
+    "name": "Black Bear",
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 11,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d8 + 6"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 30
+    },
+    "str": 15,
+    "dex": 10,
+    "con": 14,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "skill": {
+      "perception": "+3"
+    },
+    "passive": 13,
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Keen Smell",
+        "entries": [
+          "The bear has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The bear makes two attacks: one with its bite and one with its claws."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d6 + 2}) piercing damage."
+        ]
+      },
+      {
+        "name": "Claws",
+        "entries": [
+          "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}7 ({@damage 2d4 + 2}) slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-367",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        367
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/45"
+      },
+      "candidatePage": 367,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.black-dragon-wyrmling",
+    "kind": "monster",
+    "name": "Black Dragon Wyrmling",
+    "size": [
+      "M"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 17,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 33,
+      "formula": "6d8 + 6"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60,
+      "swim": 30
+    },
+    "str": 15,
+    "dex": 14,
+    "con": 13,
+    "int": 10,
+    "wis": 11,
+    "cha": 13,
+    "save": {
+      "dex": "+4",
+      "con": "+3",
+      "wis": "+2",
+      "cha": "+3"
+    },
+    "skill": {
+      "perception": "+4",
+      "stealth": "+4"
+    },
+    "senses": [
+      "blindsight 10 ft.",
+      "darkvision 60 ft."
+    ],
+    "passive": 14,
+    "languages": [
+      "Draconic"
+    ],
+    "cr": "2",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}7 ({@damage 1d10 + 2}) piercing damage plus 2 ({@damage 1d4}) acid damage."
+        ]
+      },
+      {
+        "name": "Acid Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales acid in a 15-foot line that is 5 feet wide. Each creature in that line must make a {@dc 11} Dexterity saving throw, taking 22 ({@damage 5d8}) acid damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "immune": [
+      "acid"
+    ],
+    "catalogReferences": [
+      "rulebook.page-282"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        282
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/46"
+      },
+      "candidatePage": 282,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.black-pudding",
+    "kind": "monster",
+    "name": "Black Pudding",
+    "size": [
+      "L"
+    ],
+    "type": "ooze",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      7
+    ],
+    "hp": {
+      "average": 85,
+      "formula": "10d10 + 30"
+    },
+    "speed": {
+      "walk": 20,
+      "climb": 20
+    },
+    "str": 16,
+    "dex": 5,
+    "con": 16,
+    "int": 1,
+    "wis": 6,
+    "cha": 1,
+    "senses": [
+      "blindsight 60 ft. (blind beyond this radius)"
+    ],
+    "passive": 8,
+    "cr": "4",
+    "trait": [
+      {
+        "name": "Amorphous",
+        "entries": [
+          "The pudding can move through a space as narrow as 1 inch wide without squeezing."
+        ]
+      },
+      {
+        "name": "Corrosive Form",
+        "entries": [
+          "A creature that touches the pudding or hits it with a melee attack while within 5 feet of it takes 4 ({@damage 1d8}) acid damage. Any nonmagical weapon made of metal or wood that hits the pudding corrodes. After dealing damage, the weapon takes a permanent and cumulative −1 penalty to damage rolls. If its penalty drops to −5, the weapon is destroyed. Nonmagical ammunition made of metal or wood that hits the pudding is destroyed after dealing damage. The pudding can eat through 2-inch-thick, nonmagical wood or metal in 1 round."
+        ]
+      },
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The pudding can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Pseudopod",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) bludgeoning damage plus 18 ({@damage 4d8}) acid damage. In addition, nonmagical armor worn by the target is partly dissolved and takes a permanent and cumulative −1 penalty to the AC it offers. The armor is destroyed if the penalty reduces its AC to 10."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Split",
+        "entries": [
+          "When a pudding that is Medium or larger is subjected to lightning or slashing damage, it splits into two new puddings if it has at least 10 hit points. Each new pudding has hit points equal to half the original pudding's, rounded down. New puddings are one size smaller than the original pudding."
+        ]
+      }
+    ],
+    "immune": [
+      "acid",
+      "cold",
+      "lightning",
+      "slashing"
+    ],
+    "conditionImmune": [
+      "blinded",
+      "charmed",
+      "deafened",
+      "exhaustion",
+      "frightened",
+      "prone"
+    ],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.charmed",
+      "condition.deafened",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.prone",
+      "rulebook.page-337"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        337
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/47"
+      },
+      "candidatePage": 337,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.blink-dog",
+    "kind": "monster",
+    "name": "Blink Dog",
+    "size": [
+      "M"
+    ],
+    "type": "fey",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 22,
+      "formula": "4d8 + 4"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 12,
+    "dex": 17,
+    "con": 12,
+    "int": 10,
+    "wis": 13,
+    "cha": 11,
+    "skill": {
+      "perception": "+3",
+      "stealth": "+5"
+    },
+    "passive": 13,
+    "languages": [
+      "Blink Dog",
+      "understands Sylvan but can't speak it"
+    ],
+    "cr": "1/4",
+    "trait": [
+      {
+        "name": "Keen Hearing and Smell",
+        "entries": [
+          "The dog has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d6 + 1}) piercing damage."
+        ]
+      },
+      {
+        "name": "Teleport {@recharge 4}",
+        "entries": [
+          "The dog magically teleports, along with any equipment it is wearing or carrying, up to 40 feet to an unoccupied space it can see. Before or after teleporting, the dog can make one bite attack."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rulebook.page-368",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        368
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/48"
+      },
+      "candidatePage": 368,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.blood-hawk",
+    "kind": "monster",
+    "name": "Blood Hawk",
+    "size": [
+      "S"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 7,
+      "formula": "2d6"
+    },
+    "speed": {
+      "walk": 10,
+      "fly": 60
+    },
+    "str": 6,
+    "dex": 14,
+    "con": 10,
+    "int": 3,
+    "wis": 14,
+    "cha": 5,
+    "skill": {
+      "perception": "+4"
+    },
+    "passive": 14,
+    "cr": "1/8",
+    "trait": [
+      {
+        "name": "Keen Sight",
+        "entries": [
+          "The hawk has advantage on Wisdom ({@skill Perception}) checks that rely on sight."
+        ]
+      },
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The hawk has advantage on an attack roll against a creature if at least one of the hawk's allies is within 5 feet of the creature and the ally isn't {@condition incapacitated}."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Beak",
+        "entries": [
+          "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d4 + 2}) piercing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "rulebook.page-368",
+      "skill.perception"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        368
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/49"
+      },
+      "candidatePage": 368,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.blue-dragon-wyrmling",
+    "kind": "monster",
+    "name": "Blue Dragon Wyrmling",
+    "size": [
+      "M"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 17,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 52,
+      "formula": "8d8 + 16"
+    },
+    "speed": {
+      "walk": 30,
+      "burrow": 15,
+      "fly": 60
+    },
+    "str": 17,
+    "dex": 10,
+    "con": 15,
+    "int": 12,
+    "wis": 11,
+    "cha": 15,
+    "save": {
+      "dex": "+2",
+      "con": "+4",
+      "wis": "+2",
+      "cha": "+4"
+    },
+    "skill": {
+      "perception": "+4",
+      "stealth": "+2"
+    },
+    "senses": [
+      "blindsight 10 ft.",
+      "darkvision 60 ft."
+    ],
+    "passive": 14,
+    "languages": [
+      "Draconic"
+    ],
+    "cr": "3",
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}8 ({@damage 1d10 + 3}) piercing damage plus 3 ({@damage 1d6}) lightning damage."
+        ]
+      },
+      {
+        "name": "Lightning Breath {@recharge 5}",
+        "entries": [
+          "The dragon exhales lightning in a 30-foot line that is 5 feet wide. Each creature in that line must make a {@dc 12} Dexterity saving throw, taking 22 ({@damage 4d10}) lightning damage on a failed save, or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "immune": [
+      "lightning"
+    ],
+    "catalogReferences": [
+      "rulebook.page-284"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        284
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/50"
+      },
+      "candidatePage": 284,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  },
+  {
+    "id": "monster.boar",
+    "kind": "monster",
+    "name": "Boar",
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 11,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d8 + 2"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 13,
+    "dex": 11,
+    "con": 12,
+    "int": 2,
+    "wis": 9,
+    "cha": 5,
+    "passive": 9,
+    "cr": "1/4",
+    "trait": [
+      {
+        "name": "Charge",
+        "entries": [
+          "If the boar moves at least 20 feet straight toward a target and then hits it with a tusk attack on the same turn, the target takes an extra 3 ({@damage 1d6}) slashing damage. If the target is a creature, it must succeed on a {@dc 11} Strength saving throw or be knocked {@condition prone}."
+        ]
+      },
+      {
+        "name": "Relentless (Recharges after a Short or Long Rest)",
+        "entries": [
+          "If the boar takes 7 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Tusk",
+        "entries": [
+          "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d6 + 1}) slashing damage."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.prone",
+      "rulebook.page-368"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        368
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd51.json",
+        "pointer": "/monster/51"
+      },
+      "candidatePage": 368,
+      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+    }
+  }
+]

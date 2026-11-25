@@ -89,7 +89,8 @@ public sealed class NativeAuthenticatedApiTests
         public static async Task<Fixture> StartAsync(
             string surface = "PublicOnly", string? source = null, string mode = "dorks-and-dice",
             bool dm = false,
-            INativeOriginHostUnderlyingAuthorityProvider? originVerifier = null)
+            INativeOriginHostUnderlyingAuthorityProvider? originVerifier = null,
+            bool foreign = false)
         {
             var root = Path.Combine(Path.GetTempPath(), "native-consumer-" + Guid.NewGuid().ToString("N"));
             var package = Path.Combine(root, Ruleset);
@@ -97,6 +98,28 @@ public sealed class NativeAuthenticatedApiTests
             File.WriteAllText(Path.Combine(package, "manifest.json"),
                 """{"id":"first-party-001","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/"}""");
             File.WriteAllText(Path.Combine(package, "native", "base.json"), Definition);
+            var additional = new Dictionary<string, string?>();
+            if (foreign)
+            {
+                foreach (var (id, index) in new[] { ("dnd-5e", 0), ("dnd-5-5e", 1) })
+                {
+                    var location = NativeRulesetLayout.Resolve(root, id);
+                    Directory.CreateDirectory(location.NativeDirectory);
+                    File.WriteAllText(Path.Combine(root, id, "manifest.json"),
+                        $$"""{"id":"{{id}}","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/"}""");
+                    File.WriteAllText(Path.Combine(location.NativeDirectory, "base.json"),
+                        $$"""{"id":"monster.goblin","name":"{{id}} goblin","kind":"monster"}""");
+                    additional["Rulesets:AdditionalRulesets:" + index] = id;
+                    if (index == 0)
+                    {
+                        var prefix = "RulesCore:PublicDistribution:Packages:" + id + ":";
+                        additional[prefix + "Enabled"] = "true";
+                        additional[prefix + "ApprovedFingerprint"] = NativeCatalogLoader.Load(location).Fingerprint;
+                        additional[prefix + "RightsReviewReference"] = "TEST-FIXTURE";
+                        additional[prefix + "AttributionStatement"] = "Test fixture only";
+                    }
+                }
+            }
             var app = RulesCoreApplication.Create([], builder =>
             {
                 builder.WebHost.UseUrls("http://127.0.0.1:0");
@@ -106,8 +129,9 @@ public sealed class NativeAuthenticatedApiTests
                     ["Rulesets:ContentRoot"] = root,
                     ["Rulesets:DefaultRuleset"] = Ruleset,
                     ["ToolHost:BaseUrl"] = "https://site.test"
-                    // No public distribution approval: internal access must not depend on it.
+                    // No first-party public distribution approval: internal access must not depend on it.
                 });
+                builder.Configuration.AddInMemoryCollection(additional);
             }, services =>
             {
                 services.AddHttpClient<CharacterSheetMechanicsTicketValidator>()
@@ -218,6 +242,23 @@ public sealed class NativeAuthenticatedApiTests
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
         Assert.Equal("origin_authority_unavailable",
             body.GetProperty("error").GetString());
+    }
+
+    [Fact]
+    public async Task SignedInUserReadsApprovedForeignButNotUnpublishedForeignCatalogs()
+    {
+        await using var fixture = await Fixture.StartAsync(foreign: true);
+        using var listing = await fixture.Client.SendAsync(fixture.Authorized(Catalog));
+        Assert.Equal(HttpStatusCode.OK, listing.StatusCode);
+        var body = await listing.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal(new[] { "dnd-5e", Ruleset },
+            body.GetProperty("rulesets").EnumerateArray().Select(item => item.GetProperty("id").GetString()).ToArray());
+        using var foreign = await fixture.Client.SendAsync(fixture.Authorized(Catalog + "/dnd-5e/rules/monster.goblin"));
+        Assert.Equal(HttpStatusCode.OK, foreign.StatusCode);
+        var detail = await foreign.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal("dnd-5e goblin", detail.GetProperty("rule").GetProperty("name").GetString());
+        using var denied = await fixture.Client.SendAsync(fixture.Authorized(Catalog + "/dnd-5-5e/rules/monster.goblin"));
+        Assert.Equal(HttpStatusCode.NotFound, denied.StatusCode);
     }
 
     [Fact]

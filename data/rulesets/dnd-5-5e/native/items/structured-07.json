@@ -1,0 +1,2035 @@
+[
+  {
+    "id": "item.potion-of-superior-healing",
+    "kind": "item",
+    "name": "Potion of Superior Healing",
+    "type": "P|SRD52",
+    "rarity": "rare",
+    "weight": 0.5,
+    "entries": [
+      "You regain {@dice 8d4 + 8} {@variantrule Hit Points|SRD52} when you drink this potion. The potion's red liquid glimmers when agitated."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/627"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.potion-of-supreme-healing",
+    "kind": "item",
+    "name": "Potion of Supreme Healing",
+    "type": "P|SRD52",
+    "rarity": "very rare",
+    "weight": 0.5,
+    "entries": [
+      "You regain {@dice 10d4 + 20} {@variantrule Hit Points|SRD52} when you drink this potion. The potion's red liquid glimmers when agitated."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/629"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.potion-of-thunder-resistance",
+    "kind": "item",
+    "name": "Potion of Thunder Resistance",
+    "type": "P|SRD52",
+    "resist": [
+      "thunder"
+    ],
+    "rarity": "uncommon",
+    "weight": 0.5,
+    "entries": [
+      "{#itemEntry Potion of Resistance|SRD52}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 236,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/631"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.potion-of-vitality",
+    "kind": "item",
+    "name": "Potion of Vitality",
+    "type": "P|SRD52",
+    "rarity": "very rare",
+    "weight": 0.5,
+    "entries": [
+      "When you drink this potion, it removes any {@condition Exhaustion|SRD52} levels you have and ends the {@condition Poisoned|SRD52} condition on you. For the next 24 hours, you regain the maximum number of {@variantrule Hit Points|SRD52} for any {@variantrule Hit Point Dice|SRD52|Hit Point Die} you spend.",
+      "This potion's crimson liquid regularly pulses with dull light, calling to mind a heartbeat."
+    ],
+    "catalogReferences": [
+      "condition.exhaustion",
+      "condition.poisoned"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 236,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/632"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.potion-of-water-breathing",
+    "kind": "item",
+    "name": "Potion of Water Breathing",
+    "type": "P|SRD52",
+    "rarity": "uncommon",
+    "weight": 0.5,
+    "entries": [
+      "You can breathe underwater for 24 hours after drinking this potion.",
+      "This potion's cloudy green fluid smells of the sea and has a jellyfish-like bubble floating in it."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 236,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/634"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.pouch",
+    "kind": "item",
+    "name": "Pouch",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 50,
+    "entries": [
+      "A Pouch holds up to 6 pounds within one-fifth of a cubic foot."
+    ],
+    "containerCapacity": {
+      "weight": [
+        6
+      ],
+      "item": [
+        {
+          "firearm bullet|srd52": 10,
+          "sling bullet|srd52": 20,
+          "needle|srd52": 50
+        }
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 224,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/636"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.priest-s-pack",
+    "kind": "item",
+    "name": "Priest's Pack",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 29,
+    "value": 3300,
+    "entries": [
+      "A Priest's Pack contains the following items: {@item Backpack|SRD52}, {@item Blanket|SRD52}, {@item Holy Water|SRD52}, {@item Lamp|SRD52}, 7 days of {@item Rations|SRD52}, {@item Robe|SRD52}, and {@item Tinderbox|SRD52}."
+    ],
+    "packContents": [
+      "backpack|srd52",
+      "blanket|srd52",
+      "holy water|srd52",
+      "lamp|srd52",
+      {
+        "item": "rations|srd52",
+        "quantity": 7
+      },
+      "robe|srd52",
+      "tinderbox|srd52"
+    ],
+    "catalogReferences": [
+      "item.backpack",
+      "item.blanket",
+      "item.holy-water",
+      "item.lamp",
+      "item.rations",
+      "item.robe",
+      "item.tinderbox"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 95,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/638"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.purple-worm-poison",
+    "kind": "item",
+    "name": "Purple Worm Poison",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 200000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to Purple Worm Poison makes a {@dc 21} Constitution saving throw, taking 35 ({@damage 10d6}) Poison damage on a failed save or half as much damage on a successful one."
+    ],
+    "poisonTypes": [
+      "injury"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 198,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/640"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.feather-token-anchor",
+    "kind": "item",
+    "name": "Feather Token, Anchor",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "This object looks like a feather.",
+      "You can take a {@action Magic|SRD52} action to touch the token to a boat or ship. For the next 24 hours, the vessel can't be moved by any means. Touching the token to the vessel again ends the effect. When the effect ends, the token disappears."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/642"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.feather-token-bird",
+    "kind": "item",
+    "name": "Feather Token, Bird",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "This object looks like a feather.",
+      "You can take a {@action Magic|SRD52} action to toss the token 5 feet into the air. The token disappears and an enormous, multicolored bird takes its place. The bird has the statistics of a {@creature Roc|SRD52}, but it can't attack. It obeys your simple commands and can carry up to 500 pounds while flying at its maximum speed (16 miles per hour for a maximum of 144 miles per day, with a 1-hour rest for every 3 hours of flying) or 1,000 pounds at half that speed. The bird disappears after flying its maximum distance for a day or if it drops to 0 {@variantrule Hit Points|SRD52}. You can dismiss the bird as a {@action Magic|SRD52} action."
+    ],
+    "catalogReferences": [
+      "monster.roc"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/644"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.feather-token-fan",
+    "kind": "item",
+    "name": "Feather Token, Fan",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "This object looks like a feather.",
+      "If you are on a boat or ship, you can take a {@action Magic|SRD52} action to toss the token up to 10 feet in the air. The token disappears, and a giant flapping fan takes its place. The fan floats and creates a strong wind. This wind can fill the sails of one ship, increasing its speed by 5 miles per hour for 8 hours. You can dismiss the fan as a {@action Magic|SRD52} action."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/646"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.feather-token-swan-boat",
+    "kind": "item",
+    "name": "Feather Token, Swan Boat",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "This object looks like a feather.",
+      "You can take a {@action Magic|SRD52} action to touch the token to a body of water at least 60 feet in diameter. The token disappears, and a 50-foot-long, 20-foot-wide boat shaped like a swan takes its place. The boat is self-propelled and moves across water at a speed of 6 miles per hour. You can take a {@action Magic|SRD52} action while on the boat to command it to move or to turn up to 90 degrees. The boat remains for 24 hours and then disappears. You can dismiss the boat as a {@action Magic|SRD52} action."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/648"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.feather-token-tree",
+    "kind": "item",
+    "name": "Feather Token, Tree",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "This object looks like a feather.",
+      "You must be outdoors to use this token. You can take a {@action Magic|SRD52} action to touch it to an unoccupied space on the ground. The token disappears, and in its place a nonmagical oak tree springs into existence. The tree is 60 feet tall and has a 5-foot-diameter trunk, and its branches at the top spread out in a 20-foot radius."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/650"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.feather-token-whip",
+    "kind": "item",
+    "name": "Feather Token, Whip",
+    "rarity": "rare",
+    "wondrous": true,
+    "entries": [
+      "This object looks like a feather.",
+      "You can take a {@action Magic|SRD52} action to throw the token to a point within 10 feet of yourself. The token disappears, and a floating whip takes its place. You can then take a {@variantrule Bonus Action|SRD52} to make a melee spell attack against a creature within 10 feet of the whip, with an attack bonus of +9. On a hit, the target takes {@damage 1d6 + 5} Force damage.",
+      "As a {@variantrule Bonus Action|SRD52}, you can direct the whip to fly up to 20 feet and repeat the attack against a creature within 10 feet of the whip. The whip disappears after 1 hour, when you take a {@action Magic|SRD52} action to dismiss it, or when you die or have the {@condition Incapacitated|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "condition.incapacitated"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/652"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.quarterstaff-of-the-acrobat",
+    "kind": "item",
+    "name": "Quarterstaff of the Acrobat",
+    "baseItem": "quarterstaff|srd52",
+    "type": "M|SRD52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "range": "30/120",
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "dmg2": "1d8",
+    "bonusWeapon": "+2",
+    "bonusAc": "+5",
+    "staff": true,
+    "entries": [
+      "You have a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "While holding this weapon, you can cause it to emit green {@variantrule Dim Light|SRD52} out to 10 feet, either as a {@variantrule Bonus Action|SRD52} or after you roll {@variantrule Initiative|SRD52}, or you can extinguish the light as a {@variantrule Bonus Action|SRD52}.",
+      "While holding this weapon, you can take a {@variantrule Bonus Action|SRD52} to alter its form, turning it into a 6-inch rod (for ease of storage) or a 10-foot pole, or reverting it a Quarterstaff; the weapon will elongate only as far as the surrounding space allows.",
+      "In certain forms, the weapon has the following additional properties.",
+      {
+        "type": "entries",
+        "name": "Acrobatic Assist (Quarterstaff and 10-Foot Pole Forms Only)",
+        "entries": [
+          "While holding this weapon, you have {@variantrule Advantage|SRD52} on Dexterity ({@skill Acrobatics|SRD52}) checks."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Attack Deflection (Quarterstaff Form Only)",
+        "entries": [
+          "When you are hit by an attack while holding the weapon, you can take a {@variantrule Reaction|SRD52} to twirl the weapon around you, gaining a +5 bonus to your {@variantrule Armor Class|SRD52} against the triggering attack, potentially causing the attack to miss you. You can't use this property again until you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Ranged Weapon (Quarterstaff Form Only)",
+        "entries": [
+          "This weapon has {@itemProperty T|SRD52|Thrown} with a normal range of 30 feet and a long range of 120 feet. Immediately after you make a ranged attack with the weapon, it flies back to your hand."
+        ]
+      }
+    ],
+    "light": [
+      {
+        "dim": 10
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.quarterstaff",
+      "item-mastery.topple",
+      "item-property.t",
+      "item-property.v",
+      "skill.acrobatics"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 237,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/653"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.quiver",
+    "kind": "item",
+    "name": "Quiver",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 100,
+    "entries": [
+      "A Quiver holds up to 20 Arrows."
+    ],
+    "containerCapacity": {
+      "item": [
+        {
+          "arrow|srd52": 20
+        }
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/655"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.efficient-quiver",
+    "kind": "item",
+    "name": "Efficient Quiver",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "weight": 2,
+    "entries": [
+      "Each of the quiver's three compartments connects to an extradimensional space that allows the quiver to hold numerous items while never weighing more than 2 pounds. The shortest compartment can hold up to 60 {@item Arrow|SRD52|Arrows}, {@item Bolt|SRD52|Bolts}, or similar objects. The midsize compartment holds up to 18 {@item Javelin|SRD52|Javelins} or similar objects. The longest compartment holds up to 6 long objects, such as bows, {@item Quarterstaff|SRD52|Quarterstaff's}, or {@item Spear|SRD52|Spears}.",
+      "You can draw any item the quiver contains as if doing so from a regular quiver or scabbard."
+    ],
+    "containerCapacity": {
+      "item": [
+        {
+          "bolt|srd52": 60,
+          "arrow|srd52": 60
+        },
+        {
+          "javelin|srd52": 18
+        },
+        {
+          "longbow|srd52": 6,
+          "shortbow|srd52": 6,
+          "quarterstaff|srd52": 6,
+          "spear|srd52": 6
+        }
+      ],
+      "weightless": true
+    },
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.bolt",
+      "baseitem.javelin",
+      "baseitem.quarterstaff",
+      "baseitem.spear"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 219,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/657"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.rations",
+    "kind": "item",
+    "name": "Rations",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 50,
+    "entries": [
+      "Rations consist of travel-ready food, including jerky, dried fruit, hardtack, and nuts. See \"{@hazard Malnutrition|SRD52}\" for the risks of not eating."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 213,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/658"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.red-dragon-scale-mail",
+    "kind": "item",
+    "name": "Red Dragon Scale Mail",
+    "baseItem": "scale mail|srd52",
+    "type": "MA|SRD52",
+    "resist": [
+      "fire"
+    ],
+    "detail1": "red",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 45,
+    "ac": 14,
+    "bonusAc": "+1",
+    "stealth": true,
+    "entries": [
+      "{#itemEntry Dragon Scale Mail|SRD52}"
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 218,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/661"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.reliquary",
+    "kind": "item",
+    "name": "Reliquary",
+    "type": "SCF|SRD52",
+    "scfType": "holy",
+    "rarity": "none",
+    "weight": 2,
+    "value": 500,
+    "entries": [
+      "For a Reliquary to be an effective Holy Symbol, it must be held."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 97,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/663"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.riding-horse",
+    "kind": "item",
+    "name": "Riding Horse",
+    "type": "MNT|SRD52",
+    "rarity": "none",
+    "value": 7500,
+    "carryingCapacity": 480,
+    "speed": 60,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 222,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/665"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.riding-saddle",
+    "kind": "item",
+    "name": "Riding Saddle",
+    "type": "TAH|SRD52",
+    "rarity": "none",
+    "weight": 25,
+    "value": 1000,
+    "entries": [
+      "A saddle comes with a bit, a bridle, reins, and any other equipment needed to use the saddle."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 100,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/667"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-acid-resistance",
+    "kind": "item",
+    "name": "Ring of Acid Resistance",
+    "type": "RG|SRD52",
+    "resist": [
+      "acid"
+    ],
+    "detail1": "pearl",
+    "rarity": "rare",
+    "entries": [
+      "{#itemEntry Ring of Resistance|SRD52}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/669"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-animal-influence",
+    "kind": "item",
+    "name": "Ring of Animal Influence",
+    "type": "RG|SRD52",
+    "rarity": "rare",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "entries": [
+      "This ring has 3 charges, and it regains {@dice 1d3} expended charges daily at dawn. While wearing the ring, you can expend 1 charge to cast one of the following spells (save {@dc 13}) from it:",
+      {
+        "type": "list",
+        "items": [
+          "{@spell Animal Friendship|SRD52}",
+          "{@spell Fear|SRD52} (affects Beasts only)",
+          "{@spell Speak with Animals|SRD52}"
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "animal friendship|srd52",
+          "fear|srd52",
+          "speak with animals|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.animal-friendship",
+      "spell.fear",
+      "spell.speak-with-animals"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 237,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/672"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-cold-resistance",
+    "kind": "item",
+    "name": "Ring of Cold Resistance",
+    "type": "RG|SRD52",
+    "resist": [
+      "cold"
+    ],
+    "detail1": "tourmaline",
+    "rarity": "rare",
+    "entries": [
+      "{#itemEntry Ring of Resistance|SRD52}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/674"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-djinni-summoning",
+    "kind": "item",
+    "name": "Ring of Djinni Summoning",
+    "type": "RG|SRD52",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "entries": [
+      "While wearing this ring, you can take a {@action Magic|SRD52} action to summon a particular {@creature Djinni|SRD52} from the Elemental Plane of Air. The djinni appears in an unoccupied space you choose within 120 feet of yourself. It remains as long as you maintain {@status Concentration|SRD52}, to a maximum of 1 hour, or until it drops to 0 {@variantrule Hit Points|SRD52}.",
+      "While summoned, the djinni is {@variantrule Friendly [Attitude]|SRD52|Friendly} to you and your allies, and it obeys your commands. If you fail to command it, the djinni defends itself against attackers but takes no other actions.",
+      "After the djinni departs, it can't be summoned again for 24 hours, and the ring becomes nonmagical if the djinni dies.",
+      "Rings of Djinni Summoning are often created by the djinn they summon and given to mortals as gifts of friendship or tokens of esteem."
+    ],
+    "catalogReferences": [
+      "monster.djinni"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 237,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/676"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-elemental-command-air",
+    "kind": "item",
+    "name": "Ring of Elemental Command (Air)",
+    "type": "RG|SRD52",
+    "resist": [
+      "lightning"
+    ],
+    "rarity": "legendary",
+    "reqAttune": true,
+    "grantsLanguage": true,
+    "modifySpeed": {
+      "equal": {
+        "fly": "walk"
+      }
+    },
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4 + 1}",
+    "charges": 5,
+    "entries": [
+      "The Ring of Elemental Command (air) is linked to the Elemental Plane of Air. Every Ring of Elemental Command has the following two properties:",
+      {
+        "type": "list",
+        "items": [
+          {
+            "type": "item",
+            "name": "Elemental Bane",
+            "entries": [
+              "While wearing the ring, you have {@variantrule Advantage|SRD52} on attack rolls against Elementals and they have {@variantrule Disadvantage|SRD52} on attack rolls against you."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Elemental Compulsion",
+            "entries": [
+              "While wearing the ring, you can take a {@action Magic|SRD52} action to try to compel an Elemental you see within 60 feet of yourself. The Elemental makes a {@dc 18} Wisdom saving throw. On a failed save, the Elemental has the {@condition Charmed|SRD52} condition until the start your next turn, and you determine what it does with its move and action on its next turn."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Elemental Focus",
+        "entries": [
+          "While wearing the ring, you benefit from additional properties corresponding to the ring's linked Elemental Plane:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Air",
+                "entries": [
+                  "You know Auran, you have {@variantrule Resistance|SRD52} to Lightning damage, and you have a {@variantrule Fly Speed|SRD52} equal to your {@variantrule Speed|SRD52} and can hover."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spellcasting",
+        "entries": [
+          "The ring has 5 charges and regains {@dice 1d4 + 1} expended charges daily at dawn. While wearing the ring, you can cast a spell from it. A spell cast from the ring has a save DC of 18. Choose the spell from the following list: {@spell Chain Lightning|SRD52} (3 charges), {@spell Feather Fall|SRD52} (0 charges), {@spell Gust of Wind|SRD52} (2 charges), {@spell Wind Wall|SRD52} (1 charge)"
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "0": [
+          "feather fall|srd52"
+        ],
+        "1": [
+          "wind wall|srd52"
+        ],
+        "2": [
+          "gust of wind|srd52"
+        ],
+        "3": [
+          "chain lightning|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "condition.charmed",
+      "spell.chain-lightning",
+      "spell.feather-fall",
+      "spell.gust-of-wind",
+      "spell.wind-wall"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 237,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/678"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-elemental-command-earth",
+    "kind": "item",
+    "name": "Ring of Elemental Command (Earth)",
+    "type": "RG|SRD52",
+    "resist": [
+      "acid"
+    ],
+    "rarity": "legendary",
+    "reqAttune": true,
+    "grantsLanguage": true,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4 + 1}",
+    "charges": 5,
+    "entries": [
+      "The Ring of Elemental Command (earth) is linked to the Elemental Plane of Earth. Every Ring of Elemental Command has the following two properties:",
+      {
+        "type": "list",
+        "items": [
+          {
+            "type": "item",
+            "name": "Elemental Bane",
+            "entries": [
+              "While wearing the ring, you have {@variantrule Advantage|SRD52} on attack rolls against Elementals and they have {@variantrule Disadvantage|SRD52} on attack rolls against you."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Elemental Compulsion",
+            "entries": [
+              "While wearing the ring, you can take a {@action Magic|SRD52} action to try to compel an Elemental you see within 60 feet of yourself. The Elemental makes a {@dc 18} Wisdom saving throw. On a failed save, the Elemental has the {@condition Charmed|SRD52} condition until the start your next turn, and you determine what it does with its move and action on its next turn."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Elemental Focus",
+        "entries": [
+          "While wearing the ring, you benefit from additional properties corresponding to the ring's linked Elemental Plane:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Earth",
+                "entries": [
+                  "You know Terran, and you have {@variantrule Resistance|SRD52} to Acid damage. Terrain composed of rubble, rocks, or dirt isn't {@variantrule Difficult Terrain|SRD52} for you. In addition, you can move through solid earth or rock as if those areas were {@variantrule Difficult Terrain|SRD52} without disturbing the matter through which you pass. If you end your turn in solid earth or rock, you are shunted out to the nearest unoccupied space you last occupied."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spellcasting",
+        "entries": [
+          "The ring has 5 charges and regains {@dice 1d4 + 1} expended charges daily at dawn. While wearing the ring, you can cast a spell from it. A spell cast from the ring has a save DC of 18. Choose the spell from the following list: {@spell Earthquake|SRD52} (5 charges), {@spell Stone Shape|SRD52} (2 charges), {@spell Stoneskin|SRD52} (3 charges), {@spell Wall of Stone|SRD52} (3 charges)"
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "2": [
+          "stone shape|srd52"
+        ],
+        "3": [
+          "stoneskin|srd52",
+          "wall of stone|srd52"
+        ],
+        "5": [
+          "earthquake|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "condition.charmed",
+      "spell.earthquake",
+      "spell.stone-shape",
+      "spell.stoneskin",
+      "spell.wall-of-stone"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 237,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/679"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-elemental-command-fire",
+    "kind": "item",
+    "name": "Ring of Elemental Command (Fire)",
+    "type": "RG|SRD52",
+    "immune": [
+      "fire"
+    ],
+    "resist": [
+      "fire"
+    ],
+    "rarity": "legendary",
+    "reqAttune": true,
+    "grantsLanguage": true,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4 + 1}",
+    "charges": 5,
+    "entries": [
+      "The Ring of Elemental Command (fire) is linked to the Elemental Plane of Fire. Every Ring of Elemental Command has the following two properties:",
+      {
+        "type": "list",
+        "items": [
+          {
+            "type": "item",
+            "name": "Elemental Bane",
+            "entries": [
+              "While wearing the ring, you have {@variantrule Advantage|SRD52} on attack rolls against Elementals and they have {@variantrule Disadvantage|SRD52} on attack rolls against you."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Elemental Compulsion",
+            "entries": [
+              "While wearing the ring, you can take a {@action Magic|SRD52} action to try to compel an Elemental you see within 60 feet of yourself. The Elemental makes a {@dc 18} Wisdom saving throw. On a failed save, the Elemental has the {@condition Charmed|SRD52} condition until the start your next turn, and you determine what it does with its move and action on its next turn."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Elemental Focus",
+        "entries": [
+          "While wearing the ring, you benefit from additional properties corresponding to the ring's linked Elemental Plane:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Fire",
+                "entries": [
+                  "You know Ignan, and you have {@variantrule Immunity|SRD52} to Fire damage."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spellcasting",
+        "entries": [
+          "The ring has 5 charges and regains {@dice 1d4 + 1} expended charges daily at dawn. While wearing the ring, you can cast a spell from it. A spell cast from the ring has a save DC of 18. Choose the spell from the following list: {@spell Burning Hands|SRD52} (1 charge), {@spell Fireball|SRD52} (2 charges), {@spell Fire Storm|SRD52} (4 charges), {@spell Wall of Fire|SRD52} (3 charges)"
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "burning hands|srd52"
+        ],
+        "2": [
+          "fireball|srd52"
+        ],
+        "3": [
+          "wall of fire|srd52"
+        ],
+        "4": [
+          "fire storm|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "condition.charmed",
+      "spell.burning-hands",
+      "spell.fire-storm",
+      "spell.fireball",
+      "spell.wall-of-fire"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 237,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/680"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-elemental-command-water",
+    "kind": "item",
+    "name": "Ring of Elemental Command (Water)",
+    "type": "RG|SRD52",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "grantsLanguage": true,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4 + 1}",
+    "charges": 5,
+    "entries": [
+      "The Ring of Elemental Command (water) is linked to the Elemental Plane of Water. Every Ring of Elemental Command has the following two properties:",
+      {
+        "type": "list",
+        "items": [
+          {
+            "type": "item",
+            "name": "Elemental Bane",
+            "entries": [
+              "While wearing the ring, you have {@variantrule Advantage|SRD52} on attack rolls against Elementals and they have {@variantrule Disadvantage|SRD52} on attack rolls against you."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Elemental Compulsion",
+            "entries": [
+              "While wearing the ring, you can take a {@action Magic|SRD52} action to try to compel an Elemental you see within 60 feet of yourself. The Elemental makes a {@dc 18} Wisdom saving throw. On a failed save, the Elemental has the {@condition Charmed|SRD52} condition until the start your next turn, and you determine what it does with its move and action on its next turn."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Elemental Focus",
+        "entries": [
+          "While wearing the ring, you benefit from additional properties corresponding to the ring's linked Elemental Plane:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Water",
+                "entries": [
+                  "You know Aquan, you gain a {@variantrule Swim Speed|SRD52} of 60 feet, and you can breathe underwater."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spellcasting",
+        "entries": [
+          "The ring has 5 charges and regains {@dice 1d4 + 1} expended charges daily at dawn. While wearing the ring, you can cast a spell from it. A spell cast from the ring has a save DC of 18. Choose the spell from the following list: {@spell Create or Destroy Water|SRD52} (1 charge), {@spell Ice Storm|SRD52} (2 charges), {@spell Tsunami|SRD52} (5 charges), {@spell Wall of Ice|SRD52} (3 charges), {@spell Water Walk|SRD52} (2 charges)"
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "create or destroy water|srd52"
+        ],
+        "2": [
+          "ice storm|srd52",
+          "water walk|srd52"
+        ],
+        "3": [
+          "wall of ice|srd52"
+        ],
+        "5": [
+          "tsunami|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "condition.charmed",
+      "spell.create-or-destroy-water",
+      "spell.ice-storm",
+      "spell.tsunami",
+      "spell.wall-of-ice",
+      "spell.water-walk"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 237,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/681"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-evasion",
+    "kind": "item",
+    "name": "Ring of Evasion",
+    "type": "RG|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "entries": [
+      "This ring has 3 charges, and it regains {@dice 1d3} expended charges daily at dawn. When you fail a Dexterity saving throw while wearing the ring, you can take a {@variantrule Reaction|SRD52} to expend 1 charge to succeed on that save instead."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/683"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-feather-falling",
+    "kind": "item",
+    "name": "Ring of Feather Falling",
+    "type": "RG|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "When you fall while wearing this ring, you descend 60 feet per round and take no damage from falling."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/685"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-fire-resistance",
+    "kind": "item",
+    "name": "Ring of Fire Resistance",
+    "type": "RG|SRD52",
+    "resist": [
+      "fire"
+    ],
+    "detail1": "garnet",
+    "rarity": "rare",
+    "entries": [
+      "{#itemEntry Ring of Resistance|SRD52}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/688"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-force-resistance",
+    "kind": "item",
+    "name": "Ring of Force Resistance",
+    "type": "RG|SRD52",
+    "resist": [
+      "force"
+    ],
+    "detail1": "sapphire",
+    "rarity": "rare",
+    "entries": [
+      "{#itemEntry Ring of Resistance|SRD52}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/690"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-free-action",
+    "kind": "item",
+    "name": "Ring of Free Action",
+    "type": "RG|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "While you wear this ring, {@variantrule Difficult Terrain|SRD52} doesn't cost you extra movement. In addition, magic can neither reduce any of your Speeds nor cause you to have the {@condition Paralyzed|SRD52} or {@condition Restrained|SRD52} condition."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [
+      "condition.paralyzed",
+      "condition.restrained"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/692"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-invisibility",
+    "kind": "item",
+    "name": "Ring of Invisibility",
+    "type": "RG|SRD52",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "entries": [
+      "While wearing this ring, you can take a {@action Magic|SRD52} action to give yourself the {@condition Invisible|SRD52} condition. You remain {@condition Invisible|SRD52} until the ring is removed or until you take a {@variantrule Bonus Action|SRD52} to become visible again."
+    ],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/694"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-jumping",
+    "kind": "item",
+    "name": "Ring of Jumping",
+    "type": "RG|SRD52",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "entries": [
+      "While wearing this ring, you can cast {@spell Jump|SRD52} from it, but can target only yourself when you do so."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "attachedSpells": {
+      "will": [
+        "jump|srd52"
+      ]
+    },
+    "catalogReferences": [
+      "spell.jump"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/696"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-lightning-resistance",
+    "kind": "item",
+    "name": "Ring of Lightning Resistance",
+    "type": "RG|SRD52",
+    "resist": [
+      "lightning"
+    ],
+    "detail1": "citrine",
+    "rarity": "rare",
+    "entries": [
+      "{#itemEntry Ring of Resistance|SRD52}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/698"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-mind-shielding",
+    "kind": "item",
+    "name": "Ring of Mind Shielding",
+    "type": "RG|SRD52",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "entries": [
+      "While wearing this ring, you are immune to magic that allows other creatures to read your thoughts, determine whether you are lying, know your alignment, or know your creature type. Creatures can telepathically communicate with you only if you allow it.",
+      "You can take a {@action Magic|SRD52} action to cause the ring to become imperceptible until you take another {@action Magic|SRD52} action to make it perceptible, until you remove the ring, or until you die.",
+      "If you die while wearing the ring, your soul enters it, unless it already houses a soul. You can remain in the ring or depart for the afterlife. As long as your soul is in the ring, you can telepathically communicate with any creature wearing it. A wearer can't prevent this telepathic communication."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/700"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-necrotic-resistance",
+    "kind": "item",
+    "name": "Ring of Necrotic Resistance",
+    "type": "RG|SRD52",
+    "resist": [
+      "necrotic"
+    ],
+    "detail1": "jet",
+    "rarity": "rare",
+    "entries": [
+      "{#itemEntry Ring of Resistance|SRD52}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/702"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-poison-resistance",
+    "kind": "item",
+    "name": "Ring of Poison Resistance",
+    "type": "RG|SRD52",
+    "resist": [
+      "poison"
+    ],
+    "detail1": "amethyst",
+    "rarity": "rare",
+    "entries": [
+      "{#itemEntry Ring of Resistance|SRD52}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/704"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-protection",
+    "kind": "item",
+    "name": "Ring of Protection",
+    "type": "RG|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "bonusAc": "+1",
+    "bonusSavingThrow": "+1",
+    "entries": [
+      "You gain a +1 bonus to {@variantrule Armor Class|SRD52} and saving throws while wearing this ring."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/706"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-psychic-resistance",
+    "kind": "item",
+    "name": "Ring of Psychic Resistance",
+    "type": "RG|SRD52",
+    "resist": [
+      "psychic"
+    ],
+    "detail1": "jade",
+    "rarity": "rare",
+    "entries": [
+      "{#itemEntry Ring of Resistance|SRD52}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/708"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-radiant-resistance",
+    "kind": "item",
+    "name": "Ring of Radiant Resistance",
+    "type": "RG|SRD52",
+    "resist": [
+      "radiant"
+    ],
+    "detail1": "topaz",
+    "rarity": "rare",
+    "entries": [
+      "{#itemEntry Ring of Resistance|SRD52}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/710"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-regeneration",
+    "kind": "item",
+    "name": "Ring of Regeneration",
+    "type": "RG|SRD52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "While wearing this ring, you regain {@dice 1d6} {@variantrule Hit Points|SRD52} every 10 minutes if you have at least 1 {@variantrule Hit Points|SRD52|Hit Point}. If you lose a body part, the ring causes the missing part to regrow and return to full functionality after {@dice 1d6 + 1} days if you have at least 1 {@variantrule Hit Points|SRD52|Hit Point} the whole time."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/712"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-shooting-stars",
+    "kind": "item",
+    "name": "Ring of Shooting Stars",
+    "type": "RG|SRD52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6}",
+    "charges": 6,
+    "entries": [
+      "You can cast {@spell Dancing Lights|SRD52} or {@spell Light|SRD52} from the ring.",
+      "The ring has 6 charges and regains {@dice 1d6} expended charges daily at dawn. You can expend its charges to use the properties below.",
+      {
+        "type": "entries",
+        "name": "Faerie Fire",
+        "entries": [
+          "You can expend 1 charge to cast {@spell Faerie Fire|SRD52} from the ring."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Lightning Spheres",
+        "entries": [
+          "You can expend 2 charges as a {@action Magic|SRD52} action to create up to four 3-foot-diameter spheres of lightning.",
+          "Each sphere appears in an unoccupied space you can see within 120 feet of yourself. The spheres last as long as you maintain {@status Concentration|SRD52}, up to 1 minute. Each sphere sheds {@variantrule Dim Light|SRD52} in a 30-foot radius.",
+          "As a {@variantrule Bonus Action|SRD52}, you can move each sphere up to 30 feet, but no farther than 120 feet away from yourself. The first time the sphere comes within 5 feet of a creature other than you that isn't behind {@variantrule Cover|SRD52|Total Cover}, the sphere discharges lightning at that creature and disappears. That creature makes a {@dc 15} Dexterity saving throw. On a failed save, the creature takes Lightning damage based on the number of spheres you created, as shown in the following table. On a successful save, the creature takes half as much damage.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "colLabels": [
+              "Number of Spheres",
+              "Lightning Damage"
+            ],
+            "rows": [
+              [
+                "1",
+                "{@damage 4d12}"
+              ],
+              [
+                "2",
+                "{@damage 5d4}"
+              ],
+              [
+                "3",
+                "{@damage 2d6}"
+              ],
+              [
+                "4",
+                "{@damage 2d4}"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Shooting Stars",
+        "entries": [
+          "You can expend 1 to 3 charges as a {@action Magic|SRD52} action. For every charge you expend, you launch a glowing mote of light from the ring at a point you can see within 60 feet of yourself. Each creature in a 15-foot {@variantrule Cube [Area of Effect]|SRD52|Cube} originating from that point is showered in sparks and makes a {@dc 15} Dexterity saving throw, taking {@damage 5d4} Radiant damage on a failed save or half as much damage on a successful one."
+        ]
+      }
+    ],
+    "light": [
+      {
+        "dim": 30
+      }
+    ],
+    "attachedSpells": {
+      "will": [
+        "dancing lights|srd52",
+        "light|srd52"
+      ],
+      "charges": {
+        "1": [
+          "faerie fire|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.dancing-lights",
+      "spell.faerie-fire",
+      "spell.light"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/714"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-spell-storing",
+    "kind": "item",
+    "name": "Ring of Spell Storing",
+    "type": "RG|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "This ring stores spells cast into it, holding them until the attuned wearer uses them. The ring can store up to 5 levels worth of spells at a time. When found, it contains {@dice 1d6 - 1} levels of stored spells chosen by the DM.",
+      "Any creature can cast a spell of level 1 through 5 into the ring by touching the ring as the spell is cast. The spell has no effect other than to be stored in the ring. If the ring can't hold the spell, the spell is expended without effect. The level of the slot used to cast the spell determines how much space it uses.",
+      "While wearing this ring, you can cast any spell stored in it. The spell uses the slot level, spell save DC, spell attack bonus, and spellcasting ability of the original caster but is otherwise treated as if you cast the spell. The spell cast from the ring is no longer stored in it, freeing up space."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 239,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/716"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-spell-turning",
+    "kind": "item",
+    "name": "Ring of Spell Turning",
+    "type": "RG|SRD52",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "entries": [
+      "While wearing this ring, you have {@variantrule Advantage|SRD52} on saving throws against spells. If you succeed on the save for a spell of level 7 or lower, the spell has no effect on you. If that spell targeted only you and didn't create an area of effect, you can take a {@variantrule Reaction|SRD52} to deflect the spell back at the spell's caster; the caster must make a saving throw against the spell using their own spell save DC."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 239,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/718"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-swimming",
+    "kind": "item",
+    "name": "Ring of Swimming",
+    "type": "RG|SRD52",
+    "rarity": "uncommon",
+    "modifySpeed": {
+      "static": {
+        "swim": 40
+      }
+    },
+    "entries": [
+      "You have a {@variantrule Swim Speed|SRD52} of 40 feet while wearing this ring."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 239,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/720"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ring-of-telekinesis",
+    "kind": "item",
+    "name": "Ring of Telekinesis",
+    "type": "RG|SRD52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "While wearing this ring, you can cast {@spell Telekinesis|SRD52} from it."
+    ],
+    "attachedSpells": {
+      "will": [
+        "telekinesis|srd52"
+      ]
+    },
+    "catalogReferences": [
+      "spell.telekinesis"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 239,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/722"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  }
+]

@@ -1,0 +1,341 @@
+{
+  "edition": "srd-5.2.1",
+  "counts": {
+    "item": 464,
+    "itemGroup": 25,
+    "baseitem": 94,
+    "itemProperty": 9,
+    "itemMastery": 8,
+    "magicvariant": 41
+  },
+  "excluded": [
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/107",
+      "reason": "obsolete legacy duplicate; retain modern weapon mastery definition"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/122",
+      "reason": "obsolete legacy duplicate; retain modern weapon mastery definition"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/5",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/7",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/19",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/2",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/4",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/6",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/8",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/10",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/12",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/14",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/16",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/18",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/20",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/22",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/24",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/26",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/28",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/30",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/32",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/34",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/36",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/38",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/40",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/42",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/44",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/46",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/48",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/50",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/52",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/54",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/56",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/58",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/59",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/61",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/63",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/65",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/1",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/2",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/4",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/5",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/7",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/9",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/10",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    }
+  ],
+  "corrections": [
+    {
+      "id": "item.bag-of-holding",
+      "reason": "Use official Handy Haversack name"
+    },
+    {
+      "id": "item.burglar-s-pack",
+      "reason": "Correct Burglar's Pack weight to published 42 lb.; price and contents agree with SRD 5.2.1 pp.95–96."
+    },
+    {
+      "id": "item.crawler-mucus-contact",
+      "reason": "Correct modern poison name"
+    },
+    {
+      "id": "item.cube-of-force",
+      "reason": "S52-016: correct table and attached spell identities"
+    },
+    {
+      "id": "item.deck-of-illusions",
+      "reason": "Verify all 33 illusion table rows against SRD 5.2.1 pp.217–218; restore Basilisk, Veteran Warrior display and published stat-block footnote."
+    },
+    {
+      "id": "item.mysterious-deck",
+      "reason": "S52-021: remove non-SRD inset and Bastion effect; correct table identity"
+    },
+    {
+      "id": "item.mysterious-deck",
+      "reason": "Verify all 22 published card table mappings and named effect sections; retain existing SRD-specific corrections."
+    },
+    {
+      "id": "item.spider-s-sting",
+      "reason": "Correct modern poison name"
+    },
+    {
+      "id": "item.dragon-orb",
+      "reason": "S52-020: remove non-SRD setting introduction and legacy random properties"
+    },
+    {
+      "id": "item.portable-hole",
+      "reason": "Use official Handy Haversack name"
+    },
+    {
+      "id": "item.trinket",
+      "reason": "Verify all 100 Trinkets rows against publisher pp.26–27; restore GM wording and page references."
+    },
+    {
+      "id": "item-group.druidic-focus",
+      "reason": "Restore Ranger as an eligible user of a Druidic Focus, as printed on SRD 5.2.1 p.97."
+    },
+    {
+      "id": "magic-variant.dancing-sword",
+      "reason": "Use the five explicitly listed eligible weapons rather than a generic sword tag."
+    },
+    {
+      "id": "magic-variant.defender",
+      "reason": "Remove unconditional AC bonus: transfer part of the +3 weapon bonus only when the published condition applies."
+    },
+    {
+      "id": "item.apparatus-of-the-crab",
+      "reason": "Reconcile publisher Apparatus of the Crab name and typed vehicle statistics; preserve one canonical item identity, omit unverified terrain metadata."
+    },
+    {
+      "id": "item-group.armor-of-resistance",
+      "reason": "Recover the published ten damage choices, link the ten generic templates and derive 120 eligible armor configurations; retain conditional resistance and attunement."
+    }
+  ],
+  "publisherOnly": [
+    "item.plate-armor-of-etherealness"
+  ],
+  "unresolvedReferences": [
+    {
+      "id": "item.figurine-of-wondrous-power-ivory-goats",
+      "kind": "item",
+      "raw": "+1 Lance|SRD52",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "item.figurine-of-wondrous-power-ivory-goats",
+      "kind": "item",
+      "raw": "+2 Longsword|SRD52",
+      "reason": "missing-or-ambiguous"
+    }
+  ],
+  "resolvedReferenceCount": 1627,
+  "mergedOccurrences": [
+    {
+      "id": "item.apparatus-of-the-crab",
+      "path": "vehicles.json",
+      "pointer": "/vehicle/1",
+      "reason": "Verified vehicle profile integrated with canonical magic item; duplicate prose not separately imported."
+    }
+  ],
+  "nativeCount": 772,
+  "expandedArmorResistance": {
+    "groups": 0,
+    "templates": 10,
+    "concrete": 120,
+    "nativeCount": 130,
+    "groupId": "item-group.armor-of-resistance",
+    "pages": [
+      210
+    ]
+  }
+}

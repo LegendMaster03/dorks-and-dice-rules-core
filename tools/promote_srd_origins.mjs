@@ -1,0 +1,179 @@
+// Promote edition-local character creation definitions; no first-party inheritance policy.
+import fs from "node:fs";
+import path from "node:path";
+import {fileURLToPath} from "node:url";
+import {linkSpellRelationships} from "./link_srd_spell_relationships.mjs";
+import {characterRelationshipCatalog,linkCharacterRelationships} from "./link_srd_character_relationships.mjs";
+
+function generate(races,backgrounds,backgroundFluff,manifest,sourceManifest,pages,skills,tag) {
+ const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""), edition="SRD"+tag, modern=tag==="52";
+ const records=[],report={edition:manifest.officialPageImport.release,sourceCounts:{},nativeCounts:{},excluded:[],corrections:[],mergedOccurrences:[],pendingReferences:[]};
+ const byPage=new Map(pages.map(p=>[p.page,p]));
+ const oldPages={Dragonborn:[5,6],Dwarf:[3],Elf:[4],Gnome:[6],"Half-Elf":[6,7],"Half-Orc":[7],Halfling:[4,5],Human:[5],Tiefling:[7]};
+ const newPages={Dragonborn:[84],Dwarf:[84],Elf:[84,85],Gnome:[85],Goliath:[85,86],Halfling:[86],Human:[86],Orc:[86],Tiefling:[86,87]};
+ const alignment={
+ Dragonborn:"Dragonborn tend to extremes, making a conscious choice for one side or the other in the cosmic war between good and evil. Most dragonborn are good, but those who side with evil can be terrible villains.",
+ Dwarf:"Most dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.",
+ Elf:"Elves love freedom, variety, and self-expression, so they lean strongly toward the gentler aspects of chaos. They value and protect others’ freedom as well as their own, and they are more often good than not.",
+ Gnome:"Gnomes are most often good. Those who tend toward law are sages, engineers, researchers, scholars, investigators, or inventors. Those who tend toward chaos are minstrels, tricksters, wanderers, or fanciful jewelers. Gnomes are good-hearted, and even the tricksters among them are more playful than vicious.",
+ "Half-Elf":"Half-elves share the chaotic bent of their elven heritage. They value both personal freedom and creative expression, demonstrating neither love of leaders nor desire for followers. They chafe at rules, resent others’ demands, and sometimes prove unreliable, or at least unpredictable.",
+ "Half-Orc":"Half-orcs inherit a tendency toward chaos from their orc parents and are not strongly inclined toward good. Half-orcs raised among orcs and willing to live out their lives among them are usually evil.",
+ Halfling:"Most halflings are lawful good. As a rule, they are good-hearted and kind, hate to see others in pain, and have no tolerance for oppression. They are also very orderly and traditional, leaning heavily on the support of their community and the comfort of their old ways.",
+ Human:"Humans tend toward no particular alignment. The best and the worst are found among them.",
+ Tiefling:"Tieflings might not have an innate tendency toward evil, but many of them end up there. Evil or not, an independent nature inclines many tieflings toward a chaotic alignment."
+ };
+ const omit=new Set(["name","source","page","reprintedAs","basicRules2024","edition","soundClip","hasFluff","hasFluffImages","traitTags","heightAndWeight","age"]);
+ const ptr=(file,array,index)=>({path:file,pointer:`/${array}/${index}`});
+ const sourcePtr=(file,array,index)=>({provider:sourceManifest.provider,commit:sourceManifest.commit,...ptr(file,array,index)});
+ function payload(candidate,file,array,index){
+  const result={};
+  for(const [key,value] of Object.entries(candidate)){
+   if(!omit.has(key))result[key]=JSON.parse(JSON.stringify(value));
+   else if(["heightAndWeight","age","traitTags","soundClip","hasFluff","hasFluffImages"].includes(key))report.excluded.push({path:file,pointer:`/${array}/${index}/${key}`,reason:"unverified metadata or external media; published descriptive entries retained"});
+  }return result;
+ }
+ function record(candidate,file,array,index,kind,id,name,locators){
+  if(!locators.every(n=>byPage.has(n)))throw Error("Unknown publisher page "+id);
+  if(!locators.some(n=>byPage.get(n).textLayout.toLowerCase().includes(name.toLowerCase())))throw Error("Missing publisher name locator "+id);
+  const row={id,kind,name,...payload(candidate,file,array,index),catalogReferences:locators.map(n=>byPage.get(n).id),source:{
+   release:manifest.officialPageImport.release,url:byPage.get(locators[0]).source.url,pdfSha256:manifest.officialPageImport.pdfSha256,license:manifest.license,attribution:manifest.attribution,pages:locators,candidatePage:candidate.page??null,structuredSource:sourcePtr(file,array,index),structuredStatus:"publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending"}};
+  records.push(row);report.nativeCounts[kind]=(report.nativeCounts[kind]??0)+1;return row;
+ }
+ for(const [i,c] of races.race.entries()){
+  if(c.source!==edition)continue;
+  report.sourceCounts.race=(report.sourceCounts.race??0)+1;
+  const kind=modern?"species":"race",row=record(c,"races.json","race",i,kind,kind+"."+slug(c.name),c.name,(modern?newPages:oldPages)[c.name]);
+
+  if(modern&&row.id==="species.elf"){
+   const publisher=byPage.get(85).textLayout.replace(/\s+/g," ");
+   if(!publisher.includes("High Elf You know the Prestidigitation cantrip. Whenever you finish")||
+      !publisher.includes("a Long Rest, you can replace that cantrip with a different")||
+      !publisher.includes("cantrip from the Wizard spell list."))throw Error("High Elf publisher replacement evidence changed");
+   const grants=[row.additionalSpells.find(g=>g.name==="High Elf"),row._versions.find(v=>v.name==="Elf; High Elf Lineage").additionalSpells[0]];
+   for(const grant of grants){
+    const selector=grant.known["1"]._[0];
+    if(JSON.stringify(selector)!==JSON.stringify({choose:"level=0|class=Wizard"})||grant.known["1"]._.length!==1)throw Error("High Elf source selector changed");
+    grant.known={"1":["prestidigitation|srd52#c"]};
+    // The source selector describes a replacement of the lineage cantrip,
+    // not a second grant or an unrestricted choice at character creation.
+    grant.replacementOptions=[{trigger:"long-rest",target:"known-lineage-cantrip",different:true,selector}];
+   }
+   report.corrections.push({id:row.id,reason:"SRD 5.2.1 p.85: High Elf starts with Prestidigitation; a different Wizard cantrip may replace the lineage cantrip after a Long Rest. Retain the source selector as a conditional replacement, not an initial choice."});
+  }
+  if(modern&&row.id==="species.gnome"){
+   const publisher=byPage.get(85).textLayout.split("\n").map(line=>line.slice(0,65)).join(" ").replace(/\s+/g," ");
+   if(!publisher.includes("Forest Gnome. You know the Minor Illusion cantrip.")||
+      !publisher.includes("You also always have the Speak with Animals spell prepared.")||
+      !publisher.includes("number of times equal to your Proficiency Bonus,"))throw Error("Forest Gnome publisher evidence changed");
+   const grant=row._versions.find(v=>v.name==="Gnome; Forest Gnome Lineage").additionalSpells[0];
+   if(JSON.stringify(grant.innate)!==JSON.stringify({"3":{"daily":{"pb":["speak with animals|srd52"]}}}))throw Error("Forest Gnome source grant changed");
+   grant.innate={"1":grant.innate["3"]};
+   grant.prepared={"1":["speak with animals|srd52"]};
+   report.corrections.push({id:row.id,reason:"SRD 5.2.1 p.85: Forest Gnome receives Speak with Animals as a starting lineage benefit, always prepared; preserve proficiency-bonus free casts per Long Rest instead of delaying acquisition to level 3."});
+  }
+  if(modern&&["species.elf","species.tiefling"].includes(row.id)){
+   const page=row.id==="species.elf"?84:86;
+   const publisher=byPage.get(page).textLayout.replace(/\s+/g," ");
+   if(!publisher.includes("When you reach character levels 3 and 5, you")||
+      !publisher.includes("You always have that spell prepared."))throw Error("Lineage prepared spell evidence changed "+row.id);
+   const grants=[...row.additionalSpells,...row._versions.flatMap(v=>v.additionalSpells)];
+   if(grants.length!==6)throw Error("Lineage branches changed "+row.id);
+   for(const grant of grants){
+    if(grant.prepared||JSON.stringify(Object.keys(grant.innate))!==JSON.stringify(["3","5"]))throw Error("Lineage grant shape changed "+row.id);
+    grant.prepared={};
+    for(const [level,free] of Object.entries(grant.innate)){
+     const spells=free.daily["1"];
+     if(!Array.isArray(spells)||spells.length!==1||typeof spells[0]!=="string")throw Error("Lineage spell changed "+row.id);
+     grant.prepared[level]=[...spells];
+    }
+   }
+   report.corrections.push({id:row.id,reason:"Official lineage table and grant text: the level-3 and level-5 spells are always prepared in addition to the once-per-Long-Rest slot-free casting. Preserve both modes for all named branches and nested versions."});
+  }
+  if(!modern){
+   const age=row.entries.findIndex(e=>e.name==="Age");
+   if(age<0||!alignment[c.name])throw Error("Missing guidance "+c.name);
+   row.entries.splice(age+1,0,{type:"entries",name:"Alignment",entries:[alignment[c.name]]});
+   report.corrections.push({id:row.id,reason:"Restore official nonbinding alignment guidance from cited publisher pages."});
+  }
+ }
+ const names={"Dwarf|Hill":"Hill Dwarf","Elf|High":"High Elf","Gnome|Rock":"Rock Gnome","Halfling|Lightfoot":"Lightfoot"};
+ const locs={"Dwarf|Hill":[4],"Elf|High":[4],"Gnome|Rock":[6],"Halfling|Lightfoot":[5]};
+ for(const [i,c] of races.subrace.entries()){
+  if(c.source!==edition)continue;
+  report.sourceCounts.subrace=(report.sourceCounts.subrace??0)+1;
+  const parent=records.find(r=>r.id==="race."+slug(c.raceName));
+  if(!parent||c.raceSource!==edition)throw Error("Missing or foreign parent");
+  if(!c.name){
+   const extra=payload(c,"races.json","subrace",i);
+   delete extra.raceName;delete extra.raceSource;
+   for(const [k,v] of Object.entries(extra)){if(k in parent)throw Error("Base extension conflict "+parent.id+" "+k);parent[k]=v;}
+   (parent.source.additionalStructuredSources??=[]).push(sourcePtr("races.json","subrace",i));
+   report.mergedOccurrences.push({id:parent.id,...ptr("races.json","subrace",i),fields:Object.keys(extra),reason:Object.keys(extra).length?"unnamed base-race extension":"identity-only renderer placeholder"});
+  }else{
+   const key=c.raceName+"|"+c.name,row=record(c,"races.json","subrace",i,"subrace","subrace."+slug(c.raceName)+"."+slug(c.name),names[key],locs[key]);
+   row.subraceName=c.name;row.catalogReferences.push(parent.id);
+  }
+ }
+ for(const [i,c] of backgrounds.background.entries()){
+  if(c.source!==edition)continue;report.sourceCounts.background=(report.sourceCounts.background??0)+1;
+  const row=record(c,"backgrounds.json","background",i,"background","background."+slug(c.name),c.name,modern?[83]:[60,61]);
+  if(!modern&&c.name==="Acolyte"){
+   const matches=backgroundFluff.backgroundFluff.map((entry,index)=>({entry,index})).filter(x=>x.entry.source===edition&&x.entry.name===c.name);
+   if(matches.length!==1)throw Error("Unexpected Acolyte background source");
+   const {entry,index}=matches[0], body=entry.entries?.[0]?.entries?.[0]?.entries;
+   if(body?.length!==1||typeof body[0]!=="string")throw Error("Unexpected Acolyte narrative shape");
+   const norm=s=>s.replace(/\s+/g," ").trim();
+   const layout=byPage.get(60).textLayout.split("\n");
+   const heading=layout.findIndex(line=>/\s{2,}Acolyte\s*$/.test(line));
+   if(heading<0)throw Error("Missing Acolyte publisher heading");
+   const publisher=norm(layout.slice(heading+1).map(line=>line.trimEnd().split(/\s{2,}/).at(-1)).join(" "));
+   if(!publisher.includes(norm(body[0])))throw Error("Acolyte introduction differs from publisher");
+   row.entries.unshift(body[0]);
+   (row.source.additionalStructuredSources??=[]).push(sourcePtr("fluff-backgrounds.json","backgroundFluff",index));
+   report.sourceCounts.backgroundFluff=(report.sourceCounts.backgroundFluff??0)+1;
+   report.mergedOccurrences.push({id:row.id,...ptr("fluff-backgrounds.json","backgroundFluff",index),fields:["entries"],reason:"published background introduction"});
+   report.corrections.push({id:row.id,reason:"Restore the published Acolyte introduction on SRD 5.1 p.60 from the eligible structured background text."});
+  }
+ }
+ const skillIds=new Set(skills.map(s=>s.id)), ids=new Set(records.map(r=>r.id)), pageIds=new Set(pages.map(p=>p.id));
+ if(ids.size!==records.length)throw Error("Duplicate origin identity");
+ for(const row of records){
+  const {source,catalogReferences,...body}=row,refs=new Set(catalogReferences),pending=new Set();
+  for(const m of JSON.stringify(body).matchAll(/\{@(spell|creature|condition|skill|item|feat|action|sense|variantrule|language|class|race|optfeature) ([^}]+)\}/g)){
+   const [name,src]=m[2].split("|"),id="skill."+slug(name);
+   if(m[1]==="skill"&&(!src||src.toUpperCase()===edition)&&skillIds.has(id))refs.add(id);
+   else pending.add(m[1]+"|"+m[2]);
+  }
+  row.catalogReferences=[...refs].sort();
+  for(const reference of pending)report.pendingReferences.push({id:row.id,reference,reason:"semantic cross-category resolution pending; markup preserved"});
+  for(const id of row.catalogReferences)if(!ids.has(id)&&!skillIds.has(id)&&!pageIds.has(id))throw Error("Dangling "+id);
+ }
+ report.nativeCount=records.length;
+ report.limitations=["Full body and table fidelity pending; publisher page locators are not certification.","Nested _versions are preserved as source choice templates, not independently materialized records.","Unnamed legacy subrace extensions are folded into their parent with separate source pointers.","Semantic cross-category reference reconciliation and general character-creation rules pending."];
+ return {records,report};
+}
+
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
+const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const json=x=>JSON.stringify(x,null,2)+"\n";
+const src=read("data/reference/srd/structured-manifest.json");
+const races=read("data/reference/srd/structured/races.json");
+const backgrounds=read("data/reference/srd/structured/backgrounds.json");
+const backgroundFluff=read("data/reference/srd/structured/fluff-backgrounds.json");
+const check=process.argv.includes("--check");
+for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
+ const base="data/rulesets/"+pack+"/";
+ const manifest=read(base+"manifest.json");
+ const files=tag==="51"?["003-027","053-077"]:["080-104"];
+ const pages=files.flatMap(x=>read(base+"native/rulebook/pages-"+x+".json"));
+ const {records,report}=generate(races,backgrounds,backgroundFluff,manifest,src,pages,read(base+"native/skills.json"),tag);
+ const spells=fs.readdirSync(path.join(root,base+"native/spells")).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(base+"native/spells/"+f));
+ report.literalSpellRelationships=linkSpellRelationships(records,spells,"SRD"+tag);
+ report.literalCharacterRelationships=linkCharacterRelationships(records,characterRelationshipCatalog(root,base,read),"SRD"+tag);
+ for(const [file,body] of [[base+"native/character-origins.json",json(records)],["data/reference/srd/origins-promotion-"+tag+".json",json(report)]]){
+  const target=path.join(root,file);
+  if(check){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale origins promotion "+file);}
+  else fs.writeFileSync(target,body);
+ }
+ console.log(pack+": "+records.length+" origin records");
+}

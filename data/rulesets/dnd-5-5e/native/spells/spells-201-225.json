@@ -1,0 +1,1873 @@
+[
+  {
+    "id": "spell.magic-weapon",
+    "kind": "spell",
+    "name": "Magic Weapon",
+    "level": 2,
+    "school": "T",
+    "officialTextLayout": "Magic Weapon\nLevel 2 Transmutation (Paladin, Ranger, Sorcerer,\nWizard)\nCasting Time: Bonus Action\nRange: Touch\n\nComponents: V, S\nDuration: 1 hour\nYou touch a nonmagical weapon. Until the spell\nends, that weapon becomes a magic weapon with a\n+1 bonus to attack rolls and damage rolls. The spell\nends early if you cast it again.\n  Using a Higher-Level Spell Slot. The bonus in-\ncreases to +2 with a level 3–5 spell slot. The bonus\nincreases to +3 with a level 6+ spell slot.",
+    "header": {
+      "Casting Time": "Bonus Action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-146",
+      "rulebook.page-147"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        146,
+        147
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/194"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "bonus"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You touch a nonmagical weapon. Until the spell ends, that weapon becomes a magic weapon with a +1 bonus to attack rolls and damage rolls. The spell ends early if you cast it again."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The bonus increases to +2 with a level 3-5 spell slot. The bonus increases to +3 with a level 6+ spell slot."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "spell.magnificent-mansion",
+    "kind": "spell",
+    "name": "Magnificent Mansion",
+    "level": 7,
+    "school": "C",
+    "officialTextLayout": "Magnificent Mansion\nLevel 7 Conjuration (Bard, Wizard)\nCasting Time: 1 minute\nRange: 300 feet\nComponents: V, S, M (a miniature door worth 15+ GP)\nDuration: 24 hours\nYou conjure a shimmering door in range that lasts\nfor the duration. The door leads to an extradimen-\nsional dwelling and is 5 feet wide and 10 feet tall.\nYou and any creature you designate when you cast\nthe spell can enter the extradimensional dwelling\nas long as the door remains open. You can open or\nclose it (no action required) if you are within 30 feet\nof it. While closed, the door is imperceptible.\n  Beyond the door is a magnificent foyer with\nnumerous chambers beyond. The dwelling’s atmo-\nsphere is clean, fresh, and warm.\n  You can create any floor plan you like for the\ndwelling, but it can’t exceed 50 contiguous 10-foot\nCubes. The place is furnished and decorated as you\nchoose. It contains sufficient food to serve a nine-\ncourse banquet for up to 100 people. Furnishings\nand other objects created by this spell dissipate into\nsmoke if removed from it.\n  A staff of 100 near-transparent servants attends\nall who enter. You determine the appearance of\nthese servants and their attire. They are invulner-\nable and obey your commands. Each servant can\nperform tasks that a human could perform, but they\ncan’t attack or take any action that would directly\nharm another creature. Thus the servants can fetch\nthings, clean, mend, fold clothes, light fires, serve\nfood, pour wine, and so on. The servants can’t leave\nthe dwelling.\n  When the spell ends, any creatures or objects left\ninside the extradimensional space are expelled into\nthe unoccupied spaces nearest to the entrance.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "300 feet",
+      "Components": "V, S, M (a miniature door worth 15+ GP)",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-147"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        147
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/216"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 300
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a miniature door worth 15+ GP",
+        "cost": 1500
+      }
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 24
+        }
+      }
+    ],
+    "entries": [
+      "You conjure a shimmering door in range that lasts for the duration. The door leads to an extradimensional dwelling and is 5 feet wide and 10 feet tall. You and any creature you designate when you cast the spell can enter the extradimensional dwelling as long as the door remains open. You can open or close it (no action required) if you are within 30 feet of it. While closed, the door is imperceptible.",
+      "Beyond the door is a magnificent foyer with numerous chambers beyond. The dwelling's atmosphere is clean, fresh, and warm.",
+      "You can create any floor plan you like for the dwelling, but it can't exceed 50 contiguous 10-foot Cubes. The place is furnished and decorated as you choose. It contains sufficient food to serve a nine-course banquet for up to 100 people. Furnishings and other objects created by this spell dissipate into smoke if removed from it.",
+      "A staff of 100 near-transparent servants attends all who enter. You determine the appearance of these servants and their attire. They are invulnerable and obey your commands. Each servant can perform tasks that a human could perform, but they can't attack or take any action that would directly harm another creature. Thus the servants can fetch things, clean, mend, fold clothes, light fires, serve food, pour wine, and so on. The servants can't leave the dwelling.",
+      "When the spell ends, any creatures or objects left inside the extradimensional space are expelled into the unoccupied spaces nearest to the entrance."
+    ],
+    "miscTags": [
+      "OBJ"
+    ]
+  },
+  {
+    "id": "spell.major-image",
+    "kind": "spell",
+    "name": "Major Image",
+    "level": 3,
+    "school": "I",
+    "officialTextLayout": "Major Image\nLevel 3 Illusion (Bard, Sorcerer, Warlock, Wizard)\nCasting Time: Action\nRange: 120 feet\nComponents: V, S, M (a bit of fleece)\nDuration: Concentration, up to 10 minutes\nYou create the image of an object, a creature, or\nsome other visible phenomenon that is no larger\n\nthan a 20-foot Cube. The image appears at a spot\nthat you can see within range and lasts for the du-\nration. It seems real, including sounds, smells, and\ntemperature appropriate to the thing depicted, but\nit can’t deal damage or cause conditions.\n   If you are within range of the illusion, you can\ntake a Magic action to cause the image to move to\nany other spot within range. As the image changes\nlocation, you can alter its appearance so that its\nmovements appear natural for the image. For exam-\nple, if you create an image of a creature and move\nit, you can alter the image so that it appears to be\nwalking. Similarly, you can cause the illusion to\nmake different sounds at different times, even mak-\ning it carry on a conversation, for example.\n   Physical interaction with the image reveals it to\nbe an illusion, for things can pass through it. A crea-\nture that takes a Study action to examine the image\ncan determine that it is an illusion with a success-\nful Intelligence (Investigation) check against your\nspell save DC. If a creature discerns the illusion for\nwhat it is, the creature can see through the image,\nand its other sensory qualities become faint to the\ncreature.\n   Using a Higher-Level Spell Slot. The spell lasts\nuntil dispelled, without requiring Concentration, if\ncast with a level 4+ spell slot.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "V, S, M (a bit of fleece)",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-147"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        147
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/195"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a bit of fleece"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You create the image of an object, a creature, or some other visible phenomenon that is no larger than a 20-foot {@variantrule Cube [Area of Effect]|SRD52|Cube}. The image appears at a spot that you can see within range and lasts for the duration. It seems real, including sounds, smells, and temperature appropriate to the thing depicted, but it can't deal damage or cause conditions.",
+      "If you are within range of the illusion, you can take a {@action Magic|SRD52} action to cause the image to move to any other spot within range. As the image changes location, you can alter its appearance so that its movements appear natural for the image. For example, if you create an image of a creature and move it, you can alter the image so that it appears to be walking. Similarly, you can cause the illusion to make different sounds at different times, even making it carry on a conversation, for example.",
+      "Physical interaction with the image reveals it to be an illusion, for things can pass through it. A creature that takes a {@action Study|SRD52} action to examine the image can determine that it is an illusion with a successful Intelligence ({@skill Investigation|SRD52}) check against your spell save DC. If a creature discerns the illusion for what it is, the creature can see through the image, and its other sensory qualities become faint to the creature."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The spell lasts until dispelled, without requiring {@status Concentration|SRD52}, if cast with a level 4+ spell slot."
+        ]
+      }
+    ],
+    "miscTags": [
+      "PRM",
+      "SGT"
+    ],
+    "abilityCheck": [
+      "intelligence"
+    ]
+  },
+  {
+    "id": "spell.mass-cure-wounds",
+    "kind": "spell",
+    "name": "Mass Cure Wounds",
+    "level": 5,
+    "school": "A",
+    "officialTextLayout": "Mass Cure Wounds\nLevel 5 Abjuration (Bard, Cleric, Druid)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nA wave of healing energy washes out from a point\nyou can see within range. Choose up to six crea-\ntures in a 30-foot-radius Sphere centered on that\npoint. Each target regains Hit Points equal to 5d8\nplus your spellcasting ability modifier.\n  Using a Higher-Level Spell Slot. The healing in-\ncreases by 1d8 for each spell slot level above 5.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-147"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        147
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/196"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A wave of healing energy washes out from a point you can see within range. Choose up to six creatures in a 30-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on that point. Each target regains {@variantrule Hit Points|SRD52} equal to {@dice 5d8} plus your spellcasting ability modifier."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The healing increases by {@scaledice 5d8|5-9|1d8} for each spell slot level above 5."
+        ]
+      }
+    ],
+    "miscTags": [
+      "HL"
+    ],
+    "areaTags": [
+      "MT",
+      "S"
+    ]
+  },
+  {
+    "id": "spell.mass-heal",
+    "kind": "spell",
+    "name": "Mass Heal",
+    "level": 9,
+    "school": "A",
+    "officialTextLayout": "Mass Heal\nLevel 9 Abjuration (Cleric)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nA flood of healing energy flows from you into\ncreatures around you. You restore up to 700 Hit\nPoints, divided as you choose among any number of\ncreatures that you can see within range. Creatures\nhealed by this spell also have the Blinded, Deafened,\nand Poisoned conditions removed from them.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-147"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        147
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/197"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A flood of healing energy flows from you into creatures around you. You restore up to 700 {@variantrule Hit Points|SRD52}, divided as you choose among any number of creatures that you can see within range. Creatures healed by this spell also have the {@condition Blinded|SRD52}, {@condition Deafened|SRD52}, and {@condition Poisoned|SRD52} conditions removed from them."
+    ],
+    "miscTags": [
+      "HL",
+      "SGT"
+    ],
+    "areaTags": [
+      "MT"
+    ]
+  },
+  {
+    "id": "spell.mass-healing-word",
+    "kind": "spell",
+    "name": "Mass Healing Word",
+    "level": 3,
+    "school": "A",
+    "officialTextLayout": "Mass Healing Word\nLevel 3 Abjuration (Bard, Cleric)\nCasting Time: Bonus Action\nRange: 60 feet\nComponents: V\nDuration: Instantaneous\nUp to six creatures of your choice that you can see\nwithin range regain Hit Points equal to 2d4 plus\nyour spellcasting ability modifier.\n  Using a Higher-Level Spell Slot. The healing in-\ncreases by 1d4 for each spell slot level above 3.",
+    "header": {
+      "Casting Time": "Bonus Action",
+      "Range": "60 feet",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-148"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        148
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/198"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "bonus"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "Up to six creatures of your choice that you can see within range regain {@variantrule Hit Points|SRD52} equal to {@dice 2d4} plus your spellcasting ability modifier."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The healing increases by {@scaledice 2d4|3-9|1d4} for each spell slot level above 3."
+        ]
+      }
+    ],
+    "miscTags": [
+      "HL",
+      "SGT"
+    ],
+    "areaTags": [
+      "MT"
+    ]
+  },
+  {
+    "id": "spell.mass-suggestion",
+    "kind": "spell",
+    "name": "Mass Suggestion",
+    "level": 6,
+    "school": "E",
+    "officialTextLayout": "Mass Suggestion\nLevel 6 Enchantment (Bard, Sorcerer, Wizard)\nCasting Time: Action\nRange: 60 feet\nComponents: V, M (a snake’s tongue)\nDuration: 24 hours\nYou suggest a course of activity—described in no\nmore than 25 words—to twelve or fewer creatures\nyou can see within range that can hear and under-\nstand you. The suggestion must sound achievable\nand not involve anything that would obviously deal\ndamage to any of the targets or their allies. For\nexample, you could say, “Walk to the village down\nthat road, and help the villagers there harvest crops\nuntil sunset.” Or you could say, “Now is not the time\nfor violence. Drop your weapons, and dance! Stop in\nan hour.”\n  Each target must succeed on a Wisdom saving\nthrow or have the Charmed condition for the dura-\ntion or until you or your allies deal damage to the\ntarget. Each Charmed target pursues the suggestion\nto the best of its ability. The suggested activity can\ncontinue for the entire duration, but if the sug-\ngested activity can be completed in a shorter time,\nthe spell ends for a target upon completing it.\n  Using a Higher-Level Spell Slot. The duration is\nlonger with a spell slot of level 7 (10 days), 8 (30\ndays), or 9 (366 days).",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, M (a snake’s tongue)",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-148"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        148
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/199"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "m": "a snake's tongue"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 24
+        }
+      }
+    ],
+    "entries": [
+      "You suggest a course of activity—described in no more than 25 words—to twelve or fewer creatures you can see within range that can hear and understand you. The suggestion must sound achievable and not involve anything that would obviously deal damage to any of the targets or their allies. For example, you could say, \"Walk to the village down that road, and help the villagers there harvest crops until sunset.\" Or you could say, \"Now is not the time for violence. Drop your weapons, and dance! Stop in an hour.\"",
+      "Each target must succeed on a Wisdom saving throw or have the {@condition Charmed|SRD52} condition for the duration or until you or your allies deal damage to the target. Each {@condition Charmed|SRD52} target pursues the suggestion to the best of its ability. The suggested activity can continue for the entire duration, but if the suggested activity can be completed in a shorter time, the spell ends for a target upon completing it."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The duration is longer with a spell slot of level 7 (10 days), 8 (30 days), or 9 (366 days)."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "wisdom"
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "areaTags": [
+      "MT"
+    ],
+    "conditionInflict": [
+      "charmed"
+    ]
+  },
+  {
+    "id": "spell.maze",
+    "kind": "spell",
+    "name": "Maze",
+    "level": 8,
+    "school": "C",
+    "officialTextLayout": "Maze\nLevel 8 Conjuration (Wizard)\nCasting Time: Action\nRange: 60 feet\nComponents: V, S\nDuration: Concentration, up to 10 minutes\nYou banish a creature that you can see within range\ninto a labyrinthine demiplane. The target remains\nthere for the duration or until it escapes the maze.\n  The target can take a Study action to try to es-\ncape. When it does so, it makes a DC 20 Intelligence\n(Investigation) check. If it succeeds, it escapes, and\nthe spell ends.\n\n  When the spell ends, the target reappears in the\nspace it left or, if that space is occupied, in the near-\nest unoccupied space.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "60 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 10 minutes"
+    },
+    "catalogReferences": [
+      "rulebook.page-148"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        148
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/200"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 10
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You banish a creature that you can see within range into a labyrinthine demiplane. The target remains there for the duration or until it escapes the maze.",
+      "The target can take a {@action Study|SRD52} action to try to escape. When it does so, it makes a {@dc 20} Intelligence ({@skill Investigation|SRD52}) check. If it succeeds, it escapes, and the spell ends.",
+      "When the spell ends, the target reappears in the space it left or, if that space is occupied, in the nearest unoccupied space."
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "abilityCheck": [
+      "intelligence"
+    ]
+  },
+  {
+    "id": "spell.meld-into-stone",
+    "kind": "spell",
+    "name": "Meld into Stone",
+    "level": 3,
+    "school": "T",
+    "officialTextLayout": "Meld into Stone\nLevel 3 Transmutation (Cleric, Druid, Ranger)\nCasting Time: Action or Ritual\nRange: Touch\nComponents: V, S\nDuration: 8 hours\nYou step into a stone object or surface large enough\nto fully contain your body, merging yourself and\nyour equipment with the stone for the duration.\nYou must touch the stone to do so. Nothing of your\npresence remains visible or otherwise detectable by\nnonmagical senses.\n  While merged with the stone, you can’t see what\noccurs outside it, and any Wisdom (Perception)\nchecks you make to hear sounds outside it are made\nwith Disadvantage. You remain aware of the pas-\nsage of time and can cast spells on yourself while\nmerged in the stone. You can use 5 feet of movement\nto leave the stone where you entered it, which ends\nthe spell. You otherwise can’t move.\n  Minor physical damage to the stone doesn’t harm\nyou, but its partial destruction or a change in its\nshape (to the extent that you no longer fit within it)\nexpels you and deals 6d6 Force damage to you. The\nstone’s complete destruction (or transmutation into\na different substance) expels you and deals 50 Force\ndamage to you. If expelled, you move into an unoc-\ncupied space closest to where you first entered and\nhave the Prone condition.",
+    "header": {
+      "Casting Time": "Action or Ritual",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-148"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        148
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/201"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 8
+        }
+      }
+    ],
+    "entries": [
+      "You step into a stone object or surface large enough to fully contain your body, merging yourself and your equipment with the stone for the duration. You must touch the stone to do so. Nothing of your presence remains visible or otherwise detectable by nonmagical senses.",
+      "While merged with the stone, you can't see what occurs outside it, and any Wisdom ({@skill Perception|SRD52}) checks you make to hear sounds outside it are made with {@variantrule Disadvantage|SRD52}. You remain aware of the passage of time and can cast spells on yourself while merged in the stone. You can use 5 feet of movement to leave the stone where you entered it, which ends the spell. You otherwise can't move.",
+      "Minor physical damage to the stone doesn't harm you, but its partial destruction or a change in its shape (to the extent that you no longer fit within it) expels you and deals {@damage 6d6} Force damage to you. The stone's complete destruction (or transmutation into a different substance) expels you and deals 50 Force damage to you. If expelled, you move into an unoccupied space closest to where you first entered and have the {@condition Prone|SRD52} condition."
+    ],
+    "damageInflict": [
+      "force"
+    ],
+    "meta": {
+      "ritual": true
+    },
+    "conditionInflict": [
+      "prone"
+    ]
+  },
+  {
+    "id": "spell.mending",
+    "kind": "spell",
+    "name": "Mending",
+    "level": 0,
+    "school": "T",
+    "officialTextLayout": "Mending\nTransmutation Cantrip (Bard, Cleric, Druid, Sorcerer,\nWizard)\nCasting Time: 1 minute\nRange: Touch\nComponents: V, S, M (two lodestones)\nDuration: Instantaneous\nThis spell repairs a single break or tear in an object\nyou touch, such as a broken chain link, two halves of\na broken key, a torn cloak, or a leaking wineskin. As\nlong as the break or tear is no larger than 1 foot in\nany dimension, you mend it, leaving no trace of the\nformer damage.\n   This spell can physically repair a magic item, but\nit can’t restore magic to such an object.",
+    "header": {
+      "Casting Time": "1 minute",
+      "Range": "Touch",
+      "Components": "V, S, M (two lodestones)",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-148"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        148
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/203"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "two lodestones"
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "This spell repairs a single break or tear in an object you touch, such as a broken chain link, two halves of a broken key, a torn cloak, or a leaking wineskin. As long as the break or tear is no larger than 1 foot in any dimension, you mend it, leaving no trace of the former damage.",
+      "This spell can physically repair a magic item, but it can't restore magic to such an object."
+    ],
+    "miscTags": [
+      "OBJ"
+    ]
+  },
+  {
+    "id": "spell.message",
+    "kind": "spell",
+    "name": "Message",
+    "level": 0,
+    "school": "T",
+    "officialTextLayout": "Message\nTransmutation Cantrip (Bard, Druid, Sorcerer,\nWizard)\nCasting Time: Action\nRange: 120 feet\nComponents: S, M (a copper wire)\nDuration: 1 round\n\nYou point toward a creature within range and\nwhisper a message. The target (and only the target)\nhears the message and can reply in a whisper that\nonly you can hear.\n  You can cast this spell through solid objects if you\nare familiar with the target and know it is beyond\nthe barrier. Magical silence; 1 foot of stone, metal,\nor wood; or a thin sheet of lead blocks the spell.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "S, M (a copper wire)",
+      "Duration": "1 round"
+    },
+    "catalogReferences": [
+      "rulebook.page-148",
+      "rulebook.page-149"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        148,
+        149
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/204"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "s": true,
+      "m": "a copper wire"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "round",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You point toward a creature within range and whisper a message. The target (and only the target) hears the message and can reply in a whisper that only you can hear.",
+      "You can cast this spell through solid objects if you are familiar with the target and know it is beyond the barrier. Magical silence; 1 foot of stone, metal, or wood; or a thin sheet of lead blocks the spell."
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  },
+  {
+    "id": "spell.meteor-swarm",
+    "kind": "spell",
+    "name": "Meteor Swarm",
+    "level": 9,
+    "school": "V",
+    "officialTextLayout": "Meteor Swarm\nLevel 9 Evocation (Sorcerer, Wizard)\nCasting Time: Action\nRange: 1 mile\nComponents: V, S\nDuration: Instantaneous\nBlazing orbs of fire plummet to the ground at four\ndifferent points you can see within range. Each\ncreature in a 40-foot-radius Sphere centered on\neach of those points makes a Dexterity saving\nthrow. A creature takes 20d6 Fire damage and 20d6\nBludgeoning damage on a failed save or half as\nmuch damage on a successful one. A creature in the\narea of more than one fiery Sphere is affected only\nonce.\n  A nonmagical object that isn’t being worn or car-\nried also takes the damage if it’s in the spell’s area,\nand the object starts burning if it’s flammable.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "1 mile",
+      "Components": "V, S",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-149"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        149
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/205"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "miles",
+        "amount": 1
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "Blazing orbs of fire plummet to the ground at four different points you can see within range. Each creature in a 40-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on each of those points makes a Dexterity saving throw. A creature takes {@damage 20d6} Fire damage and {@damage 20d6} Bludgeoning damage on a failed save or half as much damage on a successful one. A creature in the area of more than one fiery {@variantrule Sphere [Area of Effect]|SRD52|Sphere} is affected only once.",
+      "A nonmagical object that isn't being worn or carried also takes the damage if it's in the spell's area, and the object starts {@hazard burning|SRD52} if it's flammable."
+    ],
+    "damageInflict": [
+      "bludgeoning",
+      "fire"
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "miscTags": [
+      "OBJ",
+      "SGT"
+    ],
+    "areaTags": [
+      "S"
+    ]
+  },
+  {
+    "id": "spell.mind-blank",
+    "kind": "spell",
+    "name": "Mind Blank",
+    "level": 8,
+    "school": "A",
+    "officialTextLayout": "Mind Blank\nLevel 8 Abjuration (Bard, Wizard)\nCasting Time: Action\nRange: Touch\nComponents: V, S\nDuration: 24 hours\nUntil the spell ends, one willing creature you touch\nhas Immunity to Psychic damage and the Charmed\ncondition. The target is also unaffected by anything\nthat would sense its emotions or alignment, read\nits thoughts, or magically detect its location, and\nno spell—not even Wish—can gather information\nabout the target, observe it remotely, or control its\nmind.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S",
+      "Duration": "24 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-149"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        149
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/206"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 24
+        }
+      }
+    ],
+    "entries": [
+      "Until the spell ends, one willing creature you touch has {@variantrule Immunity|SRD52} to Psychic damage and the {@condition Charmed|SRD52} condition. The target is also unaffected by anything that would sense its emotions or alignment, read its thoughts, or magically detect its location, and no spell—not even {@spell Wish|SRD52}—can gather information about the target, observe it remotely, or control its mind."
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionImmune": [
+      "charmed"
+    ],
+    "damageImmune": [
+      "psychic"
+    ]
+  },
+  {
+    "id": "spell.mind-spike",
+    "kind": "spell",
+    "name": "Mind Spike",
+    "level": 2,
+    "school": "D",
+    "officialTextLayout": "Mind Spike\nLevel 2 Divination (Sorcerer, Warlock, Wizard)\nCasting Time: Action\nRange: 120 feet\nComponents: S\nDuration: Concentration, up to 1 hour\nYou drive a spike of psionic energy into the mind of\none creature you can see within range. The target\nmakes a Wisdom saving throw, taking 3d8 Psychic\ndamage on a failed save or half as much damage on\na successful one. On a failed save, you also always\nknow the target’s location until the spell ends, but\nonly while the two of you are on the same plane\n\nof existence. While you have this knowledge, the\ntarget can’t become hidden from you, and if it has\nthe Invisible condition, it gains no benefit from that\ncondition against you.\n  Using a Higher-Level Spell Slot. The damage in-\ncreases by 1d8 for each spell slot level above 2.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "S",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-149"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        149
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/207"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You drive a spike of psionic energy into the mind of one creature you can see within range. The target makes a Wisdom saving throw, taking {@damage 3d8} Psychic damage on a failed save or half as much damage on a successful one. On a failed save, you also always know the target's location until the spell ends, but only while the two of you are on the same plane of existence. While you have this knowledge, the target can't become hidden from you, and if it has the {@condition Invisible|SRD52} condition, it gains no benefit from that condition against you."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The damage increases by {@scaledamage 3d8|2-9|1d8} for each spell slot level above 2."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "psychic"
+    ],
+    "savingThrow": [
+      "wisdom"
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  },
+  {
+    "id": "spell.minor-illusion",
+    "kind": "spell",
+    "name": "Minor Illusion",
+    "level": 0,
+    "school": "I",
+    "officialTextLayout": "Minor Illusion\nIllusion Cantrip (Bard, Sorcerer, Warlock, Wizard)\nCasting Time: Action\nRange: 30 feet\nComponents: S, M (a bit of fleece)\nDuration: 1 minute\nYou create a sound or an image of an object within\nrange that lasts for the duration. See the descrip-\ntions below for the effects of each. The illusion ends\nif you cast this spell again.\n   If a creature takes a Study action to examine the\nsound or image, the creature can determine that it\nis an illusion with a successful Intelligence (Inves-\ntigation) check against your spell save DC. If a crea-\nture discerns the illusion for what it is, the illusion\nbecomes faint to the creature.\n   Sound. If you create a sound, its volume can range\nfrom a whisper to a scream. It can be your voice,\nsomeone else’s voice, a lion’s roar, a beating of\ndrums, or any other sound you choose. The sound\ncontinues unabated throughout the duration, or you\ncan make discrete sounds at different times before\nthe spell ends.\n   Image. If you create an image of an object—such\nas a chair, muddy footprints, or a small chest—it\nmust be no larger than a 5-foot Cube. The image\ncan’t create sound, light, smell, or any other sensory\neffect. Physical interaction with the image reveals it\nto be an illusion, since things can pass through it.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "S, M (a bit of fleece)",
+      "Duration": "1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-149"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        149
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/208"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "s": true,
+      "m": "a bit of fleece"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "You create a sound or an image of an object within range that lasts for the duration. See the descriptions below for the effects of each. The illusion ends if you cast this spell again.",
+      "If a creature takes a {@action Study|SRD52} action to examine the sound or image, the creature can determine that it is an illusion with a successful Intelligence ({@skill Investigation|SRD52}) check against your spell save DC. If a creature discerns the illusion for what it is, the illusion becomes faint to the creature.",
+      {
+        "type": "entries",
+        "name": "Sound",
+        "entries": [
+          "If you create a sound, its volume can range from a whisper to a scream. It can be your voice, someone else's voice, a lion's roar, a beating of drums, or any other sound you choose. The sound continues unabated throughout the duration, or you can make discrete sounds at different times before the spell ends."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Image",
+        "entries": [
+          "If you create an image of an object—such as a chair, muddy footprints, or a small chest—it must be no larger than a 5-foot {@variantrule Cube [Area of Effect]|SRD52|Cube}. The image can't create sound, light, smell, or any other sensory effect. Physical interaction with the image reveals it to be an illusion, since things can pass through it."
+        ]
+      }
+    ],
+    "abilityCheck": [
+      "intelligence"
+    ]
+  },
+  {
+    "id": "spell.mirage-arcane",
+    "kind": "spell",
+    "name": "Mirage Arcane",
+    "level": 7,
+    "school": "I",
+    "officialTextLayout": "Mirage Arcane\nLevel 7 Illusion (Bard, Druid, Wizard)\nCasting Time: 10 minutes\nRange: Sight\nComponents: V, S\nDuration: 10 days\nYou make terrain in an area up to 1 mile square\nlook, sound, smell, and even feel like some other\nsort of terrain. Open fields or a road could be made\nto resemble a swamp, hill, crevasse, or some other\nrough or impassable terrain. A pond can be made to\nseem like a grassy meadow, a precipice like a gentle\nslope, or a rock-strewn gully like a wide and smooth\nroad.\n  Similarly, you can alter the appearance of struc-\ntures or add them where none are present. The spell\ndoesn’t disguise, conceal, or add creatures.\n  The illusion includes audible, visual, tactile, and\nolfactory elements, so it can turn clear ground\n\ninto Difficult Terrain (or vice versa) or otherwise\nimpede movement through the area. Any piece\nof the illusory terrain (such as a rock or stick)\nthat is removed from the spell’s area disappears\nimmediately.\n  Creatures with Truesight can see through the illu-\nsion to the terrain’s true form; however, all other el-\nements of the illusion remain, so while the creature\nis aware of the illusion’s presence, the creature can\nstill physically interact with the illusion.",
+    "header": {
+      "Casting Time": "10 minutes",
+      "Range": "Sight",
+      "Components": "V, S",
+      "Duration": "10 days"
+    },
+    "catalogReferences": [
+      "rulebook.page-149",
+      "rulebook.page-150"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        149,
+        150
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/209"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 10,
+        "unit": "minute"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "sight"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "day",
+          "amount": 10
+        }
+      }
+    ],
+    "entries": [
+      "You make terrain in an area up to 1 mile square look, sound, smell, and even feel like some other sort of terrain. Open fields or a road could be made to resemble a swamp, hill, crevasse, or some other rough or impassable terrain. A pond can be made to seem like a grassy meadow, a precipice like a gentle slope, or a rock-strewn gully like a wide and smooth road.",
+      "Similarly, you can alter the appearance of structures or add them where none are present. The spell doesn't disguise, conceal, or add creatures.",
+      "The illusion includes audible, visual, tactile, and olfactory elements, so it can turn clear ground into {@variantrule Difficult Terrain|SRD52} (or vice versa) or otherwise impede movement through the area. Any piece of the illusory terrain (such as a rock or stick) that is removed from the spell's area disappears immediately.",
+      "Creatures with {@sense Truesight|SRD52} can see through the illusion to the terrain's true form; however, all other elements of the illusion remain, so while the creature is aware of the illusion's presence, the creature can still physically interact with the illusion."
+    ],
+    "miscTags": [
+      "DFT"
+    ]
+  },
+  {
+    "id": "spell.mirror-image",
+    "kind": "spell",
+    "name": "Mirror Image",
+    "level": 2,
+    "school": "I",
+    "officialTextLayout": "Mirror Image\nLevel 2 Illusion (Bard, Sorcerer, Warlock, Wizard)\nCasting Time: Action\nRange: Self\nComponents: V, S\nDuration: 1 minute\nThree illusory duplicates of yourself appear in your\nspace. Until the spell ends, the duplicates move with\nyou and mimic your actions, shifting position so it’s\nimpossible to track which image is real.\n  Each time a creature hits you with an attack roll\nduring the spell’s duration, roll a d6 for each of\nyour remaining duplicates. If any of the d6s rolls\na 3 or higher, one of the duplicates is hit instead of\nyou, and the duplicate is destroyed. The duplicates\notherwise ignore all other damage and effects. The\nspell ends when all three duplicates are destroyed.\n  A creature is unaffected by this spell if it has the\nBlinded condition, Blindsight, or Truesight.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S",
+      "Duration": "1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-150"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        150
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/210"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "Three illusory duplicates of yourself appear in your space. Until the spell ends, the duplicates move with you and mimic your actions, shifting position so it's impossible to track which image is real.",
+      "Each time a creature hits you with an attack roll during the spell's duration, roll a {@dice d6} for each of your remaining duplicates. If any of the d6s rolls a 3 or higher, one of the duplicates is hit instead of you, and the duplicate is destroyed. The duplicates otherwise ignore all other damage and effects. The spell ends when all three duplicates are destroyed.",
+      "A creature is unaffected by this spell if it has the {@condition Blinded|SRD52} condition, {@sense Blindsight|SRD52}, or {@sense Truesight|SRD52}."
+    ]
+  },
+  {
+    "id": "spell.mislead",
+    "kind": "spell",
+    "name": "Mislead",
+    "level": 5,
+    "school": "I",
+    "officialTextLayout": "Mislead\nLevel 5 Illusion (Bard, Warlock, Wizard)\nCasting Time: Action\nRange: Self\nComponents: S\nDuration: Concentration, up to 1 hour\nYou gain the Invisible condition at the same time\nthat an illusory double of you appears where you\nare standing. The double lasts for the duration, but\nthe invisibility ends immediately after you make an\nattack roll, deal damage, or cast a spell.\n  As a Magic action, you can move the illusory dou-\nble up to twice your Speed and make it gesture,\nspeak, and behave in whatever way you choose. It is\nintangible and invulnerable.\n  You can see through its eyes and hear through its\nears as if you were located where it is.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "S",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-150"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        150
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/211"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You gain the {@condition Invisible|SRD52} condition at the same time that an illusory double of you appears where you are standing. The double lasts for the duration, but the invisibility ends immediately after you make an attack roll, deal damage, or cast a spell.",
+      "As a {@action Magic|SRD52} action, you can move the illusory double up to twice your {@variantrule Speed|SRD52} and make it gesture, speak, and behave in whatever way you choose. It is intangible and invulnerable.",
+      "You can see through its eyes and hear through its ears as if you were located where it is."
+    ],
+    "miscTags": [
+      "SGT"
+    ],
+    "conditionInflict": [
+      "invisible"
+    ]
+  },
+  {
+    "id": "spell.misty-step",
+    "kind": "spell",
+    "name": "Misty Step",
+    "level": 2,
+    "school": "C",
+    "officialTextLayout": "Misty Step\nLevel 2 Conjuration (Sorcerer, Warlock, Wizard)\nCasting Time: Bonus Action\nRange: Self\nComponents: V\nDuration: Instantaneous\n\nBriefly surrounded by silvery mist, you teleport up\nto 30 feet to an unoccupied space you can see.",
+    "header": {
+      "Casting Time": "Bonus Action",
+      "Range": "Self",
+      "Components": "V",
+      "Duration": "Instantaneous"
+    },
+    "catalogReferences": [
+      "rulebook.page-150"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        150
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/212"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "bonus"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "self"
+      }
+    },
+    "components": {
+      "v": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "Briefly surrounded by silvery mist, you teleport up to 30 feet to an unoccupied space you can see."
+    ],
+    "miscTags": [
+      "SGT",
+      "TP"
+    ]
+  },
+  {
+    "id": "spell.modify-memory",
+    "kind": "spell",
+    "name": "Modify Memory",
+    "level": 5,
+    "school": "E",
+    "officialTextLayout": "Modify Memory\nLevel 5 Enchantment (Bard, Wizard)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S\nDuration: Concentration, up to 1 minute\nYou attempt to reshape another creature’s mem-\nories. One creature that you can see within range\nmakes a Wisdom saving throw. If you are fighting\nthe creature, it has Advantage on the save. On a\nfailed save, the target has the Charmed condition\nfor the duration. While Charmed in this way, the\ntarget also has the Incapacitated condition and is\nunaware of its surroundings, though it can hear\nyou. If it takes any damage or is targeted by another\nspell, this spell ends, and no memories are modified.\n  While this charm lasts, you can affect the target’s\nmemory of an event that it experienced within the\nlast 24 hours and that lasted no more than 10 min-\nutes. You can permanently eliminate all memory of\nthe event, allow the target to recall the event with\nperfect clarity, change its memory of the event’s de-\ntails, or create a memory of some other event.\n  You must speak to the target to describe how its\nmemories are affected, and it must be able to under-\nstand your language for the modified memories to\ntake root. Its mind fills in any gaps in the details of\nyour description. If the spell ends before you finish\ndescribing the modified memories, the creature’s\nmemory isn’t altered. Otherwise, the modified\nmemories take hold when the spell ends.\n  A modified memory doesn’t necessarily affect\nhow a creature behaves, particularly if the mem-\nory contradicts the creature’s natural inclinations,\nalignment, or beliefs. An illogical modified memory,\nsuch as a false memory of how much the creature\nenjoyed swimming in acid, is dismissed as a bad\ndream. The GM might deem a modified memory too\nnonsensical to affect a creature.\n  A Remove Curse or Greater Restoration spell cast\non the target restores the creature’s true memory.\n  Using a Higher-Level Spell Slot. You can alter the\ntarget’s memories of an event that took place up to\n7 days ago (level 6 spell slot), 30 days ago (level 7\nspell slot), 365 days ago (level 8 spell slot), or any\ntime in the creature’s past (level 9 spell slot).",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-150"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        150
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/213"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You attempt to reshape another creature's memories. One creature that you can see within range makes a Wisdom saving throw. If you are fighting the creature, it has {@variantrule Advantage|SRD52} on the save. On a failed save, the target has the {@condition Charmed|SRD52} condition for the duration. While {@condition Charmed|SRD52} in this way, the target also has the {@condition Incapacitated|SRD52} condition and is unaware of its surroundings, though it can hear you. If it takes any damage or is targeted by another spell, this spell ends, and no memories are modified.",
+      "While this charm lasts, you can affect the target's memory of an event that it experienced within the last 24 hours and that lasted no more than 10 minutes. You can permanently eliminate all memory of the event, allow the target to recall the event with perfect clarity, change its memory of the event's details, or create a memory of some other event.",
+      "You must speak to the target to describe how its memories are affected, and it must be able to understand your language for the modified memories to take root. Its mind fills in any gaps in the details of your description. If the spell ends before you finish describing the modified memories, the creature's memory isn't altered. Otherwise, the modified memories take hold when the spell ends.",
+      "A modified memory doesn't necessarily affect how a creature behaves, particularly if the memory contradicts the creature's natural inclinations, alignment, or beliefs. An illogical modified memory, such as a false memory of how much the creature enjoyed swimming in acid, is dismissed as a bad dream. The DM might deem a modified memory too nonsensical to affect a creature.",
+      "A {@spell Remove Curse|SRD52} or {@spell Greater Restoration|SRD52} spell cast on the target restores the creature's true memory."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "You can alter the target's memories of an event that took place up to 7 days ago (level 6 spell slot), 30 days ago (level 7 spell slot), 365 days ago (level 8 spell slot), or any time in the creature's past (level 9 spell slot)."
+        ]
+      }
+    ],
+    "savingThrow": [
+      "wisdom"
+    ],
+    "miscTags": [
+      "PRM",
+      "SGT"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "conditionInflict": [
+      "charmed",
+      "incapacitated"
+    ]
+  },
+  {
+    "id": "spell.moonbeam",
+    "kind": "spell",
+    "name": "Moonbeam",
+    "level": 2,
+    "school": "V",
+    "officialTextLayout": "Moonbeam\nLevel 2 Evocation (Druid)\nCasting Time: Action\nRange: 120 feet\nComponents: V, S, M (a moonseed leaf)\nDuration: Concentration, up to 1 minute\n\nA silvery beam of pale light shines down in a\n5-foot-radius, 40-foot-high Cylinder centered on a\npoint within range. Until the spell ends, Dim Light\nfills the Cylinder, and you can take a Magic action on\nlater turns to move the Cylinder up to 60 feet.\n   When the Cylinder appears, each creature in it\nmakes a Constitution saving throw. On a failed save,\na creature takes 2d10 Radiant damage, and if the\ncreature is shape-shifted (as a result of the Poly-\nmorph spell, for example), it reverts to its true form\nand can’t shape-shift until it leaves the Cylinder.\nOn a successful save, a creature takes half as much\ndamage only. A creature also makes this save when\nthe spell’s area moves into its space and when it\nenters the spell’s area or ends its turn there. A crea-\nture makes this save only once per turn.\n   Using a Higher-Level Spell Slot. The damage in-\ncreases by 1d10 for each spell slot level above 2.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "V, S, M (a moonseed leaf)",
+      "Duration": "Concentration, up to 1 minute"
+    },
+    "catalogReferences": [
+      "rulebook.page-150",
+      "rulebook.page-151"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        150,
+        151
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/214"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a moonseed leaf"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "A silvery beam of pale light shines down in a 5-foot-radius, 40-foot-high {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} centered on a point within range. Until the spell ends, {@variantrule Dim Light|SRD52} fills the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder}, and you can take a {@action Magic|SRD52} action on later turns to move the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} up to 60 feet.",
+      "When the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} appears, each creature in it makes a Constitution saving throw. On a failed save, a creature takes {@damage 2d10} Radiant damage, and if the creature is shape-shifted (as a result of the {@spell Polymorph|SRD52} spell, for example), it reverts to its true form and can't shape-shift until it leaves the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder}. On a successful save, a creature takes half as much damage only. A creature also makes this save when the spell's area moves into its space and when it enters the spell's area or ends its turn there. A creature makes this save only once per turn."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
+        "entries": [
+          "The damage increases by {@scaledamage 2d10|2-9|1d10} for each spell slot level above 2."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "radiant"
+    ],
+    "savingThrow": [
+      "constitution"
+    ],
+    "miscTags": [
+      "LGT"
+    ],
+    "areaTags": [
+      "Y"
+    ]
+  },
+  {
+    "id": "spell.move-earth",
+    "kind": "spell",
+    "name": "Move Earth",
+    "level": 6,
+    "school": "T",
+    "officialTextLayout": "Move Earth\nLevel 6 Transmutation (Druid, Sorcerer, Wizard)\nCasting Time: Action\nRange: 120 feet\nComponents: V, S, M (a miniature shovel)\nDuration: Concentration, up to 2 hours\nChoose an area of terrain no larger than 40 feet on\na side within range. You can reshape dirt, sand, or\nclay in the area in any manner you choose for the\nduration. You can raise or lower the area’s eleva-\ntion, create or fill in a trench, erect or flatten a wall,\nor form a pillar. The extent of any such changes\ncan’t exceed half the area’s largest dimension. For\nexample, if you affect a 40-foot square, you can\ncreate a pillar up to 20 feet high, raise or lower the\nsquare’s elevation by up to 20 feet, dig a trench up\nto 20 feet deep, and so on. It takes 10 minutes for\nthese changes to complete. Because the terrain’s\ntransformation occurs slowly, creatures in the area\ncan’t usually be trapped or injured by the ground’s\nmovement.\n  At the end of every 10 minutes you spend concen-\ntrating on the spell, you can choose a new area of\nterrain to affect within range.\n  This spell can’t manipulate natural stone or stone\nconstruction. Rocks and structures shift to accom-\nmodate the new terrain. If the way you shape the\nterrain would make a structure unstable, it might\ncollapse.\n  Similarly, this spell doesn’t directly affect plant\ngrowth. The moved earth carries any plants along\nwith it.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "120 feet",
+      "Components": "V, S, M (a miniature shovel)",
+      "Duration": "Concentration, up to 2 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-151"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        151
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/219"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 120
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a miniature shovel"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 2
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "Choose an area of terrain no larger than 40 feet on a side within range. You can reshape dirt, sand, or clay in the area in any manner you choose for the duration. You can raise or lower the area's elevation, create or fill in a trench, erect or flatten a wall, or form a pillar. The extent of any such changes can't exceed half the area's largest dimension. For example, if you affect a 40-foot square, you can create a pillar up to 20 feet high, raise or lower the square's elevation by up to 20 feet, dig a trench up to 20 feet deep, and so on. It takes 10 minutes for these changes to complete. Because the terrain's transformation occurs slowly, creatures in the area can't usually be trapped or injured by the ground's movement.",
+      "At the end of every 10 minutes you spend {@status Concentration|SRD52|Concentrating} on the spell, you can choose a new area of terrain to affect within range.",
+      "This spell can't manipulate natural stone or stone construction. Rocks and structures shift to accommodate the new terrain. If the way you shape the terrain would make a structure unstable, it might collapse.",
+      "Similarly, this spell doesn't directly affect plant growth. The moved earth carries any plants along with it."
+    ],
+    "areaTags": [
+      "Q"
+    ]
+  },
+  {
+    "id": "spell.nondetection",
+    "kind": "spell",
+    "name": "Nondetection",
+    "level": 3,
+    "school": "A",
+    "officialTextLayout": "Nondetection\nLevel 3 Abjuration (Bard, Ranger, Wizard)\nCasting Time: Action\nRange: Touch\n\nComponents: V, S, M (a pinch of diamond dust worth\n 25+ GP, which the spell consumes)\nDuration: 8 hours\nFor the duration, you hide a target that you touch\nfrom Divination spells. The target can be a willing\ncreature, or it can be a place or an object no larger\nthan 10 feet in any dimension. The target can’t\nbe targeted by any Divination spell or perceived\nthrough magical scrying sensors.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Touch",
+      "Components": "V, S, M (a pinch of diamond dust worth",
+      "Duration": "8 hours"
+    },
+    "catalogReferences": [
+      "rulebook.page-151"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        151
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/220"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "a pinch of diamond dust worth 25+ GP, which the spell consumes",
+        "cost": 2500,
+        "consume": true
+      }
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 8
+        }
+      }
+    ],
+    "entries": [
+      "For the duration, you hide a target that you touch from Divination spells. The target can be a willing creature, or it can be a place or an object no larger than 10 feet in any dimension. The target can't be targeted by any Divination spell or perceived through magical scrying sensors."
+    ],
+    "miscTags": [
+      "OBJ"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  },
+  {
+    "id": "spell.passwall",
+    "kind": "spell",
+    "name": "Passwall",
+    "level": 5,
+    "school": "T",
+    "officialTextLayout": "Passwall\nLevel 5 Transmutation (Wizard)\nCasting Time: Action\nRange: 30 feet\nComponents: V, S, M (a pinch of sesame seeds)\nDuration: 1 hour\nA passage appears at a point that you can see on a\nwooden, plaster, or stone surface (such as a wall,\nceiling, or floor) within range and lasts for the dura-\ntion. You choose the opening’s dimensions: up to 5\nfeet wide, 8 feet tall, and 20 feet deep. The passage\ncreates no instability in a structure surrounding it.\n  When the opening disappears, any creatures or\nobjects still in the passage created by the spell are\nsafely ejected to an unoccupied space nearest to the\nsurface on which you cast the spell.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "30 feet",
+      "Components": "V, S, M (a pinch of sesame seeds)",
+      "Duration": "1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-151"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        151
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/226"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a pinch of sesame seeds"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        }
+      }
+    ],
+    "entries": [
+      "A passage appears at a point that you can see on a wooden, plaster, or stone surface (such as a wall, ceiling, or floor) within range and lasts for the duration. You choose the opening's dimensions: up to 5 feet wide, 8 feet tall, and 20 feet deep. The passage creates no instability in a structure surrounding it.",
+      "When the opening disappears, any creatures or objects still in the passage created by the spell are safely ejected to an unoccupied space nearest to the surface on which you cast the spell."
+    ],
+    "miscTags": [
+      "OBJ",
+      "SGT"
+    ]
+  },
+  {
+    "id": "spell.pass-without-trace",
+    "kind": "spell",
+    "name": "Pass without Trace",
+    "level": 2,
+    "school": "A",
+    "officialTextLayout": "Pass without Trace\nLevel 2 Abjuration (Druid, Ranger)\nCasting Time: Action\nRange: Self\nComponents: V, S, M (ashes from burned mistletoe)\nDuration: Concentration, up to 1 hour\nYou radiate a concealing aura in a 30-foot Emana-\ntion for the duration. While in the aura, you and\neach creature you choose have a +10 bonus to Dex-\nterity (Stealth) checks and leave no tracks.",
+    "header": {
+      "Casting Time": "Action",
+      "Range": "Self",
+      "Components": "V, S, M (ashes from burned mistletoe)",
+      "Duration": "Concentration, up to 1 hour"
+    },
+    "catalogReferences": [
+      "rulebook.page-151"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        151
+      ],
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/spells-srd52.json",
+        "pointer": "/spell/225"
+      },
+      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+    },
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "emanation",
+      "distance": {
+        "type": "feet",
+        "amount": 30
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "ashes from burned mistletoe"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
+        },
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You radiate a concealing aura in a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} for the duration. While in the aura, you and each creature you choose have a +10 bonus to Dexterity ({@skill Stealth|SRD52}) checks and leave no tracks."
+    ],
+    "areaTags": [
+      "MT"
+    ]
+  }
+]

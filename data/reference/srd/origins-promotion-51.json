@@ -1,0 +1,418 @@
+{
+  "edition": "srd-5.1",
+  "sourceCounts": {
+    "race": 9,
+    "subrace": 9,
+    "background": 1,
+    "backgroundFluff": 1
+  },
+  "nativeCounts": {
+    "race": 9,
+    "subrace": 4,
+    "background": 1
+  },
+  "excluded": [
+    {
+      "path": "races.json",
+      "pointer": "/race/0/heightAndWeight",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/0/age",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/0/traitTags",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/0/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/2/age",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/2/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/4/age",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/4/traitTags",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/4/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/6/heightAndWeight",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/6/age",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/6/traitTags",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/6/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/9/heightAndWeight",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/9/age",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/9/traitTags",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/9/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/10/heightAndWeight",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/10/age",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/10/traitTags",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/10/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/11/heightAndWeight",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/11/age",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/11/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/13/heightAndWeight",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/13/age",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/13/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/16/heightAndWeight",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/16/age",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/16/traitTags",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/race/16/soundClip",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/subrace/1/heightAndWeight",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "races.json",
+      "pointer": "/subrace/2/heightAndWeight",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    },
+    {
+      "path": "backgrounds.json",
+      "pointer": "/background/0/hasFluff",
+      "reason": "unverified metadata or external media; published descriptive entries retained"
+    }
+  ],
+  "corrections": [
+    {
+      "id": "race.dragonborn",
+      "reason": "Restore official nonbinding alignment guidance from cited publisher pages."
+    },
+    {
+      "id": "race.dwarf",
+      "reason": "Restore official nonbinding alignment guidance from cited publisher pages."
+    },
+    {
+      "id": "race.elf",
+      "reason": "Restore official nonbinding alignment guidance from cited publisher pages."
+    },
+    {
+      "id": "race.gnome",
+      "reason": "Restore official nonbinding alignment guidance from cited publisher pages."
+    },
+    {
+      "id": "race.half-elf",
+      "reason": "Restore official nonbinding alignment guidance from cited publisher pages."
+    },
+    {
+      "id": "race.half-orc",
+      "reason": "Restore official nonbinding alignment guidance from cited publisher pages."
+    },
+    {
+      "id": "race.halfling",
+      "reason": "Restore official nonbinding alignment guidance from cited publisher pages."
+    },
+    {
+      "id": "race.human",
+      "reason": "Restore official nonbinding alignment guidance from cited publisher pages."
+    },
+    {
+      "id": "race.tiefling",
+      "reason": "Restore official nonbinding alignment guidance from cited publisher pages."
+    },
+    {
+      "id": "background.acolyte",
+      "reason": "Restore the published Acolyte introduction on SRD 5.1 p.60 from the eligible structured background text."
+    }
+  ],
+  "mergedOccurrences": [
+    {
+      "id": "race.dragonborn",
+      "path": "races.json",
+      "pointer": "/subrace/0",
+      "fields": [
+        "_versions"
+      ],
+      "reason": "unnamed base-race extension"
+    },
+    {
+      "id": "race.half-elf",
+      "path": "races.json",
+      "pointer": "/subrace/4",
+      "fields": [],
+      "reason": "identity-only renderer placeholder"
+    },
+    {
+      "id": "race.half-orc",
+      "path": "races.json",
+      "pointer": "/subrace/5",
+      "fields": [],
+      "reason": "identity-only renderer placeholder"
+    },
+    {
+      "id": "race.human",
+      "path": "races.json",
+      "pointer": "/subrace/7",
+      "fields": [
+        "ability"
+      ],
+      "reason": "unnamed base-race extension"
+    },
+    {
+      "id": "race.tiefling",
+      "path": "races.json",
+      "pointer": "/subrace/8",
+      "fields": [],
+      "reason": "identity-only renderer placeholder"
+    },
+    {
+      "id": "background.acolyte",
+      "path": "fluff-backgrounds.json",
+      "pointer": "/backgroundFluff/0",
+      "fields": [
+        "entries"
+      ],
+      "reason": "published background introduction"
+    }
+  ],
+  "pendingReferences": [
+    {
+      "id": "race.dwarf",
+      "reference": "item|battleaxe|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.dwarf",
+      "reference": "item|handaxe|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.dwarf",
+      "reference": "item|light hammer|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.dwarf",
+      "reference": "item|warhammer|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.dwarf",
+      "reference": "item|artisan's tools|SRD51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.dwarf",
+      "reference": "item|Smith's tools|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.dwarf",
+      "reference": "item|brewer's supplies|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.dwarf",
+      "reference": "item|mason's tools|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.elf",
+      "reference": "condition|charmed",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.half-elf",
+      "reference": "condition|charmed",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.halfling",
+      "reference": "condition|frightened",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.tiefling",
+      "reference": "spell|thaumaturgy",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.tiefling",
+      "reference": "spell|hellish rebuke",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "race.tiefling",
+      "reference": "spell|darkness",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "subrace.elf.high",
+      "reference": "item|longsword|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "subrace.elf.high",
+      "reference": "item|shortsword|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "subrace.elf.high",
+      "reference": "item|shortbow|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "subrace.elf.high",
+      "reference": "item|longbow|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "subrace.gnome.rock",
+      "reference": "item|artisan's tools|SRD51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "subrace.gnome.rock",
+      "reference": "item|tinker's tools|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.acolyte",
+      "reference": "item|holy symbol|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.acolyte",
+      "reference": "item|book|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.acolyte",
+      "reference": "item|common clothes|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    },
+    {
+      "id": "background.acolyte",
+      "reference": "item|pouch|srd51",
+      "reason": "semantic cross-category resolution pending; markup preserved"
+    }
+  ],
+  "nativeCount": 14,
+  "limitations": [
+    "Full body and table fidelity pending; publisher page locators are not certification.",
+    "Nested _versions are preserved as source choice templates, not independently materialized records.",
+    "Unnamed legacy subrace extensions are folded into their parent with separate source pointers.",
+    "Semantic cross-category reference reconciliation and general character-creation rules pending."
+  ],
+  "literalSpellRelationships": {
+    "grantOccurrences": 3,
+    "prerequisiteOccurrences": 0,
+    "addedCatalogLinks": 3,
+    "unresolvedSelectors": 1
+  },
+  "literalCharacterRelationships": {
+    "literalOccurrences": 39,
+    "namedVariantOccurrences": 0,
+    "addedCatalogLinks": 35
+  }
+}

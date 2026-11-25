@@ -1,0 +1,2007 @@
+[
+  {
+    "id": "class.sorcerer",
+    "kind": "class",
+    "name": "Sorcerer",
+    "hd": {
+      "number": 1,
+      "faces": 6
+    },
+    "proficiency": [
+      "con",
+      "cha"
+    ],
+    "spellcastingAbility": "cha",
+    "casterProgression": "full",
+    "cantripProgression": [
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "spellsKnownProgression": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      12,
+      13,
+      13,
+      14,
+      14,
+      15,
+      15,
+      15,
+      15
+    ],
+    "optionalfeatureProgression": [
+      {
+        "name": "Metamagic",
+        "featureType": [
+          "MM"
+        ],
+        "progression": {
+          "3": 2,
+          "10": 3,
+          "17": 4
+        }
+      }
+    ],
+    "startingProficiencies": {
+      "weapons": [
+        "{@item dagger|srd51|daggers}",
+        "{@item dart|srd51|darts}",
+        "{@item sling|srd51|slings}",
+        "{@item quarterstaff|srd51|quarterstaffs}",
+        "{@item light crossbow|srd51|light crossbows}"
+      ],
+      "skills": [
+        {
+          "choose": {
+            "from": [
+              "arcana",
+              "deception",
+              "insight",
+              "intimidation",
+              "persuasion",
+              "religion"
+            ],
+            "count": 2
+          }
+        }
+      ]
+    },
+    "startingEquipment": {
+      "additionalFromBackground": true,
+      "default": [
+        "(a) a {@item light crossbow|srd51} and {@item crossbow bolts (20)|srd51|20 bolts} or (b) any {@filter simple weapon|items|source=srd51|category=basic|type=simple weapon}",
+        "(a) a {@item component pouch|srd51} or (b) an {@item arcane focus|srd51}",
+        "(a) a {@item dungeoneer's pack|srd51} or (b) an {@item explorer's pack|srd51}",
+        "Two {@item dagger|srd51|daggers}"
+      ],
+      "goldAlternative": "{@dice 3d4 × 10|3d4 × 10|Starting Gold}",
+      "defaultData": [
+        {
+          "a": [
+            "light crossbow|srd51",
+            "crossbow bolts (20)|srd51"
+          ],
+          "b": [
+            {
+              "equipmentType": "weaponSimple"
+            }
+          ]
+        },
+        {
+          "a": [
+            "component pouch|srd51"
+          ],
+          "b": [
+            {
+              "equipmentType": "focusSpellcastingArcane"
+            }
+          ]
+        },
+        {
+          "a": [
+            "dungeoneer's pack|srd51"
+          ],
+          "b": [
+            "explorer's pack|srd51"
+          ]
+        },
+        {
+          "_": [
+            {
+              "item": "dagger|srd51",
+              "quantity": 2
+            }
+          ]
+        }
+      ]
+    },
+    "multiclassing": {
+      "requirements": {
+        "cha": 13
+      }
+    },
+    "classTableGroups": [
+      {
+        "colLabels": [
+          "Sorcery Points"
+        ],
+        "rows": [
+          [
+            0
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ],
+          [
+            5
+          ],
+          [
+            6
+          ],
+          [
+            7
+          ],
+          [
+            8
+          ],
+          [
+            9
+          ],
+          [
+            10
+          ],
+          [
+            11
+          ],
+          [
+            12
+          ],
+          [
+            13
+          ],
+          [
+            14
+          ],
+          [
+            15
+          ],
+          [
+            16
+          ],
+          [
+            17
+          ],
+          [
+            18
+          ],
+          [
+            19
+          ],
+          [
+            20
+          ]
+        ]
+      },
+      {
+        "colLabels": [
+          "{@filter Cantrips Known|spells|level=0|class=sorcerer}",
+          "{@filter Spells Known|spells|class=sorcerer}"
+        ],
+        "rows": [
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            5,
+            10
+          ],
+          [
+            6,
+            11
+          ],
+          [
+            6,
+            12
+          ],
+          [
+            6,
+            12
+          ],
+          [
+            6,
+            13
+          ],
+          [
+            6,
+            13
+          ],
+          [
+            6,
+            14
+          ],
+          [
+            6,
+            14
+          ],
+          [
+            6,
+            15
+          ],
+          [
+            6,
+            15
+          ],
+          [
+            6,
+            15
+          ],
+          [
+            6,
+            15
+          ]
+        ]
+      },
+      {
+        "title": "Spell Slots per Spell Level",
+        "colLabels": [
+          "{@filter 1st|spells|level=1|class=sorcerer}",
+          "{@filter 2nd|spells|level=2|class=sorcerer}",
+          "{@filter 3rd|spells|level=3|class=sorcerer}",
+          "{@filter 4th|spells|level=4|class=sorcerer}",
+          "{@filter 5th|spells|level=5|class=sorcerer}",
+          "{@filter 6th|spells|level=6|class=sorcerer}",
+          "{@filter 7th|spells|level=7|class=sorcerer}",
+          "{@filter 8th|spells|level=8|class=sorcerer}",
+          "{@filter 9th|spells|level=9|class=sorcerer}"
+        ],
+        "rowsSpellProgression": [
+          [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            3,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            1,
+            1
+          ]
+        ]
+      }
+    ],
+    "classFeatures": [
+      "Spellcasting|Sorcerer||1",
+      {
+        "classFeature": "Sorcerous Origin|Sorcerer||1",
+        "gainSubclassFeature": true
+      },
+      "Font of Magic|Sorcerer||2",
+      "Metamagic|Sorcerer||3",
+      "Ability Score Improvement|Sorcerer||4",
+      {
+        "classFeature": "Sorcerous Origin feature|Sorcerer||6",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Sorcerer||8",
+      "Metamagic|Sorcerer||10",
+      "Ability Score Improvement|Sorcerer||12",
+      {
+        "classFeature": "Sorcerous Origin feature|Sorcerer||14",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Sorcerer||16",
+      "Metamagic|Sorcerer||17",
+      {
+        "classFeature": "Sorcerous Origin feature|Sorcerer||18",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Sorcerer||19",
+      "Sorcerous Restoration|Sorcerer||20"
+    ],
+    "subclassTitle": "Sorcerous Origin",
+    "catalogReferences": [
+      "baseitem.crossbow-bolts-20",
+      "baseitem.dagger",
+      "baseitem.dart",
+      "baseitem.light-crossbow",
+      "baseitem.quarterstaff",
+      "baseitem.sling",
+      "class-feature.sorcerer.ability-score-improvement.12",
+      "class-feature.sorcerer.ability-score-improvement.16",
+      "class-feature.sorcerer.ability-score-improvement.19",
+      "class-feature.sorcerer.ability-score-improvement.4",
+      "class-feature.sorcerer.ability-score-improvement.8",
+      "class-feature.sorcerer.font-of-magic.2",
+      "class-feature.sorcerer.metamagic.10",
+      "class-feature.sorcerer.metamagic.17",
+      "class-feature.sorcerer.metamagic.3",
+      "class-feature.sorcerer.sorcerous-origin-feature.14",
+      "class-feature.sorcerer.sorcerous-origin-feature.18",
+      "class-feature.sorcerer.sorcerous-origin-feature.6",
+      "class-feature.sorcerer.sorcerous-origin.1",
+      "class-feature.sorcerer.sorcerous-restoration.20",
+      "class-feature.sorcerer.spellcasting.1",
+      "item.component-pouch",
+      "item.dungeoneer-s-pack",
+      "item.explorer-s-pack",
+      "rulebook.page-042",
+      "rulebook.page-109",
+      "rulebook.page-110",
+      "skill.arcana",
+      "skill.deception",
+      "skill.insight",
+      "skill.intimidation",
+      "skill.persuasion",
+      "skill.religion",
+      "spell.acid-splash",
+      "spell.alter-self",
+      "spell.animate-objects",
+      "spell.banishment",
+      "spell.blight",
+      "spell.blindness-deafness",
+      "spell.blink",
+      "spell.blur",
+      "spell.burning-hands",
+      "spell.chain-lightning",
+      "spell.charm-person",
+      "spell.chill-touch",
+      "spell.circle-of-death",
+      "spell.clairvoyance",
+      "spell.cloudkill",
+      "spell.color-spray",
+      "spell.comprehend-languages",
+      "spell.cone-of-cold",
+      "spell.confusion",
+      "spell.counterspell",
+      "spell.creation",
+      "spell.dancing-lights",
+      "spell.darkness",
+      "spell.darkvision",
+      "spell.daylight",
+      "spell.delayed-blast-fireball",
+      "spell.detect-magic",
+      "spell.detect-thoughts",
+      "spell.dimension-door",
+      "spell.disguise-self",
+      "spell.disintegrate",
+      "spell.dispel-magic",
+      "spell.dominate-beast",
+      "spell.dominate-monster",
+      "spell.dominate-person",
+      "spell.earthquake",
+      "spell.enhance-ability",
+      "spell.enlarge-reduce",
+      "spell.etherealness",
+      "spell.expeditious-retreat",
+      "spell.eyebite",
+      "spell.false-life",
+      "spell.fear",
+      "spell.feather-fall",
+      "spell.finger-of-death",
+      "spell.fire-bolt",
+      "spell.fire-storm",
+      "spell.fireball",
+      "spell.fly",
+      "spell.fog-cloud",
+      "spell.gaseous-form",
+      "spell.gate",
+      "spell.globe-of-invulnerability",
+      "spell.greater-invisibility",
+      "spell.gust-of-wind",
+      "spell.haste",
+      "spell.hold-monster",
+      "spell.hold-person",
+      "spell.hypnotic-pattern",
+      "spell.ice-storm",
+      "spell.incendiary-cloud",
+      "spell.insect-plague",
+      "spell.invisibility",
+      "spell.jump",
+      "spell.knock",
+      "spell.levitate",
+      "spell.light",
+      "spell.lightning-bolt",
+      "spell.mage-armor",
+      "spell.mage-hand",
+      "spell.magic-missile",
+      "spell.major-image",
+      "spell.mass-suggestion",
+      "spell.mending",
+      "spell.message",
+      "spell.meteor-swarm",
+      "spell.minor-illusion",
+      "spell.mirror-image",
+      "spell.misty-step",
+      "spell.move-earth",
+      "spell.plane-shift",
+      "spell.poison-spray",
+      "spell.polymorph",
+      "spell.power-word-kill",
+      "spell.power-word-stun",
+      "spell.prestidigitation",
+      "spell.prismatic-spray",
+      "spell.protection-from-energy",
+      "spell.ray-of-frost",
+      "spell.reverse-gravity",
+      "spell.scorching-ray",
+      "spell.see-invisibility",
+      "spell.seeming",
+      "spell.shatter",
+      "spell.shield",
+      "spell.shocking-grasp",
+      "spell.silent-image",
+      "spell.sleep",
+      "spell.sleet-storm",
+      "spell.slow",
+      "spell.spider-climb",
+      "spell.stinking-cloud",
+      "spell.stoneskin",
+      "spell.suggestion",
+      "spell.sunbeam",
+      "spell.sunburst",
+      "spell.telekinesis",
+      "spell.teleport",
+      "spell.teleportation-circle",
+      "spell.thunderwave",
+      "spell.time-stop",
+      "spell.tongues",
+      "spell.true-seeing",
+      "spell.true-strike",
+      "spell.wall-of-fire",
+      "spell.wall-of-stone",
+      "spell.water-breathing",
+      "spell.water-walk",
+      "spell.web",
+      "spell.wish"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        42
+      ],
+      "candidatePage": 42,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/class/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending",
+      "spellList": {
+        "pages": [
+          109,
+          110
+        ],
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/sources.json",
+        "pointer": "/SRD51",
+        "verification": "publisher class-list membership verified; not a feature grant or executable spellcasting policy"
+      }
+    },
+    "spellList": [
+      {
+        "level": 0,
+        "spellIds": [
+          "spell.acid-splash",
+          "spell.chill-touch",
+          "spell.dancing-lights",
+          "spell.fire-bolt",
+          "spell.light",
+          "spell.mage-hand",
+          "spell.mending",
+          "spell.message",
+          "spell.minor-illusion",
+          "spell.poison-spray",
+          "spell.prestidigitation",
+          "spell.ray-of-frost",
+          "spell.shocking-grasp",
+          "spell.true-strike"
+        ]
+      },
+      {
+        "level": 1,
+        "spellIds": [
+          "spell.burning-hands",
+          "spell.charm-person",
+          "spell.color-spray",
+          "spell.comprehend-languages",
+          "spell.detect-magic",
+          "spell.disguise-self",
+          "spell.expeditious-retreat",
+          "spell.false-life",
+          "spell.feather-fall",
+          "spell.fog-cloud",
+          "spell.jump",
+          "spell.mage-armor",
+          "spell.magic-missile",
+          "spell.shield",
+          "spell.silent-image",
+          "spell.sleep",
+          "spell.thunderwave"
+        ]
+      },
+      {
+        "level": 2,
+        "spellIds": [
+          "spell.alter-self",
+          "spell.blindness-deafness",
+          "spell.blur",
+          "spell.darkness",
+          "spell.darkvision",
+          "spell.detect-thoughts",
+          "spell.enhance-ability",
+          "spell.enlarge-reduce",
+          "spell.gust-of-wind",
+          "spell.hold-person",
+          "spell.invisibility",
+          "spell.knock",
+          "spell.levitate",
+          "spell.mirror-image",
+          "spell.misty-step",
+          "spell.scorching-ray",
+          "spell.see-invisibility",
+          "spell.shatter",
+          "spell.spider-climb",
+          "spell.suggestion",
+          "spell.web"
+        ]
+      },
+      {
+        "level": 3,
+        "spellIds": [
+          "spell.blink",
+          "spell.clairvoyance",
+          "spell.counterspell",
+          "spell.daylight",
+          "spell.dispel-magic",
+          "spell.fear",
+          "spell.fireball",
+          "spell.fly",
+          "spell.gaseous-form",
+          "spell.haste",
+          "spell.hypnotic-pattern",
+          "spell.lightning-bolt",
+          "spell.major-image",
+          "spell.protection-from-energy",
+          "spell.sleet-storm",
+          "spell.slow",
+          "spell.stinking-cloud",
+          "spell.tongues",
+          "spell.water-breathing",
+          "spell.water-walk"
+        ]
+      },
+      {
+        "level": 4,
+        "spellIds": [
+          "spell.banishment",
+          "spell.blight",
+          "spell.confusion",
+          "spell.dimension-door",
+          "spell.dominate-beast",
+          "spell.greater-invisibility",
+          "spell.ice-storm",
+          "spell.polymorph",
+          "spell.stoneskin",
+          "spell.wall-of-fire"
+        ]
+      },
+      {
+        "level": 5,
+        "spellIds": [
+          "spell.animate-objects",
+          "spell.cloudkill",
+          "spell.cone-of-cold",
+          "spell.creation",
+          "spell.dominate-person",
+          "spell.hold-monster",
+          "spell.insect-plague",
+          "spell.seeming",
+          "spell.telekinesis",
+          "spell.teleportation-circle",
+          "spell.wall-of-stone"
+        ]
+      },
+      {
+        "level": 6,
+        "spellIds": [
+          "spell.chain-lightning",
+          "spell.circle-of-death",
+          "spell.disintegrate",
+          "spell.eyebite",
+          "spell.globe-of-invulnerability",
+          "spell.mass-suggestion",
+          "spell.move-earth",
+          "spell.sunbeam",
+          "spell.true-seeing"
+        ]
+      },
+      {
+        "level": 7,
+        "spellIds": [
+          "spell.delayed-blast-fireball",
+          "spell.etherealness",
+          "spell.finger-of-death",
+          "spell.fire-storm",
+          "spell.plane-shift",
+          "spell.prismatic-spray",
+          "spell.reverse-gravity",
+          "spell.teleport"
+        ]
+      },
+      {
+        "level": 8,
+        "spellIds": [
+          "spell.dominate-monster",
+          "spell.earthquake",
+          "spell.incendiary-cloud",
+          "spell.power-word-stun",
+          "spell.sunburst"
+        ]
+      },
+      {
+        "level": 9,
+        "spellIds": [
+          "spell.gate",
+          "spell.meteor-swarm",
+          "spell.power-word-kill",
+          "spell.time-stop",
+          "spell.wish"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "subclass.sorcerer.draconic",
+    "kind": "subclass",
+    "name": "Draconic Bloodline",
+    "shortName": "Draconic",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "subclassFeatures": [
+      "Draconic Bloodline|Sorcerer||Draconic||1",
+      "Elemental Affinity|Sorcerer||Draconic||6",
+      "Dragon Wings|Sorcerer||Draconic||14",
+      "Draconic Presence|Sorcerer||Draconic||18"
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-044",
+      "subclass-feature.sorcerer.draconic.draconic-bloodline.1",
+      "subclass-feature.sorcerer.draconic.draconic-presence.18",
+      "subclass-feature.sorcerer.draconic.dragon-wings.14",
+      "subclass-feature.sorcerer.draconic.elemental-affinity.6"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        44
+      ],
+      "candidatePage": 44,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/subclass/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.sorcerous-origin.1",
+    "kind": "class-feature",
+    "name": "Sorcerous Origin",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 1,
+    "entries": [
+      "Choose a sorcerous origin, which describes the source of your innate magical power, from the list of available origins.",
+      "Your choice grants you features when you choose it at 1st level and again at 6th, 14th, and 18th level."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-042"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        42
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.spellcasting.1",
+    "kind": "class-feature",
+    "name": "Spellcasting",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 1,
+    "entries": [
+      "An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic. This font of magic, whatever its origin, fuels your spells. See {@book chapter 10|SRD51|10} for the general rules of spellcasting and {@book chapter 11|SRD51|11} for the {@filter sorcerer spell list|spells|class=sorcerer}.",
+      {
+        "type": "entries",
+        "name": "Cantrips",
+        "entries": [
+          "At 1st level, you know four cantrips of your choice from the sorcerer spell list. You learn an additional sorcerer cantrip of your choice at 4th level and another at 10th level."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spell Slots",
+        "entries": [
+          "The Sorcerer table shows how many spell slots you have to cast your {@filter sorcerer spells|spells|class=sorcerer} of 1st level and higher. To cast one of these sorcerer spells, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.",
+          "For example, if you know the 1st-level spell {@spell burning hands} and have a 1st-level and a 2nd-level spell slot available, you can cast {@spell burning hands} using either slot."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spells Known of 1st Level and Higher",
+        "entries": [
+          "You know two 1st-level spells of your choice from the sorcerer spell list.",
+          "You learn an additional sorcerer spell of your choice at each level except 12th, 14th, 16th, 18th, 19th, and 20th. Each of these spells must be of a level for which you have spell slots. For instance, when you reach 3rd level in this class, you can learn one new spell of 1st or 2nd level.",
+          "Additionally, when you gain a level in this class, you can choose one of the sorcerer spells you know and replace it with another spell from the sorcerer spell list, which also must be of a level for which you have spell slots."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spellcasting Ability",
+        "entries": [
+          "Charisma is your spellcasting ability for your sorcerer spells, since the power of your magic relies on your ability to project your will into the world. You use your Charisma whenever a spell refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for a sorcerer spell you cast and when making an attack roll with one.",
+          {
+            "type": "abilityDc",
+            "name": "Spell",
+            "attributes": [
+              "cha"
+            ]
+          },
+          {
+            "type": "abilityAttackMod",
+            "name": "Spell",
+            "attributes": [
+              "cha"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spellcasting Focus",
+        "entries": [
+          "You can use an {@item arcane focus|srd51} as a spellcasting focus for your sorcerer spells."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-042"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        42
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.flexible-casting.2",
+    "kind": "class-feature",
+    "name": "Flexible Casting",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 2,
+    "header": 1,
+    "entries": [
+      "You can use your sorcery points to gain additional spell slots, or sacrifice spell slots to gain additional sorcery points. You learn other ways to use your sorcery points as you reach higher levels.",
+      {
+        "type": "entries",
+        "name": "Creating Spell Slots",
+        "entries": [
+          "You can transform unexpended sorcery points into one spell slot as a bonus action on your turn. The created spell slots vanish at the end of a long rest. The Creating Spell Slots table shows the cost of creating a spell slot of a given level. You can create spell slots no higher in level than 5th.",
+          {
+            "type": "table",
+            "caption": "Creating Spell Slots",
+            "colLabels": [
+              "Spell Slot Level",
+              "Sorcery Point Cost"
+            ],
+            "colStyles": [
+              "col-6 text-center",
+              "col-6 text-center"
+            ],
+            "rows": [
+              [
+                "1st",
+                "2"
+              ],
+              [
+                "2nd",
+                "3"
+              ],
+              [
+                "3rd",
+                "5"
+              ],
+              [
+                "4th",
+                "6"
+              ],
+              [
+                "5th",
+                "7"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Converting a Spell Slot to Sorcery Points",
+        "entries": [
+          "As a bonus action on your turn, you can expend one spell slot and gain a number of sorcery points equal to the slot's level."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-043"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        43
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/2"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.font-of-magic.2",
+    "kind": "class-feature",
+    "name": "Font of Magic",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 2,
+    "entries": [
+      "At 2nd level, you tap into a deep wellspring of magic within yourself. This wellspring is represented by sorcery points, which allow you to create a variety of magical effects.",
+      {
+        "type": "refClassFeature",
+        "classFeature": "Sorcery Points|Sorcerer||2"
+      },
+      {
+        "type": "refClassFeature",
+        "classFeature": "Flexible Casting|Sorcerer||2"
+      }
+    ],
+    "catalogReferences": [
+      "class-feature.sorcerer.flexible-casting.2",
+      "class-feature.sorcerer.sorcery-points.2",
+      "class.sorcerer",
+      "rulebook.page-042"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        42
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/3"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.sorcery-points.2",
+    "kind": "class-feature",
+    "name": "Sorcery Points",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 2,
+    "header": 1,
+    "entries": [
+      "You have 2 sorcery points, and you gain one additional point every time you level up, to a maximum of 20 at level 20. You can never have more sorcery points than shown on the table for your level. You regain all spent sorcery points when you finish a long rest."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-043"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        43
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/4"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.metamagic.3",
+    "kind": "class-feature",
+    "name": "Metamagic",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 3,
+    "entries": [
+      "At 3rd level, you gain the ability to twist your spells to suit your needs. You gain two of the following Metamagic options of your choice. You gain another one at 10th and 17th level.",
+      "You can use only one Metamagic option on a spell when you cast it, unless otherwise noted.",
+      {
+        "type": "options",
+        "count": 2,
+        "entries": [
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Careful Spell",
+            "preserve": {
+              "consumes": true
+            }
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Distant Spell",
+            "preserve": {
+              "consumes": true
+            }
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Empowered Spell",
+            "preserve": {
+              "consumes": true
+            }
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Extended Spell",
+            "preserve": {
+              "consumes": true
+            }
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Heightened Spell",
+            "preserve": {
+              "consumes": true
+            }
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Quickened Spell",
+            "preserve": {
+              "consumes": true
+            }
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Subtle Spell",
+            "preserve": {
+              "consumes": true
+            }
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Twinned Spell",
+            "preserve": {
+              "consumes": true
+            }
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "optional-feature.careful-spell",
+      "optional-feature.distant-spell",
+      "optional-feature.empowered-spell",
+      "optional-feature.extended-spell",
+      "optional-feature.heightened-spell",
+      "optional-feature.quickened-spell",
+      "optional-feature.subtle-spell",
+      "optional-feature.twinned-spell",
+      "rulebook.page-042"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        42
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/5"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.ability-score-improvement.4",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 4,
+    "entries": [
+      "When you reach 4th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-044"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        44
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/6"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.sorcerous-origin-feature.6",
+    "kind": "class-feature",
+    "name": "Sorcerous Origin feature",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 6,
+    "entries": [
+      "At 6th level, you gain a feature granted by your Sorcerous Origin."
+    ],
+    "catalogReferences": [
+      "class.sorcerer"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/7"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.ability-score-improvement.8",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 8,
+    "entries": [
+      "When you reach 8th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-044"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        44
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/8"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.metamagic.10",
+    "kind": "class-feature",
+    "name": "Metamagic",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 10,
+    "entries": [
+      "At 10th level, you learn an additional metamagic option."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-042"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        42
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/9"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.ability-score-improvement.12",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 12,
+    "entries": [
+      "When you reach 12th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-044"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        44
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/10"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.sorcerous-origin-feature.14",
+    "kind": "class-feature",
+    "name": "Sorcerous Origin feature",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 14,
+    "entries": [
+      "At 14th level, you gain a feature granted by your Sorcerous Origin."
+    ],
+    "catalogReferences": [
+      "class.sorcerer"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/11"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.ability-score-improvement.16",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 16,
+    "entries": [
+      "When you reach 16th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-044"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        44
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/12"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.metamagic.17",
+    "kind": "class-feature",
+    "name": "Metamagic",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 17,
+    "entries": [
+      "At 17th level, you learn an additional metamagic option."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-042"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        42
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/13"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.sorcerous-origin-feature.18",
+    "kind": "class-feature",
+    "name": "Sorcerous Origin feature",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 18,
+    "entries": [
+      "At 18th level, you gain a feature granted by your Sorcerous Origin."
+    ],
+    "catalogReferences": [
+      "class.sorcerer"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/14"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.ability-score-improvement.19",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 19,
+    "entries": [
+      "When you reach 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-044"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        44
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/15"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.sorcerer.sorcerous-restoration.20",
+    "kind": "class-feature",
+    "name": "Sorcerous Restoration",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "level": 20,
+    "entries": [
+      "At 20th level, you regain 4 expended sorcery points whenever you finish a short rest."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-042"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        42
+      ],
+      "candidatePage": 99,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/classFeature/16"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.sorcerer.draconic.draconic-bloodline.1",
+    "kind": "subclass-feature",
+    "name": "Draconic Bloodline",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "subclassShortName": "Draconic",
+    "subclassSource": "SRD51",
+    "level": 1,
+    "entries": [
+      "Your innate magic comes from draconic magic that was mingled with your blood or that of your ancestors. Most often, sorcerers with this origin trace their descent back to a mighty sorcerer of ancient times who made a bargain with a dragon or who might even have claimed a dragon parent. Some of these bloodlines are well established in the world, but most are obscure. Any given sorcerer could be the first of a new bloodline, as a result of a pact or some other exceptional circumstance.",
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Dragon Ancestor|Sorcerer||Draconic||1"
+      },
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Draconic Resilience|Sorcerer||Draconic||1"
+      }
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-043",
+      "subclass-feature.sorcerer.draconic.draconic-resilience.1",
+      "subclass-feature.sorcerer.draconic.dragon-ancestor.1",
+      "subclass.sorcerer.draconic"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        43
+      ],
+      "candidatePage": 102,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/subclassFeature/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.sorcerer.draconic.draconic-resilience.1",
+    "kind": "subclass-feature",
+    "name": "Draconic Resilience",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "subclassShortName": "Draconic",
+    "subclassSource": "SRD51",
+    "level": 1,
+    "header": 1,
+    "entries": [
+      "As magic flows through your body, it causes physical traits of your dragon ancestors to emerge. At 1st level, your hit point maximum increases by 1 and increases by 1 again whenever you gain a level in this class.",
+      "Additionally, parts of your skin are covered by a thin sheen of dragon-like scales. When you aren't wearing armor, your AC equals 13 + your Dexterity modifier."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-045",
+      "subclass.sorcerer.draconic"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        45
+      ],
+      "candidatePage": 102,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/subclassFeature/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.sorcerer.draconic.dragon-ancestor.1",
+    "kind": "subclass-feature",
+    "name": "Dragon Ancestor",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "subclassShortName": "Draconic",
+    "subclassSource": "SRD51",
+    "level": 1,
+    "header": 1,
+    "entries": [
+      "At 1st level, you choose one type of dragon as your ancestor. The damage type associated with each dragon is used by features you gain later.",
+      {
+        "type": "table",
+        "caption": "Draconic Ancestry",
+        "colLabels": [
+          "Dragon",
+          "Damage Type"
+        ],
+        "colStyles": [
+          "col-6 text-center",
+          "col-6 text-center"
+        ],
+        "rows": [
+          [
+            "Black",
+            "{@filter Acid|spells|damage type=acid|class=sorcerer}"
+          ],
+          [
+            "Blue",
+            "{@filter Lightning|spells|damage type=lightning|class=sorcerer}"
+          ],
+          [
+            "Brass",
+            "{@filter Fire|spells|damage type=fire|class=sorcerer}"
+          ],
+          [
+            "Bronze",
+            "{@filter Lightning|spells|damage type=lightning|class=sorcerer}"
+          ],
+          [
+            "Copper",
+            "{@filter Acid|spells|damage type=acid|class=sorcerer}"
+          ],
+          [
+            "Gold",
+            "{@filter Fire|spells|damage type=fire|class=sorcerer}"
+          ],
+          [
+            "Green",
+            "{@filter Poison|spells|damage type=poison|class=sorcerer}"
+          ],
+          [
+            "Red",
+            "{@filter Fire|spells|damage type=fire|class=sorcerer}"
+          ],
+          [
+            "Silver",
+            "{@filter Cold|spells|damage type=cold|class=sorcerer}"
+          ],
+          [
+            "White",
+            "{@filter Cold|spells|damage type=cold|class=sorcerer}"
+          ]
+        ]
+      },
+      "You can speak, read, and write {@language Draconic}. Additionally, whenever you make a Charisma check when interacting with dragons, your proficiency bonus is doubled if it applies to the check."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-044",
+      "subclass.sorcerer.draconic"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        44
+      ],
+      "candidatePage": 102,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/subclassFeature/2"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.sorcerer.draconic.elemental-affinity.6",
+    "kind": "subclass-feature",
+    "name": "Elemental Affinity",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "subclassShortName": "Draconic",
+    "subclassSource": "SRD51",
+    "level": 6,
+    "header": 2,
+    "consumes": {
+      "name": "Sorcery Point"
+    },
+    "entries": [
+      "Starting at 6th level, when you cast a spell that deals damage of the type associated with your draconic ancestry, you can add your Charisma modifier to one damage roll of that spell. At the same time, you can spend 1 sorcery point to gain resistance to that damage type for 1 hour."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-045",
+      "subclass.sorcerer.draconic"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        45
+      ],
+      "candidatePage": 102,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/subclassFeature/3"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.sorcerer.draconic.dragon-wings.14",
+    "kind": "subclass-feature",
+    "name": "Dragon Wings",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "subclassShortName": "Draconic",
+    "subclassSource": "SRD51",
+    "level": 14,
+    "header": 2,
+    "entries": [
+      "At 14th level, you gain the ability to sprout a pair of dragon wings from your back, gaining a flying speed equal to your current speed. You can create these wings as a bonus action on your turn. They last until you dismiss them as a bonus action on your turn.",
+      "You can't manifest your wings while wearing armor unless the armor is made to accommodate them, and clothing not made to accommodate your wings might be destroyed when you manifest them."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-045",
+      "subclass.sorcerer.draconic"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        45
+      ],
+      "candidatePage": 102,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/subclassFeature/4"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.sorcerer.draconic.draconic-presence.18",
+    "kind": "subclass-feature",
+    "name": "Draconic Presence",
+    "className": "Sorcerer",
+    "classSource": "SRD51",
+    "subclassShortName": "Draconic",
+    "subclassSource": "SRD51",
+    "level": 18,
+    "header": 2,
+    "consumes": {
+      "name": "Sorcery Point",
+      "amount": 5
+    },
+    "entries": [
+      "Beginning at 18th level, you can channel the dread presence of your dragon ancestor, causing those around you to become awestruck or {@condition frightened}. As an action, you can spend 5 sorcery points to draw on this power and exude an aura of awe or fear (your choice) to a distance of 60 feet. For 1 minute or until you lose your {@status concentration} (as if you were casting a {@status concentration} spell), each hostile creature that starts its turn in this aura must succeed on a Wisdom saving throw or be {@condition charmed} (if you chose awe) or {@condition frightened} (if you chose fear) until the aura ends. A creature that succeeds on this saving throw is immune to your aura for 24 hours."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-045",
+      "subclass.sorcerer.draconic"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        45
+      ],
+      "candidatePage": 102,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-sorcerer.json",
+        "pointer": "/subclassFeature/5"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  }
+]

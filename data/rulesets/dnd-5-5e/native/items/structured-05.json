@@ -1,0 +1,1804 @@
+[
+  {
+    "id": "item.ioun-stone-sustenance",
+    "kind": "item",
+    "name": "Ioun Stone, Sustenance",
+    "rarity": "rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "entries": [
+      "{#itemEntry Ioun Stone|SRD52}",
+      "You don't need to eat or drink while this clear spindle orbits your head."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 227,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/419"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.iron",
+    "kind": "item",
+    "name": "Iron",
+    "type": "TG|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 10,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/421"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.iron-bands",
+    "kind": "item",
+    "name": "Iron Bands",
+    "rarity": "rare",
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "This rusty iron sphere measures 3 inches in diameter and weighs 1 pound. You can take a {@action Magic|SRD52} action to throw the sphere at a Huge or smaller creature you can see within 60 feet of yourself. As the sphere moves through the air, it opens into a tangle of metal bands.",
+      "Make a ranged attack roll with an attack bonus equal to your Dexterity modifier plus your {@variantrule Proficiency|SRD52|Proficiency Bonus}. On a hit, the target has the {@condition Restrained|SRD52} condition until you take a {@variantrule Bonus Action|SRD52} to issue a command that releases it. Doing so or missing with the attack causes the bands to contract and become a sphere once more.",
+      "A creature that can touch the bands, including the one {@condition Restrained|SRD52}, can take an action to make a {@dc 20} Strength ({@skill Athletics|SRD52}) check to break the iron bands. On a successful check, the item is destroyed, and the {@condition Restrained|SRD52} creature is freed. On a failed check, any further attempts made by that creature automatically fail until 24 hours have elapsed.",
+      "Once the bands are used, they can't be used again until the next dawn."
+    ],
+    "catalogReferences": [
+      "condition.restrained",
+      "skill.athletics"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 228,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/423"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.iron-flask",
+    "kind": "item",
+    "name": "Iron Flask",
+    "rarity": "legendary",
+    "wondrous": true,
+    "entries": [
+      "While holding this brass-stoppered iron flask, you can take a {@action Magic|SRD52} action to target a creature that you can see within 60 feet of yourself. If the flask is empty and the target is native to a plane of existence other than the one you're on, the target must succeed on a {@dc 17} Wisdom saving throw or be trapped in the flask. If the target has been trapped by the flask before, it has {@variantrule Advantage|SRD52} on the save. Once trapped, a creature remains in the flask until released. The flask can hold only one creature at a time. A creature trapped in the flask doesn't age and doesn't need to breathe, eat, or drink.",
+      "You can take a {@action Magic|SRD52} action to remove the flask's stopper and release the creature in the flask. The creature then obeys your commands for 1 hour, understanding those commands even if it doesn't know the language in which the commands are given. If you issue no commands or give the creature a command that is likely to result in its death or imprisonment, it defends itself but otherwise takes no actions. At the end of the duration, the creature acts in accordance with its normal disposition and alignment.",
+      "An {@spell Identify|SRD52} spell reveals if the flask contains a creature, but the only way to determine the type of creature is to open the flask. A newly discovered Iron Flask might already contain a creature chosen by the DM."
+    ],
+    "catalogReferences": [
+      "spell.identify"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 228,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/425"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.iron-pot",
+    "kind": "item",
+    "name": "Iron Pot",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 10,
+    "value": 200,
+    "entries": [
+      "An Iron Pot holds up to 1 gallon."
+    ],
+    "containerCapacity": {
+      "volume": [
+        0.1
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/427"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.iron-spike",
+    "kind": "item",
+    "name": "Iron Spike",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 0.5,
+    "value": 10,
+    "entries": [
+      "Iron Spikes come in bundles of ten. As a {@action Utilize|SRD52} action, you can use a blunt object, such as a {@item Light Hammer|SRD52}, to hammer a spike into wood, earth, or a similar material. You can do so to jam a door shut or to then tie a {@item Rope|SRD52} or {@item Chain|SRD52} to the Spike."
+    ],
+    "catalogReferences": [
+      "baseitem.light-hammer",
+      "item.chain",
+      "item.rope"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/429"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.iron-spikes",
+    "kind": "item",
+    "name": "Iron Spikes",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 5,
+    "value": 100,
+    "entries": [
+      "Iron Spikes come in bundles of ten. As a {@action Utilize|SRD52} action, you can use a blunt object, such as a {@item Light Hammer|SRD52}, to hammer a spike into wood, earth, or a similar material. You can do so to jam a door shut or to then tie a {@item Rope|SRD52} or {@item Chain|SRD52} to the Spike."
+    ],
+    "packContents": [
+      {
+        "item": "iron spike|srd52",
+        "quantity": 10
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.light-hammer",
+      "item.chain",
+      "item.iron-spike",
+      "item.rope"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/430"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.javelin-of-lightning",
+    "kind": "item",
+    "name": "Javelin of Lightning",
+    "baseItem": "javelin|srd52",
+    "type": "M|SRD52",
+    "rarity": "uncommon",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "range": "30/120",
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "entries": [
+      "Each time you make an attack roll with this magic weapon and hit, you can have it deal Lightning damage instead of Piercing damage.",
+      {
+        "type": "entries",
+        "name": "Lightning Bolt",
+        "entries": [
+          "When you throw this weapon at a target no farther than 120 feet from you, you can forgo making a ranged attack roll and instead turn the weapon into a bolt of lightning. This bolt forms a 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line} between you and the target. The target and each other creature in the {@variantrule Line [Area of Effect]|SRD52|Line} (excluding you) makes a {@dc 13} Dexterity saving throw, taking {@damage 4d6} Lightning damage on a failed save or half as much damage on a successful one. Immediately after dealing this damage, the weapon reappears in your hand. This property can't be used again until the next dawn."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.javelin",
+      "item-mastery.slow",
+      "item-property.t"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 228,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/433"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.jug",
+    "kind": "item",
+    "name": "Jug",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 4,
+    "value": 2,
+    "entries": [
+      "A Jug holds up to 1 gallon."
+    ],
+    "containerCapacity": {
+      "volume": [
+        0.1
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/435"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.keelboat",
+    "kind": "item",
+    "name": "Keelboat",
+    "type": "SHP|SRD52",
+    "rarity": "none",
+    "value": 300000,
+    "crew": 1,
+    "vehAc": 15,
+    "vehHp": 100,
+    "vehDmgThresh": 10,
+    "vehSpeed": 1,
+    "capPassenger": 6,
+    "capCargo": 0.5,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 100,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/437"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.ladder",
+    "kind": "item",
+    "name": "Ladder",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 25,
+    "value": 10,
+    "entries": [
+      "A Ladder is 10 feet tall. You must climb to move up or down it."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/439"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.lamp",
+    "kind": "item",
+    "name": "Lamp",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 50,
+    "entries": [
+      "A Lamp burns {@item Oil|SRD52} as fuel to cast {@variantrule Bright Light|SRD52} in a 15-foot radius and {@variantrule Dim Light|SRD52} for an additional 30 feet."
+    ],
+    "light": [
+      {
+        "bright": 15,
+        "dim": 45
+      }
+    ],
+    "catalogReferences": [
+      "item.oil"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/442"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.lantern-of-revealing",
+    "kind": "item",
+    "name": "Lantern of Revealing",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "While lit, this hooded lantern burns for 6 hours on 1 pint of oil, shedding {@variantrule Bright Light|SRD52} in a 30-foot radius and {@variantrule Dim Light|SRD52} for an additional 30 feet. {@condition Invisible|SRD52} creatures and objects are visible as long as they are in the lantern's {@variantrule Bright Light|SRD52}. You can take a {@action Utilize|SRD52} action to lower the hood, reducing the lantern's light to {@variantrule Dim Light|SRD52} in a 5-foot radius."
+    ],
+    "light": [
+      {
+        "bright": 30,
+        "dim": 60
+      },
+      {
+        "dim": 5
+      }
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 228,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/444"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.lock",
+    "kind": "item",
+    "name": "Lock",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 1000,
+    "entries": [
+      "A Lock comes with a key. Without the key, a creature can use {@item Thieves' Tools|SRD52} to pick this Lock with a successful {@dc 15} Dexterity ({@skill Sleight of Hand|SRD52}) check."
+    ],
+    "catalogReferences": [
+      "item.thieves-tools",
+      "skill.sleight-of-hand"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 246,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/448"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.spider-s-sting",
+    "kind": "item",
+    "name": "Spider's Sting",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 20000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to Spider's Sting must succeed on a {@dc 13} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 1 hour. If the creature fails the save by 5 or more, the creature also has the {@condition Unconscious|SRD52} condition while {@condition Poisoned|SRD52} in this way. The creature wakes up if it takes damage or if another creature takes an action to shake it awake."
+    ],
+    "poisonTypes": [
+      "injury"
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "condition.unconscious",
+      "rulebook.page-198"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        198
+      ],
+      "candidatePage": 198,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/449"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.longship",
+    "kind": "item",
+    "name": "Longship",
+    "type": "SHP|SRD52",
+    "rarity": "none",
+    "value": 1000000,
+    "crew": 40,
+    "vehAc": 15,
+    "vehHp": 300,
+    "vehDmgThresh": 15,
+    "vehSpeed": 3,
+    "capPassenger": 150,
+    "capCargo": 10,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 101,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/451"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mace-of-disruption",
+    "kind": "item",
+    "name": "Mace of Disruption",
+    "baseItem": "mace|srd52",
+    "type": "M|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "weight": 4,
+    "weaponCategory": "simple",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "entries": [
+      "When you hit a Fiend or an Undead with this magic weapon, that creature takes an extra {@damage 2d6} Radiant damage. If the target has 25 {@variantrule Hit Points|SRD52} or fewer after taking this damage, it must succeed on a {@dc 15} Wisdom saving throw or be destroyed. On a successful save, the creature has the {@condition Frightened|SRD52} condition until the end of your next turn.",
+      {
+        "type": "entries",
+        "name": "Light",
+        "entries": [
+          "While you hold this weapon, it sheds {@variantrule Bright Light|SRD52} in a 20-foot radius and {@variantrule Dim Light|SRD52} for an additional 20 feet."
+        ]
+      }
+    ],
+    "light": [
+      {
+        "bright": 20,
+        "dim": 40
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.mace",
+      "condition.frightened",
+      "item-mastery.sap"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/453"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mace-of-smiting",
+    "kind": "item",
+    "name": "Mace of Smiting",
+    "baseItem": "mace|srd52",
+    "type": "M|SRD52",
+    "rarity": "rare",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. The bonus increases to +3 when you use the weapon to attack a Construct.",
+      "When you roll a 20 on an attack roll made with this weapon, the target takes an extra 7 Bludgeoning damage, or 14 Bludgeoning damage if it's a Construct. If a Construct has 25 {@variantrule Hit Points|SRD52} or fewer after taking this damage, it is destroyed."
+    ],
+    "catalogReferences": [
+      "baseitem.mace",
+      "item-mastery.sap"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/455"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mace-of-terror",
+    "kind": "item",
+    "name": "Mace of Terror",
+    "baseItem": "mace|srd52",
+    "type": "M|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "weight": 4,
+    "weaponCategory": "simple",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "entries": [
+      "This magic weapon has 3 charges and regains {@dice 1d3} expended charges daily at dawn. While holding the weapon, you can take a {@action Magic|SRD52} action and expend 1 charge to release a wave of terror from it. Each creature of your choice within 30 feet of you must succeed on a {@dc 15} Wisdom saving throw or have the {@condition Frightened|SRD52} condition for 1 minute. While {@condition Frightened|SRD52} in this way, a creature must spend its turns trying to move as far away from you as it can, and it can't make {@action Opportunity Attack|SRD52|Opportunity Attacks}. For its action, it can use only the {@action Dash|SRD52} action or try to escape from an effect that prevents it from moving. If it has nowhere it can move, the creature can take the {@action Dodge|SRD52} action. At the end of each of its turns, a creature repeats the save, ending the effect on itself on a success."
+    ],
+    "catalogReferences": [
+      "baseitem.mace",
+      "condition.frightened",
+      "item-mastery.sap"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/457"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.magnifying-glass",
+    "kind": "item",
+    "name": "Magnifying Glass",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 10000,
+    "entries": [
+      "A Magnifying Glass grants {@variantrule Advantage|SRD52} on any ability check made to appraise or inspect a highly detailed item. Lighting a fire with a Magnifying Glass requires light as bright as sunlight to focus, tinder to ignite, and about 5 minutes for the fire to ignite."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/459"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.malice",
+    "kind": "item",
+    "name": "Malice",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 25000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to Malice must succeed on a {@dc 15} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 1 hour. The creature also has the {@condition Blinded|SRD52} condition while {@condition Poisoned|SRD52} in this way."
+    ],
+    "poisonTypes": [
+      "inhaled"
+    ],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.poisoned"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 197,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/461"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.manacles",
+    "kind": "item",
+    "name": "Manacles",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 6,
+    "value": 200,
+    "entries": [
+      "As a {@action Utilize|SRD52} action, you can use Manacles to bind an unwilling Small or Medium creature within 5 feet of yourself that has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition if you succeed on a {@dc 13} Dexterity ({@skill Sleight of Hand|SRD52}) check. While bound, a creature has {@variantrule Disadvantage|SRD52} on attack rolls, and the creature is {@condition Restrained|SRD52} if the Manacles are attached to a chain or hook that is fixed in place. Escaping the Manacles requires a successful {@dc 20} Dexterity ({@skill Sleight of Hand|SRD52}) check as an action. Bursting them requires a successful {@dc 25} Strength ({@skill Athletics|SRD52}) check as an action.",
+      "Each set of Manacles comes with a key. Without the key, a creature can use {@item Thieves' Tools|SRD52} to pick the Manacles' lock with a successful {@dc 15} Dexterity ({@skill Sleight of Hand|SRD52}) check."
+    ],
+    "catalogReferences": [
+      "condition.grappled",
+      "condition.incapacitated",
+      "condition.restrained",
+      "item.thieves-tools",
+      "skill.athletics",
+      "skill.sleight-of-hand"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/463"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mantle-of-spell-resistance",
+    "kind": "item",
+    "name": "Mantle of Spell Resistance",
+    "rarity": "rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "entries": [
+      "You have {@variantrule Advantage|SRD52} on saving throws against spells while you wear this cloak."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/465"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.manual-of-bodily-health",
+    "kind": "item",
+    "name": "Manual of Bodily Health",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 5,
+    "ability": {
+      "con": 2
+    },
+    "entries": [
+      "This book contains health and diet tips, and its words are charged with magic. If you spend 48 hours over a period of 6 days or fewer studying the book's contents and practicing its guidelines, your Constitution increases by 2, to a maximum of 30. The manual then loses its magic, but regains it in a century."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/467"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.manual-of-clay-golems",
+    "kind": "item",
+    "name": "Manual of Clay Golems",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 5,
+    "entries": [
+      "This tome contains information and incantations necessary to make a {@creature clay golem|SRD52}. To decipher and use the manual, you must be a spellcaster with at least two 5th-level spell slots. A creature that can't use a {@i manual of golems} and attempts to read it takes {@damage 6d6} psychic damage.",
+      "To create a clay golem, you must spend 30 days, working without interruption with the manual at hand and resting no more than 8 hours per day. You must also pay 65,000 gp to purchase supplies.",
+      "Once you finish creating the golem, the book is consumed in eldritch flames. The golem becomes animate when the ashes of the manual are sprinkled on it. It is under your control, and it understands and obeys your spoken commands."
+    ],
+    "catalogReferences": [
+      "monster.clay-golem"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/469"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.manual-of-flesh-golems",
+    "kind": "item",
+    "name": "Manual of Flesh Golems",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 5,
+    "entries": [
+      "This tome contains information and incantations necessary to make a {@creature flesh golem|SRD52}. To decipher and use the manual, you must be a spellcaster with at least two 5th-level spell slots. A creature that can't use a {@i manual of golems} and attempts to read it takes {@damage 6d6} psychic damage.",
+      "To create a flesh golem, you must spend 60 days, working without interruption with the manual at hand and resting no more than 8 hours per day. You must also pay 50,000 gp to purchase supplies.",
+      "Once you finish creating the golem, the book is consumed in eldritch flames. The golem becomes animate when the ashes of the manual are sprinkled on it. It is under your control, and it understands and obeys your spoken commands."
+    ],
+    "catalogReferences": [
+      "monster.flesh-golem"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/471"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.manual-of-gainful-exercise",
+    "kind": "item",
+    "name": "Manual of Gainful Exercise",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 5,
+    "ability": {
+      "str": 2
+    },
+    "entries": [
+      "This book describes fitness exercises, and its words are charged with magic. If you spend 48 hours over a period of 6 days or fewer studying the book's contents and practicing its guidelines, your Strength increases by 2, to a maximum of 30. The manual then loses its magic, but regains it in a century."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/473"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.manual-of-iron-golems",
+    "kind": "item",
+    "name": "Manual of Iron Golems",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 5,
+    "entries": [
+      "This tome contains information and incantations necessary to make a {@creature iron golem|SRD52}. To decipher and use the manual, you must be a spellcaster with at least two 5th-level spell slots. A creature that can't use a {@i manual of golems} and attempts to read it takes {@damage 6d6} psychic damage.",
+      "To create an iron golem, you must spend 120 days, working without interruption with the manual at hand and resting no more than 8 hours per day. You must also pay 100,000 gp to purchase supplies.",
+      "Once you finish creating the golem, the book is consumed in eldritch flames. The golem becomes animate when the ashes of the manual are sprinkled on it. It is under your control, and it understands and obeys your spoken commands."
+    ],
+    "catalogReferences": [
+      "monster.iron-golem"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/475"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.manual-of-quickness-of-action",
+    "kind": "item",
+    "name": "Manual of Quickness of Action",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 5,
+    "ability": {
+      "dex": 2
+    },
+    "entries": [
+      "This book contains coordination and balance exercises, and its words are charged with magic. If you spend 48 hours over a period of 6 days or fewer studying the book's contents and practicing its guidelines, your Dexterity increases by 2, to a maximum of 30. The manual then loses its magic, but regains it in a century."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 230,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/477"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.manual-of-stone-golems",
+    "kind": "item",
+    "name": "Manual of Stone Golems",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 5,
+    "entries": [
+      "This tome contains information and incantations necessary to make a {@creature stone golem|SRD52}. To decipher and use the manual, you must be a spellcaster with at least two 5th-level spell slots. A creature that can't use a {@i manual of golems} and attempts to read it takes {@damage 6d6} psychic damage.",
+      "To create a stone golem, you must spend 90 days, working without interruption with the manual at hand and resting no more than 8 hours per day. You must also pay 80,000 gp to purchase supplies.",
+      "Once you finish creating the golem, the book is consumed in eldritch flames. The golem becomes animate when the ashes of the manual are sprinkled on it. It is under your control, and it understands and obeys your spoken commands."
+    ],
+    "catalogReferences": [
+      "monster.stone-golem"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/479"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.map",
+    "kind": "item",
+    "name": "Map",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 100,
+    "entries": [
+      "If you consult an accurate Map, you gain a +5 bonus to Wisdom ({@skill Survival|SRD52}) checks you make to find your way in the place represented on it."
+    ],
+    "catalogReferences": [
+      "skill.survival"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/480"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.map-or-scroll-case",
+    "kind": "item",
+    "name": "Map or Scroll Case",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 100,
+    "entries": [
+      "A {@item Map or Scroll Case|SRD52} holds up to 10 sheets of paper or 5 sheets of parchment."
+    ],
+    "containerCapacity": {
+      "item": [
+        {
+          "parchment|srd52": 5,
+          "paper|srd52": 10
+        }
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/482"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mastiff",
+    "kind": "item",
+    "name": "Mastiff",
+    "type": "MNT|SRD52",
+    "rarity": "none",
+    "value": 2500,
+    "carryingCapacity": 195,
+    "speed": 40,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 212,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/484"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.medallion-of-thoughts",
+    "kind": "item",
+    "name": "Medallion of Thoughts",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4}",
+    "charges": 5,
+    "entries": [
+      "The medallion has 5 charges. While wearing it, you can expend 1 charge to cast {@spell Detect Thoughts|SRD52} (save {@dc 13}) from it. The medallion regains {@dice 1d4} expended charges daily at dawn."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "detect thoughts|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.detect-thoughts"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 230,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/486"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.midnight-tears",
+    "kind": "item",
+    "name": "Midnight Tears",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 150000,
+    "poison": true,
+    "entries": [
+      "A creature that ingests Midnight Tears suffers no effect until the stroke of midnight. Any effect that ends the {@condition Poisoned|SRD52} condition neutralizes this poison. If the poison hasn't been neutralized before midnight, the creature makes a {@dc 17} Constitution saving throw, taking 31 ({@damage 9d6}) Poison damage on a failed save or half as much damage on a successful one."
+    ],
+    "poisonTypes": [
+      "ingested"
+    ],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 197,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/490"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.military-saddle",
+    "kind": "item",
+    "name": "Military Saddle",
+    "type": "TAH|SRD52",
+    "rarity": "none",
+    "weight": 30,
+    "value": 2000,
+    "entries": [
+      "A saddle comes with a bit, a bridle, reins, and any other equipment needed to use the saddle. A Military Saddle gives {@variantrule Advantage|SRD52} on any ability check you make to remain mounted."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 100,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/492"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mirror",
+    "kind": "item",
+    "name": "Mirror",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 0.5,
+    "value": 500,
+    "entries": [
+      "A handheld steel Mirror is useful for personal cosmetics but also for peeking around corners and reflecting light as a signal."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 230,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/494"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mirror-of-life-trapping",
+    "kind": "item",
+    "name": "Mirror of Life Trapping",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 50,
+    "entries": [
+      "When this 4-foot-tall, 2-foot-wide mirror is viewed indirectly, its surface shows faint images of creatures. The mirror weighs 50 pounds, and it has AC 11, HP 10, {@variantrule Immunity|SRD52} to Poison and Psychic damage, and {@variantrule Vulnerability|SRD52} to Bludgeoning damage. It shatters and is destroyed when reduced to 0 {@variantrule Hit Points|SRD52}.",
+      "If the mirror is hanging on a vertical surface and you are within 5 feet of it, you can take a {@action Magic|SRD52} action and use a command word to activate it. It remains activated until you take a {@action Magic|SRD52} action and repeat the command word to deactivate it.",
+      "Any creature other than you that sees its reflection in the activated mirror while within 30 feet of the mirror must succeed on a {@dc 15} Charisma saving throw or be trapped, along with anything it is wearing or carrying, in one of the mirror's twelve extradimensional cells. A creature that knows the mirror's nature makes the save with {@variantrule Advantage|SRD52}, and Constructs succeed on the save automatically.",
+      "An extradimensional cell is an infinite expanse filled with thick fog that reduces visibility to 10 feet. Creatures trapped in the mirror's cells don't age, and they don't need to eat, drink, or sleep. A creature trapped within a cell can escape using magic that permits planar travel. Otherwise, the creature is confined to the cell until freed.",
+      "If the mirror traps a creature but its twelve extradimensional cells are already occupied, the mirror frees one trapped creature at random to accommodate the new prisoner. A freed creature appears in an unoccupied space within sight of the mirror but facing away from it. If the mirror is shattered, all creatures it contains are freed and appear in unoccupied spaces near it.",
+      "While within 5 feet of the mirror, you can take a {@action Magic|SRD52} action to name one creature trapped in it or call out a particular cell by number. The creature named or contained in the named cell appears as an image on the mirror's surface. You and the creature can then communicate.",
+      "In a similar way, you can take a {@action Magic|SRD52} action and use a second command word to free one creature trapped in the mirror. The freed creature appears, along with its possessions, in the unoccupied space nearest to the mirror and facing away from it.",
+      "Placing the mirror inside an extradimensional space created by a {@item Bag of Holding|SRD52}, Portable Hole, or similar item instantly destroys both items and opens a gate to the Astral Plane. The gate originates where the one item was placed inside the other. Any creature within 10 feet of the gate and not behind {@variantrule Cover|SRD52|Total Cover} is sucked through it to a random location on the Astral Plane. The gate then closes. The gate is one-way only and can't be reopened."
+    ],
+    "catalogReferences": [
+      "item.bag-of-holding"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 230,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/496"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.mule",
+    "kind": "item",
+    "name": "Mule",
+    "type": "MNT|SRD52",
+    "rarity": "none",
+    "value": 800,
+    "carryingCapacity": 420,
+    "speed": 40,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 225,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/498"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.navigator-s-tools",
+    "kind": "item",
+    "name": "Navigator's Tools",
+    "type": "T|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 2500,
+    "entries": [
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "name": "Ability:",
+            "type": "item",
+            "entries": [
+              "Wisdom"
+            ]
+          },
+          {
+            "name": "Utilize:",
+            "type": "item",
+            "entries": [
+              "Plot a course ({@dc 10}), or determine position by stargazing ({@dc 15})"
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/500"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.necklace-of-adaptation",
+    "kind": "item",
+    "name": "Necklace of Adaptation",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "While wearing this necklace, you can breathe normally in any environment, and you have {@variantrule Advantage|SRD52} on saving throws made to avoid or end the {@condition Poisoned|SRD52} condition."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 232,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/502"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.necklace-of-fireballs",
+    "kind": "item",
+    "name": "Necklace of Fireballs",
+    "rarity": "rare",
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "This necklace has {@dice 1d6 + 3} beads hanging from it. You can take a {@action Magic|SRD52} action to detach a bead and throw it up to 60 feet away. When it reaches the end of its trajectory, the bead detonates as a level 3 {@spell Fireball|SRD52} (save {@dc 15}).",
+      "You can hurl multiple beads, or even the whole necklace, at one time. When you do so, increase the damage of the Fireball by {@damage 1d6} for each bead after the first (maximum {@dice 12d6})."
+    ],
+    "attachedSpells": {
+      "limited": {
+        "9": [
+          "fireball|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [
+      "spell.fireball"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 233,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/504"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.necklace-of-prayer-beads",
+    "kind": "item",
+    "name": "Necklace of Prayer Beads",
+    "rarity": "rare",
+    "reqAttune": "by a cleric, druid, or paladin",
+    "reqAttuneTags": [
+      {
+        "class": "cleric"
+      },
+      {
+        "class": "druid"
+      },
+      {
+        "class": "paladin"
+      }
+    ],
+    "wondrous": true,
+    "weight": 1,
+    "entries": [
+      "This necklace has {@dice 1d4 + 2} magic beads made from aquamarine, black pearl, or topaz. It also has many nonmagical beads made from stones such as amber, bloodstone, citrine, coral, jade, pearl, or quartz. If a magic bead is removed from the necklace, that bead loses its magic.",
+      "Six types of magic beads exist. The DM decides the type of each bead on the necklace or determines it randomly by rolling on the table below. A necklace can have more than one bead of the same type. To use one, you must be wearing the necklace. Each bead contains a spell that you can cast from it as a {@variantrule Bonus Action|SRD52} (using your spell save DC if a save is necessary). Once a magic bead's spell is cast, that bead can't be used again until the next dawn.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-5",
+          "col-5"
+        ],
+        "colLabels": [
+          "1d20",
+          "Bead",
+          "Spell"
+        ],
+        "rows": [
+          [
+            "1-6",
+            "Bead of Blessing",
+            "{@spell Bless|SRD52}"
+          ],
+          [
+            "7-12",
+            "Bead of Curing",
+            "{@spell Cure Wounds|SRD52} (level 2 version)"
+          ],
+          [
+            "13-16",
+            "Bead of Favor",
+            "{@spell Greater Restoration|SRD52}"
+          ],
+          [
+            "17-18",
+            "Bead of Smiting",
+            "{@spell Shining Smite|SRD52}"
+          ],
+          [
+            "19",
+            "Bead of Summons",
+            "{@spell Guardian of Faith|SRD52}"
+          ],
+          [
+            "20",
+            "Bead of Wind Walking",
+            "{@spell Wind Walk|SRD52}"
+          ]
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "other": [
+        "bless|srd52",
+        "cure wounds|srd52",
+        "greater restoration|srd52",
+        "guardian of faith|srd52",
+        "shining smite|srd52",
+        "wind walk|srd52"
+      ]
+    },
+    "catalogReferences": [
+      "spell.bless",
+      "spell.cure-wounds",
+      "spell.greater-restoration",
+      "spell.guardian-of-faith",
+      "spell.shining-smite",
+      "spell.wind-walk"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 233,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/506"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.net",
+    "kind": "item",
+    "name": "Net",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 3,
+    "value": 100,
+    "entries": [
+      "When you take the {@action Attack|SRD52} action, you can replace one of your attacks with throwing a Net. Target a creature you can see within 15 feet of yourself. The target must succeed on a Dexterity saving throw ({@dc 8} plus your Dexterity modifier and {@variantrule Proficiency|SRD52|Proficiency Bonus}) or have the {@condition Restrained|SRD52} condition until it escapes. The target succeeds automatically if it is Huge or larger.",
+      "To escape, the target or a creature within 5 feet of it must take an action to make a {@dc 10} Strength ({@skill Athletics|SRD52}) check, freeing the {@condition Restrained|SRD52} creature on a success. Destroying the Net (AC 10; 5 HP; {@variantrule Immunity|SRD52} to Bludgeoning, Poison, and Psychic damage) also frees the target, ending the effect."
+    ],
+    "catalogReferences": [
+      "condition.restrained",
+      "skill.athletics"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/507"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.marvelous-pigments",
+    "kind": "item",
+    "name": "Marvelous Pigments",
+    "rarity": "very rare",
+    "wondrous": true,
+    "entries": [
+      "This fine wooden box contains {@dice 1d4} pots of pigment and a brush (weighing 1 pound in total). Using the brush and expending 1 pot of pigment, you can paint any number of three-dimensional objects and terrain features (such as walls, doors, trees, flowers, weapons, webs, and pits), provided these elements are all confined to a 20-foot {@variantrule Cube [Area of Effect]|SRD52|Cube}. The effort takes 10 minutes (regardless of the number of elements you create), during which time you must remain in the {@variantrule Cube [Area of Effect]|SRD52|Cube}, and requires {@status Concentration|SRD52}. If your {@status Concentration|SRD52} is broken or you leave the {@variantrule Cube [Area of Effect]|SRD52|Cube} before the work is done, all the painted elements vanish, and the pot of pigment is wasted.",
+      "When the work is done, all the painted objects and terrain features become real. Thus, painting a door on a wall creates an actual door, which can be opened to whatever is beyond. Painting a pit creates a real pit, the entire depth of which must lie within the 20-foot {@variantrule Cube [Area of Effect]|SRD52|Cube}.",
+      "No object created by a pot of pigment can have a value greater than 25 GP, and the total value of all objects created by a pot of pigment can't exceed 500 GP. If you paint objects of greater value (such as a large pile of gold), they look authentic, but close inspection reveals they're made from paste, cookies, or some other worthless material.",
+      "If you paint a form of energy such as fire or lightning, the energy dissipates as soon as you complete the painting, doing no harm."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 230,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/509"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.oil",
+    "kind": "item",
+    "name": "Oil",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 10,
+    "entries": [
+      "You can douse a creature, object, or space with Oil or use it as fuel, as detailed below.",
+      {
+        "name": "Dousing a Creature or an Object",
+        "type": "entries",
+        "entries": [
+          "When you take the {@action Attack|SRD52} action, you can replace one of your attacks with throwing an Oil flask. Target one creature or object within 20 feet of yourself. The target must succeed on a Dexterity saving throw ({@dc 8} plus your Dexterity modifier and {@variantrule Proficiency|SRD52|Proficiency Bonus}) or be covered in oil. If the target takes Fire damage before the oil dries (after 1 minute), the target takes an extra 5 Fire damage from burning oil."
+        ]
+      },
+      {
+        "name": "Dousing a Space",
+        "type": "entries",
+        "entries": [
+          "You can take the {@action Utilize|SRD52} action to pour an Oil flask on level ground to cover a 5-foot-square area within 5 feet of yourself. If lit, the oil burns until the end of the turn 2 rounds from when the oil was lit (or 12 seconds) and deals 5 Fire damage to any creature that enters the area or ends its turn there. A creature can take this damage only once per turn."
+        ]
+      },
+      {
+        "name": "Fuel",
+        "type": "entries",
+        "entries": [
+          "Oil serves as fuel for Lamps and Lanterns. Once lit, a flask of Oil burns for 6 hours in a Lamp or Lantern. That duration doesn't need to be consecutive; you can extinguish the burning Oil (as a {@action Utilize|SRD52} action) and rekindle it again until it has burned for a total of 6 hours."
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/511"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.oil-of-etherealness",
+    "kind": "item",
+    "name": "Oil of Etherealness",
+    "type": "P|SRD52",
+    "rarity": "rare",
+    "weight": 0.5,
+    "entries": [
+      "One vial of this oil can cover one Medium or smaller creature, along with the equipment it's wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of the {@spell Etherealness|SRD52} spell for 1 hour.",
+      "Beads of this cloudy, gray oil form on the outside of its container and quickly evaporate."
+    ],
+    "attachedSpells": [
+      "etherealness|srd52"
+    ],
+    "catalogReferences": [
+      "spell.etherealness"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 233,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/514"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.oil-of-sharpness",
+    "kind": "item",
+    "name": "Oil of Sharpness",
+    "type": "P|SRD52",
+    "rarity": "very rare",
+    "weight": 0.5,
+    "bonusWeapon": "+3",
+    "entries": [
+      "One vial of this oil can coat one Melee weapon or twenty pieces of ammunition, but only ammunition and Melee weapons that are nonmagical and deal Slashing or Piercing damage are affected. Applying the oil takes 1 minute, after which the oil magically seeps into whatever it coats, turning the coated weapon into a +3 Weapon or the coated ammunition into +3 Ammunition.",
+      "This clear, gelatinous oil sparkles with tiny, ultrathin silver shards."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 233,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/516"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.oil-of-slipperiness",
+    "kind": "item",
+    "name": "Oil of Slipperiness",
+    "type": "P|SRD52",
+    "rarity": "uncommon",
+    "weight": 0.5,
+    "entries": [
+      "One vial of this oil can cover one Medium or smaller creature, along with the equipment it's wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of the {@spell Freedom of Movement|SRD52} spell for 8 hours.",
+      "Alternatively, the oil can be poured on the ground as a {@action Magic|SRD52} action, where it covers a 10-foot square, duplicating the effect of the {@spell Grease|SRD52} spell in that area for 8 hours.",
+      "This sticky, black unguent is thick and heavy, but it flows quickly when poured."
+    ],
+    "attachedSpells": [
+      "freedom of movement|srd52"
+    ],
+    "catalogReferences": [
+      "spell.freedom-of-movement",
+      "spell.grease"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 233,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/518"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.oil-of-taggit",
+    "kind": "item",
+    "name": "Oil of Taggit",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 40000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to Oil of Taggit must succeed on a {@dc 13} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 24 hours. The creature also has the {@condition Unconscious|SRD52} condition while {@condition Poisoned|SRD52} in this way. It wakes up if it takes damage."
+    ],
+    "poisonTypes": [
+      "contact"
+    ],
+    "catalogReferences": [
+      "condition.poisoned",
+      "condition.unconscious"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 198,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/520"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  }
+]

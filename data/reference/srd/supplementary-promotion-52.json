@@ -1,0 +1,1565 @@
+{
+  "edition": "srd-5.2.1",
+  "sourceCounts": {
+    "variantrule": 114,
+    "disease": 3,
+    "status": 3,
+    "trap": 8,
+    "hazard": 14,
+    "table": 3,
+    "action": 17,
+    "vehicle": 1
+  },
+  "nativeCounts": {
+    "glossary": 114,
+    "magical-contagion": 3,
+    "status": 3,
+    "trap": 8,
+    "hazard": 5,
+    "environmental-effect": 9,
+    "table": 3,
+    "equipment-option": 1,
+    "activity": 1,
+    "combat-option": 2,
+    "reaction-option": 1
+  },
+  "excluded": [
+    {
+      "path": "actions.json",
+      "pointer": "/action/2",
+      "name": "Attack",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/5",
+      "name": "Dash",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/7",
+      "name": "Disengage",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/9",
+      "name": "Dodge",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/18",
+      "name": "Help",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/20",
+      "name": "Hide",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/21",
+      "name": "Influence",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/22",
+      "name": "Magic",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/27",
+      "name": "Ready",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/29",
+      "name": "Search",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/32",
+      "name": "Study",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "actions.json",
+      "pointer": "/action/36",
+      "name": "Utilize",
+      "reason": "Already promoted in core actions."
+    },
+    {
+      "path": "vehicles.json",
+      "pointer": "/vehicle/1",
+      "name": "Apparatus of the Crab",
+      "reason": "Apparatus of the Crab is an existing magic-item identity; vehicle-specific projection needs separate reconciliation."
+    }
+  ],
+  "corrections": [
+    {
+      "id": "glossary.player-character",
+      "reason": "Remove non-publisher hyperlink and restore the printed Character Creation cross-reference on SRD 5.2.1 p.186."
+    },
+    {
+      "id": "equipment-option.don-or-doff-a-shield",
+      "reason": "Publisher p.92 explicitly specifies Utilize action."
+    }
+  ],
+  "pendingReferences": [
+    {
+      "id": "glossary.ability-check",
+      "reference": "variantrule|D20 Test|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.ability-score-and-modifier",
+      "reference": "variantrule|D20 Test|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Attack|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Dodge|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Dash|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Help|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Disengage|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Hide|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Influence|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Magic|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Ready|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Search|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Study|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.action",
+      "reference": "action|Utilize|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.advantage",
+      "reference": "variantrule|D20 Test|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.advantage",
+      "reference": "variantrule|Disadvantage|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.adventure",
+      "reference": "variantrule|Encounter|srd52|encounters",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.area-of-effect",
+      "reference": "variantrule|Cone [Area of Effect]|srd52|Cone",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.area-of-effect",
+      "reference": "variantrule|Cube [Area of Effect]|srd52|Cube",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.area-of-effect",
+      "reference": "variantrule|Cylinder [Area of Effect]|srd52|Cylinder",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.area-of-effect",
+      "reference": "variantrule|Emanation [Area of Effect]|srd52|Emanation",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.area-of-effect",
+      "reference": "variantrule|Line [Area of Effect]|srd52|Line",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.area-of-effect",
+      "reference": "variantrule|Sphere [Area of Effect]|srd52|Sphere",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.area-of-effect",
+      "reference": "variantrule|Cover|srd52|Total Cover",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.armor-training",
+      "reference": "variantrule|Disadvantage|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.armor-training",
+      "reference": "variantrule|D20 Test|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.armor-training",
+      "reference": "item|Shield|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.attack-roll",
+      "reference": "variantrule|D20 Test|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.attack-roll",
+      "reference": "variantrule|Unarmed Strike|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.attitude",
+      "reference": "variantrule|Monster|srd52|monster",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.attitude",
+      "reference": "variantrule|Player Character|srd52|player character",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.attitude",
+      "reference": "variantrule|Friendly [Attitude]|srd52|Friendly",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.attitude",
+      "reference": "variantrule|Hostile [Attitude]|srd52|Hostile",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.attitude",
+      "reference": "variantrule|Indifferent [Attitude]|srd52|Indifferent",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.breaking-objects",
+      "reference": "action|Attack|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.breaking-objects",
+      "reference": "action|Utilize|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.breaking-objects",
+      "reference": "variantrule|Immunity|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.breaking-objects",
+      "reference": "variantrule|Damage Types|srd52|damage types",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.breaking-objects",
+      "reference": "variantrule|Vulnerability|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.breaking-objects",
+      "reference": "variantrule|Damage Threshold|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.campaign",
+      "reference": "variantrule|Adventure|srd52|adventures",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.challenge-rating",
+      "reference": "variantrule|Monster|srd52|monster",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.challenge-rating",
+      "reference": "variantrule|Player Character|srd52|player characters",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.challenge-rating",
+      "reference": "variantrule|Monster|srd52|monster's",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.challenge-rating",
+      "reference": "variantrule|Encounter|srd52|encounters",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.climb-speed",
+      "reference": "variantrule|Speed|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.climbing",
+      "reference": "variantrule|Difficult Terrain|srd52|difficult terrain",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.climbing",
+      "reference": "variantrule|Climb Speed|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.climbing",
+      "reference": "skill|Athletics|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Blinded|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Charmed|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Deafened|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Exhaustion|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Frightened|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Grappled|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Incapacitated|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Invisible|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Paralyzed|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Petrified|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Poisoned|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Prone|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Restrained|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Stunned|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.condition",
+      "reference": "condition|Unconscious|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.cover",
+      "reference": "variantrule|Saving Throw|srd52|saving throws",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.crawling",
+      "reference": "variantrule|Difficult Terrain|srd52|difficult terrain",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.creature",
+      "reference": "variantrule|Player Character|srd52|a player's character",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.creature-type",
+      "reference": "variantrule|Player Character|srd52|player character",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.creature-type",
+      "reference": "variantrule|Player Character|srd52|player characters",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.curses",
+      "reference": "spell|Remove Curse|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.curses",
+      "reference": "spell|Greater Restoration|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.d20-test",
+      "reference": "variantrule|Ability Check|srd52|ability checks",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.d20-test",
+      "reference": "variantrule|Attack Roll|srd52|attack rolls",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.d20-test",
+      "reference": "variantrule|Saving Throw|srd52|saving throws",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.damage",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.damage-threshold",
+      "reference": "variantrule|Immunity|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.damage-threshold",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.darkness",
+      "reference": "variantrule|Heavily Obscured|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.dead",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.dead",
+      "reference": "spell|Raise Dead|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.dead",
+      "reference": "spell|Revivify|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.dead",
+      "reference": "variantrule|Condition|srd52|conditions",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.dead",
+      "reference": "condition|Exhaustion|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.dead",
+      "reference": "variantrule|Attunement|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.death-saving-throw",
+      "reference": "variantrule|Player Character|srd52|player character",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.death-saving-throw",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.difficulty-class",
+      "reference": "variantrule|Saving Throw|srd52|saving throw",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.dim-light",
+      "reference": "variantrule|Lightly Obscured|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.disadvantage",
+      "reference": "variantrule|D20 Test|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.disadvantage",
+      "reference": "variantrule|Advantage|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.expertise",
+      "reference": "variantrule|Proficiency|srd52|Proficiency Bonus",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.expertise",
+      "reference": "variantrule|skill|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.flying",
+      "reference": "condition|Incapacitated|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.flying",
+      "reference": "condition|Prone|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.flying",
+      "reference": "variantrule|Fly Speed|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.friendly-attitude",
+      "reference": "variantrule|Advantage|srd52|advantage",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.grappling",
+      "reference": "variantrule|Unarmed Strike|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.grappling",
+      "reference": "variantrule|Monster|srd52|monsters",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.grappling",
+      "reference": "condition|Grappled|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.grappling",
+      "reference": "skill|Athletics|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.grappling",
+      "reference": "skill|Acrobatics|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.grappling",
+      "reference": "variantrule|Condition|srd52|condition",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.grappling",
+      "reference": "condition|Incapacitated|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.healing",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.heavily-obscured",
+      "reference": "condition|Blinded|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.heroic-inspiration",
+      "reference": "variantrule|Player Character|srd52|a player character",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.heroic-inspiration",
+      "reference": "variantrule|Player Character|srd52|player character",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.hit-point-dice",
+      "reference": "variantrule|Player Character|srd52|player character's",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.hit-point-dice",
+      "reference": "variantrule|Monster|srd52|monsters",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.hit-point-dice",
+      "reference": "variantrule|Short Rest|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.hit-point-dice",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.hostile-attitude",
+      "reference": "variantrule|Disadvantage|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.hover",
+      "reference": "variantrule|Flying|srd52|flying",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.immunity",
+      "reference": "variantrule|Damage Types|srd52|damage type",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.immunity",
+      "reference": "variantrule|Condition|srd52|condition",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.improvised-weapons",
+      "reference": "variantrule|Proficiency|srd52|Proficiency Bonus",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.improvised-weapons",
+      "reference": "item|Club|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.indifferent-attitude",
+      "reference": "variantrule|Monster|srd52|monster",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.initiative",
+      "reference": "variantrule|Advantage|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.initiative",
+      "reference": "variantrule|Disadvantage|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.jumping",
+      "reference": "variantrule|Long Jump|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.jumping",
+      "reference": "variantrule|High Jump|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.knocking-out-a-creature",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.knocking-out-a-creature",
+      "reference": "condition|Unconscious|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.knocking-out-a-creature",
+      "reference": "variantrule|Short Rest|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.knocking-out-a-creature",
+      "reference": "skill|Medicine|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.lightly-obscured",
+      "reference": "variantrule|Disadvantage|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.lightly-obscured",
+      "reference": "skill|Perception|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.long-jump",
+      "reference": "variantrule|Difficult Terrain|srd52|difficult terrain",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.long-jump",
+      "reference": "skill|Acrobatics|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.long-jump",
+      "reference": "condition|Prone|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.long-jump",
+      "reference": "skill|Athletics|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.long-rest",
+      "reference": "condition|Unconscious|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.long-rest",
+      "reference": "variantrule|Hit Points|srd52|Hit Point",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.long-rest",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.long-rest",
+      "reference": "variantrule|Hit Point Dice|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.long-rest",
+      "reference": "condition|Exhaustion|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.long-rest",
+      "reference": "variantrule|Initiative|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.long-rest",
+      "reference": "variantrule|Short Rest|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.nonplayer-character",
+      "reference": "variantrule|Monster|srd52|monster",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.passive-perception",
+      "reference": "skill|Perception|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.passive-perception",
+      "reference": "variantrule|Advantage|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.passive-perception",
+      "reference": "variantrule|Disadvantage|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.per-day",
+      "reference": "variantrule|Long Rest|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.possession",
+      "reference": "spell|Protection from Evil and Good|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.possession",
+      "reference": "spell|Dispel Evil and Good|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.proficiency",
+      "reference": "variantrule|D20 Test|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.proficiency",
+      "reference": "variantrule|Saving Throw|srd52|saving throw",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.reaction",
+      "reference": "variantrule|Bonus Action|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.reaction",
+      "reference": "action|Opportunity Attack|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.resistance",
+      "reference": "variantrule|Damage Types|srd52|damage type",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.save",
+      "reference": "variantrule|Saving Throw|srd52|saving throw",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.shape-shifting",
+      "reference": "spell|Polymorph|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.shape-shifting",
+      "reference": "variantrule|Condition|srd52|conditions",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.short-rest",
+      "reference": "variantrule|Hit Points|srd52|Hit Point",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.short-rest",
+      "reference": "variantrule|Hit Point Dice|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.short-rest",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.short-rest",
+      "reference": "variantrule|Hit Point Dice|srd52|Hit Point Die",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.short-rest",
+      "reference": "variantrule|Initiative|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.simultaneous-effects",
+      "reference": "variantrule|Player Character|srd52|player character's",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.size",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.skill",
+      "reference": "variantrule|Proficiency|srd52|Proficiency Bonus",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.speed",
+      "reference": "variantrule|Burrow Speed|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.speed",
+      "reference": "variantrule|Climb Speed|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.speed",
+      "reference": "variantrule|Fly Speed|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.speed",
+      "reference": "variantrule|Swim Speed|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.spell",
+      "reference": "variantrule|Magical Effect|srd52|magical effect",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.spell-attack",
+      "reference": "variantrule|Magical Effect|srd52|magical effect",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stable",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stable",
+      "reference": "variantrule|Death Saving Throw|srd52|Death Saving Throws",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "variantrule|Monster|srd52|monster",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "variantrule|Monster|srd52|monster's",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "variantrule|Armor Class|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "variantrule|Initiative|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "variantrule|Hit Point Dice|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "variantrule|Saving Throw|srd52|saving throw",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "variantrule|Condition|srd52|condition",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "sense|Darkvision|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "skill|Perception|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "variantrule|Proficiency|srd52|Proficiency Bonus",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "variantrule|Bonus Action|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.stat-block",
+      "reference": "variantrule|Reaction|srd52|Reactions",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.swimming",
+      "reference": "variantrule|Difficult Terrain|srd52|difficult terrain",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.swimming",
+      "reference": "variantrule|Swim Speed|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.swimming",
+      "reference": "skill|Athletics|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.target",
+      "reference": "variantrule|Saving Throw|srd52|saving throw",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.telepathy",
+      "reference": "condition|Incapacitated|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.teleportation",
+      "reference": "action|Opportunity Attack|srd52|Opportunity Attacks",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.temporary-hit-points",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.unarmed-strike",
+      "reference": "variantrule|Proficiency|srd52|Proficiency Bonus",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.unarmed-strike",
+      "reference": "variantrule|Saving Throw|srd52|saving throw",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.unarmed-strike",
+      "reference": "condition|Grappled|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.unarmed-strike",
+      "reference": "condition|Prone|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "glossary.vulnerability",
+      "reference": "variantrule|Damage Types|srd52|damage type",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "magical-contagion.cackle-fever",
+      "reference": "condition|Exhaustion|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "magical-contagion.cackle-fever",
+      "reference": "condition|Incapacitated|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "magical-contagion.cackle-fever",
+      "reference": "variantrule|Emanation [Area of Effect]|SRD52|Emanation",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "magical-contagion.sewer-plague",
+      "reference": "condition|Exhaustion|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "magical-contagion.sight-rot",
+      "reference": "condition|Blinded|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "magical-contagion.sight-rot",
+      "reference": "spell|Heal|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "magical-contagion.sight-rot",
+      "reference": "spell|Lesser Restoration|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "magical-contagion.sight-rot",
+      "reference": "item|Herbalism Kit|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.bloodied",
+      "reference": "variantrule|Hit Points|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.concentration",
+      "reference": "variantrule|Saving Throw|srd52|saving throw",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.concentration",
+      "reference": "condition|Incapacitated|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.surprised",
+      "reference": "variantrule|Disadvantage|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "status.surprised",
+      "reference": "variantrule|Initiative|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.collapsing-roof",
+      "reference": "variantrule|Difficult Terrain|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.collapsing-roof",
+      "reference": "action|Search|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.collapsing-roof",
+      "reference": "skill|Perception|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.falling-net",
+      "reference": "item|Net|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.falling-net",
+      "reference": "condition|Restrained|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.falling-net",
+      "reference": "skill|Athletics|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.falling-net",
+      "reference": "action|Search|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.falling-net",
+      "reference": "skill|Perception|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.falling-net",
+      "reference": "item|Net|SRD52|Net's",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.falling-net",
+      "reference": "item|Thieves' Tools|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.falling-net",
+      "reference": "skill|Sleight of Hand|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.fire-casting-statue",
+      "reference": "variantrule|Cone [Area of Effect]|SRD52|Cone",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.fire-casting-statue",
+      "reference": "spell|Detect Magic|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.fire-casting-statue",
+      "reference": "action|Search|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.fire-casting-statue",
+      "reference": "skill|Perception|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.fire-casting-statue",
+      "reference": "action|Study|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.fire-casting-statue",
+      "reference": "skill|Arcana|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.fire-casting-statue",
+      "reference": "item|Iron Spikes|SRD52|Iron Spike",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.hidden-pit",
+      "reference": "action|Study|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.hidden-pit",
+      "reference": "skill|Investigation|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.hidden-pit",
+      "reference": "spell|Arcane Lock|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.hidden-pit",
+      "reference": "spell|Spider Climb|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poisoned-darts",
+      "reference": "action|Search|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poisoned-darts",
+      "reference": "skill|Perception|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poisoned-darts",
+      "reference": "item|Iron Spikes|SRD52|Iron Spike",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poisoned-needle",
+      "reference": "condition|Poisoned|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poisoned-needle",
+      "reference": "spell|Knock|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poisoned-needle",
+      "reference": "action|Search|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poisoned-needle",
+      "reference": "skill|Perception|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.poisoned-needle",
+      "reference": "skill|Sleight of Hand|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.rolling-stone",
+      "reference": "variantrule|Difficult Terrain|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.rolling-stone",
+      "reference": "condition|Prone|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.rolling-stone",
+      "reference": "action|Study|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.rolling-stone",
+      "reference": "skill|Investigation|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.rolling-stone",
+      "reference": "variantrule|Damage Threshold|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.rolling-stone",
+      "reference": "variantrule|Immunity|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.rolling-stone",
+      "reference": "skill|Athletics|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.spiked-pit",
+      "reference": "action|Study|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.spiked-pit",
+      "reference": "skill|Investigation|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.spiked-pit",
+      "reference": "spell|Arcane Lock|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "trap.spiked-pit",
+      "reference": "spell|Spider Climb|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "hazard.burning",
+      "reference": "condition|Prone|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.deep-water",
+      "reference": "condition|Exhaustion|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "hazard.dehydration",
+      "reference": "condition|Exhaustion|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.extreme-cold",
+      "reference": "condition|Exhaustion|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.extreme-cold",
+      "reference": "variantrule|Resistance|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.extreme-cold",
+      "reference": "variantrule|Immunity|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.extreme-heat",
+      "reference": "condition|Exhaustion|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.extreme-heat",
+      "reference": "variantrule|Disadvantage|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.extreme-heat",
+      "reference": "variantrule|Resistance|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.extreme-heat",
+      "reference": "variantrule|Immunity|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "hazard.falling",
+      "reference": "condition|Prone|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "hazard.falling",
+      "reference": "variantrule|Reaction|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "hazard.falling",
+      "reference": "skill|Athletics|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "hazard.falling",
+      "reference": "skill|Acrobatics|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.frigid-water",
+      "reference": "condition|Exhaustion|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.frigid-water",
+      "reference": "variantrule|Resistance|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.frigid-water",
+      "reference": "variantrule|Immunity|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.heavy-precipitation",
+      "reference": "variantrule|Lightly Obscured|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.heavy-precipitation",
+      "reference": "variantrule|Disadvantage|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.heavy-precipitation",
+      "reference": "skill|Perception|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "hazard.malnutrition",
+      "reference": "variantrule|Saving Throw|srd52|saving throw",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "hazard.malnutrition",
+      "reference": "condition|Exhaustion|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.slippery-ice",
+      "reference": "variantrule|Difficult Terrain|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.slippery-ice",
+      "reference": "condition|Prone|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.strong-wind",
+      "reference": "variantrule|Disadvantage|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "environmental-effect.strong-wind",
+      "reference": "skill|Perception|SRD52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "hazard.suffocation",
+      "reference": "condition|Exhaustion|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "equipment-option.don-or-doff-a-shield",
+      "reference": "item|Shield|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "equipment-option.don-or-doff-a-shield",
+      "reference": "action|Utilize|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.escape-a-grapple",
+      "reference": "skill|Athletics|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.escape-a-grapple",
+      "reference": "skill|Acrobatics|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.escape-a-grapple",
+      "reference": "variantrule|Condition|srd52|condition",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.escape-a-grapple",
+      "reference": "condition|Incapacitated|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "reaction-option.opportunity-attack",
+      "reference": "variantrule|Bonus Action|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "reaction-option.opportunity-attack",
+      "reference": "variantrule|Reaction|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "reaction-option.opportunity-attack",
+      "reference": "variantrule|Unarmed Strike|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.two-weapon-fighting",
+      "reference": "action|Attack|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.two-weapon-fighting",
+      "reference": "variantrule|Bonus Action|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.two-weapon-fighting",
+      "reference": "item|Shortsword|srd52",
+      "reason": "semantic reference reconciliation pending"
+    },
+    {
+      "id": "combat-option.two-weapon-fighting",
+      "reference": "item|Dagger|srd52",
+      "reason": "semantic reference reconciliation pending"
+    }
+  ],
+  "locatorLimitations": [],
+  "nativeCount": 150
+}

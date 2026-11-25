@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Hosting;
+using System.Net;
 using RulesCore.Content;
 
 namespace RulesCore.Host;
@@ -19,7 +20,11 @@ public static class RulesCoreApplication
         builder.Services.Configure<HostOptions>(options =>
             options.ShutdownTimeout = TimeSpan.FromSeconds(15));
         builder.Services.AddSingleton(settings);
-        builder.Services.AddSingleton<NativeCatalogStore>();
+        builder.Services.AddSingleton(new NativeCatalogStore(settings.Ruleset.RulesetId));
+        builder.Services.AddSingleton(services => new NativeCatalogRegistry(
+            settings.Ruleset.RulesetId,
+            services.GetRequiredService<NativeCatalogStore>(),
+            settings.AdditionalRulesets.Select(location => location.RulesetId)));
         builder.Services.AddSingleton(new NativePublicDistributionPolicy(builder.Configuration));
         builder.Services.AddSingleton<INativeCatalogReadiness>(services =>
             services.GetRequiredService<NativeCatalogStore>());
@@ -64,16 +69,38 @@ public static class RulesCoreApplication
                 : Results.Json(new { status = "not_ready", reason = state.Reason }, statusCode: 503);
         });
 
+        // Deployment can require every configured package without revealing
+        // individual unpublished package IDs or failure details on public ingress.
+        app.MapGet("/ready/all", (NativeCatalogRegistry registry) =>
+            registry.RulesetIds.All(id => registry.GetStore(id).Current().IsReady)
+                ? Results.Ok(new { status = "ready" })
+                : Results.Json(new { status = "not_ready" }, statusCode: 503));
+        // Detailed operational readiness is local to the actual host connection.
+        // Do not use X-Forwarded-For, request Host, or an unverified header as identity.
+        app.MapGet("/ready/rulesets/{rulesetId}", (HttpContext context, string rulesetId,
+            NativeCatalogRegistry registry) =>
+        {
+            if (context.Connection.RemoteIpAddress is not { } address || !IPAddress.IsLoopback(address))
+                return Results.NotFound();
+            if (!registry.TryGetStore(rulesetId, out var store)) return Results.NotFound();
+            var snapshot = store!.Snapshot;
+            return snapshot is not null
+                ? Results.Ok(new { rulesetId, status = "ready", fingerprint = snapshot.Fingerprint })
+                : Results.Json(new { rulesetId, status = "not_ready" }, statusCode: 503);
+        });
+
         if (settings.Surface == ApiSurfaceMode.PrivateOnly)
         {
             app.MapNativePrivateReferences();
             app.MapAuthenticatedNativeMechanics(privateTunnel: true);
+            app.MapRulesetResolution(privateTunnel: true);
         }
         else
         {
             app.MapNativePublicReferences();
             app.MapNativeAuthenticatedReferences();
             app.MapAuthenticatedNativeMechanics(privateTunnel: false);
+            app.MapRulesetResolution(privateTunnel: false);
         }
         // Unrecognized API paths never resolve to the UI or a legacy endpoint.
         app.Map("/api/{**unmatched}", () => Results.NotFound(new { error = "api_not_found" }));

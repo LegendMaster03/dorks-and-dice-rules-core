@@ -1,0 +1,47 @@
+{
+  "edition": "srd-5.1",
+  "templateCount": 18,
+  "counts": {
+    "Adamantine Armor": 8,
+    "Arrow of Slaying": 4,
+    "Berserker Axe": 3,
+    "Dancing Sword": 5,
+    "Defender": 5,
+    "Dragon Slayer": 5,
+    "Flame Tongue": 5,
+    "Frost Brand": 5,
+    "Giant Slayer": 8,
+    "Holy Avenger": 5,
+    "Luck Blade": 5,
+    "Mithral Armor": 8,
+    "Nine Lives Stealer": 5,
+    "Sword of Life Stealing": 5,
+    "Sword of Sharpness": 3,
+    "Sword of Wounding": 5,
+    "Vicious Weapon": 36,
+    "Vorpal Sword": 3
+  },
+  "excludedBases": [
+    {
+      "templateId": "magic-variant.arrow-of-slaying",
+      "baseItemId": "baseitem.arrows-20",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.arrow-of-slaying",
+      "baseItemId": "baseitem.blowgun-needles-50",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.arrow-of-slaying",
+      "baseItemId": "baseitem.crossbow-bolts-20",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.arrow-of-slaying",
+      "baseItemId": "baseitem.sling-bullets-20",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    }
+  ],
+  "nativeCount": 123
+}
