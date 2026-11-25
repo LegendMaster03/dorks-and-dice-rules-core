@@ -251,6 +251,43 @@
         206,
         207
       ]
+    },
+    {
+      "id": "rule.ability-scores-and-modifiers",
+      "pointer": "/data/6/entries/4",
+      "pages": [
+        76
+      ]
+    },
+    {
+      "id": "rule.time",
+      "pointer": "/data/7/entries/0",
+      "pages": [
+        84
+      ]
+    },
+    {
+      "id": "rule.movement",
+      "pointer": "/data/7/entries/1",
+      "pages": [
+        84,
+        85
+      ]
+    },
+    {
+      "id": "rule.between-adventures",
+      "pointer": "/data/7/entries/4",
+      "pages": [
+        88,
+        89
+      ]
+    },
+    {
+      "id": "rule.what-is-a-spell",
+      "pointer": "/data/9/entries/2",
+      "pages": [
+        100
+      ]
     }
   ],
   "corrections": [
@@ -299,9 +336,21 @@
     {
       "id": "rule.activating-an-item",
       "reason": "Restore publisher pp.206–207 activation, consumable, command-word, spell-level and charge wording; retain the published Use an Item label with the local Use an Object action reference."
+    },
+    {
+      "id": "rule.movement",
+      "reason": "Restore published forced-march navigation and high-jump formula without later minimum-0 errata; remove absent commercial navigation (pp.84–85)."
+    },
+    {
+      "id": "rule.between-adventures",
+      "reason": "Correct source punctuation and GM terminology to publisher pp.88–89."
+    },
+    {
+      "id": "rule.what-is-a-spell",
+      "reason": "Restore Wish example, bard/sorcerer examples, Warlock spell-slot exception and appendix label on p.100."
     }
   ],
-  "nativeCount": 34,
+  "nativeCount": 39,
   "tableInventory": {
     "total": 30,
     "counts": {

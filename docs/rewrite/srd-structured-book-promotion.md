@@ -47,3 +47,7 @@ Six SRD 5.2.1 rules reuse the pinned book nodes and publisher pp.102–103, 204�
 ## Legacy sentient-item procedures
 
 The pinned legacy book does not include the publisher's sentient magic item procedure. Recover the section from official pp.251–252, retaining all four existing legacy table references rather than copying their rows. The conflict starts with contested Charisma checks, not the modern DC-based saving throw. Attempted control uses a separate saving throw of DC 12 plus the item's Charisma modifier, 1d12-hour duration, a repeat save on damage and next-dawn reuse. The extractor checks heading boundaries, four demands, three possible responses and the complete cross-column control paragraph. This remains descriptive content.
+
+## Legacy ability scores, travel, downtime and spell fundamentals
+
+Five additional SRD 5.1 book rules reuse structured nodes and publisher pp.76, 84–85, 88–89 and 100. Ability Scores and Modifiers and Movement link existing tables. Movement retains the published forced-march DC, jumping and difficult-terrain rules, without later high-jump errata or absent navigation. Between Adventures retains the 5 gp/day crafting progress and 250-day training procedure. What Is a Spell? restores the published Wish example, bard/sorcerer examples and warlock exception to the usual spell-slot table description. Source examples mentioning non-SRD features do not create feature definitions. These remain descriptive projections, not new execution policies.

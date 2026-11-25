@@ -490,6 +490,18 @@ public sealed class RulesetResolutionApiTests
         Assert.Contains("table.sentient-item-s-communication", modernSentientRule.GetProperty("catalogReferences").GetRawText());
         Assert.Contains("1d12", modernSentientRule.GetProperty("entries").GetRawText());
 
+        // Legacy travel and downtime must retain their own published procedures.
+        var legacyTravelRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.movement")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("table.travel-pace", legacyTravelRule.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("10 + 1 for each hour past 8 hours", legacyTravelRule.GetProperty("entries").GetRawText());
+        Assert.DoesNotContain("minimum of 0 feet", legacyTravelRule.GetProperty("entries").GetRawText());
+        var legacyDowntimeRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.between-adventures")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("250 days", legacyDowntimeRule.GetProperty("entries").GetRawText());
+        Assert.Contains("5 gp", legacyDowntimeRule.GetProperty("entries").GetRawText());
+        var legacySpellBasics = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.what-is-a-spell")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("except that of the warlock", legacySpellBasics.GetProperty("entries").GetRawText());
+        Assert.Contains("spell.wish", legacySpellBasics.GetProperty("catalogReferences").GetRawText());
+
         // Edition-specific magic item procedures and canonical crafting tables.
         var legacyMagicAttunement = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.attunement")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("a creature must be a member of that class", legacyMagicAttunement.GetProperty("entries")[0].GetString());

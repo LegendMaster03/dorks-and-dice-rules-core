@@ -419,6 +419,32 @@ function modernMagicItemEntries(name,entries){
  return entries;
 }
 
+function legacyGameplayEntries(name,entries){
+ const find=(arr,name)=>{for(const n of arr){if(n&&typeof n==="object"){if(n.name===name)return n;if(n.entries){const v=find(n.entries,name);if(v)return v;}}}};
+ const replace=(s,a,b)=>{if(!s.includes(a))throw Error("Changed source: "+a);return s.replace(a,b);};
+ if(name==="Movement"){
+  entries[0]=replace(entries[0],"mountain slope all sorts","mountain slope—all sorts");
+  const travel=find(entries,"Travel Pace");
+  travel.entries[0]=replace(travel.entries[0],' (see the "Activity While Traveling" section later in this chapter for more information)',"");
+  travel.entries[2]=replace(travel.entries[2],"(see the appendix)","(see appendix PH-A)");
+  const mounts=find(entries,"Mounts and Vehicles");
+  mounts.entries[2]=replace(mounts.entries[2]," The GM's Guide contains more information on special methods of travel.","");
+  const jump=find(entries,"High Jump");
+  jump.entries[0]=replace(jump.entries[0]," (minimum of 0 feet)","");
+ }
+ if(name==="Between Adventures"){
+  const lifestyle=find(entries,"Lifestyle Expenses");lifestyle.entries[0]=replace(lifestyle.entries[0],"lifestyle,.","lifestyle.");
+  const training=find(entries,"Training");training.entries[0]=replace(training.entries[0],"Your DM","Your GM");
+ }
+ if(name==="What Is a Spell?"){
+  entries[1]=replace(entries[1],"(see appendix A)","(see appendix PH-A)");
+  const level=find(entries,"Spell Level");level.entries[0]=replace(level.entries[0],"incredible time stop","earth-shaking wish");
+  const prepared=find(entries,"Known and Prepared Spells");prepared.entries[0]=replace(prepared.entries[0],"Members of a few classes have","Members of a few classes, including bards and sorcerers, have");prepared.entries[0]=replace(prepared.entries[0],"magic using monsters","magic-using monsters");
+  const slots=find(entries,"Spell Slots");slots.entries[0]=replace(slots.entries[0],"each spellcasting class's description includes","each spellcasting class's description (except that of the warlock) includes");
+ }
+ return entries;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -576,7 +602,12 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Underwater Combat","/data/8/entries/7",[99],[]],
   ["Attunement","/data/12/entries/1",[206],["rule.resting","item.ring-of-protection"]],
   ["Wearing and Wielding Items","/data/12/entries/2",[206],[]],
-  ["Activating an Item","/data/12/entries/3",[206,207],["action.use-an-object","spell.silence","spell.identify","status.concentration","rule.attunement"]]
+  ["Activating an Item","/data/12/entries/3",[206,207],["action.use-an-object","spell.silence","spell.identify","status.concentration","rule.attunement"]],
+  ["Ability Scores and Modifiers","/data/6/entries/4",[76],[]],
+  ["Time","/data/7/entries/0",[84],[]],
+  ["Movement","/data/7/entries/1",[84,85],["condition.exhaustion","condition.prone","skill.perception","skill.athletics","skill.acrobatics","rule.saving-throws"]],
+  ["Between Adventures","/data/7/entries/4",[88,89],["table.lifestyle-expenses","skill.performance","skill.investigation","skill.persuasion","baseitem.plate-armor"]],
+  ["What Is a Spell?","/data/9/entries/2",[100],["spell.magic-missile","spell.wish","spell.cure-wounds","class.bard","class.sorcerer","class.cleric","class.druid","class.wizard","class.warlock","class.monk","monster.pit-fiend","rule.resting"]]
  ]:[
   ["Travel Pace","/data/10/entries/0",[192],["table.travel-pace","condition.exhaustion","spell.wind-walk","item-group.carpet-of-flying","glossary.difficult-terrain"]],
   ["Creating a Background","/data/10/entries/1",[192,193],[]],
@@ -598,6 +629,9 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Sentient Magic Items","/data/11/entries/9",[207,208],["condition.charmed","rule.the-next-dawn","rule.attunement"]]
  ];
  const extraCorrections={
+  "Movement":"Restore published forced-march navigation and high-jump formula without later minimum-0 errata; remove absent commercial navigation (pp.84–85).",
+  "Between Adventures":"Correct source punctuation and GM terminology to publisher pp.88–89.",
+  "What Is a Spell?":"Restore Wish example, bard/sorcerer examples, Warlock spell-slot exception and appendix label on p.100.",
   "Attunement":"Restore explicit class membership prerequisite from p.206 and the publisher's spellcasting-class monster exception.",
   "Wearing and Wielding Items":"Restore published size/anatomy and paired-item wording on p.206.",
   "Activating an Item":"Restore publisher pp.206–207 activation, consumable, command-word, spell-level and charge wording; retain the published Use an Item label with the local Use an Object action reference.",
@@ -624,7 +658,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
    return x;
   };
   let content=project(node.entries);
-  if(tag==="51")content=legacyMagicItemEntries(name,content);
+  if(tag==="51")content=legacyGameplayEntries(name,legacyMagicItemEntries(name,content));
   else content=modernMagicItemEntries(name,content);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");
