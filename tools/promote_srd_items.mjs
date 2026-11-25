@@ -6,7 +6,7 @@ import {fileURLToPath} from "node:url";
 const slug = name => name.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const kinds = {item:"item",baseitem:"baseitem",itemGroup:"item-group",magicvariant:"magic-variant",itemProperty:"item-property",itemMastery:"item-mastery"};
 const excluded = new Set(["name","source","page","reprintedAs","classFeatures","miscTags","hasRefs","alias","tier","group","seeAlsoDeck","seeAlsoVehicle","additionalEntries"]);
-function generate(files, sourceManifest, packageManifest, tag, officialUrl) {
+function generate(files, sourceManifest, packageManifest, tag, officialUrl, externalIds) {
     const records=[], report={edition:packageManifest.officialPageImport.release, counts:{}, excluded:[], corrections:[], publisherOnly:[]};
     const source="SRD"+tag;
     const reference = (page)=>"rulebook.page-"+String(page).padStart(3,"0");
@@ -26,6 +26,10 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl) {
                 const pointer={path:file,pointer:"/"+kind+"/"+index};
                 if(!kinds[kind]){
                     report.excluded.push({...pointer,reason:"schema metadata or reusable entry template; not a standalone native rule"});
+                    continue;
+                }
+                if(kind==="itemProperty"&&["AF","BF","RLD"].includes(candidate.abbreviation)){
+                    report.excluded.push({...pointer,reason:"legacy firearm metadata, not a distinct official SRD weapon property"});
                     continue;
                 }
                 if(tag==="52"&&kind==="baseitem"&&["Musket","Pistol"].includes(candidate.name)&&candidate.edition==="classic"){
@@ -79,6 +83,57 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl) {
         report.publisherOnly.push(id);
     }
     if(new Set(records.map(r=>r.id)).size!==records.length)throw Error("Duplicate item identity");
+    const known = new Set([...records.map(r=>r.id),...externalIds]);
+    const itemIds=new Map();
+    for(const row of records.filter(r=>["item","baseitem","magic-variant","item-group"].includes(r.kind))){
+        const key=slug(row.name);
+        const candidates=itemIds.get(key)??[];
+        candidates.push(row.id);itemIds.set(key,candidates);
+    }
+    report.unresolvedReferences=[];
+    report.resolvedReferenceCount=0;
+    const leaves=value=>typeof value==="string"?[value]:Array.isArray(value)?value.flatMap(leaves):value&&typeof value==="object"?Object.values(value).flatMap(leaves):[];
+    for(const row of records){
+        const refs=new Set(row.catalogReferences);
+        const unresolved=new Set();
+        const resolve=(kind,raw)=>{
+            if(typeof raw!=="string")return;
+            const [name,edition]=raw.split("|"), key=slug(name.split("#")[0]);
+            const editionTag=edition?.split("#")[0];
+            let targets=kind==="item"?(itemIds.get(key)??[]):[(kind==="creature"?"monster":kind)+"."+key];
+            targets=targets.filter(id=>known.has(id));
+            // Prefer a concrete equipment record to a group or generic template;
+            // do not pick arbitrarily when two concrete records share a name.
+            if(kind==="item"&&targets.length>1){
+                const concrete=targets.filter(id=>id.startsWith("item.")||id.startsWith("baseitem."));
+                if(concrete.length===1)targets=concrete;
+            }
+            if((!editionTag||editionTag.toUpperCase()===source)&&targets.length===1){
+                if(targets[0]!==row.id)refs.add(targets[0]);
+            }else{
+                const identity=kind+"|"+raw;
+                if(!unresolved.has(identity)){
+                    unresolved.add(identity);
+                    report.unresolvedReferences.push({id:row.id,kind,raw,reason:editionTag&&editionTag.toUpperCase()!==source?"foreign-source":"missing-or-ambiguous"});
+                }
+            }
+        };
+        const {source:provenance,catalogReferences,...payload}=row;
+        for(const match of JSON.stringify(payload).matchAll(/\{@(spell|creature|condition|skill|item|feat) ([^}]+)\}/g)){
+            const parts=match[2].split("|");
+            resolve(match[1],parts.slice(0,2).join("|"));
+        }
+        for(const node of [row,row.inherits??{}]){
+            for(const value of leaves(node.attachedSpells))resolve("spell",value);
+            for(const key of ["baseItem","ammoType"])if(node[key])resolve("item",node[key]);
+            for(const value of node.items??[])if(typeof value==="string")resolve("item",value);
+            for(const value of node.packContents??[])if(typeof value==="string"||value?.item)resolve("item",typeof value==="string"?value:value.item);
+            for(const value of node.property??[])resolve("item-property",value);
+            for(const value of node.mastery??[])resolve("item-mastery",value);
+        }
+        row.catalogReferences=[...refs].sort();
+        report.resolvedReferenceCount+=row.catalogReferences.length;
+    }
     report.nativeCount=records.length;
     return {records,report};
 }
@@ -93,7 +148,10 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
     const manifest=read(base+"manifest.json");
     const first=fs.readdirSync(path.join(root,base,"native/rulebook")).filter(f=>/^pages-\d+-\d+\.json$/.test(f)).sort()[0];
     const officialUrl=read(base+"native/rulebook/"+first)[0].source.url;
-    const {records,report}=generate(inputs,sourceManifest,manifest,tag,officialUrl);
+    const native=base+"native/";
+    const externalIds=["spells","bestiary"].flatMap(folder=>fs.readdirSync(path.join(root,native,folder)).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(native+folder+"/"+f).map(row=>row.id)));
+    externalIds.push(...read(native+"skills.json").map(row=>row.id),...read(native+"conditions.json").map(row=>row.id));
+    const {records,report}=generate(inputs,sourceManifest,manifest,tag,officialUrl,externalIds);
     const outputs=new Map();
     for(let i=0;i<records.length;i+=50)outputs.set(dir+"structured-"+String(i/50+1).padStart(2,"0")+".json",json(records.slice(i,i+50)));
     outputs.set("data/reference/srd/item-promotion-"+tag+".json",json(report));
