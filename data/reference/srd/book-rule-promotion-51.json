@@ -171,5 +171,245 @@
       "reason": "Restore published short-rest healing wording and long-rest sleep/light-activity wording from p.87; do not import later errata into the pinned SRD."
     }
   ],
-  "nativeCount": 23
+  "nativeCount": 23,
+  "tableInventory": {
+    "total": 30,
+    "counts": {
+      "projected": 15,
+      "existing-catalog-representation": 5,
+      "pending-review": 10
+    },
+    "occurrences": [
+      {
+        "pointer": "/data/3/entries/5",
+        "caption": "Character Advancement",
+        "context": "Beyond 1st Level",
+        "rows": 20,
+        "disposition": "projected",
+        "nativeId": "table.character-advancement"
+      },
+      {
+        "pointer": "/data/3/entries/6/entries/3/entries/1",
+        "caption": "Multiclassing Prerequisites",
+        "context": "Prerequisites",
+        "rows": 12,
+        "disposition": "projected",
+        "nativeId": "table.multiclassing-prerequisites"
+      },
+      {
+        "pointer": "/data/3/entries/6/entries/7/entries/1",
+        "caption": "Multiclassing Proficiencies",
+        "context": "Proficiencies",
+        "rows": 12,
+        "disposition": "projected",
+        "nativeId": "table.multiclassing-proficiencies"
+      },
+      {
+        "pointer": "/data/3/entries/6/entries/8/entries/4/entries/4",
+        "caption": "Multiclass Spellcaster: Spell Slots per Spell Level",
+        "context": "Spellcasting",
+        "rows": 20,
+        "disposition": "projected",
+        "nativeId": "table.multiclass-spellcaster-spell-slots-per-spell-level"
+      },
+      {
+        "pointer": "/data/3/entries/8/entries/3",
+        "caption": "Standard Languages",
+        "context": "Languages",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.standard-languages"
+      },
+      {
+        "pointer": "/data/3/entries/8/entries/4",
+        "caption": "Exotic Languages",
+        "context": "Languages",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.exotic-languages"
+      },
+      {
+        "pointer": "/data/4/entries/6",
+        "caption": "Standard Exchange Rates",
+        "context": "Equipment",
+        "rows": 5,
+        "disposition": "projected",
+        "nativeId": "table.standard-exchange-rates"
+      },
+      {
+        "pointer": "/data/4/entries/8/entries/6",
+        "caption": "Armor",
+        "context": "Armor",
+        "rows": 17,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/4/entries/8/entries/7/entries/2",
+        "caption": "Donning and Doffing Armor",
+        "context": "Getting Into and Out of Armor",
+        "rows": 4,
+        "disposition": "existing-catalog-representation",
+        "representation": "table.donning-and-doffing-armor"
+      },
+      {
+        "pointer": "/data/4/entries/9/entries/4",
+        "caption": "Weapons",
+        "context": "Weapons",
+        "rows": 41,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/4/entries/10/entries/2",
+        "caption": "Adventuring Gear",
+        "context": "Adventuring Gear",
+        "rows": 108,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/4/entries/10/entries/3",
+        "caption": "Container Capacity",
+        "context": "Adventuring Gear",
+        "rows": 13,
+        "disposition": "projected",
+        "nativeId": "table.container-capacity"
+      },
+      {
+        "pointer": "/data/4/entries/11/entries/1",
+        "caption": "Tools",
+        "context": "Tools",
+        "rows": 41,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/4/entries/12/entries/4",
+        "caption": "Mounts and Other Animals",
+        "context": "Mounts and Vehicles",
+        "rows": 8,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/4/entries/12/entries/5",
+        "caption": "Tack, Harness, and Drawn Vehicles",
+        "context": "Mounts and Vehicles",
+        "rows": 15,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/4/entries/12/entries/6",
+        "caption": "Waterborne Vehicles",
+        "context": "Mounts and Vehicles",
+        "rows": 6,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/4/entries/13/entries/2",
+        "caption": "Trade Goods",
+        "context": "Trade Goods",
+        "rows": 13,
+        "disposition": "projected",
+        "nativeId": "table.trade-goods"
+      },
+      {
+        "pointer": "/data/4/entries/14/entries/1/entries/3",
+        "caption": "Lifestyle Expenses",
+        "context": "Lifestyle Expenses",
+        "rows": 7,
+        "disposition": "projected",
+        "nativeId": "table.lifestyle-expenses"
+      },
+      {
+        "pointer": "/data/4/entries/14/entries/3/entries/1",
+        "caption": "Food, Drink, and Lodging",
+        "context": "Food, Drink, and Lodging",
+        "rows": 24,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/4/entries/14/entries/4/entries/3",
+        "caption": "Services",
+        "context": "Services",
+        "rows": 9,
+        "disposition": "projected",
+        "nativeId": "table.services"
+      },
+      {
+        "pointer": "/data/6/entries/4/entries/5",
+        "caption": "Ability Scores and Modifiers",
+        "context": "Ability Scores and Modifiers",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.ability-scores-and-modifiers"
+      },
+      {
+        "pointer": "/data/6/entries/7/entries/2",
+        "caption": "Typical Difficulty Classes",
+        "context": "Ability Checks",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.typical-difficulty-classes"
+      },
+      {
+        "pointer": "/data/6/entries/7/entries/6/entries/3",
+        "caption": null,
+        "context": "Skills",
+        "rows": 5,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/7/entries/1/entries/2/entries/2/entries/4",
+        "caption": "Travel Pace",
+        "context": "Travel Pace",
+        "rows": 3,
+        "disposition": "projected",
+        "nativeId": "table.travel-pace"
+      },
+      {
+        "pointer": "/data/8/entries/1/entries/9/entries/2",
+        "caption": "Size Categories",
+        "context": "Creature Size",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.size-categories"
+      },
+      {
+        "pointer": "/data/40/entries/7/entries/1",
+        "caption": null,
+        "context": "Exhaustion",
+        "rows": 6,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/41/entries/1/entries/1",
+        "caption": "Celtic Deities",
+        "context": "The Celtic Pantheon",
+        "rows": 14,
+        "disposition": "existing-catalog-representation",
+        "representation": "deity catalog: Celtic pantheon"
+      },
+      {
+        "pointer": "/data/41/entries/2/entries/1",
+        "caption": "Greek Deities",
+        "context": "The Greek Pantheon",
+        "rows": 19,
+        "disposition": "existing-catalog-representation",
+        "representation": "deity catalog: Greek pantheon"
+      },
+      {
+        "pointer": "/data/41/entries/3/entries/3",
+        "caption": "Egyptian Deities",
+        "context": "The Egyptian Pantheon",
+        "rows": 14,
+        "disposition": "existing-catalog-representation",
+        "representation": "deity catalog: Egyptian pantheon"
+      },
+      {
+        "pointer": "/data/41/entries/4/entries/2",
+        "caption": "Norse Deities",
+        "context": "The Norse Pantheon",
+        "rows": 20,
+        "disposition": "existing-catalog-representation",
+        "representation": "deity catalog: Norse pantheon"
+      }
+    ]
+  }
 }

@@ -303,5 +303,468 @@
       "reason": "Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
     }
   ],
-  "nativeCount": 45
+  "nativeCount": 45,
+  "tableInventory": {
+    "total": 59,
+    "counts": {
+      "projected": 38,
+      "existing-catalog-representation": 2,
+      "pending-review": 19
+    },
+    "occurrences": [
+      {
+        "pointer": "/data/1/entries/1/entries/1",
+        "caption": "Ability Descriptions",
+        "context": "The Six Abilities",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.ability-descriptions"
+      },
+      {
+        "pointer": "/data/1/entries/1/entries/2/entries/1",
+        "caption": "Ability Scores",
+        "context": "Ability Scores",
+        "rows": 7,
+        "disposition": "projected",
+        "nativeId": "table.ability-scores"
+      },
+      {
+        "pointer": "/data/1/entries/1/entries/3/entries/1",
+        "caption": "Ability Modifiers",
+        "context": "Ability Modifiers",
+        "rows": 16,
+        "disposition": "projected",
+        "nativeId": "table.ability-modifiers"
+      },
+      {
+        "pointer": "/data/1/entries/2/entries/2/entries/1/entries/1",
+        "caption": "Ability Check Examples",
+        "context": "Ability Modifier",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.ability-check-examples"
+      },
+      {
+        "pointer": "/data/1/entries/2/entries/2/entries/3/entries/1",
+        "caption": "Typical Difficulty Classes",
+        "context": "Difficulty Class",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.typical-difficulty-classes"
+      },
+      {
+        "pointer": "/data/1/entries/2/entries/3/entries/2/entries/1",
+        "caption": "Saving Throw Examples",
+        "context": "Ability Modifier",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.saving-throw-examples"
+      },
+      {
+        "pointer": "/data/1/entries/2/entries/4/entries/1/entries/1",
+        "caption": "Attack Roll Abilities",
+        "context": "Ability Modifier",
+        "rows": 3,
+        "disposition": "projected",
+        "nativeId": "table.attack-roll-abilities"
+      },
+      {
+        "pointer": "/data/1/entries/3/entries/2",
+        "caption": "Proficiency Bonus",
+        "context": "Proficiency",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.proficiency-bonus"
+      },
+      {
+        "pointer": "/data/1/entries/3/entries/4/entries/2/entries/1",
+        "caption": "Skills",
+        "context": "Skill List",
+        "rows": 18,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/1/entries/4/entries/1",
+        "caption": "Actions",
+        "context": "Actions",
+        "rows": 12,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/1/entries/6/entries/6/entries/3/entries/1",
+        "caption": "Travel Pace",
+        "context": "Travel Pace",
+        "rows": 3,
+        "disposition": "projected",
+        "nativeId": "table.travel-pace"
+      },
+      {
+        "pointer": "/data/1/entries/7/entries/2/entries/7/entries/2",
+        "caption": "Creature Size and Space",
+        "context": "Creature Size",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.creature-size-and-space"
+      },
+      {
+        "pointer": "/data/1/entries/7/entries/4/entries/2",
+        "caption": "Cover",
+        "context": "Cover",
+        "rows": 3,
+        "disposition": "projected",
+        "nativeId": "table.cover"
+      },
+      {
+        "pointer": "/data/2/entries/1/entries/2/entries/1",
+        "caption": "Class Overview",
+        "context": "Step 1: Choose Class",
+        "rows": 12,
+        "disposition": "projected",
+        "nativeId": "table.class-overview"
+      },
+      {
+        "pointer": "/data/2/entries/1/entries/3/entries/2/entries/2",
+        "caption": "Ability Scores and Backgrounds",
+        "context": "Choose a Background",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.ability-scores-and-backgrounds"
+      },
+      {
+        "pointer": "/data/2/entries/1/entries/3/entries/6/entries/2",
+        "caption": "Standard Languages",
+        "context": "Choose Languages",
+        "rows": 10,
+        "disposition": "projected",
+        "nativeId": "table.standard-languages"
+      },
+      {
+        "pointer": "/data/2/entries/1/entries/3/entries/6/entries/4",
+        "caption": "Rare Languages",
+        "context": "Choose Languages",
+        "rows": 5,
+        "disposition": "projected",
+        "nativeId": "table.rare-languages"
+      },
+      {
+        "pointer": "/data/2/entries/1/entries/4/entries/1/entries/3/entries/1",
+        "caption": "Ability Score Point Costs",
+        "context": "Point Cost",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.ability-score-point-costs"
+      },
+      {
+        "pointer": "/data/2/entries/1/entries/4/entries/2/entries/2",
+        "caption": "Standard Array by Class",
+        "context": "Assign Ability Scores",
+        "rows": 12,
+        "disposition": "projected",
+        "nativeId": "table.standard-array-by-class"
+      },
+      {
+        "pointer": "/data/2/entries/1/entries/4/entries/4/entries/1",
+        "caption": "Ability Scores and Modifiers",
+        "context": "Determine Ability Modifiers",
+        "rows": 10,
+        "disposition": "projected",
+        "nativeId": "table.ability-scores-and-modifiers"
+      },
+      {
+        "pointer": "/data/2/entries/1/entries/6/entries/2/entries/4/entries/1",
+        "caption": "Level 1 Hit Points by Class",
+        "context": "Hit Points",
+        "rows": 4,
+        "disposition": "projected",
+        "nativeId": "table.level-1-hit-points-by-class"
+      },
+      {
+        "pointer": "/data/2/entries/2/entries/2",
+        "caption": "Character Advancement",
+        "context": "Level Advancement",
+        "rows": 20,
+        "disposition": "projected",
+        "nativeId": "table.character-advancement"
+      },
+      {
+        "pointer": "/data/2/entries/2/entries/3/entries/1/items/1/entries/1",
+        "caption": "Fixed Hit Points by Class",
+        "context": "Adjust Hit Points and Hit Point Dice",
+        "rows": 4,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/2/entries/3/entries/2/entries/2",
+        "caption": "Starting Equipment at Higher Levels",
+        "context": "Starting Equipment",
+        "rows": 4,
+        "disposition": "projected",
+        "nativeId": "table.starting-equipment-at-higher-levels"
+      },
+      {
+        "pointer": "/data/2/entries/4/entries/6/entries/4/entries/1",
+        "caption": "Multiclass Spellcaster: Spell Slots per Spell Level",
+        "context": "Spellcasting",
+        "rows": 20,
+        "disposition": "projected",
+        "nativeId": "table.multiclass-spellcaster-spell-slots-per-spell-level"
+      },
+      {
+        "pointer": "/data/6/entries/1/entries/2",
+        "caption": "Coin Values",
+        "context": "Coins",
+        "rows": 5,
+        "disposition": "projected",
+        "nativeId": "table.coin-values"
+      },
+      {
+        "pointer": "/data/6/entries/2/entries/2",
+        "caption": "Weapons",
+        "context": "Weapons",
+        "rows": 42,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/6/entries/3/entries/4",
+        "caption": "Armor",
+        "context": "Armor",
+        "rows": 17,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/6/entries/5/entries/1",
+        "caption": "Adventuring Gear",
+        "context": "Adventuring Gear",
+        "rows": 82,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/6/entries/5/entries/2/entries/2/entries/1",
+        "caption": "Ammunition",
+        "context": "Ammunition (Varies)",
+        "rows": 5,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/6/entries/5/entries/2/entries/4/entries/1",
+        "caption": "Arcane Focuses",
+        "context": "Arcane Focus (Varies)",
+        "rows": 5,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/6/entries/5/entries/2/entries/30/entries/1",
+        "caption": "Druidic Focuses",
+        "context": "Druidic Focus (Varies)",
+        "rows": 3,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/6/entries/5/entries/2/entries/37/entries/2",
+        "caption": "Holy Symbols",
+        "context": "Holy Symbol (Varies)",
+        "rows": 3,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/6/entries/6/entries/4",
+        "caption": "Mounts and Other Animals",
+        "context": "Mounts and Vehicles",
+        "rows": 8,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/6/entries/6/entries/5",
+        "caption": "Tack, Harness, and Drawn Vehicles",
+        "context": "Mounts and Vehicles",
+        "rows": 11,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/6/entries/6/entries/6/entries/6",
+        "caption": "Airborne and Waterborne Vehicles",
+        "context": "Large Vehicles",
+        "rows": 7,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/6/entries/8/entries/1",
+        "caption": "Food, Drink, and Lodging",
+        "context": "Food, Drink, and Lodging",
+        "rows": 20,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/6/entries/9/entries/1",
+        "caption": "Hirelings",
+        "context": "Hirelings",
+        "rows": 3,
+        "disposition": "projected",
+        "nativeId": "table.hirelings"
+      },
+      {
+        "pointer": "/data/6/entries/10/entries/1",
+        "caption": "Spellcasting Services",
+        "context": "Spellcasting",
+        "rows": 7,
+        "disposition": "projected",
+        "nativeId": "table.spellcasting-services"
+      },
+      {
+        "pointer": "/data/6/entries/14/entries/4",
+        "caption": "Spell Scroll Costs",
+        "context": "Scribing Spell Scrolls",
+        "rows": 10,
+        "disposition": "existing-catalog-representation",
+        "representation": "table.spell-scroll-costs"
+      },
+      {
+        "pointer": "/data/7/entries/0/entries/1/entries/1",
+        "caption": "Spell Preparation by Class",
+        "context": "Preparing Spells",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.spell-preparation-by-class"
+      },
+      {
+        "pointer": "/data/7/entries/1/entries/2/entries/1",
+        "caption": "Schools of Magic",
+        "context": "School of Magic",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.schools-of-magic"
+      },
+      {
+        "pointer": "/data/9/entries/0/entries/2",
+        "caption": null,
+        "context": "Glossary Conventions",
+        "rows": 33,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/10/entries/0/entries/5/entries/1",
+        "caption": "Travel Terrain",
+        "context": "Vehicles",
+        "rows": 11,
+        "disposition": "projected",
+        "nativeId": "table.travel-terrain"
+      },
+      {
+        "pointer": "/data/10/entries/4/entries/2/entries/1",
+        "caption": "Sample Fear DCs",
+        "context": "Fear Effects",
+        "rows": 3,
+        "disposition": "projected",
+        "nativeId": "table.sample-fear-dcs"
+      },
+      {
+        "pointer": "/data/10/entries/4/entries/3/entries/2",
+        "caption": "Sample Mental Stress Effects",
+        "context": "Mental Stress Effects",
+        "rows": 3,
+        "disposition": "projected",
+        "nativeId": "table.sample-mental-stress-effects"
+      },
+      {
+        "pointer": "/data/10/entries/7/entries/2/entries/2/entries/1",
+        "caption": "XP Budget per Character",
+        "context": "Step 2: Determine Your XP Budget",
+        "rows": 20,
+        "disposition": "projected",
+        "nativeId": "table.xp-budget-per-character"
+      },
+      {
+        "pointer": "/data/11/entries/2/entries/1",
+        "caption": "Magic Item Categories",
+        "context": "Magic Item Categories",
+        "rows": 9,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/11/entries/2/entries/3/entries/2/entries/2",
+        "caption": "Potion Miscibility",
+        "context": "Mixing Potions",
+        "rows": 8,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/11/entries/3/entries/2/entries/2",
+        "caption": "Magic Item Rarities and Values",
+        "context": "Magic Item Values by Rarity",
+        "rows": 6,
+        "disposition": "existing-catalog-representation",
+        "representation": "table.magic-item-rarities-and-values"
+      },
+      {
+        "pointer": "/data/11/entries/8/entries/2/entries/1",
+        "caption": "Magic Item Tools",
+        "context": "Tools",
+        "rows": 9,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/11/entries/8/entries/4/entries/3/entries/2",
+        "caption": "Magic Item Crafting Time and Cost",
+        "context": "Raw Materials",
+        "rows": 5,
+        "disposition": "pending-review"
+      },
+      {
+        "pointer": "/data/11/entries/9/entries/3/entries/5/entries/1",
+        "caption": "Sentient Item's Alignment",
+        "context": "Special Purpose",
+        "rows": 9,
+        "disposition": "projected",
+        "nativeId": "table.sentient-item-s-alignment"
+      },
+      {
+        "pointer": "/data/11/entries/9/entries/3/entries/5/entries/2",
+        "caption": "Sentient Item's Communication",
+        "context": "Special Purpose",
+        "rows": 3,
+        "disposition": "projected",
+        "nativeId": "table.sentient-item-s-communication"
+      },
+      {
+        "pointer": "/data/11/entries/9/entries/3/entries/5/entries/3",
+        "caption": "Sentient Item's Senses",
+        "context": "Special Purpose",
+        "rows": 4,
+        "disposition": "projected",
+        "nativeId": "table.sentient-item-s-senses"
+      },
+      {
+        "pointer": "/data/11/entries/9/entries/3/entries/5/entries/4",
+        "caption": "Sentient Item's Special Purpose",
+        "context": "Special Purpose",
+        "rows": 10,
+        "disposition": "projected",
+        "nativeId": "table.sentient-item-s-special-purpose"
+      },
+      {
+        "pointer": "/data/13/entries/1/entries/8",
+        "caption": "Hit Dice by Size",
+        "context": "Parts of a Stat Block",
+        "rows": 6,
+        "disposition": "projected",
+        "nativeId": "table.hit-dice-by-size"
+      },
+      {
+        "pointer": "/data/13/entries/1/entries/20/entries/2",
+        "caption": "Experience Points by Challenge Rating",
+        "context": "Challenge Rating",
+        "rows": 34,
+        "disposition": "projected",
+        "nativeId": "table.experience-points-by-challenge-rating"
+      },
+      {
+        "pointer": "/data/13/entries/1/entries/20/entries/3/entries/1",
+        "caption": "Proficiency Bonus by Challenge Rating",
+        "context": "Proficiency Bonus",
+        "rows": 8,
+        "disposition": "projected",
+        "nativeId": "table.proficiency-bonus-by-challenge-rating"
+      }
+    ]
+  }
 }

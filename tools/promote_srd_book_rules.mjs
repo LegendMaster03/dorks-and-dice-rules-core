@@ -65,6 +65,44 @@ const selections={
  ]
 };
 
+
+// Account for every table occurrence in the pinned book, not just its parent
+// chapter. A covered catalog is not proof that every source table cell agrees.
+function inventoryBookTables(book,report,tag){
+ const selected=new Map(report.tables.map(t=>[t.pointer,t.id]));
+ const existing=tag==="51"?{
+  "/data/4/entries/8/entries/7/entries/2":"table.donning-and-doffing-armor",
+  "/data/41/entries/1/entries/1":"deity catalog: Celtic pantheon",
+  "/data/41/entries/2/entries/1":"deity catalog: Greek pantheon",
+  "/data/41/entries/3/entries/3":"deity catalog: Egyptian pantheon",
+  "/data/41/entries/4/entries/2":"deity catalog: Norse pantheon"
+ }:{
+  "/data/6/entries/14/entries/4":"table.spell-scroll-costs",
+  "/data/11/entries/3/entries/2/entries/2":"table.magic-item-rarities-and-values"
+ };
+ const result=[];
+ const escape=k=>k.replaceAll("~","~0").replaceAll("/","~1");
+ function visit(node,pointer,context){
+  if(!node||typeof node!=="object")return;
+  if(node.type==="table"){
+   const id=selected.get(pointer),representation=existing[pointer];
+   result.push({pointer,caption:node.caption??null,context,rows:node.rows?.length??null,
+    disposition:id?"projected":representation?"existing-catalog-representation":"pending-review",
+    ...(id?{nativeId:id}:representation?{representation}:{})});
+   // Continue walking in case a table contains further nested tables.
+  }
+  if(Array.isArray(node))node.forEach((child,i)=>visit(child,pointer+"/"+i,context));
+  else for(const [key,child] of Object.entries(node))
+   visit(child,pointer+"/"+escape(key),node.name??node.caption??context);
+ }
+ visit(book.data,"/data",null);
+ for(const pointer of [...selected.keys(),...Object.keys(existing)])
+  if(!result.some(t=>t.pointer===pointer))throw Error("Unaccounted book table pointer "+pointer);
+ const counts={projected:0,"existing-catalog-representation":0,"pending-review":0};
+ for(const t of result)counts[t.disposition]++;
+ return {total:result.length,counts,occurrences:result};
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -246,6 +284,7 @@ function generateBookRules(book,manifest,src,pages,tag,known){
  if(ids.size!==rows.length||rows.some(r=>known.has(r.id)))throw Error("Book projection identity collision");
  for(const r of rows)for(const id of r.catalogReferences)if(!known.has(id)&&!ids.has(id))throw Error("Missing book reference "+r.id+" -> "+id);
  report.nativeCount=rows.length;
+ report.tableInventory=inventoryBookTables(book,report,tag);
  return {rows,report};
 }
 
