@@ -810,6 +810,37 @@ function modernEquipmentEntries(name,entries,existing,local){
  return entries;
 }
 
+// Read the selected legacy appendix's publisher columns in reading order.
+function legacyAppendixColumns(page){
+ const left=[],right=[];
+ for(const line of page.textLayout.split("\n")){
+  if(!line.trim()||line.includes("System Reference Document 5.1"))continue;
+  if(page.page===365){left.push(line.trim());continue;}
+  if(/^ {50,}/.test(line)){right.push(line.trim());continue;}
+  const parts=line.trim().split(/ {4,}/);
+  if(parts.length>2)throw Error("Unexpected legacy appendix column layout");
+  left.push(parts[0]);if(parts.length===2)right.push(parts[1]);
+ }
+ return [left.join(" "),right.join(" ")];
+}
+
+function normalizeAppendix(s){
+ return s.replace(/\{@[a-z]+ ([^|}]+)(?:\|[^}]+)?\}/gi,"$1").normalize("NFKC").toLowerCase().replace(/[^a-z0-9]/g,"");
+}
+
+function reconcileLegacyAppendix(content,pages){
+ const outer=content.find(x=>x?.name==="Beyond the Material")?.entries.find(x=>x?.name==="Outer Planes");
+ const old="Elysium, for example,",restored="Elysium, for example (a neutral good Upper Plane),";
+ if(!outer?.entries.at(-1).includes(old))throw Error("Unexpected Elysium source");
+ outer.entries[outer.entries.length-1]=outer.entries.at(-1).replace(old,restored);
+ const paragraphs=[];
+ function visit(x){if(typeof x==="string")paragraphs.push(x);else if(Array.isArray(x))x.forEach(visit);else if(x?.entries)visit(x.entries);}
+ visit(content);
+ const pub=normalizeAppendix(pages.flatMap(legacyAppendixColumns).join(" "));
+ if(paragraphs.length!==24||paragraphs.some(x=>!pub.includes(normalizeAppendix(x))))throw Error("Legacy planes appendix paragraph mismatch");
+ return content;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -997,7 +1028,9 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Adventuring Gear","/data/4/entries/10",[66,67,68,69,70],["rule.the-environment","rule.casting-a-spell","item-group.arcane-focus","item-group.druidic-focus","item-group.holy-symbol"]],
   ["Tools","/data/4/entries/11",[70,71],["rule.proficiency-bonus","rule.ability-checks","rule.mounts-and-vehicles","class.bard"]],
   ["Racial Traits","/data/1/entries/0",[3],["rule.movement","rule.weapons","rule.languages","rule.the-order-of-combat"]],
-  ["Customizing NPCs","/data/44/entries/1",[395],["rule.racial-traits","rule.armor","rule.weapons","rule.casting-a-spell"]]
+  ["Customizing NPCs","/data/44/entries/1",[395],["rule.racial-traits","rule.armor","rule.weapons","rule.casting-a-spell"]],
+  ["Magic Items","/data/12",[206],["rule.attunement","rule.wearing-and-wielding-items","rule.activating-an-item","rule.sentient-magic-items"],[0,1]],
+  ["Appendix PH-C: The Planes of Existence","/data/42",[363,364,365],["spell.plane-shift","spell.gate","spell.etherealness","spell.astral-projection","spell.see-invisibility","spell.true-seeing","spell.forcecage","spell.wall-of-force","spell.demiplane","rule.alignment"]]
  ]:[
   ["Travel Pace","/data/10/entries/0",[192],["table.travel-pace","condition.exhaustion","spell.wind-walk","item-group.carpet-of-flying","glossary.difficult-terrain"]],
   ["Creating a Background","/data/10/entries/1",[192,193],[]],
@@ -1088,6 +1121,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   "Damage and Healing": "Restore publisher opening and local damage, knockout, rest and stabilization references (pp.16–18)."
 };
  const extraCorrections={
+  "Appendix PH-C: The Planes of Existence":"Restore the published Elysium alignment parenthetical; check all 24 prose paragraphs against the sequential publisher columns (pp.363–365).",
   "Customizing NPCs":"Remove two non-publisher DMG navigation references while preserving all published customization rules (p.395).",
   "Armor":"Reuse canonical armor descriptions after exact comparison and retain proficiency, AC, speed, stealth and don/doff rules (pp.62–64).",
   "Weapons":"Reuse canonical weapon properties and special weapon definitions; reconcile original property wording (pp.64–66).",
@@ -1122,7 +1156,8 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   if(node.name!==name||nums.some(n=>!pageMap.has(n)))throw Error("Unreviewed book rule "+name);
   // The two-line curse heading is interrupted by the facing column in the page layout.
   const headingMatches=nums.some(n=>norm(pageMap.get(n).textLayout).includes(norm(name)))||(name==="Curses and Magical Contagions"&&nums.some(n=>/Curses and\s{2,}[^\n]+\n\s*Magical Contagions\s{2,}/.test(pageMap.get(n).textLayout)));
-  if(name!=="Advantage and Disadvantage"&&!headingMatches)throw Error("Missing book rule heading "+name);
+  const appendixHeading=tag==="51"&&name==="Appendix PH-C: The Planes of Existence"&&legacyAppendixColumns(pageMap.get(363))[0].startsWith(name+" ");
+  if(name!=="Advantage and Disadvantage"&&!headingMatches&&!appendixHeading)throw Error("Missing book rule heading "+name);
   const local=new Set([...nums.map(pageId),...refs]);
   const project=x=>{
    if(typeof x==="string")return x.replace(/\{@book ([^}|]+)(?:\|[^}]+)?\}/g,(_,label)=>label);
@@ -1144,6 +1179,11 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   let content=project(entryRange?node.entries.slice(...entryRange):node.entries);
   if(tag==="51")content=legacyEquipmentEntries(name,legacyEconomyEntries(name,legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local)),existing,local);
   else content=modernEquipmentEntries(name,modernToolboxMonsterEntries(name,modernCharacterEconomySpellEntries(name,modernGameplayEntries(name,modernMagicItemEntries(name,content),existing,local),existing,local),existing,local),existing,local);
+  if(tag==="51"&&name==="Appendix PH-C: The Planes of Existence")content=reconcileLegacyAppendix(content,nums.map(n=>pageMap.get(n)));
+  if(tag==="51"&&name==="Magic Items"&&!normalizeAppendix(pageMap.get(206).textLayout).includes(normalizeAppendix(content[0]))){
+   // The intro is in the left column, not contiguous in the raw page layout.
+   if(!normalizeAppendix(legacyAppendixColumns(pageMap.get(206))[0]).includes(normalizeAppendix(content[0])))throw Error("Legacy magic item intro mismatch");
+  }
   if(name==="Customizing NPCs"){
    const armor=content.find(x=>x?.name==="Armor and Weapon Swaps"),magic=content.find(x=>x?.name==="Magic Items");
    const a=", as explained in the Dungeon Master's Guide.",b=" Magic items, as well as adjusting a creature's challenge rating, are described in the Dungeon Master's Guide.";

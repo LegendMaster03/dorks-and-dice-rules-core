@@ -504,6 +504,26 @@
       "pages": [
         395
       ]
+    },
+    {
+      "id": "rule.magic-items",
+      "pointer": "/data/12",
+      "pages": [
+        206
+      ],
+      "entryRange": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "rule.appendix-ph-c-the-planes-of-existence",
+      "pointer": "/data/42",
+      "pages": [
+        363,
+        364,
+        365
+      ]
     }
   ],
   "corrections": [
@@ -640,9 +660,13 @@
     {
       "id": "rule.customizing-npcs",
       "reason": "Remove two non-publisher DMG navigation references while preserving all published customization rules (p.395)."
+    },
+    {
+      "id": "rule.appendix-ph-c-the-planes-of-existence",
+      "reason": "Restore the published Elysium alignment parenthetical; check all 24 prose paragraphs against the sequential publisher columns (pp.363–365)."
     }
   ],
-  "nativeCount": 64,
+  "nativeCount": 66,
   "tableInventory": {
     "total": 30,
     "counts": {

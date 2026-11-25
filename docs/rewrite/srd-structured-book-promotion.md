@@ -91,3 +91,7 @@ The remaining four sections cover pp.89–100, retaining equipment-level rules w
 ### Character creation, NPC customization, and glossary conventions
 
 The legacy projection adds Racial Traits (p. 3) and Customizing NPCs (p. 395), using the pinned structured entries and the publisher page layouts. Two Dungeon Master's Guide navigation sentences or clauses not present in the publisher's NPC text are omitted. The modern projection adds Character Backgrounds (p. 83), Character Species (pp. 83–84), Feat Descriptions (p. 87), and Glossary Conventions (p. 176). The conventions reference the existing corrected abbreviation table; they do not create a second table. Existing edition-local character and rule definitions are linked without duplicating their content. These are targeted source checks, not whole-book body certification.
+
+## Legacy magic-item overview and planes appendix
+
+Project the Magic Items introduction (p.206) and the complete pinned Planes of Existence appendix (pp.363–365), linking the existing item procedures and nine edition-local spell identities. The introduction retains only its selected entry range; the appendix preserves Material, transitive, inner, outer and demiplane guidance. Restore the publisher's omitted Elysium alignment parenthetical and verify all 24 prose fragments against the ordered PDF columns with punctuation and markup normalization. This is paragraph presence verification, not a whole-book fidelity or executable planar-travel claim.
