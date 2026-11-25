@@ -1,0 +1,2340 @@
+[
+  {
+    "id": "item.wand-of-polymorph",
+    "kind": "item",
+    "name": "Wand of Polymorph",
+    "type": "WD|SRD52",
+    "rarity": "very rare",
+    "reqAttune": "by a spellcaster",
+    "reqAttuneTags": [
+      {
+        "spellcasting": true
+      }
+    ],
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 1}",
+    "charges": 7,
+    "entries": [
+      "This wand has 7 charges. While holding it, you can expend 1 charge to cast {@spell Polymorph|SRD52} (save {@dc 15}) from it.",
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into ashes and is destroyed."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "polymorph|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 251,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/928"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wand-of-secrets",
+    "kind": "item",
+    "name": "Wand of Secrets",
+    "type": "WD|SRD52",
+    "rarity": "uncommon",
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d3}",
+    "charges": 3,
+    "entries": [
+      "This wand has 3 charges and regains {@dice 1d3} expended charges daily at dawn. While holding it, you can take a {@action Magic|SRD52} action to expend 1 charge, and if a secret door or trap is within 60 feet of you, the wand pulses and points at the one nearest to you."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 251,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/930"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wand-of-web",
+    "kind": "item",
+    "name": "Wand of Web",
+    "type": "WD|SRD52",
+    "rarity": "uncommon",
+    "reqAttune": "by a spellcaster",
+    "reqAttuneTags": [
+      {
+        "spellcasting": true
+      }
+    ],
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 1}",
+    "charges": 7,
+    "entries": [
+      "This wand has 7 charges. While holding it, you can expend 1 charge to cast {@spell Web|SRD52} (save {@dc 13}) from it.",
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into ashes and is destroyed."
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "web|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 251,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/932"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wand-of-wonder",
+    "kind": "item",
+    "name": "Wand of Wonder",
+    "type": "WD|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "weight": 1,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d6 + 1}",
+    "charges": 7,
+    "entries": [
+      "This wand has 7 charges. While holding it, you can take a {@action Magic|SRD52} action to expend 1 charge while choosing a point within 120 feet of yourself. That location becomes the point of origin of a spell or other magical effect determined by rolling on the Wand of Wonder Effects table. Spells cast from the wand have a save DC of 15. If a spell's maximum range is normally less than 120 feet, it becomes 120 feet when cast from the wand. If an effect has multiple possible subjects, the DM determines randomly which among them are affected.",
+      {
+        "type": "entries",
+        "name": "Regaining Charges",
+        "entries": [
+          "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into dust and is destroyed."
+        ]
+      },
+      {
+        "type": "table",
+        "caption": "Wand of Wonder Effects",
+        "colStyles": [
+          "col-2 text-center",
+          "col-10"
+        ],
+        "colLabels": [
+          "1d100",
+          "Effect"
+        ],
+        "rows": [
+          [
+            "01-20",
+            "You cast a spell originating from the chosen point. Roll {@dice 1d10} to determine the spell: on a {@b 1-2}, {@spell Darkness|SRD52}; on a {@b 3-4}, {@spell Faerie Fire|SRD52}; on a {@b 5-6}, {@spell Fireball|SRD52}; on a {@b 7-8}, {@spell Slow|SRD52}; on a {@b 9-10}, {@spell Stinking Cloud|SRD52}."
+          ],
+          [
+            "21-25",
+            "Nothing happens at the chosen point of origin. Instead, you have the {@condition Stunned|SRD52} condition until the start of your next turn, believing something awesome just happened."
+          ],
+          [
+            "26-30",
+            "You cast {@spell Gust of Wind|SRD52}. The {@variantrule Line [Area of Effect]|SRD52|Line} created by the spell extends from you to the chosen point of origin."
+          ],
+          [
+            "31-35",
+            "Nothing happens at the chosen point of origin. Instead, you take {@damage 1d6} Psychic damage."
+          ],
+          [
+            "36-40",
+            "Heavy rain falls for 1 minute in a 120-foot-high, 60-foot-radius {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} centered on the chosen point of origin. During that time, the area of effect is {@variantrule Lightly Obscured|SRD52}."
+          ],
+          [
+            "41-45",
+            "A cloud of 600 oversized butterflies fills a 60-foot-high, 30-foot-radius {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} centered on the chosen point of origin. The butterflies remain for 10 minutes, during which time the area of effect is {@variantrule Heavily Obscured|SRD52}."
+          ],
+          [
+            "46-50",
+            "You cast {@spell Lightning Bolt|SRD52}. The {@variantrule Line [Area of Effect]|SRD52|Line} created by the spell extends from you to the chosen point of origin."
+          ],
+          [
+            "51-55",
+            "The creature closest to the chosen point of origin is enlarged as if you had cast {@spell Enlarge/Reduce|SRD52} on it. If the target isn't you and can't be affected by that spell, you become the target instead."
+          ],
+          [
+            "56-60",
+            "A magically formed creature appears in an unoccupied space as close to the chosen point of origin as possible. The creature isn't under your control, acts as it normally would, and disappears after 1 hour or when it drops to 0 {@variantrule Hit Points|SRD52}. Roll {@dice 1d4} to determine which creature appears. On a {@b 1}, a {@creature Rhinoceros|SRD52} appears; on a {@b 2}, an {@creature Elephant|SRD52} appears; and on a {@b 3-4}, a {@creature Rat|SRD52} appears."
+          ],
+          [
+            "61-64",
+            "Grass covers a 60-foot-radius circle of ground, with the center of that circle as close to the chosen point of origin as possible. Grass that's already there grows to ten times its normal size and remains overgrown for 1 minute."
+          ],
+          [
+            "65-68",
+            "An object of the DM's choice disappears into the Ethereal Plane. The object must be neither worn nor carried, within 120 feet of the chosen point of origin, and no larger than 10 feet in any dimension. If there are no such objects in range, nothing happens."
+          ],
+          [
+            "69-72",
+            "Nothing happens at the chosen point of origin. Instead, you shrink as if you had cast {@spell Enlarge/Reduce|SRD52} on yourself and remain in that state for 1 minute."
+          ],
+          [
+            "73-77",
+            "Leaves grow from the creature nearest to the chosen point of origin. Unless they are picked off, the leaves turn brown and fall off after 24 hours."
+          ],
+          [
+            "78-82",
+            "Nothing happens at the chosen point of origin. Instead, a burst of colorful, shimmering light extends from you in a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation}. Each creature in the area must succeed on a {@dc 15} Constitution saving throw or have the {@condition Blinded|SRD52} condition for 1 minute. A creature repeats the save at the end of each of its turns, ending the effect on itself on a success."
+          ],
+          [
+            "83-87",
+            "Nothing happens at the chosen point of origin. Instead, you cast {@spell Invisibility|SRD52} on yourself."
+          ],
+          [
+            "88-92",
+            "Nothing happens at the chosen point of origin. Instead, a stream of {@dice 1d4 × 10} gems, each worth 1 GP, shoots from the wand's tip in a {@variantrule Line [Area of Effect]|SRD52|Line} 30 feet long and 5 feet wide toward the chosen point of origin. Each gem deals 1 Bludgeoning damage, and the total damage of the gems is divided equally among all creatures in the {@variantrule Line [Area of Effect]|SRD52|Line}."
+          ],
+          [
+            "93-97",
+            "You cast {@spell Polymorph|SRD52}, targeting the creature closest to the chosen point of origin. Roll {@dice 1d4} to determine the target's new form. On a {@b 1}, the new form is a {@creature Black Bear|SRD52}; on a {@b 2}, the new form is a {@creature Giant Wasp|SRD52}; on a {@b 3-4}, the new form is a {@creature Frog|SRD52}."
+          ],
+          [
+            "98-00",
+            "The creature closest to the chosen point of origin makes a {@dc 15} Constitution saving throw. On a failed save, the creature has the {@condition Restrained|SRD52} condition and begins to turn to stone. While {@condition Restrained|SRD52} in this way, the creature repeats the save at the end of its next turn. On a successful save, the effect ends. On a failed save, the creature has the {@condition Petrified|SRD52} condition instead of the {@condition Restrained|SRD52} condition. The petrification lasts until the creature is freed by the {@spell Greater Restoration|SRD52} spell or similar magic."
+          ]
+        ],
+        "data": {
+          "genTables": {
+            "tableInclude": true
+          }
+        }
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "darkness|srd52",
+          "enlarge/reduce|srd52",
+          "faerie fire|srd52",
+          "fireball|srd52",
+          "greater restoration|srd52",
+          "gust of wind|srd52",
+          "invisibility|srd52",
+          "lightning bolt|srd52",
+          "polymorph|srd52",
+          "slow|srd52",
+          "stinking cloud|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 251,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/934"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.warhorse",
+    "kind": "item",
+    "name": "Warhorse",
+    "type": "MNT|SRD52",
+    "rarity": "none",
+    "value": 40000,
+    "carryingCapacity": 540,
+    "speed": 60,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 100,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/936"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.warship",
+    "kind": "item",
+    "name": "Warship",
+    "type": "SHP|SRD52",
+    "rarity": "none",
+    "value": 2500000,
+    "crew": 60,
+    "vehAc": 15,
+    "vehHp": 500,
+    "vehDmgThresh": 20,
+    "vehSpeed": 2.5,
+    "capPassenger": 60,
+    "capCargo": 200,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 101,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/938"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.waterskin",
+    "kind": "item",
+    "name": "Waterskin",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 5,
+    "weightNote": "(full)",
+    "value": 20,
+    "entries": [
+      "A Waterskin holds up to 4 pints. If you don't drink sufficient water, you risk dehydration."
+    ],
+    "containerCapacity": {
+      "volume": [
+        0.08
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/940"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.well-of-many-worlds",
+    "kind": "item",
+    "name": "Well of Many Worlds",
+    "rarity": "legendary",
+    "wondrous": true,
+    "entries": [
+      "This fine black cloth, soft as silk, is folded up to the dimensions of a handkerchief. It unfolds into a circular sheet 6 feet in diameter.",
+      "You can take a {@action Magic|SRD52} action to unfold the Well of Many Worlds and place it on a solid surface, whereupon it forms a two-way, 6-foot-diameter, circular portal to another world or plane of existence. Each time the item opens a portal, the DM decides where it leads. The portal remains open until a creature within 5 feet of it takes a {@action Magic|SRD52} action to close it by taking hold of the edges of the cloth and folding it up.",
+      "Once the Well of Many Worlds has opened a portal, it can't do so again for {@dice 1d8} hours."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 253,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/942"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.white-dragon-scale-mail",
+    "kind": "item",
+    "name": "White Dragon Scale Mail",
+    "baseItem": "scale mail|srd52",
+    "type": "MA|SRD52",
+    "resist": [
+      "cold"
+    ],
+    "detail1": "white",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 45,
+    "ac": 14,
+    "bonusAc": "+1",
+    "stealth": true,
+    "entries": [
+      "{#itemEntry Dragon Scale Mail|SRD52}"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 218,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/946"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wind-fan",
+    "kind": "item",
+    "name": "Wind Fan",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "While holding this fan, you can cast {@spell Gust of Wind|SRD52} (save {@dc 13}) from it. Each subsequent time the fan is used before the next dawn, it has a cumulative {@chance 20} chance of not working; if the fan fails to work, it tears into useless, nonmagical tatters."
+    ],
+    "attachedSpells": {
+      "daily": {
+        "1e": [
+          "gust of wind|srd52"
+        ]
+      }
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 253,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/948"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.winged-boots",
+    "kind": "item",
+    "name": "Winged Boots",
+    "rarity": "uncommon",
+    "reqAttune": true,
+    "wondrous": true,
+    "modifySpeed": {
+      "static": {
+        "fly": 30
+      }
+    },
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4}",
+    "charges": 4,
+    "entries": [
+      "These boots have 4 charges and regain {@dice 1d4} expended charges daily at dawn. While wearing the boots, you can take a {@action Magic|SRD52} action to expend 1 charge, gaining a {@variantrule Fly Speed|SRD52} of 30 feet for 1 hour. If you are flying when the duration expires, you descend at a rate of 30 feet per round until you land."
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 253,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/950"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wings-of-flying",
+    "kind": "item",
+    "name": "Wings of Flying",
+    "rarity": "rare",
+    "reqAttune": true,
+    "wondrous": true,
+    "modifySpeed": {
+      "static": {
+        "fly": 60
+      }
+    },
+    "entries": [
+      "While wearing this cloak, you can take a {@action Magic|SRD52} action to turn the cloak into a pair of wings on your back. The wings lasts for 1 hour or until you end the effect early as a {@action Magic|SRD52} action. The wings give you a {@variantrule Fly Speed|SRD52} of 60 feet. If you are aloft when the wings disappear, you fall. When the wings disappear, you can't use them again for {@dice 1d12} hours."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 253,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/952"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.wyvern-poison",
+    "kind": "item",
+    "name": "Wyvern Poison",
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 120000,
+    "poison": true,
+    "entries": [
+      "A creature subjected to Wyvern Poison makes a {@dc 14} Constitution saving throw, taking 24 ({@damage 7d6}) Poison damage on a failed save or half as much damage on a successful one."
+    ],
+    "poisonTypes": [
+      "injury"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 198,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/954"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item.yew-wand",
+    "kind": "item",
+    "name": "Yew Wand",
+    "type": "SCF|SRD52",
+    "scfType": "druid",
+    "rarity": "none",
+    "weight": 1,
+    "value": 1000,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 97,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/item/956"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.arcane-focus",
+    "kind": "item-group",
+    "name": "Arcane Focus",
+    "type": "SCF|SRD52",
+    "scfType": "arcane",
+    "rarity": "none",
+    "focus": [
+      "Sorcerer",
+      "Warlock",
+      "Wizard"
+    ],
+    "items": [
+      "Crystal|SRD52",
+      "Orb|SRD52",
+      "Rod|SRD52",
+      "Staff|SRD52",
+      "Wand|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/0"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.armor-of-resistance",
+    "kind": "item-group",
+    "name": "Armor of Resistance",
+    "type": "GV|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "You have {@variantrule Resistance|SRD52} to one type of damage while you wear this armor. The DM chooses the type or determines it randomly by rolling on the following table.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-10"
+        ],
+        "colLabels": [
+          "d10",
+          "Damage Type"
+        ],
+        "rows": [
+          [
+            "1",
+            "Acid"
+          ],
+          [
+            "2",
+            "Cold"
+          ],
+          [
+            "3",
+            "Fire"
+          ],
+          [
+            "4",
+            "Force"
+          ],
+          [
+            "5",
+            "Lightning"
+          ],
+          [
+            "6",
+            "Necrotic"
+          ],
+          [
+            "7",
+            "Poison"
+          ],
+          [
+            "8",
+            "Psychic"
+          ],
+          [
+            "9",
+            "Radiant"
+          ],
+          [
+            "10",
+            "Thunder"
+          ]
+        ]
+      }
+    ],
+    "items": [],
+    "itemsHidden": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 210,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/1"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.armor-of-vulnerability",
+    "kind": "item-group",
+    "name": "Armor of Vulnerability",
+    "type": "GV|SRD52",
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "items": [
+      "Armor of Vulnerability (Bludgeoning)|SRD52",
+      "Armor of Vulnerability (Piercing)|SRD52",
+      "Armor of Vulnerability (Slashing)|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 211,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/2"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.artisan-s-tools",
+    "kind": "item-group",
+    "name": "Artisan's Tools",
+    "type": "AT|SRD52",
+    "rarity": "none",
+    "items": [
+      "Alchemist's Supplies|SRD52",
+      "Brewer's Supplies|SRD52",
+      "Calligrapher's Supplies|SRD52",
+      "Carpenter's Tools|SRD52",
+      "Cartographer's Tools|SRD52",
+      "Cobbler's Tools|SRD52",
+      "Cook's Utensils|SRD52",
+      "Glassblower's Tools|SRD52",
+      "Jeweler's Tools|SRD52",
+      "Leatherworker's Tools|SRD52",
+      "Mason's Tools|SRD52",
+      "Painter's Supplies|SRD52",
+      "Potter's Tools|SRD52",
+      "Smith's Tools|SRD52",
+      "Tinker's Tools|SRD52",
+      "Weaver's Tools|SRD52",
+      "Woodcarver's Tools|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/4"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.bag-of-tricks",
+    "kind": "item-group",
+    "name": "Bag of Tricks",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "recharge": "dawn",
+    "items": [
+      "Bag of Tricks, Gray|SRD52",
+      "Bag of Tricks, Rust|SRD52",
+      "Bag of Tricks, Tan|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 212,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/5"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.belt-of-giant-strength",
+    "kind": "item-group",
+    "name": "Belt of Giant Strength",
+    "rarity": "varies",
+    "reqAttune": true,
+    "wondrous": true,
+    "entries": [
+      {
+        "type": "table",
+        "colLabels": [
+          "Belt",
+          "Str.",
+          "Rarity"
+        ],
+        "colStyles": [
+          "col-8",
+          "col-2 text-center",
+          "col-2"
+        ],
+        "rows": [
+          [
+            "{@item Belt of Hill Giant Strength|SRD52}",
+            "21",
+            "Rare"
+          ],
+          [
+            "{@item Belt of Frost Giant Strength|SRD52} or {@item Belt of Stone Giant Strength|SRD52}",
+            "23",
+            "Very Rare"
+          ],
+          [
+            "{@item Belt of Fire Giant Strength|SRD52}",
+            "25",
+            "Very Rare"
+          ],
+          [
+            "{@item Belt of Cloud Giant Strength|SRD52}",
+            "27",
+            "Legendary"
+          ],
+          [
+            "{@item Belt of Storm Giant Strength|SRD52}",
+            "29",
+            "Legendary"
+          ]
+        ]
+      }
+    ],
+    "items": [
+      "Belt of Cloud Giant Strength|SRD52",
+      "Belt of Fire Giant Strength|SRD52",
+      "Belt of Frost Giant Strength|SRD52",
+      "Belt of Hill Giant Strength|SRD52",
+      "Belt of Stone Giant Strength|SRD52",
+      "Belt of Storm Giant Strength|SRD52"
+    ],
+    "itemsHidden": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 213,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/6"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.carpet-of-flying",
+    "kind": "item-group",
+    "name": "Carpet of Flying",
+    "rarity": "very rare",
+    "wondrous": true,
+    "entries": [
+      "You can make this carpet hover and fly by taking a {@action Magic|SRD52} action and using the carpet's command word. It moves according to your directions if you are within 30 feet of it.",
+      "Four sizes of Carpet of Flying exist. The DM chooses the size of a given carpet or determines it randomly by rolling on the following table. A carpet can carry up to twice the weight shown on the table, but its {@variantrule Fly Speed|SRD52} is halved if it carries more than its normal capacity.",
+      {
+        "type": "table",
+        "caption": "Applicable Carpet Sizes",
+        "colStyles": [
+          "col-2 text-center",
+          "col-4",
+          "col-3 text-center",
+          "col-3 text-center"
+        ],
+        "colLabels": [
+          "1d100",
+          "Size",
+          "Capacity",
+          "Fly Speed"
+        ],
+        "rows": [
+          [
+            "01-20",
+            "{@item Carpet of Flying, 3 ft. × 5 ft.|SRD52}",
+            "200 lb.",
+            "80 feet"
+          ],
+          [
+            "21-55",
+            "{@item Carpet of Flying, 4 ft. × 6 ft.|SRD52}",
+            "400 lb.",
+            "60 feet"
+          ],
+          [
+            "56-80",
+            "{@item Carpet of Flying, 5 ft. × 7 ft.|SRD52}",
+            "600 lb.",
+            "40 feet"
+          ],
+          [
+            "81-00",
+            "{@item Carpet of Flying, 6 ft. × 9 ft.|SRD52}",
+            "800 lb.",
+            "30 feet"
+          ]
+        ]
+      }
+    ],
+    "items": [
+      "Carpet of Flying, 3 ft. × 5 ft.|SRD52",
+      "Carpet of Flying, 4 ft. × 6 ft.|SRD52",
+      "Carpet of Flying, 5 ft. × 7 ft.|SRD52",
+      "Carpet of Flying, 6 ft. × 9 ft.|SRD52"
+    ],
+    "itemsHidden": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 215,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/7"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.dragon-scale-mail",
+    "kind": "item-group",
+    "name": "Dragon Scale Mail",
+    "baseItem": "scale mail|srd52",
+    "type": "MA|SRD52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "weight": 45,
+    "ac": 14,
+    "bonusAc": "+1",
+    "stealth": true,
+    "items": [
+      "Black Dragon Scale Mail|SRD52",
+      "Blue Dragon Scale Mail|SRD52",
+      "Brass Dragon Scale Mail|SRD52",
+      "Bronze Dragon Scale Mail|SRD52",
+      "Copper Dragon Scale Mail|SRD52",
+      "Gold Dragon Scale Mail|SRD52",
+      "Green Dragon Scale Mail|SRD52",
+      "Red Dragon Scale Mail|SRD52",
+      "Silver Dragon Scale Mail|SRD52",
+      "White Dragon Scale Mail|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 218,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/9"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.druidic-focus",
+    "kind": "item-group",
+    "name": "Druidic Focus",
+    "type": "SCF|SRD52",
+    "scfType": "druid",
+    "rarity": "none",
+    "focus": [
+      "Druid"
+    ],
+    "items": [
+      "Sprig of mistletoe|SRD52",
+      "Wooden staff|SRD52",
+      "Yew wand|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/10"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.elemental-gem",
+    "kind": "item-group",
+    "name": "Elemental Gem",
+    "rarity": "uncommon",
+    "wondrous": true,
+    "items": [
+      "Elemental Gem, Blue Sapphire|SRD52",
+      "Elemental Gem, Emerald|SRD52",
+      "Elemental Gem, Red Corundum|SRD52",
+      "Elemental Gem, Yellow Diamond|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 220,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/11"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.figurine-of-wondrous-power",
+    "kind": "item-group",
+    "name": "Figurine of Wondrous Power",
+    "rarity": "varies",
+    "wondrous": true,
+    "items": [
+      "Figurine of Wondrous Power, Bronze Griffon|SRD52",
+      "Figurine of Wondrous Power, Ebony Fly|SRD52",
+      "Figurine of Wondrous Power, Golden Lions|SRD52",
+      "Figurine of Wondrous Power, Ivory Goats|SRD52",
+      "Figurine of Wondrous Power, Marble Elephant|SRD52",
+      "Figurine of Wondrous Power, Obsidian Steed|SRD52",
+      "Figurine of Wondrous Power, Onyx Dog|SRD52",
+      "Figurine of Wondrous Power, Serpentine Owl|SRD52",
+      "Figurine of Wondrous Power, Silver Raven|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/12"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.gaming-set",
+    "kind": "item-group",
+    "name": "Gaming Set",
+    "type": "GS|SRD52",
+    "rarity": "none",
+    "items": [
+      "Dice Set|SRD52",
+      "Dragonchess Set|SRD52",
+      "Playing Cards|SRD52",
+      "Three-Dragon Ante Set|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/14"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.holy-symbol",
+    "kind": "item-group",
+    "name": "Holy Symbol",
+    "type": "SCF|SRD52",
+    "scfType": "holy",
+    "rarity": "none",
+    "focus": [
+      "Cleric",
+      "Paladin"
+    ],
+    "items": [
+      "Amulet|SRD52",
+      "Emblem|SRD52",
+      "Reliquary|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 249,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/15"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.horn-of-valhalla",
+    "kind": "item-group",
+    "name": "Horn of Valhalla",
+    "rarity": "varies",
+    "wondrous": true,
+    "entries": [
+      "You can take a {@action Magic|SRD52} action to blow this horn. In response, warrior spirits from the plane of Ysgard appear in unoccupied spaces within 60 feet of you. Each spirit uses the {@creature Berserker|SRD52} stat block and returns to Ysgard after 1 hour or when it drops to 0 {@variantrule Hit Points|SRD52}. The spirits look like living, breathing warriors, and they have {@variantrule Immunity|SRD52} to the {@condition Charmed|SRD52} and {@condition Frightened|SRD52} conditions. Once you use the horn, it can't be used again until 7 days have passed.",
+      "Four types of Horn of Valhalla are known to exist, each made of a different metal. The horn's type determines how many spirits it summons, as well as the requirement for its use. The DM chooses the horn's type or determines it randomly by rolling on the following table. If you blow the horn without meeting its requirement, the summoned spirits attack you.",
+      "If you meet the requirement, they are {@variantrule Friendly [Attitude]|SRD52|Friendly} to you and your allies and follow your commands.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-2 text-center",
+          "col-2 text-center",
+          "col-6"
+        ],
+        "colLabels": [
+          "1d100",
+          "Horn Type",
+          "Spirits",
+          "Requirement"
+        ],
+        "rows": [
+          [
+            "01-40",
+            "{@item Horn of Valhalla, Silver|SRD52|Silver}",
+            "2",
+            "None"
+          ],
+          [
+            "41-75",
+            "{@item Horn of Valhalla, Brass|SRD52|Brass}",
+            "3",
+            "{@variantrule Proficiency|SRD52} with all Simple weapons"
+          ],
+          [
+            "76-90",
+            "{@item Horn of Valhalla, Bronze|SRD52|Bronze}",
+            "4",
+            "Training with all Medium armor"
+          ],
+          [
+            "91-00",
+            "{@item Horn of Valhalla, Iron|SRD52|Iron}",
+            "5",
+            "{@variantrule Proficiency|SRD52} with all Martial weapons"
+          ]
+        ]
+      }
+    ],
+    "items": [
+      "Horn of Valhalla, Brass|SRD52",
+      "Horn of Valhalla, Bronze|SRD52",
+      "Horn of Valhalla, Iron|SRD52",
+      "Horn of Valhalla, Silver|SRD52"
+    ],
+    "itemsHidden": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 226,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/16"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.ioun-stone",
+    "kind": "item-group",
+    "name": "Ioun Stone",
+    "rarity": "varies",
+    "reqAttune": true,
+    "wondrous": true,
+    "entries": [
+      "{#itemEntry Ioun Stone|SRD52}",
+      "The type of stone determines its rarity and effects."
+    ],
+    "items": [
+      "Ioun Stone, Absorption|SRD52",
+      "Ioun Stone, Agility|SRD52",
+      "Ioun Stone, Awareness|SRD52",
+      "Ioun Stone, Fortitude|SRD52",
+      "Ioun Stone, Greater Absorption|SRD52",
+      "Ioun Stone, Insight|SRD52",
+      "Ioun Stone, Intellect|SRD52",
+      "Ioun Stone, Leadership|SRD52",
+      "Ioun Stone, Mastery|SRD52",
+      "Ioun Stone, Protection|SRD52",
+      "Ioun Stone, Regeneration|SRD52",
+      "Ioun Stone, Reserve|SRD52",
+      "Ioun Stone, Strength|SRD52",
+      "Ioun Stone, Sustenance|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 227,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/17"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.manual-of-golems",
+    "kind": "item-group",
+    "name": "Manual of Golems",
+    "rarity": "very rare",
+    "wondrous": true,
+    "weight": 5,
+    "entries": [
+      "This tome contains information and incantations necessary to make a particular type of golem. To decipher and use the manual, you must be a spellcaster with at least two 5th-level spell slots. A creature that can't use a manual of golems and attempts to read it takes {@damage 6d6} psychic damage.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-4",
+          "col-3 text-center",
+          "col-3 text-right"
+        ],
+        "colLabels": [
+          "d20",
+          "Golem",
+          "Time",
+          "Cost"
+        ],
+        "rows": [
+          [
+            "1-5",
+            "{@item Manual of Clay Golems|SRD52}",
+            "30 days",
+            "65,000 GP"
+          ],
+          [
+            "6-17",
+            "{@item Manual of Flesh Golems|SRD52}",
+            "60 days",
+            "50,000 GP"
+          ],
+          [
+            "18",
+            "{@item Manual of Iron Golems|SRD52}",
+            "120 days",
+            "100,000 GP"
+          ],
+          [
+            "19-20",
+            "{@item Manual of Stone Golems|SRD52}",
+            "90 days",
+            "80,000 GP"
+          ]
+        ]
+      },
+      "To create a golem, you must spend the time shown on the table, working without interruption with the manual at hand and resting no more than 8 hours per day. You must also pay the specified cost to purchase supplies.",
+      "Once you finish creating the golem, the book is consumed in eldritch flames. The golem becomes animate when the ashes of the manual are sprinkled on it. It is under your control, and it understands and obeys your spoken commands."
+    ],
+    "items": [
+      "Manual of Clay Golems|SRD52",
+      "Manual of Flesh Golems|SRD52",
+      "Manual of Iron Golems|SRD52",
+      "Manual of Stone Golems|SRD52"
+    ],
+    "itemsHidden": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 229,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/18"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.musical-instrument",
+    "kind": "item-group",
+    "name": "Musical Instrument",
+    "type": "INS|SRD52",
+    "rarity": "none",
+    "items": [
+      "Bagpipes|SRD52",
+      "Drum|SRD52",
+      "Dulcimer|SRD52",
+      "Flute|SRD52",
+      "Horn|SRD52",
+      "Lute|SRD52",
+      "Lyre|SRD52",
+      "Pan Flute|SRD52",
+      "Shawm|SRD52",
+      "Viol|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/20"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.potion-of-giant-strength",
+    "kind": "item-group",
+    "name": "Potion of Giant Strength",
+    "type": "P|SRD52",
+    "rarity": "varies",
+    "weight": 0.5,
+    "items": [
+      "Potion of Hill Giant Strength|SRD52",
+      "Potion of Frost Giant Strength|SRD52",
+      "Potion of Stone Giant Strength|SRD52",
+      "Potion of Fire Giant Strength|SRD52",
+      "Potion of Cloud Giant Strength|SRD52",
+      "Potion of Storm Giant Strength|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 235,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/21"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.potion-of-resistance",
+    "kind": "item-group",
+    "name": "Potion of Resistance",
+    "type": "P|SRD52",
+    "rarity": "uncommon",
+    "weight": 0.5,
+    "entries": [
+      "When you drink this potion, you have {@variantrule Resistance|SRD52} to one type of damage for 1 hour. The DM chooses the type or determines it randomly by rolling on the following table.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-10"
+        ],
+        "colLabels": [
+          "d10",
+          "Damage Type"
+        ],
+        "rows": [
+          [
+            "1",
+            "{@item Potion of Acid Resistance|SRD52|Acid}"
+          ],
+          [
+            "2",
+            "{@item Potion of Cold Resistance|SRD52|Cold}"
+          ],
+          [
+            "3",
+            "{@item Potion of Fire Resistance|SRD52|Fire}"
+          ],
+          [
+            "4",
+            "{@item Potion of Force Resistance|SRD52|Force}"
+          ],
+          [
+            "5",
+            "{@item Potion of Lightning Resistance|SRD52|Lightning}"
+          ],
+          [
+            "6",
+            "{@item Potion of Necrotic Resistance|SRD52|Necrotic}"
+          ],
+          [
+            "7",
+            "{@item Potion of Poison Resistance|SRD52|Poison}"
+          ],
+          [
+            "8",
+            "{@item Potion of Psychic Resistance|SRD52|Psychic}"
+          ],
+          [
+            "9",
+            "{@item Potion of Radiant Resistance|SRD52|Radiant}"
+          ],
+          [
+            "10",
+            "{@item Potion of Thunder Resistance|SRD52|Thunder}"
+          ]
+        ]
+      }
+    ],
+    "items": [
+      "Potion of Acid Resistance|SRD52",
+      "Potion of Cold Resistance|SRD52",
+      "Potion of Fire Resistance|SRD52",
+      "Potion of Force Resistance|SRD52",
+      "Potion of Lightning Resistance|SRD52",
+      "Potion of Necrotic Resistance|SRD52",
+      "Potion of Poison Resistance|SRD52",
+      "Potion of Psychic Resistance|SRD52",
+      "Potion of Radiant Resistance|SRD52",
+      "Potion of Thunder Resistance|SRD52"
+    ],
+    "itemsHidden": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 236,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/23"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.potions-of-healing",
+    "kind": "item-group",
+    "name": "Potions of Healing",
+    "type": "P|SRD52",
+    "rarity": "varies",
+    "weight": 0.5,
+    "items": [
+      "Potion of Healing|SRD52",
+      "Potion of Greater Healing|SRD52",
+      "Potion of Superior Healing|SRD52",
+      "Potion of Supreme Healing|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 206,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/24"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.feather-token",
+    "kind": "item-group",
+    "name": "Feather Token",
+    "rarity": "varies",
+    "wondrous": true,
+    "entries": [
+      "This object looks like a feather. Different types of feather tokens exist, each with a different single-use effect. The DM chooses the kind of token or determines it randomly by rolling on the Feather Tokens table. The type of token determines its rarity.",
+      {
+        "type": "table",
+        "caption": "Feather Tokens",
+        "colStyles": [
+          "col-2 text-center",
+          "col-5 text-center",
+          "col-5 text-center"
+        ],
+        "colLabels": [
+          "1d100",
+          "Token",
+          "Rarity"
+        ],
+        "rows": [
+          [
+            "01-20",
+            "{@item Feather Token, Anchor|SRD52|Anchor}",
+            "Uncommon"
+          ],
+          [
+            "21-35",
+            "{@item Feather Token, Bird|SRD52|Bird}",
+            "Rare"
+          ],
+          [
+            "36-50",
+            "{@item Feather Token, Fan|SRD52|Fan}",
+            "Uncommon"
+          ],
+          [
+            "51-65",
+            "{@item Feather Token, Swan boat|SRD52|Swan Boat}",
+            "Rare"
+          ],
+          [
+            "66-90",
+            "{@item Feather Token, Tree|SRD52|Tree}",
+            "Uncommon"
+          ],
+          [
+            "91-00",
+            "{@item Feather Token, Whip|SRD52|Whip}",
+            "Rare"
+          ]
+        ]
+      }
+    ],
+    "items": [
+      "Feather Token, Anchor|SRD52",
+      "Feather Token, Bird|SRD52",
+      "Feather Token, Fan|SRD52",
+      "Feather Token, Swan Boat|SRD52",
+      "Feather Token, Tree|SRD52",
+      "Feather Token, Whip|SRD52"
+    ],
+    "itemsHidden": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 221,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/25"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.ring-of-elemental-command",
+    "kind": "item-group",
+    "name": "Ring of Elemental Command",
+    "type": "RG|SRD52",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4 + 1}",
+    "charges": 5,
+    "items": [
+      "Ring of Elemental Command (Air)|SRD52",
+      "Ring of Elemental Command (Earth)|SRD52",
+      "Ring of Elemental Command (Fire)|SRD52",
+      "Ring of Elemental Command (Water)|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 237,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/26"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.ring-of-resistance",
+    "kind": "item-group",
+    "name": "Ring of Resistance",
+    "type": "RG|SRD52",
+    "rarity": "rare",
+    "entries": [
+      "You have {@variantrule Resistance|SRD52} to one damage type while wearing this ring. The gemstone in the ring indicates the type, which the DM chooses or determines randomly by rolling on the following table.",
+      {
+        "type": "table",
+        "colStyles": [
+          "col-2 text-center",
+          "col-5",
+          "col-5"
+        ],
+        "colLabels": [
+          "d10",
+          "Damage Type",
+          "Gem"
+        ],
+        "rows": [
+          [
+            "1",
+            "{@item Ring of Acid Resistance|SRD52|Acid}",
+            "Pearl"
+          ],
+          [
+            "2",
+            "{@item Ring of Cold Resistance|SRD52|Cold}",
+            "Tourmaline"
+          ],
+          [
+            "3",
+            "{@item Ring of Fire Resistance|SRD52|Fire}",
+            "Garnet"
+          ],
+          [
+            "4",
+            "{@item Ring of Force Resistance|SRD52|Force}",
+            "Sapphire"
+          ],
+          [
+            "5",
+            "{@item Ring of Lightning Resistance|SRD52|Lightning}",
+            "Citrine"
+          ],
+          [
+            "6",
+            "{@item Ring of Necrotic Resistance|SRD52|Necrotic}",
+            "Jet"
+          ],
+          [
+            "7",
+            "{@item Ring of Poison Resistance|SRD52|Poison}",
+            "Amethyst"
+          ],
+          [
+            "8",
+            "{@item Ring of Psychic Resistance|SRD52|Psychic}",
+            "Jade"
+          ],
+          [
+            "9",
+            "{@item Ring of Radiant Resistance|SRD52|Radiant}",
+            "Topaz"
+          ],
+          [
+            "10",
+            "{@item Ring of Thunder Resistance|SRD52|Thunder}",
+            "Spinel"
+          ]
+        ]
+      }
+    ],
+    "items": [
+      "Ring of Acid Resistance|SRD52",
+      "Ring of Cold Resistance|SRD52",
+      "Ring of Fire Resistance|SRD52",
+      "Ring of Force Resistance|SRD52",
+      "Ring of Lightning Resistance|SRD52",
+      "Ring of Necrotic Resistance|SRD52",
+      "Ring of Poison Resistance|SRD52",
+      "Ring of Psychic Resistance|SRD52",
+      "Ring of Radiant Resistance|SRD52",
+      "Ring of Thunder Resistance|SRD52"
+    ],
+    "itemsHidden": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 238,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/27"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.spell-scroll",
+    "kind": "item-group",
+    "name": "Spell Scroll",
+    "type": "SC|SRD52",
+    "rarity": "varies",
+    "items": [
+      "Spell Scroll (Cantrip)|SRD52",
+      "Spell Scroll (Level 1)|SRD52",
+      "Spell Scroll (Level 2)|SRD52",
+      "Spell Scroll (Level 3)|SRD52",
+      "Spell Scroll (Level 4)|SRD52",
+      "Spell Scroll (Level 5)|SRD52",
+      "Spell Scroll (Level 6)|SRD52",
+      "Spell Scroll (Level 7)|SRD52",
+      "Spell Scroll (Level 8)|SRD52",
+      "Spell Scroll (Level 9)|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 204,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/28"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-group.wand-of-the-war-mage",
+    "kind": "item-group",
+    "name": "Wand of the War Mage",
+    "type": "WD|SRD52",
+    "rarity": "varies",
+    "reqAttune": "by a spellcaster",
+    "reqAttuneTags": [
+      {
+        "spellcasting": true
+      }
+    ],
+    "weight": 1,
+    "items": [
+      "+1 Wand of the War Mage|SRD52",
+      "+2 Wand of the War Mage|SRD52",
+      "+3 Wand of the War Mage|SRD52"
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 251,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items.json",
+        "pointer": "/itemGroup/30"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.alchemist-s-supplies",
+    "kind": "baseitem",
+    "name": "Alchemist's Supplies",
+    "type": "AT|SRD52",
+    "rarity": "none",
+    "weight": 8,
+    "value": 5000,
+    "entries": [
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "name": "Ability:",
+            "type": "item",
+            "entries": [
+              "Intelligence"
+            ]
+          },
+          {
+            "name": "Utilize:",
+            "type": "item",
+            "entries": [
+              "Identify a substance ({@dc 15}), or start a fire ({@dc 15})"
+            ]
+          },
+          {
+            "name": "Craft:",
+            "type": "item",
+            "entries": [
+              "{@item Acid|SRD52}, {@item Alchemist's Fire|SRD52}, {@item Component Pouch|SRD52}, {@item Oil|SRD52}, {@item Paper|SRD52}, {@item Perfume|SRD52}"
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/1"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.arrow",
+    "kind": "baseitem",
+    "name": "Arrow",
+    "edition": "one",
+    "type": "A|SRD52",
+    "rarity": "none",
+    "weight": 0.05,
+    "value": 5,
+    "arrow": true,
+    "entries": [
+      "Arrows are used with a weapon that has the ammunition property to make a ranged attack. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack (you need a free hand to load a one-handed weapon). At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.",
+      "Arrows are typically stored in a {@item Quiver|SRD52} (bought separately)."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 91,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/3"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.arrows-20",
+    "kind": "baseitem",
+    "name": "Arrows (20)",
+    "edition": "one",
+    "type": "A|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 100,
+    "arrow": true,
+    "entries": [
+      "Arrows are used with a weapon that has the ammunition property to make a ranged attack. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack (you need a free hand to load a one-handed weapon). At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.",
+      "Arrows are typically stored in a {@item Quiver|SRD52} (bought separately)."
+    ],
+    "packContents": [
+      {
+        "item": "arrow|srd52",
+        "quantity": 20
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 96,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/5"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.bagpipes",
+    "kind": "baseitem",
+    "name": "Bagpipes",
+    "edition": "one",
+    "type": "INS|SRD52",
+    "rarity": "none",
+    "weight": 6,
+    "value": 3000,
+    "entries": [
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "name": "Ability:",
+            "type": "item",
+            "entries": [
+              "Charisma"
+            ]
+          },
+          {
+            "name": "Utilize:",
+            "type": "item",
+            "entries": [
+              "Play a known tune ({@dc 10}), or improvise a song ({@dc 15})"
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/7"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.battleaxe",
+    "kind": "baseitem",
+    "name": "Battleaxe",
+    "edition": "one",
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 4,
+    "value": 1000,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "S",
+    "dmg2": "1d10",
+    "axe": true,
+    "weapon": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 91,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/9"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.blowgun",
+    "kind": "baseitem",
+    "name": "Blowgun",
+    "edition": "one",
+    "type": "R|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 1000,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "range": "25/100",
+    "dmg1": "1",
+    "dmgType": "P",
+    "weapon": true,
+    "ammoType": "needle|srd52",
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 91,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/11"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.bolt",
+    "kind": "baseitem",
+    "name": "Bolt",
+    "edition": "one",
+    "type": "A|SRD52",
+    "rarity": "none",
+    "weight": 0.075,
+    "value": 5,
+    "bolt": true,
+    "entries": [
+      "Crossbow bolts are used with a weapon that has the ammunition property to make a ranged attack. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack (you need a free hand to load a one-handed weapon). At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.",
+      "Bolts are typically stored in a {@item Crossbow Bolt Case|SRD52} (bought separately)."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 91,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/14"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.bolts-20",
+    "kind": "baseitem",
+    "name": "Bolts (20)",
+    "edition": "one",
+    "type": "A|SRD52",
+    "rarity": "none",
+    "weight": 1.5,
+    "value": 100,
+    "bolt": true,
+    "entries": [
+      "Crossbow bolts are used with a weapon that has the ammunition property to make a ranged attack. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack (you need a free hand to load a one-handed weapon). At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.",
+      "Bolts are typically stored in a {@item Crossbow Bolt Case|SRD52} (bought separately)."
+    ],
+    "packContents": [
+      {
+        "item": "bolt|srd52",
+        "quantity": 20
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 94,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/15"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.breastplate",
+    "kind": "baseitem",
+    "name": "Breastplate",
+    "edition": "one",
+    "type": "MA|SRD52",
+    "rarity": "none",
+    "weight": 20,
+    "value": 40000,
+    "ac": 14,
+    "armor": true,
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/17"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.brewer-s-supplies",
+    "kind": "baseitem",
+    "name": "Brewer's Supplies",
+    "type": "AT|SRD52",
+    "rarity": "none",
+    "weight": 9,
+    "value": 2000,
+    "entries": [
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "name": "Ability:",
+            "type": "item",
+            "entries": [
+              "Intelligence"
+            ]
+          },
+          {
+            "name": "Utilize:",
+            "type": "item",
+            "entries": [
+              "Detect poisoned drink ({@dc 15}), or identify alcohol ({@dc 10})"
+            ]
+          },
+          {
+            "name": "Craft:",
+            "type": "item",
+            "entries": [
+              "{@item Antitoxin|SRD52}"
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/19"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "baseitem.calligrapher-s-supplies",
+    "kind": "baseitem",
+    "name": "Calligrapher's Supplies",
+    "type": "AT|SRD52",
+    "rarity": "none",
+    "weight": 5,
+    "value": 1000,
+    "entries": [
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "name": "Ability:",
+            "type": "item",
+            "entries": [
+              "Dexterity"
+            ]
+          },
+          {
+            "name": "Utilize:",
+            "type": "item",
+            "entries": [
+              "Write text with impressive flourishes that guard against forgery ({@dc 15})"
+            ]
+          },
+          {
+            "name": "Craft:",
+            "type": "item",
+            "entries": [
+              "{@item Ink|SRD52}, {@item Spell Scroll|SRD52}"
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 93,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/baseitem/21"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  }
+]

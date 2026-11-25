@@ -1,0 +1,249 @@
+{
+  "edition": "srd-5.2.1",
+  "counts": {
+    "item": 464,
+    "itemGroup": 25,
+    "baseitem": 93,
+    "itemProperty": 12,
+    "itemMastery": 8,
+    "magicvariant": 41
+  },
+  "excluded": [
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/107",
+      "reason": "obsolete legacy duplicate; retain modern weapon mastery definition"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/baseitem/122",
+      "reason": "obsolete legacy duplicate; retain modern weapon mastery definition"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/2",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/4",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/6",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/8",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/10",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/12",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/14",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/16",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/18",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/20",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/22",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/24",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/26",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/28",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/30",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/32",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/34",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/36",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/38",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/40",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/42",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/44",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/46",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/48",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/50",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/52",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/54",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/56",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/58",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/59",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/61",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/63",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemType/65",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/1",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/2",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/4",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/5",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/7",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/9",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemEntry/10",
+      "reason": "schema metadata or reusable entry template; not a standalone native rule"
+    }
+  ],
+  "corrections": [
+    {
+      "id": "item.crawler-mucus-contact",
+      "reason": "Correct modern poison name"
+    },
+    {
+      "id": "item.cube-of-force",
+      "reason": "S52-016: correct table and attached spell identities"
+    },
+    {
+      "id": "item.mysterious-deck",
+      "reason": "S52-021: remove non-SRD inset and Bastion effect; correct table identity"
+    },
+    {
+      "id": "item.spider-s-sting",
+      "reason": "Correct modern poison name"
+    },
+    {
+      "id": "item.dragon-orb",
+      "reason": "S52-020: remove non-SRD setting introduction and legacy random properties"
+    }
+  ],
+  "publisherOnly": [
+    "item.plate-armor-of-etherealness"
+  ],
+  "nativeCount": 644
+}
