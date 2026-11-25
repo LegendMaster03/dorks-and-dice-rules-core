@@ -61,3 +61,10 @@ At the prior exact-head audit, all 13 missing SRD 5.1 inline targets were confin
 ## Consolidated native publisher comparison
 
 The historical audit on commit f4162a5aaf2ed6c2aa120d902f2f3fe1b16af95b compared the entire pinned reference pack, including unpromoted narrative. The current `tools/audit_srd_native_fidelity.py` instead inventories promoted native rule prose, nested table cells and labels, retaining exact entity/JSON pointers and source-page evidence. Spell bodies receive complete normalized token-sequence comparisons against their independently extracted official layouts, preserving small substitutions, numeric changes and missing/extra text; other prose is matched against publisher raw-text page indexes, with source-local and elsewhere matches distinguished. Unknown markup, short unmatched cells and partial matches remain review candidates. Table-cell presence is not row/column parity; casting header structures, stat-block numeric fields, and omitted publisher content require separate verification. The existing official-source workflow generates the complete report from the hash-verified publisher PDFs. It is diagnostic, not a new runtime schema, automatic text rewrite, or rights approval. Publisher source and third-party pinned source files are unchanged.
+
+### First confirmed spell corrections
+
+- **SRD 5.1 Acid Splash (p.114):** remove the imported requirement to see each selected creature; the pinned publisher PDF requires only the stated range and separation. Remove the corresponding sight-target tag. The modern spell remains unchanged.
+- **SRD 5.2.1 Animate Dead (p.108):** restore the publisher cross-reference to the Monsters section for the Skeleton and Zombie stat blocks. No mechanical grant changes.
+
+Both native corrections are reproducible in the existing spell promotion generator. Their entire normalized spell bodies are covered by the native fidelity comparison. The remainder of the spell inventory and other content categories have not been certified.

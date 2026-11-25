@@ -25,6 +25,21 @@ function enrichSpell(row, candidate, index, manifest, tag) {
         delete result[field];
         if (field in candidate) result[field] = candidate[field];
     }
+    // Keep publisher-confirmed differences in the native projection, not the pinned corpus.
+    if(tag==="51"&&row.id==="spell.acid-splash"){
+        const evidence=row.officialTextLayout.replace(/\s+/g," ");
+        if(!evidence.includes("Choose one creature within range, or choose two creatures within range")||
+           result.entries[0].split("you can see").length!==3||!result.miscTags.includes("SGT"))
+            throw Error("Unexpected legacy Acid Splash targeting evidence");
+        result.entries=[result.entries[0].replaceAll(" you can see",""),...result.entries.slice(1)];
+        result.miscTags=result.miscTags.filter(t=>t!=="SGT");
+    }
+    if(tag==="52"&&row.id==="spell.animate-dead"){
+        const evidence=row.officialTextLayout.replace(/\s+/g," ");
+        if(!evidence.includes('corpse (see “Monsters” for the stat blocks).')||!result.entries[0].endsWith("if you chose a corpse."))
+            throw Error("Unexpected modern Animate Dead cross-reference evidence");
+        result.entries=[result.entries[0].replace(/corpse\.$/,'corpse (see “Monsters” for the stat blocks).'),...result.entries.slice(1)];
+    }
     result.source = {...row.source, structuredSource: pointer(manifest, tag, "spell", index),
         structuredStatus: "publisher-name-level-school-verified; structured body review pending"};
     return result;

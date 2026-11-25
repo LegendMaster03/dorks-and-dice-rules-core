@@ -40,3 +40,15 @@ class NativeFidelityTests(unittest.TestCase):
         self.assertEqual("/entries/1/rows/0/0", record["fragments"][1]["pointer"])
         self.assertTrue(record["fragments"][1]["tableCellOrLabel"])
         self.assertEqual("exact-elsewhere", report["records"][1]["fragments"][0]["status"])
+
+    def test_reviewed_spell_source_corrections(self):
+        root = Path(__file__).resolve().parents[1]
+        import json
+        for package, identity in (("dnd-5e", "spell.acid-splash"),
+                                  ("dnd-5-5e", "spell.animate-dead")):
+            with self.subTest(identity=identity):
+                rows = json.loads((root / "data/rulesets" / package / "native/spells/spells-001-025.json").read_text())
+                row = next(r for r in rows if r["id"] == identity)
+                self.assertEqual("exact-normalized-text", spell_body(row)["status"])
+                if identity == "spell.acid-splash":
+                    self.assertNotIn("SGT", row["miscTags"])
