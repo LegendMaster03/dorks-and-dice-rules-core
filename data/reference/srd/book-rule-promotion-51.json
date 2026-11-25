@@ -176,8 +176,8 @@
     "total": 30,
     "counts": {
       "projected": 15,
-      "existing-catalog-representation": 5,
-      "pending-review": 10
+      "existing-catalog-representation": 7,
+      "pending-review": 8
     },
     "occurrences": [
       {
@@ -353,7 +353,8 @@
         "caption": null,
         "context": "Skills",
         "rows": 5,
-        "disposition": "pending-review"
+        "disposition": "existing-catalog-representation",
+        "representation": "18 native skill definitions; ability grouping verified"
       },
       {
         "pointer": "/data/7/entries/1/entries/2/entries/2/entries/4",
@@ -376,7 +377,8 @@
         "caption": null,
         "context": "Exhaustion",
         "rows": 6,
-        "disposition": "pending-review"
+        "disposition": "existing-catalog-representation",
+        "representation": "condition.exhaustion (identical six-row nested table)"
       },
       {
         "pointer": "/data/41/entries/1/entries/1",

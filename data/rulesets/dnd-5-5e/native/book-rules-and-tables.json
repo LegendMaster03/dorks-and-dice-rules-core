@@ -3149,6 +3149,556 @@
     }
   },
   {
+    "id": "table.actions",
+    "kind": "table",
+    "name": "Actions",
+    "colLabels": [
+      "Action",
+      "Summary"
+    ],
+    "rows": [
+      [
+        "{@action Attack|srd52}",
+        "Attack with a weapon or an {@variantrule Unarmed Strike|srd52}."
+      ],
+      [
+        "{@action Dash|srd52}",
+        "For the rest of the turn, give yourself extra movement equal to your {@variantrule Speed|srd52}."
+      ],
+      [
+        "{@action Disengage|srd52}",
+        "Your movement doesn't provoke {@action Opportunity Attack|srd52} for the rest of the turn."
+      ],
+      [
+        "{@action Dodge|srd52}",
+        "Until the start of your next turn, attack rolls against you have {@variantrule Disadvantage|srd52}, and you make Dexterity saving throws with {@variantrule Advantage|srd52}. You lose this benefit if you have the {@condition Incapacitated|srd52} condition or if your Speed is 0."
+      ],
+      [
+        "{@action Help|srd52}",
+        "Help another creature's ability check or attack roll, or administer first aid."
+      ],
+      [
+        "{@action Hide|srd52}",
+        "Make a Dexterity ({@skill Stealth|srd52}) check."
+      ],
+      [
+        "{@action Influence|srd52}",
+        "Make a Charisma ({@skill Deception|srd52}, {@skill Intimidation|srd52}, {@skill Performance|srd52}, or {@skill Persuasion|srd52}) or Wisdom ({@skill Animal Handling|srd52}) check to alter a creature's attitude."
+      ],
+      [
+        "{@action Magic|srd52}",
+        "Cast a spell, use a magic item, or use a magical feature."
+      ],
+      [
+        "{@action Ready|srd52}",
+        "Prepare to take an action in response to a trigger you define."
+      ],
+      [
+        "{@action Search|srd52}",
+        "Make a Wisdom ({@skill Insight|srd52}, {@skill Medicine|srd52}, {@skill Perception|srd52}, or {@skill Survival|srd52}) check."
+      ],
+      [
+        "{@action Study|srd52}",
+        "Make an Intelligence ({@skill Arcana|srd52}, {@skill History|srd52}, {@skill Investigation|srd52}, {@skill Nature|srd52}, or {@skill Religion|srd52}) check."
+      ],
+      [
+        "{@action Utilize|srd52}",
+        "Use a nonmagical object."
+      ]
+    ],
+    "catalogReferences": [
+      "action.attack",
+      "action.dash",
+      "action.disengage",
+      "action.dodge",
+      "action.help",
+      "action.hide",
+      "action.influence",
+      "action.magic",
+      "action.ready",
+      "action.search",
+      "action.study",
+      "action.utilize",
+      "rulebook.page-009",
+      "rulebook.page-010"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        9,
+        10
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/1",
+        "entryPointer": "/data/1/entries/4/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.glossary-abbreviations",
+    "kind": "table",
+    "name": "Glossary Abbreviations",
+    "colLabels": [
+      "Abbreviation",
+      "Meaning"
+    ],
+    "rows": [
+      [
+        "AC",
+        "Armor Class"
+      ],
+      [
+        "C",
+        "{@status Concentration|srd52}"
+      ],
+      [
+        "CE",
+        "Chaotic Evil"
+      ],
+      [
+        "CG",
+        "Chaotic Good"
+      ],
+      [
+        "Cha.",
+        "Charisma"
+      ],
+      [
+        "CN",
+        "Chaotic Neutral"
+      ],
+      [
+        "Con.",
+        "Constitution"
+      ],
+      [
+        "CP",
+        "Copper Piece(s)"
+      ],
+      [
+        "CR",
+        "{@variantrule Challenge Rating|srd52}"
+      ],
+      [
+        "DC",
+        "{@variantrule Difficulty Class|srd52}"
+      ],
+      [
+        "Dex.",
+        "Dexterity"
+      ],
+      [
+        "GM",
+        "Game Master"
+      ],
+      [
+        "EP",
+        "Electrum Piece(s)"
+      ],
+      [
+        "GP",
+        "Gold Piece(s)"
+      ],
+      [
+        "HP",
+        "{@variantrule Hit Points|srd52|Hit Point}(s)"
+      ],
+      [
+        "Int.",
+        "Intelligence"
+      ],
+      [
+        "LE",
+        "Lawful Evil"
+      ],
+      [
+        "LG",
+        "Lawful Good"
+      ],
+      [
+        "LN",
+        "Lawful Neutral"
+      ],
+      [
+        "M",
+        "Material component"
+      ],
+      [
+        "N",
+        "Neutral"
+      ],
+      [
+        "NE",
+        "Neutral Evil"
+      ],
+      [
+        "NG",
+        "Neutral Good"
+      ],
+      [
+        "NPC",
+        "Nonplayer character"
+      ],
+      [
+        "PB",
+        "{@variantrule Proficiency|srd52|Proficiency Bonus}"
+      ],
+      [
+        "PP",
+        "Platinum Piece(s)"
+      ],
+      [
+        "R",
+        "{@variantrule Ritual|srd52}"
+      ],
+      [
+        "S",
+        "Somatic component"
+      ],
+      [
+        "SP",
+        "Silver Piece(s)"
+      ],
+      [
+        "Str.",
+        "Strength"
+      ],
+      [
+        "V",
+        "Verbal component"
+      ],
+      [
+        "Wis.",
+        "Wisdom"
+      ],
+      [
+        "XP",
+        "{@variantrule Experience Points|srd52|Experience Point}(s)"
+      ]
+    ],
+    "catalogReferences": [
+      "glossary.challenge-rating",
+      "glossary.difficulty-class",
+      "glossary.experience-points",
+      "glossary.hit-points",
+      "glossary.proficiency",
+      "glossary.ritual",
+      "rulebook.page-176",
+      "status.concentration"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        176
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/9",
+        "entryPointer": "/data/9/entries/0/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.magic-item-categories",
+    "kind": "table",
+    "name": "Magic Item Categories",
+    "colLabels": [
+      "Category",
+      "Examples"
+    ],
+    "rows": [
+      [
+        "Armor",
+        "+1 Leather Armor, +1 Shield"
+      ],
+      [
+        "Potions",
+        "Potion of Healing"
+      ],
+      [
+        "Rings",
+        "Ring of Invisibility"
+      ],
+      [
+        "Rods",
+        "Immovable Rod"
+      ],
+      [
+        "Scrolls",
+        "Spell Scroll"
+      ],
+      [
+        "Staffs",
+        "Staff of Striking"
+      ],
+      [
+        "Wands",
+        "Wand of Fireballs"
+      ],
+      [
+        "Weapons",
+        "+1 Ammunition, +1 Longsword"
+      ],
+      [
+        "Wondrous Items",
+        "Bag of Holding, Boots of Elvenkind"
+      ]
+    ],
+    "catalogReferences": [
+      "item-group.spell-scroll",
+      "item.bag-of-holding",
+      "item.boots-of-elvenkind",
+      "item.immovable-rod",
+      "item.potion-of-healing",
+      "item.ring-of-invisibility",
+      "item.staff-of-striking",
+      "item.wand-of-fireballs",
+      "rulebook.page-204"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        204
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/2/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.potion-miscibility",
+    "kind": "table",
+    "name": "Potion Miscibility",
+    "colLabels": [
+      "1d100",
+      "Result"
+    ],
+    "rows": [
+      [
+        "01",
+        "Both potions lose their effects, and the mixture creates a magical explosion in a 5-foot-radius {@variantrule Sphere [Area of Effect]|srd52|Sphere} centered on itself. Each creature in that area takes {@dice 4d10} Force damage."
+      ],
+      [
+        "02–08",
+        "Both potions lose their effects, and the mixture becomes an ingested poison of your choice (see \"Poison\" in \"Gameplay Toolbox\")."
+      ],
+      [
+        "09–15",
+        "Both potions lose their effects."
+      ],
+      [
+        "16–25",
+        "One potion loses its effect."
+      ],
+      [
+        "26–35",
+        "Both potions work, but with their numerical effects and durations halved. If a potion has no numerical effect and no duration, it instead loses its effect."
+      ],
+      [
+        "36–90",
+        "Both potions work normally."
+      ],
+      [
+        "91–99",
+        "Both potions work, but the numerical effects and duration of one potion are doubled. If neither potion has anything to double in this way, they work normally."
+      ],
+      [
+        "00",
+        "Only one potion works, but its effects are permanent. Choose the simplest effect to make permanent or the one that seems the most fun. For example, a Potion of Healing might increase the drinker's Hit Point maximum by {@dice 2d4 + 2}, or a Potion of Invisibility might give the drinker the {@condition Invisible|srd52} condition indefinitely. At your discretion, a {@spell Dispel Magic|srd52} spell or similar magic might end this lasting effect."
+      ]
+    ],
+    "catalogReferences": [
+      "condition.invisible",
+      "glossary.sphere-area-of-effect",
+      "item.potion-of-healing",
+      "item.potion-of-invisibility",
+      "rulebook.page-204",
+      "spell.dispel-magic"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        204
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/2/entries/3/entries/2/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.magic-item-tools",
+    "kind": "table",
+    "name": "Magic Item Tools",
+    "colLabels": [
+      "Item Category",
+      "Required Tool"
+    ],
+    "rows": [
+      [
+        "Armor",
+        "Leatherworker's Tools, Smith's Tools, or Weaver's Tools depending on the kind of armor as noted in the tools' descriptions"
+      ],
+      [
+        "Potion",
+        "Alchemist's Supplies or Herbalism Kit"
+      ],
+      [
+        "Ring",
+        "Jeweler's Tools"
+      ],
+      [
+        "Rod",
+        "Woodcarver's Tools"
+      ],
+      [
+        "Scroll",
+        "Calligrapher's Supplies"
+      ],
+      [
+        "Staff",
+        "Woodcarver's Tools"
+      ],
+      [
+        "Wand",
+        "Woodcarver's Tools"
+      ],
+      [
+        "Weapon",
+        "Leatherworker's Tools, Smith's Tools, or Woodcarver's Tools depending on the kind of weapon as noted in the tools' descriptions"
+      ],
+      [
+        "Wondrous Item",
+        "Tinker's Tools or the tool required to make the nonmagical item on which the magic item is based"
+      ]
+    ],
+    "catalogReferences": [
+      "baseitem.alchemist-s-supplies",
+      "baseitem.calligrapher-s-supplies",
+      "baseitem.jeweler-s-tools",
+      "baseitem.leatherworker-s-tools",
+      "baseitem.smith-s-tools",
+      "baseitem.tinker-s-tools",
+      "baseitem.weaver-s-tools",
+      "baseitem.woodcarver-s-tools",
+      "item.herbalism-kit",
+      "rulebook.page-207"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        207
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/8/entries/2/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.magic-item-crafting-time-and-cost",
+    "kind": "table",
+    "name": "Magic Item Crafting Time and Cost",
+    "colLabels": [
+      "Item Rarity",
+      "Time*",
+      "Cost*"
+    ],
+    "rows": [
+      [
+        "Common",
+        "5 days",
+        "50 GP"
+      ],
+      [
+        "Uncommon",
+        "10 days",
+        "200 GP"
+      ],
+      [
+        "Rare",
+        "50 days",
+        "2,000 GP"
+      ],
+      [
+        "Very Rare",
+        "125 days",
+        "20,000 GP"
+      ],
+      [
+        "Legendary",
+        "250 days",
+        "100,000 GP"
+      ]
+    ],
+    "footnotes": [
+      "*The time and cost are halved for a consumable item other than a Spell Scroll, whose crafting time and cost are given in \"Equipment\"."
+    ],
+    "catalogReferences": [
+      "item-group.spell-scroll",
+      "rulebook.page-207",
+      "table.spell-scroll-costs"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        207
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/8/entries/4/entries/3/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
     "id": "rule.multiclassing",
     "kind": "rule",
     "name": "Multiclassing",

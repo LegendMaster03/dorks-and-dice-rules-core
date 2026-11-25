@@ -242,6 +242,46 @@
       "pointer": "/data/11/entries/9/entries/3/entries/5/entries/4",
       "page": 208,
       "rowCount": 10
+    },
+    {
+      "id": "table.actions",
+      "pointer": "/data/1/entries/4/entries/1",
+      "page": 9,
+      "rowCount": 12,
+      "pages": [
+        9,
+        10
+      ]
+    },
+    {
+      "id": "table.glossary-abbreviations",
+      "pointer": "/data/9/entries/0/entries/2",
+      "page": 176,
+      "rowCount": 33
+    },
+    {
+      "id": "table.magic-item-categories",
+      "pointer": "/data/11/entries/2/entries/1",
+      "page": 204,
+      "rowCount": 9
+    },
+    {
+      "id": "table.potion-miscibility",
+      "pointer": "/data/11/entries/2/entries/3/entries/2/entries/2",
+      "page": 204,
+      "rowCount": 8
+    },
+    {
+      "id": "table.magic-item-tools",
+      "pointer": "/data/11/entries/8/entries/2/entries/1",
+      "page": 207,
+      "rowCount": 9
+    },
+    {
+      "id": "table.magic-item-crafting-time-and-cost",
+      "pointer": "/data/11/entries/8/entries/4/entries/3/entries/2",
+      "page": 207,
+      "rowCount": 5
     }
   ],
   "rules": [
@@ -309,13 +349,13 @@
       "reason": "Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
     }
   ],
-  "nativeCount": 46,
+  "nativeCount": 52,
   "tableInventory": {
     "total": 59,
     "counts": {
-      "projected": 39,
-      "existing-catalog-representation": 2,
-      "pending-review": 18
+      "projected": 45,
+      "existing-catalog-representation": 3,
+      "pending-review": 11
     },
     "occurrences": [
       {
@@ -387,14 +427,16 @@
         "caption": "Skills",
         "context": "Skill List",
         "rows": 18,
-        "disposition": "pending-review"
+        "disposition": "existing-catalog-representation",
+        "representation": "18 native skill definitions; abilities and example uses verified"
       },
       {
         "pointer": "/data/1/entries/4/entries/1",
         "caption": "Actions",
         "context": "Actions",
         "rows": 12,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.actions"
       },
       {
         "pointer": "/data/1/entries/6/entries/6/entries/3/entries/1",
@@ -646,7 +688,8 @@
         "caption": null,
         "context": "Glossary Conventions",
         "rows": 33,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.glossary-abbreviations"
       },
       {
         "pointer": "/data/10/entries/0/entries/5/entries/1",
@@ -685,14 +728,16 @@
         "caption": "Magic Item Categories",
         "context": "Magic Item Categories",
         "rows": 9,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.magic-item-categories"
       },
       {
         "pointer": "/data/11/entries/2/entries/3/entries/2/entries/2",
         "caption": "Potion Miscibility",
         "context": "Mixing Potions",
         "rows": 8,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.potion-miscibility"
       },
       {
         "pointer": "/data/11/entries/3/entries/2/entries/2",
@@ -707,14 +752,16 @@
         "caption": "Magic Item Tools",
         "context": "Tools",
         "rows": 9,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.magic-item-tools"
       },
       {
         "pointer": "/data/11/entries/8/entries/4/entries/3/entries/2",
         "caption": "Magic Item Crafting Time and Cost",
         "context": "Raw Materials",
         "rows": 5,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.magic-item-crafting-time-and-cost"
       },
       {
         "pointer": "/data/11/entries/9/entries/3/entries/5/entries/1",

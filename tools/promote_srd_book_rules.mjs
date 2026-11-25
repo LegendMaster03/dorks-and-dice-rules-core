@@ -62,7 +62,13 @@ const selections={
   ["Sentient Item's Alignment","/data/11/entries/9/entries/3/entries/5/entries/1",208,9],
   ["Sentient Item's Communication","/data/11/entries/9/entries/3/entries/5/entries/2",208,3],
   ["Sentient Item's Senses","/data/11/entries/9/entries/3/entries/5/entries/3",208,4],
-  ["Sentient Item's Special Purpose","/data/11/entries/9/entries/3/entries/5/entries/4",208,10]
+  ["Sentient Item's Special Purpose","/data/11/entries/9/entries/3/entries/5/entries/4",208,10],
+  ["Actions","/data/1/entries/4/entries/1",9,12,[9,10]],
+  ["Glossary Abbreviations","/data/9/entries/0/entries/2",176,33],
+  ["Magic Item Categories","/data/11/entries/2/entries/1",204,9],
+  ["Potion Miscibility","/data/11/entries/2/entries/3/entries/2/entries/2",204,8],
+  ["Magic Item Tools","/data/11/entries/8/entries/2/entries/1",207,9],
+  ["Magic Item Crafting Time and Cost","/data/11/entries/8/entries/4/entries/3/entries/2",207,5]
  ]
 };
 
@@ -76,10 +82,13 @@ function inventoryBookTables(book,report,tag){
   "/data/41/entries/1/entries/1":"deity catalog: Celtic pantheon",
   "/data/41/entries/2/entries/1":"deity catalog: Greek pantheon",
   "/data/41/entries/3/entries/3":"deity catalog: Egyptian pantheon",
-  "/data/41/entries/4/entries/2":"deity catalog: Norse pantheon"
+  "/data/41/entries/4/entries/2":"deity catalog: Norse pantheon",
+  "/data/6/entries/7/entries/6/entries/3":"18 native skill definitions; ability grouping verified",
+  "/data/40/entries/7/entries/1":"condition.exhaustion (identical six-row nested table)"
  }:{
   "/data/6/entries/14/entries/4":"table.spell-scroll-costs",
-  "/data/11/entries/3/entries/2/entries/2":"table.magic-item-rarities-and-values"
+  "/data/11/entries/3/entries/2/entries/2":"table.magic-item-rarities-and-values",
+  "/data/1/entries/3/entries/4/entries/2/entries/1":"18 native skill definitions; abilities and example uses verified"
  };
  const result=[];
  const escape=k=>k.replaceAll("~","~0").replaceAll("/","~1");
@@ -121,12 +130,12 @@ function generateBookRules(book,manifest,src,pages,tag,known){
  });
  for(const [name,pointer,page,count,sourcePages=[page]] of selections[tag]){
   const t=get(pointer);
-  if(t.type!=="table"||t.caption!==name||t.rows.length!==count)throw Error("Unexpected table "+pointer);
+  if(t.type!=="table"||(name==="Glossary Abbreviations"?t.caption!==undefined:t.caption!==name)||t.rows.length!==count)throw Error("Unexpected table "+pointer);
   const pageText=norm(pageMap.get(page).textLayout);
   // Split headings in the PDF may have interleaved second-column text.
-  const heading=name.split(":")[0];
+  const heading=name==="Glossary Abbreviations"?"Abbreviations":name.split(":")[0];
   if(!pageText.includes(norm(heading)))throw Error("Missing publisher heading "+name+" on "+page);
-  const cols=t.colLabels??t.colLabelRows?.at(-1);
+  const cols=t.colLabels??t.colLabelRows?.at(-1)??(name==="Glossary Abbreviations"?["Abbreviation","Meaning"]:null);
   if(!cols||t.rows.some(r=>r.length!==cols.length))throw Error("Nonrectangular table "+name);
   const id="table."+slug(name);
   const r={id,kind:"table",name,colLabels:clone(cols),rows:clone(t.rows)};
@@ -141,6 +150,36 @@ function generateBookRules(book,manifest,src,pages,tag,known){
     .replace(/\{@filter ([^}|]+)(?:\|[^}]+)?\}/g,(_,label)=>label)
     .replace(/\{@i ([^}]+)\}/g,(_,label)=>label)
     .replace(/\{@item ([^}|]+)\|[^}|]+(?:\|([^}]+))?\}/g,(_,label,display)=>display??label):cell));
+  }
+  // Preserve published examples while replacing commercial navigation and
+  // display-only aliases with their visible labels; links use known local IDs.
+  const displayOnly=x=>x.replace(/\{@(?:book|table|item) ([^}|]+)(?:\|([^}]*))?\}/g,(all,label,rest)=>{
+   const bits=(rest??"").split("|");
+   return all.startsWith("{@book ")&&bits.length>2?bits.at(-1):all.startsWith("{@table ")&&bits.length>1?bits.at(-1):all.startsWith("{@item ")&&bits.length>1?bits.at(-1):label;
+  });
+  if(["Magic Item Categories","Potion Miscibility","Magic Item Tools","Magic Item Crafting Time and Cost"].includes(name)){
+   r.rows=r.rows.map(row=>row.map(cell=>typeof cell==="string"?displayOnly(cell):cell));
+   if(r.footnotes)r.footnotes=r.footnotes.map(displayOnly);
+  }
+  if(name==="Glossary Abbreviations"){
+   // The source uses DM/GM; the published SRD defines GM/Game Master.
+   r.rows=r.rows.map(row=>row[0]==="DM"?["GM","Game Master"]:row);
+   for(const id of ["status.concentration","glossary.challenge-rating","glossary.difficulty-class","glossary.hit-points","glossary.proficiency","glossary.ritual","glossary.experience-points"])refs.add(id);
+  }
+  if(name==="Actions"){
+   for(const action of ["attack","dash","disengage","dodge","help","hide","influence","magic","ready","search","study","utilize"])refs.add("action."+action);
+  }
+  if(name==="Magic Item Categories"){
+   for(const id of ["item.potion-of-healing","item.ring-of-invisibility","item.immovable-rod","item-group.spell-scroll","item.staff-of-striking","item.wand-of-fireballs","item.bag-of-holding","item.boots-of-elvenkind"])refs.add(id);
+   // Numbered example labels are retained without guessing template identities.
+  }
+  if(name==="Potion Miscibility")for(const id of ["glossary.sphere-area-of-effect","item.potion-of-healing","item.potion-of-invisibility","condition.invisible","spell.dispel-magic"])refs.add(id);
+  if(name==="Magic Item Tools"){
+   for(const tool of ["leatherworker-s-tools","smith-s-tools","weaver-s-tools","alchemist-s-supplies","jeweler-s-tools","woodcarver-s-tools","calligrapher-s-supplies","tinker-s-tools"])refs.add("baseitem."+tool);
+   refs.add("item.herbalism-kit");
+  }
+  if(name==="Magic Item Crafting Time and Cost"){
+   refs.add("item-group.spell-scroll");refs.add("table.spell-scroll-costs");
   }
   if(name==="Services")r.rows[2][0]="Within a city";
   if(name==="Attack Roll Abilities"){

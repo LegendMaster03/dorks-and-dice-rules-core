@@ -85,8 +85,8 @@
     "representation": "Derived edition-local numbered armor, shield, weapon and individual ammunition enhancements; parent template and base item references."
   },
   "structuredBookRuleImport": {
-    "nativeRecords": 46,
-    "tables": 39,
+    "nativeRecords": 52,
+    "tables": 45,
     "rules": 7,
     "representation": "Individually selected nested book rules and tables with publisher locators; full chapter and semantic coverage pending."
   }
