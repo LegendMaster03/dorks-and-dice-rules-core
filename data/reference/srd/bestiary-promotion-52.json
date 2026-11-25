@@ -372,6 +372,10 @@
       "id": "monster.ancient-black-dragon",
       "from": "Melf's Acid Arrow",
       "to": "Acid Arrow"
+    },
+    {
+      "id": "monster.animated-object",
+      "reason": "Restore damage and condition immunities from official p.109."
     }
   ],
   "unmatchedPublisherLocators": [],

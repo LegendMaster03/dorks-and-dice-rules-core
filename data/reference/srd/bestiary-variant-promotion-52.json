@@ -1,0 +1,118 @@
+{
+  "edition": "srd-5.2.1",
+  "sourceGroups": 4,
+  "sourceVersionOccurrences": 10,
+  "nativeCount": 14,
+  "variants": [
+    {
+      "id": "monster.animated-object-huge",
+      "parentId": "monster.animated-object",
+      "pointer": "/monster/330/_versions/0",
+      "page": 109
+    },
+    {
+      "id": "monster.animated-object-large",
+      "parentId": "monster.animated-object",
+      "pointer": "/monster/330/_versions/1",
+      "page": 109
+    },
+    {
+      "id": "monster.animated-object-medium-or-smaller",
+      "parentId": "monster.animated-object",
+      "pointer": "/monster/330/_versions/2",
+      "page": 109
+    },
+    {
+      "id": "monster.draconic-spirit-acid",
+      "parentId": "monster.draconic-spirit",
+      "pointer": "/monster/331/_versions/0/_implementations/0",
+      "page": 166
+    },
+    {
+      "id": "monster.draconic-spirit-cold",
+      "parentId": "monster.draconic-spirit",
+      "pointer": "/monster/331/_versions/0/_implementations/1",
+      "page": 166
+    },
+    {
+      "id": "monster.draconic-spirit-fire",
+      "parentId": "monster.draconic-spirit",
+      "pointer": "/monster/331/_versions/0/_implementations/2",
+      "page": 166
+    },
+    {
+      "id": "monster.draconic-spirit-lightning",
+      "parentId": "monster.draconic-spirit",
+      "pointer": "/monster/331/_versions/0/_implementations/3",
+      "page": 166
+    },
+    {
+      "id": "monster.draconic-spirit-poison",
+      "parentId": "monster.draconic-spirit",
+      "pointer": "/monster/331/_versions/0/_implementations/4",
+      "page": 166
+    },
+    {
+      "id": "monster.giant-insect-centipede",
+      "parentId": "monster.giant-insect",
+      "pointer": "/monster/332/_versions/0",
+      "page": 136
+    },
+    {
+      "id": "monster.giant-insect-spider",
+      "parentId": "monster.giant-insect",
+      "pointer": "/monster/332/_versions/1",
+      "page": 136
+    },
+    {
+      "id": "monster.giant-insect-wasp",
+      "parentId": "monster.giant-insect",
+      "pointer": "/monster/332/_versions/2",
+      "page": 136
+    },
+    {
+      "id": "monster.otherworldly-steed-celestial",
+      "parentId": "monster.otherworldly-steed",
+      "pointer": "/monster/333/_versions/0",
+      "page": 131
+    },
+    {
+      "id": "monster.otherworldly-steed-fey",
+      "parentId": "monster.otherworldly-steed",
+      "pointer": "/monster/333/_versions/1",
+      "page": 131
+    },
+    {
+      "id": "monster.otherworldly-steed-fiend",
+      "parentId": "monster.otherworldly-steed",
+      "pointer": "/monster/333/_versions/2",
+      "page": 131
+    }
+  ],
+  "corrections": [
+    {
+      "id": "monster.animated-object-medium-or-smaller",
+      "reason": "Official p.109 does not add the caster ability modifier to Medium or smaller Slam damage."
+    },
+    {
+      "id": "monster.draconic-spirit-acid",
+      "reason": "Preserve all five creature resistances and the independent published Breath Weapon damage choice; specialize only the caster's shared resistance."
+    },
+    {
+      "id": "monster.draconic-spirit-cold",
+      "reason": "Preserve all five creature resistances and the independent published Breath Weapon damage choice; specialize only the caster's shared resistance."
+    },
+    {
+      "id": "monster.draconic-spirit-fire",
+      "reason": "Preserve all five creature resistances and the independent published Breath Weapon damage choice; specialize only the caster's shared resistance."
+    },
+    {
+      "id": "monster.draconic-spirit-lightning",
+      "reason": "Preserve all five creature resistances and the independent published Breath Weapon damage choice; specialize only the caster's shared resistance."
+    },
+    {
+      "id": "monster.draconic-spirit-poison",
+      "reason": "Preserve all five creature resistances and the independent published Breath Weapon damage choice; specialize only the caster's shared resistance."
+    }
+  ]
+}

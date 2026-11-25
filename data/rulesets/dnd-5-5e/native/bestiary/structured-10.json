@@ -1028,7 +1028,23 @@
     "summonedBySpell": "Animate Objects|SRD52",
     "summonedBySpellLevel": 5,
     "pbNote": "equals your Proficiency Bonus",
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "poisoned"
+    ],
     "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.poisoned",
       "rulebook.page-109",
       "spell.animate-objects"
     ],

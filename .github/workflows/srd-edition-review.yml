@@ -12,6 +12,8 @@ on:
       - 'tools/audit_srd_native_references.py'
       - 'tests/test_srd_native_reference_audit.py'
       - 'tools/promote_srd_bestiary.mjs'
+      - 'tools/promote_srd_bestiary_variants.mjs'
+      - 'data/reference/srd/bestiary-variant-promotion-*.json'
       - 'tools/promote_srd_items.mjs'
       - 'tools/promote_srd_origins.mjs'
       - 'tools/promote_srd_classes.mjs'
@@ -58,6 +60,8 @@ jobs:
         run: node tools/promote_srd_items.mjs --check
       - name: Verify structured bestiary source projection
         run: node tools/promote_srd_bestiary.mjs --check
+      - name: Verify finite spell-summon variant projection
+        run: node tools/promote_srd_bestiary_variants.mjs --check
       - name: Reconcile native promotion coverage (diagnostic only)
         run: python3 tools/report_srd_promotion.py --output build/srd-review/promotion-coverage.json
       - name: Test semantic reference audit

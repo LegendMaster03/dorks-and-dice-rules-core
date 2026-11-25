@@ -108,8 +108,8 @@ public sealed class RulesetResolutionApiTests
         const string animals = "/api/rulesets/dnd-5-5e/rules";
         var firstPage = await client.GetFromJsonAsync<JsonElement>(animals + "?category=monster&limit=10");
         var secondPage = await client.GetFromJsonAsync<JsonElement>(animals + "?category=monster&limit=10&offset=10");
-        Assert.Equal(336, firstPage.GetProperty("total").GetInt32());
-        Assert.Equal(336, secondPage.GetProperty("total").GetInt32());
+        Assert.Equal(350, firstPage.GetProperty("total").GetInt32());
+        Assert.Equal(350, secondPage.GetProperty("total").GetInt32());
         Assert.Empty(firstPage.GetProperty("rules").EnumerateArray().Select(x => x.GetProperty("id").GetString())
             .Intersect(secondPage.GetProperty("rules").EnumerateArray().Select(x => x.GetProperty("id").GetString())));
         var seahorse = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.seahorse");
@@ -132,6 +132,47 @@ public sealed class RulesetResolutionApiTests
 
         // Concrete equipment, generic magic templates and weapon rules remain
         // distinct and edition-scoped; recovered embedded stat blocks are accessible.
+        // All finite summon choices preserve their parent and edition, not a fixed cast level.
+        var summonCases = new[]
+        {
+            ("animated-object-huge", "animated-object"),
+            ("animated-object-large", "animated-object"),
+            ("animated-object-medium-or-smaller", "animated-object"),
+            ("draconic-spirit-acid", "draconic-spirit"),
+            ("draconic-spirit-cold", "draconic-spirit"),
+            ("draconic-spirit-fire", "draconic-spirit"),
+            ("draconic-spirit-lightning", "draconic-spirit"),
+            ("draconic-spirit-poison", "draconic-spirit"),
+            ("giant-insect-centipede", "giant-insect"),
+            ("giant-insect-spider", "giant-insect"),
+            ("giant-insect-wasp", "giant-insect"),
+            ("otherworldly-steed-celestial", "otherworldly-steed"),
+            ("otherworldly-steed-fey", "otherworldly-steed"),
+            ("otherworldly-steed-fiend", "otherworldly-steed"),
+        };
+        foreach (var (variant, parent) in summonCases)
+        {
+            var summoned = await client.GetFromJsonAsync<JsonElement>(animals + "/monster." + variant);
+            var definition = summoned.GetProperty("rule").GetProperty("definition");
+            Assert.Equal("monster." + parent, definition.GetProperty("variantOf").GetString());
+            Assert.Contains("monster." + parent, definition.GetProperty("catalogReferences").GetRawText());
+            Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync("/api/rulesets/dnd-5e/rules/monster." + variant)).StatusCode);
+        }
+        var mediumAnimated = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.animated-object-medium-or-smaller");
+        var mediumDefinition = mediumAnimated.GetProperty("rule").GetProperty("definition");
+        Assert.Equal(3, mediumDefinition.GetProperty("size").GetArrayLength());
+        Assert.Equal(5, mediumDefinition.GetProperty("conditionImmune").GetArrayLength());
+        Assert.DoesNotContain("your spellcasting ability modifier", mediumDefinition.GetProperty("action").GetRawText());
+        var wasp = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.giant-insect-wasp");
+        var waspDefinition = wasp.GetProperty("rule").GetProperty("definition");
+        Assert.Equal(40, waspDefinition.GetProperty("speed").GetProperty("fly").GetInt32());
+        Assert.False(waspDefinition.TryGetProperty("bonus", out _));
+        Assert.DoesNotContain("Web Bolt", waspDefinition.GetProperty("action").GetRawText());
+        var fireSpirit = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.draconic-spirit-fire");
+        var fireDefinition = fireSpirit.GetProperty("rule").GetProperty("definition");
+        Assert.Equal(5, fireDefinition.GetProperty("resist").GetArrayLength());
+        Assert.Equal("fire", fireDefinition.GetProperty("variantSelection").GetProperty("sharedResistance").GetString());
+
         var modernItems = await client.GetFromJsonAsync<JsonElement>(animals + "?category=item&limit=1");
         Assert.Equal(465, modernItems.GetProperty("total").GetInt32());
         var modernWeapon = await client.GetFromJsonAsync<JsonElement>(animals + "/baseitem.musket");

@@ -1,0 +1,1391 @@
+[
+  {
+    "id": "monster.animated-object-huge",
+    "kind": "monster",
+    "name": "Animated Object (Huge)",
+    "size": [
+      "H"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "special": "40"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 10,
+    "con": 10,
+    "int": 3,
+    "wis": 3,
+    "cha": 1,
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 6,
+    "languages": [
+      "understands the languages you know"
+    ],
+    "action": [
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 5 ft. {@h}Force damage equal to {@damage (summonSpellLevel - 3)d12 + 3|2d12 + 3} + your spellcasting ability modifier."
+        ]
+      }
+    ],
+    "summonedBySpell": "Animate Objects|SRD52",
+    "summonedBySpellLevel": 5,
+    "pbNote": "equals your Proficiency Bonus",
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "poisoned"
+    ],
+    "variantOf": "monster.animated-object",
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.poisoned",
+      "monster.animated-object",
+      "rulebook.page-109",
+      "spell.animate-objects"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        109
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/330"
+      },
+      "candidatePage": 109,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/330/_versions/0"
+    }
+  },
+  {
+    "id": "monster.animated-object-large",
+    "kind": "monster",
+    "name": "Animated Object (Large)",
+    "size": [
+      "L"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "special": "20"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 10,
+    "con": 10,
+    "int": 3,
+    "wis": 3,
+    "cha": 1,
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 6,
+    "languages": [
+      "understands the languages you know"
+    ],
+    "action": [
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 5 ft. {@h}Force damage equal to {@damage (summonSpellLevel - 3)d6 + 3|2d6 + 3} + your spellcasting ability modifier."
+        ]
+      }
+    ],
+    "summonedBySpell": "Animate Objects|SRD52",
+    "summonedBySpellLevel": 5,
+    "pbNote": "equals your Proficiency Bonus",
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "poisoned"
+    ],
+    "variantOf": "monster.animated-object",
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.poisoned",
+      "monster.animated-object",
+      "rulebook.page-109",
+      "spell.animate-objects"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        109
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/330"
+      },
+      "candidatePage": 109,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/330/_versions/1"
+    }
+  },
+  {
+    "id": "monster.animated-object-medium-or-smaller",
+    "kind": "monster",
+    "name": "Animated Object (Medium or Smaller)",
+    "size": [
+      "T",
+      "S",
+      "M"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "special": "10"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 10,
+    "con": 10,
+    "int": 3,
+    "wis": 3,
+    "cha": 1,
+    "senses": [
+      "Blindsight 30 ft."
+    ],
+    "passive": 6,
+    "languages": [
+      "understands the languages you know"
+    ],
+    "action": [
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 5 ft. {@h}Force damage equal to {@damage (summonSpellLevel - 4)d4 + 3|1d4 + 3}."
+        ]
+      }
+    ],
+    "summonedBySpell": "Animate Objects|SRD52",
+    "summonedBySpellLevel": 5,
+    "pbNote": "equals your Proficiency Bonus",
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "poisoned"
+    ],
+    "variantOf": "monster.animated-object",
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.exhaustion",
+      "condition.frightened",
+      "condition.paralyzed",
+      "condition.poisoned",
+      "monster.animated-object",
+      "rulebook.page-109",
+      "spell.animate-objects"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        109
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/330"
+      },
+      "candidatePage": 109,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/330/_versions/2"
+    }
+  },
+  {
+    "id": "monster.draconic-spirit-acid",
+    "kind": "monster",
+    "name": "Draconic Spirit (Acid)",
+    "size": [
+      "L"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      {
+        "special": "14 + the spell's level"
+      }
+    ],
+    "hp": {
+      "special": "50 + 10 for each spell level above 5"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60,
+      "swim": 30
+    },
+    "str": 19,
+    "dex": 14,
+    "con": 17,
+    "int": 10,
+    "wis": 14,
+    "cha": 14,
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "Draconic",
+      "understands the languages you know"
+    ],
+    "trait": [
+      {
+        "name": "Shared Resistances",
+        "entries": [
+          "You have {@variantrule Resistance|SRD52} to Acid damage until the spell ends."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The spirit makes a number of Rend attacks equal to half the spell's level (round down), and it uses Breath Weapon."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atk m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 10 feet. {@h}{@damage 1d6 + 4 + summonSpellLevel} Piercing damage."
+        ]
+      },
+      {
+        "name": "Breath Weapon",
+        "entries": [
+          "{@actSave dex} DC equals your spell save DC, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} {@damage 2d6} damage of a type this spirit has {@variantrule Resistance|SRD52} to (your choice when you cast the spell). {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "resist": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened",
+      "poisoned"
+    ],
+    "summonedBySpell": "Summon Dragon|SRD52",
+    "summonedBySpellLevel": 5,
+    "pbNote": "equals your Proficiency Bonus",
+    "variantSelection": {
+      "sharedResistance": "acid"
+    },
+    "variantOf": "monster.draconic-spirit",
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.frightened",
+      "condition.poisoned",
+      "monster.draconic-spirit",
+      "rulebook.page-166",
+      "spell.summon-dragon"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        166
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/331"
+      },
+      "candidatePage": 166,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/331/_versions/0/_implementations/0"
+    }
+  },
+  {
+    "id": "monster.draconic-spirit-cold",
+    "kind": "monster",
+    "name": "Draconic Spirit (Cold)",
+    "size": [
+      "L"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      {
+        "special": "14 + the spell's level"
+      }
+    ],
+    "hp": {
+      "special": "50 + 10 for each spell level above 5"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60,
+      "swim": 30
+    },
+    "str": 19,
+    "dex": 14,
+    "con": 17,
+    "int": 10,
+    "wis": 14,
+    "cha": 14,
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "Draconic",
+      "understands the languages you know"
+    ],
+    "trait": [
+      {
+        "name": "Shared Resistances",
+        "entries": [
+          "You have {@variantrule Resistance|SRD52} to Cold damage until the spell ends."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The spirit makes a number of Rend attacks equal to half the spell's level (round down), and it uses Breath Weapon."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atk m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 10 feet. {@h}{@damage 1d6 + 4 + summonSpellLevel} Piercing damage."
+        ]
+      },
+      {
+        "name": "Breath Weapon",
+        "entries": [
+          "{@actSave dex} DC equals your spell save DC, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} {@damage 2d6} damage of a type this spirit has {@variantrule Resistance|SRD52} to (your choice when you cast the spell). {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "resist": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened",
+      "poisoned"
+    ],
+    "summonedBySpell": "Summon Dragon|SRD52",
+    "summonedBySpellLevel": 5,
+    "pbNote": "equals your Proficiency Bonus",
+    "variantSelection": {
+      "sharedResistance": "cold"
+    },
+    "variantOf": "monster.draconic-spirit",
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.frightened",
+      "condition.poisoned",
+      "monster.draconic-spirit",
+      "rulebook.page-166",
+      "spell.summon-dragon"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        166
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/331"
+      },
+      "candidatePage": 166,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/331/_versions/0/_implementations/1"
+    }
+  },
+  {
+    "id": "monster.draconic-spirit-fire",
+    "kind": "monster",
+    "name": "Draconic Spirit (Fire)",
+    "size": [
+      "L"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      {
+        "special": "14 + the spell's level"
+      }
+    ],
+    "hp": {
+      "special": "50 + 10 for each spell level above 5"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60,
+      "swim": 30
+    },
+    "str": 19,
+    "dex": 14,
+    "con": 17,
+    "int": 10,
+    "wis": 14,
+    "cha": 14,
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "Draconic",
+      "understands the languages you know"
+    ],
+    "trait": [
+      {
+        "name": "Shared Resistances",
+        "entries": [
+          "You have {@variantrule Resistance|SRD52} to Fire damage until the spell ends."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The spirit makes a number of Rend attacks equal to half the spell's level (round down), and it uses Breath Weapon."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atk m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 10 feet. {@h}{@damage 1d6 + 4 + summonSpellLevel} Piercing damage."
+        ]
+      },
+      {
+        "name": "Breath Weapon",
+        "entries": [
+          "{@actSave dex} DC equals your spell save DC, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} {@damage 2d6} damage of a type this spirit has {@variantrule Resistance|SRD52} to (your choice when you cast the spell). {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "resist": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened",
+      "poisoned"
+    ],
+    "summonedBySpell": "Summon Dragon|SRD52",
+    "summonedBySpellLevel": 5,
+    "pbNote": "equals your Proficiency Bonus",
+    "variantSelection": {
+      "sharedResistance": "fire"
+    },
+    "variantOf": "monster.draconic-spirit",
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.frightened",
+      "condition.poisoned",
+      "monster.draconic-spirit",
+      "rulebook.page-166",
+      "spell.summon-dragon"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        166
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/331"
+      },
+      "candidatePage": 166,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/331/_versions/0/_implementations/2"
+    }
+  },
+  {
+    "id": "monster.draconic-spirit-lightning",
+    "kind": "monster",
+    "name": "Draconic Spirit (Lightning)",
+    "size": [
+      "L"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      {
+        "special": "14 + the spell's level"
+      }
+    ],
+    "hp": {
+      "special": "50 + 10 for each spell level above 5"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60,
+      "swim": 30
+    },
+    "str": 19,
+    "dex": 14,
+    "con": 17,
+    "int": 10,
+    "wis": 14,
+    "cha": 14,
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "Draconic",
+      "understands the languages you know"
+    ],
+    "trait": [
+      {
+        "name": "Shared Resistances",
+        "entries": [
+          "You have {@variantrule Resistance|SRD52} to Lightning damage until the spell ends."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The spirit makes a number of Rend attacks equal to half the spell's level (round down), and it uses Breath Weapon."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atk m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 10 feet. {@h}{@damage 1d6 + 4 + summonSpellLevel} Piercing damage."
+        ]
+      },
+      {
+        "name": "Breath Weapon",
+        "entries": [
+          "{@actSave dex} DC equals your spell save DC, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} {@damage 2d6} damage of a type this spirit has {@variantrule Resistance|SRD52} to (your choice when you cast the spell). {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "resist": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened",
+      "poisoned"
+    ],
+    "summonedBySpell": "Summon Dragon|SRD52",
+    "summonedBySpellLevel": 5,
+    "pbNote": "equals your Proficiency Bonus",
+    "variantSelection": {
+      "sharedResistance": "lightning"
+    },
+    "variantOf": "monster.draconic-spirit",
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.frightened",
+      "condition.poisoned",
+      "monster.draconic-spirit",
+      "rulebook.page-166",
+      "spell.summon-dragon"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        166
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/331"
+      },
+      "candidatePage": 166,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/331/_versions/0/_implementations/3"
+    }
+  },
+  {
+    "id": "monster.draconic-spirit-poison",
+    "kind": "monster",
+    "name": "Draconic Spirit (Poison)",
+    "size": [
+      "L"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      {
+        "special": "14 + the spell's level"
+      }
+    ],
+    "hp": {
+      "special": "50 + 10 for each spell level above 5"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60,
+      "swim": 30
+    },
+    "str": 19,
+    "dex": 14,
+    "con": 17,
+    "int": 10,
+    "wis": 14,
+    "cha": 14,
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "Draconic",
+      "understands the languages you know"
+    ],
+    "trait": [
+      {
+        "name": "Shared Resistances",
+        "entries": [
+          "You have {@variantrule Resistance|SRD52} to Poison damage until the spell ends."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The spirit makes a number of Rend attacks equal to half the spell's level (round down), and it uses Breath Weapon."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atk m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 10 feet. {@h}{@damage 1d6 + 4 + summonSpellLevel} Piercing damage."
+        ]
+      },
+      {
+        "name": "Breath Weapon",
+        "entries": [
+          "{@actSave dex} DC equals your spell save DC, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} {@damage 2d6} damage of a type this spirit has {@variantrule Resistance|SRD52} to (your choice when you cast the spell). {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "resist": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened",
+      "poisoned"
+    ],
+    "summonedBySpell": "Summon Dragon|SRD52",
+    "summonedBySpellLevel": 5,
+    "pbNote": "equals your Proficiency Bonus",
+    "variantSelection": {
+      "sharedResistance": "poison"
+    },
+    "variantOf": "monster.draconic-spirit",
+    "catalogReferences": [
+      "condition.charmed",
+      "condition.frightened",
+      "condition.poisoned",
+      "monster.draconic-spirit",
+      "rulebook.page-166",
+      "spell.summon-dragon"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        166
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/331"
+      },
+      "candidatePage": 166,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/331/_versions/0/_implementations/4"
+    }
+  },
+  {
+    "id": "monster.giant-insect-centipede",
+    "kind": "monster",
+    "name": "Giant Insect (Centipede)",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "special": "11 + the spell's level"
+      }
+    ],
+    "hp": {
+      "special": "30 + 10 for each spell level above 4"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40
+    },
+    "str": 17,
+    "dex": 13,
+    "con": 15,
+    "int": 4,
+    "wis": 14,
+    "cha": 3,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "understands the languages you know"
+    ],
+    "trait": [
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The insect can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The insect makes a number of attacks equal to half this spell's level (round down)."
+        ]
+      },
+      {
+        "name": "Poison Jab",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 10 ft. {@h}{@damage 1d6 + 3 + summonSpellLevel} Piercing damage plus {@damage 1d4} Poison damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Venomous Spew (Centipede Only)",
+        "entries": [
+          "{@actSave con} Your spell save DC, one creature the insect can see within 10 feet. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition until the start of the insect's next turn."
+        ]
+      }
+    ],
+    "summonedBySpell": "Giant Insect|SRD52",
+    "summonedBySpellLevel": 4,
+    "pbNote": "equals your Proficiency Bonus",
+    "variantOf": "monster.giant-insect",
+    "catalogReferences": [
+      "condition.poisoned",
+      "monster.giant-insect",
+      "rulebook.page-136",
+      "spell.giant-insect"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        136
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/332"
+      },
+      "candidatePage": 136,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/332/_versions/0"
+    }
+  },
+  {
+    "id": "monster.giant-insect-spider",
+    "kind": "monster",
+    "name": "Giant Insect (Spider)",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "special": "11 + the spell's level"
+      }
+    ],
+    "hp": {
+      "special": "30 + 10 for each spell level above 4"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40
+    },
+    "str": 17,
+    "dex": 13,
+    "con": 15,
+    "int": 4,
+    "wis": 14,
+    "cha": 3,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "understands the languages you know"
+    ],
+    "trait": [
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The insect can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The insect makes a number of attacks equal to half this spell's level (round down)."
+        ]
+      },
+      {
+        "name": "Poison Jab",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 10 ft. {@h}{@damage 1d6 + 3 + summonSpellLevel} Piercing damage plus {@damage 1d4} Poison damage."
+        ]
+      },
+      {
+        "name": "Web Bolt",
+        "entries": [
+          "{@atkr r} {@hitYourSpellAttack Bonus equals your spell attack modifier}, range 60 ft. {@h}{@damage 1d10 + 3 + summonSpellLevel} Bludgeoning damage, and the target's {@variantrule Speed|SRD52} is reduced to 0 until the start of the insect's next turn."
+        ]
+      }
+    ],
+    "summonedBySpell": "Giant Insect|SRD52",
+    "summonedBySpellLevel": 4,
+    "pbNote": "equals your Proficiency Bonus",
+    "variantOf": "monster.giant-insect",
+    "catalogReferences": [
+      "monster.giant-insect",
+      "rulebook.page-136",
+      "spell.giant-insect"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        136
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/332"
+      },
+      "candidatePage": 136,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/332/_versions/1"
+    }
+  },
+  {
+    "id": "monster.giant-insect-wasp",
+    "kind": "monster",
+    "name": "Giant Insect (Wasp)",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "special": "11 + the spell's level"
+      }
+    ],
+    "hp": {
+      "special": "30 + 10 for each spell level above 4"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 40
+    },
+    "str": 17,
+    "dex": 13,
+    "con": 15,
+    "int": 4,
+    "wis": 14,
+    "cha": 3,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 12,
+    "languages": [
+      "understands the languages you know"
+    ],
+    "trait": [
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The insect can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The insect makes a number of attacks equal to half this spell's level (round down)."
+        ]
+      },
+      {
+        "name": "Poison Jab",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 10 ft. {@h}{@damage 1d6 + 3 + summonSpellLevel} Piercing damage plus {@damage 1d4} Poison damage."
+        ]
+      }
+    ],
+    "summonedBySpell": "Giant Insect|SRD52",
+    "summonedBySpellLevel": 4,
+    "pbNote": "equals your Proficiency Bonus",
+    "variantOf": "monster.giant-insect",
+    "catalogReferences": [
+      "monster.giant-insect",
+      "rulebook.page-136",
+      "spell.giant-insect"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        136
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/332"
+      },
+      "candidatePage": 136,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/332/_versions/2"
+    }
+  },
+  {
+    "id": "monster.otherworldly-steed-celestial",
+    "kind": "monster",
+    "name": "Otherworldly Steed (Celestial)",
+    "size": [
+      "L"
+    ],
+    "type": "celestial",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      {
+        "special": "10 + 1 per spell level"
+      }
+    ],
+    "hp": {
+      "special": "5 + 10 per spell level (the steed has a number of Hit Dice [d10s] equal to the spell's level)"
+    },
+    "speed": {
+      "walk": 60,
+      "fly": {
+        "number": 60,
+        "condition": "(requires level 4+ spell)"
+      }
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 14,
+    "int": 6,
+    "wis": 12,
+    "cha": 8,
+    "passive": 11,
+    "languages": [
+      "telepathy 1 mile (works only with you)"
+    ],
+    "trait": [
+      {
+        "name": "Life Bond",
+        "entries": [
+          "When you regain {@variantrule Hit Points|SRD52} from a level 1+ spell, the steed regains the same number of {@variantrule Hit Points|SRD52} if you're within 5 feet of it."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Otherworldly Slam",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 5 ft. {@h}{@damage 1d8 + summonSpellLevel} Radiant damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Healing Touch (Recharges after a Long Rest)",
+        "entries": [
+          "One creature within 5 feet of the steed regains a number of {@variantrule Hit Points|SRD52} equal to {@dice 2d8 + summonSpellLevel}."
+        ]
+      }
+    ],
+    "summonedBySpell": "Find Steed|SRD52",
+    "summonedBySpellLevel": 2,
+    "pbNote": "equals your Proficiency Bonus",
+    "variantOf": "monster.otherworldly-steed",
+    "catalogReferences": [
+      "monster.otherworldly-steed",
+      "rulebook.page-131",
+      "spell.find-steed"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        131
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/333"
+      },
+      "candidatePage": 131,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/333/_versions/0"
+    }
+  },
+  {
+    "id": "monster.otherworldly-steed-fey",
+    "kind": "monster",
+    "name": "Otherworldly Steed (Fey)",
+    "size": [
+      "L"
+    ],
+    "type": "fey",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      {
+        "special": "10 + 1 per spell level"
+      }
+    ],
+    "hp": {
+      "special": "5 + 10 per spell level (the steed has a number of Hit Dice [d10s] equal to the spell's level)"
+    },
+    "speed": {
+      "walk": 60,
+      "fly": {
+        "number": 60,
+        "condition": "(requires level 4+ spell)"
+      }
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 14,
+    "int": 6,
+    "wis": 12,
+    "cha": 8,
+    "passive": 11,
+    "languages": [
+      "telepathy 1 mile (works only with you)"
+    ],
+    "trait": [
+      {
+        "name": "Life Bond",
+        "entries": [
+          "When you regain {@variantrule Hit Points|SRD52} from a level 1+ spell, the steed regains the same number of {@variantrule Hit Points|SRD52} if you're within 5 feet of it."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Otherworldly Slam",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 5 ft. {@h}{@damage 1d8 + summonSpellLevel} Psychic damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Fey Step (Recharges after a Long Rest)",
+        "entries": [
+          "The steed teleports, along with its rider, to an unoccupied space of your choice up to 60 feet away from itself."
+        ]
+      }
+    ],
+    "summonedBySpell": "Find Steed|SRD52",
+    "summonedBySpellLevel": 2,
+    "pbNote": "equals your Proficiency Bonus",
+    "variantOf": "monster.otherworldly-steed",
+    "catalogReferences": [
+      "monster.otherworldly-steed",
+      "rulebook.page-131",
+      "spell.find-steed"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        131
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/333"
+      },
+      "candidatePage": 131,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/333/_versions/1"
+    }
+  },
+  {
+    "id": "monster.otherworldly-steed-fiend",
+    "kind": "monster",
+    "name": "Otherworldly Steed (Fiend)",
+    "size": [
+      "L"
+    ],
+    "type": "fiend",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      {
+        "special": "10 + 1 per spell level"
+      }
+    ],
+    "hp": {
+      "special": "5 + 10 per spell level (the steed has a number of Hit Dice [d10s] equal to the spell's level)"
+    },
+    "speed": {
+      "walk": 60,
+      "fly": {
+        "number": 60,
+        "condition": "(requires level 4+ spell)"
+      }
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 14,
+    "int": 6,
+    "wis": 12,
+    "cha": 8,
+    "passive": 11,
+    "languages": [
+      "telepathy 1 mile (works only with you)"
+    ],
+    "trait": [
+      {
+        "name": "Life Bond",
+        "entries": [
+          "When you regain {@variantrule Hit Points|SRD52} from a level 1+ spell, the steed regains the same number of {@variantrule Hit Points|SRD52} if you're within 5 feet of it."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Otherworldly Slam",
+        "entries": [
+          "{@atkr m} {@hitYourSpellAttack Bonus equals your spell attack modifier}, reach 5 ft. {@h}{@damage 1d8 + summonSpellLevel} Necrotic damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Fell Glare (Recharges after a Long Rest)",
+        "entries": [
+          "{@actSave wis} DC equals your spell save DC, one creature within 60 feet the steed can see. {@actSaveFail} The target has the {@condition Frightened|SRD52} condition until the end of your next turn."
+        ]
+      }
+    ],
+    "summonedBySpell": "Find Steed|SRD52",
+    "summonedBySpellLevel": 2,
+    "pbNote": "equals your Proficiency Bonus",
+    "variantOf": "monster.otherworldly-steed",
+    "catalogReferences": [
+      "condition.frightened",
+      "monster.otherworldly-steed",
+      "rulebook.page-131",
+      "spell.find-steed"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        131
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "bestiary/bestiary-srd52.json",
+        "pointer": "/monster/333"
+      },
+      "candidatePage": 131,
+      "structuredStatus": "Publisher-backed finite variant derived from the edition-local parent and pinned variant occurrence; spell-level formulas retained.",
+      "adaptation": "Generated finite spell-summon variant; no external media, renderer metadata or first-party mechanics.",
+      "variantPointer": "/monster/333/_versions/2"
+    }
+  }
+]

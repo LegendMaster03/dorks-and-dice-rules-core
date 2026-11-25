@@ -65,6 +65,12 @@ function generate(candidates, spells, conditions, skills, pages, existing, sourc
             Object.assign(row,JSON.parse(serialized.split(fix[0]).join(fix[1])));
             report.corrections.push({id,from:fix[0],to:fix[1]});
         }
+        // Official SRD 5.2.1 p.109 supplies immunities omitted by the structured source.
+        if(tag==="52"&&candidate.name==="Animated Object"){
+            row.immune=["poison","psychic"];
+            row.conditionImmune=["charmed","exhaustion","frightened","paralyzed","poisoned"];
+            report.corrections.push({id,reason:"Restore damage and condition immunities from official p.109."});
+        }
         for (const key of ["size","type","ac","hp","speed","str","dex","con","int","wis","cha"])
             if (!(key in row)) throw Error("Missing stat-block field "+key+": "+id);
         // Candidate page numbers often match the SRD PDF. Verify that a name
