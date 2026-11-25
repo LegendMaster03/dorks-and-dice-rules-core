@@ -529,7 +529,13 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Combat Encounters","/data/10/entries/7",[202,203],["monster.bugbear-warrior","monster.giant-wasp","monster.giant-rat","monster.druid","monster.stirge","monster.wight","monster.warhorse-skeleton","monster.skeleton","monster.adult-red-dragon","monster.fire-giant","monster.ogre"]],
   ["Crafting Nonmagical Items","/data/6/entries/12",[103],["baseitem.plate-armor","baseitem.heavy-crossbow"]],
   ["Brewing Potions of Healing","/data/6/entries/13",[103],["item.herbalism-kit","item.potion-of-healing"]],
-  ["Scribing Spell Scrolls","/data/6/entries/14",[103],["table.spell-scroll-costs","item-group.spell-scroll","skill.arcana","baseitem.calligrapher-s-supplies"]]
+  ["Scribing Spell Scrolls","/data/6/entries/14",[103],["table.spell-scroll-costs","item-group.spell-scroll","skill.arcana","baseitem.calligrapher-s-supplies"]],
+  ["Magic Item Rules","/data/11/entries/1",[205],["glossary.attunement"]],
+  ["Activating a Magic Item","/data/11/entries/4",[206],["action.magic","spell.silence","spell.identify","item.potion-of-healing","status.concentration","glossary.attunement"]],
+  ["\"The Next Dawn\"","/data/11/entries/5",[206],[]],
+  ["Cursed Items","/data/11/entries/6",[206],["glossary.attunement","spell.identify","spell.remove-curse"]],
+  ["Magic Item Resilience","/data/11/entries/7",[206],["glossary.resistance"]],
+  ["Crafting Magic Items","/data/11/entries/8",[206,207],["skill.arcana","rule.brewing-potions-of-healing","rule.scribing-spell-scrolls","rule.crafting-nonmagical-items"]]
  ];
  const extraCorrections={
   "Advantage and Disadvantage":"Restore the original reroll-only wording and unrestricted Inspiration wording from pp.76–77; remove later source additions.",
@@ -571,6 +577,12 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
    const before=JSON.stringify(content);
    content=JSON.parse(before.replace("{@creature Twig Blight|srd52|Twig Blights}","{@creature Giant Rat|srd52|Giant Rats}").replace("{@creature Nothic|srd52|Nothics}","{@creature Druid|srd52|Druids}").replace("use swarms from the Monster Manual instead","use swarms instead"));
    if(JSON.stringify(content).includes("Twig Blight")||JSON.stringify(content).includes("Nothic")||JSON.stringify(content).includes("Monster Manual"))throw Error("Unreconciled encounter example");
+  }
+  if(name==="Crafting Magic Items"){
+   const tools=find(content,"Tools");
+   tools.entries[0]=tools.entries[0].replace('For more information on the tools, see the "Equipment".','For more information on the tools, see "Equipment".');
+   const raw=find(content,"Raw Materials");
+   raw.entries[1]=raw.entries[1].replace("{@item +1 Plate Armor|srd52|+1 Armor (Plate Armor)}","+1 Armor (Plate Armor)");
   }
   const id="rule."+slug(name);
   rows.push({id,kind:"rule",name,entries:content,catalogReferences:[...local].sort(),source:metadata(pointer,nums)});

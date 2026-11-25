@@ -6531,5 +6531,309 @@
       },
       "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
     }
+  },
+  {
+    "id": "rule.magic-item-rules",
+    "kind": "rule",
+    "name": "Magic Item Rules",
+    "entries": [
+      "Rules for identifying, attuning to, and using magic items appear in \"Equipment\". Additional rules are presented below.",
+      {
+        "type": "entries",
+        "name": "Attunement Prerequisites",
+        "entries": [
+          "If a magic item has a class prerequisite, a creature must be a member of that class to attune to the item. If a creature must be a spellcaster to attune to an item, the creature qualifies if it can cast at least one spell using its traits or features, not by using a magic item or the like."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Items Made for Specific Creatures",
+        "entries": [
+          "Magic items that are meant to be worn tend to magically adjust themselves to the wearer. However, you can decide that a magic item doesn't adjust its size to fit any wearer. For example, a particular armorer might make items usable only by folk who are sized and shaped like dwarves."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Unusual Anatomy",
+        "entries": [
+          "Use your discretion to decide whether a creature can wear an item not made for its anatomy. A ring placed on a tentacle might work, but a yuan-ti with a snakelike tail instead of legs can't wear magic boots."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Paired Items",
+        "entries": [
+          "You can allow exceptions to the rule that paired items must both be worn. For example, a character with only one arm might be able to use a single {@item Gloves of Missile Snaring|srd52|Glove of Missile Snaring} so long as the matching glove is on their person."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "glossary.attunement",
+      "rulebook.page-205"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        205
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.activating-a-magic-item",
+    "kind": "rule",
+    "name": "Activating a Magic Item",
+    "entries": [
+      "It usually takes a {@action Magic|srd52} action to activate a magic item. The item's user might also need to do something special. The description of each item category or individual item details how an item is activated. Certain items use the following rules for their activation.",
+      {
+        "type": "entries",
+        "name": "Command Word",
+        "entries": [
+          "A command word is a word or short phrase that must be spoken or signed for an item to work. Spoken command words must be audible and fail to work in areas where all sound is suppressed, as in the area of the {@spell Silence|srd52} spell."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Consumable Items",
+        "entries": [
+          "Some items are consumed—used up, in other words—when they are activated. A {@item Potion of Healing|srd52} must be swallowed, for example, while the writing vanishes from a scroll when it is read. Once used, a consumable item loses its magic."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spells Cast from Items",
+        "entries": [
+          "Some magic items allow the user to cast a spell from the item. The spell is cast at the lowest possible spell and caster level, doesn't expend any of the user's spell slots, and requires no components unless the item's description notes otherwise. The spell uses its normal casting time, range, and duration, and the user of the item must concentrate if the spell requires {@status Concentration|srd52}. Many items, such as Potions, bypass the casting of a spell and confer the spell's effects with its usual duration. Certain items make exceptions to these rules, changing the casting time, duration, or other parts of a spell.",
+          "A magic item may require the user to use their own spellcasting ability when casting a spell from the item. If the user has more than one spellcasting ability, the user chooses which one to use with the item. If the user doesn't have a spellcasting ability, their spellcasting ability modifier is +0 for the item, and the user's Proficiency Bonus applies."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Charges",
+        "entries": [
+          "Some magic items have charges that must be expended to activate their properties. The number of charges an item has remaining is revealed when the {@spell Identify|srd52} spell is cast on it. A creature attuned to an item knows how many charges the item has and how many it regains."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "action.magic",
+      "glossary.attunement",
+      "item.potion-of-healing",
+      "rulebook.page-206",
+      "spell.identify",
+      "spell.silence",
+      "status.concentration"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        206
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.the-next-dawn",
+    "kind": "rule",
+    "name": "\"The Next Dawn\"",
+    "entries": [
+      "Magic items often have charges or properties that recharge at the next dawn or some other specified time. If such an item is on a world or plane of existence where the specified event doesn't occur, the GM determines when the item recharges."
+    ],
+    "catalogReferences": [
+      "rulebook.page-206"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        206
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/5"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.cursed-items",
+    "kind": "rule",
+    "name": "Cursed Items",
+    "entries": [
+      "A magic item's description specifies whether it bears a curse. Most methods of identifying items, including the {@spell Identify|srd52} spell, fail to reveal such a curse.",
+      "Attunement to a cursed item can't be ended voluntarily unless the curse is broken first, such as with a {@spell Remove Curse|srd52} spell."
+    ],
+    "catalogReferences": [
+      "glossary.attunement",
+      "rulebook.page-206",
+      "spell.identify",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        206
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/6"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.magic-item-resilience",
+    "kind": "rule",
+    "name": "Magic Item Resilience",
+    "entries": [
+      "A magic item is at least as durable as a nonmagical item of its kind. Most magic items, other than Potions and Scrolls, have Resistance to all damage.",
+      "An Artifact can be destroyed only in some special way. Otherwise, it is impervious to damage. Learning how to destroy an Artifact usually requires research or the completion of a quest."
+    ],
+    "catalogReferences": [
+      "glossary.resistance",
+      "rulebook.page-206"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        206
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/7"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.crafting-magic-items",
+    "kind": "rule",
+    "name": "Crafting Magic Items",
+    "entries": [
+      "\"Equipment\" contains rules on brewing Potions of Healing and scribing Spell Scrolls. To create other magic items, follow the rules below. In these rules, \"you\" refers to the character crafting the magic item.",
+      {
+        "type": "entries",
+        "name": "Arcana Proficiency",
+        "entries": [
+          "To craft a magic item, you and any assistants must have proficiency in the {@skill Arcana|srd52} skill."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Tools",
+        "entries": [
+          "The Magic Item Tools table lists which tool is required to make a magic item of each category. You must use the required tool to make an item and have proficiency with that tool. Any assistants must also have proficiency with it. For more information on the tools, see \"Equipment\".",
+          "See the Magic Item Tools table."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spells",
+        "entries": [
+          "If a magic item allows its user to cast any spells from it, you must have all those spells prepared every day you spend crafting the item."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Time and Cost",
+        "entries": [
+          "Crafting a magic item takes an amount of time and money based on the item's rarity as shown in the Magic Item Crafting Time and Cost table.",
+          {
+            "type": "entries",
+            "name": "Work per Day",
+            "entries": [
+              "For each day of crafting, you must work for 8 hours. If an item requires multiple days, those days needn't be consecutive."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Assistants",
+            "entries": [
+              "Characters can combine their efforts to shorten the crafting time. Divide the time needed to create an item by the number of characters working on it. Normally, only one other character can assist you, but the GM might allow more assistants."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Raw Materials",
+            "entries": [
+              "The cost in the table represents the raw materials needed to make a magic item. The GM determines whether appropriate raw materials are available. In a city, there is a 75 percent chance that the materials are available, and in any other settlement, that chance is 25 percent. If materials aren't available, you must wait at least 7 days before checking on the availability again.",
+              "If a magic item incorporates an item that has a purchase cost (such as a weapon or a suit of armor), you must also pay that entire cost or craft that item using the rules in \"Equipment\". For example, to make +1 Armor (Plate Armor), you must pay 3,500 GP or pay 2,000 GP and craft the armor.",
+              "See the Magic Item Crafting Time and Cost table."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rule.brewing-potions-of-healing",
+      "rule.crafting-nonmagical-items",
+      "rule.scribing-spell-scrolls",
+      "rulebook.page-206",
+      "rulebook.page-207",
+      "skill.arcana",
+      "table.magic-item-crafting-time-and-cost",
+      "table.magic-item-tools"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        206,
+        207
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/8"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
   }
 ]

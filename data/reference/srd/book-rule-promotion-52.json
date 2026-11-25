@@ -407,6 +407,49 @@
       "pages": [
         103
       ]
+    },
+    {
+      "id": "rule.magic-item-rules",
+      "pointer": "/data/11/entries/1",
+      "pages": [
+        205
+      ]
+    },
+    {
+      "id": "rule.activating-a-magic-item",
+      "pointer": "/data/11/entries/4",
+      "pages": [
+        206
+      ]
+    },
+    {
+      "id": "rule.the-next-dawn",
+      "pointer": "/data/11/entries/5",
+      "pages": [
+        206
+      ]
+    },
+    {
+      "id": "rule.cursed-items",
+      "pointer": "/data/11/entries/6",
+      "pages": [
+        206
+      ]
+    },
+    {
+      "id": "rule.magic-item-resilience",
+      "pointer": "/data/11/entries/7",
+      "pages": [
+        206
+      ]
+    },
+    {
+      "id": "rule.crafting-magic-items",
+      "pointer": "/data/11/entries/8",
+      "pages": [
+        206,
+        207
+      ]
     }
   ],
   "corrections": [
@@ -419,7 +462,7 @@
       "reason": "Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
     }
   ],
-  "nativeCount": 63,
+  "nativeCount": 69,
   "tableInventory": {
     "total": 59,
     "counts": {
