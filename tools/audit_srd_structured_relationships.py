@@ -203,8 +203,8 @@ class OptionalFeatureProgressionInventory:
     """
     SPECS = {
         ("SRD51", "class.fighter", "FS:F"): ("Fighting Style", {1: 1}, 6, 24),
-        ("SRD51", "class.paladin", "FS:P"): ("Fighting Style", {2: 1}, 4, 30),
-        ("SRD51", "class.ranger", "FS:R"): ("Fighting Style", {2: 1}, 4, 35),
+        ("SRD51", "class.paladin", "FS:P"): ("Fighting Style", {2: 1}, 4, 31),
+        ("SRD51", "class.ranger", "FS:R"): ("Fighting Style", {2: 1}, 4, 36),
         ("SRD51", "class.sorcerer", "MM"): ("Metamagic", {3: 2, 10: 3, 17: 4}, 8, 44),
         ("SRD51", "class.warlock", "PB"): ("Pact Boon", {3: 1}, 3, 47),
         ("SRD51", "class.warlock", "EI"): ("Eldritch Invocations", None, 32, 46),
@@ -271,7 +271,7 @@ class OptionalFeatureProgressionInventory:
         else:
             phrases = {
                 ("SRD51", "FS:F"): ["Choose one of the following options"],
-                ("SRD51", "FS:P"): ["At 2nd level, you adopt a particular style"],
+                ("SRD51", "FS:P"): ["At 2nd level, you adopt a style of fighting"],
                 ("SRD51", "FS:R"): ["At 2nd level, you adopt a particular style"],
                 ("SRD51", "MM"): ["You gain another", "one at 10th and 17th level."],
                 ("SRD51", "PB"): ["At 3rd level, your otherworldly patron bestows a gift"],
@@ -703,6 +703,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--require-literal-links", action="store_true", help="Fail when an inventoried literal dependency does not resolve and link within its edition.")
+    parser.add_argument("--require-reviewed-selectors", action="store_true", help="Fail on unresolved inventoried static selectors, reviewed predicates or progression schedules.")
     args = parser.parse_args()
     report = {}
     for edition, package in PACKAGES.items():
@@ -723,6 +724,22 @@ def main():
                 if o.get("literal") and (o["status"] not in {"unique-literal-candidate", "named-variant-candidate"} or not o["alreadyExplicit"]):
                     print(edition, o["entity"], o["pointer"], o["raw"], o["status"], o["targets"])
         raise SystemExit("Unlinked literal structured relationships")
+    if args.require_reviewed_selectors:
+        allowed = {"selectorStatus": {"static-candidates"},
+                   "candidateStatus": {"static-candidates", "currency-value", "descriptive-special-equipment"},
+                   "predicateStatus": {"reviewed-static-predicate"},
+                   "progressionStatus": {"reviewed-static-progression"}}
+        failures = [(edition, o["entity"], o["pointer"], key, o[key])
+                    for edition, r in report.items() for o in r["occurrences"]
+                    for key, statuses in allowed.items() if key in o and o[key] not in statuses]
+        # The reviewed progression inventory must be present in full, not simply absent.
+        for edition, expected in (("srd-5.1", 6), ("srd-5.2.1", 2)):
+            if report[edition]["optionalFeatureProgressionCounts"].get("reviewed-static-progression") != expected:
+                failures.append((edition, "optional-feature-progression", "reviewed count", expected))
+        if failures:
+            for failure in failures:
+                print(*failure)
+            raise SystemExit("Unresolved reviewed structured selectors or progressions")
 
 
 if __name__ == "__main__":

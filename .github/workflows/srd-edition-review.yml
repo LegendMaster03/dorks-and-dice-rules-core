@@ -104,7 +104,7 @@ jobs:
       - name: Test structured relationship audit
         run: python3 -m unittest discover -s tests -p test_srd_structured_relationships.py
       - name: Verify literal structured character dependencies and inventory selectors
-        run: python3 tools/audit_srd_structured_relationships.py --output build/srd-review/structured-relationship-audit.json --require-literal-links
+        run: python3 tools/audit_srd_structured_relationships.py --output build/srd-review/structured-relationship-audit.json --require-literal-links --require-reviewed-selectors
       - name: Publish review inventory to summary
         run: |
           echo '## Unreviewed SRD candidate inventory' >> "$GITHUB_STEP_SUMMARY"
