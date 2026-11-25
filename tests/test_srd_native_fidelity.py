@@ -4,6 +4,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from audit_srd_native_fidelity import audit, spell_body, tokens, render
+from srd_import_sources import read_index
 
 
 class NativeFidelityTests(unittest.TestCase):
@@ -72,7 +73,9 @@ class NativeFidelityTests(unittest.TestCase):
                          "spell.polymorph", "spell.telekinesis"):
             with self.subTest(identity=identity):
                 self.assertEqual("exact-normalized-text", spell_body(rows[identity])["status"])
-        self.assertIn("source gap remains", rows["spell.telekinesis"]["source"]["structuredStatus"])
+        evidence = read_index("dnd-5-5e")
+        telekinesis = next(shard["spell.telekinesis"] for shard in evidence.values() if "spell.telekinesis" in shard)
+        self.assertIn("source gap remains", telekinesis["structuredStatus"])
         self.assertTrue(rows["spell.telekinesis"]["entries"][2]["entries"][2].endswith("simple tool,"))
 
     def test_legacy_familiar_wall_and_sleet_publisher_rules(self):

@@ -18,20 +18,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         142
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/169"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -90,20 +81,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         142
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/170"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -221,21 +203,12 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         142,
         143
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/171"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -301,20 +274,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         143
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/172"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -378,20 +342,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         143
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/173"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -467,20 +422,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         143
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/94"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -541,20 +487,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         143
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/224"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -618,20 +555,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         143
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/174"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -701,20 +629,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         143
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/175"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -781,21 +700,12 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         143,
         144
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/176"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -848,20 +758,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         144
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/177"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -917,20 +818,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         144
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/180"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -979,20 +871,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         144
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/181"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1057,20 +940,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         144
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/182"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1125,20 +999,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         144
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/183"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1207,20 +1072,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         144
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/184"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1274,20 +1130,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         145
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/185"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1341,20 +1188,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         145
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/186"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1411,20 +1249,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         145
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/187"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1490,20 +1319,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         145
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/188"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1560,20 +1380,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         145
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/189"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1631,21 +1442,12 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         145,
         146
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/190"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1736,20 +1538,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         146
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/191"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1817,20 +1610,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         146
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/192"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {
@@ -1896,20 +1680,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "pages": [
         146
       ],
       "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "adaptation": "direct publisher column extraction; layout text, not executable mechanics",
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "spells/spells-srd52.json",
-        "pointer": "/spell/193"
-      },
-      "structuredStatus": "publisher-name-level-school-verified; structured body review pending"
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode."
     },
     "time": [
       {

@@ -160,28 +160,11 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         5,
         6
-      ],
-      "candidatePage": 5,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/race/0"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending",
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "races.json",
-          "pointer": "/subrace/0"
-        }
       ]
     },
     "_versions": [
@@ -467,20 +450,11 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         3
-      ],
-      "candidatePage": 3,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/race/2"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending"
+      ]
     }
   },
   {
@@ -576,20 +550,11 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         4
-      ],
-      "candidatePage": 4,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/race/4"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending"
+      ]
     }
   },
   {
@@ -664,20 +629,11 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         6
-      ],
-      "candidatePage": 6,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/race/6"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending"
+      ]
     }
   },
   {
@@ -776,28 +732,11 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         6,
         7
-      ],
-      "candidatePage": 6,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/race/9"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending",
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "races.json",
-          "pointer": "/subrace/4"
-        }
       ]
     }
   },
@@ -894,27 +833,10 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         7
-      ],
-      "candidatePage": 7,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/race/10"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending",
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "races.json",
-          "pointer": "/subrace/5"
-        }
       ]
     }
   },
@@ -997,21 +919,12 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         4,
         5
-      ],
-      "candidatePage": 4,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/race/11"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending"
+      ]
     }
   },
   {
@@ -1065,27 +978,10 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         5
-      ],
-      "candidatePage": 4,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/race/13"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending",
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "races.json",
-          "pointer": "/subrace/7"
-        }
       ]
     },
     "ability": [
@@ -1211,27 +1107,10 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         7
-      ],
-      "candidatePage": 7,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/race/16"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending",
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "races.json",
-          "pointer": "/subrace/8"
-        }
       ]
     }
   },
@@ -1262,20 +1141,11 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         4
-      ],
-      "candidatePage": 4,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/subrace/1"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending"
+      ]
     },
     "subraceName": "Hill"
   },
@@ -1359,20 +1229,11 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         4
-      ],
-      "candidatePage": 4,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/subrace/2"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending"
+      ]
     },
     "subraceName": "High"
   },
@@ -1439,20 +1300,11 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         6
-      ],
-      "candidatePage": 6,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/subrace/3"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending"
+      ]
     },
     "subraceName": "Rock"
   },
@@ -1483,20 +1335,11 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         5
-      ],
-      "candidatePage": 5,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "races.json",
-        "pointer": "/subrace/6"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending"
+      ]
     },
     "subraceName": "Lightfoot"
   },
@@ -1761,28 +1604,11 @@
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
-      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         60,
         61
-      ],
-      "candidatePage": 127,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "backgrounds.json",
-        "pointer": "/background/0"
-      },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending",
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "fluff-backgrounds.json",
-          "pointer": "/backgroundFluff/0"
-        }
       ]
     }
   }

@@ -3,6 +3,8 @@ on:
   pull_request:
     branches: [main]
     paths:
+      - 'tools/srd_import_sources.*'
+      - 'data/reference/srd/dnd-*-import-sources.json'
       - 'tools/import_official_srd_pages.py'
       - 'tools/audit_srd_native_fidelity.py'
       - 'tests/test_srd_native_fidelity.py'

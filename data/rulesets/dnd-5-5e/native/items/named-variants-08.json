@@ -46,27 +46,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/70"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -121,27 +105,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/72"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -188,27 +156,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/78"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -260,27 +212,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/82"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -333,27 +269,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/88"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -402,27 +322,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/90"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -475,27 +379,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/92"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -543,27 +431,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/94"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -605,27 +477,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/100"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -673,27 +529,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/104"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -735,27 +575,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/106"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -809,27 +633,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/108"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -879,27 +687,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/121"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -951,27 +743,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/123"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1018,27 +794,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/129"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1085,27 +845,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/131"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1154,27 +898,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/139"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1225,27 +953,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/145"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1294,27 +1006,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/147"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1360,27 +1056,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/149"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1428,27 +1108,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/151"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1498,27 +1162,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/159"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1568,27 +1216,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/169"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1635,27 +1267,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/175"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1702,27 +1318,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/177"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1770,27 +1370,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/63"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/181"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1836,27 +1420,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/64"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/92"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1900,27 +1468,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         233
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/64"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/145"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -1961,27 +1513,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/65"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/54"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -2021,27 +1557,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/65"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/62"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -2080,27 +1600,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/65"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/94"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -2138,27 +1642,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/65"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/131"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -2198,27 +1686,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/65"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/139"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -2258,27 +1730,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/65"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/147"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -2321,27 +1777,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/66"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/54"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -2383,27 +1823,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/66"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/62"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -2444,27 +1868,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/66"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/94"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -2506,27 +1914,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/66"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/139"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -2567,27 +1959,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/67"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/54"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   },
   {
@@ -2627,27 +2003,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         248
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/67"
-      },
-      "additionalStructuredSources": [
-        {
-          "provider": "CoolFireGiant/hewnhero-srd",
-          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-          "path": "items-base.json",
-          "pointer": "/baseitem/62"
-        }
-      ],
-      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+      ]
     }
   }
 ]

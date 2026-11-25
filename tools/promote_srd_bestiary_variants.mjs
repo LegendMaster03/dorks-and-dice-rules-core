@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Materialize only publisher-backed spell-summon variants, without resolving dynamic spell levels.
 import fs from "node:fs";
 import path from "node:path";
@@ -135,14 +136,13 @@ function generateLegacyVariants(candidates,parents,armorRows,pages){
  return {records,report};
 }
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
-const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const { read, write } = srdImportFiles(root);
 const dir="data/rulesets/dnd-5-5e/native/bestiary/";
 const parents=fs.readdirSync(path.join(root,dir)).filter(f=>/^structured-\d+\.json$/.test(f)).sort().flatMap(f=>read(dir+f));
 const {records,report}=generateVariants(read("data/reference/srd/structured/bestiary/bestiary-srd52.json").monster,parents);
 for(const [file,value] of [[dir+"variants.json",records],["data/reference/srd/bestiary-variant-promotion-52.json",report]]){
- const target=path.join(root,file),body=JSON.stringify(value,null,2)+"\n";
- if(process.argv.includes("--check")){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale bestiary variants "+file);}
- else fs.writeFileSync(target,body);
+ const body=JSON.stringify(value,null,2)+"\n";
+ write(file, body, process.argv.includes("--check"));
 }
 console.log("dnd-5-5e: "+report.nativeCount+" generated spell-summon variants");
 
@@ -151,8 +151,7 @@ const legacyParents=fs.readdirSync(path.join(root,legacyDir+"bestiary")).filter(
 const armorRows=fs.readdirSync(path.join(root,legacyDir+"items")).filter(f=>/^structured-\d+\.json$/.test(f)).sort().flatMap(f=>read(legacyDir+"items/"+f));
 const legacy=generateLegacyVariants(read("data/reference/srd/structured/bestiary/bestiary-srd51.json").monster,legacyParents,armorRows,read(legacyDir+"rulebook/pages-053-077.json"));
 for(const [file,value] of [[legacyDir+"bestiary/variants.json",legacy.records],["data/reference/srd/bestiary-variant-promotion-51.json",legacy.report]]){
- const target=path.join(root,file),body=JSON.stringify(value,null,2)+"\n";
- if(process.argv.includes("--check")){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale legacy bestiary variants "+file);}
- else fs.writeFileSync(target,body);
+ const body=JSON.stringify(value,null,2)+"\n";
+ write(file, body, process.argv.includes("--check"));
 }
 console.log("dnd-5e: "+legacy.report.nativeCount+" generated creature variants; "+legacy.report.excluded.length+" excluded source additions");

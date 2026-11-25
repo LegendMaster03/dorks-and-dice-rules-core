@@ -142,7 +142,8 @@ public static class NativeCatalogLoader
 
     // The common loader does not impose D&D or Fate schemas on unrelated
     // packages. These optional manifest declarations opt into source-specific
-    // structural checks, independently of the source-fidelity audit.
+    // structural checks. Offline import checks verify the pinned input digests
+    // and source locations independently of the runtime citations.
     private static void ValidateImportedSource(JsonElement manifest, IReadOnlyList<NativeRuleEntity> entities)
     {
         static int Integer(JsonElement value, string key) =>
@@ -171,7 +172,7 @@ public static class NativeCatalogLoader
                     string.IsNullOrWhiteSpace(ReadString(entity.Definition, "textLayout")) ||
                     !entity.Definition.TryGetProperty("source", out var source) ||
                     source.ValueKind != JsonValueKind.Object ||
-                    ReadString(source, "release") != release || ReadString(source, "pdfSha256") != hash)
+                    ReadString(source, "release") != release)
                     throw Invalid("invalid_native_json", "Publisher page provenance or identity is invalid.");
             }
         }
@@ -193,7 +194,7 @@ public static class NativeCatalogLoader
                 if (level < 1 || level > 6 || string.IsNullOrWhiteSpace(ReadString(entity.Definition, "markdown")) ||
                     !entity.Definition.TryGetProperty("parentId", out var parent) ||
                     !entity.Definition.TryGetProperty("source", out var source) ||
-                    ReadString(source, "commit") != commit)
+                    source.ValueKind != JsonValueKind.Object || string.IsNullOrWhiteSpace(ReadString(source, "url")))
                     throw Invalid("invalid_native_json", "Invalid Markdown section or provenance.");
                 if (parent.ValueKind == JsonValueKind.Null)
                 {

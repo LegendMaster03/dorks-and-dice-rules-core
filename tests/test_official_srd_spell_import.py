@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import unittest
 from tools.import_official_srd_spells import normalized, slug
+from tools.srd_import_sources import read_native_shards
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -13,8 +14,12 @@ class OfficialSrdSpellImportTests(unittest.TestCase):
             with self.subTest(package=package):
                 root = ROOT / "data/rulesets" / package
                 manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
-                spells = [r for p in sorted((root / "native/spells").glob("spells-*.json"))
-                          for r in json.loads(p.read_text(encoding="utf-8"))]
+                native = root / "native"
+                spells = read_native_shards(native, "spells/spells-*.json")
+                for path in (native / "spells").glob("spells-*.json"):
+                    for record in json.loads(path.read_text(encoding="utf-8")):
+                        self.assertNotIn("structuredSource", record["source"], record["id"])
+                        self.assertNotIn("pdfSha256", record["source"], record["id"])
                 expected = json.loads((ROOT / f"data/reference/srd/structured/spells/spells-srd{tag}.json")
                                       .read_text(encoding="utf-8"))["spell"]
                 self.assertEqual(count, len(spells))

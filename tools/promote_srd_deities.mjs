@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Reconcile the legacy fantasy-historical pantheon tables, not commercial setting deities.
 import fs from "node:fs";
 import path from "node:path";
@@ -40,12 +41,11 @@ function generatePantheons(source,manifest,src,pages){
  report.nativeCount=records.length;return {records,report};
 }
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
-const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const { read, write } = srdImportFiles(root);
 const base="data/rulesets/dnd-5e/",src=read("data/reference/srd/structured-manifest.json");
 const {records,report}=generatePantheons(read("data/reference/srd/structured/deities.json"),read(base+"manifest.json"),src,read(base+"native/rulebook/pages-353-377.json"));
 for(const [file,value] of [[base+"native/deities.json",records],["data/reference/srd/deity-promotion-51.json",report]]){
- const body=JSON.stringify(value,null,2)+"\n",target=path.join(root,file);
- if(process.argv.includes("--check")){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale deity promotion "+file);}
- else fs.writeFileSync(target,body);
+ const body=JSON.stringify(value,null,2)+"\n";
+ write(file, body, process.argv.includes("--check"));
 }
 console.log("dnd-5e: "+report.nativeCount+" verified deity table rows");

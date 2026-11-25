@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Promote selected item arrays from the pinned, separately hash-checked SRD corpus.
 // Source membership is not a claim of official body fidelity or publication approval.
 import fs from "node:fs";
@@ -421,7 +422,7 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
     return {records,report};
 }
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
-const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const { read, write } = srdImportFiles(root);
 const json=value=>JSON.stringify(value,null,2)+"\n";
 const sourceManifest=read("data/reference/srd/structured-manifest.json");
 const inputs=Object.fromEntries(["items.json","items-base.json","magicvariants.json"].map(file=>[file,read("data/reference/srd/structured/"+file)]));
@@ -442,9 +443,8 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
     for(let i=0;i<records.length;i+=50)outputs.set(dir+"structured-"+String(i/50+1).padStart(2,"0")+".json",json(records.slice(i,i+50)));
     outputs.set("data/reference/srd/item-promotion-"+tag+".json",json(report));
     for(const [file,body] of outputs){
-        const target=path.join(root,file);
-        if(check){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale item promotion "+file);}
-        else {fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,body);}
+
+        write(file, body, check);
     }
     for(const file of fs.readdirSync(path.join(root,dir)).filter(f=>/^structured-\d+\.json$/.test(f)))
         if(!outputs.has(dir+file))throw Error("Stale generated item file "+file);

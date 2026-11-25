@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Bulk promote edition-specific monster stat blocks from the pinned SRD JSON.
 // Preserve the existing independently reviewed records and publisher extracts.
 // A publisher name match establishes a locator, not full stat-block fidelity.
@@ -144,7 +145,7 @@ function generate(candidates, spells, conditions, skills, pages, existing, sourc
 }
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
-const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const { read, write } = srdImportFiles(root);
 const json=value=>JSON.stringify(value,null,2)+"\n";
 const check=process.argv.includes("--check");
 const sourceManifest=read("data/reference/srd/structured-manifest.json");
@@ -160,9 +161,8 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
     for(let i=0;i<rows.length;i+=25)outputs.set(directory+"structured-"+String(i/25+1).padStart(2,"0")+".json",json(rows.slice(i,i+25)));
     outputs.set("data/reference/srd/bestiary-promotion-"+tag+".json",json(report));
     for(const [file,body] of outputs){
-        const target=path.join(root,file);
-        if(check){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale bestiary promotion "+file);}
-        else fs.writeFileSync(target,body);
+
+        write(file, body, check);
     }
     for(const file of fs.readdirSync(path.join(root,directory)).filter(f=>/^structured-\d+\.json$/.test(f)))
         if(!outputs.has(directory+file))throw Error("Stale generated bestiary file "+file);

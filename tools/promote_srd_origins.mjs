@@ -1,3 +1,4 @@
+import { srdImportFiles } from "./srd_import_sources.mjs";
 // Promote edition-local character creation definitions; no first-party inheritance policy.
 import fs from "node:fs";
 import path from "node:path";
@@ -154,7 +155,7 @@ function generate(races,backgrounds,backgroundFluff,manifest,sourceManifest,page
 }
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
-const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const { read, write } = srdImportFiles(root);
 const json=x=>JSON.stringify(x,null,2)+"\n";
 const src=read("data/reference/srd/structured-manifest.json");
 const races=read("data/reference/srd/structured/races.json");
@@ -171,9 +172,8 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  report.literalSpellRelationships=linkSpellRelationships(records,spells,"SRD"+tag);
  report.literalCharacterRelationships=linkCharacterRelationships(records,characterRelationshipCatalog(root,base,read),"SRD"+tag);
  for(const [file,body] of [[base+"native/character-origins.json",json(records)],["data/reference/srd/origins-promotion-"+tag+".json",json(report)]]){
-  const target=path.join(root,file);
-  if(check){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale origins promotion "+file);}
-  else fs.writeFileSync(target,body);
+
+  write(file, body, check);
  }
  console.log(pack+": "+records.length+" origin records");
 }

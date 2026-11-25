@@ -10,6 +10,11 @@ import json
 from pathlib import Path
 import subprocess
 
+if __package__:
+    from .srd_import_sources import read_native_shards
+else:
+    from srd_import_sources import read_native_shards
+
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data/reference/srd/manifest.json"
 PACKAGES = {"srd-5.1": ("dnd-5e", 403, 3), "srd-5.2.1": ("dnd-5-5e", 364, 5)}
@@ -94,10 +99,8 @@ if __name__ == "__main__":
     result = extract(args.edition, args.pdf)
     metadata = write_result(result, args.output)
     if args.check:
-        directory = ROOT / "data" / "rulesets" / result["package"] / "native" / "rulebook"
-        committed = []
-        for path in sorted(directory.glob("pages-*.json")):
-            committed.extend(json.loads(path.read_text(encoding="utf-8")))
+        native = ROOT / "data/rulesets" / result["package"] / "native"
+        committed = read_native_shards(native, "rulebook/pages-*.json")
         if committed != result["records"]:
             raise ValueError("Committed native page records differ from official extraction")
         metadata["nativePageParity"] = True

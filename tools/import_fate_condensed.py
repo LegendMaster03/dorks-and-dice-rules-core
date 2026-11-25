@@ -8,9 +8,7 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data/reference/fate-condensed/Fate-Condensed-SRD-CC-BY.md"
 TARGET = ROOT / "data/rulesets/fate-condensed/native/sections.json"
-COMMIT = "93ed848e723f31b4994b466b7241011ba24be885"
 BLOB = "cc313c53ee75939e1f5c53f0f2ee59181e78ee00"
-PATH = "docs/markdown/Fate-Condensed-SRD-CC-BY.md"
 ATTRIBUTION = "This work is based on Fate Condensed (found at https://fate-srd.com/fate-condensed), a product of Evil Hat Productions, LLC, developed, authored, and edited by PK Sullivan, Lara Turner, Fred Hicks, Richard Bellingham, Robert Hanz, and Sophie Lagacé, and licensed for our use under the Creative Commons Attribution 3.0 Unported license (https://creativecommons.org/licenses/by/3.0/)."
 
 
@@ -33,10 +31,8 @@ def convert():
         records.append(dict(id=entity_id, name=name, kind="chapter" if level == 1 else "rule",
                             headingLevel=level, parentId=stack[-1][2] if stack else None,
                             markdown=source[match.start():end],
-                            source=dict(commit=COMMIT, path=PATH,
-                                        line=source[:match.start()].count("\n") + 1,
-                                        license="CC-BY-3.0", attribution=ATTRIBUTION,
-                                        url=f"https://github.com/fate-srd/fate-srd-content/blob/{COMMIT}/{PATH}")))
+                            source=dict(license="CC-BY-3.0", attribution=ATTRIBUTION,
+                                        url="https://fate-srd.com/fate-condensed")))
         stack.append((level, slug, entity_id))
     if len({r["id"] for r in records}) != len(records):
         raise ValueError("Duplicate section IDs")

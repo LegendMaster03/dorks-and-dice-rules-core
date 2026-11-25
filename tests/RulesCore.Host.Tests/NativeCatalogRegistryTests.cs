@@ -118,6 +118,21 @@ public sealed class NativeCatalogRegistryTests
         Assert.NotEqual(a!.Definition.GetRawText(), b!.Definition.GetRawText());
         Assert.Equal(401, old.CountByCategory("rulebook-page"));
         Assert.Equal(360, modern.CountByCategory("rulebook-page"));
+
+        Assert.True(modern.TryGetById("class.warlock", out var warlock));
+        var citation = warlock!.Definition.GetProperty("source");
+        Assert.Equal("srd-5.2.1", citation.GetProperty("release").GetString());
+        Assert.NotEmpty(citation.GetProperty("pages").EnumerateArray());
+        Assert.False(citation.TryGetProperty("structuredSource", out _));
+        Assert.False(citation.TryGetProperty("pdfSha256", out _));
+        Assert.False(citation.GetProperty("spellList").TryGetProperty("commit", out _));
+
+        var fate = registry.GetStore("fate-condensed").Snapshot!;
+        Assert.True(fate.TryGetById("action.attack", out var attack));
+        var fateCitation = attack!.Definition.GetProperty("source");
+        Assert.Equal("https://fate-srd.com/fate-condensed", fateCitation.GetProperty("url").GetString());
+        Assert.False(fateCitation.TryGetProperty("commit", out _));
+        Assert.False(fateCitation.TryGetProperty("path", out _));
         Assert.Equal(319, old.CountByCategory("spell"));
         Assert.Equal(339, modern.CountByCategory("spell"));
         foreach (var catalog in new[] { old, modern })
@@ -180,10 +195,10 @@ public sealed class NativeCatalogRegistryTests
             File.WriteAllText(Path.Combine(root, "markdown-test", "manifest.json"),
                 """{"id":"markdown-test","kind":"ruleset-package","schemaVersion":1,"nativeRoot":"native/","workingRoot":"working/","runtimeContentRoot":"native/","markdownImport":{"sectionRecords":2,"commit":"COMMIT_PLACEHOLDER"}}""".Replace("COMMIT_PLACEHOLDER", commit));
             File.WriteAllText(Path.Combine(location.NativeDirectory, "root.json"),
-                """{"id":"section.root","kind":"chapter","name":"Root","headingLevel":1,"parentId":null,"markdown":"# Root","source":{"commit":"COMMIT_PLACEHOLDER"}}""".Replace("COMMIT_PLACEHOLDER", commit));
+                """{"id":"section.root","kind":"chapter","name":"Root","headingLevel":1,"parentId":null,"markdown":"# Root","source":{"url":"https://example.com/rules"}}""");
             var parent = valid ? "section.root" : "section.missing";
             File.WriteAllText(Path.Combine(location.NativeDirectory, "child.json"),
-                """{"id":"section.root.child","kind":"rule","name":"Child","headingLevel":2,"parentId":"PARENT_PLACEHOLDER","markdown":"## Child","source":{"commit":"COMMIT_PLACEHOLDER"}}""".Replace("COMMIT_PLACEHOLDER", commit).Replace("PARENT_PLACEHOLDER", parent));
+                """{"id":"section.root.child","kind":"rule","name":"Child","headingLevel":2,"parentId":"PARENT_PLACEHOLDER","markdown":"## Child","source":{"url":"https://example.com/rules"}}""".Replace("PARENT_PLACEHOLDER", parent));
             File.WriteAllText(Path.Combine(location.NativeDirectory, "skill.json"),
                 """{"id":"skill.example","kind":"skill","name":"Example"}""");
             if (valid)

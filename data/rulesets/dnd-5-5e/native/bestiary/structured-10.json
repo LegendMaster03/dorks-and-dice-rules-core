@@ -93,21 +93,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         268
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/321"
-      },
-      "candidatePage": 268,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -211,21 +201,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         270
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/322"
-      },
-      "candidatePage": 270,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -320,21 +300,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         276
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/323"
-      },
-      "candidatePage": 276,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -438,21 +408,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         291
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/324"
-      },
-      "candidatePage": 291,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -553,21 +513,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         293
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/325"
-      },
-      "candidatePage": 293,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -655,21 +605,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         318
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/326"
-      },
-      "candidatePage": 318,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -765,21 +705,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         324
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/327"
-      },
-      "candidatePage": 324,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -876,21 +806,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         340
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/328"
-      },
-      "candidatePage": 340,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -963,21 +883,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         343
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/329"
-      },
-      "candidatePage": 343,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -1051,21 +961,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         109
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/330"
-      },
-      "candidatePage": 109,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -1160,21 +1060,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         166
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/331"
-      },
-      "candidatePage": 166,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -1264,21 +1154,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         136
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/332"
-      },
-      "candidatePage": 136,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   },
   {
@@ -1372,21 +1252,11 @@
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
         131
-      ],
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "bestiary/bestiary-srd52.json",
-        "pointer": "/monster/333"
-      },
-      "candidatePage": 131,
-      "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      ]
     }
   }
 ]

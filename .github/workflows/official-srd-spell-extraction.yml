@@ -3,6 +3,8 @@ on:
   pull_request:
     branches: [main]
     paths:
+      - 'tools/srd_import_sources.*'
+      - 'data/reference/srd/dnd-*-import-sources.json'
       - 'tools/import_official_srd_spells.py'
       - 'tools/promote_srd_json.mjs'
       - 'data/rulesets/dnd-5e/native/spells/**'
