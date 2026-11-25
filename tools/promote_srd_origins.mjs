@@ -60,6 +60,17 @@ function generate(races,backgrounds,manifest,sourceManifest,pages,skills,tag) {
    }
    report.corrections.push({id:row.id,reason:"SRD 5.2.1 p.85: High Elf starts with Prestidigitation; a different Wizard cantrip may replace the lineage cantrip after a Long Rest. Retain the source selector as a conditional replacement, not an initial choice."});
   }
+  if(modern&&row.id==="species.gnome"){
+   const publisher=byPage.get(85).textLayout.split("\n").map(line=>line.slice(0,65)).join(" ").replace(/\s+/g," ");
+   if(!publisher.includes("Forest Gnome. You know the Minor Illusion cantrip.")||
+      !publisher.includes("You also always have the Speak with Animals spell prepared.")||
+      !publisher.includes("number of times equal to your Proficiency Bonus,"))throw Error("Forest Gnome publisher evidence changed");
+   const grant=row._versions.find(v=>v.name==="Gnome; Forest Gnome Lineage").additionalSpells[0];
+   if(JSON.stringify(grant.innate)!==JSON.stringify({"3":{"daily":{"pb":["speak with animals|srd52"]}}}))throw Error("Forest Gnome source grant changed");
+   grant.innate={"1":grant.innate["3"]};
+   grant.prepared={"1":["speak with animals|srd52"]};
+   report.corrections.push({id:row.id,reason:"SRD 5.2.1 p.85: Forest Gnome receives Speak with Animals as a starting lineage benefit, always prepared; preserve proficiency-bonus free casts per Long Rest instead of delaying acquisition to level 3."});
+  }
   if(!modern){
    const age=row.entries.findIndex(e=>e.name==="Age");
    if(age<0||!alignment[c.name])throw Error("Missing guidance "+c.name);

@@ -361,6 +361,11 @@ public sealed class RulesetResolutionApiTests
             Assert.True(replacement.GetProperty("different").GetBoolean());
             Assert.Equal("level=0|class=Wizard", replacement.GetProperty("selector").GetProperty("choose").GetString());
         }
+        var modernGnome = (await client.GetFromJsonAsync<JsonElement>(animals + "/species.gnome")).GetProperty("rule").GetProperty("definition");
+        var forestGnome = modernGnome.GetProperty("_versions").EnumerateArray().Single(x => x.GetProperty("name").GetString() == "Gnome; Forest Gnome Lineage").GetProperty("additionalSpells")[0];
+        Assert.Equal("speak with animals|srd52", forestGnome.GetProperty("innate").GetProperty("1").GetProperty("daily").GetProperty("pb")[0].GetString());
+        Assert.Equal("speak with animals|srd52", forestGnome.GetProperty("prepared").GetProperty("1")[0].GetString());
+        Assert.False(forestGnome.GetProperty("innate").TryGetProperty("3", out _));
         var acolyteRelationships = (await client.GetFromJsonAsync<JsonElement>(animals + "/background.acolyte")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("feat.magic-initiate", acolyteRelationships.GetProperty("catalogReferences").GetRawText());
         Assert.Contains("magic initiate; cleric", acolyteRelationships.GetProperty("feats").GetRawText());

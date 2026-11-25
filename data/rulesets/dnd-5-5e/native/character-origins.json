@@ -859,7 +859,7 @@
         "additionalSpells": [
           {
             "innate": {
-              "3": {
+              "1": {
                 "daily": {
                   "pb": [
                     "speak with animals|srd52"
@@ -877,6 +877,11 @@
             "known": {
               "1": [
                 "minor illusion|srd52#c"
+              ]
+            },
+            "prepared": {
+              "1": [
+                "speak with animals|srd52"
               ]
             }
           }
