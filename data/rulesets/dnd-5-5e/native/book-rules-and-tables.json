@@ -1688,6 +1688,1407 @@
     }
   },
   {
+    "id": "table.ability-descriptions",
+    "kind": "table",
+    "name": "Ability Descriptions",
+    "colLabels": [
+      "Ability",
+      "Score Measures..."
+    ],
+    "rows": [
+      [
+        "Strength",
+        "Physical might"
+      ],
+      [
+        "Dexterity",
+        "Agility, reflexes, and balance"
+      ],
+      [
+        "Constitution",
+        "Health and stamina"
+      ],
+      [
+        "Intelligence",
+        "Reasoning and memory"
+      ],
+      [
+        "Wisdom",
+        "Perceptiveness and mental fortitude"
+      ],
+      [
+        "Charisma",
+        "Confidence, poise, and charm"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-005"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        5
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/1",
+        "entryPointer": "/data/1/entries/1/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.ability-scores",
+    "kind": "table",
+    "name": "Ability Scores",
+    "colLabels": [
+      "Score",
+      "Meaning"
+    ],
+    "rows": [
+      [
+        "1",
+        "This is the lowest a score can normally go. If an effect reduces a score to 0, that effect explains what happens."
+      ],
+      [
+        "2–9",
+        "This represents a weak capability."
+      ],
+      [
+        "10–11",
+        "This represents the human average."
+      ],
+      [
+        "12–19",
+        "This represents a strong capability."
+      ],
+      [
+        "20",
+        "This is the highest an adventurer's score can go unless a feature says otherwise."
+      ],
+      [
+        "21–29",
+        "This represents an extraordinary capability."
+      ],
+      [
+        "30",
+        "This is the highest a score can go."
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-005"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        5
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/1",
+        "entryPointer": "/data/1/entries/1/entries/2/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.ability-check-examples",
+    "kind": "table",
+    "name": "Ability Check Examples",
+    "colLabels": [
+      "Ability",
+      "Make a Check To..."
+    ],
+    "rows": [
+      [
+        "Strength",
+        "Lift, push, pull, or break something"
+      ],
+      [
+        "Dexterity",
+        "Move nimbly, quickly, or quietly"
+      ],
+      [
+        "Constitution",
+        "Push your body beyond normal limits"
+      ],
+      [
+        "Intelligence",
+        "Reason or remember"
+      ],
+      [
+        "Wisdom",
+        "Notice things in the environment or in creatures' behavior"
+      ],
+      [
+        "Charisma",
+        "Influence, entertain, or deceive"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-006"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        6
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/1",
+        "entryPointer": "/data/1/entries/2/entries/2/entries/1/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.saving-throw-examples",
+    "kind": "table",
+    "name": "Saving Throw Examples",
+    "colLabels": [
+      "Ability",
+      "Make a Save To..."
+    ],
+    "rows": [
+      [
+        "Strength",
+        "Physically resist direct force"
+      ],
+      [
+        "Dexterity",
+        "Dodge out of harm's way"
+      ],
+      [
+        "Constitution",
+        "Endure a toxic hazard"
+      ],
+      [
+        "Intelligence",
+        "Recognize an illusion as fake"
+      ],
+      [
+        "Wisdom",
+        "Resist a mental assault"
+      ],
+      [
+        "Charisma",
+        "Assert your identity"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-007"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        7
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/1",
+        "entryPointer": "/data/1/entries/2/entries/3/entries/2/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.attack-roll-abilities",
+    "kind": "table",
+    "name": "Attack Roll Abilities",
+    "colLabels": [
+      "Ability",
+      "Attack Type"
+    ],
+    "rows": [
+      [
+        "Strength",
+        "Melee attack with a weapon or an {@variantrule Unarmed Strike|srd52} (see Rules Glossary)"
+      ],
+      [
+        "Dexterity",
+        "Ranged attack with a weapon"
+      ],
+      [
+        "Varies",
+        "Spell attack (the ability used is determined by the spellcaster's spellcasting feature, as explained in Spells)"
+      ]
+    ],
+    "catalogReferences": [
+      "glossary.unarmed-strike",
+      "rulebook.page-007"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        7
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/1",
+        "entryPointer": "/data/1/entries/2/entries/4/entries/1/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.creature-size-and-space",
+    "kind": "table",
+    "name": "Creature Size and Space",
+    "colLabels": [
+      "Size",
+      "Space (Feet)",
+      "Space (Squares)"
+    ],
+    "rows": [
+      [
+        "Tiny",
+        "2½ by 2½ feet",
+        "4 per square"
+      ],
+      [
+        "Small",
+        "5 by 5 feet",
+        "1 square"
+      ],
+      [
+        "Medium",
+        "5 by 5 feet",
+        "1 square"
+      ],
+      [
+        "Large",
+        "10 by 10 feet",
+        "4 squares (2 by 2)"
+      ],
+      [
+        "Huge",
+        "15 by 15 feet",
+        "9 squares (3 by 3)"
+      ],
+      [
+        "Gargantuan",
+        "20 by 20 feet",
+        "16 squares (4 by 4)"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-014"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        14
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/1",
+        "entryPointer": "/data/1/entries/7/entries/2/entries/7/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.cover",
+    "kind": "table",
+    "name": "Cover",
+    "colLabels": [
+      "Degree",
+      "Benefit to Target",
+      "Offered By..."
+    ],
+    "rows": [
+      [
+        "{@variantrule Cover|srd52|Half}",
+        "+2 bonus to AC and Dexterity saving throws",
+        "Another creature or an object that covers at least half of the target"
+      ],
+      [
+        "{@variantrule Cover|srd52|Three-Quarters}",
+        "+5 bonus to AC and Dexterity saving throws",
+        "An object that covers at least three-quarters of the target"
+      ],
+      [
+        "{@variantrule Cover|srd52|Total}",
+        "Can't be targeted directly",
+        "An object that covers the whole target"
+      ]
+    ],
+    "catalogReferences": [
+      "glossary.cover",
+      "rulebook.page-015"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        15
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/1",
+        "entryPointer": "/data/1/entries/7/entries/4/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.class-overview",
+    "kind": "table",
+    "name": "Class Overview",
+    "colLabels": [
+      "Class",
+      "Likes...",
+      "Primary Ability",
+      "Complexity"
+    ],
+    "rows": [
+      [
+        "{@class Barbarian|srd52}",
+        "Battle",
+        "Strength",
+        "Average"
+      ],
+      [
+        "{@class Bard|srd52}",
+        "Performing",
+        "Charisma",
+        "High"
+      ],
+      [
+        "{@class Cleric|srd52}",
+        "Gods",
+        "Wisdom",
+        "Average"
+      ],
+      [
+        "{@class Druid|srd52}",
+        "Nature",
+        "Wisdom",
+        "High"
+      ],
+      [
+        "{@class Fighter|srd52}",
+        "Weapons",
+        "Strength or Dexterity",
+        "Low"
+      ],
+      [
+        "{@class Monk|srd52}",
+        "Unarmed combat",
+        "Dexterity and Wisdom",
+        "High"
+      ],
+      [
+        "{@class Paladin|srd52}",
+        "Defense",
+        "Strength and Charisma",
+        "Average"
+      ],
+      [
+        "{@class Ranger|srd52}",
+        "Survival",
+        "Dexterity and Wisdom",
+        "Average"
+      ],
+      [
+        "{@class Rogue|srd52}",
+        "Stealth",
+        "Dexterity",
+        "Low"
+      ],
+      [
+        "{@class Sorcerer|srd52}",
+        "Power",
+        "Charisma",
+        "High"
+      ],
+      [
+        "{@class Warlock|srd52}",
+        "Occult lore",
+        "Charisma",
+        "High"
+      ],
+      [
+        "{@class Wizard|srd52}",
+        "Spellbooks",
+        "Intelligence",
+        "Average"
+      ]
+    ],
+    "catalogReferences": [
+      "class.barbarian",
+      "class.bard",
+      "class.cleric",
+      "class.druid",
+      "class.fighter",
+      "class.monk",
+      "class.paladin",
+      "class.ranger",
+      "class.rogue",
+      "class.sorcerer",
+      "class.warlock",
+      "class.wizard",
+      "rulebook.page-019",
+      "rulebook.page-020"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        19,
+        20
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/2",
+        "entryPointer": "/data/2/entries/1/entries/2/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.ability-scores-and-backgrounds",
+    "kind": "table",
+    "name": "Ability Scores and Backgrounds",
+    "colLabels": [
+      "Ability",
+      "Background"
+    ],
+    "rows": [
+      [
+        "Strength",
+        "{@background Soldier|srd52}"
+      ],
+      [
+        "Dexterity",
+        "{@background Soldier|srd52}"
+      ],
+      [
+        "Constitution",
+        "{@background Soldier|srd52}"
+      ],
+      [
+        "Intelligence",
+        "{@background Acolyte|srd52}"
+      ],
+      [
+        "Wisdom",
+        "{@background Acolyte|srd52}"
+      ],
+      [
+        "Charisma",
+        "{@background Acolyte|srd52}"
+      ]
+    ],
+    "catalogReferences": [
+      "background.acolyte",
+      "background.soldier",
+      "rulebook.page-019",
+      "rulebook.page-020"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        19,
+        20
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/2",
+        "entryPointer": "/data/2/entries/1/entries/3/entries/2/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.standard-languages",
+    "kind": "table",
+    "name": "Standard Languages",
+    "colLabels": [
+      "{@dice 1d12}",
+      "Language"
+    ],
+    "rows": [
+      [
+        "—",
+        "{@language Common|srd52}"
+      ],
+      [
+        {
+          "type": "cell",
+          "roll": {
+            "exact": 1
+          }
+        },
+        "{@language Common Sign Language|srd52}"
+      ],
+      [
+        {
+          "type": "cell",
+          "roll": {
+            "exact": 2
+          }
+        },
+        "{@language Draconic|srd52}"
+      ],
+      [
+        {
+          "type": "cell",
+          "roll": {
+            "min": 3,
+            "max": 4
+          }
+        },
+        "{@language Dwarvish|srd52}"
+      ],
+      [
+        {
+          "type": "cell",
+          "roll": {
+            "min": 5,
+            "max": 6
+          }
+        },
+        "{@language Elvish|srd52}"
+      ],
+      [
+        {
+          "type": "cell",
+          "roll": {
+            "exact": 7
+          }
+        },
+        "{@language Giant|srd52}"
+      ],
+      [
+        {
+          "type": "cell",
+          "roll": {
+            "exact": 8
+          }
+        },
+        "{@language Gnomish|srd52}"
+      ],
+      [
+        {
+          "type": "cell",
+          "roll": {
+            "exact": 9
+          }
+        },
+        "{@language Goblin|srd52}"
+      ],
+      [
+        {
+          "type": "cell",
+          "roll": {
+            "min": 10,
+            "max": 11
+          }
+        },
+        "{@language Halfling|srd52}"
+      ],
+      [
+        {
+          "type": "cell",
+          "roll": {
+            "exact": 12
+          }
+        },
+        "{@language Orc|srd52}"
+      ]
+    ],
+    "catalogReferences": [
+      "language.common",
+      "language.common-sign-language",
+      "language.draconic",
+      "language.dwarvish",
+      "language.elvish",
+      "language.giant",
+      "language.gnomish",
+      "language.goblin",
+      "language.halfling",
+      "language.orc",
+      "rulebook.page-020"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        20
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/2",
+        "entryPointer": "/data/2/entries/1/entries/3/entries/6/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.rare-languages",
+    "kind": "table",
+    "name": "Rare Languages",
+    "colLabels": [
+      "Language",
+      "Language"
+    ],
+    "rows": [
+      [
+        "{@language Abyssal|srd52}",
+        "{@language Primordial|srd52|Primordial*}"
+      ],
+      [
+        "{@language Celestial|srd52}",
+        "{@language Sylvan|srd52}"
+      ],
+      [
+        "{@language Deep Speech|srd52}",
+        "{@language Thieves' Cant|srd52}"
+      ],
+      [
+        "{@language Druidic|srd52}",
+        "{@language Undercommon|srd52}"
+      ],
+      [
+        "{@language Infernal|srd52}",
+        ""
+      ]
+    ],
+    "footnotes": [
+      "*Primordial includes the Aquan, Auran, Ignan, and Terran dialects. Creatures that know one of these dialects can communicate with those that know a different one."
+    ],
+    "catalogReferences": [
+      "language.abyssal",
+      "language.celestial",
+      "language.deep-speech",
+      "language.druidic",
+      "language.infernal",
+      "language.primordial",
+      "language.sylvan",
+      "language.thieves-cant",
+      "language.undercommon",
+      "rulebook.page-020"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        20
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/2",
+        "entryPointer": "/data/2/entries/1/entries/3/entries/6/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.level-1-hit-points-by-class",
+    "kind": "table",
+    "name": "Level 1 Hit Points by Class",
+    "colLabels": [
+      "Class",
+      "Hit Point Maximum"
+    ],
+    "rows": [
+      [
+        "{@class Barbarian|srd52}",
+        "12 + Con. modifier"
+      ],
+      [
+        "{@class Fighter|srd52}, {@class Paladin|srd52}, or {@class Ranger|srd52}",
+        "10 + Con. modifier"
+      ],
+      [
+        "{@class Bard|srd52}, {@class Cleric|srd52}, {@class Druid|srd52}, {@class Monk|srd52}, {@class Rogue|srd52}, or {@class Warlock|srd52}",
+        "8 + Con. modifier"
+      ],
+      [
+        "{@class Sorcerer|srd52} or {@class Wizard|srd52}",
+        "6 + Con. modifier"
+      ]
+    ],
+    "catalogReferences": [
+      "class.barbarian",
+      "class.bard",
+      "class.cleric",
+      "class.druid",
+      "class.fighter",
+      "class.monk",
+      "class.paladin",
+      "class.ranger",
+      "class.rogue",
+      "class.sorcerer",
+      "class.warlock",
+      "class.wizard",
+      "rulebook.page-022"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        22
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/2",
+        "entryPointer": "/data/2/entries/1/entries/6/entries/2/entries/4/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.hirelings",
+    "kind": "table",
+    "name": "Hirelings",
+    "colLabels": [
+      "Service",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "Skilled hireling",
+        "2 GP per day"
+      ],
+      [
+        "Untrained hireling",
+        "2 SP per day"
+      ],
+      [
+        "Messenger",
+        "2 CP per mile"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-102"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        102
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/9/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.spellcasting-services",
+    "kind": "table",
+    "name": "Spellcasting Services",
+    "colLabels": [
+      "Spell Level",
+      "Availability",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "Cantrip",
+        "Village, town, or city",
+        "30 GP"
+      ],
+      [
+        "1",
+        "Village, town, or city",
+        "50 GP"
+      ],
+      [
+        "2",
+        "Village, town, or city",
+        "200 GP"
+      ],
+      [
+        "3",
+        "Town or city only",
+        "300 GP"
+      ],
+      [
+        "4–5",
+        "Town or city only",
+        "2,000 GP"
+      ],
+      [
+        "6–8",
+        "City only",
+        "20,000 GP"
+      ],
+      [
+        "9",
+        "City only",
+        "100,000 GP"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-102"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        102
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/10/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.spell-preparation-by-class",
+    "kind": "table",
+    "name": "Spell Preparation by Class",
+    "colLabels": [
+      "Class",
+      "Change When You...",
+      "Number of Spells"
+    ],
+    "rows": [
+      [
+        "{@class Bard|srd52}",
+        "Gain a level",
+        "One"
+      ],
+      [
+        "{@class Cleric|srd52}",
+        "Finish a Long Rest",
+        "Any"
+      ],
+      [
+        "{@class Druid|srd52}",
+        "Finish a Long Rest",
+        "Any"
+      ],
+      [
+        "{@class Paladin|srd52}",
+        "Finish a Long Rest",
+        "One"
+      ],
+      [
+        "{@class Ranger|srd52}",
+        "Finish a Long Rest",
+        "One"
+      ],
+      [
+        "{@class Sorcerer|srd52}",
+        "Gain a level",
+        "One"
+      ],
+      [
+        "{@class Warlock|srd52}",
+        "Gain a level",
+        "One"
+      ],
+      [
+        "{@class Wizard|srd52}",
+        "Finish a Long Rest",
+        "Any"
+      ]
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "class.cleric",
+      "class.druid",
+      "class.paladin",
+      "class.ranger",
+      "class.sorcerer",
+      "class.warlock",
+      "class.wizard",
+      "rulebook.page-104"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        104
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/7",
+        "entryPointer": "/data/7/entries/0/entries/1/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.schools-of-magic",
+    "kind": "table",
+    "name": "Schools of Magic",
+    "colLabels": [
+      "School",
+      "Typical Effects"
+    ],
+    "rows": [
+      [
+        "Abjuration",
+        "Prevents or reverses harmful effects"
+      ],
+      [
+        "Conjuration",
+        "Transports creatures or objects"
+      ],
+      [
+        "Divination",
+        "Reveals information"
+      ],
+      [
+        "Enchantment",
+        "Influences minds"
+      ],
+      [
+        "Evocation",
+        "Channels energy to create effects that are often destructive"
+      ],
+      [
+        "Illusion",
+        "Deceives the mind or senses"
+      ],
+      [
+        "Necromancy",
+        "Manipulates life and death"
+      ],
+      [
+        "Transmutation",
+        "Transforms creatures or objects"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-105"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        105
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/7",
+        "entryPointer": "/data/7/entries/1/entries/2/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.sample-fear-dcs",
+    "kind": "table",
+    "name": "Sample Fear DCs",
+    "colLabels": [
+      "Example",
+      "Save DC"
+    ],
+    "rows": [
+      [
+        "When the characters open a sarcophagus, a harmless yet terrifying apparition appears.",
+        "10"
+      ],
+      [
+        "A character triggers a magical trap that creates an illusory manifestation of that character's worst fears, visible only to that character.",
+        "15"
+      ],
+      [
+        "A portal to the Abyss opens, revealing a nightmarish realm of torment and slaughter.",
+        "20"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-196"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        196
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/10",
+        "entryPointer": "/data/10/entries/4/entries/2/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.sample-mental-stress-effects",
+    "kind": "table",
+    "name": "Sample Mental Stress Effects",
+    "colLabels": [
+      "Example",
+      "Save DC",
+      "Psychic Damage"
+    ],
+    "rows": [
+      [
+        "A character ingests a hallucinogenic substance that distorts the character's perception of reality.",
+        "10",
+        "{@dice 1d6}"
+      ],
+      [
+        "A character touches a fiendish idol that tears at the character's mind, threatening to shatter it.",
+        "15",
+        "{@dice 3d6}"
+      ],
+      [
+        "A magical trap flings a character into the Far Realm until the end of that character's next turn.",
+        "20",
+        "{@dice 9d6}"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-196"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        196
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/10",
+        "entryPointer": "/data/10/entries/4/entries/3/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.sentient-item-s-alignment",
+    "kind": "table",
+    "name": "Sentient Item's Alignment",
+    "colLabels": [
+      "1d100",
+      "Alignment"
+    ],
+    "rows": [
+      [
+        "01–15",
+        "Lawful Good"
+      ],
+      [
+        "16–35",
+        "Neutral Good"
+      ],
+      [
+        "36–50",
+        "Chaotic Good"
+      ],
+      [
+        "51–63",
+        "Lawful Neutral"
+      ],
+      [
+        "64–73",
+        "Neutral"
+      ],
+      [
+        "74–85",
+        "Chaotic Neutral"
+      ],
+      [
+        "86–89",
+        "Lawful Evil"
+      ],
+      [
+        "90–96",
+        "Neutral Evil"
+      ],
+      [
+        "97–00",
+        "Chaotic Evil"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-208"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        208
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/9/entries/3/entries/5/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.sentient-item-s-communication",
+    "kind": "table",
+    "name": "Sentient Item's Communication",
+    "colLabels": [
+      "1d10",
+      "Communication"
+    ],
+    "rows": [
+      [
+        "1–6",
+        "The item communicates by transmitting emotion to the creature carrying or wielding it."
+      ],
+      [
+        "7–9",
+        "The item speaks one or more languages."
+      ],
+      [
+        "10",
+        "The item speaks one or more languages. In addition, the item can communicate telepathically with any creature that carries or wields it."
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-208"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        208
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/9/entries/3/entries/5/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.sentient-item-s-senses",
+    "kind": "table",
+    "name": "Sentient Item's Senses",
+    "colLabels": [
+      "1d4",
+      "Senses"
+    ],
+    "rows": [
+      [
+        "1",
+        "Hearing and standard vision out to 30 feet"
+      ],
+      [
+        "2",
+        "Hearing and standard vision out to 60 feet"
+      ],
+      [
+        "3",
+        "Hearing and standard vision out to 120 feet"
+      ],
+      [
+        "4",
+        "Hearing and {@sense Darkvision|srd52} out to 120 feet"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-208",
+      "sense.darkvision"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        208
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/9/entries/3/entries/5/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.sentient-item-s-special-purpose",
+    "kind": "table",
+    "name": "Sentient Item's Special Purpose",
+    "colLabels": [
+      "1d10",
+      "Special Purpose"
+    ],
+    "rows": [
+      [
+        "1",
+        "Aligned. The item seeks to defeat or destroy those of a diametrically opposed alignment. Such an item is never Neutral."
+      ],
+      [
+        "2",
+        "Bane. The item seeks to thwart or destroy creatures of a particular type, such as Constructs, Fiends, or Undead."
+      ],
+      [
+        "3",
+        "Creator Seeker. The item seeks its creator and wants to understand why it was created."
+      ],
+      [
+        "4",
+        "Destiny Seeker. The item believes it and its bearer have key roles to play in future events."
+      ],
+      [
+        "5",
+        "Destroyer. The item craves destruction and goads its user to fight arbitrarily."
+      ],
+      [
+        "6",
+        "Glory Seeker. The item seeks renown as the greatest magic item in the world by winning fame or notoriety for its user."
+      ],
+      [
+        "7",
+        "Lore Seeker. The item craves knowledge or is determined to solve a mystery, learn a secret, or unravel a cryptic prophecy."
+      ],
+      [
+        "8",
+        "Protector. The item seeks to defend a particular kind of creature, such as elves or werewolves."
+      ],
+      [
+        "9",
+        "Soulmate Seeker. The item seeks another sentient magic item, perhaps one that is similar to itself."
+      ],
+      [
+        "10",
+        "Templar. The item seeks to defend the servants and interests of a particular deity."
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-208"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        208
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/11",
+        "entryPointer": "/data/11/entries/9/entries/3/entries/5/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
     "id": "rule.multiclassing",
     "kind": "rule",
     "name": "Multiclassing",

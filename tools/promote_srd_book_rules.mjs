@@ -15,7 +15,13 @@ const selections={
   ["Ability Scores and Modifiers","/data/6/entries/4/entries/5",76,8],
   ["Typical Difficulty Classes","/data/6/entries/7/entries/2",77,6],
   ["Travel Pace","/data/7/entries/1/entries/2/entries/2/entries/4",84,3],
-  ["Size Categories","/data/8/entries/1/entries/9/entries/2",92,6]
+  ["Size Categories","/data/8/entries/1/entries/9/entries/2",92,6],
+  ["Standard Languages","/data/3/entries/8/entries/3",59,8],
+  ["Exotic Languages","/data/3/entries/8/entries/4",59,8],
+  ["Container Capacity","/data/4/entries/10/entries/3",69,13,[69,70]],
+  ["Trade Goods","/data/4/entries/13/entries/2",72,13],
+  ["Lifestyle Expenses","/data/4/entries/14/entries/1/entries/3",72,7],
+  ["Services","/data/4/entries/14/entries/4/entries/3",74,9]
  ],
  "52":[
   ["Ability Modifiers","/data/1/entries/1/entries/3/entries/1",6,16],
@@ -33,7 +39,29 @@ const selections={
   ["XP Budget per Character","/data/10/entries/7/entries/2/entries/2/entries/1",202,20],
   ["Hit Dice by Size","/data/13/entries/1/entries/8",255,6],
   ["Experience Points by Challenge Rating","/data/13/entries/1/entries/20/entries/2",256,34],
-  ["Proficiency Bonus by Challenge Rating","/data/13/entries/1/entries/20/entries/3/entries/1",256,8]
+  ["Proficiency Bonus by Challenge Rating","/data/13/entries/1/entries/20/entries/3/entries/1",256,8],
+  ["Ability Descriptions","/data/1/entries/1/entries/1",5,6],
+  ["Ability Scores","/data/1/entries/1/entries/2/entries/1",5,7],
+  ["Ability Check Examples","/data/1/entries/2/entries/2/entries/1/entries/1",6,6],
+  ["Saving Throw Examples","/data/1/entries/2/entries/3/entries/2/entries/1",7,6],
+  ["Attack Roll Abilities","/data/1/entries/2/entries/4/entries/1/entries/1",7,3],
+  ["Creature Size and Space","/data/1/entries/7/entries/2/entries/7/entries/2",14,6],
+  ["Cover","/data/1/entries/7/entries/4/entries/2",15,3],
+  ["Class Overview","/data/2/entries/1/entries/2/entries/1",19,12,[19,20]],
+  ["Ability Scores and Backgrounds","/data/2/entries/1/entries/3/entries/2/entries/2",19,6,[19,20]],
+  ["Standard Languages","/data/2/entries/1/entries/3/entries/6/entries/2",20,10],
+  ["Rare Languages","/data/2/entries/1/entries/3/entries/6/entries/4",20,5],
+  ["Level 1 Hit Points by Class","/data/2/entries/1/entries/6/entries/2/entries/4/entries/1",22,4],
+  ["Hirelings","/data/6/entries/9/entries/1",102,3],
+  ["Spellcasting Services","/data/6/entries/10/entries/1",102,7],
+  ["Spell Preparation by Class","/data/7/entries/0/entries/1/entries/1",104,8],
+  ["Schools of Magic","/data/7/entries/1/entries/2/entries/1",105,8],
+  ["Sample Fear DCs","/data/10/entries/4/entries/2/entries/1",196,3],
+  ["Sample Mental Stress Effects","/data/10/entries/4/entries/3/entries/2",196,3],
+  ["Sentient Item's Alignment","/data/11/entries/9/entries/3/entries/5/entries/1",208,9],
+  ["Sentient Item's Communication","/data/11/entries/9/entries/3/entries/5/entries/2",208,3],
+  ["Sentient Item's Senses","/data/11/entries/9/entries/3/entries/5/entries/3",208,4],
+  ["Sentient Item's Special Purpose","/data/11/entries/9/entries/3/entries/5/entries/4",208,10]
  ]
 };
 
@@ -52,8 +80,7 @@ function generateBookRules(book,manifest,src,pages,tag,known){
    pointer:pointer.split("/").slice(0,3).join("/"),entryPointer:pointer},
   structuredStatus:"Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
  });
- const classRefs=new Set();
- for(const [name,pointer,page,count] of selections[tag]){
+ for(const [name,pointer,page,count,sourcePages=[page]] of selections[tag]){
   const t=get(pointer);
   if(t.type!=="table"||t.caption!==name||t.rows.length!==count)throw Error("Unexpected table "+pointer);
   const pageText=norm(pageMap.get(page).textLayout);
@@ -66,15 +93,37 @@ function generateBookRules(book,manifest,src,pages,tag,known){
   const r={id,kind:"table",name,colLabels:clone(cols),rows:clone(t.rows)};
   if(t.colLabelRows)r.colLabelRows=clone(t.colLabelRows);
   if(t.footnotes)r.footnotes=clone(t.footnotes);
-  const refs=new Set([pageId(page)]);
+  const refs=new Set(sourcePages.map(pageId));
+  if(sourcePages.some(n=>!pageMap.has(n)))throw Error("Missing publisher table page "+name);
+  // Normalize navigation and presentation aliases without inventing item identities.
+  if(name==="Container Capacity"||name==="Services"||name==="Attack Roll Abilities"||name==="Spellcasting Services"){
+   r.rows=r.rows.map(row=>row.map(cell=>typeof cell==="string"?cell
+    .replace(/\{@book ([^}|]+)(?:\|[^}]+)?\}/g,(_,label)=>label==="chapter 7"?"Spells":label)
+    .replace(/\{@filter ([^}|]+)(?:\|[^}]+)?\}/g,(_,label)=>label)
+    .replace(/\{@i ([^}]+)\}/g,(_,label)=>label)
+    .replace(/\{@item ([^}|]+)\|[^}|]+(?:\|([^}]+))?\}/g,(_,label,display)=>display??label):cell));
+  }
+  if(name==="Services")r.rows[2][0]="Within a city";
+  if(name==="Attack Roll Abilities"){
+   r.rows[0][1]+=" (see Rules Glossary)";
+   refs.add("glossary.unarmed-strike");
+  }
+  if(name==="Cover")refs.add("glossary.cover");
+  if(name==="Sentient Item's Senses")refs.add("sense.darkvision");
+  for(const match of JSON.stringify(r.rows).matchAll(/\{@(language|background) ([^}|]+)(?:\|[^}]+)?\}/g)){
+   refs.add(match[1]+"."+slug(match[2]));
+  }
+  if(tag==="51"&&(name==="Standard Languages"||name==="Exotic Languages")){
+   for(const row of r.rows)refs.add("language."+slug(row[0]));
+  }
   for(const match of JSON.stringify(r.rows).matchAll(/\{@class ([^}|]+)(?:\|[^}]+)?\}/g)){
-   const cid="class."+slug(match[1]);refs.add(cid);classRefs.add(cid);
+   const cid="class."+slug(match[1]);refs.add(cid);
   }
   if(name==="Multiclassing Proficiencies")refs.add("item.thieves-tools");
   if(tag==="51"&&name==="Travel Pace")refs.add("skill.perception");
   r.catalogReferences=[...refs].sort();
-  r.source=metadata(pointer,[page]);
-  rows.push(r);report.tables.push({id,pointer,page,rowCount:count});
+  r.source=metadata(pointer,sourcePages);
+  rows.push(r);report.tables.push({id,pointer,page,rowCount:count,...(sourcePages.length>1?{pages:sourcePages}:{})});
  }
  // Keep source prose and its nested rule structure, but point at the canonical
  // table identities rather than duplicating data or inventing a renderer tag.

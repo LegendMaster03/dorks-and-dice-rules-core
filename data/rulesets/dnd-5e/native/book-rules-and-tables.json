@@ -925,6 +925,469 @@
     }
   },
   {
+    "id": "table.standard-languages",
+    "kind": "table",
+    "name": "Standard Languages",
+    "colLabels": [
+      "Language",
+      "Typical Speakers",
+      "Script"
+    ],
+    "rows": [
+      [
+        "Common",
+        "Humans",
+        "Common"
+      ],
+      [
+        "Dwarvish",
+        "Dwarves",
+        "Dwarvish"
+      ],
+      [
+        "Elvish",
+        "Elves",
+        "Elvish"
+      ],
+      [
+        "Giant",
+        "Ogres, giants",
+        "Dwarvish"
+      ],
+      [
+        "Gnomish",
+        "Gnomes",
+        "Dwarvish"
+      ],
+      [
+        "Goblin",
+        "Goblinoids",
+        "Dwarvish"
+      ],
+      [
+        "Halfling",
+        "Halflings",
+        "Common"
+      ],
+      [
+        "Orc",
+        "Orcs",
+        "Dwarvish"
+      ]
+    ],
+    "catalogReferences": [
+      "language.common",
+      "language.dwarvish",
+      "language.elvish",
+      "language.giant",
+      "language.gnomish",
+      "language.goblin",
+      "language.halfling",
+      "language.orc",
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/3",
+        "entryPointer": "/data/3/entries/8/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.exotic-languages",
+    "kind": "table",
+    "name": "Exotic Languages",
+    "colLabels": [
+      "Language",
+      "Typical Speakers",
+      "Script"
+    ],
+    "rows": [
+      [
+        "Abyssal",
+        "Demons",
+        "Infernal"
+      ],
+      [
+        "Celestial",
+        "Celestials",
+        "Celestial"
+      ],
+      [
+        "Draconic",
+        "Dragons, dragonborn",
+        "Draconic"
+      ],
+      [
+        "Deep Speech",
+        "Aboleths, cloakers",
+        "—"
+      ],
+      [
+        "Infernal",
+        "Devils",
+        "Infernal"
+      ],
+      [
+        "Primordial",
+        "Elementals",
+        "Dwarvish"
+      ],
+      [
+        "Sylvan",
+        "Fey creatures",
+        "Elvish"
+      ],
+      [
+        "Undercommon",
+        "Underworld traders",
+        "Elvish"
+      ]
+    ],
+    "catalogReferences": [
+      "language.abyssal",
+      "language.celestial",
+      "language.deep-speech",
+      "language.draconic",
+      "language.infernal",
+      "language.primordial",
+      "language.sylvan",
+      "language.undercommon",
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/3",
+        "entryPointer": "/data/3/entries/8/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.container-capacity",
+    "kind": "table",
+    "name": "Container Capacity",
+    "colLabels": [
+      "Container",
+      "Capacity"
+    ],
+    "rows": [
+      [
+        "Backpack*",
+        "1 cubic foot/30 pounds of gear"
+      ],
+      [
+        "Barrel",
+        "40 gallons liquid, 4 cubic feet solid"
+      ],
+      [
+        "Basket",
+        "2 cubic feet/40 pounds of gear"
+      ],
+      [
+        "Bottle",
+        "1½ pints liquid"
+      ],
+      [
+        "Bucket",
+        "3 gallons liquid, 1/2 cubic foot solid"
+      ],
+      [
+        "Chest",
+        "12 cubic feet/300 pounds of gear"
+      ],
+      [
+        "Flask or tankard",
+        "1 pint liquid"
+      ],
+      [
+        "Jug or pitcher",
+        "1 gallon liquid"
+      ],
+      [
+        "Pot, iron",
+        "1 gallon liquid"
+      ],
+      [
+        "Pouch",
+        "1/5 cubic foot/6 pounds of gear"
+      ],
+      [
+        "Sack",
+        "1 cubic foot/30 pounds of gear"
+      ],
+      [
+        "Vial",
+        "4 ounces liquid"
+      ],
+      [
+        "Waterskin",
+        "4 pints liquid"
+      ]
+    ],
+    "footnotes": [
+      "* You can also strap items, such as a bedroll or a coil of rope, to the outside of a backpack."
+    ],
+    "catalogReferences": [
+      "rulebook.page-069",
+      "rulebook.page-070"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        69,
+        70
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/10/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.trade-goods",
+    "kind": "table",
+    "name": "Trade Goods",
+    "colLabels": [
+      "Cost",
+      "Goods"
+    ],
+    "rows": [
+      [
+        "1 cp",
+        "1 lb. of wheat"
+      ],
+      [
+        "2 cp",
+        "1 lb. of flour or one chicken"
+      ],
+      [
+        "5 cp",
+        "1 lb. of salt"
+      ],
+      [
+        "1 sp",
+        "1 lb. of iron or 1 sq. yd. of canvas"
+      ],
+      [
+        "5 sp",
+        "1 lb. of copper or 1 sq. yd. of cotton cloth"
+      ],
+      [
+        "1 gp",
+        "1 lb. of ginger or one goat"
+      ],
+      [
+        "2 gp",
+        "1 lb. of cinnamon or pepper, or one sheep"
+      ],
+      [
+        "3 gp",
+        "1 lb. of cloves or one pig"
+      ],
+      [
+        "5 gp",
+        "1 lb. of silver or 1 sq. yd. of linen"
+      ],
+      [
+        "10 gp",
+        "1 sq. yd. of silk or one cow"
+      ],
+      [
+        "15 gp",
+        "1 lb. of saffron or one ox"
+      ],
+      [
+        "50 gp",
+        "1 lb. of gold"
+      ],
+      [
+        "500 gp",
+        "1 lb. of platinum"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-072"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        72
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/13/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.lifestyle-expenses",
+    "kind": "table",
+    "name": "Lifestyle Expenses",
+    "colLabels": [
+      "Lifestyle",
+      "Price/Day"
+    ],
+    "rows": [
+      [
+        "Wretched",
+        "—"
+      ],
+      [
+        "Squalid",
+        "1 sp"
+      ],
+      [
+        "Poor",
+        "2 sp"
+      ],
+      [
+        "Modest",
+        "1 gp"
+      ],
+      [
+        "Comfortable",
+        "2 gp"
+      ],
+      [
+        "Wealthy",
+        "4 gp"
+      ],
+      [
+        "Aristocratic",
+        "10 gp minimum"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-072"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        72
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/14/entries/1/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.services",
+    "kind": "table",
+    "name": "Services",
+    "colLabels": [
+      "Service",
+      "Pay"
+    ],
+    "rows": [
+      [
+        "Coach cab",
+        ""
+      ],
+      [
+        "Between towns",
+        "3 cp per mile"
+      ],
+      [
+        "Within a city",
+        "1 cp"
+      ],
+      [
+        "Hireling",
+        ""
+      ],
+      [
+        "Skilled",
+        "2 gp per day"
+      ],
+      [
+        "Untrained",
+        "2 sp per day"
+      ],
+      [
+        "Messenger",
+        "2 cp per mile"
+      ],
+      [
+        "Road or gate toll",
+        "1 cp"
+      ],
+      [
+        "Ship's passage",
+        "1 sp per mile"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        74
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/14/entries/4/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
     "id": "rule.multiclassing",
     "kind": "rule",
     "name": "Multiclassing",

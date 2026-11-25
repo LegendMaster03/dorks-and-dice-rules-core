@@ -96,6 +96,146 @@
       "pointer": "/data/13/entries/1/entries/20/entries/3/entries/1",
       "page": 256,
       "rowCount": 8
+    },
+    {
+      "id": "table.ability-descriptions",
+      "pointer": "/data/1/entries/1/entries/1",
+      "page": 5,
+      "rowCount": 6
+    },
+    {
+      "id": "table.ability-scores",
+      "pointer": "/data/1/entries/1/entries/2/entries/1",
+      "page": 5,
+      "rowCount": 7
+    },
+    {
+      "id": "table.ability-check-examples",
+      "pointer": "/data/1/entries/2/entries/2/entries/1/entries/1",
+      "page": 6,
+      "rowCount": 6
+    },
+    {
+      "id": "table.saving-throw-examples",
+      "pointer": "/data/1/entries/2/entries/3/entries/2/entries/1",
+      "page": 7,
+      "rowCount": 6
+    },
+    {
+      "id": "table.attack-roll-abilities",
+      "pointer": "/data/1/entries/2/entries/4/entries/1/entries/1",
+      "page": 7,
+      "rowCount": 3
+    },
+    {
+      "id": "table.creature-size-and-space",
+      "pointer": "/data/1/entries/7/entries/2/entries/7/entries/2",
+      "page": 14,
+      "rowCount": 6
+    },
+    {
+      "id": "table.cover",
+      "pointer": "/data/1/entries/7/entries/4/entries/2",
+      "page": 15,
+      "rowCount": 3
+    },
+    {
+      "id": "table.class-overview",
+      "pointer": "/data/2/entries/1/entries/2/entries/1",
+      "page": 19,
+      "rowCount": 12,
+      "pages": [
+        19,
+        20
+      ]
+    },
+    {
+      "id": "table.ability-scores-and-backgrounds",
+      "pointer": "/data/2/entries/1/entries/3/entries/2/entries/2",
+      "page": 19,
+      "rowCount": 6,
+      "pages": [
+        19,
+        20
+      ]
+    },
+    {
+      "id": "table.standard-languages",
+      "pointer": "/data/2/entries/1/entries/3/entries/6/entries/2",
+      "page": 20,
+      "rowCount": 10
+    },
+    {
+      "id": "table.rare-languages",
+      "pointer": "/data/2/entries/1/entries/3/entries/6/entries/4",
+      "page": 20,
+      "rowCount": 5
+    },
+    {
+      "id": "table.level-1-hit-points-by-class",
+      "pointer": "/data/2/entries/1/entries/6/entries/2/entries/4/entries/1",
+      "page": 22,
+      "rowCount": 4
+    },
+    {
+      "id": "table.hirelings",
+      "pointer": "/data/6/entries/9/entries/1",
+      "page": 102,
+      "rowCount": 3
+    },
+    {
+      "id": "table.spellcasting-services",
+      "pointer": "/data/6/entries/10/entries/1",
+      "page": 102,
+      "rowCount": 7
+    },
+    {
+      "id": "table.spell-preparation-by-class",
+      "pointer": "/data/7/entries/0/entries/1/entries/1",
+      "page": 104,
+      "rowCount": 8
+    },
+    {
+      "id": "table.schools-of-magic",
+      "pointer": "/data/7/entries/1/entries/2/entries/1",
+      "page": 105,
+      "rowCount": 8
+    },
+    {
+      "id": "table.sample-fear-dcs",
+      "pointer": "/data/10/entries/4/entries/2/entries/1",
+      "page": 196,
+      "rowCount": 3
+    },
+    {
+      "id": "table.sample-mental-stress-effects",
+      "pointer": "/data/10/entries/4/entries/3/entries/2",
+      "page": 196,
+      "rowCount": 3
+    },
+    {
+      "id": "table.sentient-item-s-alignment",
+      "pointer": "/data/11/entries/9/entries/3/entries/5/entries/1",
+      "page": 208,
+      "rowCount": 9
+    },
+    {
+      "id": "table.sentient-item-s-communication",
+      "pointer": "/data/11/entries/9/entries/3/entries/5/entries/2",
+      "page": 208,
+      "rowCount": 3
+    },
+    {
+      "id": "table.sentient-item-s-senses",
+      "pointer": "/data/11/entries/9/entries/3/entries/5/entries/3",
+      "page": 208,
+      "rowCount": 4
+    },
+    {
+      "id": "table.sentient-item-s-special-purpose",
+      "pointer": "/data/11/entries/9/entries/3/entries/5/entries/4",
+      "page": 208,
+      "rowCount": 10
     }
   ],
   "rules": [
@@ -163,5 +303,5 @@
       "reason": "Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
     }
   ],
-  "nativeCount": 23
+  "nativeCount": 45
 }
