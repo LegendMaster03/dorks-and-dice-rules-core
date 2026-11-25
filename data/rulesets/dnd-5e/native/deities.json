@@ -1,0 +1,2364 @@
+[
+  {
+    "id": "deity.norse.aegir",
+    "kind": "deity",
+    "name": "Aegir",
+    "pantheon": "Norse",
+    "title": "God of the sea and storms",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "domains": [
+      "Tempest"
+    ],
+    "symbol": "Rough ocean waves",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/0"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.anubis",
+    "kind": "deity",
+    "name": "Anubis",
+    "pantheon": "Egyptian",
+    "title": "God of judgment and death",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "domains": [
+      "Death"
+    ],
+    "symbol": "Black jackal",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/1"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.apep",
+    "kind": "deity",
+    "name": "Apep",
+    "pantheon": "Egyptian",
+    "title": "God of evil, fire, and serpents",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Flaming snake",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/2"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.aphrodite",
+    "kind": "deity",
+    "name": "Aphrodite",
+    "pantheon": "Greek",
+    "title": "Goddess of love and beauty",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "domains": [
+      "Light"
+    ],
+    "symbol": "Sea shell",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/3"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.apollo",
+    "kind": "deity",
+    "name": "Apollo",
+    "pantheon": "Greek",
+    "title": "God of light, music, and healing",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "domains": [
+      "Knowledge",
+      "Life",
+      "Light"
+    ],
+    "symbol": "Lyre",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/4"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.arawn",
+    "kind": "deity",
+    "name": "Arawn",
+    "pantheon": "Celtic",
+    "title": "God of life and death",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "domains": [
+      "Life",
+      "Death"
+    ],
+    "symbol": "Black star on gray background",
+    "catalogReferences": [
+      "rulebook.page-360"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        360
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/5"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.ares",
+    "kind": "deity",
+    "name": "Ares",
+    "pantheon": "Greek",
+    "title": "God of war and strife",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "domains": [
+      "War"
+    ],
+    "symbol": "Spear",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/6"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.artemis",
+    "kind": "deity",
+    "name": "Artemis",
+    "pantheon": "Greek",
+    "title": "Goddess of hunting and childbirth",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Life",
+      "Nature"
+    ],
+    "symbol": "Bow and arrow on lunar disk",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/7"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.athena",
+    "kind": "deity",
+    "name": "Athena",
+    "pantheon": "Greek",
+    "title": "Goddess of wisdom and civilization",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "domains": [
+      "Knowledge",
+      "War"
+    ],
+    "symbol": "Owl",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/8"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.balder",
+    "kind": "deity",
+    "name": "Balder",
+    "pantheon": "Norse",
+    "title": "God of beauty and poetry",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Life",
+      "Light"
+    ],
+    "symbol": "Gem-encrusted silver chalice",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/9"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.bast",
+    "kind": "deity",
+    "name": "Bast",
+    "pantheon": "Egyptian",
+    "title": "Goddess of cats and vengeance",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "domains": [
+      "War"
+    ],
+    "symbol": "Cat",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/10"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.belenus",
+    "kind": "deity",
+    "name": "Belenus",
+    "pantheon": "Celtic",
+    "title": "God of sun, light, and warmth",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Light"
+    ],
+    "symbol": "Solar disk and standing stones",
+    "catalogReferences": [
+      "rulebook.page-360"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        360
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/11"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.bes",
+    "kind": "deity",
+    "name": "Bes",
+    "pantheon": "Egyptian",
+    "title": "God of luck and music",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Image of the misshapen deity",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/12"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.brigantia",
+    "kind": "deity",
+    "name": "Brigantia",
+    "pantheon": "Celtic",
+    "title": "Goddess of rivers and livestock",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Life"
+    ],
+    "symbol": "Footbridge",
+    "catalogReferences": [
+      "rulebook.page-360"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        360
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/13"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.demeter",
+    "kind": "deity",
+    "name": "Demeter",
+    "pantheon": "Greek",
+    "title": "Goddess of agriculture",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Life"
+    ],
+    "symbol": "Mare's head",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/14"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.diancecht",
+    "kind": "deity",
+    "name": "Diancecht",
+    "pantheon": "Celtic",
+    "title": "God of medicine and healing",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "domains": [
+      "Life"
+    ],
+    "symbol": "Crossed oak and mistletoe branches",
+    "catalogReferences": [
+      "rulebook.page-360"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        360
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/15"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.dionysus",
+    "kind": "deity",
+    "name": "Dionysus",
+    "pantheon": "Greek",
+    "title": "God of mirth and wine",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "domains": [
+      "Life"
+    ],
+    "symbol": "Thyrsus (staff tipped with pine cone)",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/16"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.dunatis",
+    "kind": "deity",
+    "name": "Dunatis",
+    "pantheon": "Celtic",
+    "title": "God of mountains and peaks",
+    "alignment": [
+      "N"
+    ],
+    "domains": [
+      "Nature"
+    ],
+    "symbol": "Red sun-capped mountain peak",
+    "catalogReferences": [
+      "rulebook.page-360"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        360
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/17"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.forseti",
+    "kind": "deity",
+    "name": "Forseti",
+    "pantheon": "Norse",
+    "title": "God of justice and law",
+    "alignment": [
+      "N"
+    ],
+    "domains": [
+      "Light"
+    ],
+    "symbol": "Head of a bearded man",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/18"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.frey",
+    "kind": "deity",
+    "name": "Frey",
+    "pantheon": "Norse",
+    "title": "God of fertility and the sun",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Life",
+      "Light"
+    ],
+    "symbol": "Ice-blue greatsword",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/19"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.freya",
+    "kind": "deity",
+    "name": "Freya",
+    "pantheon": "Norse",
+    "title": "Goddess of fertility and love",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Life"
+    ],
+    "symbol": "Falcon",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/20"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.frigga",
+    "kind": "deity",
+    "name": "Frigga",
+    "pantheon": "Norse",
+    "title": "Goddess of birth and fertility",
+    "alignment": [
+      "N"
+    ],
+    "domains": [
+      "Life",
+      "Light"
+    ],
+    "symbol": "Cat",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/21"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.goibhniu",
+    "kind": "deity",
+    "name": "Goibhniu",
+    "pantheon": "Celtic",
+    "title": "God of smiths and healing",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Knowledge",
+      "Life"
+    ],
+    "symbol": "Giant mallet over sword",
+    "catalogReferences": [
+      "rulebook.page-360"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        360
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/22"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.hades",
+    "kind": "deity",
+    "name": "Hades",
+    "pantheon": "Greek",
+    "title": "God of the underworld",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "domains": [
+      "Death"
+    ],
+    "symbol": "Black ram",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/23"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.hathor",
+    "kind": "deity",
+    "name": "Hathor",
+    "pantheon": "Egyptian",
+    "title": "Goddess of love, music, and motherhood",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Life",
+      "Light"
+    ],
+    "symbol": "Horned cow's head with lunar disk",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/24"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.hecate",
+    "kind": "deity",
+    "name": "Hecate",
+    "pantheon": "Greek",
+    "title": "Goddess of magic and the moon",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "domains": [
+      "Knowledge",
+      "Trickery"
+    ],
+    "symbol": "Setting moon",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/25"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.heimdall",
+    "kind": "deity",
+    "name": "Heimdall",
+    "pantheon": "Norse",
+    "title": "God of watchfulness and loyalty",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "domains": [
+      "Light",
+      "War"
+    ],
+    "symbol": "Curling musical horn",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/26"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.hel",
+    "kind": "deity",
+    "name": "Hel",
+    "pantheon": "Norse",
+    "title": "Goddess of the underworld",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "domains": [
+      "Death"
+    ],
+    "symbol": "Woman's face, rotting on one side",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/27"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.hephaestus",
+    "kind": "deity",
+    "name": "Hephaestus",
+    "pantheon": "Greek",
+    "title": "God of smithing and craft",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Knowledge"
+    ],
+    "symbol": "Hammer and anvil",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/28"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.hera",
+    "kind": "deity",
+    "name": "Hera",
+    "pantheon": "Greek",
+    "title": "Goddess of marriage and intrigue",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Fan of peacock feathers",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/29"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.hercules",
+    "kind": "deity",
+    "name": "Hercules",
+    "pantheon": "Greek",
+    "title": "God of strength and adventure",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "domains": [
+      "Tempest",
+      "War"
+    ],
+    "symbol": "Lion's head",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/30"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.hermes",
+    "kind": "deity",
+    "name": "Hermes",
+    "pantheon": "Greek",
+    "title": "God of travel and commerce",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Caduceus (winged staff and serpents)",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/31"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.hermod",
+    "kind": "deity",
+    "name": "Hermod",
+    "pantheon": "Norse",
+    "title": "God of luck",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Winged scroll",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/32"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.hestia",
+    "kind": "deity",
+    "name": "Hestia",
+    "pantheon": "Greek",
+    "title": "Goddess of home and family",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Life"
+    ],
+    "symbol": "Hearth",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/33"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.imhotep",
+    "kind": "deity",
+    "name": "Imhotep",
+    "pantheon": "Egyptian",
+    "title": "God of crafts and medicine",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Knowledge"
+    ],
+    "symbol": "Step pyramid",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/34"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.isis",
+    "kind": "deity",
+    "name": "Isis",
+    "pantheon": "Egyptian",
+    "title": "Goddess of fertility and magic",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Knowledge",
+      "Life"
+    ],
+    "symbol": "Ankh and star",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/35"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.loki",
+    "kind": "deity",
+    "name": "Loki",
+    "pantheon": "Norse",
+    "title": "God of thieves and trickery",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Flame",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/36"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.lugh",
+    "kind": "deity",
+    "name": "Lugh",
+    "pantheon": "Celtic",
+    "title": "God of arts, travel, and commerce",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "domains": [
+      "Knowledge",
+      "Life"
+    ],
+    "symbol": "Pair of long hands",
+    "catalogReferences": [
+      "rulebook.page-360"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        360
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/37"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.manannan-mac-lir",
+    "kind": "deity",
+    "name": "Manannan mac Lir",
+    "pantheon": "Celtic",
+    "title": "God of oceans and sea creatures",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "domains": [
+      "Nature",
+      "Tempest"
+    ],
+    "symbol": "Wave of white water on green",
+    "catalogReferences": [
+      "rulebook.page-360"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        360
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/38"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.math-mathonwy",
+    "kind": "deity",
+    "name": "Math Mathonwy",
+    "pantheon": "Celtic",
+    "title": "God of magic",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "domains": [
+      "Knowledge"
+    ],
+    "symbol": "Staff",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/39"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.morrigan",
+    "kind": "deity",
+    "name": "Morrigan",
+    "pantheon": "Celtic",
+    "title": "Goddess of battle",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "domains": [
+      "War"
+    ],
+    "symbol": "Two crossed spears",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/40"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.nephthys",
+    "kind": "deity",
+    "name": "Nephthys",
+    "pantheon": "Egyptian",
+    "title": "Goddess of death and grief",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "domains": [
+      "Death"
+    ],
+    "symbol": "Horns around a lunar disk",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/41"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.nike",
+    "kind": "deity",
+    "name": "Nike",
+    "pantheon": "Greek",
+    "title": "Goddess of victory",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "domains": [
+      "War"
+    ],
+    "symbol": "Winged woman",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/42"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.njord",
+    "kind": "deity",
+    "name": "Njord",
+    "pantheon": "Norse",
+    "title": "God of sea and wind",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Nature",
+      "Tempest"
+    ],
+    "symbol": "Gold coin",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/43"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.nuada",
+    "kind": "deity",
+    "name": "Nuada",
+    "pantheon": "Celtic",
+    "title": "God of war and warriors",
+    "alignment": [
+      "N"
+    ],
+    "domains": [
+      "War"
+    ],
+    "symbol": "Silver hand on black background",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/44"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.odin",
+    "kind": "deity",
+    "name": "Odin",
+    "pantheon": "Norse",
+    "title": "God of knowledge and war",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Knowledge",
+      "War"
+    ],
+    "symbol": "Watching blue eye",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/45"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.odur",
+    "kind": "deity",
+    "name": "Odur",
+    "pantheon": "Norse",
+    "title": "God of light and the sun",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "domains": [
+      "Light"
+    ],
+    "symbol": "Solar disk",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/46"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.oghma",
+    "kind": "deity",
+    "name": "Oghma",
+    "pantheon": "Celtic",
+    "title": "God of speech and writing",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "domains": [
+      "Knowledge"
+    ],
+    "symbol": "Unfurled scroll",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/47"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.osiris",
+    "kind": "deity",
+    "name": "Osiris",
+    "pantheon": "Egyptian",
+    "title": "God of nature and the underworld",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "domains": [
+      "Life",
+      "Nature"
+    ],
+    "symbol": "Crook and flail",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/49"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.pan",
+    "kind": "deity",
+    "name": "Pan",
+    "pantheon": "Greek",
+    "title": "God of nature",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "domains": [
+      "Nature"
+    ],
+    "symbol": "Syrinx (pan pipes)",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/50"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.poseidon",
+    "kind": "deity",
+    "name": "Poseidon",
+    "pantheon": "Greek",
+    "title": "God of the sea and earthquakes",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "domains": [
+      "Tempest"
+    ],
+    "symbol": "Trident",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/51"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.ptah",
+    "kind": "deity",
+    "name": "Ptah",
+    "pantheon": "Egyptian",
+    "title": "God of crafts, knowledge, and secrets",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "domains": [
+      "Knowledge"
+    ],
+    "symbol": "Bull",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/52"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.re-horakhty",
+    "kind": "deity",
+    "name": "Re-Horakhty",
+    "pantheon": "Egyptian",
+    "title": "God of the sun, ruler of the gods",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "domains": [
+      "Life",
+      "Light"
+    ],
+    "symbol": "Solar disk encircled by serpent",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/53"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.set",
+    "kind": "deity",
+    "name": "Set",
+    "pantheon": "Egyptian",
+    "title": "God of darkness and desert storms",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "domains": [
+      "Death",
+      "Tempest",
+      "Trickery"
+    ],
+    "symbol": "Coiled cobra",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/54"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.sif",
+    "kind": "deity",
+    "name": "Sif",
+    "pantheon": "Norse",
+    "title": "Goddess of war",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "domains": [
+      "War"
+    ],
+    "symbol": "Upraised sword",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/55"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.silvanus",
+    "kind": "deity",
+    "name": "Silvanus",
+    "pantheon": "Celtic",
+    "title": "God of nature and forests",
+    "alignment": [
+      "N"
+    ],
+    "domains": [
+      "Nature"
+    ],
+    "symbol": "Summer oak tree",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/56"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.skadi",
+    "kind": "deity",
+    "name": "Skadi",
+    "pantheon": "Norse",
+    "title": "God of earth and mountains",
+    "alignment": [
+      "N"
+    ],
+    "domains": [
+      "Nature"
+    ],
+    "symbol": "Mountain peak",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/58"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.sobek",
+    "kind": "deity",
+    "name": "Sobek",
+    "pantheon": "Egyptian",
+    "title": "God of water and crocodiles",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "domains": [
+      "Nature",
+      "Tempest"
+    ],
+    "symbol": "Crocodile head with horns and plumes",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/59"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.surtur",
+    "kind": "deity",
+    "name": "Surtur",
+    "pantheon": "Norse",
+    "title": "God of fire giants and war",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "domains": [
+      "War"
+    ],
+    "symbol": "Flaming sword",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/61"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.celtic.the-daghdha",
+    "kind": "deity",
+    "name": "The Daghdha",
+    "pantheon": "Celtic",
+    "title": "God of weather and crops",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "domains": [
+      "Nature",
+      "Trickery"
+    ],
+    "symbol": "Bubbling cauldron or shield",
+    "catalogReferences": [
+      "rulebook.page-360"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        360
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/62"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.thor",
+    "kind": "deity",
+    "name": "Thor",
+    "pantheon": "Norse",
+    "title": "God of storms and thunder",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "domains": [
+      "Tempest",
+      "War"
+    ],
+    "symbol": "Hammer",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/63"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.egyptian.thoth",
+    "kind": "deity",
+    "name": "Thoth",
+    "pantheon": "Egyptian",
+    "title": "God of knowledge and wisdom",
+    "alignment": [
+      "N"
+    ],
+    "domains": [
+      "Knowledge"
+    ],
+    "symbol": "Ibis",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/64"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.thrym",
+    "kind": "deity",
+    "name": "Thrym",
+    "pantheon": "Norse",
+    "title": "God of frost giants and cold",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "domains": [
+      "War"
+    ],
+    "symbol": "White double-bladed axe",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/66"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.tyche",
+    "kind": "deity",
+    "name": "Tyche",
+    "pantheon": "Greek",
+    "title": "Goddess of good fortune",
+    "alignment": [
+      "N"
+    ],
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Red pentagram",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/67"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.tyr",
+    "kind": "deity",
+    "name": "Tyr",
+    "pantheon": "Norse",
+    "title": "God of courage and strategy",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "domains": [
+      "Knowledge",
+      "War"
+    ],
+    "symbol": "Sword",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/69"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.norse.uller",
+    "kind": "deity",
+    "name": "Uller",
+    "pantheon": "Norse",
+    "title": "God of hunting and winter",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "domains": [
+      "Nature"
+    ],
+    "symbol": "Longbow",
+    "catalogReferences": [
+      "rulebook.page-362"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        362
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/70"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  },
+  {
+    "id": "deity.greek.zeus",
+    "kind": "deity",
+    "name": "Zeus",
+    "pantheon": "Greek",
+    "title": "God of the sky, ruler of the gods",
+    "alignment": [
+      "N"
+    ],
+    "domains": [
+      "Tempest"
+    ],
+    "symbol": "Fist full of lightning bolts",
+    "catalogReferences": [
+      "rulebook.page-361"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        361
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "deities.json",
+        "pointer": "/deity/71"
+      },
+      "structuredStatus": "Publisher deity table row verified; domains, alignment, title and symbol reconciled."
+    }
+  }
+]

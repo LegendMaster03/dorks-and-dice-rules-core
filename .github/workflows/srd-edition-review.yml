@@ -18,6 +18,8 @@ on:
       - 'tools/promote_srd_features.mjs'
       - 'tools/promote_srd_general.mjs'
       - 'tools/promote_srd_supplementary.mjs'
+      - 'tools/promote_srd_deities.mjs'
+      - 'data/reference/srd/deity-promotion-*.json'
       - 'data/reference/srd/supplementary-promotion-*.json'
       - 'data/reference/srd/general-promotion-*.json'
       - 'data/reference/srd/feature-promotion-*.json'
@@ -40,6 +42,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build isolated edition review catalogs
         run: python3 tools/stage_srd_editions.py --output build/srd-review
+      - name: Verify legacy deity table projection
+        run: node tools/promote_srd_deities.mjs --check
       - name: Verify supplementary rule source projection
         run: node tools/promote_srd_supplementary.mjs --check
       - name: Verify structured general-rule source projection

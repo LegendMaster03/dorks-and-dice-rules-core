@@ -69,9 +69,12 @@ class Index:
         self.names = defaultdict(set)
         self.features = defaultdict(set)
         self.variants = defaultdict(set)
+        self.pantheons = defaultdict(set)
         for row in rows:
             kind, name, identity = row["kind"], row["name"], row["id"]
             self.names[kind, normalize(name)].add(identity)
+            if kind == "deity":
+                self.pantheons[normalize(row["pantheon"]), normalize(name)].add(identity)
             if kind == "class-feature":
                 key = ("classfeature", normalize(name), normalize(row["className"]), str(row["level"]))
                 self.features[key].add(identity)
@@ -105,6 +108,9 @@ class Index:
         if kind not in KINDS:
             return "unsupported-tag", [], None
         source = parts[1] if len(parts) > 1 else ""
+        # Deity markup uses pantheon, not publication, in its second field.
+        if kind == "deity" and source and source.upper() not in ("SRD51", "SRD52"):
+            return self.result(sorted(self.pantheons[normalize(source), normalize(name)]))
         if source and source.upper() != self.tag:
             return "foreign-source", [], None
         candidates = KINDS[kind]

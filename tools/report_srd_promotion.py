@@ -103,7 +103,7 @@ def report(edition, candidates, native, decisions=()):
 def load_decisions(root, edition):
     """Read documented dispositions, not inferred license approvals."""
     tag = "51" if edition == "srd-5.1" else "52"
-    for group in ("item", "origins", "class", "feature", "general", "supplementary"):
+    for group in ("item", "origins", "class", "feature", "general", "supplementary", "deity"):
         filename = f"{group}-promotion-{tag}.json"
         path = root / filename
         if not path.exists():
@@ -114,7 +114,9 @@ def load_decisions(root, edition):
         for section in ("excluded", "deferred"):
             for row in report_data.get(section, []):
                 # Deity and vehicle records are explicitly awaiting further review.
-                deferred = section == "deferred" or row.get("path") in ("deities.json", "vehicles.json")
+                if group == "supplementary" and row.get("path") == "deities.json" and (root / "deity-promotion-51.json").exists():
+                    continue  # Superseded by complete publisher table reconciliation.
+                deferred = section == "deferred" or row.get("path") == "vehicles.json"
                 yield dict(row, disposition="deferred" if deferred else "not-promoted",
                            evidence=filename)
 

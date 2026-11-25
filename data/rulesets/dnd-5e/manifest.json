@@ -64,5 +64,9 @@
   "structuredSupplementaryImport": {
     "nativeRecords": 27,
     "representation": "edition-specific glossary, supplementary options, environmental rules, diseases/contagions, traps, tables and statuses; publisher locators; full semantic and body review pending"
+  },
+  "structuredDeityImport": {
+    "nativeRecords": 67,
+    "representation": "Four official fantasy-historical pantheons; complete publisher table row reconciliation."
   }
 }

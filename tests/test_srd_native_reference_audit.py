@@ -67,3 +67,13 @@ class NativeReferenceAuditTests(unittest.TestCase):
         statuses = [x["status"] for x in report("srd-5.1", candidates, rows, decisions)["occurrences"]]
         self.assertEqual(["explicit-source-pointer", "explicit-source-pointer", "documented-not-promoted",
                           "unreviewed", "documented-deferred"], statuses)
+
+    def test_deity_pantheon_is_not_an_edition_tag(self):
+        rows = [
+            {"id": "deity.celtic.oghma", "kind": "deity", "name": "Oghma", "pantheon": "Celtic"},
+            {"id": "rule.test", "kind": "rule", "name": "Test",
+             "entries": ["{@deity Oghma|Celtic} {@deity Oghma|Forgotten Realms}"]},
+        ]
+        refs = audit(rows, "SRD51")["occurrences"]
+        self.assertEqual(["deity.celtic.oghma"], refs[0]["targets"])
+        self.assertEqual("missing", refs[1]["status"])

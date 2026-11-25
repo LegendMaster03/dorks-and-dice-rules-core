@@ -1,0 +1,244 @@
+{
+  "edition": "srd-5.1",
+  "nativeCount": 67,
+  "excluded": [
+    {
+      "path": "deities.json",
+      "pointer": "/deity/48",
+      "name": "Oghma",
+      "reason": "Pantheon not in official SRD 5.1 deity tables; no separate entity is authorized by a prose mention."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/57",
+      "name": "Silvanus",
+      "reason": "Pantheon not in official SRD 5.1 deity tables; no separate entity is authorized by a prose mention."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/60",
+      "name": "Surtur",
+      "reason": "Pantheon not in official SRD 5.1 deity tables; no separate entity is authorized by a prose mention."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/65",
+      "name": "Thrym",
+      "reason": "Pantheon not in official SRD 5.1 deity tables; no separate entity is authorized by a prose mention."
+    },
+    {
+      "path": "deities.json",
+      "pointer": "/deity/68",
+      "name": "Tyr",
+      "reason": "Pantheon not in official SRD 5.1 deity tables; no separate entity is authorized by a prose mention."
+    }
+  ],
+  "corrections": [
+    {
+      "id": "deity.egyptian.anubis",
+      "page": 361,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "Death",
+            "Grave",
+            "Order"
+          ],
+          "to": [
+            "Death"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deity.greek.athena",
+      "page": 361,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "Knowledge",
+            "War",
+            "Order"
+          ],
+          "to": [
+            "Knowledge",
+            "War"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deity.norse.forseti",
+      "page": 361,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "Light",
+            "Order"
+          ],
+          "to": [
+            "Light"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deity.celtic.goibhniu",
+      "page": 360,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "Forge",
+            "Knowledge",
+            "Life"
+          ],
+          "to": [
+            "Knowledge",
+            "Life"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deity.greek.hades",
+      "page": 361,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "Death",
+            "Grave"
+          ],
+          "to": [
+            "Death"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deity.greek.hecate",
+      "page": 361,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "Knowledge",
+            "Trickery",
+            "Arcana"
+          ],
+          "to": [
+            "Knowledge",
+            "Trickery"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deity.greek.hephaestus",
+      "page": 361,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "Forge",
+            "Knowledge"
+          ],
+          "to": [
+            "Knowledge"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deity.egyptian.isis",
+      "page": 361,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "Knowledge",
+            "Life",
+            "Arcana"
+          ],
+          "to": [
+            "Knowledge",
+            "Life"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deity.celtic.math-mathonwy",
+      "page": 361,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "Knowledge",
+            "Arcana"
+          ],
+          "to": [
+            "Knowledge"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deity.celtic.nuada",
+      "page": 361,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "War",
+            "Order"
+          ],
+          "to": [
+            "War"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deity.egyptian.osiris",
+      "page": 361,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "Grave",
+            "Life",
+            "Nature"
+          ],
+          "to": [
+            "Life",
+            "Nature"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deity.norse.tyr",
+      "page": 362,
+      "changes": [
+        {
+          "field": "domains",
+          "from": [
+            "Knowledge",
+            "War",
+            "Order"
+          ],
+          "to": [
+            "Knowledge",
+            "War"
+          ]
+        }
+      ]
+    }
+  ],
+  "publisherRows": 67
+}
