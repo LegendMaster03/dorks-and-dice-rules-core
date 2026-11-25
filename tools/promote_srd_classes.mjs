@@ -57,6 +57,40 @@ function generateClasses(inputs,manifest,src,pages,tag){
      selected.sort((a,b)=>a-b);
     }
     if(tag==="51"&&id.startsWith("class-feature.bard.magical-secrets.")&&!selected.includes(13))selected.push(13);
+    if(tag==="52"&&id==="subclass.wizard.evoker"){
+     const book=pages.find(p=>p.page===78).textLayout,feature=pages.find(p=>p.page===82).textLayout;
+     if(!book.includes("The book contains the level 1+ spells you know.")||
+        !feature.includes("Choose two Wizard spells from the Evocation")||
+        !feature.includes("school, each of which must be no higher than level 2,")||
+        !feature.includes("level of spell slots in this class, you can add one Wiz-")||
+        !feature.includes("which you have spell slots."))throw Error("Evocation Savant publisher evidence changed");
+     const wizard=inputs.wizard.class.find(x=>x.source===edition);
+     const slots=wizard.classTableGroups.find(x=>x.rowsSpellProgression).rowsSpellProgression;
+     const grant=record.additionalSpells[0],known=grant.known,spellbook={};
+     const acquisition=[3,...Array.from({length:7},(_,i)=>5+2*i)];
+     if(JSON.stringify(Object.keys(known))!==JSON.stringify(acquisition.map(String)))throw Error("Evocation Savant acquisition levels changed");
+     for(const level of acquisition){
+      const max=slots[level-1].filter(n=>n>0).length;
+      const prior=slots[level-2].filter(n=>n>0).length;
+      if(max!==(level+1)/2||max!==prior+1)throw Error("Evocation Savant slot progression changed");
+      const original="level="+Array.from({length:max+1},(_,i)=>i).join(";")+"|class=Wizard|school=V";
+      if(known[level].length!==(level===3?2:1)||known[level].some(x=>JSON.stringify(x)!==JSON.stringify({choose:original})))throw Error("Evocation Savant source selector changed");
+      spellbook[level]=known[level].map(()=>({choose:"level="+Array.from({length:max},(_,i)=>i+1).join(";")+"|class=Wizard|school=V"}));
+     }
+     delete grant.known;
+     grant.spellbook=spellbook;
+     report.corrections.push({id,reason:"Official SRD 5.2.1 pp.77–78,82: Evocation Savant adds level-1+ Evocation Wizard spells to the spellbook, not cantrips or automatically prepared spells. Initial two choices at Wizard level 3; later one at each new class spell-slot level, from any spell level for which the Wizard has slots.",pages:[77,78,82]});
+     for(const p of [77,78,82])if(!selected.includes(p))selected.push(p);
+     selected.sort((a,b)=>a-b);
+    }
+    if(tag==="52"&&id==="subclass-feature.wizard.evoker.evocation-savant.3"){
+     const original=JSON.stringify(record.entries),corrected=original.replace("level=0;1;2|class=Wizard|school=V","level=1;2|class=Wizard|school=V");
+     if(original===corrected)throw Error("Evocation Savant inline filter changed");
+     record.entries=JSON.parse(corrected);
+     report.corrections.push({id,reason:"Correct the Evocation Savant inline filter to exclude cantrips, consistent with the level-1+ spellbook rule on p.78; retain the publisher wording.",pages:[78,82]});
+     if(!selected.includes(78))selected.push(78);
+     selected.sort((a,b)=>a-b);
+    }
     if(kind==="classFeature"&&tag==="52"&&c.className==="Warlock"&&c.name==="Pact Magic"&&c.level===1){
      const original=JSON.stringify(record.entries),corrected=original.replace("{@spell Witch Bolt|SRD52}","{@spell Charm Person|SRD52}");
      if(original===corrected)throw Error("Missing expected S52-019 discrepancy");

@@ -124,3 +124,35 @@ class StructuredRelationshipsTests(unittest.TestCase):
         self.assertEqual("long-rest", replacement["raw"]["trigger"])
         self.assertFalse(replacement["alreadyExplicit"])
         self.assertEqual(0, report["unlinkedLiteralOccurrences"])
+
+    def test_spellbook_selectors_keep_school_and_slot_bounds(self):
+        rows = [
+            {"id": "spell.light", "kind": "spell", "name": "Light", "level": 0, "school": "V"},
+            {"id": "spell.burning-hands", "kind": "spell", "name": "Burning Hands", "level": 1, "school": "V"},
+            {"id": "spell.shatter", "kind": "spell", "name": "Shatter", "level": 2, "school": "V"},
+            {"id": "spell.fireball", "kind": "spell", "name": "Fireball", "level": 3, "school": "V"},
+            {"id": "spell.shield", "kind": "spell", "name": "Shield", "level": 1, "school": "A"},
+            {"id": "spell.cure-wounds", "kind": "spell", "name": "Cure Wounds", "level": 1, "school": "V"},
+            {"id": "class.wizard", "kind": "class", "name": "Wizard",
+             "spellList": [{"level": 0, "spellIds": ["spell.light"]},
+                           {"level": 1, "spellIds": ["spell.burning-hands", "spell.shield"]},
+                           {"level": 2, "spellIds": ["spell.shatter"]},
+                           {"level": 3, "spellIds": ["spell.fireball"]}]},
+            {"id": "subclass.wizard.evoker", "kind": "subclass", "name": "Evoker",
+             "additionalSpells": [{"spellbook": {
+                 "3": [{"choose": "level=1;2|class=Wizard|school=V", "count": 2}],
+                 "5": [{"choose": "level=1;2;3|class=Wizard|school=v"}],
+                 "invalid": [{"choose": "level=0;1|class=Wizard|school=V"},
+                             {"choose": "level=1|class=Wizard|school=bogus"}]}}]},
+        ]
+        original = copy.deepcopy(rows)
+        report = audit(rows, "SRD52")
+        refs = report["occurrences"]
+        self.assertEqual([
+            ("static-candidates", ["spell.burning-hands", "spell.shatter"]),
+            ("static-candidates", ["spell.burning-hands", "spell.fireball", "spell.shatter"]),
+            ("unsupported-filter-syntax", []),
+            ("unsupported-filter-syntax", []),
+        ], [(r["selectorStatus"], r["candidateSpellIds"]) for r in refs])
+        self.assertTrue(all(r["grantMode"] == "spellbook" and not r["targets"] for r in refs))
+        self.assertEqual(original, rows)

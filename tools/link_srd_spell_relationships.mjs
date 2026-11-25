@@ -28,7 +28,7 @@ export function linkSpellRelationships(rows,spells,edition){
    for(const [key,child] of Object.entries(value)){
     if(key==="source"||key==="catalogReferences")continue;
     if(key==="additionalSpells"&&Array.isArray(child)){
-     for(const grant of child)for(const mode of ["known","prepared","innate","expanded"])if(Object.hasOwn(grant,mode))tree(grant[mode]);
+     for(const grant of child)for(const mode of ["known","prepared","innate","expanded","spellbook"])if(Object.hasOwn(grant,mode))tree(grant[mode]);
     }else if(key==="prerequisite"&&Array.isArray(child)){
      for(const p of child)for(const target of p.spell??[]){if(typeof target==="string")link(target,"prerequisite");else selectors++;}
     }else visit(child);

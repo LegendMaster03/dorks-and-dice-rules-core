@@ -357,6 +357,18 @@ public sealed class RulesetResolutionApiTests
             foreach (var choice in choices.EnumerateArray())
                 Assert.Equal("level=" + string.Join(";", Enumerable.Range(0, max + 1)) + "|class=Bard;Cleric;Druid;Paladin;Ranger;Sorcerer;Warlock;Wizard", choice.GetProperty("choose").GetString());
         }
+        var evokerSpellAccess = (await client.GetFromJsonAsync<JsonElement>(animals + "/subclass.wizard.evoker")).GetProperty("rule").GetProperty("definition").GetProperty("additionalSpells")[0];
+        Assert.False(evokerSpellAccess.TryGetProperty("known", out _));
+        Assert.False(evokerSpellAccess.TryGetProperty("prepared", out _));
+        var evokerBook = evokerSpellAccess.GetProperty("spellbook");
+        Assert.Equal(8, evokerBook.EnumerateObject().Count());
+        foreach (var level in Enumerable.Range(0, 8).Select(i => 3 + 2 * i))
+        {
+            var choices = evokerBook.GetProperty(level.ToString());
+            Assert.Equal(level == 3 ? 2 : 1, choices.GetArrayLength());
+            foreach (var choice in choices.EnumerateArray())
+                Assert.Equal("level=" + string.Join(";", Enumerable.Range(1, (level + 1) / 2)) + "|class=Wizard|school=V", choice.GetProperty("choose").GetString());
+        }
         var modernElf = (await client.GetFromJsonAsync<JsonElement>(animals + "/species.elf")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("spell.prestidigitation", modernElf.GetProperty("catalogReferences").GetRawText());
         var highElfGrants = modernElf.GetProperty("additionalSpells").EnumerateArray().Single(x => x.GetProperty("name").GetString() == "High Elf");

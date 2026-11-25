@@ -19,6 +19,23 @@
       "pages": [
         71
       ]
+    },
+    {
+      "id": "subclass.wizard.evoker",
+      "reason": "Official SRD 5.2.1 pp.77–78,82: Evocation Savant adds level-1+ Evocation Wizard spells to the spellbook, not cantrips or automatically prepared spells. Initial two choices at Wizard level 3; later one at each new class spell-slot level, from any spell level for which the Wizard has slots.",
+      "pages": [
+        77,
+        78,
+        82
+      ]
+    },
+    {
+      "id": "subclass-feature.wizard.evoker.evocation-savant.3",
+      "reason": "Correct the Evocation Savant inline filter to exclude cantrips, consistent with the level-1+ spellbook rule on p.78; retain the publisher wording.",
+      "pages": [
+        78,
+        82
+      ]
     }
   ],
   "excluded": [

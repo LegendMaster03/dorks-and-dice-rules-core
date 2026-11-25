@@ -1066,48 +1066,48 @@
     "classSource": "SRD52",
     "additionalSpells": [
       {
-        "known": {
+        "spellbook": {
           "3": [
             {
-              "choose": "level=0;1;2|class=Wizard|school=V"
+              "choose": "level=1;2|class=Wizard|school=V"
             },
             {
-              "choose": "level=0;1;2|class=Wizard|school=V"
+              "choose": "level=1;2|class=Wizard|school=V"
             }
           ],
           "5": [
             {
-              "choose": "level=0;1;2;3|class=Wizard|school=V"
+              "choose": "level=1;2;3|class=Wizard|school=V"
             }
           ],
           "7": [
             {
-              "choose": "level=0;1;2;3;4|class=Wizard|school=V"
+              "choose": "level=1;2;3;4|class=Wizard|school=V"
             }
           ],
           "9": [
             {
-              "choose": "level=0;1;2;3;4;5|class=Wizard|school=V"
+              "choose": "level=1;2;3;4;5|class=Wizard|school=V"
             }
           ],
           "11": [
             {
-              "choose": "level=0;1;2;3;4;5;6|class=Wizard|school=V"
+              "choose": "level=1;2;3;4;5;6|class=Wizard|school=V"
             }
           ],
           "13": [
             {
-              "choose": "level=0;1;2;3;4;5;6;7|class=Wizard|school=V"
+              "choose": "level=1;2;3;4;5;6;7|class=Wizard|school=V"
             }
           ],
           "15": [
             {
-              "choose": "level=0;1;2;3;4;5;6;7;8|class=Wizard|school=V"
+              "choose": "level=1;2;3;4;5;6;7;8|class=Wizard|school=V"
             }
           ],
           "17": [
             {
-              "choose": "level=0;1;2;3;4;5;6;7;8;9|class=Wizard|school=V"
+              "choose": "level=1;2;3;4;5;6;7;8;9|class=Wizard|school=V"
             }
           ]
         }
@@ -1121,6 +1121,8 @@
     ],
     "catalogReferences": [
       "class.wizard",
+      "rulebook.page-077",
+      "rulebook.page-078",
       "rulebook.page-082",
       "subclass-feature.wizard.evoker.empowered-evocation.10",
       "subclass-feature.wizard.evoker.evoker.3",
@@ -1134,6 +1136,8 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
+        77,
+        78,
         82
       ],
       "candidatePage": 82,
@@ -1815,11 +1819,12 @@
     "level": 3,
     "header": 1,
     "entries": [
-      "Choose two {@filter Wizard spells from the Evocation school|spells|level=0;1;2|class=Wizard|school=V}, each of which must be no higher than level 2, and add them to your spellbook for free.",
+      "Choose two {@filter Wizard spells from the Evocation school|spells|level=1;2|class=Wizard|school=V}, each of which must be no higher than level 2, and add them to your spellbook for free.",
       "In addition, whenever you gain access to a new level of spell slots in this class, you can add one Wizard spell from the Evocation school to your spellbook for free. The chosen spell must be of a level for which you have spell slots."
     ],
     "catalogReferences": [
       "class.wizard",
+      "rulebook.page-078",
       "rulebook.page-082",
       "subclass.wizard.evoker"
     ],
@@ -1830,6 +1835,7 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
+        78,
         82
       ],
       "candidatePage": 174,

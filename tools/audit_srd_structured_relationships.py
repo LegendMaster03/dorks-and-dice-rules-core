@@ -13,7 +13,8 @@ from report_srd_promotion import REPO, PACKAGES, native_rows
 
 ORIGIN_KINDS = {"class", "subclass", "class-feature", "subclass-feature",
                 "race", "subrace", "species", "background", "feat", "optional-feature"}
-MODES = {"known", "prepared", "innate", "expanded"}
+MODES = {"known", "prepared", "innate", "expanded", "spellbook"}
+SCHOOL_CODES = frozenset("acdeintv")
 
 
 def part(key):
@@ -70,8 +71,10 @@ class SpellSelectorInventory:
                 return result("unsupported-filter-syntax")
             clauses[key] = [normalize(v) for v in value.split(";")]
         if ("level" not in clauses or
-                set(clauses) - {"level", "class", "components & miscellaneous"} or
+                set(clauses) - {"level", "class", "components & miscellaneous", "school"} or
                 any(v not in tuple(str(n) for n in range(10)) for v in clauses["level"]) or
+                ("school" in clauses and any(v not in SCHOOL_CODES for v in clauses["school"])) or
+                (mode == "spellbook" and "0" in clauses["level"]) or
                 ("components & miscellaneous" in clauses and
                  clauses["components & miscellaneous"] != ["ritual"])):
             return result("unsupported-filter-syntax")
@@ -97,6 +100,10 @@ class SpellSelectorInventory:
                         if group["level"] in levels:
                             membership.add(identity)
             candidates &= membership
+        if "school" in clauses:
+            schools = set(clauses["school"])
+            candidates = {identity for identity in candidates
+                          if normalize(self.spells[identity].get("school", "")) in schools}
         if "components & miscellaneous" in clauses:
             candidates = {identity for identity in candidates
                           if self.spells[identity].get("meta", {}).get("ritual") is True}
