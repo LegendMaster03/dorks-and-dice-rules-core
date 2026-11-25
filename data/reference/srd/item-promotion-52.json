@@ -265,6 +265,14 @@
       "reason": "Use official Handy Haversack name"
     },
     {
+      "id": "magic-variant.dancing-sword",
+      "reason": "Use the five explicitly listed eligible weapons rather than a generic sword tag."
+    },
+    {
+      "id": "magic-variant.defender",
+      "reason": "Remove unconditional AC bonus: transfer part of the +3 weapon bonus only when the published condition applies."
+    },
+    {
       "id": "item.apparatus-of-the-crab",
       "reason": "Reconcile publisher Apparatus of the Crab name and typed vehicle statistics; preserve one canonical item identity, omit unverified terrain metadata."
     }
@@ -304,7 +312,7 @@
       "reason": "missing-or-ambiguous"
     }
   ],
-  "resolvedReferenceCount": 1100,
+  "resolvedReferenceCount": 1102,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",

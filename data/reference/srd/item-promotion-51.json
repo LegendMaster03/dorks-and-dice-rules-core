@@ -371,6 +371,26 @@
       "reason": "Remove gaming set variants absent from the 5.1 tools table"
     },
     {
+      "id": "magic-variant.arrow-of-slaying",
+      "reason": "Restore legacy slaying ammunition's piercing damage, flexible target grouping and alternate ammunition guidance; remove imported modern random creature-type table."
+    },
+    {
+      "id": "magic-variant.defender",
+      "reason": "Remove unconditional AC bonus: transfer part of the +3 weapon bonus only when the published condition applies."
+    },
+    {
+      "id": "magic-variant.sword-of-life-stealing",
+      "reason": "Restore published 3d6 extra damage and matching temporary hit points instead of fixed 10; remove editorial note."
+    },
+    {
+      "id": "magic-variant.sword-of-sharpness",
+      "reason": "Restore published 4d6 slashing damage instead of fixed 14; remove editorial note."
+    },
+    {
+      "id": "magic-variant.vicious-weapon",
+      "reason": "Restore published 2d6 damage on a natural 20 instead of fixed 7; remove editorial note."
+    },
+    {
       "id": "item.apparatus-of-the-crab",
       "reason": "Reconcile publisher Apparatus of the Crab name and typed vehicle statistics; preserve one canonical item identity, omit unverified terrain metadata."
     }
@@ -384,7 +404,7 @@
       "reason": "missing-or-ambiguous"
     }
   ],
-  "resolvedReferenceCount": 725,
+  "resolvedReferenceCount": 730,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",

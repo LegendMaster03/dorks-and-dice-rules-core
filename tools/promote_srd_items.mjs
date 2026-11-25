@@ -26,6 +26,37 @@ function reconcileApparatus(records,report,vehicles,sourceManifest,tag){
  report.corrections.push({id:row.id,reason:"Reconcile publisher Apparatus of the Crab name and typed vehicle statistics; preserve one canonical item identity, omit unverified terrain metadata."});
  report.mergedOccurrences=[...(report.mergedOccurrences??[]),{id:row.id,path:pointer.path,pointer:pointer.pointer,reason:"Verified vehicle profile integrated with canonical magic item; duplicate prose not separately imported."}];
 }
+function reconcileNamedTemplate(row,tag){
+ if(row.kind!=="magic-variant")return null;
+ const h=JSON.parse(JSON.stringify(row.inherits)),name=row.name,modern=tag==="52";
+ let reason=null,page=h.page;
+ if(name==="Defender"){
+  // The +1 in the publisher example is not a permanent AC bonus.
+  if(h.bonusAc!=="+1")throw Error("Unexpected Defender metadata");
+  delete h.bonusAc;h.entries=h.entries.map(s=>typeof s==="string"?s.replaceAll("{=bonusAc}","+1"):s);
+  reason="Remove unconditional AC bonus: transfer part of the +3 weapon bonus only when the published condition applies.";
+ }else if(!modern&&name==="Arrow of Slaying"){
+  h.entries=[
+   "An arrow of slaying is a magic weapon meant to slay a particular kind of creature. Some are more focused than others; for example, there are both arrows of dragon slaying and arrows of blue dragon slaying. If a creature belonging to the type, race, or group associated with an arrow of slaying takes damage from the arrow, the creature must make a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} piercing damage on a failed save, or half as much extra damage on a successful one.",
+   "Once an arrow of slaying deals its extra damage to a creature, it becomes a nonmagical arrow.",
+   "Other types of magic ammunition of this kind exist, such as bolts of slaying meant for a crossbow, though arrows are most common."
+  ];reason="Restore legacy slaying ammunition's piercing damage, flexible target grouping and alternate ammunition guidance; remove imported modern random creature-type table.";
+ }else if(!modern&&name==="Sword of Life Stealing"){
+  h.entries=["When you attack a creature with this magic weapon and roll a 20 on the attack roll, that target takes an extra {@damage 3d6} necrotic damage, provided that the target isn't a construct or an undead. You gain temporary hit points equal to the extra damage dealt."];
+  reason="Restore published 3d6 extra damage and matching temporary hit points instead of fixed 10; remove editorial note.";
+ }else if(!modern&&name==="Sword of Sharpness"){
+  h.entries=h.entries.filter(s=>typeof s!=="string"||!s.startsWith("{@note ")).map(s=>typeof s==="string"?s.replace("extra 14 slashing damage","extra {@damage 4d6} slashing damage"):s);
+  reason="Restore published 4d6 slashing damage instead of fixed 14; remove editorial note.";
+ }else if(!modern&&name==="Vicious Weapon"){
+  h.entries=["When you roll a 20 on your attack roll with this magic weapon, your critical hit deals an extra {@damage 2d6} damage of the weapon's type."];
+  reason="Restore published 2d6 damage on a natural 20 instead of fixed 7; remove editorial note.";
+ }else if(modern&&name==="Dancing Sword"){
+  row.requires=["Greatsword","Longsword","Rapier","Scimitar","Shortsword"].map(name=>({name,source:"SRD52"}));
+  reason="Use the five explicitly listed eligible weapons rather than a generic sword tag.";
+ }
+ if(!reason)return null;
+ row.inherits=h;return {page,reason};
+}
 function generate(files, sourceManifest, packageManifest, tag, officialUrl, externalIds, vehicles) {
     const records=[], report={edition:packageManifest.officialPageImport.release, counts:{}, excluded:[], corrections:[], publisherOnly:[]};
     const source="SRD"+tag;
@@ -101,6 +132,8 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
                         row.entries=row.entries.map(s=>s.replace("Lolth's Sting","Spider's Sting"));pages=[198];addCorrection(id,"Correct modern poison name");
                     }
                 }
+                const templateCorrection=reconcileNamedTemplate(row,tag);
+                if(templateCorrection){pages=[templateCorrection.page];addCorrection(id,templateCorrection.reason);}
                 if(candidate._copy)throw Error("Unexpected unresolved copy: "+id);
                 row.catalogReferences=pages.map(reference);
                 row.source=metadata(candidate,file,kind,index,pages);

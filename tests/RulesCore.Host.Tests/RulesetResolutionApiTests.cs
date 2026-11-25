@@ -356,6 +356,30 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal(8, mastery.GetProperty("rule").GetProperty("definition").GetProperty("properties").GetArrayLength());
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/rule.weapon-mastery-properties")).StatusCode);
 
+        // Verify published named-template corrections without inventing unconditional bonuses.
+        foreach (var prefix in new[] { oldRules, animals })
+        {
+            var defender = await client.GetFromJsonAsync<JsonElement>(prefix + "/magic-variant.defender");
+            var inheritance = defender.GetProperty("rule").GetProperty("definition").GetProperty("inherits");
+            Assert.Equal("+3", inheritance.GetProperty("bonusWeapon").GetString());
+            Assert.False(inheritance.TryGetProperty("bonusAc", out _));
+            Assert.DoesNotContain("{=bonusAc}", inheritance.GetProperty("entries").GetRawText());
+        }
+        var oldSlaying = await client.GetFromJsonAsync<JsonElement>(oldRules + "/magic-variant.arrow-of-slaying");
+        var slayingEntries = oldSlaying.GetProperty("rule").GetProperty("definition").GetProperty("inherits").GetProperty("entries");
+        Assert.Equal(3, slayingEntries.GetArrayLength());
+        Assert.Contains("6d10", slayingEntries.GetRawText());
+        Assert.Contains("piercing damage", slayingEntries.GetRawText());
+        foreach (var (name, dice) in new[] { ("sword-of-life-stealing", "3d6"), ("sword-of-sharpness", "4d6"), ("vicious-weapon", "2d6") })
+        {
+            var template = await client.GetFromJsonAsync<JsonElement>(oldRules + "/magic-variant." + name);
+            var entries = template.GetProperty("rule").GetProperty("definition").GetProperty("inherits").GetProperty("entries").GetRawText();
+            Assert.Contains(dice, entries);
+            Assert.DoesNotContain("rpg.stackexchange", entries);
+        }
+        var dancing = await client.GetFromJsonAsync<JsonElement>(animals + "/magic-variant.dancing-sword");
+        Assert.Equal(5, dancing.GetProperty("rule").GetProperty("definition").GetProperty("requires").GetArrayLength());
+
         // A vehicle profile belongs to its existing magic item, not a second item identity.
         foreach (var prefix in new[] { oldRules, animals })
         {

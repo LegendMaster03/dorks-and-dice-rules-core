@@ -551,87 +551,23 @@
       "page": 209,
       "rarity": "very rare",
       "entries": [
-        "This magic ammunition is meant to slay creatures of a particular type, which the DM chooses or determines randomly by rolling on the table below. If a creature of that type takes damage from the ammunition, the creature makes a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} Force damage on a failed save or half as much extra damage on a successful one.",
-        "After dealing its extra damage to a creature, the ammunition becomes nonmagical.",
-        {
-          "type": "table",
-          "colStyles": [
-            "col-2 text-center",
-            "col-10"
-          ],
-          "colLabels": [
-            "1d100",
-            "Creature Type"
-          ],
-          "rows": [
-            [
-              "01-10",
-              "Aberrations"
-            ],
-            [
-              "11-15",
-              "Beasts"
-            ],
-            [
-              "16-20",
-              "Celestials"
-            ],
-            [
-              "21-25",
-              "Constructs"
-            ],
-            [
-              "26-35",
-              "Dragons"
-            ],
-            [
-              "36-45",
-              "Elementals"
-            ],
-            [
-              "46-50",
-              "Humanoids"
-            ],
-            [
-              "51-60",
-              "Fey"
-            ],
-            [
-              "61-70",
-              "Fiends"
-            ],
-            [
-              "71-75",
-              "Giants"
-            ],
-            [
-              "76-80",
-              "Monstrosities"
-            ],
-            [
-              "81-85",
-              "Oozes"
-            ],
-            [
-              "86-90",
-              "Plants"
-            ],
-            [
-              "91-00",
-              "Undead"
-            ]
-          ]
-        }
+        "An arrow of slaying is a magic weapon meant to slay a particular kind of creature. Some are more focused than others; for example, there are both arrows of dragon slaying and arrows of blue dragon slaying. If a creature belonging to the type, race, or group associated with an arrow of slaying takes damage from the arrow, the creature must make a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} piercing damage on a failed save, or half as much extra damage on a successful one.",
+        "Once an arrow of slaying deals its extra damage to a creature, it becomes a nonmagical arrow.",
+        "Other types of magic ammunition of this kind exist, such as bolts of slaying meant for a crossbow, though arrows are most common."
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "rulebook.page-209"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        209
+      ],
       "candidatePage": 209,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -747,20 +683,23 @@
       "rarity": "legendary",
       "reqAttune": true,
       "bonusWeapon": "+3",
-      "bonusAc": "+1",
       "entries": [
         "You gain a +3 bonus to attack and damage rolls made with this magic weapon.",
         "The first time you attack with the sword on each of your turns, you can transfer some or all of the sword's bonus to your Armor Class, instead of using the bonus on any attacks that turn. For example, you could reduce the bonus to your attack and damage rolls to +1 and gain a +2 bonus to AC. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the sword to gain a bonus to AC from it."
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "rulebook.page-218"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        218
+      ],
       "candidatePage": 218,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -1178,18 +1117,21 @@
       "rarity": "rare",
       "reqAttune": true,
       "entries": [
-        "When you attack a creature with this magic weapon and roll a 20 on the attack roll, that target takes an extra 10 necrotic damage if it isn't a construct or an undead. You also gain 10 temporary hit points.",
-        "{@note Note: According to the SRD, it is an extra {@damage 3d6} necrotic damage, although {@link this is incorrect|https://rpg.stackexchange.com/a/174522/53884}.}"
+        "When you attack a creature with this magic weapon and roll a 20 on the attack roll, that target takes an extra {@damage 3d6} necrotic damage, provided that the target isn't a construct or an undead. You gain temporary hit points equal to the extra damage dealt."
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "rulebook.page-246"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        246
+      ],
       "candidatePage": 246,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -1219,8 +1161,7 @@
       "reqAttune": true,
       "entries": [
         "When you attack an object with this magic sword and hit, maximize your weapon damage dice against the target.",
-        "When you attack a creature with this weapon and roll a 20 on the attack roll, that target takes an extra 14 slashing damage. Then roll another {@dice d20}. If you roll a 20, you lop off one of the target's limbs, with the effect of such loss determined by the DM. If the creature has no limb to sever, you lop off a portion of its body instead.",
-        "{@note Note: According to the SRD, it is an extra {@damage 4d6} slashing damage, although {@link this is incorrect|https://rpg.stackexchange.com/a/174522/53884}}.",
+        "When you attack a creature with this weapon and roll a 20 on the attack roll, that target takes an extra {@damage 4d6} slashing damage. Then roll another {@dice d20}. If you roll a 20, you lop off one of the target's limbs, with the effect of such loss determined by the DM. If the creature has no limb to sever, you lop off a portion of its body instead.",
         "In addition, you can speak the sword's command to cause the blade to shed bright light in a 10-foot radius and dim light for an additional 10 feet. Speaking the command word again or sheathing the sword puts out the light."
       ],
       "light": [
@@ -1230,14 +1171,18 @@
         }
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "rulebook.page-246"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        246
+      ],
       "candidatePage": 246,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -1312,18 +1257,21 @@
       "page": 248,
       "rarity": "rare",
       "entries": [
-        "When you roll a 20 with this magic weapon, the target takes an extra 7 {=dmgType} damage.",
-        "{@note Note: According to the SRD, it is an extra {@damage 2d6} {=dmgType} damage, although {@link this is incorrect|https://rpg.stackexchange.com/a/174522/53884}.}"
+        "When you roll a 20 on your attack roll with this magic weapon, your critical hit deals an extra {@damage 2d6} damage of the weapon's type."
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "rulebook.page-248"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        248
+      ],
       "candidatePage": 248,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",

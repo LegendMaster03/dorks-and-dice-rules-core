@@ -906,7 +906,24 @@
     "type": "GV|SRD52",
     "requires": [
       {
-        "sword": true
+        "name": "Greatsword",
+        "source": "SRD52"
+      },
+      {
+        "name": "Longsword",
+        "source": "SRD52"
+      },
+      {
+        "name": "Rapier",
+        "source": "SRD52"
+      },
+      {
+        "name": "Scimitar",
+        "source": "SRD52"
+      },
+      {
+        "name": "Shortsword",
+        "source": "SRD52"
       }
     ],
     "inherits": {
@@ -921,14 +938,18 @@
         "After the hovering weapon attacks for the fourth time, it flies back to you and tries to return to your hand. If you have no hand free, the weapon falls to the ground in your space. If the weapon has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or are more than 30 feet away from it."
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "rulebook.page-217"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
       "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        217
+      ],
       "candidatePage": 217,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -956,20 +977,23 @@
       "rarity": "legendary",
       "reqAttune": true,
       "bonusWeapon": "+3",
-      "bonusAc": "+1",
       "entries": [
         "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
-        "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to {=bonusAc} and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+        "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "rulebook.page-218"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
       "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        218
+      ],
       "candidatePage": 218,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
