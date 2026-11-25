@@ -410,6 +410,7 @@
       "shortsword|srd51"
     ],
     "catalogReferences": [
+      "baseitem.studded-leather-armor",
       "condition.incapacitated",
       "rulebook.page-396"
     ],
@@ -734,6 +735,7 @@
       "warhammer|srd51"
     ],
     "catalogReferences": [
+      "baseitem.shield",
       "condition.poisoned",
       "rulebook.page-265"
     ],
@@ -1119,6 +1121,7 @@
       "scimitar|srd51"
     ],
     "catalogReferences": [
+      "baseitem.leather-armor",
       "rulebook.page-396"
     ],
     "source": {
@@ -1229,6 +1232,7 @@
       "scimitar|srd51"
     ],
     "catalogReferences": [
+      "baseitem.studded-leather-armor",
       "rulebook.page-397"
     ],
     "source": {
@@ -1874,6 +1878,7 @@
       "greataxe|srd51"
     ],
     "catalogReferences": [
+      "baseitem.hide-armor",
       "rulebook.page-397"
     ],
     "source": {

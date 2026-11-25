@@ -350,6 +350,8 @@
       "spear|srd51"
     ],
     "catalogReferences": [
+      "baseitem.chain-shirt",
+      "baseitem.shield",
       "rulebook.page-399"
     ],
     "source": {
@@ -856,6 +858,7 @@
       "shortsword|srd51"
     ],
     "catalogReferences": [
+      "baseitem.plate-armor",
       "rulebook.page-321"
     ],
     "source": {
@@ -1518,6 +1521,8 @@
       "longsword|srd51"
     ],
     "catalogReferences": [
+      "baseitem.chain-mail",
+      "baseitem.shield",
       "condition.incapacitated",
       "rulebook.page-322"
     ],

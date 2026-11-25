@@ -194,6 +194,7 @@
       "war pick|srd51"
     ],
     "catalogReferences": [
+      "baseitem.chain-shirt",
       "condition.poisoned",
       "rulebook.page-315",
       "skill.stealth",
@@ -1332,6 +1333,7 @@
       "shortsword|srd51"
     ],
     "catalogReferences": [
+      "baseitem.chain-shirt",
       "condition.charmed",
       "condition.poisoned",
       "condition.unconscious",
@@ -1720,6 +1722,8 @@
       "war pick|srd51"
     ],
     "catalogReferences": [
+      "baseitem.scale-mail",
+      "baseitem.shield",
       "condition.charmed",
       "condition.invisible",
       "condition.paralyzed",
@@ -2472,6 +2476,7 @@
       "longsword|srd51"
     ],
     "catalogReferences": [
+      "baseitem.plate-armor",
       "condition.poisoned",
       "rulebook.page-276",
       "spell.lesser-restoration"

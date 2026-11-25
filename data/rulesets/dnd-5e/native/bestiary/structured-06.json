@@ -1510,6 +1510,8 @@
       "spear|srd51"
     ],
     "catalogReferences": [
+      "baseitem.shield",
+      "baseitem.studded-leather-armor",
       "condition.frightened",
       "condition.prone",
       "rulebook.page-399"
@@ -1614,6 +1616,8 @@
       "spear|srd51"
     ],
     "catalogReferences": [
+      "baseitem.hide-armor",
+      "baseitem.shield",
       "rulebook.page-314"
     ],
     "source": {
@@ -1789,6 +1793,8 @@
       "shortbow|srd51"
     ],
     "catalogReferences": [
+      "baseitem.leather-armor",
+      "baseitem.shield",
       "rulebook.page-315"
     ],
     "source": {

@@ -73,6 +73,7 @@
       "greatsword|srd51"
     ],
     "catalogReferences": [
+      "baseitem.plate-armor",
       "rulebook.page-312"
     ],
     "source": {
