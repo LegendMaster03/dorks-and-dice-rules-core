@@ -386,6 +386,10 @@
     ],
     "subclassTitle": "Otherworldly Patron",
     "catalogReferences": [
+      "baseitem.crossbow-bolts-20",
+      "baseitem.dagger",
+      "baseitem.leather-armor",
+      "baseitem.light-crossbow",
       "class-feature.warlock.ability-score-improvement.12",
       "class-feature.warlock.ability-score-improvement.16",
       "class-feature.warlock.ability-score-improvement.19",
@@ -403,6 +407,9 @@
       "class-feature.warlock.otherworldly-patron.1",
       "class-feature.warlock.pact-boon.3",
       "class-feature.warlock.pact-magic.1",
+      "item.component-pouch",
+      "item.dungeoneer-s-pack",
+      "item.scholar-s-pack",
       "rulebook.page-046",
       "rulebook.page-110",
       "rulebook.page-111",
@@ -879,6 +886,9 @@
     ],
     "catalogReferences": [
       "class.warlock",
+      "optional-feature.pact-of-the-blade",
+      "optional-feature.pact-of-the-chain",
+      "optional-feature.pact-of-the-tome",
       "rulebook.page-046"
     ],
     "source": {

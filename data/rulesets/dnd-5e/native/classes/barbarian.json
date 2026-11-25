@@ -283,6 +283,9 @@
     ],
     "subclassTitle": "Primal Path",
     "catalogReferences": [
+      "baseitem.greataxe",
+      "baseitem.handaxe",
+      "baseitem.javelin",
       "class-feature.barbarian.ability-score-improvement.12",
       "class-feature.barbarian.ability-score-improvement.16",
       "class-feature.barbarian.ability-score-improvement.19",
@@ -306,6 +309,7 @@
       "class-feature.barbarian.reckless-attack.2",
       "class-feature.barbarian.relentless-rage.11",
       "class-feature.barbarian.unarmored-defense.1",
+      "item.explorer-s-pack",
       "rulebook.page-008"
     ],
     "source": {

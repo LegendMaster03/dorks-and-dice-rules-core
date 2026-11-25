@@ -169,6 +169,14 @@
     ],
     "subclassTitle": "Martial Archetype",
     "catalogReferences": [
+      "baseitem.arrows-20",
+      "baseitem.chain-mail",
+      "baseitem.crossbow-bolts-20",
+      "baseitem.handaxe",
+      "baseitem.leather-armor",
+      "baseitem.light-crossbow",
+      "baseitem.longbow",
+      "baseitem.shield",
       "class-feature.fighter.ability-score-improvement.12",
       "class-feature.fighter.ability-score-improvement.14",
       "class-feature.fighter.ability-score-improvement.16",
@@ -191,6 +199,8 @@
       "class-feature.fighter.martial-archetype-feature.7",
       "class-feature.fighter.martial-archetype.3",
       "class-feature.fighter.second-wind.1",
+      "item.dungeoneer-s-pack",
+      "item.explorer-s-pack",
       "rulebook.page-024"
     ],
     "source": {
@@ -307,6 +317,12 @@
     ],
     "catalogReferences": [
       "class.fighter",
+      "optional-feature.archery",
+      "optional-feature.defense",
+      "optional-feature.dueling",
+      "optional-feature.great-weapon-fighting",
+      "optional-feature.protection",
+      "optional-feature.two-weapon-fighting",
       "rulebook.page-024"
     ],
     "source": {

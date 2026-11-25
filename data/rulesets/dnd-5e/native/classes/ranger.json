@@ -416,6 +416,11 @@
     ],
     "subclassTitle": "Ranger Archetype",
     "catalogReferences": [
+      "baseitem.arrows-20",
+      "baseitem.leather-armor",
+      "baseitem.longbow",
+      "baseitem.scale-mail",
+      "baseitem.shortsword",
       "class-feature.ranger.ability-score-improvement.12",
       "class-feature.ranger.ability-score-improvement.16",
       "class-feature.ranger.ability-score-improvement.19",
@@ -439,6 +444,8 @@
       "class-feature.ranger.ranger-archetype.3",
       "class-feature.ranger.spellcasting.2",
       "class-feature.ranger.vanish.14",
+      "item.dungeoneer-s-pack",
+      "item.explorer-s-pack",
       "rulebook.page-035",
       "rulebook.page-109",
       "spell.alarm",
@@ -729,6 +736,10 @@
     ],
     "catalogReferences": [
       "class.ranger",
+      "optional-feature.archery",
+      "optional-feature.defense",
+      "optional-feature.dueling",
+      "optional-feature.two-weapon-fighting",
       "rulebook.page-035"
     ],
     "source": {

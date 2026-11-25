@@ -426,6 +426,12 @@
     ],
     "subclassTitle": "Roguish Archetype",
     "catalogReferences": [
+      "baseitem.arrows-20",
+      "baseitem.dagger",
+      "baseitem.leather-armor",
+      "baseitem.rapier",
+      "baseitem.shortbow",
+      "baseitem.shortsword",
       "class-feature.rogue.ability-score-improvement.10",
       "class-feature.rogue.ability-score-improvement.12",
       "class-feature.rogue.ability-score-improvement.16",
@@ -448,6 +454,10 @@
       "class-feature.rogue.stroke-of-luck.20",
       "class-feature.rogue.thieves-cant.1",
       "class-feature.rogue.uncanny-dodge.5",
+      "item.burglar-s-pack",
+      "item.dungeoneer-s-pack",
+      "item.explorer-s-pack",
+      "item.thieves-tools",
       "rulebook.page-039"
     ],
     "source": {

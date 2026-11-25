@@ -572,6 +572,9 @@
     ],
     "subclassTitle": "Sorcerous Origin",
     "catalogReferences": [
+      "baseitem.crossbow-bolts-20",
+      "baseitem.dagger",
+      "baseitem.light-crossbow",
       "class-feature.sorcerer.ability-score-improvement.12",
       "class-feature.sorcerer.ability-score-improvement.16",
       "class-feature.sorcerer.ability-score-improvement.19",
@@ -587,6 +590,9 @@
       "class-feature.sorcerer.sorcerous-origin.1",
       "class-feature.sorcerer.sorcerous-restoration.20",
       "class-feature.sorcerer.spellcasting.1",
+      "item.component-pouch",
+      "item.dungeoneer-s-pack",
+      "item.explorer-s-pack",
       "rulebook.page-042",
       "rulebook.page-109",
       "rulebook.page-110",
@@ -1306,6 +1312,14 @@
     ],
     "catalogReferences": [
       "class.sorcerer",
+      "optional-feature.careful-spell",
+      "optional-feature.distant-spell",
+      "optional-feature.empowered-spell",
+      "optional-feature.extended-spell",
+      "optional-feature.heightened-spell",
+      "optional-feature.quickened-spell",
+      "optional-feature.subtle-spell",
+      "optional-feature.twinned-spell",
       "rulebook.page-042"
     ],
     "source": {

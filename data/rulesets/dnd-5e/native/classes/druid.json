@@ -477,6 +477,9 @@
     ],
     "subclassTitle": "Druid Circle",
     "catalogReferences": [
+      "baseitem.leather-armor",
+      "baseitem.scimitar",
+      "baseitem.shield",
       "class-feature.druid.ability-score-improvement.12",
       "class-feature.druid.ability-score-improvement.16",
       "class-feature.druid.ability-score-improvement.19",
@@ -494,6 +497,8 @@
       "class-feature.druid.wild-shape-improvement.4",
       "class-feature.druid.wild-shape-improvement.8",
       "class-feature.druid.wild-shape.2",
+      "item.explorer-s-pack",
+      "item.herbalism-kit",
       "rulebook.page-019",
       "rulebook.page-107",
       "rulebook.page-108",

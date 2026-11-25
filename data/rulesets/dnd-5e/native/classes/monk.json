@@ -486,6 +486,8 @@
     ],
     "subclassTitle": "Monastic Tradition",
     "catalogReferences": [
+      "baseitem.dart",
+      "baseitem.shortsword",
       "class-feature.monk.ability-score-improvement.12",
       "class-feature.monk.ability-score-improvement.16",
       "class-feature.monk.ability-score-improvement.19",
@@ -513,6 +515,8 @@
       "class-feature.monk.unarmored-defense.1",
       "class-feature.monk.unarmored-movement-improvement.9",
       "class-feature.monk.unarmored-movement.2",
+      "item.dungeoneer-s-pack",
+      "item.explorer-s-pack",
       "rulebook.page-026"
     ],
     "source": {
