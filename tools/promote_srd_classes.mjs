@@ -109,6 +109,44 @@ function generateClasses(inputs,manifest,src,pages,tag){
  }
  report.nativeCount=rows.length;return {groups,report};
 }
+function readModernSpellLists(publisherPages,add){
+ // Modern book JSON links to classes but omits the printed spell tables.
+ // Match whole table cells, not prose mentions or suffixes.
+ const ranges={Bard:[33,35],Cleric:[38,40],Druid:[44,46],Paladin:[55,56],Ranger:[60,61],Sorcerer:[67,69],Warlock:[74,76],Wizard:[79,82]};
+ const school=/^(Abjuration|Conjuration|Divination|Enchantment|Evocation|Illusion|Necromancy|Transmutation)$/;
+ const special=/^(?:[CMR](?:, [CMR])*|[—–-])$/;
+ for(const [cls,[min,max]] of Object.entries(ranges)){
+  for(const p of publisherPages.filter(p=>p.page>=min&&p.page<=max)){
+   for(const line of p.textLayout.split("\n")){
+    const cells=line.trim().split(/ {2,}/);
+    for(let i=0;i+2<cells.length;i++){
+     if(!school.test(cells[i+1])||!special.test(cells[i+2]))continue;
+     add(cls,cells[i],p.page);
+     i+=2;
+    }
+   }
+  }
+ }
+}
+function reconcileMapping(rows,mapping,byName,normal,edition,tag){
+ // Source mappings are candidates, not authority for feature access or commercial classes.
+ const excluded=[],foreign=[];
+ const expected=tag==="51"?["Monk|Astral Projection"]:["Bard|Phantasmal Force","Sorcerer|Mind Spike","Sorcerer|Phantasmal Force","Wizard|Phantasmal Force"];
+ for(const [name,access] of Object.entries(mapping)){
+  if(!byName.has(normal(name))||!Array.isArray(access.class))throw Error("Invalid spell source mapping "+name);
+  for(const c of access.class){
+   if(c.source!==edition){
+    if(tag!=="52"||c.name!=="Artificer"||c.source!=="EFA")throw Error("Unexpected foreign class mapping "+name);
+    foreign.push({className:c.name,spell:name,source:c.source,reason:"Class not published in SRD 5.2.1"});
+    continue;
+   }
+   if(!rows[c.name]?.has(name))excluded.push(c.name+"|"+name);
+  }
+ }
+ if(JSON.stringify(excluded.sort())!==JSON.stringify(expected.sort())||foreign.length!==(tag==="51"?0:73))throw Error("Unexpected structured/publisher mapping discrepancy "+JSON.stringify(excluded));
+ for(const [cls,entries] of Object.entries(rows))for(const name of entries.keys())if(!mapping[name]?.class.some(c=>c.name===cls&&c.source===edition))throw Error("Publisher-only membership "+cls+" "+name);
+ return {excluded,foreign};
+}
 function reconcileSpellLists(groups,report,tag,read,publisherPages,src){
  const names=["Bard","Cleric","Druid","Paladin","Ranger","Sorcerer","Warlock","Wizard"];
  const root="data/reference/srd/structured/",edition="SRD"+tag;
@@ -120,6 +158,7 @@ function reconcileSpellLists(groups,report,tag,read,publisherPages,src){
  if(byName.size!==spells.length||spells.some(s=>s.source!==edition)||Object.keys(mapping).length!==spells.length)throw Error("Spell inventory mismatch "+edition);
  const rows=Object.fromEntries(names.map(n=>[n,new Map()]));
  const add=(cls,name,page,level)=>{const spell=byName.get(normal(name));if(!spell||!rows[cls]||level!==undefined&&spell.level!==level||rows[cls].has(spell.name))throw Error("Invalid/duplicate publisher class spell "+cls+" "+name+" p."+page);rows[cls].set(spell.name,page);};
+ if(tag==="51"){
  // Read the pinned publisher's two columns in order, carrying class and level across page boundaries.
  let cls,level;
  for(const p of publisherPages.filter(p=>p.page>=105&&p.page<=113)){
@@ -156,18 +195,8 @@ function reconcileSpellLists(groups,report,tag,read,publisherPages,src){
   }
   if(seen.size!==rows[cls].size)throw Error("Incomplete legacy book list "+cls);
  }
- // Source mappings are candidates, not the authority for feature-specific access.
- const excluded=[];
- const expected=["Monk|Astral Projection"];
- for(const [name,access] of Object.entries(mapping)){
-  if(!byName.has(normal(name))||!Array.isArray(access.class))throw Error("Invalid spell source mapping "+name);
-  for(const c of access.class){
-   if(c.source!==edition)throw Error("Foreign class mapping "+name);
-   if(!rows[c.name]?.has(name))excluded.push(c.name+"|"+name);
-  }
- }
- if(JSON.stringify(excluded.sort())!==JSON.stringify(expected.sort()))throw Error("Unexpected structured/publisher mapping discrepancy "+JSON.stringify(excluded));
- for(const [cls,entries] of Object.entries(rows))for(const name of entries.keys())if(!mapping[name]?.class.some(c=>c.name===cls&&c.source===edition))throw Error("Publisher-only membership "+cls+" "+name);
+ }else readModernSpellLists(publisherPages,add);
+ const {excluded,foreign}=reconcileMapping(rows,mapping,byName,normal,edition,tag);
  const counts={};
  for(const cls of names){
   const r=groups[cls.toLowerCase()].find(x=>x.id==="class."+cls.toLowerCase());
@@ -185,7 +214,8 @@ function reconcileSpellLists(groups,report,tag,read,publisherPages,src){
   r.source.spellList={pages,provider:src.provider,commit:src.commit,path:"spells/sources.json",pointer:"/"+edition,verification:"publisher class-list membership verified; not a feature grant or executable spellcasting policy"};
   counts[cls]=ids.length;
  }
- report.classSpellLists={counts,total:Object.values(counts).reduce((a,b)=>a+b,0),excludedSourceMemberships:excluded.map(x=>{const [className,spell]=x.split("|");return {className,spell,reason:"Feature-specific access, not a published base class list"};}),status:"Publisher class-list membership reconciled; feature grants, preparation and spell execution are separate."};
+ report.classSpellLists={counts,total:Object.values(counts).reduce((a,b)=>a+b,0),excludedSourceMemberships:excluded.map(x=>{const [className,spell]=x.split("|");return {className,spell,reason:tag==="51"?"Feature-specific access, not a published base class list":"Absent from the published class spell table"};}),status:"Publisher class-list membership reconciled; feature grants, preparation and spell execution are separate."};
+ if(foreign.length)report.classSpellLists.excludedForeignMemberships=foreign;
 }
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
@@ -199,7 +229,8 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  const files=tag==="51"?["003-027","028-052","053-077"]:["030-054","055-079","080-104","005-029"];
  const pages=files.flatMap(x=>read(base+"native/rulebook/pages-"+x+".json")).sort((a,b)=>a.page-b.page);
  const {groups,report}=generateClasses(inputs,manifest,src,pages,tag);
- if(tag==="51")reconcileSpellLists(groups,report,tag,read,read(base+"native/rulebook/pages-103-127.json"),src);
+ const spellPages=tag==="51"?read(base+"native/rulebook/pages-103-127.json"):pages;
+ reconcileSpellLists(groups,report,tag,read,spellPages,src);
  const outputs=Object.entries(groups).map(([name,records])=>[base+"native/classes/"+name+".json",json(records)]);
  outputs.push(["data/reference/srd/class-promotion-"+tag+".json",json(report)]);
  for(const [file,body] of outputs){

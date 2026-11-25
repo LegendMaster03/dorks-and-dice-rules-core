@@ -523,7 +523,56 @@
       "class-feature.ranger.subclass-feature.7",
       "class-feature.ranger.tireless.10",
       "class-feature.ranger.weapon-mastery.1",
-      "rulebook.page-057"
+      "rulebook.page-057",
+      "rulebook.page-060",
+      "spell.aid",
+      "spell.alarm",
+      "spell.animal-friendship",
+      "spell.animal-messenger",
+      "spell.barkskin",
+      "spell.commune-with-nature",
+      "spell.conjure-animals",
+      "spell.conjure-woodland-beings",
+      "spell.cure-wounds",
+      "spell.darkvision",
+      "spell.daylight",
+      "spell.detect-magic",
+      "spell.detect-poison-and-disease",
+      "spell.dispel-magic",
+      "spell.dominate-beast",
+      "spell.enhance-ability",
+      "spell.ensnaring-strike",
+      "spell.entangle",
+      "spell.find-traps",
+      "spell.fog-cloud",
+      "spell.freedom-of-movement",
+      "spell.goodberry",
+      "spell.greater-restoration",
+      "spell.gust-of-wind",
+      "spell.hunter-s-mark",
+      "spell.jump",
+      "spell.lesser-restoration",
+      "spell.locate-animals-or-plants",
+      "spell.locate-creature",
+      "spell.locate-object",
+      "spell.longstrider",
+      "spell.magic-weapon",
+      "spell.meld-into-stone",
+      "spell.nondetection",
+      "spell.pass-without-trace",
+      "spell.plant-growth",
+      "spell.protection-from-energy",
+      "spell.protection-from-poison",
+      "spell.revivify",
+      "spell.silence",
+      "spell.speak-with-animals",
+      "spell.speak-with-plants",
+      "spell.spike-growth",
+      "spell.stoneskin",
+      "spell.tree-stride",
+      "spell.water-breathing",
+      "spell.water-walk",
+      "spell.wind-wall"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -541,8 +590,93 @@
         "path": "class/class-ranger.json",
         "pointer": "/class/1"
       },
-      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
-    }
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending",
+      "spellList": {
+        "pages": [
+          60
+        ],
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/sources.json",
+        "pointer": "/SRD52",
+        "verification": "publisher class-list membership verified; not a feature grant or executable spellcasting policy"
+      }
+    },
+    "spellList": [
+      {
+        "level": 1,
+        "spellIds": [
+          "spell.alarm",
+          "spell.animal-friendship",
+          "spell.cure-wounds",
+          "spell.detect-magic",
+          "spell.detect-poison-and-disease",
+          "spell.ensnaring-strike",
+          "spell.entangle",
+          "spell.fog-cloud",
+          "spell.goodberry",
+          "spell.hunter-s-mark",
+          "spell.jump",
+          "spell.longstrider",
+          "spell.speak-with-animals"
+        ]
+      },
+      {
+        "level": 2,
+        "spellIds": [
+          "spell.aid",
+          "spell.animal-messenger",
+          "spell.barkskin",
+          "spell.darkvision",
+          "spell.enhance-ability",
+          "spell.find-traps",
+          "spell.gust-of-wind",
+          "spell.lesser-restoration",
+          "spell.locate-animals-or-plants",
+          "spell.locate-object",
+          "spell.magic-weapon",
+          "spell.pass-without-trace",
+          "spell.protection-from-poison",
+          "spell.silence",
+          "spell.spike-growth"
+        ]
+      },
+      {
+        "level": 3,
+        "spellIds": [
+          "spell.conjure-animals",
+          "spell.daylight",
+          "spell.dispel-magic",
+          "spell.meld-into-stone",
+          "spell.nondetection",
+          "spell.plant-growth",
+          "spell.protection-from-energy",
+          "spell.revivify",
+          "spell.speak-with-plants",
+          "spell.water-breathing",
+          "spell.water-walk",
+          "spell.wind-wall"
+        ]
+      },
+      {
+        "level": 4,
+        "spellIds": [
+          "spell.conjure-woodland-beings",
+          "spell.dominate-beast",
+          "spell.freedom-of-movement",
+          "spell.locate-creature",
+          "spell.stoneskin"
+        ]
+      },
+      {
+        "level": 5,
+        "spellIds": [
+          "spell.commune-with-nature",
+          "spell.greater-restoration",
+          "spell.tree-stride"
+        ]
+      }
+    ]
   },
   {
     "id": "subclass.ranger.hunter",

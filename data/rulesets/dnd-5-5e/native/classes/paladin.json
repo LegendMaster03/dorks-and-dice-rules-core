@@ -457,7 +457,47 @@
       "class-feature.paladin.subclass-feature.20",
       "class-feature.paladin.subclass-feature.7",
       "class-feature.paladin.weapon-mastery.1",
-      "rulebook.page-053"
+      "rulebook.page-053",
+      "rulebook.page-055",
+      "rulebook.page-056",
+      "spell.aid",
+      "spell.aura-of-life",
+      "spell.banishment",
+      "spell.bless",
+      "spell.command",
+      "spell.create-food-and-water",
+      "spell.cure-wounds",
+      "spell.daylight",
+      "spell.death-ward",
+      "spell.detect-evil-and-good",
+      "spell.detect-magic",
+      "spell.detect-poison-and-disease",
+      "spell.dispel-evil-and-good",
+      "spell.dispel-magic",
+      "spell.divine-favor",
+      "spell.divine-smite",
+      "spell.find-steed",
+      "spell.geas",
+      "spell.gentle-repose",
+      "spell.greater-restoration",
+      "spell.heroism",
+      "spell.lesser-restoration",
+      "spell.locate-creature",
+      "spell.locate-object",
+      "spell.magic-circle",
+      "spell.magic-weapon",
+      "spell.prayer-of-healing",
+      "spell.protection-from-evil-and-good",
+      "spell.protection-from-poison",
+      "spell.purify-food-and-drink",
+      "spell.raise-dead",
+      "spell.remove-curse",
+      "spell.revivify",
+      "spell.searing-smite",
+      "spell.shield-of-faith",
+      "spell.shining-smite",
+      "spell.warding-bond",
+      "spell.zone-of-truth"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -475,8 +515,84 @@
         "path": "class/class-paladin.json",
         "pointer": "/class/1"
       },
-      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
-    }
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending",
+      "spellList": {
+        "pages": [
+          55,
+          56
+        ],
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/sources.json",
+        "pointer": "/SRD52",
+        "verification": "publisher class-list membership verified; not a feature grant or executable spellcasting policy"
+      }
+    },
+    "spellList": [
+      {
+        "level": 1,
+        "spellIds": [
+          "spell.bless",
+          "spell.command",
+          "spell.cure-wounds",
+          "spell.detect-evil-and-good",
+          "spell.detect-magic",
+          "spell.detect-poison-and-disease",
+          "spell.divine-favor",
+          "spell.divine-smite",
+          "spell.heroism",
+          "spell.protection-from-evil-and-good",
+          "spell.purify-food-and-drink",
+          "spell.searing-smite",
+          "spell.shield-of-faith"
+        ]
+      },
+      {
+        "level": 2,
+        "spellIds": [
+          "spell.aid",
+          "spell.find-steed",
+          "spell.gentle-repose",
+          "spell.lesser-restoration",
+          "spell.locate-object",
+          "spell.magic-weapon",
+          "spell.prayer-of-healing",
+          "spell.protection-from-poison",
+          "spell.shining-smite",
+          "spell.warding-bond",
+          "spell.zone-of-truth"
+        ]
+      },
+      {
+        "level": 3,
+        "spellIds": [
+          "spell.create-food-and-water",
+          "spell.daylight",
+          "spell.dispel-magic",
+          "spell.magic-circle",
+          "spell.remove-curse",
+          "spell.revivify"
+        ]
+      },
+      {
+        "level": 4,
+        "spellIds": [
+          "spell.aura-of-life",
+          "spell.banishment",
+          "spell.death-ward",
+          "spell.locate-creature"
+        ]
+      },
+      {
+        "level": 5,
+        "spellIds": [
+          "spell.dispel-evil-and-good",
+          "spell.geas",
+          "spell.greater-restoration",
+          "spell.raise-dead"
+        ]
+      }
+    ]
   },
   {
     "id": "subclass.paladin.devotion",

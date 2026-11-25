@@ -404,7 +404,81 @@
       "class-feature.warlock.subclass-feature.14",
       "class-feature.warlock.subclass-feature.6",
       "class-feature.warlock.warlock-subclass.3",
-      "rulebook.page-070"
+      "rulebook.page-070",
+      "rulebook.page-075",
+      "rulebook.page-076",
+      "spell.astral-projection",
+      "spell.bane",
+      "spell.banishment",
+      "spell.befuddlement",
+      "spell.blight",
+      "spell.charm-monster",
+      "spell.charm-person",
+      "spell.chill-touch",
+      "spell.circle-of-death",
+      "spell.comprehend-languages",
+      "spell.contact-other-plane",
+      "spell.counterspell",
+      "spell.create-undead",
+      "spell.darkness",
+      "spell.demiplane",
+      "spell.detect-magic",
+      "spell.dimension-door",
+      "spell.dispel-magic",
+      "spell.dominate-monster",
+      "spell.dream",
+      "spell.eldritch-blast",
+      "spell.enthrall",
+      "spell.etherealness",
+      "spell.expeditious-retreat",
+      "spell.eyebite",
+      "spell.fear",
+      "spell.finger-of-death",
+      "spell.fly",
+      "spell.forcecage",
+      "spell.foresight",
+      "spell.gaseous-form",
+      "spell.gate",
+      "spell.glibness",
+      "spell.hallucinatory-terrain",
+      "spell.hellish-rebuke",
+      "spell.hex",
+      "spell.hideous-laughter",
+      "spell.hold-monster",
+      "spell.hold-person",
+      "spell.hypnotic-pattern",
+      "spell.illusory-script",
+      "spell.imprisonment",
+      "spell.invisibility",
+      "spell.mage-hand",
+      "spell.magic-circle",
+      "spell.major-image",
+      "spell.mind-spike",
+      "spell.minor-illusion",
+      "spell.mirror-image",
+      "spell.mislead",
+      "spell.misty-step",
+      "spell.planar-binding",
+      "spell.plane-shift",
+      "spell.poison-spray",
+      "spell.power-word-kill",
+      "spell.power-word-stun",
+      "spell.prestidigitation",
+      "spell.protection-from-evil-and-good",
+      "spell.ray-of-enfeeblement",
+      "spell.remove-curse",
+      "spell.scrying",
+      "spell.speak-with-animals",
+      "spell.spider-climb",
+      "spell.suggestion",
+      "spell.teleportation-circle",
+      "spell.tongues",
+      "spell.true-polymorph",
+      "spell.true-seeing",
+      "spell.true-strike",
+      "spell.unseen-servant",
+      "spell.vampiric-touch",
+      "spell.weird"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -422,8 +496,143 @@
         "path": "class/class-warlock.json",
         "pointer": "/class/1"
       },
-      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
-    }
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending",
+      "spellList": {
+        "pages": [
+          75,
+          76
+        ],
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "spells/sources.json",
+        "pointer": "/SRD52",
+        "verification": "publisher class-list membership verified; not a feature grant or executable spellcasting policy"
+      }
+    },
+    "spellList": [
+      {
+        "level": 0,
+        "spellIds": [
+          "spell.chill-touch",
+          "spell.eldritch-blast",
+          "spell.mage-hand",
+          "spell.minor-illusion",
+          "spell.poison-spray",
+          "spell.prestidigitation",
+          "spell.true-strike"
+        ]
+      },
+      {
+        "level": 1,
+        "spellIds": [
+          "spell.bane",
+          "spell.charm-person",
+          "spell.comprehend-languages",
+          "spell.detect-magic",
+          "spell.expeditious-retreat",
+          "spell.hellish-rebuke",
+          "spell.hex",
+          "spell.hideous-laughter",
+          "spell.illusory-script",
+          "spell.protection-from-evil-and-good",
+          "spell.speak-with-animals",
+          "spell.unseen-servant"
+        ]
+      },
+      {
+        "level": 2,
+        "spellIds": [
+          "spell.darkness",
+          "spell.enthrall",
+          "spell.hold-person",
+          "spell.invisibility",
+          "spell.mind-spike",
+          "spell.mirror-image",
+          "spell.misty-step",
+          "spell.ray-of-enfeeblement",
+          "spell.spider-climb",
+          "spell.suggestion"
+        ]
+      },
+      {
+        "level": 3,
+        "spellIds": [
+          "spell.counterspell",
+          "spell.dispel-magic",
+          "spell.fear",
+          "spell.fly",
+          "spell.gaseous-form",
+          "spell.hypnotic-pattern",
+          "spell.magic-circle",
+          "spell.major-image",
+          "spell.remove-curse",
+          "spell.tongues",
+          "spell.vampiric-touch"
+        ]
+      },
+      {
+        "level": 4,
+        "spellIds": [
+          "spell.banishment",
+          "spell.blight",
+          "spell.charm-monster",
+          "spell.dimension-door",
+          "spell.hallucinatory-terrain"
+        ]
+      },
+      {
+        "level": 5,
+        "spellIds": [
+          "spell.contact-other-plane",
+          "spell.dream",
+          "spell.hold-monster",
+          "spell.mislead",
+          "spell.planar-binding",
+          "spell.scrying",
+          "spell.teleportation-circle"
+        ]
+      },
+      {
+        "level": 6,
+        "spellIds": [
+          "spell.circle-of-death",
+          "spell.create-undead",
+          "spell.eyebite",
+          "spell.true-seeing"
+        ]
+      },
+      {
+        "level": 7,
+        "spellIds": [
+          "spell.etherealness",
+          "spell.finger-of-death",
+          "spell.forcecage",
+          "spell.plane-shift"
+        ]
+      },
+      {
+        "level": 8,
+        "spellIds": [
+          "spell.befuddlement",
+          "spell.demiplane",
+          "spell.dominate-monster",
+          "spell.glibness",
+          "spell.power-word-stun"
+        ]
+      },
+      {
+        "level": 9,
+        "spellIds": [
+          "spell.astral-projection",
+          "spell.foresight",
+          "spell.gate",
+          "spell.imprisonment",
+          "spell.power-word-kill",
+          "spell.true-polymorph",
+          "spell.weird"
+        ]
+      }
+    ]
   },
   {
     "id": "subclass.warlock.fiend",

@@ -3459,5 +3459,481 @@
   ],
   "resolvedProgressionReferences": 353,
   "referenceStatus": "Explicit feature progression references verified; other semantic references and full body fidelity pending.",
-  "nativeCount": 377
+  "nativeCount": 377,
+  "classSpellLists": {
+    "counts": {
+      "Bard": 129,
+      "Cleric": 109,
+      "Druid": 124,
+      "Paladin": 38,
+      "Ranger": 48,
+      "Sorcerer": 138,
+      "Warlock": 72,
+      "Wizard": 217
+    },
+    "total": 875,
+    "excludedSourceMemberships": [
+      {
+        "className": "Bard",
+        "spell": "Phantasmal Force",
+        "reason": "Absent from the published class spell table"
+      },
+      {
+        "className": "Sorcerer",
+        "spell": "Mind Spike",
+        "reason": "Absent from the published class spell table"
+      },
+      {
+        "className": "Sorcerer",
+        "spell": "Phantasmal Force",
+        "reason": "Absent from the published class spell table"
+      },
+      {
+        "className": "Wizard",
+        "spell": "Phantasmal Force",
+        "reason": "Absent from the published class spell table"
+      }
+    ],
+    "status": "Publisher class-list membership reconciled; feature grants, preparation and spell execution are separate.",
+    "excludedForeignMemberships": [
+      {
+        "className": "Artificer",
+        "spell": "Acid Splash",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Aid",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Alarm",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Alter Self",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Animate Objects",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Arcane Eye",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Arcane Lock",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Arcane Hand",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Blink",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Blur",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Continual Flame",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Create Food and Water",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Creation",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Cure Wounds",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Dancing Lights",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Darkvision",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Detect Magic",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Disguise Self",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Dispel Magic",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Dragon's Breath",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Elementalism",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Enhance Ability",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Enlarge/Reduce",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Expeditious Retreat",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Fabricate",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Faerie Fire",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "False Life",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Feather Fall",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Fire Bolt",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Fly",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Freedom of Movement",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Glyph of Warding",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Grease",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Greater Restoration",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Guidance",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Haste",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Heat Metal",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Identify",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Invisibility",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Jump",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Secret Chest",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Lesser Restoration",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Levitate",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Light",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Longstrider",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Mage Hand",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Magic Mouth",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Magic Weapon",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Message",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Faithful Hound",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Private Sanctum",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Resilient Sphere",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Poison Spray",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Prestidigitation",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Protection from Energy",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Protection from Poison",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Purify Food and Drink",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Ray of Frost",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Resistance",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Revivify",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Rope Trick",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Sanctuary",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "See Invisibility",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Shocking Grasp",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Spare the Dying",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Spider Climb",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Stone Shape",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Stoneskin",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "True Strike",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Wall of Stone",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Water Breathing",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Water Walk",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      },
+      {
+        "className": "Artificer",
+        "spell": "Web",
+        "source": "EFA",
+        "reason": "Class not published in SRD 5.2.1"
+      }
+    ]
+  }
 }
