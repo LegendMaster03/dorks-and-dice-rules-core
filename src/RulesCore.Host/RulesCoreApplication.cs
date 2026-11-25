@@ -26,6 +26,7 @@ public static class RulesCoreApplication
             services.GetRequiredService<NativeCatalogStore>(),
             settings.AdditionalRulesets.Select(location => location.RulesetId)));
         builder.Services.AddSingleton(new NativePublicDistributionPolicy(builder.Configuration));
+        builder.Services.AddSingleton(new NativeReferenceAccessPolicy(builder.Configuration));
         builder.Services.AddSingleton<INativeCatalogReadiness>(services =>
             services.GetRequiredService<NativeCatalogStore>());
         builder.Services.AddHostedService<NativeCatalogInitializer>();

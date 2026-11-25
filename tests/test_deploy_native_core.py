@@ -25,12 +25,16 @@ class DeploymentBoundaryTests(unittest.TestCase):
         env = {**release.os.environ, "RULES_CORE_IMAGE": "rules-core:test",
                "RulesCorePrivate__Network": "core-auth-test-private",
                "ToolHosting__ControlPlaneNetwork": "core-auth-test-control",
-               "TOOL_HOST_BASE_URL": "http://dorks-and-dice-site:8080"}
+               "TOOL_HOST_BASE_URL": "http://dorks-and-dice-site:8080",
+               "RULES_CORE_AUTHENTICATED_REFERENCE_RULESETS": "dnd-5e,dnd-5-5e,fate-condensed"}
         config = json.loads(release.command(
             "docker", "compose", "-f", str(root / "docker-compose.yml"),
             "-f", str(root / "docker-compose.private-tunnel.yml"),
             "config", "--format", "json", env=env))
         release.validate_compose(config)
+        for service in config["services"].values():
+            self.assertEqual("dnd-5e,dnd-5-5e,fate-condensed",
+                             service["environment"]["RulesCore__AuthenticatedReferenceAccess__AdditionalRulesetsCsv"])
 
     def test_both_ingresses_require_site_ticket_redemption_configuration(self):
         for service in ("rules-core-public", "rules-core-private"):
