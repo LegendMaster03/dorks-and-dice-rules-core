@@ -159,9 +159,9 @@ public sealed class NativePrivateReferenceApiTests
         var dragonborn = tree.GetProperty("rows").EnumerateArray().Single(
             row => row.GetProperty("id").GetString() == "species.dragonborn");
         Assert.False(dragonborn.GetProperty("selectable").GetBoolean());
-        var lineage = (await Read("source/ancestry.dragonborn.chromatic.red")).GetProperty("lineage");
+        var lineage = (await Read("source/ancestry.dragonborn.red")).GetProperty("lineage");
         Assert.Equal(new[] { "species.dragonborn", "ancestry.dragonborn.chromatic",
-            "ancestry.dragonborn.chromatic.red" },
+            "ancestry.dragonborn.red" },
             lineage.EnumerateArray().Select(x => x.GetProperty("id").GetString()).ToArray());
         var occurrence = lineage[0].GetProperty("traitOccurrences")[2];
         Assert.Equal("trait.breath-weapon", occurrence.GetProperty("canonicalTraitId").GetString());
