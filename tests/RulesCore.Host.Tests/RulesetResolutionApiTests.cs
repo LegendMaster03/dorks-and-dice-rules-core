@@ -190,6 +190,27 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync("/api/rulesets/fate-condensed/rules/class.warlock")).StatusCode);
 
         // Legacy optional features and modern feats must retain their edition-specific semantics.
+        // Legacy publisher corrections must be visible through the public catalog,
+        // including the structured grant choices and their descriptive tables.
+        var oldPact = await client.GetFromJsonAsync<JsonElement>(oldRules + "/class-feature.warlock.pact-magic.1");
+        var oldPactEntries = oldPact.GetProperty("rule").GetProperty("definition").GetProperty("entries").GetRawText();
+        Assert.Contains("{@spell thunderwave}", oldPactEntries);
+        Assert.DoesNotContain("witch bolt", oldPactEntries);
+        var oldLand = await client.GetFromJsonAsync<JsonElement>(oldRules + "/subclass.druid.land");
+        var oldLandGrants = oldLand.GetProperty("rule").GetProperty("definition").GetProperty("additionalSpells");
+        Assert.Equal(7, oldLandGrants.GetArrayLength());
+        Assert.DoesNotContain("Underdark", oldLandGrants.GetRawText());
+        Assert.DoesNotContain("Melf", oldLandGrants.GetRawText());
+        var oldLandTable = await client.GetFromJsonAsync<JsonElement>(oldRules + "/subclass-feature.druid.land.circle-spells.2");
+        Assert.DoesNotContain("Underdark", oldLandTable.GetProperty("rule").GetProperty("definition").GetProperty("entries").GetRawText());
+        var oldTwinned = await client.GetFromJsonAsync<JsonElement>(oldRules + "/optional-feature.twinned-spell");
+        Assert.DoesNotContain("chromatic orb", oldTwinned.GetProperty("rule").GetProperty("definition").GetProperty("entries").GetRawText());
+        var oldDeities = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=deity&limit=1");
+        Assert.Equal(67, oldDeities.GetProperty("total").GetInt32());
+        var anubis = await client.GetFromJsonAsync<JsonElement>(oldRules + "/deity.egyptian.anubis");
+        Assert.Equal("Death", Assert.Single(anubis.GetProperty("rule").GetProperty("definition").GetProperty("domains").EnumerateArray()).GetString());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(animals + "/deity.egyptian.anubis")).StatusCode);
+
         var legacyFeats = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=feat&limit=1");
         var modernFeats = await client.GetFromJsonAsync<JsonElement>(animals + "?category=feat&limit=1");
         Assert.Equal(1, legacyFeats.GetProperty("total").GetInt32());

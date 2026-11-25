@@ -36,6 +36,28 @@ function generateClasses(inputs,manifest,src,pages,tag){
      record.entries=JSON.parse(corrected);report.corrections.push({id,reason:"S52-019: publisher Pact Magic example uses Charm Person, not Witch Bolt.",pages:[71]});
      if(!selected.includes(71))selected.push(71);
     }
+    if(tag==="51"&&id==="class-feature.warlock.pact-magic.1"){
+     const original=JSON.stringify(record.entries),corrected=original.replace("{@spell witch bolt}","{@spell thunderwave}");
+     if(original===corrected)throw Error("Missing legacy Pact Magic discrepancy");
+     record.entries=JSON.parse(corrected);report.corrections.push({id,reason:"Official SRD 5.1 Pact Magic example uses thunderwave, not witch bolt.",pages:[47]});
+     if(!selected.includes(47))selected.push(47);
+    }
+    if(tag==="51"&&id==="subclass.druid.land"){
+     if(!record.additionalSpells.some(x=>x.name==="Underdark"))throw Error("Expected extra terrain");
+     record.additionalSpells=record.additionalSpells.filter(x=>x.name!=="Underdark");
+     const swamp=record.additionalSpells.find(x=>x.name==="Swamp");
+     swamp.prepared["3"]=swamp.prepared["3"].map(x=>x==="Melf's acid arrow"?"acid arrow":x);
+     report.corrections.push({id,reason:"Remove non-SRD Underdark terrain and correct Swamp spell name in structured grants.",pages:[21,22]});
+     for(const p of [21,22])if(!selected.includes(p))selected.push(p);
+    }
+    if(tag==="51"&&id==="subclass-feature.druid.land.circle-spells.2"){
+     record.entries=record.entries.filter(x=>x?.caption!=="Underdark");
+     record.entries[0]=record.entries[0].replace("mountain, swamp, or Underdark","mountain, or swamp");
+     const swamp=record.entries.find(x=>x?.caption==="Swamp");
+     swamp.rows[0][1]="{@spell acid arrow}, {@spell darkness}";
+     report.corrections.push({id,reason:"Remove Underdark terrain and reconcile Swamp spell table with official SRD 5.1.",pages:[21,22]});
+     for(const p of [21,22])if(!selected.includes(p))selected.push(p);
+    }
     record.catalogReferences=selected.map(p=>"rulebook.page-"+String(p).padStart(3,"0"));
     record.source={release:manifest.officialPageImport.release,url:pages[0].source.url,pdfSha256:manifest.officialPageImport.pdfSha256,license:manifest.license,attribution:manifest.attribution,pages:selected,candidatePage:c.page??null,structuredSource:{provider:src.provider,commit:src.commit,path:"class/class-"+name+".json",pointer:"/"+kind+"/"+index},structuredStatus:"pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"};
     groups[name].push(record);rows.push({record,kind,c});

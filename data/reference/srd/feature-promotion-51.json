@@ -15,6 +15,13 @@
       "reason": "Exclude Bard fighting-style association outside SRD 5.1 College of Lore."
     },
     {
+      "id": "optional-feature.twinned-spell",
+      "pages": [
+        44
+      ],
+      "reason": "Official SRD 5.1 example uses ray of frost only; chromatic orb is not included."
+    },
+    {
       "id": "optional-feature.two-weapon-fighting",
       "reason": "Exclude Bard fighting-style association outside SRD 5.1 College of Lore."
     }
@@ -204,11 +211,6 @@
     {
       "id": "optional-feature.twinned-spell",
       "reference": "spell|ray of frost",
-      "reason": "cross-category or inline semantic reconciliation pending"
-    },
-    {
-      "id": "optional-feature.twinned-spell",
-      "reference": "spell|chromatic orb",
       "reason": "cross-category or inline semantic reconciliation pending"
     },
     {

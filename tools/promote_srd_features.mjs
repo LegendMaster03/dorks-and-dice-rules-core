@@ -22,6 +22,12 @@ function generateFeatures(feats,optional,manifest,src,pages,tag){
     r.featureType=r.featureType.filter(x=>x!=="FS:B");
     report.corrections.push({id:r.id,reason:"Exclude Bard fighting-style association outside SRD 5.1 College of Lore."});
    }
+   if(!modern&&c.name==="Twinned Spell"){
+    const original=JSON.stringify(r.entries),corrected=original.replace("{@spell ray of frost} and {@spell chromatic orb} are","{@spell ray of frost} is");
+    if(original===corrected)throw Error("Missing legacy Twinned Spell discrepancy");
+    r.entries=JSON.parse(corrected);
+    report.corrections.push({id:r.id,pages:[44],reason:"Official SRD 5.1 example uses ray of frost only; chromatic orb is not included."});
+   }
    if(modern&&c.name==="Pact of the Chain"){
     const original=JSON.stringify(r.entries),corrected=original.replace("{@creature Slaad Tadpole|SRD52}, ","").replace("see appendix B for the familiar's stat block","see “Monsters” for the familiar's stat block");
     if(corrected===original||corrected.includes("Slaad Tadpole")||corrected.includes("appendix B"))throw Error("S52-017 correction failed");

@@ -12,7 +12,31 @@
     "classFeature": 254,
     "subclassFeature": 83
   },
-  "corrections": [],
+  "corrections": [
+    {
+      "id": "subclass.druid.land",
+      "reason": "Remove non-SRD Underdark terrain and correct Swamp spell name in structured grants.",
+      "pages": [
+        21,
+        22
+      ]
+    },
+    {
+      "id": "subclass-feature.druid.land.circle-spells.2",
+      "reason": "Remove Underdark terrain and reconcile Swamp spell table with official SRD 5.1.",
+      "pages": [
+        21,
+        22
+      ]
+    },
+    {
+      "id": "class-feature.warlock.pact-magic.1",
+      "reason": "Official SRD 5.1 Pact Magic example uses thunderwave, not witch bolt.",
+      "pages": [
+        47
+      ]
+    }
+  ],
   "excluded": [
     {
       "path": "class/class-barbarian.json",
@@ -740,12 +764,12 @@
     },
     {
       "id": "subclass-feature.druid.land.circle-spells.2",
-      "reference": "spell|darkness",
+      "reference": "spell|acid arrow",
       "reason": "cross-category or inline semantic reconciliation pending"
     },
     {
       "id": "subclass-feature.druid.land.circle-spells.2",
-      "reference": "spell|Melf's acid arrow",
+      "reference": "spell|darkness",
       "reason": "cross-category or inline semantic reconciliation pending"
     },
     {
@@ -756,26 +780,6 @@
     {
       "id": "subclass-feature.druid.land.circle-spells.2",
       "reference": "spell|locate creature",
-      "reason": "cross-category or inline semantic reconciliation pending"
-    },
-    {
-      "id": "subclass-feature.druid.land.circle-spells.2",
-      "reference": "spell|web",
-      "reason": "cross-category or inline semantic reconciliation pending"
-    },
-    {
-      "id": "subclass-feature.druid.land.circle-spells.2",
-      "reference": "spell|gaseous form",
-      "reason": "cross-category or inline semantic reconciliation pending"
-    },
-    {
-      "id": "subclass-feature.druid.land.circle-spells.2",
-      "reference": "spell|greater invisibility",
-      "reason": "cross-category or inline semantic reconciliation pending"
-    },
-    {
-      "id": "subclass-feature.druid.land.circle-spells.2",
-      "reference": "spell|cloudkill",
       "reason": "cross-category or inline semantic reconciliation pending"
     },
     {
@@ -1475,7 +1479,7 @@
     },
     {
       "id": "class-feature.warlock.pact-magic.1",
-      "reference": "spell|witch bolt",
+      "reference": "spell|thunderwave",
       "reason": "cross-category or inline semantic reconciliation pending"
     },
     {

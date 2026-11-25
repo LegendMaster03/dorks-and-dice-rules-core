@@ -45,3 +45,11 @@ The automated text-overlap triage reviewed 6,301 source fragments against the 40
 The comparison is reproducible using \`tools/audit_srd_text_fidelity.py\` and \`.github/workflows/audit-srd-text.yml\` on branch \`audit/source-srd-text-parity-20261019\`. Its diagnostic workflow first passed at https://github.com/LegendMaster03/dorks-and-dice-rules-core/actions/runs/39198758922.
 
 These findings do not resolve the full chapter/paragraph audit, complete table-cell verification, full monster/spell fidelity, or comprehensive licensing review. No wholesale narrative deletion is justified until source provenance is established and approved non-SRD homebrew is distinguished.
+
+## Legacy structured reference-audit corrections
+
+- S51-001 — Warlock Pact Magic example: replace Witch Bolt with Thunderwave (official p.47). Retain slot progression and spellcasting mechanics.
+- S51-002 — Circle of the Land: official pp.21–22 list seven terrains, not Underdark. Remove Underdark from both descriptive table/choice and structured grants; Swamp's 3rd-level pair is Acid Arrow and Darkness. Preserve all other terrain tables.
+- S51-003 — Twinned Spell: official p.44 uses Ray of Frost as the only eligible example; remove Chromatic Orb from the illustrative prose.
+
+The pinned source remains unchanged; these corrections are reproduced by class and feature projection generators.

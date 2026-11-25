@@ -717,7 +717,7 @@
         "prepared": {
           "3": [
             "darkness",
-            "Melf's acid arrow"
+            "acid arrow"
           ],
           "5": [
             "water walk",
@@ -732,36 +732,6 @@
             "scrying"
           ]
         }
-      },
-      {
-        "name": "Underdark",
-        "known": {
-          "1": {
-            "_": [
-              {
-                "choose": "level=0|class=Druid"
-              }
-            ]
-          }
-        },
-        "prepared": {
-          "3": [
-            "spider climb",
-            "web"
-          ],
-          "5": [
-            "gaseous form",
-            "stinking cloud"
-          ],
-          "7": [
-            "greater invisibility",
-            "stone shape"
-          ],
-          "9": [
-            "cloudkill",
-            "insect plague"
-          ]
-        }
       }
     ],
     "subclassFeatures": [
@@ -773,6 +743,7 @@
     "catalogReferences": [
       "class.druid",
       "rulebook.page-021",
+      "rulebook.page-022",
       "subclass-feature.druid.land.circle-of-the-land.2",
       "subclass-feature.druid.land.lands-stride.6",
       "subclass-feature.druid.land.natures-sanctuary.14",
@@ -785,7 +756,8 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
-        21
+        21,
+        22
       ],
       "candidatePage": 21,
       "structuredSource": {
@@ -1564,7 +1536,7 @@
     "level": 2,
     "header": 1,
     "entries": [
-      "Your mystical connection to the land infuses you with the ability to cast certain spells. At 3rd, 5th, 7th, and 9th level you gain access to circle spells connected to the land where you became a druid. Choose that land—arctic, coast, desert, forest, grassland, mountain, swamp, or Underdark—and consult the associated list of spells.",
+      "Your mystical connection to the land infuses you with the ability to cast certain spells. At 3rd, 5th, 7th, and 9th level you gain access to circle spells connected to the land where you became a druid. Choose that land—arctic, coast, desert, forest, grassland, mountain, or swamp—and consult the associated list of spells.",
       "Once you gain access to a circle spell, you always have it prepared, and it doesn't count against the number of spells you can prepare each day. If you gain access to a spell that doesn't appear on the druid spell list, the spell is nonetheless a druid spell for you.",
       {
         "type": "table",
@@ -1760,7 +1732,7 @@
         "rows": [
           [
             "3rd",
-            "{@spell darkness}, {@spell Melf's acid arrow}"
+            "{@spell acid arrow}, {@spell darkness}"
           ],
           [
             "5th",
@@ -1775,41 +1747,12 @@
             "{@spell insect plague}, {@spell scrying}"
           ]
         ]
-      },
-      {
-        "type": "table",
-        "caption": "Underdark",
-        "colLabels": [
-          "Druid Level",
-          "Circle Spells"
-        ],
-        "colStyles": [
-          "col-2 text-center",
-          "col-10"
-        ],
-        "rows": [
-          [
-            "3rd",
-            "{@spell spider climb}, {@spell web}"
-          ],
-          [
-            "5th",
-            "{@spell gaseous form}, {@spell stinking cloud}"
-          ],
-          [
-            "7th",
-            "{@spell greater invisibility}, {@spell stone shape}"
-          ],
-          [
-            "9th",
-            "{@spell cloudkill}, {@spell insect plague}"
-          ]
-        ]
       }
     ],
     "catalogReferences": [
       "class.druid",
       "rulebook.page-021",
+      "rulebook.page-022",
       "subclass.druid.land"
     ],
     "source": {
@@ -1819,7 +1762,8 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
-        21
+        21,
+        22
       ],
       "candidatePage": 68,
       "structuredSource": {
