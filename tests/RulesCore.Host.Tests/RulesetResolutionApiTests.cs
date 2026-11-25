@@ -397,6 +397,19 @@ public sealed class RulesetResolutionApiTests
         var terrainTable = await client.GetFromJsonAsync<JsonElement>(animals + "/table.travel-terrain");
         Assert.Equal(11, terrainTable.GetProperty("rule").GetProperty("definition").GetProperty("rows").GetArrayLength());
 
+        // Language selection tables must not be silently shared between editions.
+        var legacyLanguageTable = await client.GetFromJsonAsync<JsonElement>(oldRules + "/table.standard-languages");
+        var modernLanguageTable = await client.GetFromJsonAsync<JsonElement>(animals + "/table.standard-languages");
+        var legacyLanguageDefinition = legacyLanguageTable.GetProperty("rule").GetProperty("definition");
+        var modernLanguageDefinition = modernLanguageTable.GetProperty("rule").GetProperty("definition");
+        Assert.Equal(8, legacyLanguageDefinition.GetProperty("rows").GetArrayLength());
+        Assert.Equal(10, modernLanguageDefinition.GetProperty("rows").GetArrayLength());
+        Assert.Equal(3, modernLanguageDefinition.GetProperty("rows")[3][0].GetProperty("roll").GetProperty("min").GetInt32());
+        Assert.Equal(4, modernLanguageDefinition.GetProperty("rows")[3][0].GetProperty("roll").GetProperty("max").GetInt32());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/table.spell-preparation-by-class")).StatusCode);
+        var preparationTable = await client.GetFromJsonAsync<JsonElement>(animals + "/table.spell-preparation-by-class");
+        Assert.Equal(8, preparationTable.GetProperty("rule").GetProperty("definition").GetProperty("rows").GetArrayLength());
+
         // Supplementary actions, glossary and contagions preserve edition-specific categories.
         var oldCoreActions = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=action&limit=1");
         var newCoreActions = await client.GetFromJsonAsync<JsonElement>(animals + "?category=action&limit=1");
