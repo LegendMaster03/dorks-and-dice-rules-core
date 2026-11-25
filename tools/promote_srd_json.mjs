@@ -276,8 +276,154 @@ function enrichSpell(row, candidate, index, manifest, tag) {
             target[key]=target[key].replace(from,to);
         }
     }
+    if(tag==="52"){
+        const corrections=[
+  [
+    "spell.awaken",
+    [
+      "entries",
+      0
+    ],
+    "The DM chooses statistics",
+    "The GM chooses statistics",
+    "GM chooses statistics"
+  ],
+  [
+    "spell.awaken",
+    [
+      "entries",
+      0
+    ],
+    "in the {@book Monster Manual|SRD52}.",
+    "in “Monsters.”",
+    "Awakened Tree in “Monsters.”"
+  ],
+  [
+    "spell.create-undead",
+    [
+      "entries",
+      0
+    ],
+    "see the {@book Monster Manual|SRD52} for its stat block",
+    "see “Monsters” for its stat block",
+    "see “Monsters” for its stat block"
+  ],
+  [
+    "spell.create-undead",
+    [
+      "entriesHigherLevel",
+      0,
+      "entries",
+      0
+    ],
+    "See the {@book Monster Manual|SRD52} for these stat blocks.",
+    "See “Monsters” for these stat blocks.",
+    "See “Monsters” for these stat blocks."
+  ],
+  [
+    "spell.find-familiar",
+    [
+      "entries",
+      0
+    ],
+    "statistics of the chosen form, though",
+    "statistics of the chosen form (see “Monsters”), though",
+    "statistics of the chosen form (see “Monsters”), though"
+  ],
+  [
+    "spell.finger-of-death",
+    [
+      "entries",
+      1
+    ],
+    "{@creature Zombie|SRD52} that follows",
+    "{@creature Zombie|SRD52} (see “Monsters”) that follows",
+    "Zombie (see “Monsters”) that follows"
+  ],
+  [
+    "spell.phantom-steed",
+    [
+      "entries",
+      1
+    ],
+    "stat block, except",
+    "stat block (see “Monsters”), except",
+    "stat block (see “Monsters”), except"
+  ],
+  [
+    "spell.plane-shift",
+    [
+      "entries",
+      0
+    ],
+    "the City of Brass on the Elemental Plane of Fire or the palace of Dispater on the second level of the Nine Hells",
+    "a specific city on the Elemental Plane of Fire or palace on the second level of the Nine Hells",
+    "a specific city on the Elemental Plane of Fire or palace on the second level of the Nine Hells"
+  ],
+  [
+    "spell.plane-shift",
+    [
+      "entries",
+      0
+    ],
+    "determined by the DM.",
+    "determined by the GM.",
+    "determined by the GM."
+  ],
+  [
+    "spell.polymorph",
+    [
+      "entries",
+      0
+    ],
+    "or shape-shift into Beast form",
+    "or shape-shift into a Beast form",
+    "or shape-shift into a Beast form"
+  ],
+  [
+    "spell.polymorph",
+    [
+      "entries",
+      0
+    ],
+    "{@variantrule Hit Point Dice|SRD52}.",
+    "{@variantrule Hit Point Dice|SRD52}. See the “Animals” section of “Monsters” for a sample of Beast stat blocks.",
+    "See the “Animals” section of “Monsters” for a sample of Beast stat blocks."
+  ],
+  [
+    "spell.telekinesis",
+    [
+      "entries",
+      2,
+      "entries",
+      2
+    ],
+    "manipulating a simple tool, opening a door or a container, stowing or retrieving an item from an open container, or pouring the contents from a vial.",
+    "manipulating a simple tool,",
+    "telekinetic grip, such as manipulating a simple tool,"
+  ]
+];
+        const applicable=corrections.filter(([id])=>id===row.id);
+        if(applicable.length){
+            // Clone only the edited bodies, never mutate the pinned candidates.
+            result.entries=JSON.parse(JSON.stringify(result.entries));
+            if(result.entriesHigherLevel)result.entriesHigherLevel=JSON.parse(JSON.stringify(result.entriesHigherLevel));
+            const official=row.officialTextLayout.replace(/[’‘]/g,"'").replace(/([a-zA-Z])-\s*\n\s*(?=[a-zA-Z])/g,"$1").replace(/\s+/g," ");
+            for(const [id,path,from,to,evidence] of applicable){
+                if(!official.includes(evidence))throw Error("Publisher evidence changed: "+id);
+                let target=result;
+                for(const key of path.slice(0,-1))target=target[key];
+                const key=path.at(-1);
+                if(typeof target[key]!=="string"||target[key].split(from).length!==2)throw Error("Source entry changed: "+id);
+                target[key]=target[key].replace(from,to);
+            }
+        }
+        if(row.id==="spell.telekinesis"&&!row.officialTextLayout.endsWith("telekinetic grip, such as manipulating a simple tool,"))throw Error("Publisher Telekinesis boundary changed");
+    }
     result.source = {...row.source, structuredSource: pointer(manifest, tag, "spell", index),
-        structuredStatus: "publisher-name-level-school-verified; structured body review pending"};
+        structuredStatus: tag==="52"&&row.id==="spell.telekinesis"
+            ? "publisher-name-level-school-verified; publisher Telekinesis text visibly ends mid-sentence on p.168; unprinted continuation excluded; source gap remains"
+            : "publisher-name-level-school-verified; structured body review pending"};
     return result;
 }
 

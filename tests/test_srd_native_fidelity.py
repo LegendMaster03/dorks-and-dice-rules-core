@@ -62,3 +62,15 @@ class NativeFidelityTests(unittest.TestCase):
             with self.subTest(identity=identity):
                 self.assertEqual("exact-normalized-text", spell_body(rows[identity])["status"])
         self.assertNotIn("poisoned", rows["spell.contagion"]["conditionInflict"])
+
+    def test_modern_publisher_cross_references_and_telekinesis_source_gap(self):
+        import json
+        root = Path(__file__).resolve().parents[1] / "data/rulesets/dnd-5-5e/native/spells"
+        rows = {r["id"]: r for path in root.glob("spells-*.json") for r in json.loads(path.read_text())}
+        for identity in ("spell.awaken", "spell.create-undead", "spell.find-familiar",
+                         "spell.finger-of-death", "spell.phantom-steed", "spell.plane-shift",
+                         "spell.polymorph", "spell.telekinesis"):
+            with self.subTest(identity=identity):
+                self.assertEqual("exact-normalized-text", spell_body(rows[identity])["status"])
+        self.assertIn("source gap remains", rows["spell.telekinesis"]["source"]["structuredStatus"])
+        self.assertTrue(rows["spell.telekinesis"]["entries"][2]["entries"][2].endswith("simple tool,"))
