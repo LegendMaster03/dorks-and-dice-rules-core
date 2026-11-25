@@ -369,6 +369,10 @@
     {
       "id": "item-group.gaming-set",
       "reason": "Remove gaming set variants absent from the 5.1 tools table"
+    },
+    {
+      "id": "item.apparatus-of-the-crab",
+      "reason": "Reconcile publisher Apparatus of the Crab name and typed vehicle statistics; preserve one canonical item identity, omit unverified terrain metadata."
     }
   ],
   "publisherOnly": [],
@@ -380,6 +384,14 @@
       "reason": "missing-or-ambiguous"
     }
   ],
-  "resolvedReferenceCount": 724,
-  "nativeCount": 630
+  "resolvedReferenceCount": 725,
+  "nativeCount": 630,
+  "mergedOccurrences": [
+    {
+      "id": "item.apparatus-of-the-crab",
+      "path": "vehicles.json",
+      "pointer": "/vehicle/0",
+      "reason": "Verified vehicle profile integrated with canonical magic item; duplicate prose not separately imported."
+    }
+  ]
 }

@@ -6,7 +6,27 @@ import {fileURLToPath} from "node:url";
 const slug = name => name.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const kinds = {item:"item",baseitem:"baseitem",itemGroup:"item-group",magicvariant:"magic-variant",itemProperty:"item-property",itemMastery:"item-mastery"};
 const excluded = new Set(["name","source","page","reprintedAs","classFeatures","miscTags","hasRefs","alias","tier","group","seeAlsoDeck","seeAlsoVehicle","additionalEntries"]);
-function generate(files, sourceManifest, packageManifest, tag, officialUrl, externalIds) {
+function reconcileApparatus(records,report,vehicles,sourceManifest,tag){
+ const row=records.find(x=>x.id==="item.apparatus-of-the-crab");
+ const index=vehicles.vehicle.findIndex(v=>v.name===row?.name&&v.source==="SRD"+tag);
+ if(!row||index<0)throw Error("Missing edition-local Apparatus");
+ const v=vehicles.vehicle[index],page=tag==="51"?208:210;
+ const original=JSON.stringify(row.entries);
+ if(!/apparatus of kwalish/i.test(original))throw Error("Expected obsolete internal apparatus name");
+ row.entries=JSON.parse(original.replace(/apparatus of kwalish/gi,m=>m==="Apparatus of Kwalish"?"Apparatus of the Crab":"apparatus of the Crab"));
+ // Store the verified stat profile on the canonical item. Do not duplicate the
+ // lever table or create a second independent object identity.
+ row.vehicleProfile=Object.fromEntries(["vehicleType","size","capCrew","capPassenger","ac","speed","hp","immune"].map(k=>[k,JSON.parse(JSON.stringify(v[k]))]));
+ if(tag==="51")row.vehicleProfile.speed.swim.condition="(or 0 ft. for both if the legs and tail aren't extended)";
+ const pointer={provider:sourceManifest.provider,commit:sourceManifest.commit,path:"vehicles.json",pointer:"/vehicle/"+index};
+ row.source.additionalStructuredSources=[...(row.source.additionalStructuredSources??[]),pointer];
+ row.source.pages=[...new Set([...row.source.pages,page])].sort((a,b)=>a-b);
+ const pageId="rulebook.page-"+String(page).padStart(3,"0");
+ if(!row.catalogReferences.includes(pageId)){row.catalogReferences=[...row.catalogReferences,pageId].sort();report.resolvedReferenceCount++;}
+ report.corrections.push({id:row.id,reason:"Reconcile publisher Apparatus of the Crab name and typed vehicle statistics; preserve one canonical item identity, omit unverified terrain metadata."});
+ report.mergedOccurrences=[...(report.mergedOccurrences??[]),{id:row.id,path:pointer.path,pointer:pointer.pointer,reason:"Verified vehicle profile integrated with canonical magic item; duplicate prose not separately imported."}];
+}
+function generate(files, sourceManifest, packageManifest, tag, officialUrl, externalIds, vehicles) {
     const records=[], report={edition:packageManifest.officialPageImport.release, counts:{}, excluded:[], corrections:[], publisherOnly:[]};
     const source="SRD"+tag;
     const reference = (page)=>"rulebook.page-"+String(page).padStart(3,"0");
@@ -150,6 +170,7 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
         row.catalogReferences=[...refs].sort();
         report.resolvedReferenceCount+=row.catalogReferences.length;
     }
+    reconcileApparatus(records,report,vehicles,sourceManifest,tag);
     report.nativeCount=records.length;
     return {records,report};
 }
@@ -167,7 +188,7 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
     const native=base+"native/";
     const externalIds=["spells","bestiary"].flatMap(folder=>fs.readdirSync(path.join(root,native,folder)).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(native+folder+"/"+f).map(row=>row.id)));
     externalIds.push(...read(native+"skills.json").map(row=>row.id),...read(native+"conditions.json").map(row=>row.id));
-    const {records,report}=generate(inputs,sourceManifest,manifest,tag,officialUrl,externalIds);
+    const {records,report}=generate(inputs,sourceManifest,manifest,tag,officialUrl,externalIds,read("data/reference/srd/structured/vehicles.json"));
     const outputs=new Map();
     for(let i=0;i<records.length;i+=50)outputs.set(dir+"structured-"+String(i/50+1).padStart(2,"0")+".json",json(records.slice(i,i+50)));
     outputs.set("data/reference/srd/item-promotion-"+tag+".json",json(report));

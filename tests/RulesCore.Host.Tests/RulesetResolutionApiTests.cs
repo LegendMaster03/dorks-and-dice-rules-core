@@ -249,6 +249,22 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal(HttpStatusCode.OK, (await client.GetAsync(animals + "/magical-contagion.cackle-fever")).StatusCode);
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/magical-contagion.cackle-fever")).StatusCode);
 
+        // A vehicle profile belongs to its existing magic item, not a second item identity.
+        foreach (var prefix in new[] { oldRules, animals })
+        {
+            var crab = await client.GetFromJsonAsync<JsonElement>(prefix + "/item.apparatus-of-the-crab");
+            var crabDefinition = crab.GetProperty("rule").GetProperty("definition");
+            var profile = crabDefinition.GetProperty("vehicleProfile");
+            Assert.Equal(20, profile.GetProperty("ac").GetInt32());
+            Assert.Equal(200, profile.GetProperty("hp").GetInt32());
+            Assert.Equal(1, profile.GetProperty("capCrew").GetInt32());
+            Assert.Equal(1, profile.GetProperty("capPassenger").GetInt32());
+            var restriction = profile.GetProperty("speed").GetProperty("swim").GetProperty("condition").GetString()!;
+            Assert.Equal(prefix == oldRules, restriction.Contains("and tail", StringComparison.Ordinal));
+            Assert.DoesNotContain("Kwalish", crabDefinition.GetProperty("entries").GetRawText());
+            Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(prefix + "/vehicle.apparatus-of-the-crab")).StatusCode);
+        }
+
         // The foreign catalogs expose original typed spell fields and entries,
         // not just publisher layout strings.
         foreach (var id in ids.Take(2))
