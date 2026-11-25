@@ -421,6 +421,32 @@ public sealed class RulesetResolutionApiTests
         var miscibilityTable = await client.GetFromJsonAsync<JsonElement>(animals + "/table.potion-miscibility");
         Assert.Equal(8, miscibilityTable.GetProperty("rule").GetProperty("definition").GetProperty("rows").GetArrayLength());
 
+        // Equipment tables retain published category rows and local canonical items.
+        foreach (var (prefix, weaponRows, gearRows) in new[] { (oldRules, 41, 103), (animals, 42, 82) })
+        {
+            var equipmentWeapons = (await client.GetFromJsonAsync<JsonElement>(prefix + "/table.weapons")).GetProperty("rule").GetProperty("definition");
+            var equipmentArmor = (await client.GetFromJsonAsync<JsonElement>(prefix + "/table.armor")).GetProperty("rule").GetProperty("definition");
+            var equipmentGear = (await client.GetFromJsonAsync<JsonElement>(prefix + "/table.adventuring-gear")).GetProperty("rule").GetProperty("definition");
+            Assert.Equal(weaponRows, equipmentWeapons.GetProperty("rows").GetArrayLength());
+            Assert.Equal(17, equipmentArmor.GetProperty("rows").GetArrayLength());
+            Assert.Equal(gearRows, equipmentGear.GetProperty("rows").GetArrayLength());
+            Assert.Contains("baseitem.lance", equipmentWeapons.GetProperty("catalogReferences").GetRawText());
+            Assert.Contains("baseitem.plate-armor", equipmentArmor.GetProperty("catalogReferences").GetRawText());
+            Assert.Contains("item.potion-of-healing", equipmentGear.GetProperty("catalogReferences").GetRawText());
+            Assert.Equal(prefix == animals, equipmentWeapons.GetProperty("colLabels").GetRawText().Contains("Mastery", StringComparison.Ordinal));
+        }
+        var legacyEquipmentTools = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/table.tools")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal(39, legacyEquipmentTools.GetProperty("rows").GetArrayLength());
+        Assert.Contains("table.waterborne-vehicles", legacyEquipmentTools.GetProperty("catalogReferences").GetRawText());
+        var modernAmmunitionTable = (await client.GetFromJsonAsync<JsonElement>(animals + "/table.ammunition")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal(5, modernAmmunitionTable.GetProperty("rows").GetArrayLength());
+        Assert.Contains("baseitem.sling-bullets-20", modernAmmunitionTable.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("baseitem.firearm-bullet", modernAmmunitionTable.GetProperty("catalogReferences").GetRawText());
+        var modernDruidicGroup = (await client.GetFromJsonAsync<JsonElement>(animals + "/item-group.druidic-focus")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal(new[] { "Druid", "Ranger" }, modernDruidicGroup.GetProperty("focus").EnumerateArray().Select(x => x.GetString()).ToArray());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/table.airborne-and-waterborne-vehicles")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(animals + "/table.waterborne-vehicles")).StatusCode);
+
         // Supplementary actions, glossary and contagions preserve edition-specific categories.
         var oldCoreActions = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=action&limit=1");
         var newCoreActions = await client.GetFromJsonAsync<JsonElement>(animals + "?category=action&limit=1");
