@@ -192,11 +192,28 @@ public sealed class NativePrivateReferenceApiTests
         Assert.Contains(methods.GetProperty("methods").EnumerateArray(), x =>
             x.GetProperty("reference").GetProperty("methodId").GetString() == "rite-of-rebirth" &&
             x.GetProperty("stage").GetString() == "post-origination" && !x.GetProperty("createsNewIndividual").GetBoolean());
-        Assert.True((await Read("hierarchy/characteristics")).GetProperty("complete").GetBoolean());
+        var characteristics = await Read("hierarchy/characteristics");
+        Assert.True(characteristics.GetProperty("complete").GetBoolean());
+        Assert.All(characteristics.GetProperty("rows").EnumerateArray(), row =>
+            Assert.Equal(JsonValueKind.Null, row.GetProperty("selectable").ValueKind));
         Assert.True((await Read("hierarchy/upbringing")).GetProperty("complete").GetBoolean());
         Assert.True((await Read("hierarchy/backgrounds")).GetProperty("complete").GetBoolean());
         Assert.True((await Read("hierarchy/construct-components")).GetProperty("complete").GetBoolean());
-        Assert.True((await Read("hierarchy/construct-options")).GetProperty("complete").GetBoolean());
+        var constructOptions = await Read("hierarchy/construct-options");
+        Assert.True(constructOptions.GetProperty("complete").GetBoolean());
+        Assert.All(constructOptions.GetProperty("rows").EnumerateArray(), row =>
+            Assert.Equal(JsonValueKind.Null, row.GetProperty("selectable").ValueKind));
+        using var backgroundResponse = await host.Client.SendAsync(host.TicketRequest(
+            "/api/private/rulesets/first-party-001/rules/background.acolyte"));
+        Assert.Equal(HttpStatusCode.OK, backgroundResponse.StatusCode);
+        var backgroundEnvelope = await backgroundResponse.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal(catalog.Fingerprint, backgroundEnvelope.GetProperty("fingerprint").GetString());
+        var background = backgroundEnvelope.GetProperty("rule").GetProperty("definition");
+        Assert.Equal("background.acolyte", background.GetProperty("id").GetString());
+        Assert.Equal("skill.insight", background.GetProperty("benefits")[0].GetProperty("skill").GetString());
+        Assert.Equal(2, background.GetProperty("startingEquipment").GetProperty("items")[1]
+            .GetProperty("options").GetArrayLength());
+        Assert.False(backgroundEnvelope.TryGetProperty("grants", out _));
         Assert.Equal(30, wood.GetProperty("lineage")[0].GetProperty("definition").GetProperty("walkingSpeedFeet").GetInt32());
         Assert.Equal(35, wood.GetProperty("lineage")[1].GetProperty("definition").GetProperty("walkingSpeedFeet").GetInt32());
         Assert.True(wood.GetProperty("lineage")[1].GetProperty("definition").GetProperty("overridesAncestorWalkingSpeed").GetBoolean());

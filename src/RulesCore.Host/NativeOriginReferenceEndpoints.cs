@@ -11,6 +11,7 @@ internal static class NativeOriginReferenceEndpoints
 {
     private const int FamilyLimit = 256;
     private const int LineageLimit = 64;
+    private const int RelationshipLimit = 1024;
     private static readonly Regex SafeId = new(
         @"\A[a-z0-9-]+(?:\.[a-z0-9-]+)+\z",
         RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
@@ -66,6 +67,9 @@ internal static class NativeOriginReferenceEndpoints
 
     private static IResult Methods(NativeCatalogSnapshot catalog, string scope)
     {
+        if (catalog.TryGetById("rule.creature-origination", out var rule) && rule is not null &&
+            ArrayLength(rule.Definition, "methodDefinitions") > FamilyLimit)
+            return Error(422, "origin_reference_family_limit");
         if (scope == "all") return NativeOriginDiscoveryEndpoints.ProjectMethods(catalog, null);
         if (!ValidId(scope) || !scope.StartsWith("creature-type.", StringComparison.Ordinal))
             return Error(400, "invalid_creature_type");
@@ -93,8 +97,7 @@ internal static class NativeOriginReferenceEndpoints
         {
             id = e.Id, name = e.Name, kind = e.Category,
             parentId = Text(e.Definition, "parent"),
-            selectable = e.Category == "construct-component" ? (bool?)null :
-                !e.Definition.TryGetProperty("selectable", out var flag) || flag.ValueKind != JsonValueKind.False,
+            selectable = Selectable(e),
             defaultUpbringingId = Text(e.Definition, "defaultUpbringing"),
             acquisitionMethodIds = Strings(e.Definition, "acquisitionMethods"),
             status = Text(e.Definition, "status"),
@@ -111,6 +114,17 @@ internal static class NativeOriginReferenceEndpoints
         return Results.Ok(new { contractVersion = 1, rulesetId = catalog.RulesetId,
             fingerprint = catalog.Fingerprint, family, complete = true, rows });
     }
+
+    // Species/Ancestry use the existing preset default. Life experience requires
+    // explicit selectable=true; other families are reference records, not choices.
+    private static bool? Selectable(NativeRuleEntity entity) => entity.Category switch
+    {
+        "species" or "ancestry" => !entity.Definition.TryGetProperty("selectable", out var biological) ||
+            biological.ValueKind != JsonValueKind.False,
+        "upbringing" or "background" => entity.Definition.TryGetProperty("selectable", out var cultural) &&
+            cultural.ValueKind == JsonValueKind.True,
+        _ => null
+    };
 
     private static IResult Source(NativeCatalogSnapshot catalog, string sourceId)
     {
@@ -141,6 +155,8 @@ internal static class NativeOriginReferenceEndpoints
             if (!catalog.TryGetById(parent, out current) || current is null)
                 return Error(422, "origin_reference_lineage_incomplete");
         }
+        if (chain.Sum(e => (long)ArrayLength(e.Definition, "traits")) > RelationshipLimit)
+            return Error(422, "origin_reference_relationship_limit");
         chain.Reverse();
         var lineage = chain.Select(e => new
         {
@@ -226,6 +242,9 @@ internal static class NativeOriginReferenceEndpoints
         if (!TryFamily(catalog, ["species", "ancestry", "construct-component", "construct-design",
             "construct-enhancement", "construct-power-source", "construct-material"], out var members))
             return Error(422, "origin_reference_family_limit");
+        if (members.Sum(e => (long)ArrayLength(e.Definition, "traits") +
+            ArrayLength(e.Definition, "operationalOriginTraitIds")) > RelationshipLimit)
+            return Error(422, "origin_reference_relationship_limit");
         var sources = new List<SourceLink>();
         foreach (var e in members)
         {
@@ -299,6 +318,8 @@ internal static class NativeOriginReferenceEndpoints
             if (config.ConstructionVariants.Any(x => x.RecipeId == targetId))
                 Link("/constructionVariants", "variant-recipe");
         }
+        if (sources.Count > RelationshipLimit)
+            return Error(422, "origin_reference_relationship_limit");
         // The output pointer belongs to the recipe, not to its product.
         var productId = target.Category == "crafting-recipe" ? Text(target.Definition, "producesDefinitionId") : null;
         var output = productId is not null && catalog.TryGetById(productId, out var product) && product is not null
@@ -324,6 +345,9 @@ internal static class NativeOriginReferenceEndpoints
         return true;
     }
 
+    private static int ArrayLength(JsonElement value, string key) =>
+        value.ValueKind == JsonValueKind.Object && value.TryGetProperty(key, out var items) &&
+        items.ValueKind == JsonValueKind.Array ? items.GetArrayLength() : 0;
     private static bool ValidId(string id) => id.Length <= 160 && SafeId.IsMatch(id);
     private static string? Text(JsonElement value, string key) =>
         value.ValueKind == JsonValueKind.Object && value.TryGetProperty(key, out var item) &&
