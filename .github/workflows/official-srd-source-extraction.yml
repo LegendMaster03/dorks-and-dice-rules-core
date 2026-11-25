@@ -4,6 +4,10 @@ on:
     branches: [main]
     paths:
       - 'tools/import_official_srd_pages.py'
+      - 'tools/audit_srd_native_fidelity.py'
+      - 'tests/test_srd_native_fidelity.py'
+      - 'data/rulesets/dnd-5e/native/**'
+      - 'data/rulesets/dnd-5-5e/native/**'
       - 'tools/import_official_srd52_animals.mjs'
       - 'tools/promote_srd_json.mjs'
       - 'data/rulesets/dnd-5-5e/native/bestiary/animals-*.json'
@@ -45,6 +49,12 @@ jobs:
       - name: Verify structured JSON promotion
         if: matrix.edition == 'srd-5.2.1'
         run: node tools/promote_srd_json.mjs --check
+      - name: Test native publisher fidelity comparison
+        run: python3 -m unittest discover -s tests -p test_srd_native_fidelity.py
+      - name: Compare promoted native prose against pinned publisher source
+        env:
+          EDITION: ${{ matrix.edition }}
+        run: python3 tools/audit_srd_native_fidelity.py "$EDITION" /tmp/official-srd.pdf --output build/official-srd/native-fidelity.json
       - uses: actions/upload-artifact@v4
         with:
           name: official-source-${{ matrix.edition }}
