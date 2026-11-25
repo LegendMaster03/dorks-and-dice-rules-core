@@ -70,7 +70,89 @@ function reconcileLegacyWeaponProperty(row){
  return {pages:v.pages,reason:"Restore original SRD 5.1 weapon property wording; do not import later errata."};
 }
 
-function generate(files, sourceManifest, packageManifest, tag, officialUrl, externalIds, vehicles, supplement) {
+const DECK_REVIEW=[
+  {
+    "tag": "51",
+    "id": "item.deck-of-illusions",
+    "pages": [
+      216
+    ],
+    "count": 33,
+    "reason": "Reconcile all 33 legacy illusion table rows with SRD 5.1 p.216; preserve the published Beholder example and restore Succubus or incubus display."
+  },
+  {
+    "tag": "51",
+    "id": "item.deck-of-many-things",
+    "pages": [
+      216,
+      217,
+      218
+    ],
+    "count": 22,
+    "reason": "Verify all 22 playing-card mappings and named effect sections against SRD 5.1 pp.216–218; remove non-SRD A Question of Enmity inset."
+  },
+  {
+    "tag": "52",
+    "id": "item.deck-of-illusions",
+    "pages": [
+      217,
+      218
+    ],
+    "count": 33,
+    "reason": "Verify all 33 illusion table rows against SRD 5.2.1 pp.217–218; restore Basilisk, Veteran Warrior display and published stat-block footnote."
+  },
+  {
+    "tag": "52",
+    "id": "item.mysterious-deck",
+    "pages": [
+      231,
+      232,
+      233
+    ],
+    "count": 22,
+    "reason": "Verify all 22 published card table mappings and named effect sections; retain existing SRD-specific corrections."
+  }
+];
+function reviewDeckTable(row,tag,publisherPages){
+    const spec=DECK_REVIEW.find(s=>s.tag===tag&&s.id===row.id);
+    if(!spec)return null;
+    const table=row.entries.find(e=>e?.type==="table");
+    if(table?.rows.length!==spec.count)throw Error("Unexpected deck table size "+row.id);
+    if(row.id==="item.deck-of-illusions"){
+        if(tag==="51"){
+            if(table.rows[2][1]!=="{@creature Succubus||Succubus/Incubus}")throw Error("Unexpected legacy illusion alias");
+            table.rows[2][1]="{@creature Succubus||Succubus or incubus}";
+        }else{
+            if(table.rows[4][0]!=="13-15"||table.rows[4][1]!=="Beholder"||table.rows[30][1]!=="{@creature Warrior Veteran|SRD52}")throw Error("Unexpected modern illusion table");
+            table.rows[4][1]="{@creature Basilisk|SRD52}";
+            table.rows[30][1]="{@creature Warrior Veteran|SRD52|Veteran Warrior}";
+            table.colLabels[1]="Illusion*";
+            const note="Stat blocks for these creatures (except the card drawer) appear in “Monsters.”";
+            if(!publisherPages.find(p=>p.page===218).textLayout.includes("*Stat blocks for these creatures (except the card drawer) appear in")||!publisherPages.find(p=>p.page===218).textLayout.includes("“Monsters.”"))throw Error("Missing illusion footnote");
+            row.entries.push(note);
+        }
+    }else if(row.id==="item.deck-of-many-things"){
+        if(row.entries.filter(e=>e?.name==="A Question of Enmity").length!==1)throw Error("Unexpected legacy deck inset");
+        row.entries=row.entries.filter(e=>e?.name!=="A Question of Enmity");
+    }
+    const normalize=s=>String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[–—−]/g,"-").replace(/\s/g,"");
+    const display=x=>String(typeof x==="object"?x.entry:x).replace(/\{@creature ([^}|]+)(?:\|[^}|]*)?(?:\|([^}]+))?\}/g,(_,name,label)=>label??name);
+    const published=publisherPages.filter(p=>spec.pages.includes(p.page));
+    if(published.length!==spec.pages.length)throw Error("Missing deck publisher pages");
+    const evidence=published.flatMap(p=>p.textLayout.split("\n")).map(normalize);
+    for(const cells of table.rows){
+        if(!evidence.some(l=>l.includes(normalize(cells.map(display).join(" ")))))throw Error("Publisher deck table row mismatch "+row.id+" "+JSON.stringify(cells));
+    }
+    if(row.id!=="item.deck-of-illusions"){
+        const heads=row.entries.filter(e=>e?.type==="entries").map(e=>e.name);
+        const cardNames=table.rows.map(c=>c.at(-1).replace(/\*$/,""));
+        if(heads.length!==22||new Set(heads).size!==22||cardNames.some(n=>!heads.includes(n)))throw Error("Missing named card effects "+row.id);
+        for(const name of heads)if(!published.some(p=>p.textLayout.includes(name+".")))throw Error("Missing published card heading "+name);
+    }
+    return spec;
+}
+
+function generate(files, sourceManifest, packageManifest, tag, officialUrl, externalIds, vehicles, supplement, publisherPages) {
     const records=[], report={edition:packageManifest.officialPageImport.release, counts:{}, excluded:[], corrections:[], publisherOnly:[]};
     const source="SRD"+tag;
     const reference = (page)=>"rulebook.page-"+String(page).padStart(3,"0");
@@ -168,6 +250,8 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
                     const correction=reconcileLegacyWeaponProperty(row);
                     if(correction){pages=correction.pages;addCorrection(id,correction.reason);}
                 }
+                const deckReview=reviewDeckTable(row,tag,publisherPages);
+                if(deckReview){pages=deckReview.pages;addCorrection(id,deckReview.reason);}
                 const templateCorrection=reconcileNamedTemplate(row,tag);
                 if(templateCorrection){pages=[templateCorrection.page];addCorrection(id,templateCorrection.reason);}
                 if(candidate._copy)throw Error("Unexpected unresolved copy: "+id);
@@ -272,7 +356,8 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
     const native=base+"native/";
     const externalIds=["spells","bestiary"].flatMap(folder=>fs.readdirSync(path.join(root,native,folder)).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(native+folder+"/"+f).map(row=>row.id)));
     externalIds.push(...read(native+"skills.json").map(row=>row.id),...read(native+"conditions.json").map(row=>row.id));
-    const {records,report}=generate(inputs,sourceManifest,manifest,tag,officialUrl,externalIds,read("data/reference/srd/structured/vehicles.json"),read("data/reference/srd/upstream-firearm-bullet-52.json"));
+    const publisherPages=(tag==="51"?["203-227"]:["205-229","230-254"]).flatMap(n=>read(native+"rulebook/pages-"+n+".json"));
+    const {records,report}=generate(inputs,sourceManifest,manifest,tag,officialUrl,externalIds,read("data/reference/srd/structured/vehicles.json"),read("data/reference/srd/upstream-firearm-bullet-52.json"),publisherPages);
     const outputs=new Map();
     for(let i=0;i<records.length;i+=50)outputs.set(dir+"structured-"+String(i/50+1).padStart(2,"0")+".json",json(records.slice(i,i+50)));
     outputs.set("data/reference/srd/item-promotion-"+tag+".json",json(report));

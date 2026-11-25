@@ -356,6 +356,13 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal("O", magicDefinition.GetProperty("category").GetString());
         Assert.Equal(3, magicDefinition.GetProperty("additionalSpells").GetArrayLength());
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/feat.magic-initiate")).StatusCode);
+        var legacyIllusions = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/item.deck-of-illusions")).GetProperty("rule").GetProperty("definition");
+        var modernIllusions = (await client.GetFromJsonAsync<JsonElement>(animals + "/item.deck-of-illusions")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("Beholder", legacyIllusions.GetProperty("entries").GetRawText());
+        Assert.DoesNotContain("Beholder", modernIllusions.GetProperty("entries").GetRawText());
+        Assert.Contains("monster.basilisk", modernIllusions.GetProperty("catalogReferences").GetRawText());
+        var legacyDeck = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/item.deck-of-many-things")).GetProperty("rule").GetProperty("definition");
+        Assert.DoesNotContain("A Question of Enmity", legacyDeck.GetProperty("entries").GetRawText());
         var itemCategories = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.magic-item-categories")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("item-property.a", itemCategories.GetProperty("catalogReferences").GetRawText());
         Assert.Contains("{@itemProperty A|srd52|Ammunition}", itemCategories.GetProperty("entries").GetRawText());

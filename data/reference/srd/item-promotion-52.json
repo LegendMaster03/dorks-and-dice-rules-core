@@ -253,8 +253,16 @@
       "reason": "S52-016: correct table and attached spell identities"
     },
     {
+      "id": "item.deck-of-illusions",
+      "reason": "Verify all 33 illusion table rows against SRD 5.2.1 pp.217–218; restore Basilisk, Veteran Warrior display and published stat-block footnote."
+    },
+    {
       "id": "item.mysterious-deck",
       "reason": "S52-021: remove non-SRD inset and Bastion effect; correct table identity"
+    },
+    {
+      "id": "item.mysterious-deck",
+      "reason": "Verify all 22 published card table mappings and named effect sections; retain existing SRD-specific corrections."
     },
     {
       "id": "item.spider-s-sting",
@@ -306,7 +314,7 @@
       "reason": "missing-or-ambiguous"
     }
   ],
-  "resolvedReferenceCount": 1112,
+  "resolvedReferenceCount": 1115,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",

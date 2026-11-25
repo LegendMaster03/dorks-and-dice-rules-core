@@ -363,6 +363,14 @@
       "reason": "Official SRD 5.1 p.204 uses crawler, not Carrion Crawler; retain incapacitated condition and remove the unsupported creature link."
     },
     {
+      "id": "item.deck-of-illusions",
+      "reason": "Reconcile all 33 legacy illusion table rows with SRD 5.1 p.216; preserve the published Beholder example and restore Succubus or incubus display."
+    },
+    {
+      "id": "item.deck-of-many-things",
+      "reason": "Verify all 22 playing-card mappings and named effect sections against SRD 5.1 pp.216–218; remove non-SRD A Question of Enmity inset."
+    },
+    {
       "id": "item.orb-of-dragonkind",
       "reason": "Remove non-SRD setting names and foreign creature link; retain official artifact mechanics"
     },
@@ -417,7 +425,7 @@
   ],
   "publisherOnly": [],
   "unresolvedReferences": [],
-  "resolvedReferenceCount": 735,
+  "resolvedReferenceCount": 739,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",
