@@ -211,6 +211,15 @@ def audit(rows, tag):
                         for mode, payload, mode_path in children(grant, grant_path):
                             if mode in MODES:
                                 spell_tree(payload, mode_path, mode)
+                            elif mode == "replacementOptions" and isinstance(payload, list):
+                                for _, option, option_path in children(payload, mode_path):
+                                    if (isinstance(option, dict) and set(option) == {"trigger", "target", "different", "selector"}
+                                            and option["trigger"] == "long-rest" and option["target"] == "known-lineage-cantrip"
+                                            and option["different"] is True and isinstance(option["selector"], dict)):
+                                        emit(option_path, "spell-replacement-selector", option, "selector-review",
+                                             grantMode="known", **spell_selectors.inspect(option["selector"], "known"))
+                                    else:
+                                        emit(option_path, "spell-replacement-selector", option, "unreviewed-shape")
                             elif mode not in {"name", "ability"}:
                                 emit(mode_path, "spell-grant", payload, "unreviewed-shape")
                 elif key == "startingEquipment":

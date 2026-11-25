@@ -43,6 +43,23 @@ function generate(races,backgrounds,manifest,sourceManifest,pages,skills,tag) {
   if(c.source!==edition)continue;
   report.sourceCounts.race=(report.sourceCounts.race??0)+1;
   const kind=modern?"species":"race",row=record(c,"races.json","race",i,kind,kind+"."+slug(c.name),c.name,(modern?newPages:oldPages)[c.name]);
+
+  if(modern&&row.id==="species.elf"){
+   const publisher=byPage.get(85).textLayout.replace(/\s+/g," ");
+   if(!publisher.includes("High Elf You know the Prestidigitation cantrip. Whenever you finish")||
+      !publisher.includes("a Long Rest, you can replace that cantrip with a different")||
+      !publisher.includes("cantrip from the Wizard spell list."))throw Error("High Elf publisher replacement evidence changed");
+   const grants=[row.additionalSpells.find(g=>g.name==="High Elf"),row._versions.find(v=>v.name==="Elf; High Elf Lineage").additionalSpells[0]];
+   for(const grant of grants){
+    const selector=grant.known["1"]._[0];
+    if(JSON.stringify(selector)!==JSON.stringify({choose:"level=0|class=Wizard"})||grant.known["1"]._.length!==1)throw Error("High Elf source selector changed");
+    grant.known={"1":["prestidigitation|srd52#c"]};
+    // The source selector describes a replacement of the lineage cantrip,
+    // not a second grant or an unrestricted choice at character creation.
+    grant.replacementOptions=[{trigger:"long-rest",target:"known-lineage-cantrip",different:true,selector}];
+   }
+   report.corrections.push({id:row.id,reason:"SRD 5.2.1 p.85: High Elf starts with Prestidigitation; a different Wizard cantrip may replace the lineage cantrip after a Long Rest. Retain the source selector as a conditional replacement, not an initial choice."});
+  }
   if(!modern){
    const age=row.entries.findIndex(e=>e.name==="Age");
    if(age<0||!alignment[c.name])throw Error("Missing guidance "+c.name);

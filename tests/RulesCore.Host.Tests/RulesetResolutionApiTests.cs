@@ -348,6 +348,19 @@ public sealed class RulesetResolutionApiTests
         Assert.Contains("baseitem.smith-s-tools", dwarfRelationships.GetProperty("catalogReferences").GetRawText());
         Assert.Contains("baseitem.brewer-s-supplies", dwarfRelationships.GetProperty("catalogReferences").GetRawText());
         Assert.Contains("language.dwarvish", dwarfRelationships.GetProperty("catalogReferences").GetRawText());
+        var modernElf = (await client.GetFromJsonAsync<JsonElement>(animals + "/species.elf")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("spell.prestidigitation", modernElf.GetProperty("catalogReferences").GetRawText());
+        var highElfGrants = modernElf.GetProperty("additionalSpells").EnumerateArray().Single(x => x.GetProperty("name").GetString() == "High Elf");
+        var highElfVariant = modernElf.GetProperty("_versions").EnumerateArray().Single(x => x.GetProperty("name").GetString() == "Elf; High Elf Lineage").GetProperty("additionalSpells")[0];
+        foreach (var highElf in new[] { highElfGrants, highElfVariant })
+        {
+            Assert.Equal("prestidigitation|srd52#c", highElf.GetProperty("known").GetProperty("1")[0].GetString());
+            var replacement = highElf.GetProperty("replacementOptions")[0];
+            Assert.Equal("long-rest", replacement.GetProperty("trigger").GetString());
+            Assert.Equal("known-lineage-cantrip", replacement.GetProperty("target").GetString());
+            Assert.True(replacement.GetProperty("different").GetBoolean());
+            Assert.Equal("level=0|class=Wizard", replacement.GetProperty("selector").GetProperty("choose").GetString());
+        }
         var acolyteRelationships = (await client.GetFromJsonAsync<JsonElement>(animals + "/background.acolyte")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("feat.magic-initiate", acolyteRelationships.GetProperty("catalogReferences").GetRawText());
         Assert.Contains("magic initiate; cleric", acolyteRelationships.GetProperty("feats").GetRawText());

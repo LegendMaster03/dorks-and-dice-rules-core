@@ -101,3 +101,26 @@ class StructuredRelationshipsTests(unittest.TestCase):
         self.assertEqual(original, rows)
         rows[4]["spellList"][0]["spellIds"].append("spell.foreign")
         self.assertEqual("invalid-class-list", audit(rows, "SRD52")["occurrences"][0]["selectorStatus"])
+
+    def test_conditional_replacement_is_not_an_initial_grant(self):
+        rows = [
+            {"id": "spell.prestidigitation", "kind": "spell", "name": "Prestidigitation", "level": 0},
+            {"id": "spell.light", "kind": "spell", "name": "Light", "level": 0},
+            {"id": "class.wizard", "kind": "class", "name": "Wizard",
+             "spellList": [{"level": 0, "spellIds": ["spell.light", "spell.prestidigitation"]}]},
+            {"id": "species.elf", "kind": "species", "name": "Elf",
+             "catalogReferences": ["spell.prestidigitation"],
+             "additionalSpells": [{"known": {"1": ["prestidigitation|srd52#c"]},
+                 "replacementOptions": [{"trigger": "long-rest", "target": "known-lineage-cantrip",
+                     "different": True, "selector": {"choose": "level=0|class=Wizard"}}]}]},
+        ]
+        report = audit(rows, "SRD52")
+        grant, replacement = report["occurrences"]
+        self.assertEqual("spell-grant", grant["relation"])
+        self.assertEqual(["spell.prestidigitation"], grant["targets"])
+        self.assertEqual("spell-replacement-selector", replacement["relation"])
+        self.assertEqual(["spell.light", "spell.prestidigitation"], replacement["candidateSpellIds"])
+        self.assertEqual([], replacement["targets"])
+        self.assertEqual("long-rest", replacement["raw"]["trigger"])
+        self.assertFalse(replacement["alreadyExplicit"])
+        self.assertEqual(0, report["unlinkedLiteralOccurrences"])

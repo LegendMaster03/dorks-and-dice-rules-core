@@ -432,14 +432,20 @@
           ]
         },
         "known": {
-          "1": {
-            "_": [
-              {
-                "choose": "level=0|class=Wizard"
-              }
-            ]
+          "1": [
+            "prestidigitation|srd52#c"
+          ]
+        },
+        "replacementOptions": [
+          {
+            "trigger": "long-rest",
+            "target": "known-lineage-cantrip",
+            "different": true,
+            "selector": {
+              "choose": "level=0|class=Wizard"
+            }
           }
-        }
+        ]
       },
       {
         "name": "Wood Elf",
@@ -665,14 +671,20 @@
               ]
             },
             "known": {
-              "1": {
-                "_": [
-                  {
-                    "choose": "level=0|class=Wizard"
-                  }
-                ]
+              "1": [
+                "prestidigitation|srd52#c"
+              ]
+            },
+            "replacementOptions": [
+              {
+                "trigger": "long-rest",
+                "target": "known-lineage-cantrip",
+                "different": true,
+                "selector": {
+                  "choose": "level=0|class=Wizard"
+                }
               }
-            }
+            ]
           }
         ]
       },
@@ -742,7 +754,8 @@
       "spell.faerie-fire",
       "spell.longstrider",
       "spell.misty-step",
-      "spell.pass-without-trace"
+      "spell.pass-without-trace",
+      "spell.prestidigitation"
     ],
     "source": {
       "release": "srd-5.2.1",

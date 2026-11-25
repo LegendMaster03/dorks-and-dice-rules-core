@@ -105,7 +105,12 @@
       "reason": "unverified metadata or external media; published descriptive entries retained"
     }
   ],
-  "corrections": [],
+  "corrections": [
+    {
+      "id": "species.elf",
+      "reason": "SRD 5.2.1 p.85: High Elf starts with Prestidigitation; a different Wizard cantrip may replace the lineage cantrip after a Long Rest. Retain the source selector as a conditional replacement, not an initial choice."
+    }
+  ],
   "mergedOccurrences": [],
   "pendingReferences": [
     {
@@ -652,10 +657,10 @@
     "Semantic cross-category reference reconciliation and general character-creation rules pending."
   ],
   "literalSpellRelationships": {
-    "grantOccurrences": 44,
+    "grantOccurrences": 46,
     "prerequisiteOccurrences": 0,
-    "addedCatalogLinks": 22,
-    "unresolvedSelectors": 2
+    "addedCatalogLinks": 23,
+    "unresolvedSelectors": 0
   },
   "literalCharacterRelationships": {
     "literalOccurrences": 39,
