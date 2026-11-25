@@ -439,5 +439,11 @@
   "nativeCount": 55,
   "expandedSourceCounts": {
     "optional-feature": 2
+  },
+  "literalSpellRelationships": {
+    "grantOccurrences": 11,
+    "prerequisiteOccurrences": 0,
+    "addedCatalogLinks": 11,
+    "unresolvedSelectors": 17
   }
 }

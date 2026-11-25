@@ -2,6 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
+import {linkSpellRelationships} from "./link_srd_spell_relationships.mjs";
 function expandedMetamagic(input,manifest,pages){
  const page=pages.find(p=>p.page===67);
  // Page 67 has a fixed gutter at column 60. Read each column separately,
@@ -112,6 +113,8 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
   if(additions.some(r=>records.some(x=>x.id===r.id)))throw Error("Duplicate expanded feature");
   records.push(...additions);report.nativeCounts["optional-feature"]+=additions.length;report.nativeCount+=additions.length;report.expandedSourceCounts={"optional-feature":additions.length};
  }
+ const spells=fs.readdirSync(path.join(root,base+"native/spells")).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(base+"native/spells/"+f));
+ report.literalSpellRelationships=linkSpellRelationships(records,spells,"SRD"+tag);
  for(const [file,body] of [[base+"native/feats-and-optional-features.json",json(records)],["data/reference/srd/feature-promotion-"+tag+".json",json(report)]]){
   const target=path.join(root,file);
   if(check){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale feat promotion "+file);}

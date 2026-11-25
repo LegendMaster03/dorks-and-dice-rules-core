@@ -650,5 +650,11 @@
     "Nested _versions are preserved as source choice templates, not independently materialized records.",
     "Unnamed legacy subrace extensions are folded into their parent with separate source pointers.",
     "Semantic cross-category reference reconciliation and general character-creation rules pending."
-  ]
+  ],
+  "literalSpellRelationships": {
+    "grantOccurrences": 44,
+    "prerequisiteOccurrences": 0,
+    "addedCatalogLinks": 22,
+    "unresolvedSelectors": 2
+  }
 }

@@ -1179,7 +1179,10 @@
       }
     ],
     "catalogReferences": [
-      "rulebook.page-007"
+      "rulebook.page-007",
+      "spell.darkness",
+      "spell.hellish-rebuke",
+      "spell.thaumaturgy"
     ],
     "source": {
       "release": "srd-5.1",

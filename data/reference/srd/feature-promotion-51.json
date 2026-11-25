@@ -225,5 +225,11 @@
     }
   ],
   "resolvedStructuredPrerequisites": 21,
-  "nativeCount": 50
+  "nativeCount": 50,
+  "literalSpellRelationships": {
+    "grantOccurrences": 20,
+    "prerequisiteOccurrences": 3,
+    "addedCatalogLinks": 23,
+    "unresolvedSelectors": 2
+  }
 }

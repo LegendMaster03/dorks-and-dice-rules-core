@@ -1245,7 +1245,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-072"
+      "rulebook.page-072",
+      "spell.mage-armor"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -1299,7 +1300,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-072"
+      "rulebook.page-072",
+      "spell.levitate"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -1740,7 +1742,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-073"
+      "rulebook.page-073",
+      "spell.false-life"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -2159,7 +2162,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-073"
+      "rulebook.page-073",
+      "spell.disguise-self"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -2213,7 +2217,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-073"
+      "rulebook.page-073",
+      "spell.alter-self"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -2267,7 +2272,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-074"
+      "rulebook.page-074",
+      "spell.silent-image"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -2321,7 +2327,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-074"
+      "rulebook.page-074",
+      "spell.invisibility"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -2375,7 +2382,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-074"
+      "rulebook.page-074",
+      "spell.jump"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -2455,7 +2463,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-074"
+      "rulebook.page-074",
+      "spell.find-familiar"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -2804,7 +2813,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-074"
+      "rulebook.page-074",
+      "spell.arcane-eye"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -2858,7 +2868,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-074"
+      "rulebook.page-074",
+      "spell.speak-with-dead"
     ],
     "source": {
       "release": "srd-5.2.1",

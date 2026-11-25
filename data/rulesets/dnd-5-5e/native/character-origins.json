@@ -734,7 +734,15 @@
       "rulebook.page-085",
       "skill.insight",
       "skill.perception",
-      "skill.survival"
+      "skill.survival",
+      "spell.dancing-lights",
+      "spell.darkness",
+      "spell.detect-magic",
+      "spell.druidcraft",
+      "spell.faerie-fire",
+      "spell.longstrider",
+      "spell.misty-step",
+      "spell.pass-without-trace"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -897,7 +905,11 @@
       }
     ],
     "catalogReferences": [
-      "rulebook.page-085"
+      "rulebook.page-085",
+      "spell.mending",
+      "spell.minor-illusion",
+      "spell.prestidigitation",
+      "spell.speak-with-animals"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -1786,7 +1798,17 @@
     ],
     "catalogReferences": [
       "rulebook.page-086",
-      "rulebook.page-087"
+      "rulebook.page-087",
+      "spell.chill-touch",
+      "spell.darkness",
+      "spell.false-life",
+      "spell.fire-bolt",
+      "spell.hellish-rebuke",
+      "spell.hold-person",
+      "spell.poison-spray",
+      "spell.ray-of-enfeeblement",
+      "spell.ray-of-sickness",
+      "spell.thaumaturgy"
     ],
     "source": {
       "release": "srd-5.2.1",

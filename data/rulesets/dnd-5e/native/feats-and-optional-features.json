@@ -63,7 +63,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-048"
+      "rulebook.page-048",
+      "spell.eldritch-blast"
     ],
     "source": {
       "release": "srd-5.1",
@@ -140,7 +141,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-048"
+      "rulebook.page-048",
+      "spell.mage-armor"
     ],
     "source": {
       "release": "srd-5.1",
@@ -192,7 +194,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-048"
+      "rulebook.page-048",
+      "spell.levitate"
     ],
     "source": {
       "release": "srd-5.1",
@@ -234,7 +237,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-048"
+      "rulebook.page-048",
+      "spell.speak-with-animals"
     ],
     "source": {
       "release": "srd-5.1",
@@ -329,7 +333,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-048"
+      "rulebook.page-048",
+      "spell.compulsion"
     ],
     "source": {
       "release": "srd-5.1",
@@ -478,7 +483,8 @@
     "catalogReferences": [
       "class.warlock",
       "optional-feature.pact-of-the-chain",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.hold-monster"
     ],
     "source": {
       "release": "srd-5.1",
@@ -641,7 +647,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.confusion"
     ],
     "source": {
       "release": "srd-5.1",
@@ -720,7 +727,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.detect-magic"
     ],
     "source": {
       "release": "srd-5.1",
@@ -760,7 +768,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.eldritch-blast"
     ],
     "source": {
       "release": "srd-5.1",
@@ -909,7 +918,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.false-life"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1101,7 +1111,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.disguise-self"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1153,7 +1164,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.alter-self"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1209,7 +1221,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.conjure-elemental"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1265,7 +1278,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.slow"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1307,7 +1321,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.silent-image"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1402,7 +1417,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.jump"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1484,7 +1500,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-047"
+      "rulebook.page-047",
+      "spell.find-familiar"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1642,7 +1659,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-049"
+      "rulebook.page-049",
+      "spell.eldritch-blast"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1698,7 +1716,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-050"
+      "rulebook.page-050",
+      "spell.polymorph"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1754,7 +1773,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-050"
+      "rulebook.page-050",
+      "spell.bestow-curse"
     ],
     "source": {
       "release": "srd-5.1",
@@ -1836,7 +1856,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-050"
+      "rulebook.page-050",
+      "spell.bane"
     ],
     "source": {
       "release": "srd-5.1",
@@ -2007,7 +2028,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-050"
+      "rulebook.page-050",
+      "spell.arcane-eye"
     ],
     "source": {
       "release": "srd-5.1",
@@ -2098,7 +2120,8 @@
     ],
     "catalogReferences": [
       "class.warlock",
-      "rulebook.page-050"
+      "rulebook.page-050",
+      "spell.speak-with-dead"
     ],
     "source": {
       "release": "srd-5.1",
