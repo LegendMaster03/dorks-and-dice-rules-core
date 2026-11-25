@@ -140,3 +140,7 @@ The published SRD 5.2.1 invocation predicates (Agonizing Blast p.72, Eldritch Sp
 ## Class proficiency literal dependency promotion
 
 Short-form class skill choice members and individually named weapon proficiencies are now promoted by the same edition-local literal relationship linker as the long-form origin fields. This adds 114 legacy and 96 modern catalog links across the 24 class files, accounting for 144 and 114 literal occurrences respectively. Existing equivalent long-form fields take precedence; categories and display prose are not flattened into grants. The audit includes these exact short-form literals in its required-link gate, including multiclass choice members and foreign source rejection. All original acquisition paths and counts remain unchanged.
+
+## Native invocation predicate normalization
+
+The three reviewed damaging-cantrip prerequisites now expose descriptive `predicate` and `selection` fields alongside a shared edition-local Warlock cantrip selector. The predicate separately declares damage and attack-roll requirements; selection declares known status, different-on-repeat, and minimum range where applicable. Inaccurate upstream inline display filters are removed while the published feature prose remains intact. The pinned upstream files are untouched. The audit verifies the normalized shape against the reviewed publisher spell evidence; the API returns the descriptive fields without applying character eligibility. No runtime invocation mechanic is added.

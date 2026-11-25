@@ -226,11 +226,13 @@ class StructuredRelationshipsTests(unittest.TestCase):
             rows.append(row)
         rows.append({"id": "class.warlock", "kind": "class", "name": "Warlock",
                      "spellList": [{"level": 0, "spellIds": list(reviewed)}]})
-        for identity, (expression, label, _, _) in WarlockCantripPrerequisiteInventory.FEATURES.items():
+        for identity, (expression, label, attack, minimum_range) in WarlockCantripPrerequisiteInventory.FEATURES.items():
             rows.append({"id": identity, "kind": "optional-feature", "name": identity,
                          "catalogReferences": ["class.warlock"],
                          "prerequisite": [{"spell": [{"choose": expression, "entry": label,
-                                                     "entrySummary": label.removeprefix("a ")}],
+                                                     "entrySummary": label.removeprefix("a "),
+                                                     "predicate": {"dealsDamage": True, "requiresAttackRoll": attack},
+                                                     "selection": {"known": True, "differentOnRepeat": True, "minimumRangeFeet": minimum_range}}],
                                            "level": {"level": 2, "class": {"name": "Warlock", "source": "SRD52"}}}]})
         original = copy.deepcopy(rows)
         report = audit(rows, "SRD52")
@@ -246,7 +248,7 @@ class StructuredRelationshipsTests(unittest.TestCase):
                          predicates["optional-feature.eldritch-spear"]["selectionCandidateSpellIds"])
         repelling = predicates["optional-feature.repelling-blast"]
         self.assertTrue(repelling["requiresAttackRoll"])
-        self.assertTrue(repelling["sourceFilterOmitsWeaponAttack"])
+        self.assertTrue(repelling["nativePredicateVerified"])
         self.assertEqual(damaging, repelling["selectionCandidateSpellIds"])
         self.assertEqual(0, report["unlinkedLiteralOccurrences"])
         self.assertEqual([2, 2, 2], [r["minimumClassLevel"] for r in report["occurrences"]

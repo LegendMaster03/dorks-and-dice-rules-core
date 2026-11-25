@@ -369,6 +369,20 @@ public sealed class RulesetResolutionApiTests
             foreach (var choice in choices.EnumerateArray())
                 Assert.Equal("level=" + string.Join(";", Enumerable.Range(1, (level + 1) / 2)) + "|class=Wizard|school=V", choice.GetProperty("choose").GetString());
         }
+        foreach (var (invocation, requiresAttack, minimumRange) in new[] { ("agonizing-blast", false, (int?)null), ("eldritch-spear", false, (int?)10), ("repelling-blast", true, (int?)null) })
+        {
+            var invocationDefinition = (await client.GetFromJsonAsync<JsonElement>(animals + "/optional-feature." + invocation)).GetProperty("rule").GetProperty("definition");
+            var cantripPrerequisite = invocationDefinition.GetProperty("prerequisite")[0].GetProperty("spell")[0];
+            Assert.Equal("level=0|class=Warlock", cantripPrerequisite.GetProperty("choose").GetString());
+            Assert.True(cantripPrerequisite.GetProperty("predicate").GetProperty("dealsDamage").GetBoolean());
+            Assert.Equal(requiresAttack, cantripPrerequisite.GetProperty("predicate").GetProperty("requiresAttackRoll").GetBoolean());
+            var selection = cantripPrerequisite.GetProperty("selection");
+            Assert.True(selection.GetProperty("known").GetBoolean());
+            Assert.True(selection.GetProperty("differentOnRepeat").GetBoolean());
+            var range = selection.GetProperty("minimumRangeFeet");
+            Assert.Equal(minimumRange, range.ValueKind == JsonValueKind.Null ? (int?)null : range.GetInt32());
+            Assert.DoesNotContain("spell attack=m;r;o", invocationDefinition.GetProperty("entries").GetRawText());
+        }
         var modernElf = (await client.GetFromJsonAsync<JsonElement>(animals + "/species.elf")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("spell.prestidigitation", modernElf.GetProperty("catalogReferences").GetRawText());
         var highElfGrants = modernElf.GetProperty("additionalSpells").EnumerateArray().Single(x => x.GetProperty("name").GetString() == "High Elf");

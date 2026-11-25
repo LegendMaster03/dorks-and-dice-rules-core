@@ -30,11 +30,32 @@
   ],
   "corrections": [
     {
+      "id": "optional-feature.agonizing-blast",
+      "pages": [
+        72
+      ],
+      "reason": "Normalize the published damaging Warlock cantrip prerequisite and distinct known-cantrip selection requirements, including weapon attack rolls where applicable; preserve repeatability and minimum range separately from the prerequisite."
+    },
+    {
+      "id": "optional-feature.eldritch-spear",
+      "pages": [
+        73
+      ],
+      "reason": "Normalize the published damaging Warlock cantrip prerequisite and distinct known-cantrip selection requirements, including weapon attack rolls where applicable; preserve repeatability and minimum range separately from the prerequisite."
+    },
+    {
       "id": "optional-feature.pact-of-the-chain",
       "pages": [
         74
       ],
       "reason": "S52-017: remove non-SRD Slaad Tadpole, correct Monsters cross-reference, and remove ritual-only encoding; publisher grants spell as a Magic action without a spell slot. Timing retained in entries."
+    },
+    {
+      "id": "optional-feature.repelling-blast",
+      "pages": [
+        74
+      ],
+      "reason": "Normalize the published damaging Warlock cantrip prerequisite and distinct known-cantrip selection requirements, including weapon attack rolls where applicable; preserve repeatability and minimum range separately from the prerequisite."
     }
   ],
   "publisherNameLocatorMissing": [],

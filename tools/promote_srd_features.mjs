@@ -52,6 +52,26 @@ function generateFeatures(feats,optional,manifest,src,pages,tag){
     r.entries=JSON.parse(corrected);
     report.corrections.push({id:r.id,pages:[44],reason:"Official SRD 5.1 example uses ray of frost only; chromatic orb is not included."});
    }
+   if(modern&&kind==="optional-feature"&&["Agonizing Blast","Eldritch Spear","Repelling Blast"].includes(c.name)){
+    const [page,attack,minimumRangeFeet]={"Agonizing Blast":[72,false,null],"Eldritch Spear":[73,false,10],"Repelling Blast":[74,true,null]}[c.name];
+    const evidence=pages.find(p=>p.page===page).textLayout;
+    if(!evidence.includes(c.name)||!evidence.includes("Prerequisite: Level 2+ Warlock, a Warlock Cantrip")||
+       !evidence.includes(attack?"That Deals Damage via an Attack Roll":"That Deals Damage")||
+       !evidence.includes("Choose one of your known Warlock cantrips")||
+       !evidence.includes("Repeatable. You can gain this invocation more")||
+       minimumRangeFeet!==null&&!evidence.includes("has a range of 10+ feet."))throw Error("Warlock invocation publisher evidence changed: "+c.name);
+    const raw=r.prerequisite[0].spell[0],expected="level=0|class=Warlock"+(attack?"|spell attack=m;r;o":"");
+    if(raw.choose!==expected||raw.entry!=="a Warlock Cantrip That Deals Damage"+(attack?" via an Attack Roll":""))throw Error("Warlock invocation source filter changed: "+c.name);
+    raw.choose="level=0|class=Warlock";
+    raw.predicate={dealsDamage:true,requiresAttackRoll:attack};
+    raw.selection={known:true,differentOnRepeat:true,minimumRangeFeet};
+    // The upstream display filter cannot express all of the publisher's
+    // predicates. Retain the printed prose, not the misleading link filter.
+    const original=r.entries[0];
+    r.entries[0]=original.replace(/\{@filter Warlock cantrips\|spells\|[^{}]+\}/,"Warlock cantrips");
+    if(original===r.entries[0])throw Error("Warlock invocation display filter changed");
+    report.corrections.push({id:r.id,pages:[page],reason:"Normalize the published damaging Warlock cantrip prerequisite and distinct known-cantrip selection requirements, including weapon attack rolls where applicable; preserve repeatability and minimum range separately from the prerequisite."});
+   }
    if(modern&&c.name==="Pact of the Chain"){
     const original=JSON.stringify(r.entries),corrected=original.replace("{@creature Slaad Tadpole|SRD52}, ","").replace("see appendix B for the familiar's stat block","see “Monsters” for the familiar's stat block");
     if(corrected===original||corrected.includes("Slaad Tadpole")||corrected.includes("appendix B"))throw Error("S52-017 correction failed");

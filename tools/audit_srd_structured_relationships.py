@@ -119,16 +119,15 @@ class SpellSelectorInventory:
 class WarlockCantripPrerequisiteInventory:
     """Review the three published damaging-cantrip invocation predicates.
 
-    The source filter is an incomplete representation of the prerequisite
-    prose. Keep the exact raw expression and distinguish prerequisite
-    candidates from the more restrictive selected-cantrip pool.
+    Validate normalized descriptive predicates against the published evidence.
+    Distinguish prerequisite candidates from the more restrictive selected pool.
     """
     FEATURES = {
         "optional-feature.agonizing-blast": ("level=0|class=Warlock",
                                             "a Warlock Cantrip That Deals Damage", False, None),
         "optional-feature.eldritch-spear": ("level=0|class=Warlock",
                                            "a Warlock Cantrip That Deals Damage", False, 10),
-        "optional-feature.repelling-blast": ("level=0|class=Warlock|spell attack=m;r;o",
+        "optional-feature.repelling-blast": ("level=0|class=Warlock",
                                             "a Warlock Cantrip That Deals Damage via an Attack Roll", True, None),
     }
     # Exact reviewed SRD 5.2.1 Warlock cantrip list. The positive damage and
@@ -159,8 +158,10 @@ class WarlockCantripPrerequisiteInventory:
             return self.report("unreviewed-prerequisite-selector")
         expression, label, attack, minimum_range = definition
         if (not isinstance(raw, dict) or raw.get("choose") != expression or
-                raw.get("entry") != label or set(raw) != {"choose", "entry", "entrySummary"} or
-                raw["entrySummary"] != label.removeprefix("a ")):
+                raw.get("entry") != label or set(raw) != {"choose", "entry", "entrySummary", "predicate", "selection"} or
+                raw["entrySummary"] != label.removeprefix("a ") or
+                raw["predicate"] != {"dealsDamage": True, "requiresAttackRoll": attack} or
+                raw["selection"] != {"known": True, "differentOnRepeat": True, "minimumRangeFeet": minimum_range}):
             return self.report("unexpected-prerequisite-shape")
         base = self.spell_selectors.inspect({"choose": "level=0|class=Warlock"}, "known")
         if base.get("selectorStatus") != "static-candidates":
@@ -191,8 +192,7 @@ class WarlockCantripPrerequisiteInventory:
                            selectedCantripMustBeKnown=True, differentCantripOnRepeat=True,
                            minimumSelectionRangeFeet=minimum_range,
                            publisherEvidenceReviewed=True,
-                           sourceFilterOmitsDamageConstraint=True,
-                           sourceFilterOmitsWeaponAttack=attack)
+                           nativePredicateVerified=True)
 
 
 class CharacterSelectorInventory:
