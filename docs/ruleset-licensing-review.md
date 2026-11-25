@@ -46,3 +46,7 @@ exhaustive fidelity run, or distribution approval was performed. Unresolved
 third-party rights must remain a publication-review gate. Existing source
 evidence is sufficient for the bounded license identification and notice
 contract, not a clean bill of rights for all structured data.
+
+## Fate pinned-notice reconciliation
+
+The actual preserved Markdown legal heading names Ed Turner, Leonard Balsera and Ryan Macklin in addition to other creators; current online licensing guidance names Lara Turner and omits two of those names. Retain the exact pinned attribution and copyright notice, all pinned credit paragraphs (including the Fateful Concepts acknowledgment), and the existing current-guidance credit as an additional acknowledgment. The original text and generated entity provenance remain unchanged; the manifest now supplies the full package notice independently. Publication review should reconcile the two source-specific attribution formulations if the publisher provides further guidance.
