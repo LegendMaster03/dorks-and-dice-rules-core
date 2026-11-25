@@ -496,6 +496,81 @@
         207,
         208
       ]
+    },
+    {
+      "id": "rule.rhythm-of-play",
+      "pointer": "/data/1/entries/0",
+      "pages": [
+        5
+      ]
+    },
+    {
+      "id": "rule.the-six-abilities",
+      "pointer": "/data/1/entries/1",
+      "pages": [
+        5,
+        6
+      ]
+    },
+    {
+      "id": "rule.d20-tests",
+      "pointer": "/data/1/entries/2",
+      "pages": [
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "id": "rule.proficiency",
+      "pointer": "/data/1/entries/3",
+      "pages": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "rule.actions",
+      "pointer": "/data/1/entries/4",
+      "pages": [
+        9,
+        10
+      ]
+    },
+    {
+      "id": "rule.social-interaction",
+      "pointer": "/data/1/entries/5",
+      "pages": [
+        10,
+        11
+      ]
+    },
+    {
+      "id": "rule.exploration",
+      "pointer": "/data/1/entries/6",
+      "pages": [
+        11,
+        12
+      ]
+    },
+    {
+      "id": "rule.combat",
+      "pointer": "/data/1/entries/7",
+      "pages": [
+        13,
+        14,
+        15,
+        16
+      ]
+    },
+    {
+      "id": "rule.damage-and-healing",
+      "pointer": "/data/1/entries/8",
+      "pages": [
+        16,
+        17,
+        18
+      ]
     }
   ],
   "corrections": [
@@ -510,9 +585,45 @@
     {
       "id": "rule.magic-item-rarity",
       "reason": "Restore the published generic planar city example and +1 plate armor display label from pp.205–206."
+    },
+    {
+      "id": "rule.rhythm-of-play",
+      "reason": "Restore published introductory wording and Game Master label (p.5)."
+    },
+    {
+      "id": "rule.the-six-abilities",
+      "reason": "Retain publisher ability score and round-down guidance with existing tables (pp.5–6)."
+    },
+    {
+      "id": "rule.d20-tests",
+      "reason": "Use publisher GM terminology and edition-local navigation; link the existing resolution seed and glossary (pp.6–8)."
+    },
+    {
+      "id": "rule.proficiency",
+      "reason": "Reconcile all 18 canonical skill table rows and retain tool/skill Advantage rule (pp.8–9)."
+    },
+    {
+      "id": "rule.actions",
+      "reason": "Preserve original action economy and link all twelve existing actions (pp.9–10)."
+    },
+    {
+      "id": "rule.social-interaction",
+      "reason": "Restore publisher punctuation and GM navigation (pp.10–11)."
+    },
+    {
+      "id": "rule.exploration",
+      "reason": "Restore published Equipment and Gameplay Toolbox navigation and local hazard/sense identities (pp.11–12)."
+    },
+    {
+      "id": "rule.combat",
+      "reason": "Preserve modern surprise, occupied-space, grid, mounting and underwater rules with edition-local references (pp.13–16)."
+    },
+    {
+      "id": "rule.damage-and-healing",
+      "reason": "Restore publisher opening and local damage, knockout, rest and stabilization references (pp.16–18)."
     }
   ],
-  "nativeCount": 75,
+  "nativeCount": 84,
   "tableInventory": {
     "total": 59,
     "counts": {

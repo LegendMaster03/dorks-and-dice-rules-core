@@ -626,6 +626,55 @@ function legacyEquipmentEntries(name,entries,existing,local){
  return entries;
 }
 
+function modernSkillsList(table,existing,local){
+ if(table.caption!=="Skills"||table.colLabels.join("|")!=="Skill|Ability|Example Uses"||table.rows.length!==18)throw Error("Unexpected modern skills table");
+ const seen=new Set();
+ const items=table.rows.map(([label,ability,example])=>{
+  const match=label.match(/^\{@skill ([^|}]+)\|srd52\}$/);if(!match)throw Error("Unexpected skill label "+label);
+  const row=existing.find(x=>x.kind==="skill"&&x.name===match[1]);
+  if(!row||row.ability!==ability.slice(0,3).toLowerCase()||JSON.stringify(row.entries)!==JSON.stringify([example])||seen.has(row.id))throw Error("Unreconciled modern skill "+label);
+  seen.add(row.id);local.add(row.id);
+  return {type:"item",name:match[1],entry:ability+" — see the corresponding skill definition for example uses."};
+ });
+ return {type:"list",style:"list-hang-notitle",items};
+}
+
+function modernGameplayEntries(name,entries,existing,local){
+ const sections=new Set(["Rhythm of Play","The Six Abilities","D20 Tests","Proficiency","Actions","Social Interaction","Exploration","Combat","Damage and Healing"]);
+ if(!sections.has(name))return entries;
+ const find=(arr,name)=>{for(const n of arr){if(n&&typeof n==="object"){if(n.name===name)return n;if(n.entries){const v=find(n.entries,name);if(v)return v;}}}};
+ const visit=x=>{
+  if(typeof x==="string")return x.replaceAll("later in this chapter",'later in "Playing the Game"').replaceAll("earlier in this chapter",'earlier in "Playing the Game"').replaceAll("chapter 2",'"Character Creation"').replaceAll("chapter 6",'"Equipment"').replaceAll("chapter 7",'"Spells"').replaceAll("Chapter 6",'"Equipment"').replaceAll("the rules glossary",'"Rules Glossary"').replaceAll("Your DM","Your GM").replaceAll("you're the DM","you're the GM");
+  if(Array.isArray(x))return x.map(visit);
+  if(x&&typeof x==="object")return Object.fromEntries(Object.entries(x).map(([k,v])=>[k,visit(v)]));
+  return x;
+ };
+ entries=visit(entries);
+ if(name==="Rhythm of Play"){entries[0]=entries[0].replace("The three main pillars of play","The three main pillars of D&D play");entries[1].items[0].name="The Game Master Describes a Scene";}
+ if(name==="D20 Tests"){
+  entries[1].items[2].items[0].entry=entries[1].items[2].items[0].entry.replace("This chapter and",'"Playing the Game" and');
+  const gain=find(entries,"Gaining Heroic Inspiration");if(!gain||!gain.entries[0].startsWith("Your GM"))throw Error("Missing Heroic Inspiration guidance");
+ }
+ if(name==="Proficiency"){const eq=find(entries,"Equipment Proficiencies");eq.entries[1].items[1].entry=eq.entries[1].items[1].entry.replace("have Proficiency in the skill","have proficiency in the skill");}
+ if(name==="Social Interaction"){const role=find(entries,"Roleplaying");if(!role.entries[1].endsWith("."))role.entries[1]+=".";}
+ if(name==="Exploration"){
+  const equip=find(entries,"Adventuring Equipment");equip.entries[1]='See "Equipment" for rules on many items that are useful on adventures. The items in the "Tools" and "Adventuring Gear" sections are especially useful. The weapons in "Equipment" can also be used for more than battle; you could use a {@item Quarterstaff|srd52}, for example, to push a sinister-looking button that you\'re reluctant to touch.';
+  const travel=find(entries,"Travel Pace");travel.entries[0]=travel.entries[0].replace("The {@i GM's Guide}",'"Gameplay Toolbox"');
+ }
+ if(name==="Damage and Healing")entries[0]=entries[0].replace("threats in D&D","threats");
+ // Resolve known typed navigation directly to the same-edition native identities.
+ const slug=s=>s.toLowerCase().normalize("NFKC").replace(/[’']/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+ const known=new Set(existing.map(x=>x.id));
+ const types={variantrule:"glossary",action:"action",condition:"condition",hazard:"hazard",sense:"sense",spell:"spell",skill:"skill",itemProperty:"item-property"};
+ for(const match of JSON.stringify(entries).matchAll(/\{@(variantrule|action|condition|hazard|sense|spell|skill|itemProperty|item) ([^}|]+)(?:\|[^}]+)?\}/g)){
+  const [,kind,raw]=match,key=slug(raw);
+  const ids=kind==="item"?["item."+key,"baseitem."+key]:kind==="action"&&key==="opportunity-attack"?["reaction-option.opportunity-attack"]:[types[kind]+"."+key];
+  const matches=ids.filter(id=>known.has(id));if(matches.length!==1)throw Error("Unresolved modern gameplay reference "+kind+":"+raw+" -> "+ids.join(","));
+  local.add(matches[0]);
+ }
+ return entries;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -830,8 +879,28 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Wearing and Wielding Items","/data/6/entries/11/entries/3",[103],["rule.magic-item-rules","item.boots-of-striding-and-springing","item.boots-of-elvenkind"]],
   ["Magic Item Categories","/data/11/entries/2",[204,205],["glossary.bonus-action","item-group.arcane-focus","item-group.spell-scroll"]],
   ["Magic Item Rarity","/data/11/entries/3",[205,206],["item.potion-of-healing","item.dragon-orb","baseitem.plate-armor","rule.scribing-spell-scrolls"]],
-  ["Sentient Magic Items","/data/11/entries/9",[207,208],["condition.charmed","rule.the-next-dawn","rule.attunement"]]
+  ["Sentient Magic Items","/data/11/entries/9",[207,208],["condition.charmed","rule.the-next-dawn","rule.attunement"]],
+  ["Rhythm of Play","/data/1/entries/0",[5],[]],
+  ["The Six Abilities","/data/1/entries/1",[5,6],["glossary.ability-score-and-modifier","glossary.round-down"]],
+  ["D20 Tests","/data/1/entries/2",[6,7,8],["rule.ability-check","glossary.ability-check","glossary.saving-throw","glossary.attack-roll","glossary.critical-hit","rule.proficiency"]],
+  ["Proficiency","/data/1/entries/3",[8,9],["glossary.proficiency","rule.d20-tests"]],
+  ["Actions","/data/1/entries/4",[9,10],["glossary.action","glossary.bonus-action","glossary.reaction","rule.combat","action.attack","action.dash","action.disengage","action.dodge","action.help","action.hide","action.influence","action.magic","action.ready","action.search","action.study","action.utilize"]],
+  ["Social Interaction","/data/1/entries/5",[10,11],["glossary.attitude","rule.d20-tests"]],
+  ["Exploration","/data/1/entries/6",[11,12],["item.ladder","item.torch","rule.travel-pace","rule.combat","glossary.object","glossary.bright-light","glossary.dim-light","glossary.darkness"]],
+  ["Combat","/data/1/entries/7",[13,14,15,16],["rule.actions","rule.d20-tests","rule.damage-and-healing","status.surprised","glossary.size","glossary.occupied-space","glossary.resistance"]],
+  ["Damage and Healing","/data/1/entries/8",[16,17,18],["glossary.hit-points","glossary.damage-roll","glossary.critical-hit","glossary.damage-types","table.damage-types","glossary.vulnerability","glossary.immunity","glossary.healing","glossary.knocking-out-a-creature","glossary.temporary-hit-points","status.bloodied"]]
  ];
+ const modernGameplayCorrections={
+  "Rhythm of Play": "Restore published introductory wording and Game Master label (p.5).",
+  "The Six Abilities": "Retain publisher ability score and round-down guidance with existing tables (pp.5–6).",
+  "D20 Tests": "Use publisher GM terminology and edition-local navigation; link the existing resolution seed and glossary (pp.6–8).",
+  "Proficiency": "Reconcile all 18 canonical skill table rows and retain tool/skill Advantage rule (pp.8–9).",
+  "Actions": "Preserve original action economy and link all twelve existing actions (pp.9–10).",
+  "Social Interaction": "Restore publisher punctuation and GM navigation (pp.10–11).",
+  "Exploration": "Restore published Equipment and Gameplay Toolbox navigation and local hazard/sense identities (pp.11–12).",
+  "Combat": "Preserve modern surprise, occupied-space, grid, mounting and underwater rules with edition-local references (pp.13–16).",
+  "Damage and Healing": "Restore publisher opening and local damage, knockout, rest and stabilization references (pp.16–18)."
+};
  const extraCorrections={
   "Armor":"Reuse canonical armor descriptions after exact comparison and retain proficiency, AC, speed, stealth and don/doff rules (pp.62–64).",
   "Weapons":"Reuse canonical weapon properties and special weapon definitions; reconcile original property wording (pp.64–66).",
@@ -872,6 +941,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
    if(x&&typeof x==="object"){
     if(x.type==="table"){
      if(tag==="51"&&name==="Ability Checks"&&!x.caption)return legacySkillList(x,existing,local);
+     if(tag==="52"&&name==="Proficiency"&&x.caption==="Skills")return modernSkillsList(x,existing,local);
      const id="table."+slug(x.caption);
      if(!known.has(id)&&!rows.some(r=>r.id===id))throw Error("Unprojected book table "+id);
      local.add(id);return "See the "+x.caption+" table.";
@@ -883,7 +953,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   if(entryRange&&(entryRange[0]!==0||entryRange[1]>node.entries.length||node.entries.slice(...entryRange).some(x=>typeof x!=="string"&&x.type!=="table")))throw Error("Unexpected chapter introduction "+name);
   let content=project(entryRange?node.entries.slice(...entryRange):node.entries);
   if(tag==="51")content=legacyEquipmentEntries(name,legacyEconomyEntries(name,legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local)),existing,local);
-  else content=modernMagicItemEntries(name,content);
+  else content=modernGameplayEntries(name,modernMagicItemEntries(name,content),existing,local);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");
    content[4]=content[4].replace("advantage on checks related to the character's personality, ideals, or bonds","advantage");
@@ -912,7 +982,8 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   if(entryRange)source.structuredSource.entryRange=entryRange;
   rows.push({id,kind:"rule",name,entries:content,catalogReferences:[...local].sort(),source});
   report.rules.push({id,pointer,pages:nums,...(entryRange?{entryRange}:{})});
-  if(extraCorrections[name]&&(tag==="51"||!["Attunement","Wearing and Wielding Items","Activating an Item"].includes(name)))report.corrections.push({id,reason:extraCorrections[name]});
+  if(extraCorrections[name]&&(tag==="51"||name==="Combat Encounters"))report.corrections.push({id,reason:extraCorrections[name]});
+  if(tag==="52"&&Object.hasOwn(modernGameplayCorrections,name))report.corrections.push({id,reason:modernGameplayCorrections[name]});
   if(tag==="52"&&name==="Magic Item Rarity")report.corrections.push({id,reason:"Restore the published generic planar city example and +1 plate armor display label from pp.205–206."});
  }
  const ids=new Set(rows.map(r=>r.id));

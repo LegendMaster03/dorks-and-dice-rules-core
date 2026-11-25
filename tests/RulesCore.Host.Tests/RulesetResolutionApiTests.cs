@@ -551,6 +551,17 @@ public sealed class RulesetResolutionApiTests
             Assert.Contains(referenceId, equipmentRule.GetProperty("catalogReferences").GetRawText());
         }
 
+        // Modern gameplay sections are navigable independently of the legacy edition.
+        foreach (var (ruleId, referenceId) in new[] { ("rule.d20-tests", "rule.ability-check"), ("rule.proficiency", "skill.athletics"), ("rule.actions", "action.magic"), ("rule.exploration", "hazard.suffocation"), ("rule.combat", "status.surprised"), ("rule.damage-and-healing", "glossary.knocking-out-a-creature") })
+        {
+            var modernGameplayRule = (await client.GetFromJsonAsync<JsonElement>(animals + "/" + ruleId)).GetProperty("rule").GetProperty("definition");
+            Assert.Contains(referenceId, modernGameplayRule.GetProperty("catalogReferences").GetRawText());
+        }
+        var modernCombatProcedure = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.combat")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("on their Initiative roll", modernCombatProcedure.GetProperty("entries").GetRawText());
+        var modernDamageProcedure = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.damage-and-healing")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("reduce the creature to 1 Hit Point", modernDamageProcedure.GetProperty("entries").GetRawText());
+
         // Legacy travel and downtime must retain their own published procedures.
         var legacyTravelRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.movement")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("table.travel-pace", legacyTravelRule.GetProperty("catalogReferences").GetRawText());
