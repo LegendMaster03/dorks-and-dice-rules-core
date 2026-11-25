@@ -45,7 +45,7 @@ def audit(rows, tag):
 
         def literal(path, relation, kind, raw, **context):
             if not isinstance(raw, str):
-                emit(path, relation, raw, "unreviewed-shape", **context)
+                emit(path, relation, raw, "unreviewed-shape", literal=True, **context)
                 return
             # Spell UIDs can have a cast-level or cantrip suffix; preserve it
             # separately rather than confusing cast level with spell identity.
@@ -53,7 +53,7 @@ def audit(rows, tag):
             if sep:
                 context["castQualifier"] = suffix
             status, targets, variant = index.resolve(kind, uid)
-            emit(path, relation, raw, status, targets, variant=variant, **context)
+            emit(path, relation, raw, status, targets, variant=variant, literal=True, **context)
 
         def spell_tree(value, path, mode):
             if isinstance(value, str):
@@ -89,6 +89,8 @@ def audit(rows, tag):
                     emit(child_path, "proficiency-selector", child, "selector-review", proficiencyKind=kind)
                     for i, target in enumerate(child.get("from", [])):
                         literal(child_path + "/from/" + str(i), "proficiency-choice-member", kind, target)
+                elif key == "all" and isinstance(child, dict) and isinstance(child.get("fromFilter"), str):
+                    emit(child_path, "proficiency-selector", {key: child}, "selector-review", proficiencyKind=kind)
                 elif key.startswith("any") or key in {"simple", "martial", "light", "medium", "heavy", "shield"}:
                     emit(child_path, "proficiency-selector", {key: child}, "selector-review", proficiencyKind=kind)
                 elif child is True:
@@ -168,6 +170,7 @@ def audit(rows, tag):
                     visit(child, child_path)
 
         visit(row, "")
+    unlinked = [o for o in result if o.get("literal") and (o["status"] not in {"unique-literal-candidate", "named-variant-candidate"} or not o["alreadyExplicit"])]
     counts = Counter(o["status"] for o in result)
     relation_counts = Counter(o["relation"] for o in result)
     return {"status": "diagnostic-only", "editionTag": tag,
@@ -175,20 +178,29 @@ def audit(rows, tag):
             "counts": dict(sorted(counts.items())),
             "relationCounts": dict(sorted(relation_counts.items())),
             "explicitLiteralLinks": sum(o["alreadyExplicit"] for o in result),
+            "unlinkedLiteralOccurrences": len(unlinked),
             "occurrences": result}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--require-literal-links", action="store_true", help="Fail when an inventoried literal dependency does not resolve and link within its edition.")
     args = parser.parse_args()
     report = {}
     for edition, package in PACKAGES.items():
         rows = list(native_rows(REPO / "data" / "rulesets" / package / "native"))
         report[edition] = audit(rows, "SRD51" if edition == "srd-5.1" else "SRD52")
-        print(edition, report[edition]["counts"], "explicit", report[edition]["explicitLiteralLinks"])
+        print(edition, report[edition]["counts"], "explicit", report[edition]["explicitLiteralLinks"],
+              "unlinked literal", report[edition]["unlinkedLiteralOccurrences"])
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if args.require_literal_links and any(r["unlinkedLiteralOccurrences"] for r in report.values()):
+        for edition, r in report.items():
+            for o in r["occurrences"]:
+                if o.get("literal") and (o["status"] not in {"unique-literal-candidate", "named-variant-candidate"} or not o["alreadyExplicit"]):
+                    print(edition, o["entity"], o["pointer"], o["raw"], o["status"], o["targets"])
+        raise SystemExit("Unlinked literal structured relationships")
 
 
 if __name__ == "__main__":

@@ -42,3 +42,17 @@ class StructuredRelationshipsTests(unittest.TestCase):
         self.assertEqual("selector-review", refs[1]["status"])
         self.assertEqual(["spell.light"], refs[2]["targets"])
         self.assertEqual("constraint-review", refs[3]["status"])
+
+    def test_literal_link_requirement_keeps_filter_selectors_separate(self):
+        rows = [
+            {"id": "baseitem.dagger", "kind": "baseitem", "name": "Dagger"},
+            {"id": "class.rogue", "kind": "class", "name": "Rogue",
+             "startingEquipment": ["Dagger|SRD52"],
+             "startingProficiencies": {"weaponProficiencies": [
+                 {"all": {"fromFilter": "type=martial weapon|property=light;finesse"}}]}}
+        ]
+        report = audit(rows, "SRD52")
+        self.assertEqual(1, report["unlinkedLiteralOccurrences"])
+        self.assertEqual(1, report["counts"]["selector-review"])
+        rows[1]["catalogReferences"] = ["baseitem.dagger"]
+        self.assertEqual(0, audit(rows, "SRD52")["unlinkedLiteralOccurrences"])
