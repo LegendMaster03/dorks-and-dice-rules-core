@@ -117,6 +117,16 @@ class Crosswalk:
         # prose. Check standalone printed headings, including split columns.
         headings = {normalize(cell) for page in pages for line in page["textLayout"].splitlines()
                     for cell in re.split(r" {2,}", line.strip()) if cell.strip()}
+        if self.edition == LEGACY and caption == "precipitation":
+            # The publisher has a spell-specific stage table, not the DMG
+            # random weather table. A shared caption does not establish identity.
+            matches = [p for p in pages if any(normalize(cell) == caption for line in p["textLayout"].splitlines()
+                       for cell in re.split(r" {2,}", line.strip()))]
+            if matches:
+                if [p["page"] for p in matches] != [131] or not all(label in matches[0]["textLayout"] for label in
+                        ["Stage", "Condition", "Light clouds", "Overcast or ground fog", "Torrential rain, driving hail, or blizzard"]):
+                    raise ValueError("Unexpected publisher Precipitation table context")
+                return self.result("publisher-different-table-context", ["spell.control-weather"], publisherPages=[131], **details)
         if caption in headings:
             raise ValueError("Previously absent publisher table title appeared: " + caption)
         if self.edition == LEGACY and caption == "airborne and waterborne vehicles":

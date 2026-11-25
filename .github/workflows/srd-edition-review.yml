@@ -14,6 +14,7 @@ on:
       - 'tools/report_srd_promotion.py'
       - 'tools/audit_srd_native_references.py'
       - 'tools/audit_srd_structured_relationships.py'
+      - 'tools/link_srd_spell_relationships.mjs'
       - 'tests/test_srd_structured_relationships.py'
       - 'tests/test_srd_native_reference_audit.py'
       - 'tools/promote_srd_bestiary.mjs'

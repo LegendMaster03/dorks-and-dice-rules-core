@@ -134,3 +134,11 @@ class UpstreamComparisonTests(unittest.TestCase):
         page["textLayout"] = "Ability Score Point Cost"
         with self.assertRaises(ValueError):
             Crosswalk(LEGACY, [page]).table("Ability Score Point Cost", {})
+
+    def test_weather_table_title_does_not_override_spell_context(self):
+        page = {"id": "rulebook.page-131", "kind": "rulebook-page", "name": "Page 131", "page": 131,
+                "textLayout": "Precipitation\nStage  Condition\n2  Light clouds\n3  Overcast or ground fog\n5  Torrential rain, driving hail, or blizzard"}
+        spell = {"id": "spell.control-weather", "kind": "spell", "name": "Control Weather"}
+        result = Crosswalk(LEGACY, [page, spell]).table("Weather; Precipitation", {})
+        self.assertEqual("publisher-different-table-context", result["status"])
+        self.assertEqual(["spell.control-weather"], result["nativeIds"])
