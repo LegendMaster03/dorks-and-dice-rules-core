@@ -113,7 +113,11 @@ class Crosswalk:
         if not pages:  # Small synthetic unit fixtures need not supply a book.
             return self.result("publisher-scope-review", related, **details)
         text = [normalize(p["textLayout"]) for p in pages]
-        if any(caption in page for page in text):
+        # A single-word title such as Precipitation may occur in unrelated
+        # prose. Check standalone printed headings, including split columns.
+        headings = {normalize(cell) for page in pages for line in page["textLayout"].splitlines()
+                    for cell in re.split(r" {2,}", line.strip()) if cell.strip()}
+        if caption in headings:
             raise ValueError("Previously absent publisher table title appeared: " + caption)
         if self.edition == LEGACY and caption == "airborne and waterborne vehicles":
             native = self.rows["table.waterborne-vehicles"]

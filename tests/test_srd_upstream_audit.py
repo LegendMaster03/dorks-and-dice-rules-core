@@ -129,6 +129,8 @@ class UpstreamComparisonTests(unittest.TestCase):
                                  {"rows": [[]] * 8})
         self.assertEqual("not-published-as-table", result["status"])
         self.assertEqual([], result["nativeIds"])
+        page["textLayout"] = "A spell produces precipitation in the area."
+        self.assertEqual("not-published-as-table", Crosswalk(LEGACY, [page]).table("Weather; Precipitation", {})["status"])
         page["textLayout"] = "Ability Score Point Cost"
         with self.assertRaises(ValueError):
             Crosswalk(LEGACY, [page]).table("Ability Score Point Cost", {})
