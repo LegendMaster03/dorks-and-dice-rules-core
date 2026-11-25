@@ -4491,6 +4491,1345 @@
     }
   },
   {
+    "id": "table.weapons",
+    "kind": "table",
+    "name": "Weapons",
+    "colLabels": [
+      "Name",
+      "Damage",
+      "Properties",
+      "Mastery",
+      "Weight",
+      "Cost"
+    ],
+    "rows": [
+      [
+        {
+          "type": "cell",
+          "width": 6,
+          "entry": "{@i Simple Melee Weapons}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Club|srd52}",
+          "{@dice 1d4} Bludgeoning",
+          "{@itemProperty L|srd52|Light}",
+          "{@itemMastery Slow}",
+          "2 lb.",
+          "1 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Dagger|srd52}",
+          "{@dice 1d4} Piercing",
+          "{@itemProperty F|srd52|Finesse}, {@itemProperty L|srd52|Light}, {@itemProperty T|srd52|Thrown} (Range 20/60)",
+          "{@itemMastery Nick}",
+          "1 lb.",
+          "2 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Greatclub|srd52}",
+          "{@dice 1d8} Bludgeoning",
+          "{@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Push}",
+          "10 lb.",
+          "2 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Handaxe|srd52}",
+          "{@dice 1d6} Slashing",
+          "{@itemProperty L|srd52|Light}, {@itemProperty T|srd52|Thrown} (Range 20/60)",
+          "{@itemMastery Vex}",
+          "2 lb.",
+          "5 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Javelin|srd52}",
+          "{@dice 1d6} Piercing",
+          "{@itemProperty T|srd52|Thrown} (Range 30/120)",
+          "{@itemMastery Slow}",
+          "2 lb.",
+          "5 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Light Hammer|srd52}",
+          "{@dice 1d4} Bludgeoning",
+          "{@itemProperty L|srd52|Light}, {@itemProperty T|srd52|Thrown} (Range 20/60)",
+          "{@itemMastery Nick}",
+          "2 lb.",
+          "2 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Mace|srd52}",
+          "{@dice 1d6} Bludgeoning",
+          "—",
+          "{@itemMastery Sap}",
+          "4 lb.",
+          "5 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Quarterstaff|srd52}",
+          "{@dice 1d6} Bludgeoning",
+          "{@itemProperty V|srd52|Versatile} ({@dice 1d8})",
+          "{@itemMastery Topple}",
+          "4 lb.",
+          "2 SP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Sickle|srd52}",
+          "{@dice 1d4} Slashing",
+          "{@itemProperty L|srd52|Light}",
+          "{@itemMastery Nick}",
+          "2 lb.",
+          "1 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Spear|srd52}",
+          "{@dice 1d6} Piercing",
+          "{@itemProperty T|srd52|Thrown} (Range 20/60), {@itemProperty V|srd52|Versatile} ({@dice 1d8})",
+          "{@itemMastery Sap}",
+          "3 lb.",
+          "1 GP"
+        ]
+      },
+      [
+        {
+          "type": "cell",
+          "width": 6,
+          "entry": "{@i Simple Ranged Weapons}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Dart|srd52}",
+          "{@dice 1d4} Piercing",
+          "{@itemProperty F|srd52|Finesse}, {@itemProperty T|srd52|Thrown} (Range 20/60)",
+          "{@itemMastery Vex}",
+          "1/4 lb.",
+          "5 CP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Light Crossbow|srd52}",
+          "{@dice 1d8} Piercing",
+          "{@itemProperty A|srd52|Ammunition} (Range 80/320; Bolt), {@itemProperty LD|srd52|Loading}, {@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Slow}",
+          "5 lb.",
+          "25 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Shortbow|srd52}",
+          "{@dice 1d6} Piercing",
+          "{@itemProperty A|srd52|Ammunition} (Range 80/320; Arrow), {@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Vex}",
+          "2 lb.",
+          "25 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Sling|srd52}",
+          "{@dice 1d4} Bludgeoning",
+          "{@itemProperty A|srd52|Ammunition} (Range 30/120; Bullet)",
+          "{@itemMastery Slow}",
+          "—",
+          "1 SP"
+        ]
+      },
+      [
+        {
+          "type": "cell",
+          "width": 6,
+          "entry": "{@i Martial Melee Weapons}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Battleaxe|srd52}",
+          "{@dice 1d8} Slashing",
+          "{@itemProperty V|srd52|Versatile} ({@dice 1d10})",
+          "{@itemMastery Topple}",
+          "4 lb.",
+          "10 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Flail|srd52}",
+          "{@dice 1d8} Bludgeoning",
+          "—",
+          "{@itemMastery Sap}",
+          "2 lb.",
+          "10 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Glaive|srd52}",
+          "{@dice 1d10} Slashing",
+          "{@itemProperty H|srd52|Heavy}, {@itemProperty R|srd52|Reach}, {@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Graze}",
+          "6 lb.",
+          "20 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Greataxe|srd52}",
+          "{@dice 1d12} Slashing",
+          "{@itemProperty H|srd52|Heavy}, {@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Cleave}",
+          "7 lb.",
+          "30 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Greatsword|srd52}",
+          "{@dice 2d6} Slashing",
+          "{@itemProperty H|srd52|Heavy}, {@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Graze}",
+          "6 lb.",
+          "50 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Halberd|srd52}",
+          "{@dice 1d10} Slashing",
+          "{@itemProperty H|srd52|Heavy}, {@itemProperty R|srd52|Reach}, {@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Cleave}",
+          "6 lb.",
+          "20 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Lance|srd52}",
+          "{@dice 1d10} Piercing",
+          "{@itemProperty H|srd52|Heavy}, {@itemProperty R|srd52|Reach}, {@itemProperty 2H|srd52|Two-Handed} (unless mounted)",
+          "{@itemMastery Topple}",
+          "6 lb.",
+          "10 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Longsword|srd52}",
+          "{@dice 1d8} Slashing",
+          "{@itemProperty V|srd52|Versatile} ({@dice 1d10})",
+          "{@itemMastery Sap}",
+          "3 lb.",
+          "15 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Maul|srd52}",
+          "{@dice 2d6} Bludgeoning",
+          "{@itemProperty H|srd52|Heavy}, {@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Topple}",
+          "10 lb.",
+          "10 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Morningstar|srd52}",
+          "{@dice 1d8} Piercing",
+          "—",
+          "{@itemMastery Sap}",
+          "4 lb.",
+          "15 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Pike|srd52}",
+          "{@dice 1d10} Piercing",
+          "{@itemProperty H|srd52|Heavy}, {@itemProperty R|srd52|Reach}, {@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Push}",
+          "18 lb.",
+          "5 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Rapier|srd52}",
+          "{@dice 1d8} Piercing",
+          "{@itemProperty F|srd52|Finesse}",
+          "{@itemMastery Vex}",
+          "2 lb.",
+          "25 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Scimitar|srd52}",
+          "{@dice 1d6} Slashing",
+          "{@itemProperty F|srd52|Finesse}, {@itemProperty L|srd52|Light}",
+          "{@itemMastery Nick}",
+          "3 lb.",
+          "25 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Shortsword|srd52}",
+          "{@dice 1d6} Piercing",
+          "{@itemProperty F|srd52|Finesse}, {@itemProperty L|srd52|Light}",
+          "{@itemMastery Vex}",
+          "2 lb.",
+          "10 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Trident|srd52}",
+          "{@dice 1d8} Piercing",
+          "{@itemProperty T|srd52|Thrown} (Range 20/60), {@itemProperty V|srd52|Versatile} ({@dice 1d10})",
+          "{@itemMastery Topple}",
+          "4 lb.",
+          "5 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Warhammer|srd52}",
+          "{@dice 1d8} Bludgeoning",
+          "{@itemProperty V|srd52|Versatile} ({@dice 1d10})",
+          "{@itemMastery Push}",
+          "5 lb.",
+          "15 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item War Pick|srd52}",
+          "{@dice 1d8} Piercing",
+          "{@itemProperty V|srd52|Versatile} ({@dice 1d10})",
+          "{@itemMastery Sap}",
+          "2 lb.",
+          "5 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Whip|srd52}",
+          "{@dice 1d4} Slashing",
+          "{@itemProperty F|srd52|Finesse}, {@itemProperty R|srd52|Reach}",
+          "{@itemMastery Slow}",
+          "3 lb.",
+          "2 GP"
+        ]
+      },
+      [
+        {
+          "type": "cell",
+          "width": 6,
+          "entry": "{@i Martial Ranged Weapons}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Blowgun|srd52}",
+          "1 Piercing",
+          "{@itemProperty A|srd52|Ammunition} (Range 25/100; Needle), {@itemProperty LD|srd52|Loading}",
+          "{@itemMastery Vex}",
+          "1 lb.",
+          "10 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Hand Crossbow|srd52}",
+          "{@dice 1d6} Piercing",
+          "{@itemProperty A|srd52|Ammunition} (Range 30/120; Bolt), {@itemProperty L|srd52|Light}, {@itemProperty LD|srd52|Loading}",
+          "{@itemMastery Vex}",
+          "3 lb.",
+          "75 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Heavy Crossbow|srd52}",
+          "{@dice 1d10} Piercing",
+          "{@itemProperty A|srd52|Ammunition} (Range 100/400; Bolt), {@itemProperty H|srd52|Heavy}, {@itemProperty LD|srd52|Loading}, {@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Push}",
+          "18 lb.",
+          "50 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Longbow|srd52}",
+          "{@dice 1d8} Piercing",
+          "{@itemProperty A|srd52|Ammunition} (Range 150/600; Arrow), {@itemProperty H|srd52|Heavy}, {@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Slow}",
+          "2 lb.",
+          "50 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Musket|srd52}",
+          "{@dice 1d12} Piercing",
+          "{@itemProperty A|srd52|Ammunition} (Range 40/120; Bullet), {@itemProperty LD|srd52|Loading}, {@itemProperty 2H|srd52|Two-Handed}",
+          "{@itemMastery Slow}",
+          "10 lb.",
+          "500 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Pistol|srd52}",
+          "{@dice 1d10} Piercing",
+          "{@itemProperty A|srd52|Ammunition} (Range 30/90; Bullet), {@itemProperty LD|srd52|Loading}",
+          "{@itemMastery Vex}",
+          "3 lb.",
+          "250 GP"
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.battleaxe",
+      "baseitem.blowgun",
+      "baseitem.bolt",
+      "baseitem.club",
+      "baseitem.dagger",
+      "baseitem.dart",
+      "baseitem.firearm-bullet",
+      "baseitem.flail",
+      "baseitem.glaive",
+      "baseitem.greataxe",
+      "baseitem.greatclub",
+      "baseitem.greatsword",
+      "baseitem.halberd",
+      "baseitem.hand-crossbow",
+      "baseitem.handaxe",
+      "baseitem.heavy-crossbow",
+      "baseitem.javelin",
+      "baseitem.lance",
+      "baseitem.light-crossbow",
+      "baseitem.light-hammer",
+      "baseitem.longbow",
+      "baseitem.longsword",
+      "baseitem.mace",
+      "baseitem.maul",
+      "baseitem.morningstar",
+      "baseitem.musket",
+      "baseitem.needle",
+      "baseitem.pike",
+      "baseitem.pistol",
+      "baseitem.quarterstaff",
+      "baseitem.rapier",
+      "baseitem.scimitar",
+      "baseitem.shortbow",
+      "baseitem.shortsword",
+      "baseitem.sickle",
+      "baseitem.sling",
+      "baseitem.sling-bullet",
+      "baseitem.spear",
+      "baseitem.trident",
+      "baseitem.war-pick",
+      "baseitem.warhammer",
+      "baseitem.whip",
+      "item-mastery.cleave",
+      "item-mastery.graze",
+      "item-mastery.nick",
+      "item-mastery.push",
+      "item-mastery.sap",
+      "item-mastery.slow",
+      "item-mastery.topple",
+      "item-mastery.vex",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.f",
+      "item-property.h",
+      "item-property.l",
+      "item-property.ld",
+      "item-property.r",
+      "item-property.t",
+      "item-property.v",
+      "rulebook.page-091"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        91
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/2/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.armor",
+    "kind": "table",
+    "name": "Armor",
+    "colLabels": [
+      "Armor",
+      "Armor Class (AC)",
+      "Strength",
+      "Stealth",
+      "Weight",
+      "Cost"
+    ],
+    "rows": [
+      [
+        {
+          "type": "cell",
+          "width": 6,
+          "entry": "{@i Light Armor (1 Minute to Don or Doff)}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Padded Armor|srd52}",
+          "11 + Dex modifier",
+          "—",
+          "{@variantrule Disadvantage|srd52}",
+          "8 lb.",
+          "5 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Leather Armor|srd52}",
+          "11 + Dex modifier",
+          "—",
+          "—",
+          "10 lb.",
+          "10 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Studded Leather Armor|srd52}",
+          "12 + Dex modifier",
+          "—",
+          "—",
+          "13 lb.",
+          "45 GP"
+        ]
+      },
+      [
+        {
+          "type": "cell",
+          "width": 6,
+          "entry": "{@i Medium Armor (5 Minutes to Don and 1 Minute to Doff)}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Hide Armor|srd52}",
+          "12 + Dex modifier (max 2)",
+          "—",
+          "—",
+          "12 lb.",
+          "10 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Chain Shirt|srd52}",
+          "13 + Dex modifier (max 2)",
+          "—",
+          "—",
+          "20 lb.",
+          "50 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Scale Mail|srd52}",
+          "14 + Dex modifier (max 2)",
+          "—",
+          "{@variantrule Disadvantage|srd52}",
+          "45 lb.",
+          "50 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Breastplate|srd52}",
+          "14 + Dex modifier (max 2)",
+          "—",
+          "—",
+          "20 lb.",
+          "400 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Half Plate Armor|srd52}",
+          "15 + Dex modifier (max 2)",
+          "—",
+          "{@variantrule Disadvantage|srd52}",
+          "40 lb.",
+          "750 GP"
+        ]
+      },
+      [
+        {
+          "type": "cell",
+          "width": 6,
+          "entry": "{@i Heavy Armor (10 Minutes to Don and 5 Minutes to Doff)}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Ring Mail|srd52}",
+          "14",
+          "—",
+          "{@variantrule Disadvantage|srd52}",
+          "40 lb.",
+          "30 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Chain Mail|srd52}",
+          "16",
+          "Str 13",
+          "{@variantrule Disadvantage|srd52}",
+          "55 lb.",
+          "75 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Splint Armor|srd52}",
+          "17",
+          "Str 15",
+          "{@variantrule Disadvantage|srd52}",
+          "60 lb.",
+          "200 GP"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Plate Armor|srd52}",
+          "18",
+          "Str 15",
+          "{@variantrule Disadvantage|srd52}",
+          "65 lb.",
+          "1,500 GP"
+        ]
+      },
+      [
+        {
+          "type": "cell",
+          "width": 6,
+          "entry": "{@i Shield ({@action Utilize|srd52} Action to Don or Doff)}"
+        }
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Shield|srd52}",
+          "+2",
+          "—",
+          "—",
+          "6 lb.",
+          "10 GP"
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "action.utilize",
+      "baseitem.breastplate",
+      "baseitem.chain-mail",
+      "baseitem.chain-shirt",
+      "baseitem.half-plate-armor",
+      "baseitem.hide-armor",
+      "baseitem.leather-armor",
+      "baseitem.padded-armor",
+      "baseitem.plate-armor",
+      "baseitem.ring-mail",
+      "baseitem.scale-mail",
+      "baseitem.shield",
+      "baseitem.splint-armor",
+      "baseitem.studded-leather-armor",
+      "rulebook.page-092"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        92
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/3/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.adventuring-gear",
+    "kind": "table",
+    "name": "Adventuring Gear",
+    "colLabels": [
+      "Item",
+      "Weight",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "{@item Acid|srd52}",
+        "1 lb.",
+        "25 GP"
+      ],
+      [
+        "{@item Alchemist's Fire|srd52}",
+        "1 lb.",
+        "50 GP"
+      ],
+      [
+        "Ammunition",
+        "Varies",
+        "Varies"
+      ],
+      [
+        "{@item Antitoxin|srd52}",
+        "—",
+        "50 GP"
+      ],
+      [
+        "{@item Arcane Focus|srd52}",
+        "Varies",
+        "Varies"
+      ],
+      [
+        "{@item Backpack|srd52}",
+        "5 lb.",
+        "2 GP"
+      ],
+      [
+        "{@item Ball Bearings|srd52}",
+        "2 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Barrel|srd52}",
+        "70 lb.",
+        "2 GP"
+      ],
+      [
+        "{@item Basket|srd52}",
+        "2 lb.",
+        "4 SP"
+      ],
+      [
+        "{@item Bedroll|srd52}",
+        "7 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Bell|srd52}",
+        "—",
+        "1 GP"
+      ],
+      [
+        "{@item Blanket|srd52}",
+        "3 lb.",
+        "5 SP"
+      ],
+      [
+        "{@item Block and Tackle|srd52}",
+        "5 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Book|srd52}",
+        "5 lb.",
+        "25 GP"
+      ],
+      [
+        "{@item Glass Bottle|srd52|Bottle, Glass}",
+        "2 lb.",
+        "2 GP"
+      ],
+      [
+        "{@item Bucket|srd52}",
+        "2 lb.",
+        "5 CP"
+      ],
+      [
+        "{@item Burglar's Pack|srd52}",
+        "42 lb.",
+        "16 GP"
+      ],
+      [
+        "{@item Caltrops|srd52}",
+        "2 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Candle|srd52}",
+        "—",
+        "1 CP"
+      ],
+      [
+        "{@item Crossbow Bolt Case|srd52|Case, Crossbow Bolt}",
+        "1 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Map or Scroll Case|srd52|Case, Map or Scroll}",
+        "1 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Chain|srd52}",
+        "10 lb.",
+        "5 GP"
+      ],
+      [
+        "{@item Chest|srd52}",
+        "25 lb.",
+        "5 GP"
+      ],
+      [
+        "{@item Climber's Kit|srd52}",
+        "12 lb.",
+        "25 GP"
+      ],
+      [
+        "{@item Fine Clothes|srd52|Clothes, Fine}",
+        "6 lb.",
+        "15 GP"
+      ],
+      [
+        "{@item Traveler's Clothes|srd52|Clothes, Traveler's}",
+        "4 lb.",
+        "2 GP"
+      ],
+      [
+        "{@item Component Pouch|srd52}",
+        "2 lb.",
+        "25 GP"
+      ],
+      [
+        "{@item Costume|srd52}",
+        "4 lb.",
+        "5 GP"
+      ],
+      [
+        "{@item Crowbar|srd52}",
+        "5 lb.",
+        "2 GP"
+      ],
+      [
+        "{@item Diplomat's Pack|srd52}",
+        "39 lb.",
+        "39 GP"
+      ],
+      [
+        "{@item Druidic Focus|srd52}",
+        "Varies",
+        "Varies"
+      ],
+      [
+        "{@item Dungeoneer's Pack|srd52}",
+        "55 lb.",
+        "12 GP"
+      ],
+      [
+        "{@item Entertainer's Pack|srd52}",
+        "58½ lb.",
+        "40 GP"
+      ],
+      [
+        "{@item Explorer's Pack|srd52}",
+        "55 lb.",
+        "10 GP"
+      ],
+      [
+        "{@item Flask|srd52}",
+        "1 lb.",
+        "2 CP"
+      ],
+      [
+        "{@item Grappling Hook|srd52}",
+        "4 lb.",
+        "2 GP"
+      ],
+      [
+        "{@item Healer's Kit|srd52}",
+        "3 lb.",
+        "5 GP"
+      ],
+      [
+        "{@item Holy Symbol|srd52}",
+        "Varies",
+        "Varies"
+      ],
+      [
+        "{@item Holy Water|srd52}",
+        "1 lb.",
+        "25 GP"
+      ],
+      [
+        "{@item Hunting Trap|srd52}",
+        "25 lb.",
+        "5 GP"
+      ],
+      [
+        "{@item Ink|srd52}",
+        "—",
+        "10 GP"
+      ],
+      [
+        "{@item Ink Pen|srd52}",
+        "—",
+        "2 CP"
+      ],
+      [
+        "{@item Jug|srd52}",
+        "4 lb.",
+        "2 CP"
+      ],
+      [
+        "{@item Ladder|srd52}",
+        "25 lb.",
+        "1 SP"
+      ],
+      [
+        "{@item Lamp|srd52}",
+        "1 lb.",
+        "5 SP"
+      ],
+      [
+        "{@item Bullseye Lantern|srd52|Lantern, Bullseye}",
+        "2 lb.",
+        "10 GP"
+      ],
+      [
+        "{@item Hooded Lantern|srd52|Lantern, Hooded}",
+        "2 lb.",
+        "5 GP"
+      ],
+      [
+        "{@item Lock|srd52}",
+        "1 lb.",
+        "10 GP"
+      ],
+      [
+        "{@item Magnifying Glass|srd52}",
+        "—",
+        "100 GP"
+      ],
+      [
+        "{@item Manacles|srd52}",
+        "6 lb.",
+        "2 GP"
+      ],
+      [
+        "{@item Map|srd52}",
+        "—",
+        "1 GP"
+      ],
+      [
+        "{@item Mirror|srd52}",
+        "1/2 lb.",
+        "5 GP"
+      ],
+      [
+        "{@item Net|srd52}",
+        "3 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Oil|srd52}",
+        "1 lb.",
+        "1 SP"
+      ],
+      [
+        "{@item Paper|srd52}",
+        "—",
+        "2 SP"
+      ],
+      [
+        "{@item Parchment|srd52}",
+        "—",
+        "1 SP"
+      ],
+      [
+        "{@item Perfume|srd52}",
+        "—",
+        "5 GP"
+      ],
+      [
+        "{@item Basic Poison|srd52|Poison, Basic}",
+        "—",
+        "100 GP"
+      ],
+      [
+        "{@item Pole|srd52}",
+        "7 lb.",
+        "5 CP"
+      ],
+      [
+        "{@item Iron Pot|srd52|Pot, Iron}",
+        "10 lb.",
+        "2 GP"
+      ],
+      [
+        "{@item Potion of Healing|srd52}",
+        "1/2 lb.",
+        "50 GP"
+      ],
+      [
+        "{@item Pouch|srd52}",
+        "1 lb.",
+        "5 SP"
+      ],
+      [
+        "{@item Priest's Pack|srd52}",
+        "29 lb.",
+        "33 GP"
+      ],
+      [
+        "{@item Quiver|srd52}",
+        "1 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Portable Ram|srd52|Ram, Portable}",
+        "35 lb.",
+        "4 GP"
+      ],
+      [
+        "{@item Rations|srd52}",
+        "2 lb.",
+        "5 SP"
+      ],
+      [
+        "{@item Robe|srd52}",
+        "4 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Rope|srd52}",
+        "5 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Sack|srd52}",
+        "1/2 lb.",
+        "1 CP"
+      ],
+      [
+        "{@item Scholar's Pack|srd52}",
+        "22 lb.",
+        "40 GP"
+      ],
+      [
+        "{@item Shovel|srd52}",
+        "5 lb.",
+        "2 GP"
+      ],
+      [
+        "{@item Signal Whistle|srd52}",
+        "—",
+        "5 CP"
+      ],
+      [
+        "{@item Spell Scroll (Cantrip)|srd52}",
+        "—",
+        "30 GP"
+      ],
+      [
+        "{@item Spell Scroll (Level 1)|srd52}",
+        "—",
+        "50 GP"
+      ],
+      [
+        "{@item Iron Spikes|srd52|Spikes, Iron}",
+        "5 lb.",
+        "1 GP"
+      ],
+      [
+        "{@item Spyglass|srd52}",
+        "1 lb.",
+        "1,000 GP"
+      ],
+      [
+        "{@item String|srd52}",
+        "—",
+        "1 SP"
+      ],
+      [
+        "{@item Tent|srd52}",
+        "20 lb.",
+        "2 GP"
+      ],
+      [
+        "{@item Tinderbox|srd52}",
+        "1 lb.",
+        "5 SP"
+      ],
+      [
+        "{@item Torch|srd52}",
+        "1 lb.",
+        "1 CP"
+      ],
+      [
+        "{@item Vial|srd52}",
+        "—",
+        "1 GP"
+      ],
+      [
+        "{@item Waterskin|srd52}",
+        "5 lb. (full)",
+        "2 SP"
+      ]
+    ],
+    "catalogReferences": [
+      "item-group.arcane-focus",
+      "item-group.druidic-focus",
+      "item-group.holy-symbol",
+      "item.acid",
+      "item.alchemist-s-fire",
+      "item.antitoxin",
+      "item.backpack",
+      "item.ball-bearings",
+      "item.barrel",
+      "item.basic-poison",
+      "item.basket",
+      "item.bedroll",
+      "item.bell",
+      "item.blanket",
+      "item.block-and-tackle",
+      "item.book",
+      "item.bucket",
+      "item.bullseye-lantern",
+      "item.burglar-s-pack",
+      "item.caltrops",
+      "item.candle",
+      "item.chain",
+      "item.chest",
+      "item.climber-s-kit",
+      "item.component-pouch",
+      "item.costume",
+      "item.crossbow-bolt-case",
+      "item.crowbar",
+      "item.diplomat-s-pack",
+      "item.dungeoneer-s-pack",
+      "item.entertainer-s-pack",
+      "item.explorer-s-pack",
+      "item.fine-clothes",
+      "item.flask",
+      "item.glass-bottle",
+      "item.grappling-hook",
+      "item.healer-s-kit",
+      "item.holy-water",
+      "item.hooded-lantern",
+      "item.hunting-trap",
+      "item.ink",
+      "item.ink-pen",
+      "item.iron-pot",
+      "item.iron-spikes",
+      "item.jug",
+      "item.ladder",
+      "item.lamp",
+      "item.lock",
+      "item.magnifying-glass",
+      "item.manacles",
+      "item.map",
+      "item.map-or-scroll-case",
+      "item.mirror",
+      "item.net",
+      "item.oil",
+      "item.paper",
+      "item.parchment",
+      "item.perfume",
+      "item.pole",
+      "item.portable-ram",
+      "item.potion-of-healing",
+      "item.pouch",
+      "item.priest-s-pack",
+      "item.quiver",
+      "item.rations",
+      "item.robe",
+      "item.rope",
+      "item.sack",
+      "item.scholar-s-pack",
+      "item.shovel",
+      "item.signal-whistle",
+      "item.spell-scroll-cantrip",
+      "item.spell-scroll-level-1",
+      "item.spyglass",
+      "item.string",
+      "item.tent",
+      "item.tinderbox",
+      "item.torch",
+      "item.traveler-s-clothes",
+      "item.vial",
+      "item.waterskin",
+      "rulebook.page-095",
+      "table.ammunition"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        95
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/6",
+        "entryPointer": "/data/6/entries/5/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
     "id": "rule.multiclassing",
     "kind": "rule",
     "name": "Multiclassing",

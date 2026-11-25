@@ -122,7 +122,10 @@ function projectModernEquipmentTables(book,existing,pages,metadata,rows,report){
  ["Mounts and Other Animals","/data/6/entries/6/entries/4",[100],8],
  ["Tack, Harness, and Drawn Vehicles","/data/6/entries/6/entries/5",[100],11],
  ["Airborne and Waterborne Vehicles","/data/6/entries/6/entries/6/entries/6",[101],7],
- ["Food, Drink, and Lodging","/data/6/entries/8/entries/1",[101,102],20]
+ ["Food, Drink, and Lodging","/data/6/entries/8/entries/1",[101,102],20],
+ ["Weapons","/data/6/entries/2/entries/2",[91],42],
+ ["Armor","/data/6/entries/3/entries/4",[92],17],
+ ["Adventuring Gear","/data/6/entries/5/entries/1",[95],82]
  ];
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
  const itemKinds=new Set(["item","baseitem","item-group"]);
@@ -132,9 +135,9 @@ function projectModernEquipmentTables(book,existing,pages,metadata,rows,report){
  for(const r of items){const key=slug(r.name);nameMap.set(key,[...(nameMap.get(key)??[]),r]);}
  const resolve=(raw)=>{const [name,source]=raw.split("|");if(source.toLowerCase()!=="srd52")throw Error("Foreign equipment "+raw);const hits=nameMap.get(slug(name))??[];if(hits.length!==1)throw Error("Nonunique equipment "+raw+" "+hits.map(x=>x.id));return hits[0];};
  const equal=(actual,expected,where)=>{if(typeof expected==="number"?typeof actual!=="number"||Math.abs(actual-expected)>1e-8:actual!==expected)throw Error(where+": "+actual+" != "+expected);};
- const number=s=>{s=s.replaceAll(",","").replace(/ (lb\.|mph)$/,"").trim();if(s==="—")return 0;if(s==="1/2")return .5;const m=s.match(/^(\d+(?:\.\d+)?)?\s*([½¼¾])?$/);if(!m||!m[1]&&!m[2])throw Error("Unparsed numeric cell "+s);return Number(m[1]??0)+({"½":.5,"¼":.25,"¾":.75}[m[2]]??0);};
+ const number=s=>{s=s.replaceAll(",","").replace(/ \(full\)$/,"").replace(/ (lb\.|mph)$/,"").trim();if(s==="—")return 0;if(s==="1/2")return .5;if(s==="1/4")return .25;const m=s.match(/^(\d+(?:\.\d+)?)?\s*([½¼¾])?$/);if(!m||!m[1]&&!m[2])throw Error("Unparsed numeric cell "+s);return Number(m[1]??0)+({"½":.5,"¼":.25,"¾":.75}[m[2]]??0);};
  const money=s=>{const m=s.match(/^([\d,]+) (CP|SP|GP)$/);if(!m)throw Error("Unparsed price "+s);return Number(m[1].replaceAll(",",""))*({CP:1,SP:10,GP:100}[m[2]]);};
- const display=s=>s.replace(/\{@item ([^}|]+)\|[^}|]+(?:\|([^}]+))?\}/g,(_,name,label)=>label??name).replace(/\{@i ([^}]+)\}/g,"$1");
+ const display=s=>s.replace(/\{@(?:item|itemProperty|itemMastery|dice|action|variantrule) ([^}|]+)(?:\|[^}|]+)?(?:\|([^}]+))?\}/g,(_,name,label)=>label??name).replace(/\{@i ([^}]+)\}/g,"$1");
  const norm=s=>s.toLowerCase().replace(/[’‘]/g,"'").replaceAll("½","1/2").replaceAll("¼","1/4").replaceAll("¾","3/4").replace(/\s/g,"");
  const ammoUnitIds=["baseitem.arrow","baseitem.bolt","baseitem.firearm-bullet","baseitem.sling-bullet","baseitem.needle"];
  for(const [name,pointer,nums,count,groupId] of selections){
@@ -143,20 +146,33 @@ function projectModernEquipmentTables(book,existing,pages,metadata,rows,report){
   const publisher=pages.filter(p=>nums.includes(p.page)).map(p=>p.textLayout);
   if(publisher.length!==nums.length||!publisher.some(p=>norm(p).includes(norm(name))))throw Error("Publisher table heading "+name);
   const refs=new Set(nums.map(p=>"rulebook.page-"+String(p).padStart(3,"0"))), members=new Set();
-  const tableRows=JSON.parse(JSON.stringify(node.rows));let itemCount=0;
+  const tableRows=JSON.parse(JSON.stringify(node.rows));let itemCount=0,category=null;
   for(let i=0;i<tableRows.length;i++){
    const raw=tableRows[i], row=Array.isArray(raw)?raw:raw.row;
    if(!Array.isArray(row))throw Error("Invalid equipment row "+name);
    if(row.length===1&&row[0]?.type==="cell"){
-    if(row[0].width!==node.colLabels.length||!publisher.some(p=>norm(p).includes(norm(display(row[0].entry)))))throw Error("Invalid group heading "+name);
+    const heading=display(row[0].entry);
+    if(row[0].width!==node.colLabels.length||!publisher.some(p=>norm(p).includes(norm(heading))))throw Error("Invalid group heading "+name);
+    if(name==="Weapons"||name==="Armor")category=heading;
+    if(name==="Armor"&&heading.startsWith("Shield"))refs.add("action.utilize");
     continue;
    }
    if(row.length!==node.colLabels.length||row.some(x=>typeof x!=="string"))throw Error("Invalid equipment cells "+name);
    // Match the visible published row, not commercial tags or a guessed identity.
    const visible=row.map(display);
-   if(!publisher.some(p=>norm(p).includes(norm(visible.join(" ")))))throw Error("Publisher row mismatch "+name+" "+JSON.stringify(visible));
+   let published=publisher.some(p=>norm(p).includes(norm(visible.join(" "))));
+   // Four wide weapon rows place the final property on a continuation line.
+   if(!published&&name==="Weapons"&&visible[2].endsWith(", Two-Handed")){
+    const first=[...visible];first[2]=first[2].slice(0,-" Two-Handed".length);
+    published=publisher.some(p=>p.split("\n").some((line,j,lines)=>norm(line).includes(norm(first.join(" ")))&&lines[j+1]?.trim()==="Two-Handed"));
+   }
+   if(!published)throw Error("Publisher row mismatch "+name+" "+JSON.stringify(visible));
    // Sling bullets are sold in twenty-piece packs, not as twenty units of a single catalog record.
    if(name==="Ammunition"&&i===3)row[0]="{@item Sling Bullets (20)|srd52|Bullets, Sling}";
+   if(name==="Adventuring Gear"){
+    if(row[0]==="Ammunition"){refs.add("table.ammunition");continue;}
+    if(/^Spell Scroll \((Cantrip|Level 1)\)$/.test(row[0]))row[0]="{@item "+row[0]+"|srd52}";
+   }
    const links=[...row.join(" ").matchAll(/\{@item ([^}]+)\}/g)].map(m=>resolve(m[1]));
    for(const link of links)refs.add(link.id);
    if(!links.length){
@@ -164,10 +180,45 @@ function projectModernEquipmentTables(book,existing,pages,metadata,rows,report){
     throw Error("Unexpected unlinked equipment row "+name+" "+row[0]);
    }
    const item=links[0];members.add(item.id);itemCount++;
+   if(name==="Weapons"){
+    equal(item.weaponCategory,category.startsWith("Simple")?"simple":"martial",id+" category "+item.id);
+    equal(item.type,(category.includes("Melee")?"M":"R")+"|SRD52",id+" type "+item.id);
+    const m=visible[1].match(/^(\d+(?:d\d+)?) (Bludgeoning|Piercing|Slashing)$/);
+    if(!m)throw Error("Weapon damage format "+item.id);
+    equal(String(item.dmg1),m[1],item.id+" damage");
+    equal(item.dmgType,m[2][0],item.id+" damage type");
+    const props=[...row[2].matchAll(/\{@itemProperty ([^}|]+)\|([^}|]+)(?:\|[^}]+)?\}/g)].map(m=>{
+     equal(m[2].toUpperCase(),"SRD52",item.id+" property edition");refs.add("item-property."+slug(m[1]));return m[1];
+    });
+    const actual=(item.property??[]).map(p=>typeof p==="string"?p:p.uid);
+    equal(JSON.stringify(actual.map(p=>p.split("|")[0]).sort()),JSON.stringify(props.sort()),item.id+" properties");
+    if(actual.some(p=>p.includes("|")&&p.split("|")[1]!=="SRD52"))throw Error("Foreign weapon property "+item.id);
+    equal(item.property?.find(p=>typeof p==="object")?.note??"",visible[2].includes("(unless mounted)")?"unless mounted":"",item.id+" property note");
+    equal(item.range??"",visible[2].match(/Range (\d+\/\d+)/)?.[1]??"",item.id+" range");
+    equal(item.dmg2??"",visible[2].match(/Versatile \((\d+d\d+)\)/)?.[1]??"",item.id+" versatile damage");
+    const ammo=visible[2].match(/; (Arrow|Bolt|Bullet|Needle)\)/)?.[1];
+    if(ammo){
+     const unit=resolve(item.ammoType),expected=ammo==="Bullet"?(item.name==="Sling"?"Sling Bullet":"Firearm Bullet"):ammo;
+     equal(unit.name,expected,item.id+" ammunition type");refs.add(unit.id);
+    }else if(item.ammoType)throw Error("Unexpected ammunition type "+item.id);
+    equal(JSON.stringify(item.mastery),JSON.stringify([visible[3]+"|SRD52"]),item.id+" mastery");
+    refs.add("item-mastery."+slug(visible[3]));
+   }
+   if(name==="Armor"){
+    const type=category.startsWith("Light")?"LA":category.startsWith("Medium")?"MA":category.startsWith("Heavy")?"HA":"S";
+    equal(item.type,type+"|SRD52",item.id+" armor category");
+    const expectedAc=type==="S"?"+"+item.ac:type==="LA"?item.ac+" + Dex modifier":type==="MA"?item.ac+" + Dex modifier (max 2)":String(item.ac);
+    equal(visible[1],expectedAc,item.id+" AC");
+    equal(visible[2],item.strength?"Str "+item.strength:"—",item.id+" strength");
+    equal(visible[3],item.stealth?"Disadvantage":"—",item.id+" stealth");
+   }
    for(let c=1;c<row.length;c++){
     const label=node.colLabels[c],v=row[c],context=id+" "+item.id+" "+label;
-    if(label==="Cost")equal(item.value,money(v),context);
+    if(v==="Varies"&&(label==="Cost"||label==="Weight")){
+     if(item.kind!=="item-group")throw Error("Non-group variable equipment "+item.id);
+    }else if(label==="Cost")equal(item.value,money(v),context);
     else if(label==="Weight")equal(item.weight??0,number(v),context);
+    else if(name==="Weapons"&&["Damage","Properties","Mastery"].includes(label)||name==="Armor"&&["Armor Class (AC)","Strength","Stealth"].includes(label))continue;
     else if(label==="Carrying Capacity")equal(item.carryingCapacity,number(v),context);
     else if(label==="Speed")equal(item.vehSpeed,number(v),context);
     else if(label==="Crew")equal(item.crew,number(v),context);

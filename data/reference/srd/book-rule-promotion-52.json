@@ -334,6 +334,24 @@
         101,
         102
       ]
+    },
+    {
+      "id": "table.weapons",
+      "pointer": "/data/6/entries/2/entries/2",
+      "page": 91,
+      "rowCount": 42
+    },
+    {
+      "id": "table.armor",
+      "pointer": "/data/6/entries/3/entries/4",
+      "page": 92,
+      "rowCount": 17
+    },
+    {
+      "id": "table.adventuring-gear",
+      "pointer": "/data/6/entries/5/entries/1",
+      "page": 95,
+      "rowCount": 82
     }
   ],
   "rules": [
@@ -401,13 +419,13 @@
       "reason": "Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
     }
   ],
-  "nativeCount": 60,
+  "nativeCount": 63,
   "tableInventory": {
     "total": 59,
     "counts": {
-      "projected": 53,
+      "projected": 56,
       "existing-catalog-representation": 3,
-      "pending-review": 3
+      "pending-review": 0
     },
     "occurrences": [
       {
@@ -623,21 +641,24 @@
         "caption": "Weapons",
         "context": "Weapons",
         "rows": 42,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.weapons"
       },
       {
         "pointer": "/data/6/entries/3/entries/4",
         "caption": "Armor",
         "context": "Armor",
         "rows": 17,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.armor"
       },
       {
         "pointer": "/data/6/entries/5/entries/1",
         "caption": "Adventuring Gear",
         "context": "Adventuring Gear",
         "rows": 82,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.adventuring-gear"
       },
       {
         "pointer": "/data/6/entries/5/entries/2/entries/2/entries/1",
