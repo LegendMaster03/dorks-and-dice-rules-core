@@ -6,7 +6,7 @@
   "workingRoot": "working/",
   "runtimeContentRoot": "native/",
   "name": "D&D SRD 5.2.1",
-  "coverageStatus": "official-pdf-page-reference; reviewed skills and conditions; structured SRD spells and bestiary with publisher evidence; remaining categories incomplete",
+  "coverageStatus": "official-pdf-page-reference; reviewed skills and conditions; structured SRD spells, bestiary and item catalogs; remaining categories incomplete",
   "license": "CC-BY-4.0",
   "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
   "officialPageImport": {
@@ -36,10 +36,18 @@
   },
   "structuredBestiaryImport": {
     "sourceRecords": 334,
-    "nativeRecords": 335,
+    "nativeRecords": 336,
     "publisherOnly": [
-      "monster.avatar-of-death"
+      "monster.avatar-of-death",
+      "monster.giant-fly"
     ],
     "representation": "pinned edition-specific 5e.tools-shaped stat blocks; full body review pending"
+  },
+  "structuredItemImport": {
+    "nativeRecords": 641,
+    "representation": "pinned edition-specific concrete items, base equipment, groups, templates and weapon rules; full fidelity review pending",
+    "publisherOnly": [
+      "item.plate-armor-of-etherealness"
+    ]
   }
 }

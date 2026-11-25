@@ -10,6 +10,8 @@ on:
       - 'tools/inventory_srd_editions.py'
       - 'tools/report_srd_promotion.py'
       - 'tools/promote_srd_bestiary.mjs'
+      - 'tools/promote_srd_items.mjs'
+      - 'data/reference/srd/item-promotion-*.json'
       - 'data/reference/srd/bestiary-promotion-*.json'
       - 'data/rulesets/dnd-5e/native/**'
       - 'data/rulesets/dnd-5-5e/native/**'
@@ -26,6 +28,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build isolated edition review catalogs
         run: python3 tools/stage_srd_editions.py --output build/srd-review
+      - name: Verify structured item source projection
+        run: node tools/promote_srd_items.mjs --check
       - name: Verify structured bestiary source projection
         run: node tools/promote_srd_bestiary.mjs --check
       - name: Reconcile native promotion coverage (diagnostic only)

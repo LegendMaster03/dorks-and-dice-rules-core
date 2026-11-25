@@ -108,8 +108,8 @@ public sealed class RulesetResolutionApiTests
         const string animals = "/api/rulesets/dnd-5-5e/rules";
         var firstPage = await client.GetFromJsonAsync<JsonElement>(animals + "?category=monster&limit=10");
         var secondPage = await client.GetFromJsonAsync<JsonElement>(animals + "?category=monster&limit=10&offset=10");
-        Assert.Equal(335, firstPage.GetProperty("total").GetInt32());
-        Assert.Equal(335, secondPage.GetProperty("total").GetInt32());
+        Assert.Equal(336, firstPage.GetProperty("total").GetInt32());
+        Assert.Equal(336, secondPage.GetProperty("total").GetInt32());
         Assert.Empty(firstPage.GetProperty("rules").EnumerateArray().Select(x => x.GetProperty("id").GetString())
             .Intersect(secondPage.GetProperty("rules").EnumerateArray().Select(x => x.GetProperty("id").GetString())));
         var seahorse = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.seahorse");
@@ -129,6 +129,27 @@ public sealed class RulesetResolutionApiTests
             .GetProperty("summonedBySpell").GetString());
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(
             "/api/rulesets/dnd-5e/rules/monster.draconic-spirit")).StatusCode);
+
+        // Concrete equipment, generic magic templates and weapon rules remain
+        // distinct and edition-scoped; recovered embedded stat blocks are accessible.
+        var modernItems = await client.GetFromJsonAsync<JsonElement>(animals + "?category=item&limit=1");
+        Assert.Equal(465, modernItems.GetProperty("total").GetInt32());
+        var modernWeapon = await client.GetFromJsonAsync<JsonElement>(animals + "/baseitem.musket");
+        Assert.Equal("Slow|SRD52", modernWeapon.GetProperty("rule").GetProperty("definition")
+            .GetProperty("mastery")[0].GetString());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(
+            "/api/rulesets/dnd-5e/rules/baseitem.musket")).StatusCode);
+        var cube = await client.GetFromJsonAsync<JsonElement>(animals + "/item.cube-of-force");
+        var cubeDefinition = cube.GetProperty("rule").GetProperty("definition");
+        Assert.Contains("tiny hut|srd52", cubeDefinition.GetProperty("attachedSpells").GetRawText());
+        Assert.DoesNotContain("leomund", cubeDefinition.GetProperty("attachedSpells").GetRawText());
+        var ethereal = await client.GetFromJsonAsync<JsonElement>(animals + "/item.plate-armor-of-etherealness");
+        Assert.Equal(2, ethereal.GetProperty("rule").GetProperty("definition").GetProperty("eligibleArmor").GetArrayLength());
+        var fly = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.giant-fly");
+        Assert.Equal(0, fly.GetProperty("rule").GetProperty("definition").GetProperty("challenge").GetProperty("xp").GetInt32());
+        var oldAssassin = await client.GetFromJsonAsync<JsonElement>(
+            "/api/rulesets/dnd-5e/rules/monster.assassin");
+        Assert.Contains("baseitem.studded-leather-armor", oldAssassin.GetProperty("rule").GetProperty("definition").GetRawText());
 
         // The foreign catalogs expose original typed spell fields and entries,
         // not just publisher layout strings.
