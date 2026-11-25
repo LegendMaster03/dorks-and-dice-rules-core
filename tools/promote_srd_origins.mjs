@@ -5,7 +5,7 @@ import {fileURLToPath} from "node:url";
 import {linkSpellRelationships} from "./link_srd_spell_relationships.mjs";
 import {characterRelationshipCatalog,linkCharacterRelationships} from "./link_srd_character_relationships.mjs";
 
-function generate(races,backgrounds,manifest,sourceManifest,pages,skills,tag) {
+function generate(races,backgrounds,backgroundFluff,manifest,sourceManifest,pages,skills,tag) {
  const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""), edition="SRD"+tag, modern=tag==="52";
  const records=[],report={edition:manifest.officialPageImport.release,sourceCounts:{},nativeCounts:{},excluded:[],corrections:[],mergedOccurrences:[],pendingReferences:[]};
  const byPage=new Map(pages.map(p=>[p.page,p]));
@@ -116,7 +116,24 @@ function generate(races,backgrounds,manifest,sourceManifest,pages,skills,tag) {
  }
  for(const [i,c] of backgrounds.background.entries()){
   if(c.source!==edition)continue;report.sourceCounts.background=(report.sourceCounts.background??0)+1;
-  record(c,"backgrounds.json","background",i,"background","background."+slug(c.name),c.name,modern?[83]:[60,61]);
+  const row=record(c,"backgrounds.json","background",i,"background","background."+slug(c.name),c.name,modern?[83]:[60,61]);
+  if(!modern&&c.name==="Acolyte"){
+   const matches=backgroundFluff.backgroundFluff.map((entry,index)=>({entry,index})).filter(x=>x.entry.source===edition&&x.entry.name===c.name);
+   if(matches.length!==1)throw Error("Unexpected Acolyte background source");
+   const {entry,index}=matches[0], body=entry.entries?.[0]?.entries?.[0]?.entries;
+   if(body?.length!==1||typeof body[0]!=="string")throw Error("Unexpected Acolyte narrative shape");
+   const norm=s=>s.replace(/\s+/g," ").trim();
+   const layout=byPage.get(60).textLayout.split("\n");
+   const heading=layout.findIndex(line=>/\s{2,}Acolyte\s*$/.test(line));
+   if(heading<0)throw Error("Missing Acolyte publisher heading");
+   const publisher=norm(layout.slice(heading+1).map(line=>line.trimEnd().split(/\s{2,}/).at(-1)).join(" "));
+   if(!publisher.includes(norm(body[0])))throw Error("Acolyte introduction differs from publisher");
+   row.entries.unshift(body[0]);
+   (row.source.additionalStructuredSources??=[]).push(sourcePtr("fluff-backgrounds.json","backgroundFluff",index));
+   report.sourceCounts.backgroundFluff=(report.sourceCounts.backgroundFluff??0)+1;
+   report.mergedOccurrences.push({id:row.id,...ptr("fluff-backgrounds.json","backgroundFluff",index),fields:["entries"],reason:"published background introduction"});
+   report.corrections.push({id:row.id,reason:"Restore the published Acolyte introduction on SRD 5.1 p.60 from the eligible structured background text."});
+  }
  }
  const skillIds=new Set(skills.map(s=>s.id)), ids=new Set(records.map(r=>r.id)), pageIds=new Set(pages.map(p=>p.id));
  if(ids.size!==records.length)throw Error("Duplicate origin identity");
@@ -142,13 +159,14 @@ const json=x=>JSON.stringify(x,null,2)+"\n";
 const src=read("data/reference/srd/structured-manifest.json");
 const races=read("data/reference/srd/structured/races.json");
 const backgrounds=read("data/reference/srd/structured/backgrounds.json");
+const backgroundFluff=read("data/reference/srd/structured/fluff-backgrounds.json");
 const check=process.argv.includes("--check");
 for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  const base="data/rulesets/"+pack+"/";
  const manifest=read(base+"manifest.json");
  const files=tag==="51"?["003-027","053-077"]:["080-104"];
  const pages=files.flatMap(x=>read(base+"native/rulebook/pages-"+x+".json"));
- const {records,report}=generate(races,backgrounds,manifest,src,pages,read(base+"native/skills.json"),tag);
+ const {records,report}=generate(races,backgrounds,backgroundFluff,manifest,src,pages,read(base+"native/skills.json"),tag);
  const spells=fs.readdirSync(path.join(root,base+"native/spells")).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(base+"native/spells/"+f));
  report.literalSpellRelationships=linkSpellRelationships(records,spells,"SRD"+tag);
  report.literalCharacterRelationships=linkCharacterRelationships(records,characterRelationshipCatalog(root,base,read),"SRD"+tag);

@@ -3,7 +3,8 @@
   "sourceCounts": {
     "race": 9,
     "subrace": 9,
-    "background": 1
+    "background": 1,
+    "backgroundFluff": 1
   },
   "nativeCounts": {
     "race": 9,
@@ -218,6 +219,10 @@
     {
       "id": "race.tiefling",
       "reason": "Restore official nonbinding alignment guidance from cited publisher pages."
+    },
+    {
+      "id": "background.acolyte",
+      "reason": "Restore the published Acolyte introduction on SRD 5.1 p.60 from the eligible structured background text."
     }
   ],
   "mergedOccurrences": [
@@ -259,6 +264,15 @@
       "pointer": "/subrace/8",
       "fields": [],
       "reason": "identity-only renderer placeholder"
+    },
+    {
+      "id": "background.acolyte",
+      "path": "fluff-backgrounds.json",
+      "pointer": "/backgroundFluff/0",
+      "fields": [
+        "entries"
+      ],
+      "reason": "published background introduction"
     }
   ],
   "pendingReferences": [

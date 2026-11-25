@@ -1551,6 +1551,7 @@
       }
     ],
     "entries": [
+      "You have spent your life in the service of a temple to a specific god or pantheon of gods. You act as an intermediary between the realm of the holy and the mortal world, performing sacred rites and offering sacrifices in order to conduct worshipers into the presence of the divine. You are not necessarily a cleric—performing sacred rites is not the same thing as channeling divine power.",
       {
         "type": "list",
         "style": "list-hang-notitle",
@@ -1774,7 +1775,15 @@
         "path": "backgrounds.json",
         "pointer": "/background/0"
       },
-      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending"
+      "structuredStatus": "publisher name/page locator and pinned structured projection; full descriptive and mechanical field review pending",
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "fluff-backgrounds.json",
+          "pointer": "/backgroundFluff/0"
+        }
+      ]
     }
   }
 ]

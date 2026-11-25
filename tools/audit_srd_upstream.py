@@ -12,7 +12,7 @@ import subprocess
 
 from inventory_srd_editions import ROOT
 from stage_srd_editions import PACKAGES, build
-from report_srd_promotion import REPO, load_decisions, native_rows, report
+from report_srd_promotion import REPO, is_foundry_metadata, load_decisions, native_rows, report
 from srd_upstream_crosswalk import Crosswalk
 
 UPSTREAM_COMMIT = "2512db75eb48ef06f6190b086a82430887906dca"
@@ -103,11 +103,6 @@ def checkout_files(checkout):
         if not file.is_file() or file.is_symlink():
             raise ValueError("Missing or unsupported upstream data file: " + path)
         yield path, file
-
-
-def is_foundry_metadata(path):
-    # Foundry sidecars carry renderer metadata, not independent rule bodies.
-    return Path(path).name == "foundry.json" or Path(path).name.startswith("foundry-")
 
 
 def classify_rules_matches(matches, dispositions):

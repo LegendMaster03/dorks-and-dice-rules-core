@@ -136,3 +136,27 @@ class NativeReferenceAuditTests(unittest.TestCase):
         self.assertEqual(["item.deck"], refs[8]["targets"])
         self.assertEqual("Fool", refs[8]["variant"])
         self.assertEqual([], refs[6]["targets"])
+
+    def test_reference_only_scope_preserves_text_and_source_evidence(self):
+        specs = [
+            ("foundry-items.json", "item", {"name": "Example"}),
+            ("class/foundry.json", "classFeature", {"name": "Example"}),
+            ("fluff-spells.json", "spellFluff", {"name": "Example", "images": ["image"]}),
+            ("fluff-spells.json", "spellFluff", {"name": "Example", "images": ["image"], "entries": ["text"]}),
+            ("fluff-bestiary.json", "monsterFluff", {"name": "Example", "_copy": {"name": "Other"}}),
+            ("books.json", "book", {"name": "Example", "contents": []}),
+            ("book/book-srd51.json", "data", {"name": "Example", "entries": ["text"]}),
+            ("foundry-items.json", "item", {"name": "Linked"}),
+        ]
+        candidates = [
+            {"candidateId": str(i), "proposedIdentity": str(i), "sourceKind": kind,
+             "source": {"path": path, "pointer": f"/{i}"}, "payload": payload}
+            for i, (path, kind, payload) in enumerate(specs)
+        ]
+        native = [{"id": "item.linked", "kind": "item", "source": {
+            "release": "srd-5.1", "structuredSource": candidates[-1]["source"]}}]
+        statuses = [r["status"] for r in report("srd-5.1", candidates, native)["occurrences"]]
+        self.assertEqual([
+            "reference-only-foundry", "reference-only-foundry", "reference-only-media",
+            "unreviewed", "unreviewed", "reference-only-navigation", "unreviewed",
+            "explicit-source-pointer"], statuses)

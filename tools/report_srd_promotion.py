@@ -2,7 +2,8 @@
 
 Explicit source pointers establish occurrence linkage, not semantic fidelity.
 Publisher-extracted spells are matched on the previously reviewed named inventory
-only. Everything else stays unreviewed unless separately adjudicated.
+only. Known reference-only sidecars are classified by source path and payload
+shape; other unmatched rule and narrative content stays unreviewed.
 """
 import argparse
 from collections import Counter, defaultdict
@@ -28,6 +29,30 @@ def native_rows(root):
         for row in rows:
             if row.get("kind") != "metadata":
                 yield row
+
+
+def is_foundry_metadata(path):
+    # Foundry sidecars describe another platform's renderer and automation,
+    # rather than a separately published rule identity.
+    name = Path(path).name
+    return name == "foundry.json" or name.startswith("foundry-")
+
+
+def reference_only_status(candidate):
+    """Classify only known non-rule payload shapes; never approve their rights."""
+    name = Path(candidate["source"]["path"]).name
+    kind = candidate["sourceKind"]
+    payload = candidate["payload"]
+    if is_foundry_metadata(name):
+        return "reference-only-foundry"
+    if kind == "book" and name in {"books.json", "gendata-nav-adventure-book-index.json"}:
+        return "reference-only-navigation"
+    if (kind.endswith("Fluff") and payload.get("images") and
+            set(payload) <= {"name", "source", "images", "className", "classSource", "shortName"}):
+        return "reference-only-media"
+    # Textual fluff, copied entries and chapter bodies may contain publisher
+    # material; leave them visible for source-scope review.
+    return "unreviewed"
 
 
 def report(edition, candidates, native, decisions=()):
@@ -78,6 +103,8 @@ def report(edition, candidates, native, decisions=()):
             status = ("documented-deferred" if any(d["disposition"] == "deferred"
                                                   for d in reviewed[key])
                       else "documented-not-promoted")
+        if status == "unreviewed":
+            status = reference_only_status(candidate)
         counts[kind][status] += 1
         occurrences.append({"candidateId": candidate["candidateId"],
                             "proposedIdentity": candidate["proposedIdentity"],
