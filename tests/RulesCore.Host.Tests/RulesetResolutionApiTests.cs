@@ -356,6 +356,17 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal("O", magicDefinition.GetProperty("category").GetString());
         Assert.Equal(3, magicDefinition.GetProperty("additionalSpells").GetArrayLength());
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/feat.magic-initiate")).StatusCode);
+        var metamagicOptions = await client.GetFromJsonAsync<JsonElement>(animals + "/class-feature.sorcerer.metamagic-options.2");
+        var optionRefs = metamagicOptions.GetProperty("rule").GetProperty("definition").GetProperty("catalogReferences").EnumerateArray().Select(x => x.GetString()).ToArray();
+        Assert.Equal(10, optionRefs.Count(x => x!.StartsWith("optional-feature.")));
+        foreach (var option in new[] { "seeking-spell", "transmuted-spell" })
+        {
+            var id = "optional-feature." + option;
+            Assert.Contains(id, optionRefs);
+            var definition = (await client.GetFromJsonAsync<JsonElement>(animals + "/" + id)).GetProperty("rule").GetProperty("definition");
+            Assert.Equal(1, definition.GetProperty("consumes").GetProperty("amount").GetInt32());
+            Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/" + id)).StatusCode);
+        }
         var modernChain = await client.GetFromJsonAsync<JsonElement>(animals + "/optional-feature.pact-of-the-chain");
         var chain = modernChain.GetProperty("rule").GetProperty("definition");
         Assert.DoesNotContain("Slaad Tadpole", chain.GetProperty("entries").GetRawText());

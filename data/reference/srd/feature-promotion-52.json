@@ -6,7 +6,7 @@
   },
   "nativeCounts": {
     "feat": 17,
-    "optional-feature": 36
+    "optional-feature": 38
   },
   "excluded": [
     {
@@ -436,5 +436,8 @@
     }
   ],
   "resolvedStructuredPrerequisites": 29,
-  "nativeCount": 53
+  "nativeCount": 55,
+  "expandedSourceCounts": {
+    "optional-feature": 2
+  }
 }

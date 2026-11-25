@@ -59,8 +59,8 @@
     "representation": "pinned edition-specific class/subclass progressions and feature definitions; explicit feature references resolved; full publisher body and semantic review pending"
   },
   "structuredFeatureImport": {
-    "nativeRecords": 53,
-    "representation": "pinned edition-specific feats and optional features; structured prerequisites and known source corrections; full body review pending"
+    "nativeRecords": 55,
+    "representation": "Pinned edition-specific feats and optional features, supplemented by verified expanded-source Metamagic options; structured prerequisites and known source corrections; full body review pending."
   },
   "structuredGeneralImport": {
     "nativeRecords": 35,

@@ -1359,6 +1359,16 @@
     ],
     "catalogReferences": [
       "class.sorcerer",
+      "optional-feature.careful-spell",
+      "optional-feature.distant-spell",
+      "optional-feature.empowered-spell",
+      "optional-feature.extended-spell",
+      "optional-feature.heightened-spell",
+      "optional-feature.quickened-spell",
+      "optional-feature.seeking-spell",
+      "optional-feature.subtle-spell",
+      "optional-feature.transmuted-spell",
+      "optional-feature.twinned-spell",
       "rulebook.page-066"
     ],
     "source": {

@@ -2,6 +2,28 @@
 import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
+function expandedMetamagic(input,manifest,pages){
+ const page=pages.find(p=>p.page===67);
+ // Page 67 has a fixed gutter at column 60. Read each column separately,
+ // joining wrapped words before comparing both complete published bodies.
+ const lines=page.textLayout.split("\n");
+ const left=lines.filter(l=>/^ {1,10}\S/.test(l)).map(l=>l.slice(0,60).trim()).filter(Boolean);
+ const right=lines.map(l=>l.slice(60).trim()).filter(Boolean);
+ const norm=s=>s.replace(/[’‘]/g,"'").replace(/\u00ad/g,"").replace(/-\s+/g,"").replace(/\s+/g," ").trim();
+ const seeking=left.slice(left.indexOf("Seeking Spell")+2).join(" ");
+ const transmuted=right.slice(right.indexOf("Transmuted Spell")+2,right.indexOf("Twinned Spell")).join(" ");
+ const sections={"Seeking Spell":seeking,"Transmuted Spell":transmuted};
+ if(left[left.indexOf("Seeking Spell")+1]!=="Cost: 1 Sorcery Point"||right[right.indexOf("Transmuted Spell")+1]!=="Cost: 1 Sorcery Point")throw Error("Publisher Metamagic cost mismatch");
+ if(input.provider!=="5etools-mirror-3/5etools-src"||input.commit!=="2512db75eb48ef06f6190b086a82430887906dca")throw Error("Unexpected expanded metamagic source");
+ if(input.records.length!==2)throw Error("Unexpected expanded metamagic inventory");
+ return input.records.map(({path,pointer,record:c})=>{
+  if(c.source!=="XPHB"||c.srd52!==true||c.featureType.join()!=="MM"||!Object.hasOwn(sections,c.name)||c.consumes.name!=="Sorcery Point"||(c.consumes.amount??1)!==1)throw Error("Unexpected metamagic source "+c.name);
+  const display=c.entries.join(" ").replace(/\{@dice ([^}]+)\}/g,"$1");
+  if(norm(sections[c.name])!==norm(display))throw Error("Publisher metamagic body mismatch "+c.name+": "+norm(sections[c.name]));
+  return {id:"optional-feature."+c.name.toLowerCase().replace(/ /g,"-"),kind:"optional-feature",name:c.name,featureType:c.featureType,consumes:{name:c.consumes.name,amount:1},entries:c.entries,catalogReferences:["class.sorcerer",page.id],source:{release:manifest.officialPageImport.release,url:page.source.url,pdfSha256:manifest.officialPageImport.pdfSha256,license:manifest.license,attribution:manifest.attribution,pages:[67],structuredStatus:"Expanded upstream SRD candidate; exact published option body and cost verified.",expandedStructuredSource:{provider:input.provider,commit:input.commit,path,pointer}}};
+ });
+}
+
 function generateFeatures(feats,optional,manifest,src,pages,tag){
  const edition="SRD"+tag,modern=tag==="52",slug=s=>s.toLowerCase().normalize("NFKC").replace(/[’']/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
  const report={edition:manifest.officialPageImport.release,sourceCounts:{},nativeCounts:{},excluded:[],corrections:[],publisherNameLocatorMissing:[],pendingReferences:[],resolvedStructuredPrerequisites:0};
@@ -85,6 +107,11 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  const base="data/rulesets/"+pack+"/",manifest=read(base+"manifest.json"),files=tag==="51"?["003-027","028-052","053-077"]:["005-029","030-054","055-079","080-104"];
  const pages=files.flatMap(x=>read(base+"native/rulebook/pages-"+x+".json")).sort((a,b)=>a.page-b.page);
  const {records,report}=generateFeatures(feats,optional,manifest,src,pages,tag);
+ if(tag==="52"){
+  const additions=expandedMetamagic(read("data/reference/srd/upstream-metamagic-52.json"),manifest,pages);
+  if(additions.some(r=>records.some(x=>x.id===r.id)))throw Error("Duplicate expanded feature");
+  records.push(...additions);report.nativeCounts["optional-feature"]+=additions.length;report.nativeCount+=additions.length;report.expandedSourceCounts={"optional-feature":additions.length};
+ }
  for(const [file,body] of [[base+"native/feats-and-optional-features.json",json(records)],["data/reference/srd/feature-promotion-"+tag+".json",json(report)]]){
   const target=path.join(root,file);
   if(check){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale feat promotion "+file);}

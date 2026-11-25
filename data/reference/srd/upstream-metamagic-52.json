@@ -1,0 +1,46 @@
+{
+  "provider": "5etools-mirror-3/5etools-src",
+  "commit": "2512db75eb48ef06f6190b086a82430887906dca",
+  "records": [
+    {
+      "path": "data/optionalfeatures.json",
+      "pointer": "/optionalfeature/190",
+      "record": {
+        "name": "Seeking Spell",
+        "source": "XPHB",
+        "page": 142,
+        "srd52": true,
+        "featureType": [
+          "MM"
+        ],
+        "consumes": {
+          "name": "Sorcery Point",
+          "amount": 1
+        },
+        "entries": [
+          "If you make an attack roll for a spell and miss, you can spend 1 Sorcery Point to reroll the {@dice d20}, and you must use the new roll.",
+          "You can use Seeking Spell even if you've already used a different Metamagic option during the casting of the spell."
+        ]
+      }
+    },
+    {
+      "path": "data/optionalfeatures.json",
+      "pointer": "/optionalfeature/213",
+      "record": {
+        "name": "Transmuted Spell",
+        "source": "XPHB",
+        "page": 142,
+        "srd52": true,
+        "featureType": [
+          "MM"
+        ],
+        "consumes": {
+          "name": "Sorcery Point"
+        },
+        "entries": [
+          "When you cast a spell that deals a type of damage from the following list, you can spend 1 Sorcery Point to change that damage type to one of the other listed types: Acid, Cold, Fire, Lightning, Poison, Thunder."
+        ]
+      }
+    }
+  ]
+}

@@ -58,3 +58,7 @@ discrepancies against official publications before changing generators.
 The SRD Edition Review Catalogs workflow runs this comparison against the
 pinned data checkout and includes the report in its existing artifact. No
 upstream scripts are executed; the checkout is not a runtime data source.
+
+## Expanded Metamagic recovery
+
+Seeking Spell and Transmuted Spell are absent from the original pinned optional-feature corpus but are both present in SRD 5.2.1 p.67. The selected upstream records (pointers /optionalfeature/190 and /optionalfeature/213) are retained in a small reviewed source input, not the wholesale upstream file. Their bodies match the printed options, and both explicitly consume one Sorcery Point. The modern Sorcerer finite Metamagic choice now resolves all ten options to local catalog IDs. No legacy options or executable mechanics were added.

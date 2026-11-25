@@ -2928,5 +2928,78 @@
       },
       "structuredStatus": "pinned edition-specific structured feat or optional feature; publisher name locator where available; full body and semantic review pending"
     }
+  },
+  {
+    "id": "optional-feature.seeking-spell",
+    "kind": "optional-feature",
+    "name": "Seeking Spell",
+    "featureType": [
+      "MM"
+    ],
+    "consumes": {
+      "name": "Sorcery Point",
+      "amount": 1
+    },
+    "entries": [
+      "If you make an attack roll for a spell and miss, you can spend 1 Sorcery Point to reroll the {@dice d20}, and you must use the new roll.",
+      "You can use Seeking Spell even if you've already used a different Metamagic option during the casting of the spell."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-067"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        67
+      ],
+      "structuredStatus": "Expanded upstream SRD candidate; exact published option body and cost verified.",
+      "expandedStructuredSource": {
+        "provider": "5etools-mirror-3/5etools-src",
+        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
+        "path": "data/optionalfeatures.json",
+        "pointer": "/optionalfeature/190"
+      }
+    }
+  },
+  {
+    "id": "optional-feature.transmuted-spell",
+    "kind": "optional-feature",
+    "name": "Transmuted Spell",
+    "featureType": [
+      "MM"
+    ],
+    "consumes": {
+      "name": "Sorcery Point",
+      "amount": 1
+    },
+    "entries": [
+      "When you cast a spell that deals a type of damage from the following list, you can spend 1 Sorcery Point to change that damage type to one of the other listed types: Acid, Cold, Fire, Lightning, Poison, Thunder."
+    ],
+    "catalogReferences": [
+      "class.sorcerer",
+      "rulebook.page-067"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        67
+      ],
+      "structuredStatus": "Expanded upstream SRD candidate; exact published option body and cost verified.",
+      "expandedStructuredSource": {
+        "provider": "5etools-mirror-3/5etools-src",
+        "commit": "2512db75eb48ef06f6190b086a82430887906dca",
+        "path": "data/optionalfeatures.json",
+        "pointer": "/optionalfeature/213"
+      }
+    }
   }
 ]

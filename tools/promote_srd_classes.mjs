@@ -231,6 +231,19 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  const {groups,report}=generateClasses(inputs,manifest,src,pages,tag);
  const spellPages=tag==="51"?read(base+"native/rulebook/pages-103-127.json"):pages;
  reconcileSpellLists(groups,report,tag,read,spellPages,src);
+ if(tag==="52"){
+  // Resolve the finite Metamagic choice against the edition-local option catalog,
+  // including separately recovered publisher-backed options.
+  const option=groups.sorcerer.find(r=>r.id==="class-feature.sorcerer.metamagic-options.2");
+  const available=new Set(read(base+"native/feats-and-optional-features.json").filter(r=>r.featureType?.includes("MM")).map(r=>r.id));
+  const ids=option.entries[1].entries.map(x=>{
+   const [name,source]=x.optionalfeature.split("|"),id="optional-feature."+name.toLowerCase().replace(/ /g,"-");
+   if(source!=="SRD52"||!available.has(id))throw Error("Unresolved modern Metamagic option "+x.optionalfeature);
+   return id;
+  });
+  if(new Set(ids).size!==10)throw Error("Incomplete modern Metamagic options");
+  option.catalogReferences=[...new Set([...option.catalogReferences,...ids])].sort();
+ }
  const outputs=Object.entries(groups).map(([name,records])=>[base+"native/classes/"+name+".json",json(records)]);
  outputs.push(["data/reference/srd/class-promotion-"+tag+".json",json(report)]);
  for(const [file,body] of outputs){
