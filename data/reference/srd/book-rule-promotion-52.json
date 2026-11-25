@@ -679,6 +679,62 @@
         105,
         106
       ]
+    },
+    {
+      "id": "rule.curses-and-magical-contagions",
+      "pointer": "/data/10/entries/2",
+      "pages": [
+        193,
+        194
+      ]
+    },
+    {
+      "id": "rule.environmental-effects",
+      "pointer": "/data/10/entries/3",
+      "pages": [
+        195
+      ]
+    },
+    {
+      "id": "rule.fear-and-mental-stress",
+      "pointer": "/data/10/entries/4",
+      "pages": [
+        196
+      ]
+    },
+    {
+      "id": "rule.poison",
+      "pointer": "/data/10/entries/5",
+      "pages": [
+        197,
+        198
+      ]
+    },
+    {
+      "id": "rule.traps",
+      "pointer": "/data/10/entries/6",
+      "pages": [
+        199,
+        200,
+        201
+      ]
+    },
+    {
+      "id": "rule.stat-block-overview",
+      "pointer": "/data/13/entries/0",
+      "pages": [
+        254
+      ]
+    },
+    {
+      "id": "rule.parts-of-a-stat-block",
+      "pointer": "/data/13/entries/1",
+      "pages": [
+        254,
+        255,
+        256,
+        257
+      ]
     }
   ],
   "corrections": [
@@ -761,9 +817,37 @@
     {
       "id": "rule.casting-spells",
       "reason": "Restore explicit spell DC/attack formulas, retain one-slot-per-turn and invalid-target rules; link edition-local spell and glossary identities (pp.104–106)."
+    },
+    {
+      "id": "rule.curses-and-magical-contagions",
+      "reason": "Restore publisher curse introduction and link canonical contagions and spells (pp.193–194)."
+    },
+    {
+      "id": "rule.environmental-effects",
+      "reason": "Index nine existing environmental effects rather than duplicating their descriptions (p.195)."
+    },
+    {
+      "id": "rule.fear-and-mental-stress",
+      "reason": "Preserve publisher discretionary effects and use the canonical example tables (p.196)."
+    },
+    {
+      "id": "rule.poison",
+      "reason": "Restore the publisher Crawler Mucus and Spider's Sting names and reference the fourteen existing poisons (pp.197–198)."
+    },
+    {
+      "id": "rule.traps",
+      "reason": "Link all eight canonical trap definitions and retain publisher severity, trigger and duration guidance (pp.199–201)."
+    },
+    {
+      "id": "rule.stat-block-overview",
+      "reason": "Remove source-only Vampire Familiar example and numbering; retain all eight publisher stat-block categories (p.254)."
+    },
+    {
+      "id": "rule.parts-of-a-stat-block",
+      "reason": "Restore published creature-type examples and preserve monster stat-block guidance and tables (pp.254–257)."
     }
   ],
-  "nativeCount": 98,
+  "nativeCount": 105,
   "tableInventory": {
     "total": 59,
     "counts": {

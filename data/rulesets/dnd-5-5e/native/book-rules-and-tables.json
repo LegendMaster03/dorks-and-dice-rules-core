@@ -10433,5 +10433,1072 @@
       },
       "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
     }
+  },
+  {
+    "id": "rule.curses-and-magical-contagions",
+    "kind": "rule",
+    "name": "Curses and Magical Contagions",
+    "entries": [
+      "A curse is a magical burden that lasts for a specified time or until it is ended by some means. A magical contagion is an adverse effect of magical origin that is contagious by definition.",
+      "The following sections discuss curses and magical contagions in detail.",
+      {
+        "type": "entries",
+        "name": "Curses",
+        "entries": [
+          "A curse typically takes one of the forms detailed below.",
+          {
+            "type": "entries",
+            "name": "Bestow Curse",
+            "entries": [
+              "The simplest curses are created by the {@spell Bestow Curse|srd52} spell. The effects of such curses are limited and can be ended by the {@spell Remove Curse|srd52} spell.",
+              "{@i Bestow Curse} provides useful benchmarks for gauging the potency of other curses. A curse that lasts for 1 minute equates to a level 3 spell, while one that lasts until dispelled equates to a level 9 spell."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Cursed Creatures",
+            "entries": [
+              "Some monsters are associated with curses, whether as part of their origins or due to their ability to spread curses—werewolves being a prime example.",
+              "You decide how a spell like {@spell Remove Curse|srd52} affects a creature with accursed origins. For example, you might decide that a mummy was created through a curse and it can be destroyed permanently only by casting {@i Remove Curse} on its corpse."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Cursed Magic Items",
+            "entries": [
+              "Cursed magic items are created deliberately or originate as the result of supernatural events. Such items are detailed in \"Magic Items\"."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Narrative Curses",
+            "entries": [
+              "A curse might manifest during an adventure when a creature's violation of a taboo warrants supernatural punishment, such as breaking a vow, defiling a tomb, or murdering an innocent. Such a curse can have any effects you design, or it might be a customized version of another type of curse discussed in this section.",
+              "A creature affected by such a curse should know why they're being punished and be able to learn how to end their curse, likely by symbolically righting the wrong they committed. How a spell like {@spell Remove Curse|srd52} affects a curse that's part of your adventure is up to you—the spell might merely suppress the effects of the curse for a time. Regardless, narrative curses should feel like rare, potent magic rooted in the lore of your campaign."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Environmental Curses",
+            "entries": [
+              "Some locations are so suffused with evil that anyone who lingers there is burdened with a curse. Demonic Possession is one example of an environmental curse."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Demonic Possession",
+            "entries": [
+              "Demonic Possession arises from the chaos and evil of the Abyss and commonly besets creatures that interact with demonic objects or linger in desecrated locations, where demonic spirits await victims.",
+              "A creature that becomes the target of Demonic Possession must succeed on a {@dc 15} Charisma saving throw or be possessed by a bodiless demonic entity. Whenever the possessed creature rolls a 1 on a {@variantrule D20 Test|srd52}, the demonic entity takes control of the creature and determines the creature's behavior thereafter. At the end of each of the possessed creature's later turns, the creature makes a {@dc 15} Charisma saving throw, regaining control of itself on a success.",
+              "After finishing a Long Rest, a creature with Demonic Possession makes a {@dc 15} Charisma saving throw. On a successful save, the effect ends on the creature. A {@spell Dispel Evil and Good|srd52} spell or any magic that removes a curse also ends the effect on it."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Magical Contagions",
+        "entries": [
+          "Alchemists, potion brewers, and areas of wild magic are credited with creating the first magical contagions. An outbreak of such a contagion can form the basis of an adventure as characters search for a cure and try to stop the contagion's spread.",
+          {
+            "type": "entries",
+            "name": "Rest and Recuperation",
+            "entries": [
+              "If a creature infected with a magical contagion spends 3 days recuperating, engaging in no activities that would interrupt a Long Rest, the creature makes a {@dc 15} Constitution saving throw at the end of the recuperation period. On a successful save, the creature has {@variantrule Advantage|srd52} on saving throws to fight off the magical contagion for the next 24 hours."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Example Contagions",
+            "entries": [
+              "The following examples show how magical contagions can work. Feel free to alter the saving throw DCs, effects, and other characteristics of these contagions to suit your campaign.",
+              {
+                "type": "list",
+                "columns": 3,
+                "items": [
+                  "{@disease Cackle Fever|srd52}",
+                  "{@disease Sewer Plague|srd52}",
+                  "{@disease Sight Rot|srd52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "glossary.advantage",
+      "glossary.curses",
+      "glossary.d20-test",
+      "glossary.long-rest",
+      "magical-contagion.cackle-fever",
+      "magical-contagion.sewer-plague",
+      "magical-contagion.sight-rot",
+      "rule.cursed-items",
+      "rulebook.page-193",
+      "rulebook.page-194",
+      "spell.bestow-curse",
+      "spell.dispel-evil-and-good",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        193,
+        194
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/10",
+        "entryPointer": "/data/10/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.environmental-effects",
+    "kind": "rule",
+    "name": "Environmental Effects",
+    "entries": [
+      {
+        "type": "list",
+        "columns": 3,
+        "items": [
+          "{@hazard Deep Water|srd52}",
+          "{@hazard Extreme Cold|srd52}",
+          "{@hazard Extreme Heat|srd52}",
+          "{@hazard Frigid Water|srd52}",
+          "{@hazard Heavy Precipitation|srd52}",
+          "{@hazard High Altitude|srd52}",
+          "{@hazard Slippery Ice|srd52}",
+          "{@hazard Strong Wind|srd52}",
+          "{@hazard Thin Ice|srd52}"
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "environmental-effect.deep-water",
+      "environmental-effect.extreme-cold",
+      "environmental-effect.extreme-heat",
+      "environmental-effect.frigid-water",
+      "environmental-effect.heavy-precipitation",
+      "environmental-effect.high-altitude",
+      "environmental-effect.slippery-ice",
+      "environmental-effect.strong-wind",
+      "environmental-effect.thin-ice",
+      "rule.travel-pace",
+      "rulebook.page-195"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        195
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/10",
+        "entryPointer": "/data/10/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.fear-and-mental-stress",
+    "kind": "rule",
+    "name": "Fear and Mental Stress",
+    "entries": [
+      "Due to the nature of their vocation, adventurers tend to be less susceptible to fear and mental stress than common folk. Whereas a farmer might flee in terror from a bear or an apparition, adventurers are made of sterner stuff. That said, certain creatures and game effects can terrify or fray the mind of even the most stalwart adventurer.",
+      "If you plan to use any of these rules, discuss them with your players at the start of the campaign.",
+      {
+        "type": "entries",
+        "name": "Fear Effects",
+        "entries": [
+          "Whenever the characters encounter something that is supernaturally frightful, use the {@condition Frightened|srd52} condition as the baseline effect. Fear effects typically require a Wisdom saving throw, with a save DC set based on how terrifying the situation is. The Sample Fear DCs table provides some examples.",
+          "See the Sample Fear DCs table.",
+          "Typically, a {@condition Frightened|srd52} creature repeats the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+          "At your discretion, a Frightened creature might be subject to other effects as long as the Frightened condition lasts. Consider these examples:",
+          {
+            "type": "list",
+            "items": [
+              "The Frightened creature must take the {@action Dash|srd52} action on each of its turns and uses its movement to get farther away from the source of its fear.",
+              "Attack rolls against the Frightened creature have {@variantrule Advantage|srd52}.",
+              "The Frightened creature can do only one of the following on each of its turns: move, take an action, or take a Bonus Action."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Mental Stress Effects",
+        "entries": [
+          "When a character is subjected to an effect that causes intense mental stress, Psychic damage is the best way to emulate that effect.",
+          "The Sample Mental Stress Effects table provides a few examples of such effects, with suggested saving throw DCs and damage. Mental stress can usually be resisted with a successful Wisdom save, but sometimes an Intelligence or Charisma save is more appropriate. On a successful save, a character might take half as much damage instead of no damage, at your discretion.",
+          "See the Sample Mental Stress Effects table.",
+          {
+            "type": "entries",
+            "name": "Prolonged Effects",
+            "entries": [
+              "Exposure to mental stress can cause prolonged effects. Consider the following possibilities.",
+              {
+                "type": "entries",
+                "name": "Short-Term Effects",
+                "entries": [
+                  "The character has the {@condition Frightened|srd52}, {@condition Incapacitated|srd52}, or {@condition Stunned|srd52} condition for {@dice 1d10} minutes. This condition might be accompanied by alarming behavior or hallucinations. These effects can be suppressed with the {@spell Calm Emotions|srd52} spell or removed by the {@spell Lesser Restoration|srd52} spell."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Long-Term Effects",
+                "entries": [
+                  "The character has {@variantrule Disadvantage|srd52} on some or all ability checks for {@dice 1d10 × 10} hours, stemming from an unwillingness or inability to exert a particular set of abilities. The character might feel enervated and unable to exert much Strength, for example, or become so suspicious of others that Charisma checks are more difficult. These effects can be suppressed with the Calm Emotions spell or removed by the Lesser Restoration spell."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Indefinite Effects",
+                "entries": [
+                  "An indefinite effect is a long-term effect (see above) that lasts until removed by a {@spell Greater Restoration|srd52} spell. It can be suppressed by a Calm Emotions spell."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "action.dash",
+      "condition.frightened",
+      "condition.incapacitated",
+      "condition.stunned",
+      "glossary.advantage",
+      "glossary.disadvantage",
+      "rule.damage-and-healing",
+      "rulebook.page-196",
+      "spell.calm-emotions",
+      "spell.greater-restoration",
+      "spell.lesser-restoration",
+      "table.damage-types",
+      "table.sample-fear-dcs",
+      "table.sample-mental-stress-effects"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        196
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/10",
+        "entryPointer": "/data/10/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.poison",
+    "kind": "rule",
+    "name": "Poison",
+    "entries": [
+      "Given their insidious and deadly nature, poisons are a favorite tool among assassins and evil creatures.",
+      "Poisons come in the following four types:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Contact",
+            "entry": "Contact poison can be smeared on an object and remains potent until it is touched or washed off. A creature that touches contact poison with exposed skin suffers its effects."
+          },
+          {
+            "type": "item",
+            "name": "Ingested",
+            "entry": "A creature must swallow an entire dose of ingested poison to suffer its effects. The dose can be delivered in food or a liquid. You may decide that a partial dose has a reduced effect, such as allowing {@variantrule Advantage|srd52} on the saving throw or dealing only half as much damage on a failed save."
+          },
+          {
+            "type": "item",
+            "name": "Inhaled",
+            "entry": "Poisonous powders and gases take effect when inhaled. Blowing the powder or releasing the gas subjects creatures in a 5-foot {@variantrule Cube [Area of Effect]|srd52|Cube} to its effect. The resulting cloud dissipates immediately afterward. Holding one's breath is ineffective against inhaled poisons, as they affect nasal membranes, tear ducts, and other parts of the body."
+          },
+          {
+            "type": "item",
+            "name": "Injury",
+            "entry": "Injury poison can be applied as a Bonus Action to a weapon, a piece of ammunition, or similar object. The poison remains potent until delivered through a wound or washed off. A creature that takes Piercing or Slashing damage from an object coated with the poison is exposed to its effects."
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Purchasing Poison",
+        "entries": [
+          "In some settings, laws prohibit the possession and use of poison, but an illicit dealer or unscrupulous apothecary might keep a hidden stash. Characters with criminal contacts might be able to acquire poison easily. Other characters might have to make extensive inquiries and pay bribes before they acquire the poison they seek."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Harvesting Poison",
+        "entries": [
+          "A character can attempt to harvest poison from a venomous creature that is dead or has the {@condition Incapacitated|srd52} condition. The effort takes {@dice 1d6} minutes, after which the character makes a {@dc 20} Intelligence ({@skill Nature|srd52}) check using a {@item Poisoner's Kit|srd52}. On a successful check, the character harvests enough poison for a single dose, and no additional poison can be harvested from that creature. On a failed check, the character is unable to extract any poison. If the character fails the check by 5 or more, the character is subjected to the creature's poison."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Sample Poisons",
+        "entries": [
+          "Example poisons are detailed here in alphabetical order. Each poison's description includes the suggested price for a single dose of the poison, its type (contact, ingested, inhaled, or injury), and a description of the poison's debilitating effects.",
+          {
+            "type": "list",
+            "columns": 3,
+            "items": [
+              "{@item Assassin's Blood|srd52}",
+              "{@item Burnt Othur Fumes|srd52}",
+              "{@item Crawler Mucus|srd52}",
+              "{@item Essence of Ether|srd52}",
+              "{@item Spider's Sting|srd52}",
+              "{@item Malice|srd52}",
+              "{@item Midnight Tears|srd52}",
+              "{@item Oil of Taggit|srd52}",
+              "{@item Pale Tincture|srd52}",
+              "{@item Purple Worm Poison|srd52}",
+              "{@item Serpent Venom|srd52}",
+              "{@item Torpor|srd52}",
+              "{@item Truth Serum|srd52}",
+              "{@item Wyvern Poison|srd52}"
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "condition.poisoned",
+      "glossary.advantage",
+      "glossary.bonus-action",
+      "glossary.cube-area-of-effect",
+      "item.assassin-s-blood",
+      "item.burnt-othur-fumes",
+      "item.crawler-mucus-contact",
+      "item.essence-of-ether",
+      "item.malice",
+      "item.midnight-tears",
+      "item.oil-of-taggit",
+      "item.pale-tincture",
+      "item.poisoner-s-kit",
+      "item.purple-worm-poison",
+      "item.serpent-venom",
+      "item.spider-s-sting",
+      "item.torpor",
+      "item.truth-serum",
+      "item.wyvern-poison",
+      "rulebook.page-197",
+      "rulebook.page-198",
+      "skill.nature"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        197,
+        198
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/10",
+        "entryPointer": "/data/10/entries/5"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.traps",
+    "kind": "rule",
+    "name": "Traps",
+    "entries": [
+      "Traps should be used sparingly, lest they lose their charm. A hidden pit can be a fun surprise, but too many traps in an adventure can lead players to become overly cautious, which slows down the game.",
+      "The best traps are fleeting distractions that skilled characters can overcome in a short amount of time or deadly puzzles that require quick thinking and teamwork to overcome. Traps that are undetectable and inescapable are rarely fun.",
+      {
+        "type": "entries",
+        "name": "Parts of a Trap",
+        "entries": [
+          "The description of a trap includes the following parts after the trap's name:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Severity and Levels",
+                "entry": "A trap is designated as a nuisance or as deadly for characters of certain levels. A nuisance trap is unlikely to kill or seriously harm characters of the indicated levels, whereas a deadly trap can grievously damage characters of the indicated levels."
+              },
+              {
+                "type": "item",
+                "name": "Trigger",
+                "entry": "Traps are often set to go off when a creature enters an area or touches an object. Examples of triggers include stepping on a pressure plate, crossing a trip wire, turning a doorknob, or using the wrong key in a lock."
+              },
+              {
+                "type": "item",
+                "name": "Duration",
+                "entry": "Some traps have durations expressed in rounds, minutes, or hours. Others specify that their effects last until the trap is destroyed or dispelled. If a trap's duration is instantaneous, its effect is resolved instantly."
+              }
+            ]
+          },
+          "Use caution when introducing a trap to characters of a level lower than the trap's level range. A trap that is a nuisance at one level range could be deadly to characters of a lower level range."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Example Traps",
+        "entries": [
+          "Traps are presented in alphabetical order.",
+          {
+            "type": "list",
+            "columns": 3,
+            "items": [
+              "{@trap Collapsing Roof|srd52}",
+              "{@trap Falling Net|srd52}",
+              "{@trap Fire-Casting Statue|srd52}",
+              "{@trap Hidden Pit|srd52}",
+              "{@trap Poisoned Darts|srd52}",
+              "{@trap Poisoned Needle|srd52}",
+              "{@trap Rolling Stone|srd52}",
+              "{@trap Spiked Pit|srd52}"
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "action.search",
+      "action.study",
+      "rule.exploration",
+      "rulebook.page-199",
+      "rulebook.page-200",
+      "rulebook.page-201",
+      "trap.collapsing-roof",
+      "trap.falling-net",
+      "trap.fire-casting-statue",
+      "trap.hidden-pit",
+      "trap.poisoned-darts",
+      "trap.poisoned-needle",
+      "trap.rolling-stone",
+      "trap.spiked-pit"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        199,
+        200,
+        201
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/10",
+        "entryPointer": "/data/10/entries/6"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.stat-block-overview",
+    "kind": "rule",
+    "name": "Stat Block Overview",
+    "entries": [
+      "A monster has a stat block that contains the rules necessary to use it in the game. Stat blocks are divided into the following parts:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Name and General Details",
+            "entry": "The name of the monster is followed by its size, creature type (along with any descriptive tags), and alignment."
+          },
+          {
+            "type": "item",
+            "name": "Combat Highlights",
+            "entry": "{@variantrule Armor Class|srd52}, {@variantrule Hit Points|srd52}, {@variantrule Speed|srd52}, and {@variantrule Initiative|srd52} are provided here."
+          },
+          {
+            "type": "item",
+            "name": "Ability Scores",
+            "entry": "A monster's ability scores, ability modifiers, and saving throws are listed here."
+          },
+          {
+            "type": "item",
+            "name": "Other Details",
+            "entry": "The monster's Senses, Languages, and CR entries appear here. Additional details appear in some monsters, such as skill proficiencies, Resistances, Immunities, and Gear. If a monster lacks those details, entries for them don't appear."
+          },
+          {
+            "type": "item",
+            "name": "Traits",
+            "entry": "Monster characteristics that are active at all times or during certain situations appear here."
+          },
+          {
+            "type": "item",
+            "name": "Actions",
+            "entry": "The monster can take the actions here in addition to those in \"Playing the Game\"."
+          },
+          {
+            "type": "item",
+            "name": "Bonus Actions",
+            "entry": "This section provides a monster's Bonus Actions, if any."
+          },
+          {
+            "type": "item",
+            "name": "Reactions and Legendary Actions",
+            "entry": "These sections provide Reactions and Legendary Actions, if any."
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "glossary.armor-class",
+      "glossary.hit-points",
+      "glossary.initiative",
+      "glossary.speed",
+      "glossary.stat-block",
+      "rule.parts-of-a-stat-block",
+      "rulebook.page-254"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        254
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/13",
+        "entryPointer": "/data/13/entries/0"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.parts-of-a-stat-block",
+    "kind": "rule",
+    "name": "Parts of a Stat Block",
+    "entries": [
+      "The rules for a stat block are detailed in \"Rules Glossary\" and in this section.",
+      {
+        "type": "entries",
+        "name": "Size",
+        "entries": [
+          "A monster is Tiny, Small, Medium, Large, Huge, or Gargantuan. If size options are presented, you choose the creature's size from those options. See \"Playing the Game\" for information on size."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Creature Type",
+        "entries": [
+          "Each monster has a tag that identifies the type of creature it is. Certain spells, magic items, class features, and other effects in the game interact in special ways with creatures of a particular type.",
+          "The game includes the following creature types, which have no rules of their own:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Aberrations",
+                "entry": "are utterly alien beings, such as aboleths and cloakers."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Beasts",
+                "entry": "are non-Humanoid natural creatures, like horses and wolves, as well as most giant animals."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Celestials",
+                "entry": "are magical creatures, such as angels and pegasi, with ties to the Upper Planes."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Constructs",
+                "entry": "are magically created creatures such as homunculi and shield guardians."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Dragons",
+                "entry": "are scaly beings of ancient origin, such as red dragons and wyverns."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Elementals",
+                "entry": "are beings from the Elemental Planes, such as efreet and water elementals."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Fey",
+                "entry": "are creatures tied to the Feywild or the forces of nature, such as dryads and goblins."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Fiends",
+                "entry": "are creatures tied to terrifying Lower Planes, such as balors and hell hounds."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Giants",
+                "entry": "are towering beings with humanlike shapes, like fire giants and trolls."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Humanoids",
+                "entry": "are people defined by their roles and professions, such as mages, pirates, and warriors. They include members of varied species."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Monstrosities",
+                "entry": "are unnatural creatures with strange origins, such as mimics and owlbears."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Oozes",
+                "entry": "are gelatinous creatures, including black puddings and gelatinous cubes."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Plants",
+                "entry": "are sentient vegetation and fungal monsters, such as shambling mounds and treants."
+              },
+              {
+                "type": "item",
+                "nameDot": false,
+                "name": "Undead",
+                "entry": "are spirits and the reanimated dead, such as ghosts, vampires, and zombies."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Descriptive Tags",
+        "entries": [
+          "A monster might have one or more tags in parentheses following its type. Such tags provide additional categorization and have no rules of their own, but certain game effects might refer to them."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Alignment",
+        "entries": [
+          "The alignment specified in a monster's stat block is a default suggestion of how to roleplay the monster, inspired by its traditional role in the game or real-world folklore. Change a monster's alignment to suit your storytelling needs. The Neutral alignment, in particular, is an invitation for you to consider whether an individual leans toward one of the other alignments.",
+          "\"Character Creation\" describes the nine alignments and unaligned creatures."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Armor Class",
+        "entries": [
+          "A monster's {@variantrule Armor Class|srd52} (AC) includes its natural armor, Dexterity, gear, and other defenses. See \"Playing the Game\" for information on Armor Class."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Initiative",
+        "entries": [
+          "The {@variantrule Initiative|srd52} entry specifies the monster's {@variantrule Initiative|srd52} modifier followed by the monster's {@variantrule Initiative|srd52} score in parentheses. Use the modifier when you roll to determine a monster's {@variantrule Initiative|srd52}. A monster's {@variantrule Initiative|srd52} modifier is typically equal to its Dexterity modifier, but some monsters have additional modifiers, such as {@variantrule Proficiency|srd52|Proficiency Bonus}, applied to that number.",
+          "If you don't want to roll a monster's {@variantrule Initiative|srd52}, use the {@variantrule Initiative|srd52} score as the monster's {@variantrule Initiative|srd52} in combat. Initiative is further detailed in \"Playing the Game\"."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Hit Points",
+        "entries": [
+          "A monster's {@variantrule Hit Points|srd52} are presented as a number followed by parentheses, where the monster's {@variantrule Hit Point Dice|srd52} are provided, along with any contribution from its Constitution. Either use the number for the monster's {@variantrule Hit Points|srd52} or roll the die expression in parentheses to determine the monster's {@variantrule Hit Points|srd52} randomly; don't use both.",
+          "A monster's size typically determines the die used to calculate its {@variantrule Hit Points|srd52}, as shown in the Hit Dice by {@variantrule Size|srd52} table."
+        ]
+      },
+      "See the Hit Dice by Size table.",
+      "A monster's Constitution modifier is multiplied by the number of Hit Dice it possesses, and the result is added to its {@variantrule Hit Points|srd52}. For example, if a monster has a Constitution of 12 (+1 modifier) and {@dice 2d8} Hit Dice, it has {@dice 2d8 + 2} {@variantrule Hit Points|srd52} (average 11).",
+      "For more on Hit Points, see \"Playing the Game\".",
+      {
+        "type": "entries",
+        "name": "Speed",
+        "entries": [
+          "The Speed entry specifies a monster's Speed. Some monsters have one or more of the following speeds: {@variantrule Burrow Speed|srd52|Burrow}, {@variantrule Climb Speed|srd52|Climb}, {@variantrule Fly Speed|srd52|Fly}, {@variantrule Swim Speed|srd52|Swim}. Rules for Speed and these specials speeds appear in \"Rules Glossary\"."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Ability Scores",
+        "entries": [
+          "Every monster has six ability scores along with corresponding ability score modifiers and saving throw modifiers. For more information on ability scores and saving throws, see \"Playing the Game\"."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Skills",
+        "entries": [
+          "The Skills entry specifies a monster's skill proficiencies, if any. For example, a monster that is very perceptive and stealthy might have bonuses to Wisdom ({@skill Perception|srd52}) and Dexterity ({@skill Stealth|srd52}) checks. A skill bonus is the sum of a monster's relevant ability modifier and its {@variantrule Proficiency|srd52|Proficiency Bonus}. Other modifiers might apply."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Resistances and Vulnerabilities",
+        "entries": [
+          "These entries list a monster's Resistances and Vulnerabilities, if any. See \"Playing the Game\" for more information."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Immunities",
+        "entries": [
+          "This entry lists the monster's {@variantrule Immunity|srd52|Immunities}, if any. If the monster has damage and condition Immunities, the damage types are listed before the conditions. See \"Playing the Game\" for details."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Gear",
+        "entries": [
+          "Monsters have proficiency with their equipment. If a monster has equipment that can be given away or retrieved, the items are listed in the Gear entry. The monster's stat block might include special flourishes that happen when the monster uses an item, and the stat block might ignore the rules in \"Equipment\" for that item. When used by someone else, a retrievable item uses its \"Equipment\" rules, ignoring any special flourishes in the stat block.",
+          "The Gear entry doesn't necessarily list all of a monster's equipment. For example, a monster that wears clothes is assumed to be dressed appropriately, and those clothes aren't in this entry.",
+          "Equipment mentioned outside the Gear entry is considered to be supernatural or highly specialized, and it is unusable when the monster is defeated.",
+          {
+            "type": "entries",
+            "name": "Ammunition and Ranged Attacks",
+            "entries": [
+              "A monster that requires ammunition to make ranged attacks carries the necessary ammunition."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Equipping a Monster with Other Items",
+            "entries": [
+              "You may equip monsters with additional gear however you like, using the items in \"Equipment\" for inspiration. You decide how much of a monster's equipment is recoverable after the creature is slain and whether any of that equipment is still usable.",
+              "Beware of giving a monster combat-oriented magic items, since those might alter the monster's {@variantrule Challenge Rating|srd52}. If you do give a monster a magic item, the monster can have {@variantrule Attunement|srd52} with magic items as noted in \"Equipment\". A monster with a class tag after its creature type is considered a member of that class for {@variantrule Attunement|srd52} purposes."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "inset",
+        "name": "Running a Monster",
+        "entries": [
+          "To ensure a monster acts in accordance with its {@variantrule Challenge Rating|srd52}, follow these rules during combat:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Special Abilities",
+                "entry": "If the monster has a special ability that deals a lot of damage but has a limited number of uses, such as a recharging breath weapon or a spell it can cast only once per day, have it use that special ability as quickly and as often as possible."
+              },
+              {
+                "type": "item",
+                "name": "Multiattack",
+                "entry": "If the monster has Multiattack, have it use Multiattack on any of its turns in which it's not using one of its more powerful abilities."
+              },
+              {
+                "type": "item",
+                "name": "Bonus Actions, Reactions, Legendary Actions",
+                "entry": "If the monster has Bonus Actions, Reactions, or Legendary Actions in its stat block, make sure it uses them as often as it can."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Senses",
+        "entries": [
+          "The Senses entry specifies a monster's {@variantrule Passive Perception|srd52} score, as well as any special senses the monster possesses. Passive Perception and special senses are described in \"Rules Glossary\"."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Languages",
+        "entries": [
+          "This entry lists languages that the monster can use to communicate. Sometimes a monster can understand a language but can't communicate with it, which is noted in its entry. \"None\" indicates that a creature doesn't comprehend any language.",
+          {
+            "type": "entries",
+            "name": "Telepathy",
+            "entries": [
+              "Telepathy is a magical ability that allows a creature to communicate mentally with another creature within a specified range. See \"Rules Glossary\" for more information."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Challenge Rating",
+        "entries": [
+          "Challenge Rating is defined in \"Rules Glossary\", while guidance on using CR to plan potential combat encounters is in \"Gameplay Toolbox\".",
+          {
+            "type": "entries",
+            "name": "Experience Points",
+            "entries": [
+              "The number of {@variantrule Experience Points|srd52} (XP) a monster is worth is based on its CR, as detailed in the {@variantrule Experience Points|srd52} by {@variantrule Challenge Rating|srd52} table. XP is awarded for defeating the monster in combat or otherwise neutralizing it.",
+              "Unless a rule says otherwise, a monster summoned by a spell or another magical ability is worth the XP noted in its stat block."
+            ]
+          },
+          "See the Experience Points by Challenge Rating table.",
+          {
+            "type": "entries",
+            "name": "Proficiency Bonus",
+            "entries": [
+              "A monster's {@variantrule Proficiency|srd52|Proficiency Bonus} (PB) is determined by its CR, as shown in the {@variantrule Proficiency|srd52|Proficiency Bonus} by {@variantrule Challenge Rating|srd52} table, and is reflected in saving throws, skills, and other statistics where the monster's exceptional aptitude is a factor.",
+              "See the Proficiency Bonus by Challenge Rating table."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Traits",
+        "entries": [
+          "A monster's traits, if any, are features that are active at all times or in certain situations."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Actions",
+        "entries": [
+          "A monster can take the actions in this section or take one of the actions available to all creatures, as described in \"Playing the Game\".",
+          {
+            "type": "entries",
+            "name": "Attack Notation",
+            "entries": [
+              "The entry for a monster's attack identifies whether the attack is a melee or a ranged attack and then provides the attack roll's bonus, its reach or range, and what happens on a hit. An attack is against one target unless its entry says otherwise. For details on different kinds of attacks, see \"Playing the Game\" and \"Spells\".",
+              {
+                "type": "entries",
+                "name": "Hit",
+                "entries": [
+                  "Any damage dealt or other effects that occur as a result of an attack hitting a target are described after the \"Hit:\" notation."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Miss",
+                "entries": [
+                  "If an attack has an effect that occurs on a miss, that information follows the \"Miss:\" notation."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Hit or Miss",
+                "entries": [
+                  "If an attack has an effect that occurs regardless of whether it hits or misses its target, that information follows the \"Hit or Miss:\" notation."
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Saving Throw Effect Notation",
+            "entries": [
+              "If an effect forces a saving throw, the effect identifies the kind of save required and then provides the save's DC, a description of which creatures make the save, and an explanation of what happens on a failed or successful save.",
+              "\"Half damage only\" on a successful save means the target takes half as much damage (round down) as targets that fail the save, while also ignoring all other parts of the effect."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Damage Notation",
+            "entries": [
+              "A stat block usually provides both a number and a die expression for each instance of damage. For example, an attack might deal 4 ({@damage 1d4 + 2}) damage on a hit. You decide whether to use the number or the die expression in parentheses; don't use both."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Multiattack",
+            "entries": [
+              "Some creatures can make more than one attack when they take the {@action Attack|srd52} action. Such creatures have the Multiattack entry in the \"Actions\" section of their stat block. This entry details the attacks a creature can make, as well as any additional abilities it can use, as part of the {@action Attack|srd52} action."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spellcasting",
+            "entries": [
+              "If a monster can cast any spells, its stat block lists the spells and provides the monster's spellcasting ability, spell save DC (if any spells require a saving throw), and spell attack bonus (if any spells require an attack roll). Unless noted otherwise, a spell of level 1 or higher is always cast at its lowest possible level and can't be cast at a higher level.",
+              "A monster's spell can have special rules or restrictions. For example, a green hag can cast the {@spell Invisibility|srd52} spell, but the spell has a \"self only\" restriction, which means the spell affects only the hag.",
+              {
+                "type": "entries",
+                "name": "Spell Components",
+                "entries": [
+                  "The Spellcasting trait notes whether the monster's spellcasting ignores the need for certain spell components. If any spell components are required, describe the monster's use of Verbal, Somatic, or Material components to signal to characters that it is casting a spell. A monster that requires Material components has them."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Casting Times of 1+ Minutes",
+                "entries": [
+                  "If a spell has a casting time of 1 minute or more yet is listed in a spellcasting action, the monster doesn't cast the spell in just one action unless the action's description states otherwise; the monster must take the {@action Magic|srd52} action on each of its turns and maintain {@status Concentration|srd52} to cast the spell, as described in \"Rules Glossary\"."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Bonus Action",
+        "entries": [
+          "If a monster has Bonus Action options, they are listed in this section. See \"Playing the Game\" for details on Bonus Actions."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Reactions",
+        "entries": [
+          "If the monster has Reaction options, those are listed in this section along with their triggers. See \"Playing the Game\" for details on Reactions."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Legendary Actions",
+        "entries": [
+          "If the monster has Legendary Action options, those are listed in this section. A Legendary Action is an action that a monster can take immediately after another creature's turn. Only one of these actions can be taken at a time and only after another creature's turn ends. The monster can't take a Legendary Action if it has the {@condition Incapacitated|srd52} condition or is otherwise unable to take actions.",
+          "The monster has a limited number of Legendary Action uses, and that number is specified in the stat block. The monster expends one use whenever it takes a Legendary Action, and it regains all expended uses at the start of each of its turns."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Limited Usage",
+        "entries": [
+          "Some parts of a stat block have restrictions on the number of times they can be used. Here are the most common ways that usage is limited:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "X/Day",
+                "entries": [
+                  "This notation means the stat block part can be used a certain number of times (represented by X) and that a monster must finish a {@variantrule Long Rest|srd52} to regain expended uses. For example, a {@variantrule Reaction|srd52} that includes \"1/Day\" means the {@variantrule Reaction|srd52} can be taken once and that the monster must finish a {@variantrule Long Rest|srd52} to take it again."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Recharge X–Y",
+                "entries": [
+                  "This notation means a monster can use the stat block part once. At the start of each of the monster's turns, roll {@dice 1d6}. If the roll is within the number range given in the notation (represented by X–Y), the monster regains the use of that part, which also recharges when the monster finishes a {@variantrule Short Rest|srd52|Short} or {@variantrule Long Rest|srd52}. For example, \"Recharge 5–6\" in an action means a monster can take the action once. Then, at the start of each of the monster's turns, it regains the use of that action if it rolls a 5 or 6 on {@dice 1d6}."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Recharge after a Short or Long Rest",
+                "entries": [
+                  "This notation means the monster can use the stat block part once and must then finish a {@variantrule Short Rest|srd52|Short} or {@variantrule Long Rest|srd52} to use it again."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "action.attack",
+      "action.magic",
+      "condition.incapacitated",
+      "glossary.alignment",
+      "glossary.armor-class",
+      "glossary.attunement",
+      "glossary.bonus-action",
+      "glossary.burrow-speed",
+      "glossary.challenge-rating",
+      "glossary.climb-speed",
+      "glossary.creature-type",
+      "glossary.experience-points",
+      "glossary.fly-speed",
+      "glossary.hit-point-dice",
+      "glossary.hit-points",
+      "glossary.immunity",
+      "glossary.initiative",
+      "glossary.long-rest",
+      "glossary.passive-perception",
+      "glossary.proficiency",
+      "glossary.reaction",
+      "glossary.short-rest",
+      "glossary.size",
+      "glossary.swim-speed",
+      "glossary.telepathy",
+      "rule.attunement",
+      "rule.casting-spells",
+      "rule.combat",
+      "rule.combat-encounters",
+      "rule.damage-and-healing",
+      "rule.stat-block-overview",
+      "rulebook.page-254",
+      "rulebook.page-255",
+      "rulebook.page-256",
+      "rulebook.page-257",
+      "skill.perception",
+      "skill.stealth",
+      "spell.invisibility",
+      "status.concentration",
+      "table.experience-points-by-challenge-rating",
+      "table.hit-dice-by-size",
+      "table.proficiency-bonus-by-challenge-rating"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        254,
+        255,
+        256,
+        257
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/13",
+        "entryPointer": "/data/13/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
   }
 ]

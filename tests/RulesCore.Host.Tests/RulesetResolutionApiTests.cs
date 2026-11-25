@@ -571,6 +571,14 @@ public sealed class RulesetResolutionApiTests
         Assert.Contains("Spell save DC = 8 + spellcasting ability modifier + Proficiency Bonus", modernCastingRules.GetProperty("entries").GetRawText());
         Assert.Contains("item-group.spell-scroll", modernCastingRules.GetProperty("catalogReferences").GetRawText());
 
+        var modernEnvironmentRules = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.environmental-effects")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("environmental-effect.thin-ice", modernEnvironmentRules.GetProperty("catalogReferences").GetRawText());
+        var modernPoisonRules = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.poison")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("item.spider-s-sting", modernPoisonRules.GetProperty("catalogReferences").GetRawText());
+        var modernMonsterRules = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.parts-of-a-stat-block")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("table.proficiency-bonus-by-challenge-rating", modernMonsterRules.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("Legendary Actions", modernMonsterRules.GetProperty("entries").GetRawText());
+
         // Legacy travel and downtime must retain their own published procedures.
         var legacyTravelRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.movement")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("table.travel-pace", legacyTravelRule.GetProperty("catalogReferences").GetRawText());

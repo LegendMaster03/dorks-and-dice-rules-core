@@ -697,7 +697,6 @@ function modernCharacterEconomySpellEntries(name,entries,existing,local){
  entries=visit(entries);
  if(name==="Create Your Character"){
   const prof=find(entries,"Note Proficiencies");if(!prof.entries[2].includes("sample character sheet"))throw Error("Unexpected sample-sheet text");prof.entries.splice(2,1);
-  prof.entries[2]=prof.entries[2].replace("in step 5.","in step 5.");
   const equipment=find(entries,"Choose Starting Equipment");
   equipment.entries=["Your background and class both provide starting equipment. Any coins that you gain at this step can be immediately spent on equipment from \"Equipment.\"","Record your chosen equipment on your character sheet. Equipment is described in \"Equipment,\" but for now you can just write it all down and look up the specifics in \"Equipment\" later. Note any coins you have left after purchasing your equipment."];
   const alignment=find(entries,"Step 4: Alignment");alignment.entries[1]=alignment.entries[1].replace("D&D assumes","The game assumes");
@@ -724,6 +723,36 @@ function modernCharacterEconomySpellEntries(name,entries,existing,local){
   const ids=kind==="item"&&key==="spell-scroll"?["item-group.spell-scroll"]:kind==="item"?["item."+key,"baseitem."+key]:[types[kind]+"."+key];
   const matches=ids.filter(id=>known.has(id));if(matches.length!==1)throw Error("Unresolved modern book reference "+kind+":"+raw+" -> "+ids.join(","));
   local.add(matches[0]);
+ }
+ return entries;
+}
+
+function modernToolboxMonsterEntries(name,entries,existing,local){
+ const sections=new Set(["Curses and Magical Contagions","Environmental Effects","Fear and Mental Stress","Poison","Traps","Stat Block Overview","Parts of a Stat Block"]);
+ if(!sections.has(name))return entries;
+ const find=(arr,name)=>{for(const n of arr){if(n&&typeof n==="object"){if(n.name===name)return n;if(n.entries){const v=find(n.entries,name);if(v)return v;}}}};
+ if(name==="Curses and Magical Contagions")find(entries,"Curses").entries[0]="A curse typically takes one of the forms detailed below.";
+ if(name==="Poison"){
+  const sample=find(entries,"Sample Poisons");
+  sample.entries[1].items=sample.entries[1].items.map(x=>x.replace("Carrion Crawler Mucus","Crawler Mucus").replace("Lolth's Sting","Spider's Sting"));
+ }
+ if(name==="Stat Block Overview"){
+  entries[0]="A monster has a stat block that contains the rules necessary to use it in the game. Stat blocks are divided into the following parts:";
+  const lists=entries[1].entries;if(lists.length!==8)throw Error("Unexpected stat block list");entries[1]={type:"list",style:"list-hang-notitle",items:lists.flatMap(x=>x.items)};
+  const last=entries[1].items.at(-1);last.entry=last.entry.replace(" The example monster doesn't include these parts.","");
+ }
+ if(name==="Parts of a Stat Block"){
+  const types=find(entries,"Creature Type").entries[2].items;
+  const corrections={"Aberrations":"are utterly alien beings, such as aboleths and cloakers.","Constructs":"are magically created creatures such as homunculi and shield guardians.","Fey":"are creatures tied to the Feywild or the forces of nature, such as dryads and goblins.","Giants":"are towering beings with humanlike shapes, like fire giants and trolls.","Oozes":"are gelatinous creatures, including black puddings and gelatinous cubes.","Plants":"are sentient vegetation and fungal monsters, such as shambling mounds and treants."};
+  for(const item of types){const m=item.name.match(/^\{@filter ([^|]+)\|/);if(!m)throw Error("Unexpected creature type filter");item.name=m[1];if(corrections[item.name])item.entry=corrections[item.name];}
+ }
+ const slug=s=>s.toLowerCase().normalize("NFKC").replace(/[’']/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+ const known=new Set(existing.map(x=>x.id)),types={variantrule:"glossary",action:"action",condition:"condition",skill:"skill",spell:"spell",status:"status",disease:"magical-contagion",trap:"trap",hazard:"environmental-effect",item:"item"};
+ const aliases={"Poisoner's Kit":"item.poisoner-s-kit","Assassin's Blood":"item.assassin-s-blood","Crawler Mucus":"item.crawler-mucus-contact","Spider's Sting":"item.spider-s-sting"};
+ for(const match of JSON.stringify(entries).matchAll(/\{@(variantrule|action|condition|skill|spell|status|disease|trap|hazard|item) ([^}|]+)(?:\|[^}]+)?\}/g)){
+  const [,kind,raw]=match,id=kind==="item"&&aliases[raw]?aliases[raw]:types[kind]+"."+slug(raw);
+  if(!known.has(id))throw Error("Unresolved modern toolbox reference "+kind+":"+raw+" -> "+id);
+  local.add(id);
  }
  return entries;
 }
@@ -955,9 +984,23 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Spellcasting","/data/6/entries/10",[102],[]],
   ["Magic Items","/data/6/entries/11",[102,103],["rule.magic-item-rules","rule.identifying-a-magic-item","rule.attunement","rule.wearing-and-wielding-items"]],
   ["Gaining Spells","/data/7/entries/0",[104],["glossary.armor-training","rule.create-your-character"]],
-  ["Casting Spells","/data/7/entries/1",[104,105,106],["rule.gaining-spells","status.concentration","activity.end-concentration","glossary.cantrip","glossary.spellcasting-focus","glossary.spell-attack","glossary.spell","glossary.magical-effect","rule.d20-tests"]]
+  ["Casting Spells","/data/7/entries/1",[104,105,106],["rule.gaining-spells","status.concentration","activity.end-concentration","glossary.cantrip","glossary.spellcasting-focus","glossary.spell-attack","glossary.spell","glossary.magical-effect","rule.d20-tests"]],
+  ["Curses and Magical Contagions","/data/10/entries/2",[193,194],["rule.cursed-items","glossary.curses","glossary.long-rest"]],
+  ["Environmental Effects","/data/10/entries/3",[195],["rule.travel-pace"]],
+  ["Fear and Mental Stress","/data/10/entries/4",[196],["rule.damage-and-healing","table.damage-types"]],
+  ["Poison","/data/10/entries/5",[197,198],["condition.poisoned","glossary.bonus-action"]],
+  ["Traps","/data/10/entries/6",[199,200,201],["rule.exploration","action.search","action.study"]],
+  ["Stat Block Overview","/data/13/entries/0",[254],["rule.parts-of-a-stat-block","glossary.stat-block"]],
+  ["Parts of a Stat Block","/data/13/entries/1",[254,255,256,257],["rule.stat-block-overview","rule.combat","rule.combat-encounters","rule.damage-and-healing","rule.attunement","rule.casting-spells","glossary.creature-type","glossary.alignment","glossary.telepathy","glossary.bonus-action","glossary.reaction"]]
  ];
  const modernGameplayCorrections={
+"Curses and Magical Contagions":"Restore publisher curse introduction and link canonical contagions and spells (pp.193–194).",
+"Environmental Effects":"Index nine existing environmental effects rather than duplicating their descriptions (p.195).",
+"Fear and Mental Stress":"Preserve publisher discretionary effects and use the canonical example tables (p.196).",
+"Poison":"Restore the publisher Crawler Mucus and Spider's Sting names and reference the fourteen existing poisons (pp.197–198).",
+"Traps":"Link all eight canonical trap definitions and retain publisher severity, trigger and duration guidance (pp.199–201).",
+"Stat Block Overview":"Remove source-only Vampire Familiar example and numbering; retain all eight publisher stat-block categories (p.254).",
+"Parts of a Stat Block":"Restore published creature-type examples and preserve monster stat-block guidance and tables (pp.254–257).",
 "Choose a Character Sheet":"Preserve publisher sheet selection guidance (p.19).",
 "Create Your Character":"Restore publisher character creation instructions and formulas, omit source-only sample-sheet and free-trinket guidance, link existing species/backgrounds and tables (pp.19–23).",
 "Level Advancement":"Preserve minimum 1 HP, level progression and post-level-20 bonus feat guidance (pp.23–24).",
@@ -1008,7 +1051,9 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
  for(const [name,pointer,nums,refs,entryRange] of extraRules){
   const node=get(pointer);
   if(node.name!==name||nums.some(n=>!pageMap.has(n)))throw Error("Unreviewed book rule "+name);
-  if(name!=="Advantage and Disadvantage"&&!nums.some(n=>norm(pageMap.get(n).textLayout).includes(norm(name))))throw Error("Missing book rule heading "+name);
+  // The two-line curse heading is interrupted by the facing column in the page layout.
+  const headingMatches=nums.some(n=>norm(pageMap.get(n).textLayout).includes(norm(name)))||(name==="Curses and Magical Contagions"&&nums.some(n=>/Curses and\s{2,}[^\n]+\n\s*Magical Contagions\s{2,}/.test(pageMap.get(n).textLayout)));
+  if(name!=="Advantage and Disadvantage"&&!headingMatches)throw Error("Missing book rule heading "+name);
   const local=new Set([...nums.map(pageId),...refs]);
   const project=x=>{
    if(typeof x==="string")return x.replace(/\{@book ([^}|]+)(?:\|[^}]+)?\}/g,(_,label)=>label);
@@ -1028,7 +1073,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   if(entryRange&&(entryRange[0]!==0||entryRange[1]>node.entries.length||node.entries.slice(...entryRange).some(x=>typeof x!=="string"&&x.type!=="table")))throw Error("Unexpected chapter introduction "+name);
   let content=project(entryRange?node.entries.slice(...entryRange):node.entries);
   if(tag==="51")content=legacyEquipmentEntries(name,legacyEconomyEntries(name,legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local)),existing,local);
-  else content=modernCharacterEconomySpellEntries(name,modernGameplayEntries(name,modernMagicItemEntries(name,content),existing,local),existing,local);
+  else content=modernToolboxMonsterEntries(name,modernCharacterEconomySpellEntries(name,modernGameplayEntries(name,modernMagicItemEntries(name,content),existing,local),existing,local),existing,local);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");
    content[4]=content[4].replace("advantage on checks related to the character's personality, ideals, or bonds","advantage");
