@@ -40,10 +40,14 @@ public static class NativeReferenceEndpoints
                         entityCount = snapshot.Count,
                         fingerprint = snapshot.Fingerprint,
                         metadata = snapshot.Metadata,
-                        capabilities = new { read = true, write = false }
+                        capabilities = snapshot.RulesetId == "first-party-001"
+                            ? (object)new { read = true, write = false, originReferenceContractVersion = 1 }
+                            : new { read = true, write = false }
                     }).ToArray()
             });
         });
+
+        NativeOriginReferenceEndpoints.Map(group);
 
         group.MapGet("/{rulesetId}/rules", (string rulesetId, HttpRequest request, NativeCatalogRegistry registry,
             NativePublicDistributionPolicy policy, NativeReferenceAccessPolicy referenceAccess) =>
