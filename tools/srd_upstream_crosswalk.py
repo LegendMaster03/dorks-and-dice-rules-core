@@ -4,6 +4,7 @@ A title, nested heading, or row identity is not body-fidelity certification.
 Unmatched and scope-different occurrences remain explicit review work.
 """
 from collections import defaultdict
+from copy import deepcopy
 import re
 
 LEGACY = "srd-5.1"
@@ -173,11 +174,37 @@ class Crosswalk:
                 return self.result("nested-card-effect-heading", [parent], nativePointers=matches)
         return self.result("card-body-review", [parent])
 
+    def unnamed_subrace(self, record):
+        # Upstream uses unnamed default subrace records for these legacy base
+        # races. Confirm merged content instead of creating a blank-name race.
+        allowed = {"source", "raceName", "raceSource", "page", "srd", "basicRules",
+                   "reprintedAs", "hasFluff", "hasFluffImages", "ability", "_versions"}
+        parents = {"Dragonborn": "race.dragonborn", "Half-Elf": "race.half-elf",
+                   "Half-Orc": "race.half-orc", "Human": "race.human", "Tiefling": "race.tiefling"}
+        parent = parents.get(record.get("raceName"))
+        if (self.edition != LEGACY or not parent or record.get("source") != "PHB"
+                or record.get("raceSource") != "PHB" or record.keys() - allowed):
+            return self.result("unresolved-identity")
+        native = self.rows[parent]
+        if "ability" in record and record["ability"] != native.get("ability"):
+            return self.result("unnamed-subrace-field-review", [parent])
+        if "_versions" in record:
+            versions = deepcopy(record["_versions"])
+            for version in versions:
+                if version.get("_abstract", {}).get("source") != "PHB":
+                    return self.result("unnamed-subrace-field-review", [parent])
+                version["_abstract"]["source"] = "SRD51"
+            if versions != native.get("_versions"):
+                return self.result("unnamed-subrace-field-review", [parent])
+        return self.result("merged-unnamed-subrace", [parent])
+
     def classify(self, occurrence, record):
         if occurrence["expandedSourceNativeIds"]:
             return self.result("expanded-source-pointer", occurrence["expandedSourceNativeIds"])
         kind, name = occurrence["kind"], occurrence["name"]
         if not name:
+            if kind == "subrace":
+                return self.unnamed_subrace(record)
             return self.result("unresolved-identity")
         if kind == "table":
             return self.table(name, record)

@@ -93,3 +93,15 @@ class UpstreamComparisonTests(unittest.TestCase):
         effect = crosswalk.card({"name": "Balance", "set": "Deck of Many Things"})
         self.assertEqual(["item.mysterious-deck"], effect["nativeIds"])
         self.assertEqual("nested-card-effect-heading", effect["status"])
+
+    def test_unnamed_subrace_only_links_verified_merged_fields(self):
+        base = {"id": "race.human", "kind": "race", "name": "Human", "ability": [{"str": 1}]}
+        upstream = {"source": "PHB", "raceSource": "PHB", "raceName": "Human", "srd": True,
+                    "ability": [{"str": 1}]}
+        crosswalk = Crosswalk(LEGACY, [base])
+        self.assertEqual("merged-unnamed-subrace", crosswalk.unnamed_subrace(upstream)["status"])
+        self.assertEqual("unnamed-subrace-field-review",
+                         crosswalk.unnamed_subrace(dict(upstream, ability=[{"str": 2}]))["status"])
+        self.assertEqual("unresolved-identity",
+                         crosswalk.unnamed_subrace(dict(upstream, entries=["unknown"]))["status"])
+        self.assertEqual("unresolved-identity", Crosswalk(MODERN, [base]).unnamed_subrace(upstream)["status"])
