@@ -156,3 +156,55 @@ class StructuredRelationshipsTests(unittest.TestCase):
         ], [(r["selectorStatus"], r["candidateSpellIds"]) for r in refs])
         self.assertTrue(all(r["grantMode"] == "spellbook" and not r["targets"] for r in refs))
         self.assertEqual(original, rows)
+
+    def test_character_category_pools_are_edition_local_and_do_not_award_grants(self):
+        rows = [
+            {"id": "skill.arcana", "kind": "skill", "name": "Arcana"},
+            {"id": "skill.history", "kind": "skill", "name": "History"},
+            {"id": "language.common", "kind": "language", "name": "Common", "type": "standard"},
+            {"id": "language.abyssal", "kind": "language", "name": "Abyssal", "type": "rare"},
+            {"id": "baseitem.dagger", "kind": "baseitem", "name": "Dagger", "type": "M|SRD52", "weaponCategory": "simple", "property": ["F|SRD52", "L|SRD52"]},
+            {"id": "baseitem.rapier", "kind": "baseitem", "name": "Rapier", "type": "M|SRD52", "weaponCategory": "martial", "property": ["F|SRD52"]},
+            {"id": "baseitem.hand-crossbow", "kind": "baseitem", "name": "Hand Crossbow", "type": "R|SRD52", "weaponCategory": "martial", "property": ["L|SRD52"]},
+            {"id": "baseitem.flail", "kind": "baseitem", "name": "Flail", "type": "M|SRD52", "weaponCategory": "martial"},
+            {"id": "baseitem.foreign", "kind": "baseitem", "name": "Foreign", "type": "M|SRD51", "weaponCategory": "martial", "property": ["L|SRD51"]},
+            {"id": "baseitem.staff", "kind": "baseitem", "name": "Staff", "type": "SCF|SRD52", "weaponCategory": "simple"},
+            {"id": "baseitem.leather-armor", "kind": "baseitem", "name": "Leather Armor", "type": "LA|SRD52"},
+            {"id": "item.magic-rapier", "kind": "item", "name": "Magic Rapier", "type": "M|SRD52", "weaponCategory": "martial", "property": ["F|SRD52"]},
+            {"id": "baseitem.lute", "kind": "baseitem", "name": "Lute", "type": "INS|SRD52"},
+            {"id": "baseitem.smith-s-tools", "kind": "baseitem", "name": "Smith's Tools", "type": "AT|SRD52"},
+            {"id": "item-group.musical-instrument", "kind": "item-group", "name": "Musical Instrument", "items": ["Lute|SRD52"], "catalogReferences": ["baseitem.lute"]},
+            {"id": "item-group.artisan-s-tools", "kind": "item-group", "name": "Artisan's Tools", "items": ["Smith's Tools|SRD52"], "catalogReferences": ["baseitem.smith-s-tools"]},
+            {"id": "feat.alert", "kind": "feat", "name": "Alert", "category": "O"},
+            {"id": "feat.grappler", "kind": "feat", "name": "Grappler", "category": "G"},
+            {"id": "class.rogue", "kind": "class", "name": "Rogue",
+             "startingProficiencies": {"skills": [{"choose": {"from": ["arcana", "history"], "count": 1}}],
+                "armor": ["light"], "weapons": ["ignored display"],
+                "weaponProficiencies": [{"simple": True, "all": {"fromFilter": "type=martial weapon|property=light;finesse"}}]},
+             "startingEquipment": [{"A": [{"equipmentTypes": ["instrumentMusical", "toolArtisan"]}],
+                                    "B": [{"equipmentType": "weaponMartial", "quantity": 2}]}]},
+            {"id": "species.human", "kind": "species", "name": "Human",
+             "skillProficiencies": [{"any": 1}], "languageProficiencies": [{"anyStandard": 1}],
+             "feats": [{"anyFromCategory": {"category": ["O"], "count": 1}}]},
+        ]
+        original = copy.deepcopy(rows)
+        report = audit(rows, "SRD52")
+        pools = {o["pointer"]: o for o in report["occurrences"] if "candidateStatus" in o}
+        expected = {
+            "/startingProficiencies/skills/0/choose": ["skill.arcana", "skill.history"],
+            "/startingProficiencies/armor/0": ["baseitem.leather-armor"],
+            "/startingProficiencies/weaponProficiencies/0/simple": ["baseitem.dagger"],
+            "/startingProficiencies/weaponProficiencies/0/all": ["baseitem.hand-crossbow", "baseitem.rapier"],
+            "/startingEquipment/0/A/0": ["baseitem.lute", "baseitem.smith-s-tools"],
+            "/startingEquipment/0/B/0": ["baseitem.flail", "baseitem.hand-crossbow", "baseitem.rapier"],
+            "/skillProficiencies/0/any": ["skill.arcana", "skill.history"],
+            "/languageProficiencies/0/anyStandard": ["language.common"],
+            "/feats/0/anyFromCategory": ["feat.alert"],
+        }
+        self.assertEqual(expected, {p: o["candidateIds"] for p, o in pools.items()})
+        self.assertTrue(all(o["candidateStatus"] == "static-candidates" and not o["targets"] for o in pools.values()))
+        self.assertEqual(0, report["unlinkedLiteralOccurrences"])
+        self.assertEqual(original, rows)
+        rows[14]["items"] = ["Lute|SRD51"]
+        self.assertEqual("unresolved-equipment-group", next(o for o in audit(rows, "SRD52")["occurrences"]
+                         if o["pointer"] == "/startingEquipment/0/A/0")["candidateStatus"])

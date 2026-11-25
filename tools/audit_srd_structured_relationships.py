@@ -6,6 +6,7 @@ literal edition-local identities; never flatten a choice into unconditional gran
 import argparse
 from collections import Counter
 import json
+import re
 from pathlib import Path
 
 from audit_srd_native_references import Index, normalize
@@ -115,8 +116,175 @@ class SpellSelectorInventory:
         return result("static-candidates", candidates, **details)
 
 
+class CharacterSelectorInventory:
+    """Static, edition-local candidate pools, not character eligibility decisions."""
+
+    GROUPS = {
+        "toolArtisan": "item-group.artisan-s-tools",
+        "instrumentMusical": "item-group.musical-instrument",
+        "setGaming": "item-group.gaming-set",
+        "focusSpellcastingArcane": "item-group.arcane-focus",
+        "focusSpellcastingDruidic": "item-group.druidic-focus",
+        "focusSpellcastingHoly": "item-group.holy-symbol",
+    }
+    PROFICIENCY_GROUPS = {
+        "anyArtisansTool": "toolArtisan",
+        "anyMusicalInstrument": "instrumentMusical",
+        "anyGamingSet": "setGaming",
+    }
+    ARMOR = {"light": "LA", "medium": "MA", "heavy": "HA", "shield": "S"}
+    WEAPONS = {"weaponSimple": ("simple", {"M", "R"}),
+               "weaponMartial": ("martial", {"M", "R"}),
+               "weaponSimpleMelee": ("simple", {"M"}),
+               "weaponMartialMelee": ("martial", {"M"}),
+               "weaponSimpleRanged": ("simple", {"R"}),
+               "weaponMartialRanged": ("martial", {"R"})}
+
+    def __init__(self, rows, index):
+        self.rows = {r["id"]: r for r in rows}
+        self.index = index
+
+    @staticmethod
+    def result(status, candidates=(), **details):
+        return {"candidateStatus": status, "candidateIds": sorted(set(candidates)), **details}
+
+    def local_code(self, raw):
+        if not isinstance(raw, str):
+            return None
+        parts = raw.split("|")
+        if len(parts) > 2 or (len(parts) == 2 and parts[1].upper() != self.index.tag):
+            return None
+        return parts[0]
+
+    def pool(self, candidates, count=None, **details):
+        ids = sorted(set(candidates))
+        if count is not None and (type(count) is not int or count < 1):
+            return self.result("unsupported-selector-shape", **details)
+        if not ids or (count is not None and len(ids) < count):
+            return self.result("insufficient-candidates", ids, choiceCount=count, **details)
+        return self.result("static-candidates", ids, choiceCount=count, **details)
+
+    def literal_candidates(self, kind, names, count=None):
+        if not isinstance(names, list) or not names:
+            return self.result("unsupported-selector-shape")
+        ids = []
+        for name in names:
+            if not isinstance(name, str):
+                return self.result("unsupported-selector-shape")
+            status, targets, _ = self.index.resolve(kind, name)
+            if status not in {"unique-literal-candidate", "named-variant-candidate"} or len(targets) != 1:
+                return self.result("unresolved-choice-member", unresolvedMember=name,
+                                   memberStatus=status)
+            ids.extend(targets)
+        return self.pool(ids, count)
+
+    def equipment_group(self, category):
+        group = self.rows.get(self.GROUPS[category])
+        if not group or group["kind"] != "item-group":
+            return None
+        ids = []
+        for name in group.get("items", []):
+            status, targets, _ = self.index.resolve("item", name) if isinstance(name, str) else ("invalid", [], None)
+            if (status != "unique-literal-candidate" or len(targets) != 1 or
+                    self.rows[targets[0]]["kind"] not in {"item", "baseitem"} or
+                    targets[0] not in group.get("catalogReferences", [])):
+                return None
+            ids.extend(targets)
+        return ids
+
+    def weapon_pool(self, category, types, properties=None):
+        ids = []
+        for row in self.rows.values():
+            if (row["kind"] != "baseitem" or self.local_code(row.get("type")) not in types or
+                    row.get("weaponCategory") != category):
+                continue
+            codes = {self.local_code(p.get("uid") if isinstance(p, dict) else p)
+                     for p in row.get("property", [])}
+            if properties is None or codes & properties:
+                ids.append(row["id"])
+        return ids
+
+    def equipment(self, raw):
+        if not isinstance(raw, dict) or set(raw) - {"equipmentType", "equipmentTypes", "quantity"}:
+            return self.result("non-category-equipment-or-unreviewed-shape")
+        if ("equipmentType" in raw) == ("equipmentTypes" in raw):
+            return self.result("unsupported-selector-shape")
+        categories = [raw["equipmentType"]] if "equipmentType" in raw else raw["equipmentTypes"]
+        quantity = raw.get("quantity", 1)
+        if (not isinstance(categories, list) or not categories or
+                any(not isinstance(c, str) for c in categories) or
+                type(quantity) is not int or quantity < 1):
+            return self.result("unsupported-selector-shape")
+        ids = []
+        for category in categories:
+            if category in self.GROUPS:
+                group = self.equipment_group(category)
+                if not group:
+                    return self.result("unresolved-equipment-group", category=category)
+                ids.extend(group)
+            elif category in self.WEAPONS:
+                ids.extend(self.weapon_pool(*self.WEAPONS[category]))
+            else:
+                return self.result("unsupported-equipment-category", category=category)
+        # Quantity is a purchased/granted item quantity, not a requirement
+        # to select that many distinct equipment identities.
+        return self.pool(ids, quantity=quantity, categories=categories)
+
+    def proficiency(self, raw, field):
+        if not isinstance(raw, dict) or len(raw) != 1:
+            return self.result("unsupported-selector-shape")
+        key, value = next(iter(raw.items()))
+        kind = {"skill": "skill", "language": "language",
+                "tool": "item", "weapon": "item", "armor": "item"}[field]
+        if key == "choose" and isinstance(value, dict) and set(value) <= {"from", "count"}:
+            return self.literal_candidates(kind, value.get("from"), value.get("count", 1))
+        if field == "skill" and key == "any":
+            return self.pool((r["id"] for r in self.rows.values() if r["kind"] == "skill"), value)
+        if field == "language" and key == "anyStandard":
+            return self.pool((r["id"] for r in self.rows.values()
+                              if r["kind"] == "language" and r.get("type") == "standard"), value)
+        if field == "tool" and key in self.PROFICIENCY_GROUPS:
+            ids = self.equipment_group(self.PROFICIENCY_GROUPS[key])
+            if not ids:
+                return self.result("unresolved-equipment-group", category=key)
+            return self.pool(ids, value)
+        if field == "armor" and key in self.ARMOR and value is True:
+            return self.pool((r["id"] for r in self.rows.values()
+                              if r["kind"] == "baseitem" and self.local_code(r.get("type")) == self.ARMOR[key]),
+                             operator="all")
+        if field == "weapon" and key in {"simple", "martial"} and value is True:
+            return self.pool(self.weapon_pool(key, {"M", "R"}), operator="all")
+        if field == "weapon" and key == "all" and isinstance(value, dict) and set(value) == {"fromFilter"}:
+            filters = {"type=martial weapon|property=light": {"L"},
+                       "type=martial weapon|property=light;finesse": {"L", "F"}}
+            expression = value["fromFilter"]
+            if isinstance(expression, str) and expression in filters:
+                return self.pool(self.weapon_pool("martial", {"M", "R"}, filters[expression]),
+                                 operator="all")
+        return self.result("unsupported-proficiency-selector")
+
+    def feat(self, raw):
+        if (not isinstance(raw, dict) or set(raw) != {"category", "count"} or
+                raw["category"] != ["O"]):
+            return self.result("unsupported-feat-category")
+        return self.pool((r["id"] for r in self.rows.values()
+                          if r["kind"] == "feat" and r.get("category") == "O"), raw["count"])
+
+    def class_member(self, raw, field):
+        value = raw.get("proficiency") if isinstance(raw, dict) else raw
+        if not isinstance(value, str):
+            return self.result("unsupported-class-proficiency-shape")
+        if field == "armor" and value in self.ARMOR or field == "weapon" and value in {"simple", "martial"}:
+            return self.proficiency({value: True}, field)
+        match = re.fullmatch(r"\{@item ([^{}]+)\}", value)
+        if match:
+            return self.literal_candidates("item", [match.group(1)])
+        return self.result("unreviewed-class-proficiency-prose")
+
+
 def audit(rows, tag):
     index = Index(rows, tag)
+    character_selectors = CharacterSelectorInventory(rows, index)
     spell_selectors = SpellSelectorInventory(rows)
     result = []
     for row in sorted(rows, key=lambda r: r["id"]):
@@ -160,7 +328,8 @@ def audit(rows, tag):
                 if "item" in value:
                     literal(path + "/item", "starting-equipment", "item", value["item"])
                 elif any(k in value for k in ("equipmentType", "equipmentTypes", "special", "value")):
-                    emit(path, "equipment-selector-or-value", value, "selector-review")
+                    emit(path, "equipment-selector-or-value", value, "selector-review",
+                         **character_selectors.equipment(value))
                 else:
                     for _, child, child_path in children(value, path):
                         equipment(child, child_path)
@@ -168,21 +337,29 @@ def audit(rows, tag):
                 for _, child, child_path in children(value, path):
                     equipment(child, child_path)
 
-        def proficiency(value, path, kind):
+        def proficiency(value, path, kind, field, *, literal_members=True):
             if not isinstance(value, dict):
                 emit(path, "proficiency", value, "unreviewed-shape", proficiencyKind=kind)
                 return
             for key, child, child_path in children(value, path):
                 if key == "choose" and isinstance(child, dict):
-                    emit(child_path, "proficiency-selector", child, "selector-review", proficiencyKind=kind)
-                    for i, target in enumerate(child.get("from", [])):
-                        literal(child_path + "/from/" + str(i), "proficiency-choice-member", kind, target)
+                    emit(child_path, "proficiency-selector", child, "selector-review", proficiencyKind=kind,
+                         **character_selectors.proficiency({key: child}, field))
+                    if literal_members:
+                        for i, target in enumerate(child.get("from", [])):
+                            literal(child_path + "/from/" + str(i), "proficiency-choice-member", kind, target)
                 elif key == "all" and isinstance(child, dict) and isinstance(child.get("fromFilter"), str):
-                    emit(child_path, "proficiency-selector", {key: child}, "selector-review", proficiencyKind=kind)
+                    emit(child_path, "proficiency-selector", {key: child}, "selector-review", proficiencyKind=kind,
+                         **character_selectors.proficiency({key: child}, field))
                 elif key.startswith("any") or key in {"simple", "martial", "light", "medium", "heavy", "shield"}:
-                    emit(child_path, "proficiency-selector", {key: child}, "selector-review", proficiencyKind=kind)
+                    emit(child_path, "proficiency-selector", {key: child}, "selector-review", proficiencyKind=kind,
+                         **character_selectors.proficiency({key: child}, field))
                 elif child is True:
-                    literal(child_path, "proficiency", kind, key)
+                    if literal_members:
+                        literal(child_path, "proficiency", kind, key)
+                    else:
+                        emit(child_path, "class-proficiency-member", key, "selector-review",
+                             proficiencyKind=kind, **character_selectors.literal_candidates(kind, [key]))
                 else:
                     emit(child_path, "proficiency", {key: child}, "unreviewed-shape", proficiencyKind=kind)
 
@@ -246,7 +423,8 @@ def audit(rows, tag):
                     for i, grant in enumerate(child):
                         for name, flag, grant_path in children(grant, child_path + "/" + str(i)):
                             if name == "anyFromCategory":
-                                emit(grant_path, "feat-selector", flag, "selector-review")
+                                emit(grant_path, "feat-selector", flag, "selector-review",
+                                     **character_selectors.feat(flag))
                             elif flag is True:
                                 literal(grant_path, "feat-grant", "feat", name)
                             else:
@@ -257,7 +435,26 @@ def audit(rows, tag):
                             "languageProficiencies": "language", "weaponProficiencies": "item",
                             "armorProficiencies": "item"}[key]
                     for i, grant in enumerate(child):
-                        proficiency(grant, child_path + "/" + str(i), kind)
+                        proficiency(grant, child_path + "/" + str(i), kind,
+                                    key.removesuffix("Proficiencies"))
+                elif key in {"startingProficiencies", "proficienciesGained"} and isinstance(child, dict):
+                    # Classes use short field names alongside structured long names.
+                    # The latter take precedence; the former are not counted twice.
+                    for alias, field in (("skills", "skill"), ("armor", "armor"), ("weapons", "weapon")):
+                        if field + "Proficiencies" in child or alias not in child:
+                            continue
+                        values = child[alias]
+                        if not isinstance(values, list):
+                            emit(child_path + "/" + alias, "class-proficiency-member", values, "unreviewed-shape")
+                            continue
+                        for i, member in enumerate(values):
+                            member_path = child_path + "/" + alias + "/" + str(i)
+                            if field == "skill":
+                                proficiency(member, member_path, "skill", field, literal_members=False)
+                            else:
+                                emit(member_path, "class-proficiency-member", member, "selector-review",
+                                     proficiencyKind=field, **character_selectors.class_member(member, field))
+                    visit(child, child_path)
                 elif key == "optionalfeatureProgression":
                     emit(child_path, "optional-feature-progression", child, "selector-review")
                 elif key == "type" and child == "refOptionalfeature":
@@ -271,12 +468,14 @@ def audit(rows, tag):
     counts = Counter(o["status"] for o in result)
     relation_counts = Counter(o["relation"] for o in result)
     selector_counts = Counter(o["selectorStatus"] for o in result if "selectorStatus" in o)
+    character_counts = Counter(o["candidateStatus"] for o in result if "candidateStatus" in o)
     return {"status": "diagnostic-only", "editionTag": tag,
             "scope": "Structured grants, prerequisites, equipment and proficiency fields in character options; selectors and constraints remain unexecuted.",
             "counts": dict(sorted(counts.items())),
             "relationCounts": dict(sorted(relation_counts.items())),
             "nativeEntities": len(rows),
             "spellSelectorCounts": dict(sorted(selector_counts.items())),
+            "characterSelectorCounts": dict(sorted(character_counts.items())),
             "explicitLiteralLinks": sum(o["alreadyExplicit"] for o in result),
             "unlinkedLiteralOccurrences": len(unlinked),
             "occurrences": result}
@@ -294,6 +493,7 @@ def main():
         print(edition, report[edition]["counts"], "explicit", report[edition]["explicitLiteralLinks"],
               "unlinked literal", report[edition]["unlinkedLiteralOccurrences"],
               "spell selectors", report[edition]["spellSelectorCounts"],
+              "character selectors", report[edition]["characterSelectorCounts"],
               "native entities", report[edition]["nativeEntities"])
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
