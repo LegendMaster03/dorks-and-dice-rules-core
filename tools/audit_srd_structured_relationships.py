@@ -8,7 +8,7 @@ from collections import Counter
 import json
 from pathlib import Path
 
-from audit_srd_native_references import Index
+from audit_srd_native_references import Index, normalize
 from report_srd_promotion import REPO, PACKAGES, native_rows
 
 ORIGIN_KINDS = {"class", "subclass", "class-feature", "subclass-feature",
@@ -29,8 +29,88 @@ def children(value, path):
             yield index, child, path + "/" + str(index)
 
 
+class SpellSelectorInventory:
+    """Resolve only reviewed static filter syntax, never grant a spell.
+
+    Class membership comes from the publisher-reconciled native spell lists,
+    not from upstream class tags or any other edition. Character state,
+    progression timing, replacement rules and eligibility remain unevaluated.
+    """
+    def __init__(self, rows):
+        self.spells = {r["id"]: r for r in rows if r["kind"] == "spell"}
+        self.classes = {}
+        for row in rows:
+            if row["kind"] == "class":
+                self.classes.setdefault(normalize(row["name"]), []).append(row)
+
+    def inspect(self, raw, mode):
+        # Keep unsupported forms explicit. In particular, do not interpret
+        # arbitrary selector syntax as a wildcard or silently ignore a clause.
+        def result(status, candidates=(), **details):
+            return {"selectorStatus": status, "candidateSpellIds": sorted(candidates),
+                    **details}
+
+        keys = set(raw)
+        operators = keys & {"choose", "all"}
+        if len(operators) != 1 or keys - {"choose", "all", "count"}:
+            return result("unsupported-selector-shape")
+        operator = next(iter(operators))
+        expression = raw[operator]
+        count = raw.get("count", 1) if operator == "choose" else None
+        if (not isinstance(expression, str) or
+                (operator == "choose" and (type(count) is not int or count < 1)) or
+                (operator == "all" and ("count" in raw or mode != "expanded"))):
+            return result("unsupported-selector-shape")
+
+        clauses = {}
+        for clause in expression.split("|"):
+            key, separator, value = clause.partition("=")
+            key = normalize(key)
+            if not separator or key in clauses or not value.strip():
+                return result("unsupported-filter-syntax")
+            clauses[key] = [normalize(v) for v in value.split(";")]
+        if ("level" not in clauses or
+                set(clauses) - {"level", "class", "components & miscellaneous"} or
+                any(v not in tuple(str(n) for n in range(10)) for v in clauses["level"]) or
+                ("components & miscellaneous" in clauses and
+                 clauses["components & miscellaneous"] != ["ritual"])):
+            return result("unsupported-filter-syntax")
+
+        levels = {int(v) for v in clauses["level"]}
+        candidates = {identity for identity, spell in self.spells.items()
+                      if spell.get("level") in levels}
+        if "class" in clauses:
+            membership = set()
+            for name in clauses["class"]:
+                classes = self.classes.get(name, [])
+                if len(classes) != 1 or not isinstance(classes[0].get("spellList"), list):
+                    return result("unresolved-class-list", unresolvedClass=name)
+                groups = classes[0]["spellList"]
+                for group in groups:
+                    if (not isinstance(group, dict) or type(group.get("level")) is not int
+                            or not isinstance(group.get("spellIds"), list)):
+                        return result("invalid-class-list", unresolvedClass=name)
+                    for identity in group["spellIds"]:
+                        if (not isinstance(identity, str) or identity not in self.spells or
+                                self.spells[identity].get("level") != group["level"]):
+                            return result("invalid-class-list", unresolvedClass=name)
+                        if group["level"] in levels:
+                            membership.add(identity)
+            candidates &= membership
+        if "components & miscellaneous" in clauses:
+            candidates = {identity for identity in candidates
+                          if self.spells[identity].get("meta", {}).get("ritual") is True}
+
+        details = {"selectorOperator": operator, "choiceCount": count,
+                   "selectorFilters": clauses}
+        if not candidates or (count is not None and len(candidates) < count):
+            return result("insufficient-candidates", candidates, **details)
+        return result("static-candidates", candidates, **details)
+
+
 def audit(rows, tag):
     index = Index(rows, tag)
+    spell_selectors = SpellSelectorInventory(rows)
     result = []
     for row in sorted(rows, key=lambda r: r["id"]):
         if row["kind"] not in ORIGIN_KINDS:
@@ -60,7 +140,8 @@ def audit(rows, tag):
                 literal(path, "spell-grant", "spell", value, grantMode=mode)
             elif isinstance(value, dict) and ("choose" in value or "all" in value):
                 # Filters are authored selectors, not lists of awarded spells.
-                emit(path, "spell-selector", value, "selector-review", grantMode=mode)
+                emit(path, "spell-selector", value, "selector-review", grantMode=mode,
+                     **spell_selectors.inspect(value, mode))
             else:
                 for _, child, child_path in children(value, path):
                     spell_tree(child, child_path, mode)
@@ -173,10 +254,12 @@ def audit(rows, tag):
     unlinked = [o for o in result if o.get("literal") and (o["status"] not in {"unique-literal-candidate", "named-variant-candidate"} or not o["alreadyExplicit"])]
     counts = Counter(o["status"] for o in result)
     relation_counts = Counter(o["relation"] for o in result)
+    selector_counts = Counter(o["selectorStatus"] for o in result if "selectorStatus" in o)
     return {"status": "diagnostic-only", "editionTag": tag,
             "scope": "Structured grants, prerequisites, equipment and proficiency fields in character options; selectors and constraints remain unexecuted.",
             "counts": dict(sorted(counts.items())),
             "relationCounts": dict(sorted(relation_counts.items())),
+            "spellSelectorCounts": dict(sorted(selector_counts.items())),
             "explicitLiteralLinks": sum(o["alreadyExplicit"] for o in result),
             "unlinkedLiteralOccurrences": len(unlinked),
             "occurrences": result}
@@ -192,7 +275,8 @@ def main():
         rows = list(native_rows(REPO / "data" / "rulesets" / package / "native"))
         report[edition] = audit(rows, "SRD51" if edition == "srd-5.1" else "SRD52")
         print(edition, report[edition]["counts"], "explicit", report[edition]["explicitLiteralLinks"],
-              "unlinked literal", report[edition]["unlinkedLiteralOccurrences"])
+              "unlinked literal", report[edition]["unlinkedLiteralOccurrences"],
+              "spell selectors", report[edition]["spellSelectorCounts"])
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if args.require_literal_links and any(r["unlinkedLiteralOccurrences"] for r in report.values()):
