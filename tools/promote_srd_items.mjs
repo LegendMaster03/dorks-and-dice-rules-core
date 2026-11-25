@@ -116,7 +116,10 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
                     pages=[252,253];addCorrection(id,"Remove non-SRD setting names and foreign creature link; retain official artifact mechanics");
                 }
                 if(tag==="52"&&kind==="item"){
-                    if(name==="Trinket"){
+                    if(name==="Burglar's Pack"){
+                        if(row.weight!==47.5)throw Error("Unexpected source Burglar's Pack weight");
+                        row.weight=42;pages=[95,96];addCorrection(id,"Correct Burglar's Pack weight to published 42 lb.; price and contents agree with SRD 5.2.1 pp.95–96.");
+                    }else if(name==="Trinket"){
                         // The published random table is already part of this canonical item.
                         const table=row.entries.find(entry=>entry?.type==="table"&&entry.caption==="Trinkets");
                         if(table?.rows.length!==100||table.rows.some((r,i)=>r[0]!==String((i+1)%100).padStart(2,"0")))throw Error("Unexpected Trinkets roll coverage");

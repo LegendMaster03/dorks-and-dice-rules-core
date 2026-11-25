@@ -342,7 +342,7 @@
     "name": "Burglar's Pack",
     "type": "G|SRD52",
     "rarity": "none",
-    "weight": 47.5,
+    "weight": 42,
     "value": 1600,
     "entries": [
       "A Burglar's Pack contains the following items: {@item Backpack|SRD52}, {@item Ball Bearings|SRD52}, {@item Bell|SRD52}, 10 {@item Candle|SRD52|Candles}, {@item Crowbar|SRD52}, {@item Hooded Lantern|SRD52}, 7 flasks of {@item Oil|SRD52}, 5 days of {@item Rations|SRD52}, {@item Rope|SRD52}, {@item Tinderbox|SRD52}, and {@item Waterskin|SRD52}."
@@ -380,7 +380,9 @@
       "item.rations",
       "item.rope",
       "item.tinderbox",
-      "item.waterskin"
+      "item.waterskin",
+      "rulebook.page-095",
+      "rulebook.page-096"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -388,7 +390,10 @@
       "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        95,
+        96
+      ],
       "candidatePage": 95,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",

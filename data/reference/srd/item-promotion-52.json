@@ -241,6 +241,10 @@
       "reason": "Use official Handy Haversack name"
     },
     {
+      "id": "item.burglar-s-pack",
+      "reason": "Correct Burglar's Pack weight to published 42 lb.; price and contents agree with SRD 5.2.1 pp.95–96."
+    },
+    {
       "id": "item.crawler-mucus-contact",
       "reason": "Correct modern poison name"
     },
@@ -298,7 +302,7 @@
       "reason": "missing-or-ambiguous"
     }
   ],
-  "resolvedReferenceCount": 1109,
+  "resolvedReferenceCount": 1111,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",
