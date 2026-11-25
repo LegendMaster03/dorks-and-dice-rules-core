@@ -108,8 +108,8 @@ public sealed class RulesetResolutionApiTests
         const string animals = "/api/rulesets/dnd-5-5e/rules";
         var firstPage = await client.GetFromJsonAsync<JsonElement>(animals + "?category=monster&limit=10");
         var secondPage = await client.GetFromJsonAsync<JsonElement>(animals + "?category=monster&limit=10&offset=10");
-        Assert.Equal(97, firstPage.GetProperty("total").GetInt32());
-        Assert.Equal(97, secondPage.GetProperty("total").GetInt32());
+        Assert.Equal(335, firstPage.GetProperty("total").GetInt32());
+        Assert.Equal(335, secondPage.GetProperty("total").GetInt32());
         Assert.Empty(firstPage.GetProperty("rules").EnumerateArray().Select(x => x.GetProperty("id").GetString())
             .Intersect(secondPage.GetProperty("rules").EnumerateArray().Select(x => x.GetProperty("id").GetString())));
         var seahorse = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.seahorse");
@@ -117,6 +117,18 @@ public sealed class RulesetResolutionApiTests
             .GetProperty("challenge").GetProperty("xp").GetInt32());
         var owl = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.giant-owl");
         Assert.Equal("celestial", owl.GetProperty("rule").GetProperty("definition").GetProperty("type").GetString());
+
+        var oldMonsters = await client.GetFromJsonAsync<JsonElement>("/api/rulesets/dnd-5e/rules?category=monster&limit=1");
+        Assert.Equal(323, oldMonsters.GetProperty("total").GetInt32());
+        var dragon = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.adult-black-dragon");
+        var dragonDefinition = dragon.GetProperty("rule").GetProperty("definition");
+        Assert.Contains("Acid Arrow|SRD52", dragonDefinition.GetProperty("spellcasting").GetRawText());
+        Assert.DoesNotContain("Melf", dragonDefinition.GetRawText());
+        var spirit = await client.GetFromJsonAsync<JsonElement>(animals + "/monster.draconic-spirit");
+        Assert.Equal("Summon Dragon|SRD52", spirit.GetProperty("rule").GetProperty("definition")
+            .GetProperty("summonedBySpell").GetString());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(
+            "/api/rulesets/dnd-5e/rules/monster.draconic-spirit")).StatusCode);
 
         // The foreign catalogs expose original typed spell fields and entries,
         // not just publisher layout strings.

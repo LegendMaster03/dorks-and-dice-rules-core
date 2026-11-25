@@ -8,4 +8,4 @@ Run `node tools/promote_srd_json.mjs` to populate the selected existing native d
 
 Metadata and media such as reprint references, fluff and external artwork are not promoted. Structured source pointers identify the original edition and occurrence. Source provenance explicitly distinguishes verified names/levels/schools or core stat-block fields from pending entry-body review. No body/table semantic certification, complete inline reference resolution, executable spell engine, publication approval or downstream compatibility is claimed. Known source discrepancies must be corrected in the promotion layer as they are reviewed.
 
-The next batch should reuse the remaining edition-specific structured bestiary stat blocks, apply the recorded source corrections (including the modern black dragons), preserve the already recovered official Avatar of Death, and reconcile identities and references. Other structured categories follow the same approach.
+The subsequent [structured bestiary promotion](srd-structured-bestiary-promotion.md) imports the remaining base stat blocks and applies known spell-name corrections. Other structured categories follow the same approach.
