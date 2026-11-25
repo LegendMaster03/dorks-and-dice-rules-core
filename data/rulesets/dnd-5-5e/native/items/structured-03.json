@@ -2000,7 +2000,8 @@
       }
     ],
     "catalogReferences": [
-      "item-group.figurine-of-wondrous-power"
+      "item-group.figurine-of-wondrous-power",
+      "monster.giant-fly"
     ],
     "source": {
       "release": "srd-5.2.1",

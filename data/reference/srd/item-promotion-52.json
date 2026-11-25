@@ -237,6 +237,10 @@
   ],
   "corrections": [
     {
+      "id": "item.bag-of-holding",
+      "reason": "Use official Handy Haversack name"
+    },
+    {
       "id": "item.crawler-mucus-contact",
       "reason": "Correct modern poison name"
     },
@@ -255,24 +259,16 @@
     {
       "id": "item.dragon-orb",
       "reason": "S52-020: remove non-SRD setting introduction and legacy random properties"
+    },
+    {
+      "id": "item.portable-hole",
+      "reason": "Use official Handy Haversack name"
     }
   ],
   "publisherOnly": [
     "item.plate-armor-of-etherealness"
   ],
   "unresolvedReferences": [
-    {
-      "id": "item.bag-of-holding",
-      "kind": "item",
-      "raw": "Heward's Handy Haversack|SRD52",
-      "reason": "missing-or-ambiguous"
-    },
-    {
-      "id": "item.figurine-of-wondrous-power-ebony-fly",
-      "kind": "creature",
-      "raw": "Giant Fly|SRD52",
-      "reason": "missing-or-ambiguous"
-    },
     {
       "id": "item.figurine-of-wondrous-power-ivory-goats",
       "kind": "item",
@@ -283,12 +279,6 @@
       "id": "item.figurine-of-wondrous-power-ivory-goats",
       "kind": "item",
       "raw": "+2 Longsword|SRD52",
-      "reason": "missing-or-ambiguous"
-    },
-    {
-      "id": "item.portable-hole",
-      "kind": "item",
-      "raw": "Heward's Handy Haversack|SRD52",
       "reason": "missing-or-ambiguous"
     },
     {
@@ -310,6 +300,6 @@
       "reason": "missing-or-ambiguous"
     }
   ],
-  "resolvedReferenceCount": 1096,
+  "resolvedReferenceCount": 1099,
   "nativeCount": 641
 }
