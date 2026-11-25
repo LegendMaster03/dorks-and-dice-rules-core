@@ -252,5 +252,74 @@
       },
       "adaptation": "Stat-block fields reviewed against official page; third-party media and derived tags omitted; explicit local spell references added."
     }
+  },
+  {
+    "id": "monster.giant-fly",
+    "kind": "monster",
+    "name": "Giant Fly",
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60
+    },
+    "str": 14,
+    "dex": 13,
+    "con": 13,
+    "int": 2,
+    "wis": 10,
+    "cha": 3,
+    "save": {
+      "str": "+2",
+      "dex": "+1",
+      "con": "+1",
+      "int": "-4",
+      "wis": "+0",
+      "cha": "-4"
+    },
+    "initiative": {
+      "modifier": 1,
+      "score": 11
+    },
+    "proficiencyBonus": 2,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "cr": {
+      "cr": "0",
+      "xp": 0
+    },
+    "challenge": {
+      "rating": "0",
+      "xp": 0
+    },
+    "catalogReferences": [
+      "rulebook.page-222"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "pages": [
+        222
+      ],
+      "section": "Figurine of Wondrous Power — Giant Fly",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "adaptation": "Direct publisher stat-block transcription; missing from pinned structured bestiary."
+    }
   }
 ]

@@ -42,6 +42,22 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
                 for(const [key,value] of Object.entries(candidate))if(!excluded.has(key))row[key]=value;
                 if(candidate.additionalEntries)report.excluded.push({...pointer,field:"additionalEntries",reason:"supplemental tool/vehicle prose not verified as SRD; base fields retained"});
                 let pages=[];
+                if(kind==="item"&&["Bag of Holding","Portable Hole"].includes(name)){
+                    const serialized=JSON.stringify(row);
+                    const corrected=serialized.replace(/Heward's Handy Haversack/gi,match=>match[0]==="h"?"handy haversack":"Handy Haversack");
+                    if(serialized!==corrected){Object.assign(row,JSON.parse(corrected));addCorrection(id,"Use official Handy Haversack name");}
+                }
+                if(tag==="51"&&kind==="itemGroup"&&name==="Gaming Set"){
+                    row.items=row.items.filter(item=>/^(Dice Set|Playing Card Set)\|SRD51$/.test(item));
+                    pages=[70,71];addCorrection(id,"Remove gaming set variants absent from the 5.1 tools table");
+                }
+                if(tag==="51"&&kind==="item"&&name==="Orb of Dragonkind"){
+                    row.entries[0]=row.entries[0].replace("Ages past, on the world of Krynn,","Ages past,").replace("the wizards of the Towers of High Sorcery","powerful wizards").replace("five towers","five wizard towers");
+                    row.entries[1]=row.entries[1].replace("Towers of High Sorcery","wizard towers");
+                    row.entries[5]=row.entries[5].replace("Takhisis ({@creature Tiamat|RoT|Tiamat's} name on Krynn)","Tiamat");
+                    row.entries=row.entries.map(entry=>entry?.name==="Call Dragons"?{...entry,entries:entry.entries.map(s=>s.replace("{@creature Tiamat|RoT}","Tiamat"))}:entry);
+                    pages=[252,253];addCorrection(id,"Remove non-SRD setting names and foreign creature link; retain official artifact mechanics");
+                }
                 if(tag==="52"&&kind==="item"){
                     if(name==="Cube of Force"){
                         const swaps=[["Leomund's Tiny Hut","Tiny Hut"],["Mordenkainen's Private Sanctum","Private Sanctum"],["Otiluke's Resilient Sphere","Resilient Sphere"]];

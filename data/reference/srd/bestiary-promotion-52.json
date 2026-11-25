@@ -376,6 +376,7 @@
   ],
   "unmatchedPublisherLocators": [],
   "publisherOnly": [
-    "monster.avatar-of-death"
+    "monster.avatar-of-death",
+    "monster.giant-fly"
   ]
 }
