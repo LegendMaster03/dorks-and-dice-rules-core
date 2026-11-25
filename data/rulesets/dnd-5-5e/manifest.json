@@ -6,7 +6,7 @@
   "workingRoot": "working/",
   "runtimeContentRoot": "native/",
   "name": "D&D SRD 5.2.1",
-  "coverageStatus": "official-pdf-page-reference; reviewed skills and conditions; structured SRD spells, bestiary and item catalogs; structured character origins; remaining categories incomplete",
+  "coverageStatus": "official-pdf-page-reference; reviewed skills and conditions; structured SRD spells, bestiary and item catalogs; structured character origins; structured classes and features; remaining categories incomplete",
   "license": "CC-BY-4.0",
   "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
   "officialPageImport": {
@@ -53,5 +53,9 @@
   "structuredOriginsImport": {
     "nativeRecords": 13,
     "representation": "pinned edition-specific character creation definitions; publisher page locators; full body and reference review pending"
+  },
+  "structuredClassImport": {
+    "nativeRecords": 377,
+    "representation": "pinned edition-specific class/subclass progressions and feature definitions; explicit feature references resolved; full publisher body and semantic review pending"
   }
 }

@@ -12,6 +12,8 @@ on:
       - 'tools/promote_srd_bestiary.mjs'
       - 'tools/promote_srd_items.mjs'
       - 'tools/promote_srd_origins.mjs'
+      - 'tools/promote_srd_classes.mjs'
+      - 'data/reference/srd/class-promotion-*.json'
       - 'data/reference/srd/origins-promotion-*.json'
       - 'data/reference/srd/item-promotion-*.json'
       - 'data/reference/srd/bestiary-promotion-*.json'
@@ -30,6 +32,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build isolated edition review catalogs
         run: python3 tools/stage_srd_editions.py --output build/srd-review
+      - name: Verify structured class source projection
+        run: node tools/promote_srd_classes.mjs --check
       - name: Verify structured character origins source projection
         run: node tools/promote_srd_origins.mjs --check
       - name: Verify structured item source projection

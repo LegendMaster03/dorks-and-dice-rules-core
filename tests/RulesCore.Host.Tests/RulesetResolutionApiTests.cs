@@ -172,6 +172,23 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal(4, modernBackgrounds.GetProperty("total").GetInt32());
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync("/api/rulesets/fate-condensed/rules/species.human")).StatusCode);
 
+        // Class progression links identify the edition-local feature at its acquisition level.
+        foreach (var id in ids.Take(2))
+        {
+            var prefix = "/api/rulesets/" + id + "/rules";
+            var classes = await client.GetFromJsonAsync<JsonElement>(prefix + "?category=class&limit=1");
+            var subclasses = await client.GetFromJsonAsync<JsonElement>(prefix + "?category=subclass&limit=1");
+            Assert.Equal(12, classes.GetProperty("total").GetInt32());
+            Assert.Equal(12, subclasses.GetProperty("total").GetInt32());
+            var warlock = await client.GetFromJsonAsync<JsonElement>(prefix + "/class.warlock");
+            Assert.Contains("class-feature.warlock.pact-magic.1", warlock.GetProperty("rule").GetProperty("definition").GetProperty("catalogReferences").GetRawText());
+            var pact = await client.GetFromJsonAsync<JsonElement>(prefix + "/class-feature.warlock.pact-magic.1");
+            Assert.Equal(1, pact.GetProperty("rule").GetProperty("definition").GetProperty("level").GetInt32());
+            if (id == "dnd-5-5e")
+                Assert.DoesNotContain("Witch Bolt", pact.GetProperty("rule").GetProperty("definition").GetProperty("entries").GetRawText());
+        }
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync("/api/rulesets/fate-condensed/rules/class.warlock")).StatusCode);
+
         // The foreign catalogs expose original typed spell fields and entries,
         // not just publisher layout strings.
         foreach (var id in ids.Take(2))

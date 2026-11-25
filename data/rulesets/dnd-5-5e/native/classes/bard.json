@@ -1,0 +1,1738 @@
+[
+  {
+    "id": "class.bard",
+    "kind": "class",
+    "name": "Bard",
+    "primaryAbility": [
+      {
+        "cha": true
+      }
+    ],
+    "hd": {
+      "number": 1,
+      "faces": 8
+    },
+    "proficiency": [
+      "dex",
+      "cha"
+    ],
+    "spellcastingAbility": "cha",
+    "casterProgression": "full",
+    "preparedSpellsProgression": [
+      4,
+      5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      16,
+      17,
+      17,
+      18,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "preparedSpellsChange": "level",
+    "cantripProgression": [
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "additionalSpells": [
+      {
+        "expanded": {
+          "10": [
+            {
+              "all": "level=1;2;3;4;5|class=Cleric;Druid;Wizard"
+            }
+          ],
+          "s6": [
+            {
+              "all": "level=6|class=Cleric;Druid;Wizard"
+            }
+          ],
+          "s7": [
+            {
+              "all": "level=7|class=Cleric;Druid;Wizard"
+            }
+          ],
+          "s8": [
+            {
+              "all": "level=8|class=Cleric;Druid;Wizard"
+            }
+          ],
+          "s9": [
+            {
+              "all": "level=9|class=Cleric;Druid;Wizard"
+            }
+          ]
+        },
+        "prepared": {
+          "20": [
+            "power word heal|srd52",
+            "power word kill|srd52"
+          ]
+        }
+      }
+    ],
+    "featProgression": [
+      {
+        "name": "Epic Boon",
+        "category": [
+          "EB"
+        ],
+        "progression": {
+          "19": 1
+        }
+      }
+    ],
+    "startingProficiencies": {
+      "armor": [
+        "light"
+      ],
+      "weapons": [
+        "simple"
+      ],
+      "tools": [
+        "Choose three {@item Musical Instrument|SRD52|Musical Instruments}"
+      ],
+      "toolProficiencies": [
+        {
+          "anyMusicalInstrument": 3
+        }
+      ],
+      "skills": [
+        {
+          "any": 3
+        }
+      ]
+    },
+    "startingEquipment": {
+      "additionalFromBackground": true,
+      "defaultData": [
+        {
+          "A": [
+            {
+              "item": "leather armor|srd52"
+            },
+            {
+              "item": "dagger|srd52",
+              "quantity": 2
+            },
+            {
+              "equipmentType": "instrumentMusical"
+            },
+            {
+              "item": "entertainer's pack|srd52"
+            },
+            {
+              "value": 1900
+            }
+          ],
+          "B": [
+            {
+              "value": 9000
+            }
+          ]
+        }
+      ],
+      "entries": [
+        "{@i Choose A or B:} (A) {@item Leather Armor|SRD52}, 2 {@item Dagger|SRD52}, {@item Musical Instrument|SRD52} of your choice, {@item Entertainer's Pack|SRD52}, 19 GP; or (B) 90 GP"
+      ]
+    },
+    "multiclassing": {
+      "proficienciesGained": {
+        "armor": [
+          "light"
+        ],
+        "tools": [
+          "Choose one {@item Musical Instrument|SRD52}"
+        ],
+        "toolProficiencies": [
+          {
+            "anyMusicalInstrument": 1
+          }
+        ],
+        "skills": [
+          {
+            "choose": {
+              "from": [
+                "athletics",
+                "acrobatics",
+                "sleight of hand",
+                "stealth",
+                "arcana",
+                "history",
+                "investigation",
+                "nature",
+                "religion",
+                "animal handling",
+                "insight",
+                "medicine",
+                "perception",
+                "survival",
+                "deception",
+                "intimidation",
+                "performance",
+                "persuasion"
+              ],
+              "count": 1
+            }
+          }
+        ]
+      }
+    },
+    "classTableGroups": [
+      {
+        "colLabels": [
+          "Bardic Die",
+          "{@filter Cantrips|spells|level=0|class=bard}",
+          "{@filter Prepared Spells|spells|level=!0|class=bard}"
+        ],
+        "rows": [
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            },
+            2,
+            4
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            },
+            2,
+            5
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            },
+            2,
+            6
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 6
+                }
+              ],
+              "rollable": true
+            },
+            3,
+            7
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 8
+                }
+              ],
+              "rollable": true
+            },
+            3,
+            9
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 8
+                }
+              ],
+              "rollable": true
+            },
+            3,
+            10
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 8
+                }
+              ],
+              "rollable": true
+            },
+            3,
+            11
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 8
+                }
+              ],
+              "rollable": true
+            },
+            3,
+            12
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 8
+                }
+              ],
+              "rollable": true
+            },
+            3,
+            14
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 10
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            15
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 10
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            16
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 10
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            16
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 10
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            17
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 10
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            17
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 12
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            18
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 12
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            18
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 12
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            19
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 12
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            20
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 12
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            21
+          ],
+          [
+            {
+              "type": "dice",
+              "toRoll": [
+                {
+                  "number": 1,
+                  "faces": 12
+                }
+              ],
+              "rollable": true
+            },
+            4,
+            22
+          ]
+        ]
+      },
+      {
+        "title": "Spell Slots per Spell Level",
+        "colLabels": [
+          "{@filter 1st|spells|level=1|class=bard}",
+          "{@filter 2nd|spells|level=2|class=bard}",
+          "{@filter 3rd|spells|level=3|class=bard}",
+          "{@filter 4th|spells|level=4|class=bard}",
+          "{@filter 5th|spells|level=5|class=bard}",
+          "{@filter 6th|spells|level=6|class=bard}",
+          "{@filter 7th|spells|level=7|class=bard}",
+          "{@filter 8th|spells|level=8|class=bard}",
+          "{@filter 9th|spells|level=9|class=bard}"
+        ],
+        "rowsSpellProgression": [
+          [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            0
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            3,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            1,
+            1,
+            1
+          ],
+          [
+            4,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            1,
+            1
+          ]
+        ]
+      }
+    ],
+    "classFeatures": [
+      "Bardic Inspiration|Bard|SRD52|1",
+      "Spellcasting|Bard|SRD52|1",
+      "Expertise|Bard|SRD52|2",
+      "Jack of All Trades|Bard|SRD52|2",
+      {
+        "classFeature": "Bard Subclass|Bard|SRD52|3",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Bard|SRD52|4",
+      "Font of Inspiration|Bard|SRD52|5",
+      {
+        "classFeature": "Subclass Feature|Bard|SRD52|6",
+        "gainSubclassFeature": true
+      },
+      "Countercharm|Bard|SRD52|7",
+      "Ability Score Improvement|Bard|SRD52|8",
+      "Expertise|Bard|SRD52|9",
+      "Magical Secrets|Bard|SRD52|10",
+      "Ability Score Improvement|Bard|SRD52|12",
+      {
+        "classFeature": "Subclass Feature|Bard|SRD52|14",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Bard|SRD52|16",
+      "Superior Inspiration|Bard|SRD52|18",
+      "Epic Boon|Bard|SRD52|19",
+      "Words of Creation|Bard|SRD52|20"
+    ],
+    "subclassTitle": "Bard Subclass",
+    "catalogReferences": [
+      "class-feature.bard.ability-score-improvement.12",
+      "class-feature.bard.ability-score-improvement.16",
+      "class-feature.bard.ability-score-improvement.4",
+      "class-feature.bard.ability-score-improvement.8",
+      "class-feature.bard.bard-subclass.3",
+      "class-feature.bard.bardic-inspiration.1",
+      "class-feature.bard.countercharm.7",
+      "class-feature.bard.epic-boon.19",
+      "class-feature.bard.expertise.2",
+      "class-feature.bard.expertise.9",
+      "class-feature.bard.font-of-inspiration.5",
+      "class-feature.bard.jack-of-all-trades.2",
+      "class-feature.bard.magical-secrets.10",
+      "class-feature.bard.spellcasting.1",
+      "class-feature.bard.subclass-feature.14",
+      "class-feature.bard.subclass-feature.6",
+      "class-feature.bard.superior-inspiration.18",
+      "class-feature.bard.words-of-creation.20",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 31,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/class/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass.bard.lore",
+    "kind": "subclass",
+    "name": "College of Lore",
+    "shortName": "Lore",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "additionalSpells": [
+      {
+        "prepared": {
+          "6": [
+            {
+              "choose": "level=0;1;2;3|class=Cleric;Druid;Wizard"
+            },
+            {
+              "choose": "level=0;1;2;3|class=Cleric;Druid;Wizard"
+            }
+          ]
+        }
+      }
+    ],
+    "subclassFeatures": [
+      "College of Lore|Bard|SRD52|Lore|SRD52|3",
+      "Magical Discoveries|Bard|SRD52|Lore|SRD52|6",
+      "Peerless Skill|Bard|SRD52|Lore|SRD52|14"
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-035",
+      "subclass-feature.bard.lore.college-of-lore.3",
+      "subclass-feature.bard.lore.magical-discoveries.6",
+      "subclass-feature.bard.lore.peerless-skill.14"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        35
+      ],
+      "candidatePage": 35,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/subclass/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.bardic-inspiration.1",
+    "kind": "class-feature",
+    "name": "Bardic Inspiration",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "You can supernaturally inspire others through words, music, or dance. This inspiration is represented by your Bardic Inspiration die, which is a {@dice d6}.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Using Bardic Inspiration",
+            "entries": [
+              "As a {@variantrule Bonus Action|SRD52}, you can inspire another creature within 60 feet of yourself who can see or hear you. That creature gains one of your Bardic Inspiration dice. A creature can have only one Bardic Inspiration die at a time.",
+              "Once within the next hour when the creature fails a {@variantrule D20 Test|SRD52}, the creature can roll the Bardic Inspiration die and add the number rolled to the {@dice d20}, potentially turning the failure into a success. A Bardic Inspiration die is expended when it's rolled."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Number of Uses",
+            "entries": [
+              "You can confer a Bardic Inspiration die a number of times equal to your Charisma modifier (minimum of once), and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "Your Bardic Inspiration die changes when you reach certain Bard levels, as shown in the Bardic Die column of the Bard Features table. The die becomes a {@dice d8} at level 5, a {@dice d10} at level 10, and a {@dice d12} at level 15."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/26"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.spellcasting.1",
+    "kind": "class-feature",
+    "name": "Spellcasting",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "You have learned to cast spells through your bardic arts. See {@book chapter 7|SRD52|7} for the rules on spellcasting. The information below details how you use those rules with Bard spells, which appear in the {@filter Bard spell list|spells|class=Bard} later in the class's description.",
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Cantrips",
+            "entries": [
+              "You know two cantrips of your choice from the {@filter Bard spell list|spells|class=Bard}. {@spell Dancing Lights|SRD52} and {@spell Vicious Mockery|SRD52} are recommended.",
+              "Whenever you gain a Bard level, you can replace one of your cantrips with another cantrip of your choice from the {@filter Bard spell list|spells|class=Bard}.",
+              "When you reach Bard levels 4 and 10, you learn another cantrip of your choice from the {@filter Bard spell list|spells|class=Bard}, as shown in the Cantrips column of the Bard Features table."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spell Slots",
+            "entries": [
+              "The Bard Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a {@variantrule Long Rest|SRD52}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Prepared Spells of Level 1+",
+            "entries": [
+              "You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose four level 1 spells from the {@filter Bard spell list|spells|class=Bard}. {@spell Charm Person|SRD52}, {@spell Color Spray|SRD52}, {@spell Dissonant Whispers|SRD52}, and {@spell Healing Word|SRD52} are recommended.",
+              "The number of spells on your list increases as you gain Bard levels, as shown in the Prepared Spells column of the Bard Features table. Whenever that number increases, choose additional spells from the {@filter Bard spell list|spells|class=Bard} until the number of spells on your list matches the number on the table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 3 Bard, your list of prepared spells can include six spells of levels 1 and 2 in any combination.",
+              "If another Bard feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Bard spells for you."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Changing Your Prepared Spells",
+            "entries": [
+              "Whenever you gain a Bard level, you can replace one spell on your list with another Bard spell for which you have spell slots."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spellcasting Ability",
+            "entries": [
+              "Charisma is your spellcasting ability for your Bard spells."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spellcasting Focus",
+            "entries": [
+              "You can use a {@item Musical Instrument|SRD52} as a {@variantrule Spellcasting Focus|SRD52} for your Bard spells."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/27"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.expertise.2",
+    "kind": "class-feature",
+    "name": "Expertise",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 2,
+    "entries": [
+      "You gain {@variantrule Expertise|SRD52} in two of your skill proficiencies of your choice. {@skill Performance|SRD52} and {@skill Persuasion|SRD52} are recommended if you have proficiency in them.",
+      "At Bard level 9, you gain {@variantrule Expertise|SRD52} in two more of your skill proficiencies of your choice."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 60,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/28"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.jack-of-all-trades.2",
+    "kind": "class-feature",
+    "name": "Jack of All Trades",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 2,
+    "entries": [
+      "You can add half your {@variantrule Proficiency|SRD52|Proficiency Bonus} (round down) to any ability check you make that uses a skill proficiency you lack and that doesn't otherwise use your {@variantrule Proficiency|SRD52|Proficiency Bonus}.",
+      "For example, if you make a Strength ({@skill Athletics|SRD52}) check and lack {@skill Athletics|SRD52} proficiency, you can add half your {@variantrule Proficiency|SRD52|Proficiency Bonus} to the check.",
+      {
+        "type": "inset",
+        "name": "A Bard's Repertoire",
+        "entries": [
+          "Does your Bard beat a {@item drum|SRD52} while chanting the deeds of ancient heroes? Strum a {@item lute|SRD52} while crooning romantic tunes? Perform arias of stirring power? Recite dramatic monologues from classic tragedies? Use the rhythm of a folk dance to coordinate the movement of allies in battle? Compose naughty limericks?",
+          "When you play a Bard, consider the style of artistic performance you favor, the moods you might invoke, and the themes that inspire your own creations. Are your poems inspired by moments of natural beauty, or are they brooding reflections on loss? Do you prefer lofty hymns or rowdy tavern songs? Are you drawn to laments for the fallen or celebrations of joy? Do you dance merry jigs or perform elaborate interpretive choreography? Do you focus on one style of performance or strive to master them all?"
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 60,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/29"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.bard-subclass.3",
+    "kind": "class-feature",
+    "name": "Bard Subclass",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "You gain a Bard subclass of your choice. A subclass is a specialization that grants you features at certain Bard levels. For the rest of your career, you gain each of your subclass's features that are of your Bard level or lower."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 60,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/30"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.ability-score-improvement.4",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 4,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify. You gain this feature again at Bard levels 8, 12, and 16."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/31"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.font-of-inspiration.5",
+    "kind": "class-feature",
+    "name": "Font of Inspiration",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 5,
+    "entries": [
+      "You now regain all your expended uses of Bardic Inspiration when you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}.",
+      "In addition, you can expend a spell slot (no action required) to regain one expended use of Bardic Inspiration."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/32"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.subclass-feature.6",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 6,
+    "entries": [
+      "You gain a feature from your Bard Subclass."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/33"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.countercharm.7",
+    "kind": "class-feature",
+    "name": "Countercharm",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 7,
+    "entries": [
+      "You can use musical notes or words of power to disrupt mind-influencing effects. If you or a creature within 30 feet of you fails a saving throw against an effect that applies the {@condition Charmed|SRD52} or {@condition Frightened|SRD52} condition, you can take a {@variantrule Reaction|SRD52} to cause the save to be rerolled, and the new roll has {@variantrule Advantage|SRD52}."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/34"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.ability-score-improvement.8",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 8,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/35"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.expertise.9",
+    "kind": "class-feature",
+    "name": "Expertise",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 9,
+    "entries": [
+      "You gain {@variantrule Expertise|SRD52} in two of your Skill Proficiencies of your choice."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/36"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.magical-secrets.10",
+    "kind": "class-feature",
+    "name": "Magical Secrets",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 10,
+    "entries": [
+      "You've learned secrets from various magical traditions. Whenever you reach a Bard level (including this level) and the Prepared Spells number in the Bard Features table increases, you can choose any of your new prepared spells from the {@filter Bard|spells|class=Bard}, {@filter Cleric|spells|class=Cleric}, {@filter Druid|spells|class=Druid}, and {@filter Wizard|spells|class=Wizard} {@filter spell lists|spells|class=Bard;Cleric;Druid;Wizard}, and the chosen spells count as Bard spells for you (see a class's section for its spell list). In addition, whenever you replace a spell prepared for this class, you can replace it with a spell from those lists."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/37"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.ability-score-improvement.12",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 12,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/38"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.subclass-feature.14",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 14,
+    "entries": [
+      "You gain a feature from your Bard Subclass."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/39"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.ability-score-improvement.16",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 16,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/40"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.superior-inspiration.18",
+    "kind": "class-feature",
+    "name": "Superior Inspiration",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 18,
+    "entries": [
+      "When you roll {@variantrule Initiative|SRD52}, you regain expended uses of Bardic Inspiration until you have two if you have fewer than that."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/41"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.epic-boon.19",
+    "kind": "class-feature",
+    "name": "Epic Boon",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 19,
+    "entries": [
+      "You gain an {@filter Epic Boon feat|feats|category=EB} or another {@5etools feat|feats.html} of your choice for which you qualify. {@feat Boon of Spell Recall|SRD52} is recommended."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/42"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.bard.words-of-creation.20",
+    "kind": "class-feature",
+    "name": "Words of Creation",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "level": 20,
+    "entries": [
+      "You have mastered two of the Words of Creation: the words of life and death. You therefore always have the {@spell Power Word Heal|SRD52} and {@spell Power Word Kill|SRD52} spells prepared. When you cast either spell, you can target a second creature with it if that creature is within 10 feet of the first target."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-031"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        31
+      ],
+      "candidatePage": 61,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/classFeature/43"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.bard.lore.college-of-lore.3",
+    "kind": "subclass-feature",
+    "name": "College of Lore",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "subclassShortName": "Lore",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "{@i Plumb the Depths of Magical Knowledge}",
+      "Bards of the College of Lore collect spells and secrets from diverse sources, such as scholarly tomes, mystical rites, and peasant tales. The college's members gather in libraries and universities to share their lore with one another. They also meet at festivals or affairs of state, where they can expose corruption, unravel lies, and poke fun at self-important figures of authority.",
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Bonus Proficiencies|Bard|SRD52|Lore|SRD52|3"
+      },
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Cutting Words|Bard|SRD52|Lore|SRD52|3"
+      }
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-035",
+      "subclass-feature.bard.lore.bonus-proficiencies.3",
+      "subclass-feature.bard.lore.cutting-words.3",
+      "subclass.bard.lore"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        35
+      ],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/subclassFeature/5"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.bard.lore.bonus-proficiencies.3",
+    "kind": "subclass-feature",
+    "name": "Bonus Proficiencies",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "subclassShortName": "Lore",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "header": 2,
+    "entries": [
+      "You gain proficiency with three skills of your choice."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-035",
+      "subclass.bard.lore"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        35
+      ],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/subclassFeature/6"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.bard.lore.cutting-words.3",
+    "kind": "subclass-feature",
+    "name": "Cutting Words",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "subclassShortName": "Lore",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "header": 2,
+    "entries": [
+      "You learn to use your wit to supernaturally distract, confuse, and otherwise sap the confidence and competence of others. When a creature that you can see within 60 feet of yourself makes a damage roll or succeeds on an ability check or attack roll, you can take a {@variantrule Reaction|SRD52} to expend one use of your Bardic Inspiration; roll your Bardic Inspiration die, and subtract the number rolled from the creature's roll, reducing the damage or potentially turning the success into a failure."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-035",
+      "subclass.bard.lore"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        35
+      ],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/subclassFeature/7"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.bard.lore.magical-discoveries.6",
+    "kind": "subclass-feature",
+    "name": "Magical Discoveries",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "subclassShortName": "Lore",
+    "subclassSource": "SRD52",
+    "level": 6,
+    "header": 2,
+    "entries": [
+      "You learn two spells of your choice. These spells can come from the {@filter Cleric|spells|class=Cleric}, {@filter Druid|spells|class=Druid}, or {@filter Wizard spell list|spells|class=Wizard} or any combination thereof (see a class's section for its spell list). A spell you choose must be a cantrip or a spell for which you have spell slots, as shown in the Bard Features table.",
+      "You always have the chosen spells prepared, and whenever you gain a Bard level, you can replace one of the spells with another spell that meets these requirements."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-035",
+      "subclass.bard.lore"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        35
+      ],
+      "candidatePage": 66,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/subclassFeature/8"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.bard.lore.peerless-skill.14",
+    "kind": "subclass-feature",
+    "name": "Peerless Skill",
+    "className": "Bard",
+    "classSource": "SRD52",
+    "subclassShortName": "Lore",
+    "subclassSource": "SRD52",
+    "level": 14,
+    "header": 2,
+    "entries": [
+      "When you make an ability check or attack roll and fail, you can expend one use of Bardic Inspiration; roll the Bardic Inspiration die, and add the number rolled to the {@dice d20}, potentially turning a failure into a success. On a failure, the Bardic Inspiration isn't expended."
+    ],
+    "catalogReferences": [
+      "class.bard",
+      "rulebook.page-035",
+      "subclass.bard.lore"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        35
+      ],
+      "candidatePage": 67,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-bard.json",
+        "pointer": "/subclassFeature/9"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  }
+]

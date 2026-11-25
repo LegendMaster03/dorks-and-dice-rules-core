@@ -1,0 +1,1567 @@
+[
+  {
+    "id": "class.fighter",
+    "kind": "class",
+    "name": "Fighter",
+    "primaryAbility": [
+      {
+        "str": true
+      },
+      {
+        "dex": true
+      }
+    ],
+    "hd": {
+      "number": 1,
+      "faces": 10
+    },
+    "proficiency": [
+      "str",
+      "con"
+    ],
+    "featProgression": [
+      {
+        "name": "Fighting Style",
+        "category": [
+          "FS"
+        ],
+        "progression": {
+          "1": 1
+        }
+      },
+      {
+        "name": "Epic Boon",
+        "category": [
+          "EB"
+        ],
+        "progression": {
+          "19": 1
+        }
+      }
+    ],
+    "startingProficiencies": {
+      "armor": [
+        "light",
+        "medium",
+        "heavy",
+        "shield"
+      ],
+      "weapons": [
+        "simple",
+        "martial"
+      ],
+      "skills": [
+        {
+          "choose": {
+            "from": [
+              "acrobatics",
+              "animal handling",
+              "athletics",
+              "history",
+              "insight",
+              "intimidation",
+              "persuasion",
+              "perception",
+              "survival"
+            ],
+            "count": 2
+          }
+        }
+      ]
+    },
+    "startingEquipment": {
+      "additionalFromBackground": true,
+      "defaultData": [
+        {
+          "A": [
+            {
+              "item": "chain mail|srd52"
+            },
+            {
+              "item": "greatsword|srd52"
+            },
+            {
+              "item": "flail|srd52"
+            },
+            {
+              "item": "javelin|srd52",
+              "quantity": 8
+            },
+            {
+              "item": "dungeoneer's pack|srd52"
+            },
+            {
+              "value": 400
+            }
+          ],
+          "B": [
+            {
+              "item": "studded leather armor|srd52"
+            },
+            {
+              "item": "scimitar|srd52"
+            },
+            {
+              "item": "shortsword|srd52"
+            },
+            {
+              "item": "longbow|srd52"
+            },
+            {
+              "item": "arrows (20)|srd52"
+            },
+            {
+              "item": "quiver|srd52"
+            },
+            {
+              "item": "dungeoneer's pack|srd52"
+            },
+            {
+              "value": 1100
+            }
+          ],
+          "C": [
+            {
+              "value": 15500
+            }
+          ]
+        }
+      ],
+      "entries": [
+        "{@i Choose A, B, or C:} (A) {@item Chain Mail|SRD52}, {@item Greatsword|SRD52}, {@item Flail|SRD52}, 8 {@item Javelin|SRD52|Javelins}, {@item Dungeoneer's Pack|SRD52}, and 4 GP; (B) {@item Studded Leather Armor|SRD52}, {@item Scimitar|SRD52}, {@item Shortsword|SRD52}, {@item Longbow|SRD52}, {@item Arrows (20)|SRD52|20 Arrows}, {@item Quiver|SRD52}, {@item Dungeoneer's Pack|SRD52}, and 11 GP; or (C) 155 GP"
+      ]
+    },
+    "multiclassing": {
+      "proficienciesGained": {
+        "armor": [
+          "light",
+          "medium",
+          "shield"
+        ],
+        "weapons": [
+          "martial"
+        ]
+      }
+    },
+    "classTableGroups": [
+      {
+        "colLabels": [
+          "Second Wind",
+          "Weapon Mastery"
+        ],
+        "rows": [
+          [
+            "2",
+            "3"
+          ],
+          [
+            "2",
+            "3"
+          ],
+          [
+            "2",
+            "3"
+          ],
+          [
+            "3",
+            "4"
+          ],
+          [
+            "3",
+            "4"
+          ],
+          [
+            "3",
+            "4"
+          ],
+          [
+            "3",
+            "4"
+          ],
+          [
+            "3",
+            "4"
+          ],
+          [
+            "3",
+            "4"
+          ],
+          [
+            "4",
+            "5"
+          ],
+          [
+            "4",
+            "5"
+          ],
+          [
+            "4",
+            "5"
+          ],
+          [
+            "4",
+            "5"
+          ],
+          [
+            "4",
+            "5"
+          ],
+          [
+            "4",
+            "5"
+          ],
+          [
+            "4",
+            "6"
+          ],
+          [
+            "4",
+            "6"
+          ],
+          [
+            "4",
+            "6"
+          ],
+          [
+            "4",
+            "6"
+          ],
+          [
+            "4",
+            "6"
+          ]
+        ]
+      }
+    ],
+    "classFeatures": [
+      "Fighting Style|Fighter|SRD52|1",
+      "Second Wind|Fighter|SRD52|1",
+      "Weapon Mastery|Fighter|SRD52|1",
+      "Action Surge|Fighter|SRD52|2",
+      "Tactical Mind|Fighter|SRD52|2",
+      {
+        "classFeature": "Fighter Subclass|Fighter|SRD52|3",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Fighter|SRD52|4",
+      "Extra Attack|Fighter|SRD52|5",
+      "Tactical Shift|Fighter|SRD52|5",
+      "Ability Score Improvement|Fighter|SRD52|6",
+      {
+        "classFeature": "Subclass Feature|Fighter|SRD52|7",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Fighter|SRD52|8",
+      "Indomitable|Fighter|SRD52|9",
+      "Tactical Master|Fighter|SRD52|9",
+      {
+        "classFeature": "Subclass Feature|Fighter|SRD52|10",
+        "gainSubclassFeature": true
+      },
+      "Two Extra Attacks|Fighter|SRD52|11",
+      "Ability Score Improvement|Fighter|SRD52|12",
+      "Indomitable|Fighter|SRD52|13",
+      "Studied Attacks|Fighter|SRD52|13",
+      "Ability Score Improvement|Fighter|SRD52|14",
+      {
+        "classFeature": "Subclass Feature|Fighter|SRD52|15",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Fighter|SRD52|16",
+      "Action Surge|Fighter|SRD52|17",
+      "Indomitable|Fighter|SRD52|17",
+      {
+        "classFeature": "Subclass Feature|Fighter|SRD52|18",
+        "gainSubclassFeature": true
+      },
+      "Epic Boon|Fighter|SRD52|19",
+      "Three Extra Attacks|Fighter|SRD52|20"
+    ],
+    "subclassTitle": "Fighter Subclass",
+    "catalogReferences": [
+      "class-feature.fighter.ability-score-improvement.12",
+      "class-feature.fighter.ability-score-improvement.14",
+      "class-feature.fighter.ability-score-improvement.16",
+      "class-feature.fighter.ability-score-improvement.4",
+      "class-feature.fighter.ability-score-improvement.6",
+      "class-feature.fighter.ability-score-improvement.8",
+      "class-feature.fighter.action-surge.17",
+      "class-feature.fighter.action-surge.2",
+      "class-feature.fighter.epic-boon.19",
+      "class-feature.fighter.extra-attack.5",
+      "class-feature.fighter.fighter-subclass.3",
+      "class-feature.fighter.fighting-style.1",
+      "class-feature.fighter.indomitable.13",
+      "class-feature.fighter.indomitable.17",
+      "class-feature.fighter.indomitable.9",
+      "class-feature.fighter.second-wind.1",
+      "class-feature.fighter.studied-attacks.13",
+      "class-feature.fighter.subclass-feature.10",
+      "class-feature.fighter.subclass-feature.15",
+      "class-feature.fighter.subclass-feature.18",
+      "class-feature.fighter.subclass-feature.7",
+      "class-feature.fighter.tactical-master.9",
+      "class-feature.fighter.tactical-mind.2",
+      "class-feature.fighter.tactical-shift.5",
+      "class-feature.fighter.three-extra-attacks.20",
+      "class-feature.fighter.two-extra-attacks.11",
+      "class-feature.fighter.weapon-mastery.1",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 47,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/class/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass.fighter.champion",
+    "kind": "subclass",
+    "name": "Champion",
+    "shortName": "Champion",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "featProgression": [
+      {
+        "name": "Fighting Style",
+        "category": [
+          "FS"
+        ],
+        "progression": {
+          "7": 1
+        }
+      }
+    ],
+    "subclassFeatures": [
+      "Champion|Fighter|SRD52|Champion|SRD52|3",
+      "Additional Fighting Style|Fighter|SRD52|Champion|SRD52|7",
+      "Heroic Warrior|Fighter|SRD52|Champion|SRD52|10",
+      "Superior Critical|Fighter|SRD52|Champion|SRD52|15",
+      "Survivor|Fighter|SRD52|Champion|SRD52|18"
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-049",
+      "subclass-feature.fighter.champion.additional-fighting-style.7",
+      "subclass-feature.fighter.champion.champion.3",
+      "subclass-feature.fighter.champion.heroic-warrior.10",
+      "subclass-feature.fighter.champion.superior-critical.15",
+      "subclass-feature.fighter.champion.survivor.18"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        49
+      ],
+      "candidatePage": 49,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclass/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.fighting-style.1",
+    "kind": "class-feature",
+    "name": "Fighting Style",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "You have honed your martial prowess and gain a {@filter Fighting Style feat|feats|category=FS} of your choice. {@feat Defense|SRD52} is recommended.",
+      "Whenever you gain a Fighter level, you can replace the feat you chose with a different {@filter Fighting Style feat|feats|category=FS}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 91,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/22"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.second-wind.1",
+    "kind": "class-feature",
+    "name": "Second Wind",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "You have a limited well of physical and mental stamina that you can draw on. As a {@variantrule Bonus Action|SRD52}, you can use it to regain {@variantrule Hit Points|SRD52} equal to {@dice 1d10} plus your Fighter level.",
+      "You can use this feature twice. You regain one expended use when you finish a {@variantrule Short Rest|SRD52}, and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}.",
+      "When you reach certain Fighter levels, you gain more uses of this feature, as shown in the Second Wind column of the Fighter Features table."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 91,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/23"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.weapon-mastery.1",
+    "kind": "class-feature",
+    "name": "Weapon Mastery",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 1,
+    "entries": [
+      "Your training with weapons allows you to use the {@variantrule weapon mastery properties|SRD52|mastery properties} of three kinds of {@filter Simple|items|type=simple weapon} or {@filter Martial|items|type=martial weapon} weapons of your choice. Whenever you finish a {@variantrule Long Rest|SRD52}, you can practice weapon drills and change one of those weapon choices.",
+      "When you reach certain Fighter levels, you gain the ability to use the {@variantrule weapon mastery properties|SRD52|mastery properties} of more kinds of weapons, as shown in the Weapon Mastery column of the Fighter Features table."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 91,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/24"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.action-surge.2",
+    "kind": "class-feature",
+    "name": "Action Surge",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 2,
+    "entries": [
+      "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action, except the {@action Magic|SRD52} action.",
+      "Once you use this feature, you can't do so again until you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}. Starting at level 17, you can use it twice before a rest but only once on a turn."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 91,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/25"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.tactical-mind.2",
+    "kind": "class-feature",
+    "name": "Tactical Mind",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 2,
+    "entries": [
+      "You have a mind for tactics on and off the battlefield. When you fail an ability check, you can expend a use of your Second Wind to push yourself toward success. Rather than regaining {@variantrule Hit Points|SRD52}, you roll {@dice 1d10} and add the number rolled to the ability check, potentially turning it into a success. If the check still fails, this use of Second Wind isn't expended."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 91,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/26"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.fighter-subclass.3",
+    "kind": "class-feature",
+    "name": "Fighter Subclass",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "You gain a Fighter subclass of your choice. A subclass is a specialization that grants you features at certain Fighter levels. For the rest of your career, you gain each of your subclass's features that are of your Fighter level or lower."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/27"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.4",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 4,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify. You gain this feature again at Fighter levels 6, 8, 12, 14, and 16."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/28"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.extra-attack.5",
+    "kind": "class-feature",
+    "name": "Extra Attack",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 5,
+    "entries": [
+      "You can attack twice instead of once whenever you take the {@action Attack|SRD52} action on your turn."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/29"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.tactical-shift.5",
+    "kind": "class-feature",
+    "name": "Tactical Shift",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 5,
+    "entries": [
+      "Whenever you activate your Second Wind with a {@variantrule Bonus Action|SRD52}, you can move up to half your {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/30"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.6",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 6,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/31"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.subclass-feature.7",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 7,
+    "entries": [
+      "You gain a feature from your Fighter Subclass."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/32"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.8",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 8,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/33"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.indomitable.9",
+    "kind": "class-feature",
+    "name": "Indomitable",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 9,
+    "entries": [
+      "If you fail a saving throw, you can reroll it with a bonus equal to your Fighter level. You must use the new roll, and you can't use this feature again until you finish a {@variantrule Long Rest|SRD52}.",
+      "You can use this feature twice before a {@variantrule Long Rest|SRD52} starting at level 13 and three times before a {@variantrule Long Rest|SRD52} starting at level 17."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/34"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.tactical-master.9",
+    "kind": "class-feature",
+    "name": "Tactical Master",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 9,
+    "entries": [
+      "When you attack with a weapon whose mastery property you can use, you can replace that property with the {@itemMastery Push|SRD52}, {@itemMastery Sap|SRD52}, or {@itemMastery Slow|SRD52} property for that attack."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/35"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.subclass-feature.10",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 10,
+    "entries": [
+      "You gain a feature from your Fighter Subclass."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/36"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.two-extra-attacks.11",
+    "kind": "class-feature",
+    "name": "Two Extra Attacks",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 11,
+    "entries": [
+      "You can attack three times instead of once whenever you take the {@action Attack|SRD52} action on your turn."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/37"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.12",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 12,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/38"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.indomitable.13",
+    "kind": "class-feature",
+    "name": "Indomitable",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 13,
+    "entries": [
+      "If you fail a saving throw, you can reroll it with a bonus equal to your Fighter level. You must use the new roll, and you can't use this feature again until you finish a {@variantrule Long Rest|SRD52}.",
+      "You can use this feature twice before a {@variantrule Long Rest|SRD52} starting at level 13 and three times before a {@variantrule Long Rest|SRD52} starting at level 17."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/39"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.studied-attacks.13",
+    "kind": "class-feature",
+    "name": "Studied Attacks",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 13,
+    "entries": [
+      "You study your opponents and learn from each attack you make. If you make an attack roll against a creature and miss, you have {@variantrule Advantage|SRD52} on your next attack roll against that creature before the end of your next turn."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/40"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.14",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 14,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/41"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.subclass-feature.15",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 15,
+    "entries": [
+      "You gain a feature from your Fighter Subclass."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/42"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.ability-score-improvement.16",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 16,
+    "entries": [
+      "You gain the {@feat Ability Score Improvement|SRD52} feat or another {@5etools feat|feats.html} of your choice for which you qualify."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/43"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.action-surge.17",
+    "kind": "class-feature",
+    "name": "Action Surge",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 17,
+    "entries": [
+      "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action, except the {@action Magic|SRD52} action.",
+      "Once you use this feature, you can't do so again until you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}. Starting at level 17, you can use it twice before a rest but only once on a turn."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 91,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/44"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.indomitable.17",
+    "kind": "class-feature",
+    "name": "Indomitable",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 17,
+    "entries": [
+      "If you fail a saving throw, you can reroll it with a bonus equal to your Fighter level. You must use the new roll, and you can't use this feature again until you finish a {@variantrule Long Rest|SRD52}.",
+      "You can use this feature twice before a {@variantrule Long Rest|SRD52} starting at level 13 and three times before a {@variantrule Long Rest|SRD52} starting at level 17."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/45"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.subclass-feature.18",
+    "kind": "class-feature",
+    "name": "Subclass Feature",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 18,
+    "entries": [
+      "You gain a feature from your Fighter Subclass."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/46"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.epic-boon.19",
+    "kind": "class-feature",
+    "name": "Epic Boon",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 19,
+    "entries": [
+      "You gain an {@filter Epic Boon feat|feats|category=EB} or another {@5etools feat|feats.html} of your choice for which you qualify. {@feat Boon of Combat Prowess|SRD52} is recommended."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/47"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.fighter.three-extra-attacks.20",
+    "kind": "class-feature",
+    "name": "Three Extra Attacks",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "level": 20,
+    "entries": [
+      "You can attack four times instead of once whenever you take the {@action Attack|SRD52} action on your turn."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-047"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        47
+      ],
+      "candidatePage": 92,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/classFeature/48"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.champion.3",
+    "kind": "subclass-feature",
+    "name": "Champion",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "entries": [
+      "{@i Pursue Physical Excellence in Combat}",
+      "A Champion focuses on the development of martial prowess in a relentless pursuit of victory. Champions combine rigorous training with physical excellence to deal devastating blows, withstand peril, and garner glory. Whether in athletic contests or bloody battle, Champions strive for the crown of the victor.",
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Improved Critical|Fighter|SRD52|Champion|SRD52|3"
+      },
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Remarkable Athlete|Fighter|SRD52|Champion|SRD52|3"
+      }
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-048",
+      "subclass-feature.fighter.champion.improved-critical.3",
+      "subclass-feature.fighter.champion.remarkable-athlete.3",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        48
+      ],
+      "candidatePage": 96,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/6"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.improved-critical.3",
+    "kind": "subclass-feature",
+    "name": "Improved Critical",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "header": 2,
+    "entries": [
+      "Your attack rolls with weapons and Unarmed Strikes can score a {@variantrule Critical Hit|SRD52} on a roll of 19 or 20 on the {@dice d20}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-049",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        49
+      ],
+      "candidatePage": 96,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/7"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.remarkable-athlete.3",
+    "kind": "subclass-feature",
+    "name": "Remarkable Athlete",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD52",
+    "level": 3,
+    "header": 2,
+    "entries": [
+      "Thanks to your athleticism, you have {@variantrule Advantage|SRD52} on {@variantrule Initiative|SRD52} rolls and Strength ({@skill Athletics|SRD52}) checks.",
+      "In addition, immediately after you score a {@variantrule Critical Hit|SRD52}, you can move up to half your {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-049",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        49
+      ],
+      "candidatePage": 96,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/8"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.additional-fighting-style.7",
+    "kind": "subclass-feature",
+    "name": "Additional Fighting Style",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD52",
+    "level": 7,
+    "header": 2,
+    "entries": [
+      "You gain another {@filter Fighting Style feat|feats|category=FS} of your choice."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-049",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        49
+      ],
+      "candidatePage": 96,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/9"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.heroic-warrior.10",
+    "kind": "subclass-feature",
+    "name": "Heroic Warrior",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD52",
+    "level": 10,
+    "header": 2,
+    "entries": [
+      "The thrill of battle drives you toward victory. During combat, you can give yourself {@variantrule Heroic Inspiration|SRD52} whenever you start your turn without it."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-049",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        49
+      ],
+      "candidatePage": 96,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/10"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.superior-critical.15",
+    "kind": "subclass-feature",
+    "name": "Superior Critical",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD52",
+    "level": 15,
+    "header": 2,
+    "entries": [
+      "Your attack rolls with weapons and Unarmed Strikes can now score a {@variantrule Critical Hit|SRD52} on a roll of 18–20 on the {@dice d20}."
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-049",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        49
+      ],
+      "candidatePage": 96,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/11"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.fighter.champion.survivor.18",
+    "kind": "subclass-feature",
+    "name": "Survivor",
+    "className": "Fighter",
+    "classSource": "SRD52",
+    "subclassShortName": "Champion",
+    "subclassSource": "SRD52",
+    "level": 18,
+    "header": 2,
+    "entries": [
+      "You attain the pinnacle of resilience in battle, giving you these benefits.",
+      {
+        "type": "entries",
+        "name": "Defy Death",
+        "entries": [
+          "You have {@variantrule Advantage|SRD52} on {@variantrule Death Saving Throw|SRD52|Death Saving Throws}. Moreover, when you roll 18–20 on a {@variantrule Death Saving Throw|SRD52}, you gain the benefit of rolling a 20 on it."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Heroic Rally",
+        "entries": [
+          "At the start of each of your turns, you regain {@variantrule Hit Points|SRD52} equal to 5 plus your Constitution modifier if you are {@status Bloodied|SRD52} and have at least 1 {@variantrule Hit Points|SRD52|Hit Point}."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.fighter",
+      "rulebook.page-049",
+      "subclass.fighter.champion"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        49
+      ],
+      "candidatePage": 96,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-fighter.json",
+        "pointer": "/subclassFeature/12"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  }
+]

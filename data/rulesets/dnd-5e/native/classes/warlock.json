@@ -1,0 +1,1370 @@
+[
+  {
+    "id": "class.warlock",
+    "kind": "class",
+    "name": "Warlock",
+    "hd": {
+      "number": 1,
+      "faces": 8
+    },
+    "proficiency": [
+      "wis",
+      "cha"
+    ],
+    "spellcastingAbility": "cha",
+    "casterProgression": "pact",
+    "cantripProgression": [
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "spellsKnownProgression": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      10,
+      11,
+      11,
+      12,
+      12,
+      13,
+      13,
+      14,
+      14,
+      15,
+      15
+    ],
+    "spellsKnownProgressionFixedByLevel": {
+      "11": {
+        "6": 1
+      },
+      "13": {
+        "7": 1
+      },
+      "15": {
+        "8": 1
+      },
+      "17": {
+        "9": 1
+      }
+    },
+    "optionalfeatureProgression": [
+      {
+        "name": "Eldritch Invocations",
+        "featureType": [
+          "EI"
+        ],
+        "progression": [
+          0,
+          2,
+          2,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          5,
+          5,
+          6,
+          6,
+          6,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8
+        ]
+      },
+      {
+        "name": "Pact Boon",
+        "featureType": [
+          "PB"
+        ],
+        "progression": {
+          "3": 1
+        }
+      }
+    ],
+    "startingProficiencies": {
+      "armor": [
+        "light"
+      ],
+      "weapons": [
+        "simple"
+      ],
+      "skills": [
+        {
+          "choose": {
+            "from": [
+              "arcana",
+              "deception",
+              "history",
+              "intimidation",
+              "investigation",
+              "nature",
+              "religion"
+            ],
+            "count": 2
+          }
+        }
+      ]
+    },
+    "startingEquipment": {
+      "additionalFromBackground": true,
+      "default": [
+        "(a) a {@item light crossbow|srd51} and {@item crossbow bolts (20)|srd51|20 bolts} or (b) any {@filter simple weapon|items|source=srd51|category=basic|type=simple weapon}",
+        "(a) a {@item component pouch|srd51} or (b) an {@item arcane focus|srd51}",
+        "(a) a {@item scholar's pack|srd51} or (b) a {@item dungeoneer's pack|srd51}",
+        "{@item Leather armor|srd51}, any {@filter simple weapon|items|source=srd51|category=basic|type=simple weapon}, and two {@item dagger|srd51|daggers}"
+      ],
+      "goldAlternative": "{@dice 4d4 × 10|4d4 × 10|Starting Gold}",
+      "defaultData": [
+        {
+          "a": [
+            "light crossbow|srd51",
+            "crossbow bolts (20)|srd51"
+          ],
+          "b": [
+            {
+              "equipmentType": "weaponSimple"
+            }
+          ]
+        },
+        {
+          "a": [
+            "component pouch|srd51"
+          ],
+          "b": [
+            {
+              "equipmentType": "focusSpellcastingArcane"
+            }
+          ]
+        },
+        {
+          "a": [
+            "scholar's pack|srd51"
+          ],
+          "b": [
+            "dungeoneer's pack|srd51"
+          ]
+        },
+        {
+          "_": [
+            "leather armor|srd51",
+            {
+              "equipmentType": "weaponSimple"
+            },
+            {
+              "item": "dagger|srd51",
+              "quantity": 2
+            }
+          ]
+        }
+      ]
+    },
+    "multiclassing": {
+      "requirements": {
+        "cha": 13
+      },
+      "proficienciesGained": {
+        "armor": [
+          "light"
+        ],
+        "weapons": [
+          "simple"
+        ]
+      }
+    },
+    "classTableGroups": [
+      {
+        "colLabels": [
+          "{@filter Cantrips Known|spells|level=0|class=Warlock}",
+          "{@filter Spells Known|spells|class=Warlock}",
+          "Spell Slots",
+          "Slot Level",
+          "{@filter Invocations Known|optionalfeatures|feature type=ei}"
+        ],
+        "rows": [
+          [
+            2,
+            2,
+            1,
+            "{@filter 1st|spells|level=1|class=Warlock}",
+            0
+          ],
+          [
+            2,
+            3,
+            2,
+            "{@filter 1st|spells|level=1|class=Warlock}",
+            2
+          ],
+          [
+            2,
+            4,
+            2,
+            "{@filter 2nd|spells|level=2|class=Warlock}",
+            2
+          ],
+          [
+            3,
+            5,
+            2,
+            "{@filter 2nd|spells|level=2|class=Warlock}",
+            2
+          ],
+          [
+            3,
+            6,
+            2,
+            "{@filter 3rd|spells|level=3|class=Warlock}",
+            3
+          ],
+          [
+            3,
+            7,
+            2,
+            "{@filter 3rd|spells|level=3|class=Warlock}",
+            3
+          ],
+          [
+            3,
+            8,
+            2,
+            "{@filter 4th|spells|level=4|class=Warlock}",
+            4
+          ],
+          [
+            3,
+            9,
+            2,
+            "{@filter 4th|spells|level=4|class=Warlock}",
+            4
+          ],
+          [
+            3,
+            10,
+            2,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            5
+          ],
+          [
+            4,
+            10,
+            2,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            5
+          ],
+          [
+            4,
+            11,
+            3,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            5
+          ],
+          [
+            4,
+            11,
+            3,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            6
+          ],
+          [
+            4,
+            12,
+            3,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            6
+          ],
+          [
+            4,
+            12,
+            3,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            6
+          ],
+          [
+            4,
+            13,
+            3,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            7
+          ],
+          [
+            4,
+            13,
+            3,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            7
+          ],
+          [
+            4,
+            14,
+            4,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            7
+          ],
+          [
+            4,
+            14,
+            4,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            8
+          ],
+          [
+            4,
+            15,
+            4,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            8
+          ],
+          [
+            4,
+            15,
+            4,
+            "{@filter 5th|spells|level=5|class=Warlock}",
+            8
+          ]
+        ]
+      }
+    ],
+    "classFeatures": [
+      "Pact Magic|Warlock||1",
+      {
+        "classFeature": "Otherworldly Patron|Warlock||1",
+        "gainSubclassFeature": true
+      },
+      "Eldritch Invocations|Warlock||2",
+      "Pact Boon|Warlock||3",
+      "Ability Score Improvement|Warlock||4",
+      {
+        "classFeature": "Otherworldly Patron feature|Warlock||6",
+        "gainSubclassFeature": true
+      },
+      "Ability Score Improvement|Warlock||8",
+      {
+        "classFeature": "Otherworldly Patron feature|Warlock||10",
+        "gainSubclassFeature": true
+      },
+      "Mystic Arcanum (6th level)|Warlock||11",
+      "Ability Score Improvement|Warlock||12",
+      "Mystic Arcanum (7th level)|Warlock||13",
+      {
+        "classFeature": "Otherworldly Patron feature|Warlock||14",
+        "gainSubclassFeature": true
+      },
+      "Mystic Arcanum (8th level)|Warlock||15",
+      "Ability Score Improvement|Warlock||16",
+      "Mystic Arcanum (9th level)|Warlock||17",
+      "Ability Score Improvement|Warlock||19",
+      "Eldritch Master|Warlock||20"
+    ],
+    "subclassTitle": "Otherworldly Patron",
+    "catalogReferences": [
+      "class-feature.warlock.ability-score-improvement.12",
+      "class-feature.warlock.ability-score-improvement.16",
+      "class-feature.warlock.ability-score-improvement.19",
+      "class-feature.warlock.ability-score-improvement.4",
+      "class-feature.warlock.ability-score-improvement.8",
+      "class-feature.warlock.eldritch-invocations.2",
+      "class-feature.warlock.eldritch-master.20",
+      "class-feature.warlock.mystic-arcanum-6th-level.11",
+      "class-feature.warlock.mystic-arcanum-7th-level.13",
+      "class-feature.warlock.mystic-arcanum-8th-level.15",
+      "class-feature.warlock.mystic-arcanum-9th-level.17",
+      "class-feature.warlock.otherworldly-patron-feature.10",
+      "class-feature.warlock.otherworldly-patron-feature.14",
+      "class-feature.warlock.otherworldly-patron-feature.6",
+      "class-feature.warlock.otherworldly-patron.1",
+      "class-feature.warlock.pact-boon.3",
+      "class-feature.warlock.pact-magic.1",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 46,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/class/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass.warlock.fiend",
+    "kind": "subclass",
+    "name": "The Fiend",
+    "shortName": "Fiend",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "additionalSpells": [
+      {
+        "expanded": {
+          "s1": [
+            "burning hands",
+            "command"
+          ],
+          "s2": [
+            "blindness/deafness",
+            "scorching ray"
+          ],
+          "s3": [
+            "fireball",
+            "stinking cloud"
+          ],
+          "s4": [
+            "fire shield",
+            "wall of fire"
+          ],
+          "s5": [
+            "flame strike",
+            "hallow"
+          ]
+        }
+      }
+    ],
+    "subclassFeatures": [
+      "The Fiend|Warlock||Fiend||1",
+      "Dark One's Own Luck|Warlock||Fiend||6",
+      "Fiendish Resilience|Warlock||Fiend||10",
+      "Hurl Through Hell|Warlock||Fiend||14"
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-050",
+      "subclass-feature.warlock.fiend.dark-ones-own-luck.6",
+      "subclass-feature.warlock.fiend.fiendish-resilience.10",
+      "subclass-feature.warlock.fiend.hurl-through-hell.14",
+      "subclass-feature.warlock.fiend.the-fiend.1"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        50
+      ],
+      "candidatePage": 50,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/subclass/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.otherworldly-patron.1",
+    "kind": "class-feature",
+    "name": "Otherworldly Patron",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 1,
+    "entries": [
+      "At 1st level, you have struck a bargain with an otherworldly being chosen from the list of available patrons. Your choice grants you features at 1st level and again at 6th, 10th, and 14th level."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.pact-magic.1",
+    "kind": "class-feature",
+    "name": "Pact Magic",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 1,
+    "entries": [
+      "Your arcane research and the magic bestowed on you by your patron have given you facility with spells. See {@book chapter 10|SRD51|10} for the general rules of spellcasting and {@book chapter 11|SRD51|11} for the {@filter warlock spell list|spells|class=warlock}.",
+      {
+        "type": "entries",
+        "name": "Cantrips",
+        "entries": [
+          "You know two cantrips of your choice from the warlock spell list. You learn additional warlock cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Warlock table."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spell Slots",
+        "entries": [
+          "The Warlock table shows how many spell slots you have to cast your {@filter warlock spells|spells|class=warlock} of 1st through 5th level. The table also shows what the level of those slots is; all of your spell slots are the same level. To cast one of your warlock spells of 1st level or higher, you must expend a spell slot. You regain all expended spell slots when you finish a short or long rest.",
+          "For example, when you are 5th level, you have two 3rd-level spell slots. To cast the 1st-level spell {@spell witch bolt}, you must spend one of those slots, and you cast it as a 3rd-level spell."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spells Known of 1st Level and Higher",
+        "entries": [
+          "At 1st level, you know two 1st-level spells of your choice from the warlock spell list.",
+          "The Spells Known column of the Warlock table shows when you learn more warlock spells of your choice of 1st level and higher. A spell you choose must be of a level no higher than what's shown in the table's Slot Level column for your level. When you reach 6th level, for example, you learn a new warlock spell, which can be 1st, 2nd, or 3rd level.",
+          "Additionally, when you gain a level in this class, you can choose one of the warlock spells you know and replace it with another spell from the warlock spell list, which also must be of a level for which you have spell slots."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spellcasting Ability",
+        "entries": [
+          "Charisma is your spellcasting ability for your warlock spells, so you use your Charisma whenever a spell refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for a warlock spell you cast and when making an attack roll with one.",
+          {
+            "type": "abilityDc",
+            "name": "Spell",
+            "attributes": [
+              "cha"
+            ]
+          },
+          {
+            "type": "abilityAttackMod",
+            "name": "Spell",
+            "attributes": [
+              "cha"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spellcasting Focus",
+        "entries": [
+          "You can use an {@item arcane focus|srd51} as a spellcasting focus for your warlock spells."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.eldritch-invocations.2",
+    "kind": "class-feature",
+    "name": "Eldritch Invocations",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 2,
+    "entries": [
+      "In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.",
+      "At 2nd level, you gain two eldritch invocations of your choice. A list of the available options can be found on the {@filter Optional Features|optionalfeatures|Feature Type=EI} page. When you gain certain warlock levels, you gain additional invocations of your choice, as shown in the Invocations Known column of the Warlock table.",
+      "Additionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
+      "If an eldritch invocation has prerequisites, you must meet them to learn it. You can learn the invocation at the same time that you meet its prerequisites. A level prerequisite refers to your level in this class."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/2"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.pact-boon.3",
+    "kind": "class-feature",
+    "name": "Pact Boon",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 3,
+    "entries": [
+      "At 3rd level, your otherworldly patron bestows a gift upon you for your loyal service. You gain one of the following features of your choice.",
+      {
+        "type": "options",
+        "count": 1,
+        "entries": [
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Pact of the Chain"
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Pact of the Blade"
+          },
+          {
+            "type": "refOptionalfeature",
+            "optionalfeature": "Pact of the Tome"
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/3"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.ability-score-improvement.4",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 4,
+    "entries": [
+      "When you reach 4th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/4"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.otherworldly-patron-feature.6",
+    "kind": "class-feature",
+    "name": "Otherworldly Patron feature",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 6,
+    "entries": [
+      "At 6th level, you gain a feature granted by your Otherworldly Patron."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/5"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.ability-score-improvement.8",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 8,
+    "entries": [
+      "When you reach 8th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/6"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.otherworldly-patron-feature.10",
+    "kind": "class-feature",
+    "name": "Otherworldly Patron feature",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 10,
+    "entries": [
+      "At 10th level, you gain a feature granted by your Otherworldly Patron."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/7"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.mystic-arcanum-6th-level.11",
+    "kind": "class-feature",
+    "name": "Mystic Arcanum (6th level)",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 11,
+    "entries": [
+      "At 11th level, your patron bestows upon you a magical secret called an arcanum. Choose one {@filter 6th-level spell from the warlock spell list|spells|level=6|class=Warlock} as this arcanum.",
+      "You can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again.",
+      "At higher levels, you gain more warlock spells of your choice that can be cast in this way: one 7th-level spell at 13th level, one 8th-level spell at 15th level, and one 9th-level spell at 17th level. You regain all uses of your Mystic Arcanum when you finish a long rest."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/8"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.ability-score-improvement.12",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 12,
+    "entries": [
+      "When you reach 12th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/9"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.mystic-arcanum-7th-level.13",
+    "kind": "class-feature",
+    "name": "Mystic Arcanum (7th level)",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 13,
+    "entries": [
+      "At 13th level, your patron bestows upon you a magical secret called an arcanum. Choose one {@filter 7th-level spell from the warlock spell list|spells|level=7|class=Warlock} as this arcanum.",
+      "You can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/10"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.otherworldly-patron-feature.14",
+    "kind": "class-feature",
+    "name": "Otherworldly Patron feature",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 14,
+    "entries": [
+      "At 14th level, you gain a feature granted by your Otherworldly Patron."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/11"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.mystic-arcanum-8th-level.15",
+    "kind": "class-feature",
+    "name": "Mystic Arcanum (8th level)",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 15,
+    "entries": [
+      "At 15th level, your patron bestows upon you a magical secret called an arcanum. Choose one {@filter 8th-level spell from the warlock spell list|spells|level=8|class=Warlock} as this arcanum.",
+      "You can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/12"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.ability-score-improvement.16",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 16,
+    "entries": [
+      "When you reach 16th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/13"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.mystic-arcanum-9th-level.17",
+    "kind": "class-feature",
+    "name": "Mystic Arcanum (9th level)",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 17,
+    "entries": [
+      "At 17th level, your patron bestows upon you a magical secret called an arcanum. Choose one {@filter 9th-level spell from the warlock spell list|spells|level=9|class=Warlock} as this arcanum.",
+      "You can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/14"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.ability-score-improvement.19",
+    "kind": "class-feature",
+    "name": "Ability Score Improvement",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 19,
+    "entries": [
+      "When you reach 19th level, you can increase one ability score of your choice by 2, or you can increase two ability scores of your choice by 1. As normal, you can't increase an ability score above 20 using this feature.",
+      "If your DM allows the use of feats, you may instead take a {@5etools feat|feats.html}."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/15"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "class-feature.warlock.eldritch-master.20",
+    "kind": "class-feature",
+    "name": "Eldritch Master",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "level": 20,
+    "entries": [
+      "At 20th level, you can draw on your inner reserve of mystical power while entreating your patron to regain expended spell slots. You can spend 1 minute entreating your patron for aid to regain all your expended spell slots from your Pact Magic feature. Once you regain spell slots with this feature, you must finish a long rest before you can do so again."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-046"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        46
+      ],
+      "candidatePage": 105,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/classFeature/16"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.warlock.fiend.the-fiend.1",
+    "kind": "subclass-feature",
+    "name": "The Fiend",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "subclassShortName": "Fiend",
+    "subclassSource": "SRD51",
+    "level": 1,
+    "entries": [
+      "You have made a pact with a fiend from the lower planes of existence, a being whose aims are evil, even if you strive against those aims. Such beings desire the corruption or destruction of all things, ultimately including you. Fiends powerful enough to forge a pact include demon lords such as Demogorgon, Orcus, Fraz-Urb'luu, and Baphomet; archdevils such as Asmodeus, Dispater, Mephistopheles, and Belial; pit fiends and balors that are especially mighty; and ultroloths and other lords of the yugoloths.",
+      {
+        "type": "entries",
+        "name": "Expanded Spell List",
+        "entries": [
+          "The Fiend lets you choose from an expanded list of spells when you learn a warlock spell. The following spells are added to the warlock spell list for you.",
+          {
+            "type": "table",
+            "caption": "Fiend Expanded Spells",
+            "colLabels": [
+              "Spell Level",
+              "Spells"
+            ],
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "rows": [
+              [
+                "1st",
+                "{@spell burning hands}, {@spell command}"
+              ],
+              [
+                "2nd",
+                "{@spell blindness/deafness}, {@spell scorching ray}"
+              ],
+              [
+                "3rd",
+                "{@spell fireball}, {@spell stinking cloud}"
+              ],
+              [
+                "4th",
+                "{@spell fire shield}, {@spell wall of fire}"
+              ],
+              [
+                "5th",
+                "{@spell flame strike}, {@spell hallow}"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "type": "refSubclassFeature",
+        "subclassFeature": "Dark One's Blessing|Warlock||Fiend||1"
+      }
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-050",
+      "subclass-feature.warlock.fiend.dark-ones-blessing.1",
+      "subclass.warlock.fiend"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        50
+      ],
+      "candidatePage": 109,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/subclassFeature/0"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.warlock.fiend.dark-ones-blessing.1",
+    "kind": "subclass-feature",
+    "name": "Dark One's Blessing",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "subclassShortName": "Fiend",
+    "subclassSource": "SRD51",
+    "level": 1,
+    "header": 1,
+    "entries": [
+      "Starting at 1st level, when you reduce a hostile creature to 0 hit points, you gain temporary hit points equal to your Charisma modifier + your warlock level (minimum of 1)."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-050",
+      "subclass.warlock.fiend"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        50
+      ],
+      "candidatePage": 109,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/subclassFeature/1"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.warlock.fiend.dark-ones-own-luck.6",
+    "kind": "subclass-feature",
+    "name": "Dark One's Own Luck",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "subclassShortName": "Fiend",
+    "subclassSource": "SRD51",
+    "level": 6,
+    "header": 2,
+    "entries": [
+      "Starting at 6th level, you can call on your patron to alter fate in your favor. When you make an ability check or a saving throw, you can use this feature to add a {@dice d10} to your roll. You can do so after seeing the initial roll but before any of the roll's effects occur.",
+      "Once you use this feature, you can't use it again until you finish a short or long rest."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-050",
+      "subclass.warlock.fiend"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        50
+      ],
+      "candidatePage": 109,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/subclassFeature/2"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.warlock.fiend.fiendish-resilience.10",
+    "kind": "subclass-feature",
+    "name": "Fiendish Resilience",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "subclassShortName": "Fiend",
+    "subclassSource": "SRD51",
+    "level": 10,
+    "header": 2,
+    "entries": [
+      "Starting at 10th level, you can choose one damage type when you finish a short or long rest. You gain resistance to that damage type until you choose a different one with this feature. Damage from magical weapons or silver weapons ignores this resistance."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-051",
+      "subclass.warlock.fiend"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        51
+      ],
+      "candidatePage": 109,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/subclassFeature/3"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  },
+  {
+    "id": "subclass-feature.warlock.fiend.hurl-through-hell.14",
+    "kind": "subclass-feature",
+    "name": "Hurl Through Hell",
+    "className": "Warlock",
+    "classSource": "SRD51",
+    "subclassShortName": "Fiend",
+    "subclassSource": "SRD51",
+    "level": 14,
+    "header": 2,
+    "entries": [
+      "Starting at 14th level, when you hit a creature with an attack, you can use this feature to instantly transport the target through the lower planes. The creature disappears and hurtles through a nightmare landscape.",
+      "At the end of your next turn, the target returns to the space it previously occupied, or the nearest unoccupied space. If the target is not a fiend, it takes {@damage 10d10} psychic damage as it reels from its horrific experience.",
+      "Once you use this feature, you can't use it again until you finish a long rest."
+    ],
+    "catalogReferences": [
+      "class.warlock",
+      "rulebook.page-051",
+      "subclass.warlock.fiend"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        51
+      ],
+      "candidatePage": 109,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "class/class-warlock.json",
+        "pointer": "/subclassFeature/4"
+      },
+      "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    }
+  }
+]
