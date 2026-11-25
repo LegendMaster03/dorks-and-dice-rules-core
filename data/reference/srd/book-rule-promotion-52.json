@@ -571,6 +571,114 @@
         17,
         18
       ]
+    },
+    {
+      "id": "rule.choose-a-character-sheet",
+      "pointer": "/data/2/entries/0",
+      "pages": [
+        19
+      ]
+    },
+    {
+      "id": "rule.create-your-character",
+      "pointer": "/data/2/entries/1",
+      "pages": [
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "id": "rule.level-advancement",
+      "pointer": "/data/2/entries/2",
+      "pages": [
+        23,
+        24
+      ]
+    },
+    {
+      "id": "rule.starting-at-higher-levels",
+      "pointer": "/data/2/entries/3",
+      "pages": [
+        24
+      ]
+    },
+    {
+      "id": "rule.selling-equipment",
+      "pointer": "/data/6/entries/0",
+      "pages": [
+        89
+      ]
+    },
+    {
+      "id": "rule.coins",
+      "pointer": "/data/6/entries/1",
+      "pages": [
+        89
+      ]
+    },
+    {
+      "id": "rule.mounts-and-vehicles",
+      "pointer": "/data/6/entries/6",
+      "pages": [
+        100,
+        101
+      ]
+    },
+    {
+      "id": "rule.lifestyle-expenses",
+      "pointer": "/data/6/entries/7",
+      "pages": [
+        101
+      ]
+    },
+    {
+      "id": "rule.food-drink-and-lodging",
+      "pointer": "/data/6/entries/8",
+      "pages": [
+        101,
+        102
+      ]
+    },
+    {
+      "id": "rule.hirelings",
+      "pointer": "/data/6/entries/9",
+      "pages": [
+        102
+      ]
+    },
+    {
+      "id": "rule.spellcasting",
+      "pointer": "/data/6/entries/10",
+      "pages": [
+        102
+      ]
+    },
+    {
+      "id": "rule.magic-items",
+      "pointer": "/data/6/entries/11",
+      "pages": [
+        102,
+        103
+      ]
+    },
+    {
+      "id": "rule.gaining-spells",
+      "pointer": "/data/7/entries/0",
+      "pages": [
+        104
+      ]
+    },
+    {
+      "id": "rule.casting-spells",
+      "pointer": "/data/7/entries/1",
+      "pages": [
+        104,
+        105,
+        106
+      ]
     }
   ],
   "corrections": [
@@ -621,9 +729,41 @@
     {
       "id": "rule.damage-and-healing",
       "reason": "Restore publisher opening and local damage, knockout, rest and stabilization references (pp.16–18)."
+    },
+    {
+      "id": "rule.choose-a-character-sheet",
+      "reason": "Preserve publisher sheet selection guidance (p.19)."
+    },
+    {
+      "id": "rule.create-your-character",
+      "reason": "Restore publisher character creation instructions and formulas, omit source-only sample-sheet and free-trinket guidance, link existing species/backgrounds and tables (pp.19–23)."
+    },
+    {
+      "id": "rule.level-advancement",
+      "reason": "Preserve minimum 1 HP, level progression and post-level-20 bonus feat guidance (pp.23–24)."
+    },
+    {
+      "id": "rule.starting-at-higher-levels",
+      "reason": "Restore publisher terminology and reuse starting-equipment table (p.24)."
+    },
+    {
+      "id": "rule.mounts-and-vehicles",
+      "reason": "Restore Monsters navigation and preserve ship crew, cargo, repair and damage threshold guidance (pp.100–101)."
+    },
+    {
+      "id": "rule.magic-items",
+      "reason": "Reuse the existing canonical identification, attunement and wearing rules instead of duplicating them (pp.102–103)."
+    },
+    {
+      "id": "rule.gaining-spells",
+      "reason": "Preserve class preparation and always-prepared spell rules (p.104)."
+    },
+    {
+      "id": "rule.casting-spells",
+      "reason": "Restore explicit spell DC/attack formulas, retain one-slot-per-turn and invalid-target rules; link edition-local spell and glossary identities (pp.104–106)."
     }
   ],
-  "nativeCount": 84,
+  "nativeCount": 98,
   "tableInventory": {
     "total": 59,
     "counts": {

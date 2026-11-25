@@ -675,6 +675,59 @@ function modernGameplayEntries(name,entries,existing,local){
  return entries;
 }
 
+function modernCharacterEconomySpellEntries(name,entries,existing,local){
+ const sections=new Set(["Choose a Character Sheet","Create Your Character","Level Advancement","Starting at Higher Levels","Selling Equipment","Coins","Mounts and Vehicles","Lifestyle Expenses","Food, Drink, and Lodging","Hirelings","Spellcasting","Magic Items","Gaining Spells","Casting Spells"]);
+ if(!sections.has(name))return entries;
+ const find=(arr,name)=>{for(const n of arr){if(n&&typeof n==="object"){if(n.name===name)return n;if(n.entries){const v=find(n.entries,name);if(v)return v;}}}};
+ const visit=x=>{
+  if(typeof x==="string")return x.replaceAll("Your DM","Your GM").replaceAll("A DM can","A GM can").replaceAll("later in the chapter",'later in "Character Creation"').replaceAll("chapter 1",'"Playing the Game"').replaceAll("Chapter 1",'"Playing the Game"');
+  if(Array.isArray(x))return x.map(visit);
+  if(x&&typeof x==="object"){
+   if(x.type==="abilityGeneric"&&x.name==="Passive Perception")return "Passive Perception = 10 + Wisdom (Perception) check modifier";
+   if(x.type==="abilityDc"&&x.name==="Spell")return "Spell save DC = 8 + spellcasting ability modifier + Proficiency Bonus";
+   if(x.type==="abilityAttackMod"){
+    const attr=x.attributes?.[0],formula={str:"Strength modifier",dex:"Dexterity modifier",spellcasting:"spellcasting ability modifier"}[attr];
+    if(!formula)throw Error("Unknown attack formula "+JSON.stringify(x));
+    return x.name+" attack bonus = "+formula+" + Proficiency Bonus";
+   }
+   return Object.fromEntries(Object.entries(x).map(([k,v])=>[k,visit(v)]));
+  }
+  return x;
+ };
+ entries=visit(entries);
+ if(name==="Create Your Character"){
+  const prof=find(entries,"Note Proficiencies");if(!prof.entries[2].includes("sample character sheet"))throw Error("Unexpected sample-sheet text");prof.entries.splice(2,1);
+  prof.entries[2]=prof.entries[2].replace("in step 5.","in step 5.");
+  const equipment=find(entries,"Choose Starting Equipment");
+  equipment.entries=["Your background and class both provide starting equipment. Any coins that you gain at this step can be immediately spent on equipment from \"Equipment.\"","Record your chosen equipment on your character sheet. Equipment is described in \"Equipment,\" but for now you can just write it all down and look up the specifics in \"Equipment\" later. Note any coins you have left after purchasing your equipment."];
+  const alignment=find(entries,"Step 4: Alignment");alignment.entries[1]=alignment.entries[1].replace("D&D assumes","The game assumes");
+  const unaligned=find(entries,"Unaligned Creatures");unaligned.entries[0]=unaligned.entries[0].replace("{@creature Reef Shark|srd52|Sharks}","Sharks");
+  const record=find(entries,"Record Class Features");record.entries[0]='Look at your class\'s feature table in "Classes," and write down the level 1 features. The class features are detailed there too.';
+ }
+ if(name==="Level Advancement"){
+  const gain=find(entries,"Gaining a Level");gain.entries[1].items[0].entry=gain.entries[1].items[0].entry.replace(" later in this chapter","");
+ }
+ if(name==="Starting at Higher Levels")entries[0]=entries[0].replace("seasoned players","seasoned D&D players");
+ if(name==="Mounts and Vehicles")entries[0]=entries[0].replace("See appendix B","See \"Monsters\"");
+ if(name==="Magic Items"){
+  const names=entries.slice(1).map(x=>x.name);if(names.join("|")!=="Identifying a Magic Item|Attunement|Wearing and Wielding Items")throw Error("Unexpected magic item overview");
+  entries=[entries[0],...names.map(n=>({type:"entries",name:n,entries:["See "+n+"."]}))];
+ }
+ if(name==="Casting Spells"){
+  const attack=find(entries,"Attack Rolls");attack.entries[1]="Spell attack modifier = your spellcasting ability modifier + your Proficiency Bonus";
+ }
+ const slug=s=>s.toLowerCase().normalize("NFKC").replace(/[’']/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+ const known=new Set(existing.map(x=>x.id));
+ const types={variantrule:"glossary",action:"action",condition:"condition",skill:"skill",spell:"spell",race:"species"};
+ for(const match of JSON.stringify(entries).matchAll(/\{@(variantrule|action|condition|skill|spell|race|item) ([^}|]+)(?:\|[^}]+)?\}/g)){
+  const [,kind,raw]=match,key=slug(raw);
+  const ids=kind==="item"&&key==="spell-scroll"?["item-group.spell-scroll"]:kind==="item"?["item."+key,"baseitem."+key]:[types[kind]+"."+key];
+  const matches=ids.filter(id=>known.has(id));if(matches.length!==1)throw Error("Unresolved modern book reference "+kind+":"+raw+" -> "+ids.join(","));
+  local.add(matches[0]);
+ }
+ return entries;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -888,9 +941,31 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Social Interaction","/data/1/entries/5",[10,11],["glossary.attitude","rule.d20-tests"]],
   ["Exploration","/data/1/entries/6",[11,12],["item.ladder","item.torch","rule.travel-pace","rule.combat","glossary.object","glossary.bright-light","glossary.dim-light","glossary.darkness"]],
   ["Combat","/data/1/entries/7",[13,14,15,16],["rule.actions","rule.d20-tests","rule.damage-and-healing","status.surprised","glossary.size","glossary.occupied-space","glossary.resistance"]],
-  ["Damage and Healing","/data/1/entries/8",[16,17,18],["glossary.hit-points","glossary.damage-roll","glossary.critical-hit","glossary.damage-types","table.damage-types","glossary.vulnerability","glossary.immunity","glossary.healing","glossary.knocking-out-a-creature","glossary.temporary-hit-points","status.bloodied"]]
+  ["Damage and Healing","/data/1/entries/8",[16,17,18],["glossary.hit-points","glossary.damage-roll","glossary.critical-hit","glossary.damage-types","table.damage-types","glossary.vulnerability","glossary.immunity","glossary.healing","glossary.knocking-out-a-creature","glossary.temporary-hit-points","status.bloodied"]],
+  ["Choose a Character Sheet","/data/2/entries/0",[19],["glossary.character-sheet","rule.create-your-character"]],
+  ["Create Your Character","/data/2/entries/1",[19,20,21,22,23],["rule.the-six-abilities","rule.proficiency","rule.starting-at-higher-levels","rule.d20-tests","glossary.passive-perception","glossary.hit-point-dice","glossary.initiative","glossary.armor-training","species.dragonborn","species.dwarf","species.elf","species.gnome","species.goliath","species.halfling","species.human","species.orc","species.tiefling","background.acolyte","background.criminal","background.sage","background.soldier"]],
+  ["Level Advancement","/data/2/entries/2",[23,24],["rule.multiclassing","rule.proficiency","glossary.hit-point-dice"]],
+  ["Starting at Higher Levels","/data/2/entries/3",[24],["rule.level-advancement","rule.create-your-character"]],
+  ["Selling Equipment","/data/6/entries/0",[89],["rule.magic-item-rarity"]],
+  ["Coins","/data/6/entries/1",[89],[]],
+  ["Mounts and Vehicles","/data/6/entries/6",[100,101],["table.armor","rule.combat","rule.hirelings"]],
+  ["Lifestyle Expenses","/data/6/entries/7",[101],[]],
+  ["Food, Drink, and Lodging","/data/6/entries/8",[101,102],["rule.lifestyle-expenses"]],
+  ["Hirelings","/data/6/entries/9",[102],[]],
+  ["Spellcasting","/data/6/entries/10",[102],[]],
+  ["Magic Items","/data/6/entries/11",[102,103],["rule.magic-item-rules","rule.identifying-a-magic-item","rule.attunement","rule.wearing-and-wielding-items"]],
+  ["Gaining Spells","/data/7/entries/0",[104],["glossary.armor-training","rule.create-your-character"]],
+  ["Casting Spells","/data/7/entries/1",[104,105,106],["rule.gaining-spells","status.concentration","activity.end-concentration","glossary.cantrip","glossary.spellcasting-focus","glossary.spell-attack","glossary.spell","glossary.magical-effect","rule.d20-tests"]]
  ];
  const modernGameplayCorrections={
+"Choose a Character Sheet":"Preserve publisher sheet selection guidance (p.19).",
+"Create Your Character":"Restore publisher character creation instructions and formulas, omit source-only sample-sheet and free-trinket guidance, link existing species/backgrounds and tables (pp.19–23).",
+"Level Advancement":"Preserve minimum 1 HP, level progression and post-level-20 bonus feat guidance (pp.23–24).",
+"Starting at Higher Levels":"Restore publisher terminology and reuse starting-equipment table (p.24).",
+"Mounts and Vehicles":"Restore Monsters navigation and preserve ship crew, cargo, repair and damage threshold guidance (pp.100–101).",
+"Magic Items":"Reuse the existing canonical identification, attunement and wearing rules instead of duplicating them (pp.102–103).",
+"Gaining Spells":"Preserve class preparation and always-prepared spell rules (p.104).",
+"Casting Spells":"Restore explicit spell DC/attack formulas, retain one-slot-per-turn and invalid-target rules; link edition-local spell and glossary identities (pp.104–106).",
   "Rhythm of Play": "Restore published introductory wording and Game Master label (p.5).",
   "The Six Abilities": "Retain publisher ability score and round-down guidance with existing tables (pp.5–6).",
   "D20 Tests": "Use publisher GM terminology and edition-local navigation; link the existing resolution seed and glossary (pp.6–8).",
@@ -953,7 +1028,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   if(entryRange&&(entryRange[0]!==0||entryRange[1]>node.entries.length||node.entries.slice(...entryRange).some(x=>typeof x!=="string"&&x.type!=="table")))throw Error("Unexpected chapter introduction "+name);
   let content=project(entryRange?node.entries.slice(...entryRange):node.entries);
   if(tag==="51")content=legacyEquipmentEntries(name,legacyEconomyEntries(name,legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local)),existing,local);
-  else content=modernGameplayEntries(name,modernMagicItemEntries(name,content),existing,local);
+  else content=modernCharacterEconomySpellEntries(name,modernGameplayEntries(name,modernMagicItemEntries(name,content),existing,local),existing,local);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");
    content[4]=content[4].replace("advantage on checks related to the character's personality, ideals, or bonds","advantage");

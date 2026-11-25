@@ -562,6 +562,15 @@ public sealed class RulesetResolutionApiTests
         var modernDamageProcedure = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.damage-and-healing")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("reduce the creature to 1 Hit Point", modernDamageProcedure.GetProperty("entries").GetRawText());
 
+        // Modern character creation and spellcasting use edition-local catalog identities and formulas.
+        var modernCreationProcedure = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.create-your-character")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("species.goliath", modernCreationProcedure.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("Passive Perception = 10 + Wisdom (Perception) check modifier", modernCreationProcedure.GetProperty("entries").GetRawText());
+        var modernCastingRules = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.casting-spells")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("only one spell slot to cast a spell", modernCastingRules.GetProperty("entries").GetRawText());
+        Assert.Contains("Spell save DC = 8 + spellcasting ability modifier + Proficiency Bonus", modernCastingRules.GetProperty("entries").GetRawText());
+        Assert.Contains("item-group.spell-scroll", modernCastingRules.GetProperty("catalogReferences").GetRawText());
+
         // Legacy travel and downtime must retain their own published procedures.
         var legacyTravelRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.movement")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("table.travel-pace", legacyTravelRule.GetProperty("catalogReferences").GetRawText());
