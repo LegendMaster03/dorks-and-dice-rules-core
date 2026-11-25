@@ -445,6 +445,48 @@ function legacyGameplayEntries(name,entries){
  return entries;
 }
 
+function legacySkillList(table,existing,local){
+ if(table.caption||table.colLabels.join("|")!=="Ability|Skills"||table.rows.length!==5)throw Error("Unexpected legacy skill grouping");
+ const expected=new Map([["Strength","str"],["Dexterity","dex"],["Intelligence","int"],["Wisdom","wis"],["Charisma","cha"]]);
+ const seen=new Set(),items=[];
+ for(const [ability,labels] of table.rows){
+  const abilityId=expected.get(ability);
+  if(!abilityId)throw Error("Unexpected skill ability "+ability);
+  const names=[...labels.matchAll(/\{@skill ([^}]+)\}/g)].map(m=>m[1]);
+  if(!names.length)throw Error("Empty skill group");
+  for(const name of names){
+   const skill=existing.find(x=>x.kind==="skill"&&x.name===name);
+   if(!skill||skill.ability!==abilityId||seen.has(skill.id))throw Error("Unreconciled skill "+name);
+   seen.add(skill.id);local.add(skill.id);
+  }
+  items.push({type:"item",name:ability,entry:labels});
+ }
+ if(seen.size!==18||existing.filter(x=>x.kind==="skill").some(x=>!seen.has(x.id)))throw Error("Incomplete skill grouping");
+ return {type:"list",style:"list-hang-notitle",items};
+}
+
+function legacyAdditionalEntries(name,entries){
+ const find=(arr,name)=>{for(const n of arr){if(n&&typeof n==="object"){if(n.name===name)return n;if(n.entries){const v=find(n.entries,name);if(v)return v;}}}};
+ const replace=(s,a,b)=>{if(!s.includes(a))throw Error("Changed source: "+a);return s.replace(a,b);};
+ if(name==="Ability Checks"){
+  const skill=find(entries,"Skills");skill.entries[2]=replace(skill.entries[2],"later sections of this chapter","later sections of this section");
+  const variant=find(entries,"Variant: Skills with Different Abilities");variant.entries[1]=replace(variant.entries[1],"dwarf fighter","half-orc barbarian");
+  const passive=find(entries,"Passive Checks");if(passive.entries[2].type!=="abilityGeneric")throw Error("Unexpected passive check formula");passive.entries[2]=passive.entries[2].text;
+ }
+ if(name==="The Environment"){
+  entries[0]=replace(entries[0]," The GM's Guide has rules covering more unusual situations.","");
+  const vision=find(entries,"Vision and Light");vision.entries[2]=replace(vision.entries[2],"{@condition blinded} condition","{@condition blinded} condition (see appendix PH-A)");
+  const food=find(entries,"Food and Water");food.entries[0]=replace(food.entries[0],"(see the appendix)","(see appendix PH-A)");
+  const objects=find(entries,"Interacting with Objects");objects.entries[0]=replace(objects.entries[0],"such a moving","such as moving");objects.entries[0]=replace(objects.entries[0],"if anything happens","if anything, happens");
+ }
+ if(name==="The Order of Combat"){
+  const init=find(entries,"Initiative");init.entries[2]=replace(init.entries[2],"DM-controlled","GM-controlled");
+  const turn=find(entries,"Your Turn");turn.entries[1]=replace(turn.entries[1]," section later in this chapter"," section");turn.entries[2]=replace(turn.entries[2]," section later in this chapter"," section");
+  const reactions=find(entries,"Reactions");reactions.entries[0]=replace(reactions.entries[0],", described later in this chapter,","");
+ }
+ return entries;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -607,7 +649,11 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Time","/data/7/entries/0",[84],[]],
   ["Movement","/data/7/entries/1",[84,85],["condition.exhaustion","condition.prone","skill.perception","skill.athletics","skill.acrobatics","rule.saving-throws"]],
   ["Between Adventures","/data/7/entries/4",[88,89],["table.lifestyle-expenses","skill.performance","skill.investigation","skill.persuasion","baseitem.plate-armor"]],
-  ["What Is a Spell?","/data/9/entries/2",[100],["spell.magic-missile","spell.wish","spell.cure-wounds","class.bard","class.sorcerer","class.cleric","class.druid","class.wizard","class.warlock","class.monk","monster.pit-fiend","rule.resting"]]
+  ["What Is a Spell?","/data/9/entries/2",[100],["spell.magic-missile","spell.wish","spell.cure-wounds","class.bard","class.sorcerer","class.cleric","class.druid","class.wizard","class.warlock","class.monk","monster.pit-fiend","rule.resting"]],
+  ["Ability Checks","/data/6/entries/7",[77,78,79],["rule.ability-check","rule.proficiency-bonus","rule.advantage-and-disadvantage","action.help"]],
+  ["The Environment","/data/7/entries/2",[86,87],["condition.prone","condition.blinded","condition.invisible","condition.exhaustion","skill.perception","sense.blindsight","sense.darkvision","sense.truesight","rule.breaking-objects","combat-option.stabilize-a-creature"]],
+  ["The Order of Combat","/data/8/entries/0",[90,91],["status.surprised","skill.stealth","skill.perception","action.dodge","action.ready","reaction-option.opportunity-attack","activity.other-activity"]],
+  ["Actions in Combat","/data/8/entries/2",[93,94],["action.attack","action.cast-a-spell","action.dash","action.disengage","action.dodge","action.help","action.hide","action.ready","action.search","action.use-an-object"]]
  ]:[
   ["Travel Pace","/data/10/entries/0",[192],["table.travel-pace","condition.exhaustion","spell.wind-walk","item-group.carpet-of-flying","glossary.difficult-terrain"]],
   ["Creating a Background","/data/10/entries/1",[192,193],[]],
@@ -629,6 +675,9 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Sentient Magic Items","/data/11/entries/9",[207,208],["condition.charmed","rule.the-next-dawn","rule.attunement"]]
  ];
  const extraCorrections={
+  "Ability Checks":"Reconcile the grouped skill list with all 18 canonical skill definitions; restore published variant example and navigation; preserve passive formula as text (pp.77–79).",
+  "The Environment":"Remove absent commercial navigation, restore appendix labels and correct object-interaction transcription (pp.86–87).",
+  "The Order of Combat":"Restore publisher GM terminology and remove later chapter navigation (pp.90–91).",
   "Movement":"Restore published forced-march navigation and high-jump formula without later minimum-0 errata; remove absent commercial navigation (pp.84–85).",
   "Between Adventures":"Correct source punctuation and GM terminology to publisher pp.88–89.",
   "What Is a Spell?":"Restore Wish example, bard/sorcerer examples, Warlock spell-slot exception and appendix label on p.100.",
@@ -649,6 +698,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
    if(Array.isArray(x))return x.map(project);
    if(x&&typeof x==="object"){
     if(x.type==="table"){
+     if(tag==="51"&&name==="Ability Checks"&&!x.caption)return legacySkillList(x,existing,local);
      const id="table."+slug(x.caption);
      if(!known.has(id)&&!rows.some(r=>r.id===id))throw Error("Unprojected book table "+id);
      local.add(id);return "See the "+x.caption+" table.";
@@ -658,7 +708,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
    return x;
   };
   let content=project(node.entries);
-  if(tag==="51")content=legacyGameplayEntries(name,legacyMagicItemEntries(name,content));
+  if(tag==="51")content=legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)));
   else content=modernMagicItemEntries(name,content);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");

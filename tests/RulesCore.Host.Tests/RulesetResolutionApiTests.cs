@@ -490,6 +490,21 @@ public sealed class RulesetResolutionApiTests
         Assert.Contains("table.sentient-item-s-communication", modernSentientRule.GetProperty("catalogReferences").GetRawText());
         Assert.Contains("1d12", modernSentientRule.GetProperty("entries").GetRawText());
 
+        // The legacy book section expands the existing check seed without replacing it.
+        var legacyCheckProcedures = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.ability-checks")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("rule.ability-check", legacyCheckProcedures.GetProperty("catalogReferences").GetRawText());
+        Assert.Equal(18, legacyCheckProcedures.GetProperty("catalogReferences").EnumerateArray().Count(x => x.GetString()!.StartsWith("skill.", StringComparison.Ordinal)));
+        Assert.Contains("at least half the group succeeds", legacyCheckProcedures.GetProperty("entries").GetRawText());
+        Assert.Contains("10 + all modifiers that normally apply to the check", legacyCheckProcedures.GetProperty("entries").GetRawText());
+        var legacyEnvironment = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.the-environment")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("20d6", legacyEnvironment.GetProperty("entries").GetRawText());
+        Assert.Contains("sense.darkvision", legacyEnvironment.GetProperty("catalogReferences").GetRawText());
+        var legacyCombatOrder = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.the-order-of-combat")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("status.surprised", legacyCombatOrder.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("start of your next turn", legacyCombatOrder.GetProperty("entries").GetRawText());
+        var legacyActionIndex = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.actions-in-combat")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal(10, legacyActionIndex.GetProperty("catalogReferences").EnumerateArray().Count(x => x.GetString()!.StartsWith("action.", StringComparison.Ordinal)));
+
         // Legacy travel and downtime must retain their own published procedures.
         var legacyTravelRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.movement")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("table.travel-pace", legacyTravelRule.GetProperty("catalogReferences").GetRawText());

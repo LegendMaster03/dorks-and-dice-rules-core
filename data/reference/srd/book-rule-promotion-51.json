@@ -288,6 +288,39 @@
       "pages": [
         100
       ]
+    },
+    {
+      "id": "rule.ability-checks",
+      "pointer": "/data/6/entries/7",
+      "pages": [
+        77,
+        78,
+        79
+      ]
+    },
+    {
+      "id": "rule.the-environment",
+      "pointer": "/data/7/entries/2",
+      "pages": [
+        86,
+        87
+      ]
+    },
+    {
+      "id": "rule.the-order-of-combat",
+      "pointer": "/data/8/entries/0",
+      "pages": [
+        90,
+        91
+      ]
+    },
+    {
+      "id": "rule.actions-in-combat",
+      "pointer": "/data/8/entries/2",
+      "pages": [
+        93,
+        94
+      ]
     }
   ],
   "corrections": [
@@ -348,9 +381,21 @@
     {
       "id": "rule.what-is-a-spell",
       "reason": "Restore Wish example, bard/sorcerer examples, Warlock spell-slot exception and appendix label on p.100."
+    },
+    {
+      "id": "rule.ability-checks",
+      "reason": "Reconcile the grouped skill list with all 18 canonical skill definitions; restore published variant example and navigation; preserve passive formula as text (pp.77–79)."
+    },
+    {
+      "id": "rule.the-environment",
+      "reason": "Remove absent commercial navigation, restore appendix labels and correct object-interaction transcription (pp.86–87)."
+    },
+    {
+      "id": "rule.the-order-of-combat",
+      "reason": "Restore publisher GM terminology and remove later chapter navigation (pp.90–91)."
     }
   ],
-  "nativeCount": 39,
+  "nativeCount": 43,
   "tableInventory": {
     "total": 30,
     "counts": {
