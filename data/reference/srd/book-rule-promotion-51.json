@@ -94,6 +94,80 @@
       "pointer": "/data/4/entries/14/entries/4/entries/3",
       "page": 74,
       "rowCount": 9
+    },
+    {
+      "id": "table.armor",
+      "pointer": "/data/4/entries/8/entries/6",
+      "page": 63,
+      "rowCount": 17,
+      "pages": [
+        63,
+        64
+      ]
+    },
+    {
+      "id": "table.weapons",
+      "pointer": "/data/4/entries/9/entries/4",
+      "page": 65,
+      "rowCount": 41,
+      "pages": [
+        65,
+        66
+      ]
+    },
+    {
+      "id": "table.adventuring-gear",
+      "pointer": "/data/4/entries/10/entries/2",
+      "page": 68,
+      "rowCount": 103,
+      "pages": [
+        68,
+        69
+      ],
+      "sourceRowCount": 108
+    },
+    {
+      "id": "table.tools",
+      "pointer": "/data/4/entries/11/entries/1",
+      "page": 70,
+      "rowCount": 39,
+      "sourceRowCount": 41
+    },
+    {
+      "id": "table.mounts-and-other-animals",
+      "pointer": "/data/4/entries/12/entries/4",
+      "page": 71,
+      "rowCount": 8,
+      "pages": [
+        71,
+        72
+      ]
+    },
+    {
+      "id": "table.tack-harness-and-drawn-vehicles",
+      "pointer": "/data/4/entries/12/entries/5",
+      "page": 71,
+      "rowCount": 15,
+      "pages": [
+        71,
+        72
+      ]
+    },
+    {
+      "id": "table.waterborne-vehicles",
+      "pointer": "/data/4/entries/12/entries/6",
+      "page": 72,
+      "rowCount": 6
+    },
+    {
+      "id": "table.food-drink-and-lodging",
+      "pointer": "/data/4/entries/14/entries/3/entries/1",
+      "page": 73,
+      "rowCount": 24,
+      "pages": [
+        73,
+        74
+      ]
     }
   ],
   "rules": [
@@ -159,6 +233,28 @@
   ],
   "corrections": [
     {
+      "id": "table.adventuring-gear",
+      "reason": "Restore published p.69 gear ordering and labels; move climber's and mess kits, remove duplicate healer's kit and four tool-only kit rows; retain their canonical definitions and Tools table memberships.",
+      "pages": [
+        69
+      ]
+    },
+    {
+      "id": "table.tools",
+      "reason": "Exclude two gaming-set rows absent from the official Tools table; restore singular headings and remove stray punctuation in cartographer's tools price. Retain the publisher's vehicle-proficiency footnote.",
+      "pages": [
+        70
+      ]
+    },
+    {
+      "id": "table.tack-harness-and-drawn-vehicles",
+      "reason": "Use published Feed (per day) label and link the existing item; Barding is an armor price/weight multiplier, not a standalone equipment identity.",
+      "pages": [
+        71,
+        72
+      ]
+    },
+    {
       "id": "rule.multiclassing",
       "reason": "Remove non-SRD Eldritch Knight/Arcane Trickster spell-slot contributions; retain legacy half-caster rounding down and modern rounding up as printed. Normalize book navigation; canonicalize nested tables."
     },
@@ -171,13 +267,13 @@
       "reason": "Restore published short-rest healing wording and long-rest sleep/light-activity wording from p.87; do not import later errata into the pinned SRD."
     }
   ],
-  "nativeCount": 23,
+  "nativeCount": 31,
   "tableInventory": {
     "total": 30,
     "counts": {
-      "projected": 15,
+      "projected": 23,
       "existing-catalog-representation": 7,
-      "pending-review": 8
+      "pending-review": 0
     },
     "occurrences": [
       {
@@ -241,7 +337,8 @@
         "caption": "Armor",
         "context": "Armor",
         "rows": 17,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.armor"
       },
       {
         "pointer": "/data/4/entries/8/entries/7/entries/2",
@@ -256,14 +353,16 @@
         "caption": "Weapons",
         "context": "Weapons",
         "rows": 41,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.weapons"
       },
       {
         "pointer": "/data/4/entries/10/entries/2",
         "caption": "Adventuring Gear",
         "context": "Adventuring Gear",
         "rows": 108,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.adventuring-gear"
       },
       {
         "pointer": "/data/4/entries/10/entries/3",
@@ -278,28 +377,32 @@
         "caption": "Tools",
         "context": "Tools",
         "rows": 41,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.tools"
       },
       {
         "pointer": "/data/4/entries/12/entries/4",
         "caption": "Mounts and Other Animals",
         "context": "Mounts and Vehicles",
         "rows": 8,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.mounts-and-other-animals"
       },
       {
         "pointer": "/data/4/entries/12/entries/5",
         "caption": "Tack, Harness, and Drawn Vehicles",
         "context": "Mounts and Vehicles",
         "rows": 15,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.tack-harness-and-drawn-vehicles"
       },
       {
         "pointer": "/data/4/entries/12/entries/6",
         "caption": "Waterborne Vehicles",
         "context": "Mounts and Vehicles",
         "rows": 6,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.waterborne-vehicles"
       },
       {
         "pointer": "/data/4/entries/13/entries/2",
@@ -322,7 +425,8 @@
         "caption": "Food, Drink, and Lodging",
         "context": "Food, Drink, and Lodging",
         "rows": 24,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.food-drink-and-lodging"
       },
       {
         "pointer": "/data/4/entries/14/entries/4/entries/3",

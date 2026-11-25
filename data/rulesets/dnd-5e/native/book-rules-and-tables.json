@@ -1388,6 +1388,1972 @@
     }
   },
   {
+    "id": "table.armor",
+    "kind": "table",
+    "name": "Armor",
+    "colLabels": [
+      "Armor",
+      "Cost",
+      "Armor Class (AC)",
+      "Strength",
+      "Stealth",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "{@i Light Armor}",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "{@item padded armor|srd51|Padded}",
+        "5 gp",
+        "11 + Dex modifier",
+        "—",
+        "Disadvantage",
+        "8 lb."
+      ],
+      [
+        "{@item leather armor|srd51|Leather}",
+        "10 gp",
+        "11 + Dex modifier",
+        "—",
+        "—",
+        "10 lb."
+      ],
+      [
+        "{@item studded leather armor|srd51|Studded leather}",
+        "45 gp",
+        "12 + Dex modifier",
+        "—",
+        "—",
+        "13 lb."
+      ],
+      [
+        "{@i Medium Armor}",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "{@item hide armor|srd51|Hide}",
+        "10 gp",
+        "12 + Dex modifier (max 2)",
+        "—",
+        "—",
+        "12 lb."
+      ],
+      [
+        "{@item Chain shirt|srd51}",
+        "50 gp",
+        "13 + Dex modifier (max 2)",
+        "—",
+        "—",
+        "20 lb."
+      ],
+      [
+        "{@item Scale mail|srd51}",
+        "50 gp",
+        "14 + Dex modifier (max 2)",
+        "—",
+        "Disadvantage",
+        "45 lb."
+      ],
+      [
+        "{@item Breastplate|srd51}",
+        "400 gp",
+        "14 + Dex modifier (max 2)",
+        "—",
+        "—",
+        "20 lb."
+      ],
+      [
+        "{@item half plate armor|srd51|Half plate}",
+        "750 gp",
+        "15 + Dex modifier (max 2)",
+        "—",
+        "Disadvantage",
+        "40 lb."
+      ],
+      [
+        "{@i Heavy Armor}",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "{@item Ring mail|srd51}",
+        "30 gp",
+        "14",
+        "—",
+        "Disadvantage",
+        "40 lb."
+      ],
+      [
+        "{@item Chain mail|srd51}",
+        "75 gp",
+        "16",
+        "Str 13",
+        "Disadvantage",
+        "55 lb."
+      ],
+      [
+        "{@item splint armor|srd51|Splint}",
+        "200 gp",
+        "17",
+        "Str 15",
+        "Disadvantage",
+        "60 lb."
+      ],
+      [
+        "{@item plate armor|srd51|Plate}",
+        "1,500 gp",
+        "18",
+        "Str 15",
+        "Disadvantage",
+        "65 lb."
+      ],
+      [
+        "{@i Shield}",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "{@item Shield|srd51}",
+        "10 gp",
+        "+2",
+        "—",
+        "—",
+        "6 lb."
+      ]
+    ],
+    "catalogReferences": [
+      "baseitem.breastplate",
+      "baseitem.chain-mail",
+      "baseitem.chain-shirt",
+      "baseitem.half-plate-armor",
+      "baseitem.hide-armor",
+      "baseitem.leather-armor",
+      "baseitem.padded-armor",
+      "baseitem.plate-armor",
+      "baseitem.ring-mail",
+      "baseitem.scale-mail",
+      "baseitem.shield",
+      "baseitem.splint-armor",
+      "baseitem.studded-leather-armor",
+      "rulebook.page-063",
+      "rulebook.page-064"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        63,
+        64
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/8/entries/6"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.weapons",
+    "kind": "table",
+    "name": "Weapons",
+    "colLabels": [
+      "Name",
+      "Cost",
+      "Damage",
+      "Weight",
+      "Properties"
+    ],
+    "rows": [
+      [
+        "{@i Simple Melee Weapons}",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "{@item Club|srd51}",
+        "1 sp",
+        "1d4 bludgeoning",
+        "2 lb.",
+        "Light"
+      ],
+      [
+        "{@item Dagger|srd51}",
+        "2 gp",
+        "1d4 piercing",
+        "1 lb.",
+        "Finesse, light, thrown (range 20/60)"
+      ],
+      [
+        "{@item Greatclub|srd51}",
+        "2 sp",
+        "1d8 bludgeoning",
+        "10 lb.",
+        "Two-handed"
+      ],
+      [
+        "{@item Handaxe|srd51}",
+        "5 gp",
+        "1d6 slashing",
+        "2 lb.",
+        "Light, thrown (range 20/60)"
+      ],
+      [
+        "{@item Javelin|srd51}",
+        "5 sp",
+        "1d6 piercing",
+        "2 lb.",
+        "Thrown (range 30/120)"
+      ],
+      [
+        "{@item Light hammer|srd51}",
+        "2 gp",
+        "1d4 bludgeoning",
+        "2 lb.",
+        "Light, thrown (range 20/60)"
+      ],
+      [
+        "{@item Mace|srd51}",
+        "5 gp",
+        "1d6 bludgeoning",
+        "4 lb.",
+        "—"
+      ],
+      [
+        "{@item Quarterstaff|srd51}",
+        "2 sp",
+        "1d6 bludgeoning",
+        "4 lb.",
+        "Versatile (1d8)"
+      ],
+      [
+        "{@item Sickle|srd51}",
+        "1 gp",
+        "1d4 slashing",
+        "2 lb.",
+        "Light"
+      ],
+      [
+        "{@item Spear|srd51}",
+        "1 gp",
+        "1d6 piercing",
+        "3 lb.",
+        "Thrown (range 20/60), versatile (1d8)"
+      ],
+      [
+        "{@i Simple Ranged Weapons}",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "{@item light crossbow|srd51|Crossbow, light}",
+        "25 gp",
+        "1d8 piercing",
+        "5 lb.",
+        "Ammunition (range 80/320), loading, two-handed"
+      ],
+      [
+        "{@item Dart|srd51}",
+        "5 cp",
+        "1d4 piercing",
+        "1/4 lb.",
+        "Finesse, thrown (range 20/60)"
+      ],
+      [
+        "{@item Shortbow|srd51}",
+        "25 gp",
+        "1d6 piercing",
+        "2 lb.",
+        "Ammunition (range 80/320), two-handed"
+      ],
+      [
+        "{@item Sling|srd51}",
+        "1 sp",
+        "1d4 bludgeoning",
+        "—",
+        "Ammunition (range 30/120)"
+      ],
+      [
+        "{@i Martial Melee Weapons}",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "{@item Battleaxe|srd51}",
+        "10 gp",
+        "1d8 slashing",
+        "4 lb.",
+        "Versatile (1d10)"
+      ],
+      [
+        "{@item Flail|srd51}",
+        "10 gp",
+        "1d8 bludgeoning",
+        "2 lb.",
+        "—"
+      ],
+      [
+        "{@item Glaive|srd51}",
+        "20 gp",
+        "1d10 slashing",
+        "6 lb.",
+        "Heavy, reach, two-handed"
+      ],
+      [
+        "{@item Greataxe|srd51}",
+        "30 gp",
+        "1d12 slashing",
+        "7 lb.",
+        "Heavy, two-handed"
+      ],
+      [
+        "{@item Greatsword|srd51}",
+        "50 gp",
+        "2d6 slashing",
+        "6 lb.",
+        "Heavy, two-handed"
+      ],
+      [
+        "{@item Halberd|srd51}",
+        "20 gp",
+        "1d10 slashing",
+        "6 lb.",
+        "Heavy, reach, two-handed"
+      ],
+      [
+        "{@item Lance|srd51}",
+        "10 gp",
+        "1d12 piercing",
+        "6 lb.",
+        "Reach, special"
+      ],
+      [
+        "{@item Longsword|srd51}",
+        "15 gp",
+        "1d8 slashing",
+        "3 lb.",
+        "Versatile (1d10)"
+      ],
+      [
+        "{@item Maul|srd51}",
+        "10 gp",
+        "2d6 bludgeoning",
+        "10 lb.",
+        "Heavy, two-handed"
+      ],
+      [
+        "{@item Morningstar|srd51}",
+        "15 gp",
+        "1d8 piercing",
+        "4 lb.",
+        "—"
+      ],
+      [
+        "{@item Pike|srd51}",
+        "5 gp",
+        "1d10 piercing",
+        "18 lb.",
+        "Heavy, reach, two-handed"
+      ],
+      [
+        "{@item Rapier|srd51}",
+        "25 gp",
+        "1d8 piercing",
+        "2 lb.",
+        "Finesse"
+      ],
+      [
+        "{@item Scimitar|srd51}",
+        "25 gp",
+        "1d6 slashing",
+        "3 lb.",
+        "Finesse, light"
+      ],
+      [
+        "{@item Shortsword|srd51}",
+        "10 gp",
+        "1d6 piercing",
+        "2 lb.",
+        "Finesse, light"
+      ],
+      [
+        "{@item Trident|srd51}",
+        "5 gp",
+        "1d6 piercing",
+        "4 lb.",
+        "Thrown (range 20/60), versatile (1d8)"
+      ],
+      [
+        "{@item War pick|srd51}",
+        "5 gp",
+        "1d8 piercing",
+        "2 lb.",
+        "—"
+      ],
+      [
+        "{@item Warhammer|srd51}",
+        "15 gp",
+        "1d8 bludgeoning",
+        "2 lb.",
+        "Versatile (1d10)"
+      ],
+      [
+        "{@item Whip|srd51}",
+        "2 gp",
+        "1d4 slashing",
+        "3 lb.",
+        "Finesse, reach"
+      ],
+      [
+        "{@i Martial Ranged Weapons}",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "{@item Blowgun|srd51}",
+        "10 gp",
+        "1 piercing",
+        "1 lb.",
+        "Ammunition (range 25/100), loading"
+      ],
+      [
+        "{@item hand crossbow|srd51|Crossbow, hand}",
+        "75 gp",
+        "1d6 piercing",
+        "3 lb.",
+        "Ammunition (range 30/120), light, loading"
+      ],
+      [
+        "{@item heavy crossbow|srd51|Crossbow, heavy}",
+        "50 gp",
+        "1d10 piercing",
+        "18 lb.",
+        "Ammunition (range 100/400), heavy, loading, two-handed"
+      ],
+      [
+        "{@item Longbow|srd51}",
+        "50 gp",
+        "1d8 piercing",
+        "2 lb.",
+        "Ammunition (range 150/600), heavy, two-handed"
+      ],
+      [
+        "{@item Net|srd51}",
+        "1 gp",
+        "—",
+        "3 lb.",
+        "Special, thrown (range 5/15)"
+      ]
+    ],
+    "catalogReferences": [
+      "baseitem.battleaxe",
+      "baseitem.blowgun",
+      "baseitem.club",
+      "baseitem.dagger",
+      "baseitem.dart",
+      "baseitem.flail",
+      "baseitem.glaive",
+      "baseitem.greataxe",
+      "baseitem.greatclub",
+      "baseitem.greatsword",
+      "baseitem.halberd",
+      "baseitem.hand-crossbow",
+      "baseitem.handaxe",
+      "baseitem.heavy-crossbow",
+      "baseitem.javelin",
+      "baseitem.lance",
+      "baseitem.light-crossbow",
+      "baseitem.light-hammer",
+      "baseitem.longbow",
+      "baseitem.longsword",
+      "baseitem.mace",
+      "baseitem.maul",
+      "baseitem.morningstar",
+      "baseitem.net",
+      "baseitem.pike",
+      "baseitem.quarterstaff",
+      "baseitem.rapier",
+      "baseitem.scimitar",
+      "baseitem.shortbow",
+      "baseitem.shortsword",
+      "baseitem.sickle",
+      "baseitem.sling",
+      "baseitem.spear",
+      "baseitem.trident",
+      "baseitem.war-pick",
+      "baseitem.warhammer",
+      "baseitem.whip",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.f",
+      "item-property.h",
+      "item-property.l",
+      "item-property.ld",
+      "item-property.r",
+      "item-property.s",
+      "item-property.t",
+      "item-property.v",
+      "rulebook.page-065",
+      "rulebook.page-066"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        65,
+        66
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/9/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.adventuring-gear",
+    "kind": "table",
+    "name": "Adventuring Gear",
+    "colLabels": [
+      "Item",
+      "Cost",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "{@item Abacus|srd51}",
+        "2 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Acid (vial)|srd51}",
+        "25 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Alchemist's fire (flask)|srd51}",
+        "50 gp",
+        "1 lb."
+      ],
+      [
+        "{@i Ammunition}",
+        "",
+        ""
+      ],
+      [
+        "{@item Arrows (20)|srd51}",
+        "1 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Blowgun needles (50)|srd51}",
+        "1 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Crossbow bolts (20)|srd51}",
+        "1 gp",
+        "1½ lb."
+      ],
+      [
+        "{@item Sling bullets (20)|srd51}",
+        "4 cp",
+        "1½ lb."
+      ],
+      [
+        "{@item Antitoxin (vial)|srd51}",
+        "50 gp",
+        "—"
+      ],
+      [
+        "{@i {@item Arcane focus|srd51}}",
+        "",
+        ""
+      ],
+      [
+        "{@item Crystal|srd51}",
+        "10 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Orb|srd51}",
+        "20 gp",
+        "3 lb."
+      ],
+      [
+        "{@item Rod|srd51}",
+        "10 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Staff|srd51}",
+        "5 gp",
+        "4 lb."
+      ],
+      [
+        "{@item Wand|srd51}",
+        "10 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Backpack|srd51}",
+        "2 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Ball bearings (bag of 1,000)|srd51}",
+        "1 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Barrel|srd51}",
+        "2 gp",
+        "70 lb."
+      ],
+      [
+        "{@item Basket|srd51}",
+        "4 sp",
+        "2 lb."
+      ],
+      [
+        "{@item Bedroll|srd51}",
+        "1 gp",
+        "7 lb."
+      ],
+      [
+        "{@item Bell|srd51}",
+        "1 gp",
+        "—"
+      ],
+      [
+        "{@item Blanket|srd51}",
+        "5 sp",
+        "3 lb."
+      ],
+      [
+        "{@item Block and tackle|srd51}",
+        "1 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Book|srd51}",
+        "25 gp",
+        "5 lb."
+      ],
+      [
+        "{@item glass bottle|srd51|Bottle, glass}",
+        "2 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Bucket|srd51}",
+        "5 cp",
+        "2 lb."
+      ],
+      [
+        "{@item Caltrops (bag of 20)|srd51}",
+        "1 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Candle|srd51}",
+        "1 cp",
+        "—"
+      ],
+      [
+        "{@item crossbow bolt case|srd51|Case, crossbow bolt}",
+        "1 gp",
+        "1 lb."
+      ],
+      [
+        "{@item map or scroll case|srd51|Case, map or scroll}",
+        "1 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Chain (10 feet)|srd51}",
+        "5 gp",
+        "10 lb."
+      ],
+      [
+        "{@item Chalk (1 piece)|srd51}",
+        "1 cp",
+        "—"
+      ],
+      [
+        "{@item Chest|srd51}",
+        "5 gp",
+        "25 lb."
+      ],
+      [
+        "{@item climber's kit|srd51|Climber's kit}",
+        "25 gp",
+        "12 lb."
+      ],
+      [
+        "{@item common clothes|srd51|Clothes, common}",
+        "5 sp",
+        "3 lb."
+      ],
+      [
+        "{@item costume clothes|srd51|Clothes, costume}",
+        "5 gp",
+        "4 lb."
+      ],
+      [
+        "{@item fine clothes|srd51|Clothes, fine}",
+        "15 gp",
+        "6 lb."
+      ],
+      [
+        "{@item traveler's clothes|srd51|Clothes, traveler's}",
+        "2 gp",
+        "4 lb."
+      ],
+      [
+        "{@item Component pouch|srd51}",
+        "25 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Crowbar|srd51}",
+        "2 gp",
+        "5 lb."
+      ],
+      [
+        "{@i {@item Druidic focus|srd51}}",
+        "",
+        ""
+      ],
+      [
+        "{@item Sprig of mistletoe|srd51}",
+        "1 gp",
+        "—"
+      ],
+      [
+        "{@item Totem|srd51}",
+        "1 gp",
+        "—"
+      ],
+      [
+        "{@item Wooden staff|srd51}",
+        "5 gp",
+        "4 lb."
+      ],
+      [
+        "{@item Yew wand|srd51}",
+        "10 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Fishing tackle|srd51}",
+        "1 gp",
+        "4 lb."
+      ],
+      [
+        "{@item Flask|srd51} or {@item tankard|srd51}",
+        "2 cp",
+        "1 lb."
+      ],
+      [
+        "{@item Grappling hook|srd51}",
+        "2 gp",
+        "4 lb."
+      ],
+      [
+        "{@item Hammer|srd51}",
+        "1 gp",
+        "3 lb."
+      ],
+      [
+        "{@item sledgehammer|srd51|Hammer, sledge}",
+        "2 gp",
+        "10 lb."
+      ],
+      [
+        "{@item Healer's Kit|srd51}",
+        "5 gp",
+        "3 lb."
+      ],
+      [
+        "{@i {@item Holy symbol|srd51}}",
+        "",
+        ""
+      ],
+      [
+        "{@item Amulet|srd51}",
+        "5 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Emblem|srd51}",
+        "5 gp",
+        "—"
+      ],
+      [
+        "{@item Reliquary|srd51}",
+        "5 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Holy water (flask)|srd51}",
+        "25 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Hourglass|srd51}",
+        "25 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Hunting trap|srd51}",
+        "5 gp",
+        "25 lb."
+      ],
+      [
+        "{@item Ink (1-ounce bottle)|srd51|Ink (1 ounce bottle)}",
+        "10 gp",
+        "—"
+      ],
+      [
+        "{@item Ink pen|srd51}",
+        "2 cp",
+        "—"
+      ],
+      [
+        "{@item Jug|srd51} or {@item pitcher|srd51}",
+        "2 cp",
+        "4 lb."
+      ],
+      [
+        "{@item Ladder (10-foot)|srd51}",
+        "1 sp",
+        "25 lb."
+      ],
+      [
+        "{@item Lamp|srd51}",
+        "5 sp",
+        "1 lb."
+      ],
+      [
+        "{@item bullseye lantern|srd51|Lantern, bullseye}",
+        "10 gp",
+        "2 lb."
+      ],
+      [
+        "{@item hooded lantern|srd51|Lantern, hooded}",
+        "5 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Lock|srd51}",
+        "10 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Magnifying glass|srd51}",
+        "100 gp",
+        "—"
+      ],
+      [
+        "{@item Manacles|srd51}",
+        "2 gp",
+        "6 lb."
+      ],
+      [
+        "{@item mess kit|srd51|Mess kit}",
+        "2 sp",
+        "1 lb."
+      ],
+      [
+        "{@item steel mirror|srd51|Mirror, steel}",
+        "5 gp",
+        "1/2 lb."
+      ],
+      [
+        "{@item Oil (flask)|srd51}",
+        "1 sp",
+        "1 lb."
+      ],
+      [
+        "{@item Paper (one sheet)|srd51}",
+        "2 sp",
+        "—"
+      ],
+      [
+        "{@item Parchment (one sheet)|srd51}",
+        "1 sp",
+        "—"
+      ],
+      [
+        "{@item Perfume (vial)|srd51}",
+        "5 gp",
+        "—"
+      ],
+      [
+        "{@item miner's pick|srd51|Pick, miner's}",
+        "2 gp",
+        "10 lb."
+      ],
+      [
+        "{@item Piton|srd51}",
+        "5 cp",
+        "1/4 lb."
+      ],
+      [
+        "{@item basic poison (vial)|srd51|Poison, basic (vial)}",
+        "100 gp",
+        "—"
+      ],
+      [
+        "{@item Pole (10-foot)|srd51}",
+        "5 cp",
+        "7 lb."
+      ],
+      [
+        "{@item iron pot|srd51|Pot, iron}",
+        "2 gp",
+        "10 lb."
+      ],
+      [
+        "{@item Potion of healing|srd51}",
+        "50 gp",
+        "1/2 lb."
+      ],
+      [
+        "{@item Pouch|srd51}",
+        "5 sp",
+        "1 lb."
+      ],
+      [
+        "{@item Quiver|srd51}",
+        "1 gp",
+        "1 lb."
+      ],
+      [
+        "{@item portable ram|srd51|Ram, portable}",
+        "4 gp",
+        "35 lb."
+      ],
+      [
+        "{@item Rations (1 day)|srd51}",
+        "5 sp",
+        "2 lb."
+      ],
+      [
+        "{@item Robes|srd51}",
+        "1 gp",
+        "4 lb."
+      ],
+      [
+        "{@item hempen rope (50 feet)|srd51|Rope, hempen (50 feet)}",
+        "1 gp",
+        "10 lb."
+      ],
+      [
+        "{@item silk rope (50 feet)|srd51|Rope, silk (50 feet)}",
+        "10 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Sack|srd51}",
+        "1 cp",
+        "1/2 lb."
+      ],
+      [
+        "{@item merchant's scale|srd51|Scale, merchant's}",
+        "5 gp",
+        "3 lb."
+      ],
+      [
+        "{@item Sealing wax|srd51}",
+        "5 sp",
+        "—"
+      ],
+      [
+        "{@item Shovel|srd51}",
+        "2 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Signal whistle|srd51}",
+        "5 cp",
+        "—"
+      ],
+      [
+        "{@item Signet ring|srd51}",
+        "5 gp",
+        "—"
+      ],
+      [
+        "{@item Soap|srd51}",
+        "2 cp",
+        "—"
+      ],
+      [
+        "{@item Spellbook|srd51}",
+        "50 gp",
+        "3 lb."
+      ],
+      [
+        "{@item iron spikes (10)|srd51|Spikes, iron (10)}",
+        "1 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Spyglass|srd51}",
+        "1,000 gp",
+        "1 lb."
+      ],
+      [
+        "{@item two-person tent|srd51|Tent, two-person}",
+        "2 gp",
+        "20 lb."
+      ],
+      [
+        "{@item Tinderbox|srd51}",
+        "5 sp",
+        "1 lb."
+      ],
+      [
+        "{@item Torch|srd51}",
+        "1 cp",
+        "1 lb."
+      ],
+      [
+        "{@item Vial|srd51}",
+        "1 gp",
+        "—"
+      ],
+      [
+        "{@item Waterskin|srd51}",
+        "2 sp",
+        "5 lb. (full)"
+      ],
+      [
+        "{@item Whetstone|srd51}",
+        "1 cp",
+        "1 lb."
+      ]
+    ],
+    "catalogReferences": [
+      "baseitem.arrows-20",
+      "baseitem.blowgun-needles-50",
+      "baseitem.crossbow-bolts-20",
+      "baseitem.crystal",
+      "baseitem.orb",
+      "baseitem.rod",
+      "baseitem.sling-bullets-20",
+      "baseitem.staff",
+      "baseitem.wand",
+      "baseitem.wooden-staff",
+      "item-group.arcane-focus",
+      "item-group.druidic-focus",
+      "item-group.holy-symbol",
+      "item.abacus",
+      "item.acid-vial",
+      "item.alchemist-s-fire-flask",
+      "item.amulet",
+      "item.antitoxin-vial",
+      "item.backpack",
+      "item.ball-bearings-bag-of-1-000",
+      "item.barrel",
+      "item.basic-poison-vial",
+      "item.basket",
+      "item.bedroll",
+      "item.bell",
+      "item.blanket",
+      "item.block-and-tackle",
+      "item.book",
+      "item.bucket",
+      "item.bullseye-lantern",
+      "item.caltrops-bag-of-20",
+      "item.candle",
+      "item.chain-10-feet",
+      "item.chalk-1-piece",
+      "item.chest",
+      "item.climber-s-kit",
+      "item.common-clothes",
+      "item.component-pouch",
+      "item.costume-clothes",
+      "item.crossbow-bolt-case",
+      "item.crowbar",
+      "item.emblem",
+      "item.fine-clothes",
+      "item.fishing-tackle",
+      "item.flask",
+      "item.glass-bottle",
+      "item.grappling-hook",
+      "item.hammer",
+      "item.healer-s-kit",
+      "item.hempen-rope-50-feet",
+      "item.holy-water-flask",
+      "item.hooded-lantern",
+      "item.hourglass",
+      "item.hunting-trap",
+      "item.ink-1-ounce-bottle",
+      "item.ink-pen",
+      "item.iron-pot",
+      "item.iron-spikes-10",
+      "item.jug",
+      "item.ladder-10-foot",
+      "item.lamp",
+      "item.lock",
+      "item.magnifying-glass",
+      "item.manacles",
+      "item.map-or-scroll-case",
+      "item.merchant-s-scale",
+      "item.mess-kit",
+      "item.miner-s-pick",
+      "item.oil-flask",
+      "item.paper-one-sheet",
+      "item.parchment-one-sheet",
+      "item.perfume-vial",
+      "item.pitcher",
+      "item.piton",
+      "item.pole-10-foot",
+      "item.portable-ram",
+      "item.potion-of-healing",
+      "item.pouch",
+      "item.quiver",
+      "item.rations-1-day",
+      "item.reliquary",
+      "item.robes",
+      "item.sack",
+      "item.sealing-wax",
+      "item.shovel",
+      "item.signal-whistle",
+      "item.signet-ring",
+      "item.silk-rope-50-feet",
+      "item.sledgehammer",
+      "item.soap",
+      "item.spellbook",
+      "item.sprig-of-mistletoe",
+      "item.spyglass",
+      "item.steel-mirror",
+      "item.tankard",
+      "item.tinderbox",
+      "item.torch",
+      "item.totem",
+      "item.traveler-s-clothes",
+      "item.two-person-tent",
+      "item.vial",
+      "item.waterskin",
+      "item.whetstone",
+      "item.yew-wand",
+      "rulebook.page-068",
+      "rulebook.page-069"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        68,
+        69
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/10/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.tools",
+    "kind": "table",
+    "name": "Tools",
+    "colLabels": [
+      "Item",
+      "Cost",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "{@i Artisan's tools}",
+        "",
+        ""
+      ],
+      [
+        "{@item Alchemist's supplies|srd51}",
+        "50 gp",
+        "8 lb."
+      ],
+      [
+        "{@item Brewer's supplies|srd51}",
+        "20 gp",
+        "9 lb."
+      ],
+      [
+        "{@item Calligrapher's supplies|srd51}",
+        "10 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Carpenter's tools|srd51}",
+        "8 gp",
+        "6 lb."
+      ],
+      [
+        "{@item Cartographer's tools|srd51}",
+        "15 gp",
+        "6 lb."
+      ],
+      [
+        "{@item Cobbler's tools|srd51}",
+        "5 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Cook's utensils|srd51}",
+        "1 gp",
+        "8 lb."
+      ],
+      [
+        "{@item Glassblower's tools|srd51}",
+        "30 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Jeweler's tools|srd51}",
+        "25 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Leatherworker's tools|srd51}",
+        "5 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Mason's tools|srd51}",
+        "10 gp",
+        "8 lb."
+      ],
+      [
+        "{@item Painter's supplies|srd51}",
+        "10 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Potter's tools|srd51}",
+        "10 gp",
+        "3 lb."
+      ],
+      [
+        "{@item Smith's tools|srd51}",
+        "20 gp",
+        "8 lb."
+      ],
+      [
+        "{@item Tinker's tools|srd51}",
+        "50 gp",
+        "10 lb."
+      ],
+      [
+        "{@item Weaver's tools|srd51}",
+        "1 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Woodcarver's tools|srd51}",
+        "1 gp",
+        "5 lb."
+      ],
+      [
+        "{@item Disguise Kit|srd51}",
+        "25 gp",
+        "3 lb."
+      ],
+      [
+        "{@item Forgery kit|srd51}",
+        "15 gp",
+        "5 lb."
+      ],
+      [
+        "{@i Gaming set}",
+        "",
+        ""
+      ],
+      [
+        "{@item Dice set|srd51}",
+        "1 sp",
+        "—"
+      ],
+      [
+        "{@item Playing card set|srd51}",
+        "5 sp",
+        "—"
+      ],
+      [
+        "{@item Herbalism kit|srd51}",
+        "5 gp",
+        "3 lb."
+      ],
+      [
+        "{@i Musical instrument}",
+        "",
+        ""
+      ],
+      [
+        "{@item Bagpipes|srd51}",
+        "30 gp",
+        "6 lb."
+      ],
+      [
+        "{@item Drum|srd51}",
+        "6 gp",
+        "3 lb."
+      ],
+      [
+        "{@item Dulcimer|srd51}",
+        "25 gp",
+        "10 lb."
+      ],
+      [
+        "{@item Flute|srd51}",
+        "2 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Lute|srd51}",
+        "35 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Lyre|srd51}",
+        "30 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Horn|srd51}",
+        "3 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Pan flute|srd51}",
+        "12 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Shawm|srd51}",
+        "2 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Viol|srd51}",
+        "30 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Navigator's tools|srd51}",
+        "25 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Poisoner's kit|srd51}",
+        "50 gp",
+        "2 lb."
+      ],
+      [
+        "{@item Thieves' tools|srd51}",
+        "25 gp",
+        "1 lb."
+      ],
+      [
+        "Vehicles (land or water)",
+        "*",
+        "*"
+      ]
+    ],
+    "footnotes": [
+      "* See the \"Mounts and Vehicles\" section."
+    ],
+    "catalogReferences": [
+      "baseitem.alchemist-s-supplies",
+      "baseitem.bagpipes",
+      "baseitem.brewer-s-supplies",
+      "baseitem.calligrapher-s-supplies",
+      "baseitem.carpenter-s-tools",
+      "baseitem.cartographer-s-tools",
+      "baseitem.cobbler-s-tools",
+      "baseitem.cook-s-utensils",
+      "baseitem.drum",
+      "baseitem.dulcimer",
+      "baseitem.flute",
+      "baseitem.glassblower-s-tools",
+      "baseitem.horn",
+      "baseitem.jeweler-s-tools",
+      "baseitem.leatherworker-s-tools",
+      "baseitem.lute",
+      "baseitem.lyre",
+      "baseitem.mason-s-tools",
+      "baseitem.painter-s-supplies",
+      "baseitem.pan-flute",
+      "baseitem.potter-s-tools",
+      "baseitem.shawm",
+      "baseitem.smith-s-tools",
+      "baseitem.tinker-s-tools",
+      "baseitem.viol",
+      "baseitem.weaver-s-tools",
+      "baseitem.woodcarver-s-tools",
+      "item.dice-set",
+      "item.disguise-kit",
+      "item.forgery-kit",
+      "item.herbalism-kit",
+      "item.navigator-s-tools",
+      "item.playing-card-set",
+      "item.poisoner-s-kit",
+      "item.thieves-tools",
+      "rulebook.page-070",
+      "table.tack-harness-and-drawn-vehicles",
+      "table.waterborne-vehicles"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        70
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/11/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.mounts-and-other-animals",
+    "kind": "table",
+    "name": "Mounts and Other Animals",
+    "colLabels": [
+      "Item",
+      "Cost",
+      "Speed",
+      "Carrying Capacity"
+    ],
+    "rows": [
+      [
+        "{@item Camel|srd51}",
+        "50 gp",
+        "50 ft.",
+        "480 lb."
+      ],
+      [
+        "{@item Donkey|srd51} or {@item mule|srd51}",
+        "8 gp",
+        "40 ft.",
+        "420 lb."
+      ],
+      [
+        "{@item Elephant|srd51}",
+        "200 gp",
+        "40 ft.",
+        "1,320 lb."
+      ],
+      [
+        "{@item draft horse|srd51|Horse, draft}",
+        "50 gp",
+        "40 ft.",
+        "540 lb."
+      ],
+      [
+        "{@item riding horse|srd51|Horse, riding}",
+        "75 gp",
+        "60 ft.",
+        "480 lb."
+      ],
+      [
+        "{@item Mastiff|srd51}",
+        "25 gp",
+        "40 ft.",
+        "195 lb."
+      ],
+      [
+        "{@item Pony|srd51}",
+        "30 gp",
+        "40 ft.",
+        "225 lb."
+      ],
+      [
+        "{@item Warhorse|srd51}",
+        "400 gp",
+        "60 ft.",
+        "540 lb."
+      ]
+    ],
+    "catalogReferences": [
+      "item.camel",
+      "item.donkey",
+      "item.draft-horse",
+      "item.elephant",
+      "item.mastiff",
+      "item.mule",
+      "item.pony",
+      "item.riding-horse",
+      "item.warhorse",
+      "rulebook.page-071",
+      "rulebook.page-072"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        71,
+        72
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/12/entries/4"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.tack-harness-and-drawn-vehicles",
+    "kind": "table",
+    "name": "Tack, Harness, and Drawn Vehicles",
+    "colLabels": [
+      "Item",
+      "Cost",
+      "Weight"
+    ],
+    "rows": [
+      [
+        "Barding",
+        "×4",
+        "×2"
+      ],
+      [
+        "{@item Bit and bridle|srd51}",
+        "2 gp",
+        "1 lb."
+      ],
+      [
+        "{@item Carriage|srd51}",
+        "100 gp",
+        "600 lb."
+      ],
+      [
+        "{@item Cart|srd51}",
+        "15 gp",
+        "200 lb."
+      ],
+      [
+        "{@item Chariot|srd51}",
+        "250 gp",
+        "100 lb."
+      ],
+      [
+        "{@item Feed (per day)|srd51}",
+        "5 cp",
+        "10 lb."
+      ],
+      [
+        "{@i Saddle}",
+        "",
+        ""
+      ],
+      [
+        "{@item Exotic saddle|srd51|Exotic}",
+        "60 gp",
+        "40 lb."
+      ],
+      [
+        "{@item Military saddle|srd51|Military}",
+        "20 gp",
+        "30 lb."
+      ],
+      [
+        "{@item Pack saddle|srd51|Pack}",
+        "5 gp",
+        "15 lb."
+      ],
+      [
+        "{@item Riding saddle|srd51|Riding}",
+        "10 gp",
+        "25 lb."
+      ],
+      [
+        "{@item Saddlebags|srd51}",
+        "4 gp",
+        "8 lb."
+      ],
+      [
+        "{@item Sled|srd51}",
+        "20 gp",
+        "300 lb."
+      ],
+      [
+        "Stabling (per day)",
+        "5 sp",
+        "—"
+      ],
+      [
+        "{@item Wagon|srd51}",
+        "35 gp",
+        "400 lb."
+      ]
+    ],
+    "catalogReferences": [
+      "item.bit-and-bridle",
+      "item.carriage",
+      "item.cart",
+      "item.chariot",
+      "item.exotic-saddle",
+      "item.feed-per-day",
+      "item.military-saddle",
+      "item.pack-saddle",
+      "item.riding-saddle",
+      "item.saddlebags",
+      "item.sled",
+      "item.wagon",
+      "rulebook.page-071",
+      "rulebook.page-072",
+      "table.armor"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        71,
+        72
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/12/entries/5"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.waterborne-vehicles",
+    "kind": "table",
+    "name": "Waterborne Vehicles",
+    "colLabels": [
+      "Item",
+      "Cost",
+      "Speed"
+    ],
+    "rows": [
+      [
+        "{@item Galley|srd51}",
+        "30,000 gp",
+        "4 mph"
+      ],
+      [
+        "{@item Keelboat|srd51}",
+        "3,000 gp",
+        "1 mph"
+      ],
+      [
+        "{@item Longship|srd51}",
+        "10,000 gp",
+        "3 mph"
+      ],
+      [
+        "{@item Rowboat|srd51}",
+        "50 gp",
+        "1½ mph"
+      ],
+      [
+        "{@item Sailing ship|srd51}",
+        "10,000 gp",
+        "2 mph"
+      ],
+      [
+        "{@item Warship|srd51}",
+        "25,000 gp",
+        "2½ mph"
+      ]
+    ],
+    "catalogReferences": [
+      "item.galley",
+      "item.keelboat",
+      "item.longship",
+      "item.rowboat",
+      "item.sailing-ship",
+      "item.warship",
+      "rulebook.page-072"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        72
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/12/entries/6"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "table.food-drink-and-lodging",
+    "kind": "table",
+    "name": "Food, Drink, and Lodging",
+    "colLabels": [
+      "Item",
+      "Cost"
+    ],
+    "rows": [
+      [
+        "{@i Ale}",
+        ""
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Ale (Gallon)|srd51|Gallon}",
+          "2 sp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item Ale (Mug)|srd51|Mug}",
+          "4 cp"
+        ]
+      },
+      [
+        "Banquet (per person)",
+        "10 gp"
+      ],
+      [
+        "{@item loaf of bread|srd51|Bread, loaf}",
+        "2 cp"
+      ],
+      [
+        "{@item hunk of cheese|srd51|Cheese, hunk}",
+        "1 sp"
+      ],
+      [
+        "{@i Inn stay (per day)}",
+        ""
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Squalid",
+          "7 cp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Poor",
+          "1 sp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Modest",
+          "5 sp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Comfortable",
+          "8 sp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Wealthy",
+          "2 gp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Aristocratic",
+          "4 gp"
+        ]
+      },
+      [
+        "{@i Meals (per day)}",
+        ""
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Squalid",
+          "3 cp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Poor",
+          "6 cp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Modest",
+          "3 sp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Comfortable",
+          "5 sp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Wealthy",
+          "8 sp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "Aristocratic",
+          "2 gp"
+        ]
+      },
+      [
+        "{@item chunk of meat|srd51|Meat, chunk}",
+        "3 sp"
+      ],
+      [
+        "{@i Wine}",
+        ""
+      ],
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item common wine (pitcher)|srd51|Common (pitcher)}",
+          "2 sp"
+        ]
+      },
+      {
+        "type": "row",
+        "style": "row-indent-first",
+        "row": [
+          "{@item fine wine (bottle)|srd51|Fine (bottle)}",
+          "10 gp"
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "item.ale-gallon",
+      "item.ale-mug",
+      "item.chunk-of-meat",
+      "item.common-wine-pitcher",
+      "item.fine-wine-bottle",
+      "item.hunk-of-cheese",
+      "item.loaf-of-bread",
+      "rulebook.page-073",
+      "rulebook.page-074"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        73,
+        74
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/14/entries/3/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
     "id": "rule.multiclassing",
     "kind": "rule",
     "name": "Multiclassing",

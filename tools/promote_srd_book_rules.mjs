@@ -246,6 +246,128 @@ function projectModernEquipmentTables(book,existing,pages,metadata,rows,report){
  }
 }
 
+function projectLegacyEquipmentTables(book,existing,pages,metadata,rows,report){
+ const selections=[
+ ["Armor","/data/4/entries/8/entries/6",[63,64],17],
+ ["Weapons","/data/4/entries/9/entries/4",[65,66],41],
+ ["Adventuring Gear","/data/4/entries/10/entries/2",[68,69],108],
+ ["Tools","/data/4/entries/11/entries/1",[70],41],
+ ["Mounts and Other Animals","/data/4/entries/12/entries/4",[71,72],8],
+ ["Tack, Harness, and Drawn Vehicles","/data/4/entries/12/entries/5",[71,72],15],
+ ["Waterborne Vehicles","/data/4/entries/12/entries/6",[72],6],
+ ["Food, Drink, and Lodging","/data/4/entries/14/entries/3/entries/1",[73,74],24]
+ ];
+ const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+ const items=existing.filter(x=>["item","baseitem","item-group"].includes(x.kind));
+ const nameMap=new Map();
+ for(const r of items){const key=slug(r.name);nameMap.set(key,[...(nameMap.get(key)??[]),r]);}
+ const resolve=raw=>{
+  const [name,source]=raw.split("|");if(source?.toLowerCase()!=="srd51")throw Error("Foreign equipment "+raw);
+  let hits=nameMap.get(slug(name))??[];
+  // The priced healing potion is the concrete ordinary potion, not its family.
+  if(slug(name)==="potion-of-healing")hits=hits.filter(x=>x.id==="item.potion-of-healing");
+  if(hits.length!==1)throw Error("Nonunique equipment "+raw+" "+hits.map(x=>x.id));return hits[0];
+ };
+ const display=s=>s.replace(/\{@item ([^}|]+)\|[^}|]+(?:\|([^}]+))?\}/g,(_,name,label)=>label??name).replace(/\{@i ([^}]+)\}/g,"$1");
+ const norm=s=>s.toLowerCase().replace(/[’‘]/g,"'").replaceAll("½","1/2").replaceAll("¼","1/4").replaceAll("¾","3/4").replace(/[\u00ad\u2010-\u2015]/g,"-").replace(/-+/g,"-").replace(/\s/g,"");
+ const equal=(actual,expected,where)=>{if(typeof expected==="number"?typeof actual!=="number"||Math.abs(actual-expected)>1e-8:actual!==expected)throw Error(where+": "+actual+" != "+expected);};
+ const money=s=>{const m=s.match(/^([\d,]+) (cp|sp|gp)$/i);if(!m)throw Error("Unparsed price "+s);return Number(m[1].replaceAll(",",""))*({cp:1,sp:10,gp:100}[m[2].toLowerCase()]);};
+ const number=s=>{s=s.replaceAll(",","").replace(/ \(full\)$/,"").replace(/ (lb\.|mph|ft\.)$/,"").trim();if(s==="—")return 0;if(s==="1/2")return .5;if(s==="1/4")return .25;const m=s.match(/^(\d+(?:\.\d+)?)?\s*([½¼¾])?$/);if(!m||!m[1]&&!m[2])throw Error("Unparsed numeric cell "+s);return Number(m[1]??0)+({"½":.5,"¼":.25,"¾":.75}[m[2]]??0);};
+ const propCodes={"ammunition":"A","finesse":"F","heavy":"H","light":"L","loading":"LD","reach":"R","special":"S","thrown":"T","two-handed":"2H","versatile":"V"};
+ for(const [name,pointer,nums,count] of selections){
+  const node=pointer.split("/").slice(1).reduce((o,k)=>o[k],book),id="table."+slug(name);
+  if(node.type!=="table"||node.caption!==name||node.rows.length!==count)throw Error("Legacy equipment table identity "+name);
+  const publisher=pages.filter(p=>nums.includes(p.page)).map(p=>p.textLayout);
+  if(publisher.length!==nums.length||!publisher.some(p=>norm(p).includes(norm(name))))throw Error("Publisher table heading "+name);
+  const refs=new Set(nums.map(p=>"rulebook.page-"+String(p).padStart(3,"0")));
+  let tableRows=JSON.parse(JSON.stringify(node.rows)),category=null;
+  if(name==="Adventuring Gear"){
+   // The structured source places several tool kits in this table and repeats
+   // the healer's kit. The publisher lists only the three gear kits here.
+   const expected={60:"climber's kit",61:"disguise kit",62:"forgery kit",63:"herbalism kit",64:"healer's kit",65:"mess kit",66:"poisoner's kit"};
+   for(const [i,label] of Object.entries(expected))if(!tableRows[i][0].startsWith("{@item "+label+"|"))throw Error("Unexpected kit source ordering");
+   tableRows[60][0]="{@item climber's kit|srd51|Climber's kit}";
+   tableRows[65][0]="{@item mess kit|srd51|Mess kit}";
+   tableRows[57][0]="{@item Ink (1-ounce bottle)|srd51|Ink (1 ounce bottle)}";
+   const old=tableRows;
+   tableRows=[...old.slice(0,33),old[60],...old.slice(33,60),...old.slice(67,74),old[65],...old.slice(74)];
+   report.corrections.push({id,reason:"Restore published p.69 gear ordering and labels; move climber's and mess kits, remove duplicate healer's kit and four tool-only kit rows; retain their canonical definitions and Tools table memberships.",pages:[69]});
+  }
+  if(name==="Tools"){
+   if(!tableRows[22][0].includes("Dragonchess set")||!tableRows[24][0].includes("Three-Dragon Ante set"))throw Error("Unexpected excluded gaming rows");
+   tableRows=tableRows.filter((_,i)=>i!==22&&i!==24);
+   tableRows[5][1]="15 gp";
+   const replaceHeading=(from,to)=>{const r=tableRows.find(x=>x[0]===from);if(!r)throw Error("Missing heading "+from);r[0]=to;};
+   replaceHeading("{@i Gaming sets}","{@i Gaming set}");
+   replaceHeading("{@i Musical instruments}","{@i Musical instrument}");
+   report.corrections.push({id,reason:"Exclude two gaming-set rows absent from the official Tools table; restore singular headings and remove stray punctuation in cartographer's tools price. Retain the publisher's vehicle-proficiency footnote.",pages:[70]});
+  }
+  if(name==="Tack, Harness, and Drawn Vehicles"){
+   if(!tableRows[0][0].includes("Barding")||tableRows[5][0]!=="Animal Feed (per day)")throw Error("Unexpected tack source");
+   tableRows[0][0]="Barding";
+   tableRows[5][0]="{@item Feed (per day)|srd51}";
+   report.corrections.push({id,reason:"Use published Feed (per day) label and link the existing item; Barding is an armor price/weight multiplier, not a standalone equipment identity.",pages:[71,72]});
+  }
+  for(const raw of tableRows){
+   const row=Array.isArray(raw)?raw:raw.row;
+   if(!Array.isArray(row)||row.length!==node.colLabels.length||row.some(x=>typeof x!=="string"))throw Error("Invalid legacy equipment row "+name);
+   const visible=row.map(display);
+   if(!publisher.some(p=>norm(p).includes(norm(visible.join(" ")))))throw Error("Publisher row mismatch "+name+" "+JSON.stringify(visible));
+   const links=[...row[0].matchAll(/\{@item ([^}]+)\}/g)].map(m=>resolve(m[1]));
+   for(const link of links)refs.add(link.id);
+   if(row.slice(1).every(v=>v==="")){
+    if(!row[0].startsWith("{@i"))throw Error("Unexpected header "+row[0]);
+    if(name==="Armor"||name==="Weapons")category=visible[0];
+    continue;
+   }
+   if(!links.length){
+    if(name==="Tools"&&row[0]==="Vehicles (land or water)"){refs.add("table.tack-harness-and-drawn-vehicles");refs.add("table.waterborne-vehicles");continue;}
+    if(name==="Tack, Harness, and Drawn Vehicles"&&row[0]==="Barding"){
+     equal(row[1],"×4","Barding price");equal(row[2],"×2","Barding weight");refs.add("table.armor");continue;
+    }
+    if(name==="Tack, Harness, and Drawn Vehicles"&&row[0]==="Stabling (per day)"||name==="Food, Drink, and Lodging")continue;
+    throw Error("Unexpected unlinked legacy equipment "+name+" "+row[0]);
+   }
+   // Shared published rows (donkey/mule, flask/tankard, jug/pitcher) must
+   // agree for each of the linked concrete definitions.
+   for(const item of links){
+    if(name==="Armor"){
+     const type=category==="Shield"?"S":category.startsWith("Light")?"LA":category.startsWith("Medium")?"MA":"HA";
+     equal(item.type,type,item.id+" category");
+     const ac=type==="S"?"+"+item.ac:type==="LA"?item.ac+" + Dex modifier":type==="MA"?item.ac+" + Dex modifier (max 2)":String(item.ac);
+     equal(row[2],ac,item.id+" AC");equal(row[3],item.strength?"Str "+item.strength:"—",item.id+" Strength");equal(row[4],item.stealth?"Disadvantage":"—",item.id+" Stealth");
+    }
+    if(name==="Weapons"){
+     equal(item.weaponCategory,category.startsWith("Simple")?"simple":"martial",item.id+" category");
+     equal(item.type,category.includes("Melee")?"M":"R",item.id+" type");
+     const damage=row[2].match(/^(\d+(?:d\d+)?) (bludgeoning|piercing|slashing)$/);
+     if(damage){equal(String(item.dmg1),damage[1],item.id+" damage");equal(item.dmgType,damage[2][0].toUpperCase(),item.id+" damage type");}
+     else if(row[2]!=="—"||item.dmg1!==undefined||item.dmgType!==undefined)throw Error("Unexpected weapon damage "+item.id);
+     const props=row[4]==="—"?[]:row[4].split(/,\s*/).map(p=>{
+      const code=propCodes[p.split(" (")[0].toLowerCase()];if(!code)throw Error("Unknown weapon property "+p);refs.add("item-property."+slug(code));return code;
+     });
+     equal(JSON.stringify([...(item.property??[])].sort()),JSON.stringify(props.sort()),item.id+" properties");
+     equal(item.range??"",row[4].match(/range (\d+\/\d+)/i)?.[1]??"",item.id+" range");
+     equal(item.dmg2??"",row[4].match(/versatile \((\d+d\d+)\)/i)?.[1]??"",item.id+" versatile");
+    }
+    for(let i=1;i<row.length;i++){
+     const label=node.colLabels[i],v=row[i],context=item.id+" "+label;
+     if(label==="Cost")equal(item.value,money(v),context);
+     else if(label==="Weight")equal(item.weight??0,number(v),context);
+     else if(label==="Carrying Capacity")equal(item.carryingCapacity,number(v),context);
+     else if(label==="Speed")equal(name==="Waterborne Vehicles"?item.vehSpeed:item.speed,number(v),context);
+     else if(name==="Armor"&&["Armor Class (AC)","Strength","Stealth"].includes(label)||name==="Weapons"&&["Damage","Properties"].includes(label))continue;
+     else throw Error("Unreviewed legacy field "+label);
+    }
+   }
+  }
+  const record={id,kind:"table",name,colLabels:JSON.parse(JSON.stringify(node.colLabels)),rows:tableRows};
+  if(node.footnotes)record.footnotes=JSON.parse(JSON.stringify(node.footnotes));
+  record.catalogReferences=[...refs].sort();record.source=metadata(pointer,nums);
+  rows.push(record);report.tables.push({id,pointer,page:nums[0],rowCount:tableRows.length,...(nums.length>1?{pages:nums}:{}),...(tableRows.length!==count?{sourceRowCount:count}:{})});
+ }
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -337,6 +459,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   rows.push(r);report.tables.push({id,pointer,page,rowCount:count,...(sourcePages.length>1?{pages:sourcePages}:{})});
  }
  if(tag==="52")projectModernEquipmentTables(book,existing,pages,metadata,rows,report);
+ else projectLegacyEquipmentTables(book,existing,pages,metadata,rows,report);
  // Keep source prose and its nested rule structure, but point at the canonical
  // table identities rather than duplicating data or inventing a renderer tag.
  const multiPointer=tag==="51"?"/data/3/entries/6":"/data/2/entries/4";
