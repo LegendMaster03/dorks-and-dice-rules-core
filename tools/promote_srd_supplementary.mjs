@@ -2,6 +2,23 @@
 import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
+function correctLegacyCombatOption(r){
+ if(r.id==="attack-option.grapple"){
+  r.entries[0]=r.entries[0].replace("The target of your grapple must be no more than one size larger than you, and it must be within your reach.","The target of your grapple must be no more than one size larger than you and must be within your reach.");
+  r.entries[1]=r.entries[1].replace("a grapple check,","a grapple check instead of an attack roll:").replace(" You succeed automatically if the target is {@condition incapacitated}.","").replace("(see the appendix)","(see appendix PH-A)");
+  return "Restore publisher grapple contest instead of an attack roll and remove later automatic-success errata (p.95).";
+ }
+ if(r.id==="attack-option.shove"){
+  r.entries[1]=r.entries[1].replace("The target of your shove must be no more than one size larger than you, and it must be within your reach. You make","The target must be no more than one size larger than you and must be within your reach. Instead of making an attack roll, you make").replace(" You succeed automatically if the target is {@condition incapacitated}.","").replace("If you succeed,","If you win the contest,");
+  return "Restore publisher shove contest instead of an attack roll and remove later automatic-success errata (p.96).";
+ }
+ if(r.id==="reaction-option.opportunity-attack"){
+  r.entries[0]="In a fight, everyone is constantly watching for a chance to strike an enemy who is fleeing or passing by. Such a strike is called an opportunity attack.";
+  r.entries[1]=r.entries[1].replace("The attack interrupts the provoking creature's movement, occurring right before","The attack occurs right before");
+  return "Restore published opportunity attack wording (p.95).";
+ }
+}
+
 function generate(input,manifest,src,pages,tag){
  const modern=tag==="52",edition="SRD"+tag,slug=s=>s.toLowerCase().normalize("NFKC").replace(/[’']/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
  const norm=s=>s.toLowerCase().replace(/[’‘]/g,"'").replace(/[\u00ad\u2010-\u2014]/g,"-").replace(/\s+/g," ");
@@ -53,6 +70,7 @@ function generate(input,manifest,src,pages,tag){
  }
  if(array==="action"){
  if(kind==="attack-option"){delete r.time;r.replacesAttack=true;report.corrections.push({id:r.id,reason:"Legacy grapple/shove replaces an attack within the Attack action, rather than requiring a separate full action."});}
+ if(!modern){const reason=correctLegacyCombatOption(r);if(reason)report.corrections.push({id:r.id,reason});}
  if(modern&&name==="Don or Doff a Shield"){r.actionId="action.utilize";r.entries=["A {@item Shield|srd52} can be donned or doffed using the {@action Utilize|srd52} action."];report.corrections.push({id:r.id,reason:"Publisher p.92 explicitly specifies Utilize action."});}
  }
  r.catalogReferences=locs.map(n=>pageByNumber.get(n).id);

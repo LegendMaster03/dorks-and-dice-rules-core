@@ -505,6 +505,21 @@ public sealed class RulesetResolutionApiTests
         var legacyActionIndex = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.actions-in-combat")).GetProperty("rule").GetProperty("definition");
         Assert.Equal(10, legacyActionIndex.GetProperty("catalogReferences").EnumerateArray().Count(x => x.GetString()!.StartsWith("action.", StringComparison.Ordinal)));
 
+        // Legacy combat and casting retain original publisher procedures.
+        var legacyCombatMovement = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.movement-and-position")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("five Large creatures", legacyCombatMovement.GetProperty("entries").GetRawText());
+        var legacyAttackProcedure = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.making-an-attack")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("attack-option.grapple", legacyAttackProcedure.GetProperty("catalogReferences").GetRawText());
+        var legacyGrappleProcedure = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/attack-option.grapple")).GetProperty("rule").GetProperty("definition");
+        Assert.DoesNotContain("succeed automatically", legacyGrappleProcedure.GetProperty("entries").GetRawText());
+        var legacyShoveProcedure = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/attack-option.shove")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("If you win the contest", legacyShoveProcedure.GetProperty("entries").GetRawText());
+        var legacyDamageProcedure = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.damage-and-healing")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("never negative damage", legacyDamageProcedure.GetProperty("entries").GetRawText());
+        var legacyCastingProcedure = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.casting-a-spell")).GetProperty("rule").GetProperty("definition");
+        Assert.DoesNotContain("most recent effect applies", legacyCastingProcedure.GetProperty("entries").GetRawText());
+        Assert.Contains("status.concentration", legacyCastingProcedure.GetProperty("catalogReferences").GetRawText());
+
         // Legacy travel and downtime must retain their own published procedures.
         var legacyTravelRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.movement")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("table.travel-pace", legacyTravelRule.GetProperty("catalogReferences").GetRawText());

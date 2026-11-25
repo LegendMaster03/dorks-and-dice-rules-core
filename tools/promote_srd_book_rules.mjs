@@ -487,6 +487,38 @@ function legacyAdditionalEntries(name,entries){
  return entries;
 }
 
+function legacyCombatAndCastingEntries(name,entries){
+ const find=(arr,name)=>{for(const n of arr){if(n&&typeof n==="object"){if(n.name===name)return n;if(n.entries){const v=find(n.entries,name);if(v)return v;}}}};
+ const replace=(s,a,b)=>{if(!s.includes(a))throw Error("Changed source: "+a);return s.replace(a,b);};
+ if(name==="Movement and Position"){
+  const prone=find(entries,"Being Prone");prone.entries[0]=replace(prone.entries[0],"described in the appendix","described in appendix PH-A");
+  const moving=find(entries,"Moving around Other Creatures");moving.entries[2]=replace(moving.entries[2],", as explained later in the chapter","");
+  const space=find(entries,"Space");space.entries[3]=replace(space.entries[3],"four Large","five Large");
+ }
+ if(name==="Making an Attack"){
+  const modifier=find(entries,"Ability Modifier");modifier.entries[1]=replace(modifier.entries[1],', as explained in "Spellcasting"',"");
+  const roll=find(entries,"Rolling 1 or 20");roll.entries[1]=replace(roll.entries[1],", which is explained later in this chapter","");
+  const options=entries.at(-1);
+  const refs={"Opportunity Attacks":"See Opportunity Attack.","Two-Weapon Fighting":"See Two-Weapon Fighting.","Grappling":"See Grapple, including moving a grappled creature, and Escape a Grapple.","Shoving a Creature":"See Shove."};
+  options.entries=options.entries.map(x=>Object.hasOwn(refs,x.name)?{type:"entries",name:x.name,entries:[refs[x.name]]}:x);
+ }
+ if(name==="Damage and Healing"){
+  const damage=find(entries,"Damage Rolls");
+  damage.entries[0]+=" With a penalty, it is possible to deal 0 damage, but never negative damage.";
+  damage.entries[1]=replace(damage.entries[1],"used for the attack roll to the damage","used for the attack roll—to the damage");
+  const unconscious=find(entries,"Falling Unconscious");unconscious.entries[0]=replace(unconscious.entries[0],"(see the appendix)","(see appendix PH-A)");
+  const stabilize=find(entries,"Stabilizing a Creature");stabilize.entries=[stabilize.entries[0],"See Stabilize a Creature."];
+ }
+ if(name==="Casting a Spell"){
+  const range=find(entries,"Range");range.entries[2]=replace(range.entries[2],' later in the this chapter',"");
+  const areas=find(entries,"Areas of Effect");areas.entries[1]=replace(areas.entries[1],', as explained in "Combat"',"");
+  const schools=find(entries,"The Schools of Magic");
+  schools.entries.unshift("Academies of magic group spells into eight categories called schools of magic. Scholars, particularly wizards, apply these categories to all spells, believing that all magic functions in essentially the same way, whether it derives from rigorous study or is bestowed by a deity.","The schools of magic help describe spells; they have no rules of their own, although some rules refer to the schools.");
+  const combine=find(entries,"Combining Magical Effects");combine.entries[0]=replace(combine.entries[0],", or the most recent effect applies if the castings are equally potent and their durations overlap","");
+ }
+ return entries;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -653,7 +685,11 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Ability Checks","/data/6/entries/7",[77,78,79],["rule.ability-check","rule.proficiency-bonus","rule.advantage-and-disadvantage","action.help"]],
   ["The Environment","/data/7/entries/2",[86,87],["condition.prone","condition.blinded","condition.invisible","condition.exhaustion","skill.perception","sense.blindsight","sense.darkvision","sense.truesight","rule.breaking-objects","combat-option.stabilize-a-creature"]],
   ["The Order of Combat","/data/8/entries/0",[90,91],["status.surprised","skill.stealth","skill.perception","action.dodge","action.ready","reaction-option.opportunity-attack","activity.other-activity"]],
-  ["Actions in Combat","/data/8/entries/2",[93,94],["action.attack","action.cast-a-spell","action.dash","action.disengage","action.dodge","action.help","action.hide","action.ready","action.search","action.use-an-object"]]
+  ["Actions in Combat","/data/8/entries/2",[93,94],["action.attack","action.cast-a-spell","action.dash","action.disengage","action.dodge","action.help","action.hide","action.ready","action.search","action.use-an-object"]],
+  ["Movement and Position","/data/8/entries/1",[91,92],["condition.prone","spell.fly","rule.movement","reaction-option.opportunity-attack","activity.other-activity"]],
+  ["Making an Attack","/data/8/entries/3",[94,95,96],["rule.cover","rule.advantage-and-disadvantage","rule.proficiency-bonus","rule.ability-checks","condition.incapacitated","spell.invisibility","reaction-option.opportunity-attack","combat-option.two-weapon-fighting","attack-option.grapple","combat-option.escape-a-grapple","attack-option.shove","action.attack"]],
+  ["Damage and Healing","/data/8/entries/5",[96,97,98,99],["table.damage-types","condition.unconscious","combat-option.stabilize-a-creature","skill.medicine","spell.cure-wounds","spell.revivify","rule.resting"]],
+  ["Casting a Spell","/data/9/entries/3",[101,102,103,104],["rule.what-is-a-spell","rule.cover","rule.proficiency-bonus","rule.saving-throws","rule.making-an-attack","status.concentration","activity.end-concentration","condition.incapacitated","spell.silence","spell.bless","spell.burning-hands","spell.cone-of-cold","spell.animate-dead"]]
  ]:[
   ["Travel Pace","/data/10/entries/0",[192],["table.travel-pace","condition.exhaustion","spell.wind-walk","item-group.carpet-of-flying","glossary.difficult-terrain"]],
   ["Creating a Background","/data/10/entries/1",[192,193],[]],
@@ -675,6 +711,10 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Sentient Magic Items","/data/11/entries/9",[207,208],["condition.charmed","rule.the-next-dawn","rule.attunement"]]
  ];
  const extraCorrections={
+  "Movement and Position":"Restore publisher five Large creatures example and appendix/navigation wording (pp.91–92).",
+  "Making an Attack":"Use existing canonical attack options, corrected against pp.95–96, instead of duplicating their procedures; restore publisher attack navigation.",
+  "Damage and Healing":"Restore the published nonnegative damage floor and appendix label; link canonical stabilization procedure (pp.96–99).",
+  "Casting a Spell":"Restore school introduction and publisher navigation; remove later equal-potency recency rule (pp.101–104).",
   "Ability Checks":"Reconcile the grouped skill list with all 18 canonical skill definitions; restore published variant example and navigation; preserve passive formula as text (pp.77–79).",
   "The Environment":"Remove absent commercial navigation, restore appendix labels and correct object-interaction transcription (pp.86–87).",
   "The Order of Combat":"Restore publisher GM terminology and remove later chapter navigation (pp.90–91).",
@@ -708,7 +748,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
    return x;
   };
   let content=project(node.entries);
-  if(tag==="51")content=legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)));
+  if(tag==="51")content=legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content))));
   else content=modernMagicItemEntries(name,content);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");

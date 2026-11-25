@@ -321,6 +321,43 @@
         93,
         94
       ]
+    },
+    {
+      "id": "rule.movement-and-position",
+      "pointer": "/data/8/entries/1",
+      "pages": [
+        91,
+        92
+      ]
+    },
+    {
+      "id": "rule.making-an-attack",
+      "pointer": "/data/8/entries/3",
+      "pages": [
+        94,
+        95,
+        96
+      ]
+    },
+    {
+      "id": "rule.damage-and-healing",
+      "pointer": "/data/8/entries/5",
+      "pages": [
+        96,
+        97,
+        98,
+        99
+      ]
+    },
+    {
+      "id": "rule.casting-a-spell",
+      "pointer": "/data/9/entries/3",
+      "pages": [
+        101,
+        102,
+        103,
+        104
+      ]
     }
   ],
   "corrections": [
@@ -393,9 +430,25 @@
     {
       "id": "rule.the-order-of-combat",
       "reason": "Restore publisher GM terminology and remove later chapter navigation (pp.90–91)."
+    },
+    {
+      "id": "rule.movement-and-position",
+      "reason": "Restore publisher five Large creatures example and appendix/navigation wording (pp.91–92)."
+    },
+    {
+      "id": "rule.making-an-attack",
+      "reason": "Use existing canonical attack options, corrected against pp.95–96, instead of duplicating their procedures; restore publisher attack navigation."
+    },
+    {
+      "id": "rule.damage-and-healing",
+      "reason": "Restore the published nonnegative damage floor and appendix label; link canonical stabilization procedure (pp.96–99)."
+    },
+    {
+      "id": "rule.casting-a-spell",
+      "reason": "Restore school introduction and publisher navigation; remove later equal-potency recency rule (pp.101–104)."
     }
   ],
-  "nativeCount": 43,
+  "nativeCount": 47,
   "tableInventory": {
     "total": 30,
     "counts": {

@@ -1182,8 +1182,8 @@
     "kind": "attack-option",
     "name": "Grapple",
     "entries": [
-      "When you want to grab a creature or wrestle with it, you can use the {@action Attack} action to make a special melee attack, a grapple. If you're able to make multiple attacks with the {@action Attack} action, this attack replaces one of them. The target of your grapple must be no more than one size larger than you, and it must be within your reach.",
-      "Using at least one free hand, you try to seize the target by making a grapple check, a Strength ({@skill Athletics}) check contested by the target's Strength ({@skill Athletics}) or Dexterity ({@skill Acrobatics}) check (the target chooses the ability to use). You succeed automatically if the target is {@condition incapacitated}. If you succeed, you subject the target to the {@condition grappled} condition (see the appendix). The condition specifies the things that end it, and you can release the target whenever you like (no action required).",
+      "When you want to grab a creature or wrestle with it, you can use the {@action Attack} action to make a special melee attack, a grapple. If you're able to make multiple attacks with the {@action Attack} action, this attack replaces one of them. The target of your grapple must be no more than one size larger than you and must be within your reach.",
+      "Using at least one free hand, you try to seize the target by making a grapple check instead of an attack roll: a Strength ({@skill Athletics}) check contested by the target's Strength ({@skill Athletics}) or Dexterity ({@skill Acrobatics}) check (the target chooses the ability to use). If you succeed, you subject the target to the {@condition grappled} condition (see appendix PH-A). The condition specifies the things that end it, and you can release the target whenever you like (no action required).",
       {
         "type": "entries",
         "name": "Moving a Grappled Target",
@@ -1232,8 +1232,8 @@
       }
     ],
     "entries": [
-      "In a fight, everyone is constantly watching for enemies to drop their guard. You can rarely move heedlessly past your foes without putting yourself in danger; doing so provokes an opportunity attack.",
-      "You can make an opportunity attack when a hostile creature that you can see moves out of your reach. To make the opportunity attack, you use your reaction to make one melee attack against the provoking creature. The attack interrupts the provoking creature's movement, occurring right before the creature leaves your reach.",
+      "In a fight, everyone is constantly watching for a chance to strike an enemy who is fleeing or passing by. Such a strike is called an opportunity attack.",
+      "You can make an opportunity attack when a hostile creature that you can see moves out of your reach. To make the opportunity attack, you use your reaction to make one melee attack against the provoking creature. The attack occurs right before the creature leaves your reach.",
       "You can avoid provoking an opportunity attack by taking the {@action Disengage} action. You also don't provoke an opportunity attack when you teleport or when someone or something moves you without using your movement, action, or reaction. For example, you don't provoke an opportunity attack if an explosion hurls you out of a foe's reach or if gravity causes you to fall past an enemy."
     ],
     "catalogReferences": [
@@ -1333,7 +1333,7 @@
     "name": "Shove",
     "entries": [
       "Using the {@action Attack} action, you can make a special melee attack to shove a creature, either to knock it {@condition prone} or push it away from you. If you're able to make multiple attacks with the {@action Attack} action, this attack replaces one of them.",
-      "The target of your shove must be no more than one size larger than you, and it must be within your reach. You make a Strength ({@skill Athletics}) check contested by the target's Strength ({@skill Athletics}) or Dexterity ({@skill Acrobatics}) check (the target chooses the ability to use). You succeed automatically if the target is {@condition incapacitated}. If you succeed, you either knock the target {@condition prone} or push it 5 feet away from you."
+      "The target must be no more than one size larger than you and must be within your reach. Instead of making an attack roll, you make a Strength ({@skill Athletics}) check contested by the target's Strength ({@skill Athletics}) or Dexterity ({@skill Acrobatics}) check (the target chooses the ability to use). If you win the contest, you either knock the target {@condition prone} or push it 5 feet away from you."
     ],
     "seeAlsoAction": [
       "Attack",

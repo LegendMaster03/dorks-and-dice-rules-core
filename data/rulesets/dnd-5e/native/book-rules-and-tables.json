@@ -4807,5 +4807,926 @@
       },
       "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
     }
+  },
+  {
+    "id": "rule.movement-and-position",
+    "kind": "rule",
+    "name": "Movement and Position",
+    "entries": [
+      "In combat, characters and monsters are in constant motion, often using movement and position to gain the upper hand.",
+      "On your turn, you can move a distance up to your speed. You can use as much or as little of your speed as you like on your turn, following the rules here.",
+      "Your movement can include jumping, climbing, and swimming. These different modes of movement can be combined with walking, or they can constitute your entire move. However you're moving, you deduct the distance of each part of your move from your speed until it is used up or until you are done moving.",
+      {
+        "type": "entries",
+        "name": "Breaking Up Your Move",
+        "entries": [
+          "You can break up your movement on your turn, using some of your speed before and after your action. For example, if you have a speed of 30 feet, you can move 10 feet, take your action, and then move 20 feet.",
+          {
+            "type": "entries",
+            "name": "Moving between Attacks",
+            "entries": [
+              "If you take an action that includes more than one weapon attack, you can break up your movement even further by moving between those attacks. For example, a fighter who can make two attacks with the Extra Attack feature and who has a speed of 25 feet could move 10 feet, make an attack, move 15 feet, and then attack again."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Using Different Speeds",
+            "entries": [
+              "If you have more than one speed, such as your walking speed and a flying speed, you can switch back and forth between your speeds during your move. Whenever you switch, subtract the distance you've already moved from the new speed. The result determines how much farther you can move. If the result is 0 or less, you can't use the new speed during the current move.",
+              "For example, if you have a speed of 30 and a flying speed of 60 because a wizard cast the {@spell fly} spell on you, you could fly 20 feet, then walk 10 feet, and then leap into the air to fly 30 feet more."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Difficult Terrain",
+        "entries": [
+          "Combat rarely takes place in bare rooms or on featureless plains.",
+          "Boulder-strewn caverns, briar-choked forests, treacherous staircases—the setting of a typical fight contains difficult terrain.",
+          "Every foot of movement in difficult terrain costs 1 extra foot. This rule is true even if multiple things in a space count as difficult terrain.",
+          "Low furniture, rubble, undergrowth, steep stairs, snow, and shallow bogs are examples of difficult terrain. The space of another creature, whether hostile or not, also counts as difficult terrain."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Being Prone",
+        "entries": [
+          "Combatants often find themselves lying on the ground, either because they are knocked down or because they throw themselves down. In the game, they are {@condition prone}, a condition described in appendix PH-A.",
+          "You can drop {@condition prone} without using any of your speed. Standing up takes more effort; doing so costs an amount of movement equal to half your speed. For example, if your speed is 30 feet, you must spend 15 feet of movement to stand up. You can't stand up if you don't have enough movement left or if your speed is 0.",
+          "To move while {@condition prone}, you must {@b crawl} or use magic such as teleportation. Every foot of movement while crawling costs 1 extra foot. Crawling 1 foot in {@quickref difficult terrain||3}, therefore, costs 3 feet of movement."
+        ]
+      },
+      {
+        "type": "inset",
+        "name": "Interacting with Objects Around You",
+        "entries": [
+          "Here are a few examples of the sorts of thing you can do in tandem with your movement and action:",
+          {
+            "type": "list",
+            "items": [
+              "draw or sheathe a sword",
+              "open or close a door",
+              "withdraw a potion from your backpack",
+              "pick up a dropped axe",
+              "take a bauble from a table",
+              "remove a ring from your finger",
+              "stuff some food into your mouth",
+              "plant a banner in the ground",
+              "fish a few coins from your belt pouch",
+              "drink all the ale in a flagon",
+              "throw a lever or a switch",
+              "pull a torch from a sconce",
+              "take a book from a shelf you can reach",
+              "extinguish a small flame",
+              "don a mask",
+              "pull the hood of your cloak up and over your head",
+              "put your ear to a door",
+              "kick a small stone",
+              "turn a key in a lock",
+              "tap the floor with a 10-foot pole",
+              "hand an item to another character"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Moving around Other Creatures",
+        "entries": [
+          "You can move through a nonhostile creature's space. In contrast, you can move through a hostile creature's space only if the creature is at least two sizes larger or smaller than you. Remember that another creature's space is {@quickref difficult terrain||3} for you.",
+          "Whether a creature is a friend or an enemy, you can't willingly end your move in its space.",
+          "If you leave a hostile creature's reach during your move, you provoke an opportunity attack."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Flying Movement",
+        "entries": [
+          "Flying creatures enjoy many benefits of mobility, but they must also deal with the danger of falling. If a flying creature is knocked {@condition prone}, has its speed reduced to 0, or is otherwise deprived of the ability to move, the creature falls, unless it has the ability to hover or it is being held aloft by magic, such as by the {@spell fly} spell."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Creature Size",
+        "entries": [
+          "Each creature takes up a different amount of space.",
+          "The Size Categories table shows how much space a creature of a particular size controls in combat. Objects sometimes use the same size categories.",
+          "See the Size Categories table.",
+          {
+            "type": "entries",
+            "name": "Space",
+            "entries": [
+              "A creature's space is the area in feet that it effectively controls in combat, not an expression of its physical dimensions. A typical Medium creature isn't 5 feet wide, for example, but it does control a space that wide. If a Medium hobgoblin stands in a 5-foot-wide doorway, other creatures can't get through unless the hobgoblin lets them.",
+              "A creature's space also reflects the area it needs to fight effectively. For that reason, there's a limit to the number of creatures that can surround another creature in combat. Assuming Medium combatants, eight creatures can fit in a 5-foot radius around another one.",
+              "Because larger creatures take up more space, fewer of them can surround a creature.",
+              "If five Large creatures crowd around a Medium or smaller one, there's little room for anyone else. In contrast, as many as twenty Medium creatures can surround a Gargantuan one."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Squeezing into a Smaller Space",
+            "entries": [
+              "A creature can squeeze through a space that is large enough for a creature one size smaller than it. Thus, a Large creature can squeeze through a passage that's only 5 feet wide. While squeezing through a space, a creature must spend 1 extra foot for every foot it moves there, and it has disadvantage on attack rolls and Dexterity saving throws. Attack rolls against the creature have advantage while it's in the smaller space."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "activity.other-activity",
+      "condition.prone",
+      "reaction-option.opportunity-attack",
+      "rule.movement",
+      "rulebook.page-091",
+      "rulebook.page-092",
+      "spell.fly",
+      "table.size-categories"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        91,
+        92
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/8",
+        "entryPointer": "/data/8/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.making-an-attack",
+    "kind": "rule",
+    "name": "Making an Attack",
+    "entries": [
+      "Whether you're striking with a melee weapon, firing a weapon at range, or making an attack roll as part of a spell, an attack has a simple structure.",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "1. Choose a target",
+            "entry": "Pick a target within your attack's range: a creature, an object, or a location."
+          },
+          {
+            "type": "item",
+            "name": "2. Determine modifiers",
+            "entry": "The GM determines whether the target has cover and whether you have advantage or disadvantage against the target. In addition, spells, special abilities, and other effects can apply penalties or bonuses to your attack roll."
+          },
+          {
+            "type": "item",
+            "name": "3. Resolve the attack",
+            "entry": "You make the attack roll. On a hit, you roll damage, unless the particular attack has rules that specify otherwise. Some attacks cause special effects in addition to or instead of damage."
+          }
+        ]
+      },
+      "If there's ever any question whether something you're doing counts as an attack, the rule is simple: if you're making an attack roll, you're making an attack.",
+      {
+        "type": "entries",
+        "name": "Attack Rolls",
+        "entries": [
+          "When you make an attack, your attack roll determines whether the attack hits or misses. To make an attack roll, roll a d20 and add the appropriate modifiers. If the total of the roll plus modifiers equals or exceeds the target's Armor Class (AC), the attack hits. The AC of a character is determined at character creation, whereas the AC of a monster is in its stat block.",
+          {
+            "type": "entries",
+            "name": "Modifiers to the Roll",
+            "entries": [
+              "When a character makes an attack roll, the two most common modifiers to the roll are an ability modifier and the character's proficiency bonus. When a monster makes an attack roll, it uses whatever modifier is provided in its stat block.",
+              {
+                "type": "entries",
+                "name": "Ability Modifier",
+                "entries": [
+                  "The ability modifier used for a melee weapon attack is Strength, and the ability modifier used for a ranged weapon attack is Dexterity. Weapons that have the finesse or thrown property break this rule.",
+                  "Some spells also require an attack roll. The ability modifier used for a spell attack depends on the spellcasting ability of the spellcaster."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Proficiency Bonus",
+                "entries": [
+                  "You add your proficiency bonus to your attack roll when you attack using a weapon with which you have proficiency, as well as when you attack with a spell."
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Rolling 1 or 20",
+            "entries": [
+              "Sometimes fate blesses or curses a combatant, causing the novice to hit and the veteran to miss.",
+              "If the {@dice d20} roll for an attack is a 20, the attack hits regardless of any modifiers or the target's AC. This is called a critical hit.",
+              "If the {@dice d20} roll for an attack is a 1, the attack misses regardless of any modifiers or the target's AC."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Unseen Attackers and Targets",
+        "entries": [
+          "Combatants often try to escape their foes' notice by hiding, casting the {@spell invisibility} spell, or lurking in darkness.",
+          "When you attack a target that you can't see, you have disadvantage on the attack roll. This is true whether you're guessing the target's location or you're targeting a creature you can hear but not see. If the target isn't in the location you targeted, you automatically miss, but the GM typically just says that the attack missed, not whether you guessed the target's location correctly.",
+          "When a creature can't see you, you have advantage on attack rolls against it.",
+          "If you are hidden—both unseen and unheard—when you make an attack, you give away your location when the attack hits or misses."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Ranged Attacks",
+        "entries": [
+          "When you make a ranged attack, you fire a bow or a crossbow, hurl a handaxe, or otherwise send projectiles to strike a foe at a distance. A monster might shoot spines from its tail. Many spells also involve making a ranged attack.",
+          {
+            "type": "entries",
+            "name": "Range",
+            "entries": [
+              "You can make ranged attacks only against targets within a specified range.",
+              "If a ranged attack, such as one made with a spell, has a single range, you can't attack a target beyond this range.",
+              "Some ranged attacks, such as those made with a longbow or a shortbow, have two ranges. The smaller number is the normal range, and the larger number is the long range. Your attack roll has disadvantage when your target is beyond normal range, and you can't attack a target beyond the long range."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Ranged Attacks in Close Combat",
+            "entries": [
+              "Aiming a ranged attack is more difficult when a foe is next to you. When you make a ranged attack with a weapon, a spell, or some other means, you have disadvantage on the attack roll if you are within 5 feet of a hostile creature who can see you and who isn't {@condition incapacitated}."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Melee Attacks",
+        "entries": [
+          "Used in hand-to-hand combat, a melee attack allows you to attack a foe within your reach. A melee attack typically uses a handheld weapon such as a sword, a warhammer, or an axe. A typical monster makes a melee attack when it strikes with its claws, horns, teeth, tentacles, or other body part. A few spells also involve making a melee attack.",
+          "Most creatures have a 5-foot {@b reach} and can thus attack targets within 5 feet of them when making a melee attack. Certain creatures (typically those larger than Medium) have melee attacks with a greater reach than 5 feet, as noted in their descriptions.",
+          "Instead of using a weapon to make a melee weapon attack, you can use an {@b unarmed strike}: a punch, kick, head-butt, or similar forceful blow (none of which count as weapons). On a hit, an unarmed strike deals bludgeoning damage equal to 1 + your Strength modifier. You are proficient with your unarmed strikes."
+        ]
+      },
+      {
+        "type": "entries",
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Opportunity Attacks",
+            "entries": [
+              "See Opportunity Attack."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Two-Weapon Fighting",
+            "entries": [
+              "See Two-Weapon Fighting."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Grappling",
+            "entries": [
+              "See Grapple, including moving a grappled creature, and Escape a Grapple."
+            ]
+          },
+          {
+            "type": "inset",
+            "name": "Contests in Combat",
+            "entries": [
+              "Battle often involves pitting your prowess against that of your foe. Such a challenge is represented by a contest. This section includes the most common contests that require an action in combat: grappling and shoving a creature. The GM can use these contests as models for improvising others."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Shoving a Creature",
+            "entries": [
+              "See Shove."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "action.attack",
+      "attack-option.grapple",
+      "attack-option.shove",
+      "combat-option.escape-a-grapple",
+      "combat-option.two-weapon-fighting",
+      "condition.incapacitated",
+      "reaction-option.opportunity-attack",
+      "rule.ability-checks",
+      "rule.advantage-and-disadvantage",
+      "rule.cover",
+      "rule.proficiency-bonus",
+      "rulebook.page-094",
+      "rulebook.page-095",
+      "rulebook.page-096",
+      "spell.invisibility"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        94,
+        95,
+        96
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/8",
+        "entryPointer": "/data/8/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.damage-and-healing",
+    "kind": "rule",
+    "name": "Damage and Healing",
+    "entries": [
+      "Injury and the risk of death are constant companions of those who explore fantasy gaming worlds. The thrust of a sword, a well-placed arrow, or a blast of flame from a fireball spell all have the potential to damage, or even kill, the hardiest of creatures.",
+      {
+        "type": "entries",
+        "name": "Hit Points",
+        "entries": [
+          "Hit points represent a combination of physical and mental durability, the will to live, and luck. Creatures with more hit points are more difficult to kill. Those with fewer hit points are more fragile.",
+          "A creature's current hit points (usually just called hit points) can be any number from the creature's hit point maximum down to 0. This number changes frequently as a creature takes damage or receives healing. Whenever a creature takes damage, that damage is subtracted from its hit points. The loss of hit points has no effect on a creature's capabilities until the creature drops to 0 hit points."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Damage Rolls",
+        "entries": [
+          "Each weapon, spell, and harmful monster ability specifies the damage it deals. You roll the damage die or dice, add any modifiers, and apply the damage to your target. Magic weapons, special abilities, and other factors can grant a bonus to damage. With a penalty, it is possible to deal 0 damage, but never negative damage.",
+          "When attacking with a {@b weapon}, you add your ability modifier—the same modifier used for the attack roll—to the damage. A {@b spell} tells you which dice to roll for damage and whether to add any modifiers.",
+          "If a spell or other effect deals damage to {@b more than one target} at the same time, roll the damage once for all of them. For example, when a wizard casts fireball or a cleric casts flame strike, the spell's damage is rolled once for all creatures caught in the blast.",
+          {
+            "type": "entries",
+            "name": "Critical Hits",
+            "entries": [
+              "When you score a critical hit, you get to roll extra dice for the attack's damage against the target. Roll all of the attack's damage dice twice and add them together. Then add any relevant modifiers as normal. To speed up play, you can roll all the damage dice at once.",
+              "For example, if you score a critical hit with a dagger, roll 2d4 for the damage, rather than 1d4, and then add your relevant ability modifier. If the attack involves other damage dice, such as from the rogue's Sneak Attack feature, you roll those dice twice as well."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Damage Types",
+            "entries": [
+              "Different attacks, damaging spells, and other harmful effects deal different types of damage. Damage types have no rules of their own, but other rules, such as damage resistance, rely on the types.",
+              "The damage types follow, with examples to help a GM assign a damage type to a new effect.",
+              {
+                "type": "entries",
+                "name": "Acid",
+                "entries": [
+                  "The corrosive spray of a black dragon's breath and the dissolving enzymes secreted by a black pudding deal acid damage."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Bludgeoning",
+                "entries": [
+                  "Blunt force attacks—hammers, falling, constriction, and the like—deal bludgeoning damage."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Cold",
+                "entries": [
+                  "The infernal chill radiating from an ice devil's spear and the frigid blast of a white dragon's breath deal cold damage."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Fire",
+                "entries": [
+                  "Red dragons breathe fire, and many spells conjure flames to deal fire damage."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Force",
+                "entries": [
+                  "Force is pure magical energy focused into a damaging form. Most effects that deal force damage are spells, including magic missile and spiritual weapon."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Lightning",
+                "entries": [
+                  "A lightning bolt spell and a blue dragon's breath deal lightning damage."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Necrotic",
+                "entries": [
+                  "Necrotic damage, dealt by certain undead and a spell such as chill touch, withers matter and even the soul."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Piercing",
+                "entries": [
+                  "Puncturing and impaling attacks, including spears and monsters' bites, deal piercing damage."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Poison",
+                "entries": [
+                  "Venomous stings and the toxic gas of a green dragon's breath deal poison damage."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Psychic",
+                "entries": [
+                  "Mental abilities such as a mind flayer's psionic blast deal psychic damage."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Radiant",
+                "entries": [
+                  "Radiant damage, dealt by a cleric's flame strike spell or an angel's smiting weapon, sears the flesh like fire and overloads the spirit with power."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Slashing",
+                "entries": [
+                  "Swords, axes, and monsters' claws deal slashing damage."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Thunder",
+                "entries": [
+                  "A concussive burst of sound, such as the effect of the thunderwave spell, deals thunder damage."
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Damage Resistance and Vulnerability",
+        "entries": [
+          "Some creatures and objects are exceedingly difficult or unusually easy to hurt with certain types of damage.",
+          "If a creature or an object has {@b resistance} to a damage type, damage of that type is halved against it. If a creature or an object has {@b vulnerability} to a damage type, damage of that type is doubled against it.",
+          "Resistance and then vulnerability are applied after all other modifiers to damage. For example, a creature has resistance to bludgeoning damage and is hit by an attack that deals 25 bludgeoning damage. The creature is also within a magical aura that reduces all damage by 5. The 25 damage is first reduced by 5 and then halved, so the creature takes 10 damage.",
+          "Multiple instances of resistance or vulnerability that affect the same damage type count as only one instance. For example, if a creature has resistance to fire damage as well as resistance to all nonmagical damage, the damage of a nonmagical fire is reduced by half against the creature, not reduced by three-quarters."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Healing",
+        "entries": [
+          "Unless it results in death, damage isn't permanent. Even death is reversible through powerful magic. Rest can restore a creature's hit points, and magical methods such as a cure wounds spell or a potion of healing can remove damage in an instant.",
+          "When a creature receives healing of any kind, hit points regained are added to its current hit points. A creature's hit points can't exceed its hit point maximum, so any hit points regained in excess of this number are lost. For example, a druid grants a ranger 8 hit points of healing. If the ranger has 14 current hit points and has a hit point maximum of 20, the ranger regains 6 hit points from the druid, not 8.",
+          "A creature that has died can't regain hit points until magic such as the revivify spell has restored it to life."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Dropping to 0 Hit Points",
+        "alias": [
+          "Instant Death",
+          "Death Saving Throws",
+          "Stabilizing a Creature"
+        ],
+        "entries": [
+          "When you drop to 0 hit points, you either die outright or fall {@condition unconscious}, as explained in the following sections.",
+          {
+            "type": "entries",
+            "name": "Instant Death",
+            "entries": [
+              "Massive damage can kill you instantly. When damage reduces you to 0 hit points and there is damage remaining, you die if the remaining damage equals or exceeds your hit point maximum.",
+              "For example, a cleric with a maximum of 12 hit points currently has 6 hit points. If she takes 18 damage from an attack, she is reduced to 0 hit points, but 12 damage remains. Because the remaining damage equals her hit point maximum, the cleric dies."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Falling Unconscious",
+            "entries": [
+              "If damage reduces you to 0 hit points and fails to kill you, you fall {@condition unconscious} (see appendix PH-A). This unconsciousness ends if you regain any hit points."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Death Saving Throws",
+            "entries": [
+              "Whenever you start your turn with 0 hit points, you must make a special saving throw, called a death saving throw, to determine whether you creep closer to death or hang onto life. Unlike other saving throws, this one isn't tied to any ability score. You are in the hands of fate now, aided only by spells and features that improve your chances of succeeding on a saving throw.",
+              "Roll a d20. If the roll is 10 or higher, you succeed. Otherwise, you fail. A success or failure has no effect by itself. On your third success, you become stable (see below). On your third failure, you die. The successes and failures don't need to be consecutive; keep track of both until you collect three of a kind. The number of both is reset to zero when you regain any hit points or become stable.",
+              {
+                "type": "entries",
+                "name": "Rolling 1 or 20",
+                "entries": [
+                  "When you make a death saving throw and roll a 1 on the d20, it counts as two failures. If you roll a 20 on the d20, you regain 1 hit point."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Damage at 0 Hit Points",
+                "entries": [
+                  "If you take any damage while you have 0 hit points, you suffer a death saving throw failure. If the damage is from a critical hit, you suffer two failures instead. If the damage equals or exceeds your hit point maximum, you suffer instant death."
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Stabilizing a Creature",
+            "entries": [
+              "The best way to save a creature with 0 hit points is to heal it. If healing is unavailable, the creature can at least be stabilized so that it isn't killed by a failed death saving throw.",
+              "See Stabilize a Creature."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Monsters and Death",
+            "entries": [
+              "Most GMs have a monster die the instant it drops to 0 hit points, rather than having it fall {@condition unconscious} and make death saving throws.",
+              "Mighty villains and special nonplayer characters are common exceptions; the GM might have them fall {@condition unconscious} and follow the same rules as player characters."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Knocking a Creature Out",
+        "entries": [
+          "Sometimes an attacker wants to incapacitate a foe, rather than deal a killing blow. When an attacker reduces a creature to 0 hit points with a melee attack, the attacker can knock the creature out. The attacker can make this choice the instant the damage is dealt. The creature falls {@condition unconscious} and is stable."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Temporary Hit Points",
+        "entries": [
+          "Some spells and special abilities confer temporary hit points to a creature. Temporary hit points aren't actual hit points; they are a buffer against damage, a pool of hit points that protect you from injury.",
+          "When you have temporary hit points and take damage, the temporary hit points are lost first, and any leftover damage carries over to your normal hit points. For example, if you have 5 temporary hit points and take 7 damage, you lose the temporary hit points and then take 2 damage.",
+          "Because temporary hit points are separate from your actual hit points, they can exceed your hit point maximum. A character can, therefore, be at full hit points and receive temporary hit points.",
+          "Healing can't restore temporary hit points, and they can't be added together. If you have temporary hit points and receive more of them, you decide whether to keep the ones you have or to gain the new ones. For example, if a spell grants you 12 temporary hit points when you already have 10, you can have 12 or 10, not 22.",
+          "If you have 0 hit points, receiving temporary hit points doesn't restore you to consciousness or stabilize you.",
+          "They can still absorb damage directed at you while you're in that state, but only true healing can save you.",
+          "Unless a feature that grants you temporary hit points has a duration, they last until they're depleted or you finish a long rest."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "combat-option.stabilize-a-creature",
+      "condition.unconscious",
+      "rule.resting",
+      "rulebook.page-096",
+      "rulebook.page-097",
+      "rulebook.page-098",
+      "rulebook.page-099",
+      "skill.medicine",
+      "spell.cure-wounds",
+      "spell.revivify",
+      "table.damage-types"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        96,
+        97,
+        98,
+        99
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/8",
+        "entryPointer": "/data/8/entries/5"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.casting-a-spell",
+    "kind": "rule",
+    "name": "Casting a Spell",
+    "entries": [
+      "When a character casts any spell, the same basic rules are followed, regardless of the character's class or the spell's effects.",
+      "Each spell description begins with a block of information, including the spell's name, level, school of magic, casting time, range, components, and duration. The rest of a spell entry describes the spell's effect.",
+      {
+        "type": "entries",
+        "name": "Casting Time",
+        "entries": [
+          "Most spells require a single action to cast, but some spells require a bonus action, a reaction, or much more time to cast.",
+          {
+            "type": "entries",
+            "name": "Bonus Action",
+            "entries": [
+              "A spell cast with a bonus action is especially swift. You must use a bonus action on your turn to cast the spell, provided that you haven't already taken a bonus action this turn. You can't cast another spell during the same turn, except for a cantrip with a casting time of 1 action."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Reactions",
+            "entries": [
+              "Some spells can be cast as reactions. These spells take a fraction of a second to bring about and are cast in response to some event. If a spell can be cast as a reaction, the spell description tells you exactly when you can do so."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Longer Casting Times",
+            "entries": [
+              "Certain spells (including spells cast as rituals) require more time to cast: minutes or even hours. When you cast a spell with a casting time longer than a single action or reaction, you must spend your action each turn casting the spell, and you must maintain your concentration while you do so (see \"Concentration\" below). If your concentration is broken, the spell fails, but you don't expend a spell slot. If you want to try casting the spell again, you must start over."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Range",
+        "entries": [
+          "The target of a spell must be within the spell's range. For a spell like magic missile, the target is a creature. For a spell like fireball, the target is the point in space where the ball of fire erupts.",
+          "Most spells have ranges expressed in feet. Some spells can target only a creature (including you) that you touch. Other spells, such as the shield spell, affect only you. These spells have a range of self.",
+          "Spells that create cones or lines of effect that originate from you also have a range of self, indicating that the origin point of the spell's effect must be you (see \"Areas of Effect\").",
+          "Once a spell is cast, its effects aren't limited by its range, unless the spell's description says otherwise."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Components",
+        "entries": [
+          "A spell's components are the physical requirements you must meet in order to cast it. Each spell's description indicates whether it requires verbal (V), somatic (S), or material (M) components. If you can't provide one or more of a spell's components, you are unable to cast the spell.",
+          {
+            "type": "entries",
+            "name": "Verbal (V)",
+            "entries": [
+              "Most spells require the chanting of mystic words. The words themselves aren't the source of the spell's power; rather, the particular combination of sounds, with specific pitch and resonance, sets the threads of magic in motion. Thus, a character who is gagged or in an area of silence, such as one created by the silence spell, can't cast a spell with a verbal component."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Somatic (S)",
+            "entries": [
+              "Spellcasting gestures might include a forceful gesticulation or an intricate set of gestures. If a spell requires a somatic component, the caster must have free use of at least one hand to perform these gestures."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Material (M)",
+            "entries": [
+              "Casting some spells requires particular objects, specified in parentheses in the component entry. A character can use a {@b component pouch} or a {@b spellcasting focus} (found in \"Equipment\") in place of the components specified for a spell. But if a cost is indicated for a component, a character must have that specific component before he or she can cast the spell.",
+              "If a spell states that a material component is consumed by the spell, the caster must provide this component for each casting of the spell.",
+              "A spellcaster must have a hand free to access a spell's material components—or to hold a spellcasting focus—but it can be the same hand that he or she uses to perform somatic components."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Duration",
+        "entries": [
+          "A spell's duration is the length of time the spell persists. A duration can be expressed in rounds, minutes, hours, or even years. Some spells specify that their effects last until the spells are dispelled or destroyed.",
+          {
+            "type": "entries",
+            "name": "Instantaneous",
+            "entries": [
+              "Many spells are instantaneous. The spell harms, heals, creates, or alters a creature or an object in a way that can't be dispelled, because its magic exists only for an instant."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Concentration",
+            "entries": [
+              "Some spells require you to maintain concentration in order to keep their magic active. If you lose concentration, such a spell ends.",
+              "If a spell must be maintained with concentration, that fact appears in its Duration entry, and the spell specifies how long you can concentrate on it. You can end concentration at any time (no action required).",
+              "Normal activity, such as moving and attacking, doesn't interfere with concentration. The following factors can break concentration:",
+              {
+                "type": "list",
+                "items": [
+                  "{@b Casting another spell that requires concentration.} You lose concentration on a spell if you cast another spell that requires concentration. You can't concentrate on two spells at once.",
+                  "{@b Taking damage.} Whenever you take damage while you are concentrating on a spell, you must make a Constitution saving throw to maintain your concentration. The DC equals 10 or half the damage you take, whichever number is higher. If you take damage from multiple sources, such as an arrow and a dragon's breath, you make a separate saving throw for each source of damage.",
+                  "{@b Being incapacitated or killed.} You lose concentration on a spell if you are {@condition incapacitated} or if you die."
+                ]
+              }
+            ]
+          },
+          "The GM might also decide that certain environmental phenomena, such as a wave crashing over you while you're on a storm-tossed ship, require you to succeed on a {@dc 10} Constitution saving throw to maintain concentration on a spell."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Targets",
+        "entries": [
+          "A typical spell requires you to pick one or more targets to be affected by the spell's magic. A spell's description tells you whether the spell targets creatures, objects, or a point of origin for an area of effect (described below).",
+          "Unless a spell has a perceptible effect, a creature might not know it was targeted by a spell at all. An effect like crackling lightning is obvious, but a more subtle effect, such as an attempt to read a creature's thoughts, typically goes unnoticed, unless a spell says otherwise.",
+          {
+            "type": "entries",
+            "name": "A Clear Path to the Target",
+            "entries": [
+              "To target something, you must have a clear path to it, so it can't be behind {@quickref Cover||3||total cover}.",
+              "If you place an area of effect at a point that you can't see and an obstruction, such as a wall, is between you and that point, the point of origin comes into being on the near side of that obstruction."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Targeting Yourself",
+            "entries": [
+              "If a spell targets a creature of your choice, you can choose yourself, unless the creature must be hostile or specifically a creature other than you. If you are in the area of effect of a spell you cast, you can target yourself."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Areas of Effect",
+        "entries": [
+          "Spells such as {@spell burning hands} and {@spell cone of cold} cover an area, allowing them to affect multiple creatures at once. A spell's description specifies its area of effect, which typically has one of five different shapes: cone, cube, cylinder, line, or sphere. Every area of effect has a point of origin, a location from which the spell's energy erupts. The rules for each shape specify how you position its point of origin. Typically, a point of origin is a point in space, but some spells have an area whose origin is a creature or an object.",
+          "A spell's effect expands in straight lines from the point of origin. If no unblocked straight line extends from the point of origin to a location within the area of effect, that location isn't included in the spell's area. To block one of these imaginary lines, an obstruction must provide {@quickref Cover||3||total cover}.",
+          {
+            "type": "entries",
+            "name": "Cone",
+            "entries": [
+              "A cone extends in a direction you choose from its point of origin. A cone's width at a given point along its length is equal to that point's distance from the point of origin. A cone's area of effect specifies its maximum length.",
+              "A cone's point of origin is not included in the cone's area of effect, unless you decide otherwise."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Cube",
+            "entries": [
+              "You select a cube's point of origin, which lies anywhere on a face of the cubic effect. The cube's size is expressed as the length of each side.",
+              "A cube's point of origin is not included in the cube's area of effect, unless you decide otherwise."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Cylinder",
+            "entries": [
+              "A cylinder's point of origin is the center of a circle of a particular radius, as given in the spell description. The circle must either be on the ground or at the height of the spell effect. The energy in a cylinder expands in straight lines from the point of origin to the perimeter of the circle, forming the base of the cylinder. The spell's effect then shoots up from the base or down from the top, to a distance equal to the height of the cylinder.",
+              "A cylinder's point of origin is included in the cylinder's area of effect."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Line",
+            "entries": [
+              "A line extends from its point of origin in a straight path up to its length and covers an area defined by its width.",
+              "A line's point of origin is not included in the line's area of effect, unless you decide otherwise."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Sphere",
+            "entries": [
+              "You select a sphere's point of origin, and the sphere extends outward from that point. The sphere's size is expressed as a radius in feet that extends from the point.",
+              "A sphere's point of origin is included in the sphere's area of effect."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Saving Throws",
+        "entries": [
+          "Many spells specify that a target can make a saving throw to avoid some or all of a spell's effects. The spell specifies the ability that the target uses for the save and what happens on a success or failure.",
+          "The DC to resist one of your spells equals 8 + your spellcasting ability modifier + your proficiency bonus + any special modifiers."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Attack Rolls",
+        "entries": [
+          "Some spells require the caster to make an attack roll to determine whether the spell effect hits the intended target. Your attack bonus with a spell attack equals your spellcasting ability modifier + your proficiency bonus.",
+          "Most spells that require attack rolls involve ranged attacks. Remember that you have disadvantage on a ranged attack roll if you are within 5 feet of a hostile creature that can see you and that isn't {@condition incapacitated}."
+        ]
+      },
+      {
+        "type": "inset",
+        "name": "The Schools of Magic",
+        "entries": [
+          "Academies of magic group spells into eight categories called schools of magic. Scholars, particularly wizards, apply these categories to all spells, believing that all magic functions in essentially the same way, whether it derives from rigorous study or is bestowed by a deity.",
+          "The schools of magic help describe spells; they have no rules of their own, although some rules refer to the schools.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Abjuration",
+                "entry": "spells are protective in nature, though some of them have aggressive uses. They create magical barriers, negate harmful effects, harm trespassers, or banish creatures to other planes of existence.",
+                "nameDot": false
+              },
+              {
+                "type": "item",
+                "name": "Conjuration",
+                "entry": "spells involve the transportation of objects and creatures from one location to another. Some spells summon creatures or objects to the caster's side, whereas others allow the caster to teleport to another location. Some conjurations create objects or effects out of nothing.",
+                "nameDot": false
+              },
+              {
+                "type": "item",
+                "name": "Divination",
+                "entry": "spells reveal information, whether in the form of secrets long forgotten, glimpses of the future, the locations of hidden things, the truth behind illusions, or visions of distant people or places.",
+                "nameDot": false
+              },
+              {
+                "type": "item",
+                "name": "Enchantment",
+                "entry": "spells affect the minds of others, influencing or controlling their behavior. Such spells can make enemies see the caster as a friend, force creatures to take a course of action, or even control another creature like a puppet.",
+                "nameDot": false
+              },
+              {
+                "type": "item",
+                "name": "Evocation",
+                "entry": "spells manipulate magical energy to produce a desired effect. Some call up blasts of fire or lightning. Others channel positive energy to heal wounds.",
+                "nameDot": false
+              },
+              {
+                "type": "item",
+                "name": "Illusion",
+                "entry": "spells deceive the senses or minds of others. They cause people to see things that are not there, to miss things that are there, to hear phantom noises, or to remember things that never happened. Some illusions create phantom images that any creature can see, but the most insidious illusions plant an image directly in the mind of a creature.",
+                "nameDot": false
+              },
+              {
+                "type": "item",
+                "name": "Necromancy",
+                "entries": [
+                  "spells manipulate the energies of life and death. Such spells can grant an extra reserve of life force, drain the life energy from another creature, create the undead, or even bring the dead back to life.",
+                  "Creating the undead through the use of necromancy spells such as {@spell animate dead} is not a good act, and only evil casters use such spells frequently."
+                ],
+                "nameDot": false
+              },
+              {
+                "type": "item",
+                "name": "Transmutation",
+                "entry": "spells change the properties of a creature, object, or environment. They might turn an enemy into a harmless creature, bolster the strength of an ally, make an object move at the caster's command, or enhance a creature's innate healing abilities to rapidly recover from injury.",
+                "nameDot": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Combining Magical Effects",
+        "entries": [
+          "The effects of different spells add together while the durations of those spells overlap. The effects of the same spell cast multiple times don't combine, however. Instead, the most potent effect—such as the highest bonus—from those castings applies while their durations overlap.",
+          "For example, if two clerics cast {@spell bless} on the same target, that character gains the spell's benefit only once; he or she doesn't get to roll two bonus dice."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "activity.end-concentration",
+      "condition.incapacitated",
+      "rule.cover",
+      "rule.making-an-attack",
+      "rule.proficiency-bonus",
+      "rule.saving-throws",
+      "rule.what-is-a-spell",
+      "rulebook.page-101",
+      "rulebook.page-102",
+      "rulebook.page-103",
+      "rulebook.page-104",
+      "spell.animate-dead",
+      "spell.bless",
+      "spell.burning-hands",
+      "spell.cone-of-cold",
+      "spell.silence",
+      "status.concentration"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd51.json",
+        "pointer": "/data/9",
+        "entryPointer": "/data/9/entries/3"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
   }
 ]

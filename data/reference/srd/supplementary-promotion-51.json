@@ -537,8 +537,20 @@
       "reason": "Legacy grapple/shove replaces an attack within the Attack action, rather than requiring a separate full action."
     },
     {
+      "id": "attack-option.grapple",
+      "reason": "Restore publisher grapple contest instead of an attack roll and remove later automatic-success errata (p.95)."
+    },
+    {
+      "id": "reaction-option.opportunity-attack",
+      "reason": "Restore published opportunity attack wording (p.95)."
+    },
+    {
       "id": "attack-option.shove",
       "reason": "Legacy grapple/shove replaces an attack within the Attack action, rather than requiring a separate full action."
+    },
+    {
+      "id": "attack-option.shove",
+      "reason": "Restore publisher shove contest instead of an attack roll and remove later automatic-success errata (p.96)."
     }
   ],
   "pendingReferences": [
@@ -849,11 +861,6 @@
     },
     {
       "id": "attack-option.grapple",
-      "reference": "condition|incapacitated",
-      "reason": "semantic reference reconciliation pending"
-    },
-    {
-      "id": "attack-option.grapple",
       "reference": "condition|grappled",
       "reason": "semantic reference reconciliation pending"
     },
@@ -880,11 +887,6 @@
     {
       "id": "attack-option.shove",
       "reference": "skill|Acrobatics",
-      "reason": "semantic reference reconciliation pending"
-    },
-    {
-      "id": "attack-option.shove",
-      "reference": "condition|incapacitated",
       "reason": "semantic reference reconciliation pending"
     },
     {
