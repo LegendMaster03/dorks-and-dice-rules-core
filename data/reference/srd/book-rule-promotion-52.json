@@ -801,6 +801,13 @@
       "pages": [
         176
       ]
+    },
+    {
+      "id": "rule.trinkets",
+      "pointer": "/data/2/entries/5",
+      "pages": [
+        26
+      ]
     }
   ],
   "corrections": [
@@ -933,7 +940,7 @@
       "reason": "Reuse the existing publisher-corrected abbreviation table rather than duplicating it (p.176)."
     }
   ],
-  "nativeCount": 113,
+  "nativeCount": 114,
   "tableInventory": {
     "total": 59,
     "counts": {

@@ -524,6 +524,39 @@
         364,
         365
       ]
+    },
+    {
+      "id": "rule.feats",
+      "pointer": "/data/5",
+      "pages": [
+        75
+      ],
+      "entryRange": [
+        0,
+        3
+      ]
+    },
+    {
+      "id": "rule.spellcasting",
+      "pointer": "/data/9",
+      "pages": [
+        100
+      ],
+      "entryRange": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": "rule.conditions",
+      "pointer": "/data/40",
+      "pages": [
+        358
+      ],
+      "entryRange": [
+        0,
+        4
+      ]
     }
   ],
   "corrections": [
@@ -666,7 +699,7 @@
       "reason": "Restore the published Elysium alignment parenthetical; check all 24 prose paragraphs against the sequential publisher columns (pp.363–365)."
     }
   ],
-  "nativeCount": 66,
+  "nativeCount": 69,
   "tableInventory": {
     "total": 30,
     "counts": {

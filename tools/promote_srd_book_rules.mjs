@@ -841,6 +841,12 @@ function reconcileLegacyAppendix(content,pages){
  return content;
 }
 
+function verifyIntroParagraphs(content,page){
+ const norm=s=>s.replace(/\{@[a-z]+ ([^{}]+)\}/gi,(_,v)=>v.split("|")[2]||v.split("|")[0]).normalize("NFKC").toLowerCase().replace(/[^a-z0-9]/g,"");
+ const left=page.textLayout.split("\n").filter(l=>l.trim()&&!/^ {25,}/.test(l)).map(l=>l.trim().split(/ {4,}/)[0]).join(" ");
+ if(content.some(x=>typeof x!=="string"||!norm(left).includes(norm(x))))throw Error("Publisher introductory paragraph mismatch on "+page.page);
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -1030,7 +1036,10 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Racial Traits","/data/1/entries/0",[3],["rule.movement","rule.weapons","rule.languages","rule.the-order-of-combat"]],
   ["Customizing NPCs","/data/44/entries/1",[395],["rule.racial-traits","rule.armor","rule.weapons","rule.casting-a-spell"]],
   ["Magic Items","/data/12",[206],["rule.attunement","rule.wearing-and-wielding-items","rule.activating-an-item","rule.sentient-magic-items"],[0,1]],
-  ["Appendix PH-C: The Planes of Existence","/data/42",[363,364,365],["spell.plane-shift","spell.gate","spell.etherealness","spell.astral-projection","spell.see-invisibility","spell.true-seeing","spell.forcecage","spell.wall-of-force","spell.demiplane","rule.alignment"]]
+  ["Appendix PH-C: The Planes of Existence","/data/42",[363,364,365],["spell.plane-shift","spell.gate","spell.etherealness","spell.astral-projection","spell.see-invisibility","spell.true-seeing","spell.forcecage","spell.wall-of-force","spell.demiplane","rule.alignment"]],
+  ["Feats","/data/5",[75],["feat.grappler","rule.beyond-1st-level"],[0,3]],
+  ["Spellcasting","/data/9",[100],["rule.what-is-a-spell","rule.casting-a-spell"],[0,2]],
+  ["Conditions","/data/40",[358],["condition.blinded","condition.invisible","condition.prone","condition.exhaustion"],[0,4]]
  ]:[
   ["Travel Pace","/data/10/entries/0",[192],["table.travel-pace","condition.exhaustion","spell.wind-walk","item-group.carpet-of-flying","glossary.difficult-terrain"]],
   ["Creating a Background","/data/10/entries/1",[192,193],[]],
@@ -1087,7 +1096,8 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Character Backgrounds","/data/4/entries/0",[83],["background.acolyte","background.criminal","background.sage","background.soldier","rule.create-your-character","rule.feat-descriptions","rule.tools"]],
   ["Character Species","/data/4/entries/2",[83,84],["species.dragonborn","species.dwarf","species.elf","species.gnome","species.goliath","species.halfling","species.human","species.orc","species.tiefling","glossary.creature-type","glossary.size"]],
   ["Feat Descriptions","/data/5/entries/0",[87],["rule.level-advancement"]],
-  ["Glossary Conventions","/data/9/entries/0",[176],["condition.prone"]]
+  ["Glossary Conventions","/data/9/entries/0",[176],["condition.prone"]],
+  ["Trinkets","/data/2/entries/5",[26],["item.trinket"]]
  ];
  const modernGameplayCorrections={
   "Glossary Conventions":"Reuse the existing publisher-corrected abbreviation table rather than duplicating it (p.176).",
@@ -1180,6 +1190,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   if(tag==="51")content=legacyEquipmentEntries(name,legacyEconomyEntries(name,legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local)),existing,local);
   else content=modernEquipmentEntries(name,modernToolboxMonsterEntries(name,modernCharacterEconomySpellEntries(name,modernGameplayEntries(name,modernMagicItemEntries(name,content),existing,local),existing,local),existing,local),existing,local);
   if(tag==="51"&&name==="Appendix PH-C: The Planes of Existence")content=reconcileLegacyAppendix(content,nums.map(n=>pageMap.get(n)));
+  if((tag==="51"&&["Feats","Spellcasting","Conditions"].includes(name))||(tag==="52"&&name==="Trinkets"))verifyIntroParagraphs(content,pageMap.get(nums[0]));
   if(tag==="51"&&name==="Magic Items"&&!normalizeAppendix(pageMap.get(206).textLayout).includes(normalizeAppendix(content[0]))){
    // The intro is in the left column, not contiguous in the raw page layout.
    if(!normalizeAppendix(legacyAppendixColumns(pageMap.get(206))[0]).includes(normalizeAppendix(content[0])))throw Error("Legacy magic item intro mismatch");
