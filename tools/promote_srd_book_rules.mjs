@@ -519,6 +519,53 @@ function legacyCombatAndCastingEntries(name,entries){
  return entries;
 }
 
+function legacyAbilityAndOriginsEntries(name,entries,existing,local){
+ const find=(arr,name)=>{for(const n of arr){if(n&&typeof n==="object"){if(n.name===name)return n;if(n.entries){const v=find(n.entries,name);if(v)return v;}}}};
+ const replace=(s,a,b)=>{if(!s.includes(a))throw Error("Changed source: "+a);return s.replace(a,b);};
+ if(name==="Using Each Ability"){
+  const seen=new Set(),norm=x=>JSON.stringify(x).replace(/\{@skill ([^}]+)\}/g,"$1");
+  for(const ability of entries.slice(1)){
+   const checks=find(ability.entries,ability.name+" Checks");
+   const projected=[];
+   for(let i=0;i<checks.entries.length;i++){
+    const entry=checks.entries[i],skill=existing.find(x=>x.kind==="skill"&&x.name===entry?.name);
+    if(!skill){projected.push(entry);continue;}
+    const body=entry.name==="Perception"?[...entry.entries,checks.entries[++i]]:entry.entries;
+    if(norm(body)!==JSON.stringify(skill.entries)||seen.has(skill.id))throw Error("Unreconciled ability application "+skill.id);
+    seen.add(skill.id);local.add(skill.id);
+    projected.push({type:"entries",name:entry.name,entries:["See the "+entry.name+" skill."]});
+   }
+   checks.entries=projected;
+  }
+  if(seen.size!==18)throw Error("Incomplete ability skill references");
+  const vision=find(entries,"What Can you See?");vision.name="What Can You See?";
+  vision.entries[0]=replace(vision.entries[0],"{@quickref Vision and Light|srd51|4||heavily obscured}.",'heavily obscured, as explained in "The Environment".');
+ }
+ if(name==="Alignment"){
+  const multiverse=find(entries,"Alignment in the Multiverse");
+  multiverse.entries=[
+   "For many thinking creatures, alignment is a moral choice. Humans, dwarves, elves, and other humanoid races can choose whether to follow the paths of good or evil, law or chaos. According to myth, the good-aligned gods who created these races gave them free will to choose their moral paths, knowing that good without free will is slavery.",
+   "The evil deities who created other races, though, made those races to serve them. Those races have strong inborn tendencies that match the nature of their gods. Most orcs share the violent, savage nature of the orc gods, and are thus inclined toward evil. Even if an orc chooses a good alignment, it struggles against its innate tendencies for its entire life. (Even half-orcs feel the lingering pull of the orc god's influence.)",
+   "Alignment is an essential part of the nature of celestials and fiends. "+multiverse.entries[3],
+   multiverse.entries[4]
+  ];
+ }
+ if(name==="Languages")entries[1]="Choose your languages from the Standard Languages table, or choose one that is common in your campaign. "+entries[1];
+ if(name==="Inspiration"){
+  const gain=find(entries,"Gaining Inspiration");gain.entries[0]=gain.entries[0].replaceAll("Your DM","Your GM");
+ }
+ if(name==="Backgrounds"){
+  entries.splice(2,0,"The sample background presented here provides both concrete benefits (features, proficiencies, and languages) and roleplaying suggestions.");
+  const prof=find(entries,"Proficiencies");prof.entries[0]='Each background gives a character proficiency in two skills (described in "Using Ability Scores").';prof.entries[1]='In addition, most backgrounds give a character proficiency with one or more tools (detailed in "Equipment").';
+  const lang=find(entries,"Languages");lang.entries[0]=replace(lang.entries[0]," earlier in this chapter","");
+  const eq=find(entries,"Equipment");eq.entries[0]=replace(eq.entries[0]," from chapter 5","");
+  const custom=find(entries,"Customizing a Background");custom.entries[0]=replace(custom.entries[0],"as described in chapter 5","as described in the equipment section");
+  if(entries.at(-1).items?.[0]!=="{@background Acolyte|srd51}")throw Error("Unexpected background index");
+  entries[entries.length-1]="See the Acolyte background.";
+ }
+ return entries;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -681,7 +728,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Time","/data/7/entries/0",[84],[]],
   ["Movement","/data/7/entries/1",[84,85],["condition.exhaustion","condition.prone","skill.perception","skill.athletics","skill.acrobatics","rule.saving-throws"]],
   ["Between Adventures","/data/7/entries/4",[88,89],["table.lifestyle-expenses","skill.performance","skill.investigation","skill.persuasion","baseitem.plate-armor"]],
-  ["What Is a Spell?","/data/9/entries/2",[100],["spell.magic-missile","spell.wish","spell.cure-wounds","class.bard","class.sorcerer","class.cleric","class.druid","class.wizard","class.warlock","class.monk","monster.pit-fiend","rule.resting"]],
+  ["What Is a Spell?","/data/9/entries/2",[100,101],["spell.magic-missile","spell.wish","spell.cure-wounds","class.bard","class.sorcerer","class.cleric","class.druid","class.wizard","class.warlock","class.monk","monster.pit-fiend","rule.resting"]],
   ["Ability Checks","/data/6/entries/7",[77,78,79],["rule.ability-check","rule.proficiency-bonus","rule.advantage-and-disadvantage","action.help"]],
   ["The Environment","/data/7/entries/2",[86,87],["condition.prone","condition.blinded","condition.invisible","condition.exhaustion","skill.perception","sense.blindsight","sense.darkvision","sense.truesight","rule.breaking-objects","combat-option.stabilize-a-creature"]],
   ["The Order of Combat","/data/8/entries/0",[90,91],["status.surprised","skill.stealth","skill.perception","action.dodge","action.ready","reaction-option.opportunity-attack","activity.other-activity"]],
@@ -689,7 +736,12 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Movement and Position","/data/8/entries/1",[91,92],["condition.prone","spell.fly","rule.movement","reaction-option.opportunity-attack","activity.other-activity"]],
   ["Making an Attack","/data/8/entries/3",[94,95,96],["rule.cover","rule.advantage-and-disadvantage","rule.proficiency-bonus","rule.ability-checks","condition.incapacitated","spell.invisibility","reaction-option.opportunity-attack","combat-option.two-weapon-fighting","attack-option.grapple","combat-option.escape-a-grapple","attack-option.shove","action.attack"]],
   ["Damage and Healing","/data/8/entries/5",[96,97,98,99],["table.damage-types","condition.unconscious","combat-option.stabilize-a-creature","skill.medicine","spell.cure-wounds","spell.revivify","rule.resting"]],
-  ["Casting a Spell","/data/9/entries/3",[101,102,103,104],["rule.what-is-a-spell","rule.cover","rule.proficiency-bonus","rule.saving-throws","rule.making-an-attack","status.concentration","activity.end-concentration","condition.incapacitated","spell.silence","spell.bless","spell.burning-hands","spell.cone-of-cold","spell.animate-dead"]]
+  ["Casting a Spell","/data/9/entries/3",[101,102,103,104],["rule.what-is-a-spell","rule.cover","rule.proficiency-bonus","rule.saving-throws","rule.making-an-attack","status.concentration","activity.end-concentration","condition.incapacitated","spell.silence","spell.bless","spell.burning-hands","spell.cone-of-cold","spell.animate-dead"]],
+  ["Using Each Ability","/data/6/entries/8",[79,80,81,82,83],["rule.ability-checks","rule.making-an-attack","rule.the-order-of-combat","rule.the-environment","rule.casting-a-spell","table.armor","condition.invisible","class.wizard","class.cleric","class.druid","class.ranger","class.bard","class.paladin","class.sorcerer","class.warlock"]],
+  ["Alignment","/data/3/entries/7",[58,59],[]],
+  ["Languages","/data/3/entries/8",[59],["language.primordial","language.thieves-cant","language.druidic"]],
+  ["Inspiration","/data/3/entries/9",[59,60],["rule.advantage-and-disadvantage","rule.ability-checks","rule.saving-throws","rule.making-an-attack"]],
+  ["Backgrounds","/data/3/entries/10",[60],["background.acolyte","rule.languages","rule.ability-checks"]]
  ]:[
   ["Travel Pace","/data/10/entries/0",[192],["table.travel-pace","condition.exhaustion","spell.wind-walk","item-group.carpet-of-flying","glossary.difficult-terrain"]],
   ["Creating a Background","/data/10/entries/1",[192,193],[]],
@@ -711,6 +763,11 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Sentient Magic Items","/data/11/entries/9",[207,208],["condition.charmed","rule.the-next-dawn","rule.attunement"]]
  ];
  const extraCorrections={
+  "Using Each Ability":"Reuse all 18 canonical skill descriptions after exact normalized body checks; restore publisher environmental navigation (pp.79–83).",
+  "Alignment":"Restore publisher-specific fictional multiverse alignment paragraphs and remove later source rewrites (pp.58–59).",
+  "Languages":"Restore publisher standard-language selection rule (p.59).",
+  "Inspiration":"Restore publisher GM terminology (pp.59–60).",
+  "Backgrounds":"Restore publisher introduction and navigation; reference the existing Acolyte definition (p.60).",
   "Movement and Position":"Restore publisher five Large creatures example and appendix/navigation wording (pp.91–92).",
   "Making an Attack":"Use existing canonical attack options, corrected against pp.95–96, instead of duplicating their procedures; restore publisher attack navigation.",
   "Damage and Healing":"Restore the published nonnegative damage floor and appendix label; link canonical stabilization procedure (pp.96–99).",
@@ -748,7 +805,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
    return x;
   };
   let content=project(node.entries);
-  if(tag==="51")content=legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content))));
+  if(tag==="51")content=legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local);
   else content=modernMagicItemEntries(name,content);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");

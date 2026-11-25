@@ -286,7 +286,8 @@
       "id": "rule.what-is-a-spell",
       "pointer": "/data/9/entries/2",
       "pages": [
-        100
+        100,
+        101
       ]
     },
     {
@@ -357,6 +358,47 @@
         102,
         103,
         104
+      ]
+    },
+    {
+      "id": "rule.using-each-ability",
+      "pointer": "/data/6/entries/8",
+      "pages": [
+        79,
+        80,
+        81,
+        82,
+        83
+      ]
+    },
+    {
+      "id": "rule.alignment",
+      "pointer": "/data/3/entries/7",
+      "pages": [
+        58,
+        59
+      ]
+    },
+    {
+      "id": "rule.languages",
+      "pointer": "/data/3/entries/8",
+      "pages": [
+        59
+      ]
+    },
+    {
+      "id": "rule.inspiration",
+      "pointer": "/data/3/entries/9",
+      "pages": [
+        59,
+        60
+      ]
+    },
+    {
+      "id": "rule.backgrounds",
+      "pointer": "/data/3/entries/10",
+      "pages": [
+        60
       ]
     }
   ],
@@ -446,9 +488,29 @@
     {
       "id": "rule.casting-a-spell",
       "reason": "Restore school introduction and publisher navigation; remove later equal-potency recency rule (pp.101–104)."
+    },
+    {
+      "id": "rule.using-each-ability",
+      "reason": "Reuse all 18 canonical skill descriptions after exact normalized body checks; restore publisher environmental navigation (pp.79–83)."
+    },
+    {
+      "id": "rule.alignment",
+      "reason": "Restore publisher-specific fictional multiverse alignment paragraphs and remove later source rewrites (pp.58–59)."
+    },
+    {
+      "id": "rule.languages",
+      "reason": "Restore publisher standard-language selection rule (p.59)."
+    },
+    {
+      "id": "rule.inspiration",
+      "reason": "Restore publisher GM terminology (pp.59–60)."
+    },
+    {
+      "id": "rule.backgrounds",
+      "reason": "Restore publisher introduction and navigation; reference the existing Acolyte definition (p.60)."
     }
   ],
-  "nativeCount": 47,
+  "nativeCount": 52,
   "tableInventory": {
     "total": 30,
     "counts": {

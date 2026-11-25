@@ -520,6 +520,17 @@ public sealed class RulesetResolutionApiTests
         Assert.DoesNotContain("most recent effect applies", legacyCastingProcedure.GetProperty("entries").GetRawText());
         Assert.Contains("status.concentration", legacyCastingProcedure.GetProperty("catalogReferences").GetRawText());
 
+        var legacyAbilityApplications = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.using-each-ability")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal(18, legacyAbilityApplications.GetProperty("catalogReferences").EnumerateArray().Count(x => x.GetString()!.StartsWith("skill.", StringComparison.Ordinal)));
+        Assert.Contains("Variant: Encumbrance", legacyAbilityApplications.GetProperty("entries").GetRawText());
+        Assert.Contains("Strength score multiplied by 15", legacyAbilityApplications.GetProperty("entries").GetRawText());
+        var legacyBackgroundProcedure = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.backgrounds")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("background.acolyte", legacyBackgroundProcedure.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("choose any two skills", legacyBackgroundProcedure.GetProperty("entries").GetRawText());
+        var legacyLanguageProcedure = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.languages")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("table.standard-languages", legacyLanguageProcedure.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("common in your campaign", legacyLanguageProcedure.GetProperty("entries").GetRawText());
+
         // Legacy travel and downtime must retain their own published procedures.
         var legacyTravelRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.movement")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("table.travel-pace", legacyTravelRule.GetProperty("catalogReferences").GetRawText());
