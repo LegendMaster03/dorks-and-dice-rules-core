@@ -36,6 +36,20 @@
         78,
         82
       ]
+    },
+    {
+      "id": "class-feature.paladin.fighting-style.2",
+      "reason": "Restore publisher-specific Fighting Style alternatives as class-feature text and descriptive mutually exclusive choices; preserve class spellcasting ability and level-triggered replacement.",
+      "pages": [
+        54
+      ]
+    },
+    {
+      "id": "class-feature.ranger.fighting-style.2",
+      "reason": "Restore publisher-specific Fighting Style alternatives as class-feature text and descriptive mutually exclusive choices; preserve class spellcasting ability and level-triggered replacement.",
+      "pages": [
+        59
+      ]
     }
   ],
   "excluded": [
@@ -3963,5 +3977,18 @@
     "literalOccurrences": 223,
     "namedVariantOccurrences": 0,
     "addedCatalogLinks": 191
+  },
+  "fightingStyleChoices": {
+    "features": 4,
+    "featIds": [
+      "feat.archery",
+      "feat.defense",
+      "feat.great-weapon-fighting",
+      "feat.two-weapon-fighting"
+    ],
+    "alternatives": [
+      "Blessed Warrior",
+      "Druidic Warrior"
+    ]
   }
 }

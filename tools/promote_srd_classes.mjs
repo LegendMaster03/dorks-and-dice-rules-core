@@ -278,6 +278,80 @@ function reconcileSpellLists(groups,report,tag,read,publisherPages,src){
  report.classSpellLists={counts,total:Object.values(counts).reduce((a,b)=>a+b,0),excludedSourceMemberships:excluded.map(x=>{const [className,spell]=x.split("|");return {className,spell,reason:tag==="51"?"Feature-specific access, not a published base class list":"Absent from the published class spell table"};}),status:"Publisher class-list membership reconciled; feature grants, preparation and spell execution are separate."};
  if(foreign.length)report.classSpellLists.excludedForeignMemberships=foreign;
 }
+function reconcileModernFightingStyles(groups,report,pages,features){
+ const specs=[
+  {
+    "id": "class-feature.fighter.fighting-style.1",
+    "page": 47,
+    "replaceOnClassLevel": true
+  },
+  {
+    "id": "subclass-feature.fighter.champion.additional-fighting-style.7",
+    "page": 49,
+    "replaceOnClassLevel": false
+  },
+  {
+    "id": "class-feature.paladin.fighting-style.2",
+    "page": 54,
+    "replaceOnClassLevel": false,
+    "name": "Blessed Warrior",
+    "spellClass": "Cleric",
+    "ability": "cha",
+    "recommended": [
+      "Guidance",
+      "Sacred Flame"
+    ],
+    "text": "You learn two Cleric cantrips of your choice (see the Cleric class’s section for a list of Cleric spells). Guidance and Sacred Flame are recommended. The chosen cantrips count as Paladin spells for you, and Charisma is your spellcasting ability for them. Whenever you gain a Paladin level, you can replace one of these cantrips with another Cleric cantrip."
+  },
+  {
+    "id": "class-feature.ranger.fighting-style.2",
+    "page": 59,
+    "replaceOnClassLevel": false,
+    "name": "Druidic Warrior",
+    "spellClass": "Druid",
+    "ability": "wis",
+    "recommended": [
+      "Guidance",
+      "Starry Wisp"
+    ],
+    "text": "You learn two Druid cantrips of your choice (see the Druid class’s section for a list of Druid spells). Guidance and Starry Wisp are recommended. The chosen cantrips count as Ranger spells for you, and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you can replace one of these cantrips with another Druid cantrip."
+  }
+];
+ const featIds=features.filter(r=>r.kind==="feat"&&r.category==="FS").map(r=>r.id).sort();
+ if(JSON.stringify(featIds)!=="[\"feat.archery\",\"feat.defense\",\"feat.great-weapon-fighting\",\"feat.two-weapon-fighting\"]")throw Error("Published Fighting Style feat inventory changed");
+ const rows=Object.values(groups).flat();
+ for(const spec of specs){
+  const row=rows.find(r=>r.id===spec.id),page=pages.find(p=>p.page===spec.page);
+  if(!row||!page?.textLayout.includes("Fighting Style feat"))throw Error("Missing Fighting Style publisher evidence "+spec.id);
+  const choice={count:1,featIds,distinct:true,replaceFeatOnClassLevel:spec.replaceOnClassLevel};
+  const refs=new Set([...row.catalogReferences,...featIds,page.id]);
+  if(spec.name){
+   const original=row.entries[1]?.entries;
+   if(original?.length!==1||original[0].type!=="refFeat"||original[0].feat!==spec.name+"|SRD52")throw Error("Unexpected Fighting Style alternative "+spec.name);
+   // Check the entire printed paragraph, accounting for the page's two-column layout.
+   const lines=page.textLayout.split("\n"),start=lines.findIndex(l=>l.includes(spec.name+"."));
+   if(start<0)throw Error("Missing publisher alternative "+spec.name);
+   const column=spec.name==="Blessed Warrior"?62:0;
+   const width=column?undefined:62;
+   const count=spec.name==="Blessed Warrior"?8:8;
+   const norm=s=>s.replace(/[’‘]/g,"'").replace(/-\s+/g,"").replace(/\s+/g," ").trim();
+   const paragraph=lines.slice(start,start+count).map(l=>l.slice(column,width).trim()).join(" ");
+   if(norm(paragraph)!==norm(spec.name+". "+spec.text))throw Error("Publisher alternative body mismatch "+spec.name+": "+norm(paragraph));
+   const cls=groups[spec.spellClass.toLowerCase()].find(r=>r.id==="class."+spec.spellClass.toLowerCase());
+   const cantrips=cls.spellList.find(g=>g.level===0).spellIds;
+   const recommendedSpellIds=spec.recommended.map(n=>"spell."+n.toLowerCase().replace(/ /g,"-"));
+   if(recommendedSpellIds.some(id=>!cantrips.includes(id)))throw Error("Missing recommended cantrip "+spec.name);
+   row.entries[1]={type:"entries",name:spec.name,entries:[spec.text]};
+   choice.alternative={name:spec.name,spellChoice:{choose:"level=0|class="+spec.spellClass,count:2},spellcastingAbility:spec.ability,countsAsClass:row.className,recommendedSpellIds,replaceOneOnClassLevel:true};
+   refs.add(cls.id);recommendedSpellIds.forEach(id=>refs.add(id));
+   report.corrections.push({id:row.id,reason:"Restore publisher-specific Fighting Style alternatives as class-feature text and descriptive mutually exclusive choices; preserve class spellcasting ability and level-triggered replacement.",pages:[spec.page]});
+  }
+  row.fightingStyleChoice=choice;
+  row.catalogReferences=[...refs].sort();
+  if(!row.source.pages.includes(spec.page))row.source.pages=[...row.source.pages,spec.page].sort((a,b)=>a-b);
+ }
+ report.fightingStyleChoices={features:specs.length,featIds,alternatives:specs.filter(s=>s.name).map(s=>s.name)};
+}
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
 const json=x=>JSON.stringify(x,null,2)+"\n";
@@ -308,6 +382,7 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  const spells=fs.readdirSync(path.join(root,base+"native/spells")).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(base+"native/spells/"+f));
  report.literalSpellRelationships=linkSpellRelationships(Object.values(groups).flat(),spells,"SRD"+tag);
  report.literalCharacterRelationships=linkCharacterRelationships(Object.values(groups).flat(),characterRelationshipCatalog(root,base,read),"SRD"+tag);
+ if(tag==="52")reconcileModernFightingStyles(groups,report,pages,read(base+"native/feats-and-optional-features.json"));
  const outputs=Object.entries(groups).map(([name,records])=>[base+"native/classes/"+name+".json",json(records)]);
  outputs.push(["data/reference/srd/class-promotion-"+tag+".json",json(report)]);
  for(const [file,body] of outputs){

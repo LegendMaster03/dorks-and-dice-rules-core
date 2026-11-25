@@ -273,3 +273,26 @@ class StructuredRelationshipsTests(unittest.TestCase):
         self.assertEqual(0, report["unlinkedLiteralOccurrences"])
         self.assertEqual(3, report["explicitLiteralLinks"])
         self.assertEqual(1, audit(rows, "SRD52")["unlinkedLiteralOccurrences"])
+
+    def test_fighting_style_alternative_does_not_award_cantrips_with_feat(self):
+        rows = [
+            {"id": "feat.defense", "kind": "feat", "name": "Defense", "category": "FS"},
+            {"id": "feat.alert", "kind": "feat", "name": "Alert", "category": "O"},
+            {"id": "spell.light", "kind": "spell", "name": "Light", "level": 0},
+            {"id": "spell.guidance", "kind": "spell", "name": "Guidance", "level": 0},
+            {"id": "class.cleric", "kind": "class", "name": "Cleric",
+             "spellList": [{"level": 0, "spellIds": ["spell.guidance", "spell.light"]}]},
+            {"id": "class-feature.paladin.fighting-style.2", "kind": "class-feature",
+             "name": "Fighting Style", "className": "Paladin", "level": 2,
+             "catalogReferences": ["feat.defense"],
+             "fightingStyleChoice": {"count": 1, "featIds": ["feat.defense"], "distinct": True,
+                 "replaceFeatOnClassLevel": False, "alternative": {"name": "Blessed Warrior",
+                     "spellChoice": {"choose": "level=0|class=Cleric", "count": 2}}}}
+        ]
+        result = audit(rows, "SRD52")["occurrences"]
+        self.assertEqual(["feat.defense"], result[0]["candidateIds"])
+        self.assertEqual(["spell.guidance", "spell.light"], result[1]["candidateSpellIds"])
+        self.assertEqual("fighting-style-alternative", result[1]["conditionalOn"])
+        self.assertTrue(all(not o["targets"] for o in result))
+        rows[-1]["fightingStyleChoice"]["featIds"].append("feat.alert")
+        self.assertEqual("invalid-fighting-style-choice", audit(rows, "SRD52")["occurrences"][0]["candidateStatus"])

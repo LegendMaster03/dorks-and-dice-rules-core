@@ -837,17 +837,23 @@
       "You gain a {@filter Fighting Style feat|feats|category=FS} of your choice. Instead of choosing one of those feats, you can choose the option below.",
       {
         "type": "entries",
+        "name": "Blessed Warrior",
         "entries": [
-          {
-            "type": "refFeat",
-            "feat": "Blessed Warrior|SRD52"
-          }
+          "You learn two Cleric cantrips of your choice (see the Cleric class’s section for a list of Cleric spells). Guidance and Sacred Flame are recommended. The chosen cantrips count as Paladin spells for you, and Charisma is your spellcasting ability for them. Whenever you gain a Paladin level, you can replace one of these cantrips with another Cleric cantrip."
         ]
       }
     ],
     "catalogReferences": [
+      "class.cleric",
       "class.paladin",
-      "rulebook.page-053"
+      "feat.archery",
+      "feat.defense",
+      "feat.great-weapon-fighting",
+      "feat.two-weapon-fighting",
+      "rulebook.page-053",
+      "rulebook.page-054",
+      "spell.guidance",
+      "spell.sacred-flame"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -856,7 +862,8 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
-        53
+        53,
+        54
       ],
       "candidatePage": 110,
       "structuredSource": {
@@ -866,6 +873,31 @@
         "pointer": "/classFeature/25"
       },
       "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    },
+    "fightingStyleChoice": {
+      "count": 1,
+      "featIds": [
+        "feat.archery",
+        "feat.defense",
+        "feat.great-weapon-fighting",
+        "feat.two-weapon-fighting"
+      ],
+      "distinct": true,
+      "replaceFeatOnClassLevel": false,
+      "alternative": {
+        "name": "Blessed Warrior",
+        "spellChoice": {
+          "choose": "level=0|class=Cleric",
+          "count": 2
+        },
+        "spellcastingAbility": "cha",
+        "countsAsClass": "Paladin",
+        "recommendedSpellIds": [
+          "spell.guidance",
+          "spell.sacred-flame"
+        ],
+        "replaceOneOnClassLevel": true
+      }
     }
   },
   {

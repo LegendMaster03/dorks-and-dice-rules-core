@@ -540,6 +540,20 @@ def audit(rows, tag):
                                     emit(member_path, "class-proficiency-member", member, "selector-review",
                                          proficiencyKind=field, **character_selectors.class_member(member, field))
                     visit(child, child_path)
+                elif key == "fightingStyleChoice" and isinstance(child, dict):
+                    candidates = sorted(r["id"] for r in rows if r["kind"] == "feat" and r.get("category") == "FS")
+                    valid = (tag == "SRD52" and child.get("count") == 1 and child.get("distinct") is True
+                             and child.get("featIds") == candidates and bool(candidates)
+                             and set(candidates) <= explicit and type(child.get("replaceFeatOnClassLevel")) is bool)
+                    emit(child_path, "fighting-style-choice", child, "selector-review",
+                         candidateStatus="static-candidates" if valid else "invalid-fighting-style-choice",
+                         candidateIds=candidates if valid else [], choiceCount=1)
+                    if "alternative" in child:
+                        alternative = child["alternative"]
+                        selector = spell_selectors.inspect(alternative["spellChoice"], "known")
+                        emit(child_path + "/alternative/spellChoice", "conditional-spell-selector",
+                             alternative["spellChoice"], "selector-review", grantMode="known",
+                             conditionalOn="fighting-style-alternative", **selector)
                 elif key == "optionalfeatureProgression":
                     emit(child_path, "optional-feature-progression", child, "selector-review")
                 elif key == "type" and child == "refOptionalfeature":

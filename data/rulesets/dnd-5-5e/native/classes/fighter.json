@@ -413,6 +413,10 @@
     ],
     "catalogReferences": [
       "class.fighter",
+      "feat.archery",
+      "feat.defense",
+      "feat.great-weapon-fighting",
+      "feat.two-weapon-fighting",
       "rulebook.page-047"
     ],
     "source": {
@@ -432,6 +436,17 @@
         "pointer": "/classFeature/22"
       },
       "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    },
+    "fightingStyleChoice": {
+      "count": 1,
+      "featIds": [
+        "feat.archery",
+        "feat.defense",
+        "feat.great-weapon-fighting",
+        "feat.two-weapon-fighting"
+      ],
+      "distinct": true,
+      "replaceFeatOnClassLevel": true
     }
   },
   {
@@ -1437,6 +1452,10 @@
     ],
     "catalogReferences": [
       "class.fighter",
+      "feat.archery",
+      "feat.defense",
+      "feat.great-weapon-fighting",
+      "feat.two-weapon-fighting",
       "rulebook.page-049",
       "subclass.fighter.champion"
     ],
@@ -1457,6 +1476,17 @@
         "pointer": "/subclassFeature/9"
       },
       "structuredStatus": "pinned edition-specific class projection; publisher name locator where available; progression links checked; full body review pending"
+    },
+    "fightingStyleChoice": {
+      "count": 1,
+      "featIds": [
+        "feat.archery",
+        "feat.defense",
+        "feat.great-weapon-fighting",
+        "feat.two-weapon-fighting"
+      ],
+      "distinct": true,
+      "replaceFeatOnClassLevel": false
     }
   },
   {
