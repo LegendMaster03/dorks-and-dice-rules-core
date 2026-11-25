@@ -296,3 +296,27 @@ class StructuredRelationshipsTests(unittest.TestCase):
         self.assertTrue(all(not o["targets"] for o in result))
         rows[-1]["fightingStyleChoice"]["featIds"].append("feat.alert")
         self.assertEqual("invalid-fighting-style-choice", audit(rows, "SRD52")["occurrences"][0]["candidateStatus"])
+
+    def test_optional_feature_progression_and_equipment_value_classification(self):
+        rows = [
+            {"id": "rulebook.page-044", "kind": "rulebook-page", "name": "Page 44",
+             "textLayout": "You gain another\none at 10th and 17th level."},
+            {"id": "class.sorcerer", "kind": "class", "name": "Sorcerer",
+             "optionalfeatureProgression": [{"name": "Metamagic", "featureType": ["MM"],
+                                             "progression": {"3": 2, "10": 3, "17": 4}}]},
+            {"id": "background.acolyte", "kind": "background", "name": "Acolyte",
+             "startingEquipment": [{"A": [{"value": 1500}, {"special": "vestments"}],
+                                    "B": [{"special": "unreviewed object"}]}]}
+        ] + [{"id": "optional-feature.option-" + str(i), "kind": "optional-feature",
+              "name": "Option " + str(i), "featureType": ["MM"]} for i in range(8)]
+        report = audit(rows, "SRD51")
+        progression = next(o for o in report["occurrences"] if "progressionStatus" in o)
+        self.assertEqual("reviewed-static-progression", progression["progressionStatus"])
+        self.assertEqual([0, 0, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4], progression["cumulativeCounts"])
+        self.assertEqual([2, 1, 1], [n for n in progression["gainedCounts"] if n])
+        self.assertFalse(progression["replacementOnClassLevel"])
+        self.assertEqual([], progression["targets"])
+        self.assertEqual({"currency-value": 1, "descriptive-special-equipment": 1,
+                          "unreviewed-equipment-shape": 1}, report["characterSelectorCounts"])
+        rows[1]["optionalfeatureProgression"][0]["progression"]["10"] = 4
+        self.assertEqual({"progression-mismatch": 1}, audit(rows, "SRD51")["optionalFeatureProgressionCounts"])

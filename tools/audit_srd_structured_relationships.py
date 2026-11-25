@@ -195,6 +195,107 @@ class WarlockCantripPrerequisiteInventory:
                            nativePredicateVerified=True)
 
 
+class OptionalFeatureProgressionInventory:
+    """Inventory cumulative choice allowances, not acquired options.
+
+    The sparse schedules carry forward their prior allowance; dense Warlock
+    schedules are checked independently against every published table row.
+    """
+    SPECS = {
+        ("SRD51", "class.fighter", "FS:F"): ("Fighting Style", {1: 1}, 6, 24),
+        ("SRD51", "class.paladin", "FS:P"): ("Fighting Style", {2: 1}, 4, 30),
+        ("SRD51", "class.ranger", "FS:R"): ("Fighting Style", {2: 1}, 4, 35),
+        ("SRD51", "class.sorcerer", "MM"): ("Metamagic", {3: 2, 10: 3, 17: 4}, 8, 44),
+        ("SRD51", "class.warlock", "PB"): ("Pact Boon", {3: 1}, 3, 47),
+        ("SRD51", "class.warlock", "EI"): ("Eldritch Invocations", None, 32, 46),
+        ("SRD52", "class.sorcerer", "MM"): ("Metamagic", {2: 2, 10: 4, 17: 6}, 10, 66),
+        ("SRD52", "class.warlock", "EI"): ("Eldritch Invocations", None, 28, 71),
+    }
+
+    def __init__(self, rows, tag):
+        self.rows = {r["id"]: r for r in rows}
+        self.tag = tag
+
+    def inspect(self, row, raw):
+        def result(status, **fields):
+            return {"progressionStatus": status, **fields}
+
+        if (not isinstance(raw, dict) or set(raw) != {"name", "featureType", "progression"} or
+                not isinstance(raw["featureType"], list) or len(raw["featureType"]) != 1 or
+                not isinstance(raw["featureType"][0], str)):
+            return result("unsupported-progression-shape")
+        kind = raw["featureType"][0]
+        spec = self.SPECS.get((self.tag, row["id"], kind))
+        if spec is None or raw["name"] != spec[0]:
+            return result("unreviewed-progression")
+        _, expected, expected_count, page = spec
+        published = self.rows.get("rulebook.page-" + str(page).zfill(3), {}).get("textLayout")
+        if not isinstance(published, str):
+            return result("missing-progression-evidence")
+        candidates = sorted(r["id"] for r in self.rows.values()
+                            if r["kind"] == "optional-feature" and kind in r.get("featureType", []))
+        if len(candidates) != expected_count:
+            return result("changed-option-inventory", candidateOptionIds=candidates)
+        if expected is None:
+            # The Warlock table includes five numeric/ordinal cells to the
+            # right of the feature names. Invocations are last in legacy,
+            # first in modern; the legacy dash denotes zero at level one.
+            source_counts = {}
+            for line in published.splitlines():
+                cells = re.split(r" {2,}", line.strip())
+                if len(cells) != 8 or not re.fullmatch(r"\d+(?:st|nd|rd|th)?", cells[0]) or not re.fullmatch(r"\+\d+", cells[1]):
+                    continue
+                level = int(re.match(r"\d+", cells[0]).group())
+                cell = cells[-1] if self.tag == "SRD51" else cells[3]
+                if level in source_counts:
+                    return result("ambiguous-publisher-progression")
+                if cell in {"̶", "—", "–", "-"}:
+                    source_counts[level] = 0
+                elif cell.isdigit():
+                    source_counts[level] = int(cell)
+            if set(source_counts) != set(range(1, 21)):
+                return result("incomplete-publisher-progression")
+            expected_dense = [source_counts[n] for n in range(1, 21)]
+            actual = raw["progression"]
+            if actual != expected_dense:
+                return result("progression-mismatch", publisherCounts=expected_dense)
+            labels = row.get("classTableGroups", [])
+            table_counts = []
+            for table in labels:
+                indices = [i for i, label in enumerate(table.get("colLabels", []))
+                           if isinstance(label, str) and "feature type=ei" in label.lower()]
+                if len(indices) == 1:
+                    table_counts = [r[indices[0]] for r in table.get("rows", [])]
+            if table_counts != expected_dense:
+                return result("class-table-progression-mismatch")
+        else:
+            phrases = {
+                ("SRD51", "FS:F"): ["Choose one of the following options"],
+                ("SRD51", "FS:P"): ["At 2nd level, you adopt a particular style"],
+                ("SRD51", "FS:R"): ["At 2nd level, you adopt a particular style"],
+                ("SRD51", "MM"): ["You gain another", "one at 10th and 17th level."],
+                ("SRD51", "PB"): ["At 3rd level, your otherworldly patron bestows a gift"],
+                ("SRD52", "MM"): ["level 10 and two more at Sorcerer level 17."],
+            }
+            if any(phrase not in published for phrase in phrases[(self.tag, kind)]):
+                return result("changed-progression-evidence")
+            if raw["progression"] != {str(k): v for k, v in expected.items()}:
+                return result("progression-mismatch", publisherCounts=expected)
+            current = 0
+            expected_dense = []
+            for level in range(1, 21):
+                current = expected.get(level, current)
+                expected_dense.append(current)
+        gained = [value - (expected_dense[i - 1] if i else 0) for i, value in enumerate(expected_dense)]
+        if any(n < 0 for n in gained) or max(expected_dense) > len(candidates):
+            return result("invalid-progression-counts")
+        return result("reviewed-static-progression", candidateOptionIds=candidates,
+                      cumulativeCounts=expected_dense, gainedCounts=gained,
+                      publisherPage=page, characterEligibilityEvaluated=False,
+                      replacementOnClassLevel=(kind == "EI" or self.tag == "SRD52" and kind == "MM"),
+                      protectPrerequisiteOnReplacement=(kind == "EI" and self.tag == "SRD52"))
+
+
 class CharacterSelectorInventory:
     """Static, edition-local candidate pools, not character eligibility decisions."""
 
@@ -284,8 +385,16 @@ class CharacterSelectorInventory:
         return ids
 
     def equipment(self, raw):
-        if not isinstance(raw, dict) or set(raw) - {"equipmentType", "equipmentTypes", "quantity"}:
-            return self.result("non-category-equipment-or-unreviewed-shape")
+        if not isinstance(raw, dict):
+            return self.result("unreviewed-equipment-shape")
+        if set(raw) == {"value"} and type(raw["value"]) is int and raw["value"] >= 0:
+            return self.result("currency-value", copperPieces=raw["value"])
+        if set(raw) <= {"special", "quantity"} and isinstance(raw.get("special"), str):
+            quantity = raw.get("quantity", 1)
+            if raw["special"] in {"sticks of incense", "vestments", "prayer wheel"} and type(quantity) is int and quantity > 0:
+                return self.result("descriptive-special-equipment", quantity=quantity)
+        if set(raw) - {"equipmentType", "equipmentTypes", "quantity"}:
+            return self.result("unreviewed-equipment-shape")
         if ("equipmentType" in raw) == ("equipmentTypes" in raw):
             return self.result("unsupported-selector-shape")
         categories = [raw["equipmentType"]] if "equipmentType" in raw else raw["equipmentTypes"]
@@ -364,6 +473,7 @@ class CharacterSelectorInventory:
 def audit(rows, tag):
     index = Index(rows, tag)
     character_selectors = CharacterSelectorInventory(rows, index)
+    optional_progressions = OptionalFeatureProgressionInventory(rows, tag)
     spell_selectors = SpellSelectorInventory(rows)
     warlock_predicates = WarlockCantripPrerequisiteInventory(spell_selectors, tag)
     result = []
@@ -555,7 +665,12 @@ def audit(rows, tag):
                              alternative["spellChoice"], "selector-review", grantMode="known",
                              conditionalOn="fighting-style-alternative", **selector)
                 elif key == "optionalfeatureProgression":
-                    emit(child_path, "optional-feature-progression", child, "selector-review")
+                    if not isinstance(child, list):
+                        emit(child_path, "optional-feature-progression", child, "unreviewed-shape")
+                    else:
+                        for i, progression in enumerate(child):
+                            emit(child_path + "/" + str(i), "optional-feature-progression", progression,
+                                 "selector-review", **optional_progressions.inspect(row, progression))
                 elif key == "type" and child == "refOptionalfeature":
                     literal(path + "/optionalfeature", "optional-feature-choice-member",
                             "optionalfeature", value.get("optionalfeature"))
@@ -569,6 +684,7 @@ def audit(rows, tag):
     selector_counts = Counter(o["selectorStatus"] for o in result if "selectorStatus" in o)
     character_counts = Counter(o["candidateStatus"] for o in result if "candidateStatus" in o)
     predicate_counts = Counter(o["predicateStatus"] for o in result if "predicateStatus" in o)
+    progression_counts = Counter(o["progressionStatus"] for o in result if "progressionStatus" in o)
     return {"status": "diagnostic-only", "editionTag": tag,
             "scope": "Structured grants, prerequisites, equipment and proficiency fields in character options; selectors and constraints remain unexecuted.",
             "counts": dict(sorted(counts.items())),
@@ -577,6 +693,7 @@ def audit(rows, tag):
             "spellSelectorCounts": dict(sorted(selector_counts.items())),
             "characterSelectorCounts": dict(sorted(character_counts.items())),
             "spellPrerequisiteCounts": dict(sorted(predicate_counts.items())),
+            "optionalFeatureProgressionCounts": dict(sorted(progression_counts.items())),
             "explicitLiteralLinks": sum(o["alreadyExplicit"] for o in result),
             "unlinkedLiteralOccurrences": len(unlinked),
             "occurrences": result}
@@ -596,6 +713,7 @@ def main():
               "spell selectors", report[edition]["spellSelectorCounts"],
               "character selectors", report[edition]["characterSelectorCounts"],
               "spell prerequisites", report[edition]["spellPrerequisiteCounts"],
+              "optional feature progressions", report[edition]["optionalFeatureProgressionCounts"],
               "native entities", report[edition]["nativeEntities"])
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
