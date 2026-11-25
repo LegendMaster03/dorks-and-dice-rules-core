@@ -106,13 +106,51 @@ class Crosswalk:
         return [(p, v) for p, v in descendants(self.rows[parent])
                 if v.get("type") == "table" and normalize(v.get("caption")) == normalize(caption)]
 
+    def adjudicate_table_scope(self, caption, record, related, details):
+        # Adjudicate the published table scope, not the SRD flag on a
+        # commercial book's generated convenience table.
+        pages = [r for r in self.rows.values() if r["kind"] == "rulebook-page"]
+        if not pages:  # Small synthetic unit fixtures need not supply a book.
+            return self.result("publisher-scope-review", related, **details)
+        text = [normalize(p["textLayout"]) for p in pages]
+        if any(caption in page for page in text):
+            raise ValueError("Previously absent publisher table title appeared: " + caption)
+        if self.edition == LEGACY and caption == "airborne and waterborne vehicles":
+            native = self.rows["table.waterborne-vehicles"]
+            page = self.rows["rulebook.page-072"]["textLayout"]
+            if "Waterborne Vehicles" not in page or len(native["rows"]) != 6:
+                raise ValueError("Unexpected legacy vehicle table scope")
+            def compact(value):
+                return re.sub(r"\s+", "", normalize(display(value)))
+            evidence = [compact(line) for line in page.splitlines()]
+            for cells in native["rows"]:
+                if not any(compact(" ".join(display(cell) for cell in cells)) in line for line in evidence):
+                    raise ValueError("Legacy vehicle table row no longer matches publisher")
+            return self.result("publisher-narrower-table", related, publisherPages=[72],
+                               nativeRowCount=6, **details)
+        if self.edition == MODERN:
+            ids = ["table.ability-descriptions", "table.ability-check-examples", "table.saving-throw-examples"]
+            for identity in ids:
+                table = self.rows[identity]
+                if len(table["rows"]) != 6:
+                    raise ValueError("Unexpected published ability table inventory")
+                if not any(normalize(table["name"]) in page for page in text):
+                    raise ValueError("Missing published ability table heading")
+            return self.result("publisher-different-table-structure", ids, publisherPages=[5, 6, 7], **details)
+        # SRD 5.1 does not include the PHB point-buy variant or the DMG
+        # random precipitation table. This does not exclude other weather
+        # rules or forbid independently authored optional rules.
+        if caption == "ability score point cost" and any("customizing ability scores" in page for page in text):
+            raise ValueError("Legacy point-buy scope requires renewed review")
+        return self.result("not-published-as-table", **details)
+
     def table(self, name, record):
         caption = normalize(name.split("; ")[-1])
         count = len(record["rows"]) if isinstance(record.get("rows"), list) else None
         details = {"upstreamRowCount": count}
         related = TABLE_RELATED.get((self.edition, caption))
         if related is not None:
-            return self.result("publisher-scope-review", related, **details)
+            return self.adjudicate_table_scope(caption, record, related, details)
         alias = TABLE_ALIASES[self.edition].get(caption)
         ids = [alias] if alias else self.tables.get(caption, [])
         if len(ids) == 1:

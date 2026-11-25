@@ -120,3 +120,15 @@ class UpstreamComparisonTests(unittest.TestCase):
         rows[-1]["spellSaveDc"] = 18
         with self.assertRaises(ValueError):
             Crosswalk(LEGACY, rows).table("Spell Scrolls; Spell Scroll", {})
+
+    def test_scope_decision_does_not_promote_commercial_table(self):
+        page = {"id": "rulebook.page-001", "kind": "rulebook-page", "name": "Page 1",
+                "textLayout": "Races and traits."}
+        crosswalk = Crosswalk(LEGACY, [page])
+        result = crosswalk.table("Variant: Customizing Ability Scores; Ability Score Point Cost",
+                                 {"rows": [[]] * 8})
+        self.assertEqual("not-published-as-table", result["status"])
+        self.assertEqual([], result["nativeIds"])
+        page["textLayout"] = "Ability Score Point Cost"
+        with self.assertRaises(ValueError):
+            Crosswalk(LEGACY, [page]).table("Ability Score Point Cost", {})
