@@ -208,3 +208,49 @@ class StructuredRelationshipsTests(unittest.TestCase):
         rows[14]["items"] = ["Lute|SRD51"]
         self.assertEqual("unresolved-equipment-group", next(o for o in audit(rows, "SRD52")["occurrences"]
                          if o["pointer"] == "/startingEquipment/0/A/0")["candidateStatus"])
+
+    def test_warlock_damage_predicates_distinguish_weapon_attack_and_selection_range(self):
+        from audit_srd_structured_relationships import WarlockCantripPrerequisiteInventory
+        rows = []
+        reviewed = WarlockCantripPrerequisiteInventory.REVIEWED
+        for identity, (damage, attack, range_) in reviewed.items():
+            distance = {"type": "feet", "amount": range_} if type(range_) is int else {"type": range_}
+            row = {"id": identity, "kind": "spell", "name": identity.removeprefix("spell."),
+                   "level": 0, "officialTextLayout": " ".join(s for s in (damage, attack) if s),
+                   "range": {"type": "point", "distance": distance}}
+            if damage:
+                row["damageInflict"] = ["force"]
+            if attack and identity != "spell.true-strike":
+                row["spellAttack"] = ["R"]
+            rows.append(row)
+        rows.append({"id": "class.warlock", "kind": "class", "name": "Warlock",
+                     "spellList": [{"level": 0, "spellIds": list(reviewed)}]})
+        for identity, (expression, label, _, _) in WarlockCantripPrerequisiteInventory.FEATURES.items():
+            rows.append({"id": identity, "kind": "optional-feature", "name": identity,
+                         "catalogReferences": ["class.warlock"],
+                         "prerequisite": [{"spell": [{"choose": expression, "entry": label,
+                                                     "entrySummary": label.removeprefix("a ")}],
+                                           "level": {"level": 2, "class": {"name": "Warlock", "source": "SRD52"}}}]})
+        original = copy.deepcopy(rows)
+        report = audit(rows, "SRD52")
+        predicates = {r["entity"]: r for r in report["occurrences"] if "predicateStatus" in r}
+        damaging = ["spell.chill-touch", "spell.eldritch-blast", "spell.poison-spray", "spell.true-strike"]
+        for predicate in predicates.values():
+            self.assertEqual("reviewed-static-predicate", predicate["predicateStatus"])
+            self.assertEqual(damaging, predicate["prerequisiteCandidateSpellIds"])
+            self.assertTrue(predicate["selectedCantripMustBeKnown"])
+            self.assertTrue(predicate["differentCantripOnRepeat"])
+            self.assertEqual([], predicate["targets"])
+        self.assertEqual(["spell.eldritch-blast", "spell.poison-spray"],
+                         predicates["optional-feature.eldritch-spear"]["selectionCandidateSpellIds"])
+        repelling = predicates["optional-feature.repelling-blast"]
+        self.assertTrue(repelling["requiresAttackRoll"])
+        self.assertTrue(repelling["sourceFilterOmitsWeaponAttack"])
+        self.assertEqual(damaging, repelling["selectionCandidateSpellIds"])
+        self.assertEqual(0, report["unlinkedLiteralOccurrences"])
+        self.assertEqual([2, 2, 2], [r["minimumClassLevel"] for r in report["occurrences"]
+                                    if "minimumClassLevel" in r])
+        self.assertEqual(original, rows)
+        next(r for r in rows if r["id"] == "spell.true-strike")["officialTextLayout"] = "Changed source"
+        self.assertEqual({"cantrip-evidence-mismatch": 3}, audit(rows, "SRD52")["spellPrerequisiteCounts"])
+        self.assertEqual({"unreviewed-prerequisite-selector": 3}, audit(rows, "SRD51")["spellPrerequisiteCounts"])

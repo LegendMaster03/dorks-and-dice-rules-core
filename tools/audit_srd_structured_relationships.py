@@ -116,6 +116,85 @@ class SpellSelectorInventory:
         return result("static-candidates", candidates, **details)
 
 
+class WarlockCantripPrerequisiteInventory:
+    """Review the three published damaging-cantrip invocation predicates.
+
+    The source filter is an incomplete representation of the prerequisite
+    prose. Keep the exact raw expression and distinguish prerequisite
+    candidates from the more restrictive selected-cantrip pool.
+    """
+    FEATURES = {
+        "optional-feature.agonizing-blast": ("level=0|class=Warlock",
+                                            "a Warlock Cantrip That Deals Damage", False, None),
+        "optional-feature.eldritch-spear": ("level=0|class=Warlock",
+                                           "a Warlock Cantrip That Deals Damage", False, 10),
+        "optional-feature.repelling-blast": ("level=0|class=Warlock|spell attack=m;r;o",
+                                            "a Warlock Cantrip That Deals Damage via an Attack Roll", True, None),
+    }
+    # Exact reviewed SRD 5.2.1 Warlock cantrip list. The positive damage and
+    # attack evidence below is publisher text, not an inference from a name.
+    REVIEWED = {
+        "spell.chill-touch": ("necrotic damage", "make a melee spell attack", "touch"),
+        "spell.eldritch-blast": ("force damage", "make a ranged spell attack", 120),
+        "spell.poison-spray": ("poison damage", "make a ranged spell attack", 30),
+        "spell.true-strike": ("if the attack deals damage", "make one attack with the weapon", "self"),
+        "spell.mage-hand": (None, None, 30),
+        "spell.minor-illusion": (None, None, 30),
+        "spell.prestidigitation": (None, None, 10),
+    }
+
+    def __init__(self, spell_selectors, tag):
+        self.spell_selectors = spell_selectors
+        self.tag = tag
+
+    @staticmethod
+    def report(status, prerequisite=(), selection=(), **context):
+        return {"predicateStatus": status,
+                "prerequisiteCandidateSpellIds": sorted(prerequisite),
+                "selectionCandidateSpellIds": sorted(selection), **context}
+
+    def inspect(self, row, raw):
+        definition = self.FEATURES.get(row["id"])
+        if self.tag != "SRD52" or definition is None:
+            return self.report("unreviewed-prerequisite-selector")
+        expression, label, attack, minimum_range = definition
+        if (not isinstance(raw, dict) or raw.get("choose") != expression or
+                raw.get("entry") != label or set(raw) != {"choose", "entry", "entrySummary"} or
+                raw["entrySummary"] != label.removeprefix("a ")):
+            return self.report("unexpected-prerequisite-shape")
+        base = self.spell_selectors.inspect({"choose": "level=0|class=Warlock"}, "known")
+        if base.get("selectorStatus") != "static-candidates":
+            return self.report("unresolved-warlock-cantrip-list")
+        if set(base["candidateSpellIds"]) != self.REVIEWED.keys():
+            return self.report("warlock-cantrip-inventory-changed")
+        prerequisites, selected = [], []
+        for identity in base["candidateSpellIds"]:
+            spell = self.spell_selectors.spells[identity]
+            damage_text, attack_text, expected_range = self.REVIEWED[identity]
+            evidence = spell.get("officialTextLayout")
+            distance = spell.get("range", {}).get("distance", {})
+            actual_range = distance.get("amount") if distance.get("type") == "feet" else distance.get("type")
+            if not isinstance(evidence, str) or actual_range != expected_range:
+                return self.report("cantrip-evidence-mismatch", spellId=identity)
+            text = normalize(evidence)
+            if (bool(spell.get("damageInflict")) != bool(damage_text) or
+                    (damage_text and damage_text not in text) or
+                    (attack_text and attack_text not in text)):
+                return self.report("cantrip-evidence-mismatch", spellId=identity)
+            if not damage_text or (attack and not attack_text):
+                continue
+            prerequisites.append(identity)
+            if minimum_range is None or (type(actual_range) is int and actual_range >= minimum_range):
+                selected.append(identity)
+        return self.report("reviewed-static-predicate", prerequisites, selected,
+                           requiresDamage=True, requiresAttackRoll=attack,
+                           selectedCantripMustBeKnown=True, differentCantripOnRepeat=True,
+                           minimumSelectionRangeFeet=minimum_range,
+                           publisherEvidenceReviewed=True,
+                           sourceFilterOmitsDamageConstraint=True,
+                           sourceFilterOmitsWeaponAttack=attack)
+
+
 class CharacterSelectorInventory:
     """Static, edition-local candidate pools, not character eligibility decisions."""
 
@@ -286,6 +365,7 @@ def audit(rows, tag):
     index = Index(rows, tag)
     character_selectors = CharacterSelectorInventory(rows, index)
     spell_selectors = SpellSelectorInventory(rows)
+    warlock_predicates = WarlockCantripPrerequisiteInventory(spell_selectors, tag)
     result = []
     for row in sorted(rows, key=lambda r: r["id"]):
         if row["kind"] not in ORIGIN_KINDS:
@@ -370,7 +450,11 @@ def audit(rows, tag):
                     for i, target in enumerate(child):
                         target_path = child_path + "/" + str(i)
                         if isinstance(target, dict):
-                            emit(target_path, "prerequisite-selector", target, "selector-review")
+                            if kind == "spell":
+                                emit(target_path, "prerequisite-selector", target, "selector-review",
+                                     **warlock_predicates.inspect(row, target))
+                            else:
+                                emit(target_path, "prerequisite-selector", target, "selector-review")
                         else:
                             literal(target_path, "prerequisite", kind, target)
                 elif key == "pact":
@@ -378,7 +462,8 @@ def audit(rows, tag):
                 elif key == "level" and isinstance(child, dict) and isinstance(child.get("class"), dict):
                     cls = child["class"]
                     raw = cls.get("name", "") + ("|" + cls["source"] if cls.get("source") else "")
-                    literal(child_path + "/class", "prerequisite", "class", raw)
+                    literal(child_path + "/class", "prerequisite", "class", raw,
+                            minimumClassLevel=child.get("level"))
                 else:
                     emit(child_path, "prerequisite-constraint", {key: child}, "constraint-review")
 
@@ -469,6 +554,7 @@ def audit(rows, tag):
     relation_counts = Counter(o["relation"] for o in result)
     selector_counts = Counter(o["selectorStatus"] for o in result if "selectorStatus" in o)
     character_counts = Counter(o["candidateStatus"] for o in result if "candidateStatus" in o)
+    predicate_counts = Counter(o["predicateStatus"] for o in result if "predicateStatus" in o)
     return {"status": "diagnostic-only", "editionTag": tag,
             "scope": "Structured grants, prerequisites, equipment and proficiency fields in character options; selectors and constraints remain unexecuted.",
             "counts": dict(sorted(counts.items())),
@@ -476,6 +562,7 @@ def audit(rows, tag):
             "nativeEntities": len(rows),
             "spellSelectorCounts": dict(sorted(selector_counts.items())),
             "characterSelectorCounts": dict(sorted(character_counts.items())),
+            "spellPrerequisiteCounts": dict(sorted(predicate_counts.items())),
             "explicitLiteralLinks": sum(o["alreadyExplicit"] for o in result),
             "unlinkedLiteralOccurrences": len(unlinked),
             "occurrences": result}
@@ -494,6 +581,7 @@ def main():
               "unlinked literal", report[edition]["unlinkedLiteralOccurrences"],
               "spell selectors", report[edition]["spellSelectorCounts"],
               "character selectors", report[edition]["characterSelectorCounts"],
+              "spell prerequisites", report[edition]["spellPrerequisiteCounts"],
               "native entities", report[edition]["nativeEntities"])
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
