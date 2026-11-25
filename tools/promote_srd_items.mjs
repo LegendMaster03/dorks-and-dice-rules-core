@@ -207,6 +207,19 @@ function recoverArmorResistance(records,report,manifest,tag,publisherPages,input
  return extra;
 }
 
+function verifyLegacyScroll(row,publisherPages){
+ if(row.kind!=="item"||!row.id.startsWith("item.spell-scroll-"))return false;
+ const levels=["Cantrip","1st","2nd","3rd","4th","5th","6th","7th","8th","9th"],level=row.spellScrollLevel;
+ const page=publisherPages.find(p=>p.page===242),expectedRarity=["common","common","uncommon","uncommon","rare","rare","very rare","very rare","very rare","legendary"],dc=[13,13,13,15,15,17,17,18,18,19],bonus=[5,5,5,7,7,9,9,10,10,11];
+ if(!Number.isInteger(level)||level<0||level>9||!page||row.rarity!==expectedRarity[level])throw Error("Unexpected legacy scroll identity "+row.id);
+ const normalize=s=>s.replace(/\s+/g," ").toLowerCase();
+ const expected=normalize(`${levels[level]} ${expectedRarity[level]} ${dc[level]} +${bonus[level]}`);
+ if(!page.textLayout.split("\n").some(l=>normalize(l).includes(expected)))throw Error("Missing publisher scroll table row "+row.id);
+ if(!row.entries.includes(`A spell cast from this scroll has a save DC of ${dc[level]} and an attack bonus of {@hit ${bonus[level]}}.`))throw Error("Scroll prose mismatch "+row.id);
+ row.spellSaveDc=dc[level];row.spellAttackBonus=bonus[level];
+ return true;
+}
+
 function generate(files, sourceManifest, packageManifest, tag, officialUrl, externalIds, vehicles, supplement, publisherPages) {
     const records=[], report={edition:packageManifest.officialPageImport.release, counts:{}, excluded:[], corrections:[], publisherOnly:[]};
     const source="SRD"+tag;
@@ -305,6 +318,7 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
                     const correction=reconcileLegacyWeaponProperty(row);
                     if(correction){pages=correction.pages;addCorrection(id,correction.reason);}
                 }
+                if(tag==="51"&&verifyLegacyScroll(row,publisherPages)){pages=[242];addCorrection(id,"Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics.");}
                 const deckReview=reviewDeckTable(row,tag,publisherPages);
                 if(deckReview){pages=deckReview.pages;addCorrection(id,deckReview.reason);}
                 const templateCorrection=reconcileNamedTemplate(row,tag);
@@ -411,7 +425,7 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
     const native=base+"native/";
     const externalIds=["spells","bestiary"].flatMap(folder=>fs.readdirSync(path.join(root,native,folder)).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(native+folder+"/"+f).map(row=>row.id)));
     externalIds.push(...read(native+"skills.json").map(row=>row.id),...read(native+"conditions.json").map(row=>row.id));
-    const publisherPages=(tag==="51"?["203-227"]:["205-229","230-254"]).flatMap(n=>read(native+"rulebook/pages-"+n+".json"));
+    const publisherPages=(tag==="51"?["203-227","228-252"]:["205-229","230-254"]).flatMap(n=>read(native+"rulebook/pages-"+n+".json"));
     const {records,report}=generate(inputs,sourceManifest,manifest,tag,officialUrl,externalIds,read("data/reference/srd/structured/vehicles.json"),read("data/reference/srd/upstream-firearm-bullet-52.json"),publisherPages);
     const resistance=recoverArmorResistance(records,report,manifest,tag,publisherPages,read("data/reference/srd/upstream-armor-resistance.json"));
     const outputs=new Map();

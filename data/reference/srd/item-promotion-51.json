@@ -379,6 +379,46 @@
       "reason": "Use official Handy Haversack name"
     },
     {
+      "id": "item.spell-scroll-1st-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-2nd-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-3rd-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-4th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-5th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-6th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-7th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-8th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-9th-level",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
+      "id": "item.spell-scroll-cantrip",
+      "reason": "Verify published spell level, rarity, save DC and attack bonus on SRD 5.1 p.242; expose typed scroll statistics."
+    },
+    {
       "id": "item-group.gaming-set",
       "reason": "Remove gaming set variants absent from the 5.1 tools table"
     },
@@ -431,7 +471,7 @@
     "item-group.armor-of-resistance"
   ],
   "unresolvedReferences": [],
-  "resolvedReferenceCount": 1251,
+  "resolvedReferenceCount": 1261,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",

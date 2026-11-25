@@ -146,7 +146,22 @@ class Crosswalk:
             ids = [r["id"] for r in self.rows.values() if r["id"].startswith("item.spell-scroll-")]
             if len(ids) != 10:
                 raise ValueError("Unexpected legacy spell scroll inventory")
-            return self.result("normalized-collection-review", ids, nativeRecordCount=len(ids), **details)
+            rarity = ["common", "common", "uncommon", "uncommon", "rare", "rare", "very rare", "very rare", "very rare", "legendary"]
+            dc = [13, 13, 13, 15, 15, 17, 17, 18, 18, 19]
+            bonus = [5, 5, 5, 7, 7, 9, 9, 10, 10, 11]
+            levels = set()
+            for identity in ids:
+                row = self.rows[identity]
+                level = row.get("spellScrollLevel")
+                if (type(level) is not int or not 0 <= level <= 9 or level in levels
+                        or row.get("rarity") != rarity[level]
+                        or row.get("spellSaveDc") != dc[level]
+                        or row.get("spellAttackBonus") != bonus[level]
+                        or 242 not in row.get("source", {}).get("pages", [])):
+                    raise ValueError("Unverified legacy spell scroll row " + identity)
+                levels.add(level)
+            return self.result("publisher-verified-normalized-collection", ids,
+                               nativeRecordCount=len(ids), publisherPages=[242], **details)
         return self.result("unresolved-table", **details)
 
     def card(self, record):

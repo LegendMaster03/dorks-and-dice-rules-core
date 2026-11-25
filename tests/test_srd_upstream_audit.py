@@ -105,3 +105,18 @@ class UpstreamComparisonTests(unittest.TestCase):
         self.assertEqual("unresolved-identity",
                          crosswalk.unnamed_subrace(dict(upstream, entries=["unknown"]))["status"])
         self.assertEqual("unresolved-identity", Crosswalk(MODERN, [base]).unnamed_subrace(upstream)["status"])
+
+    def test_scroll_crosswalk_requires_complete_verified_statistics(self):
+        rarity = ["common", "common", "uncommon", "uncommon", "rare", "rare", "very rare", "very rare", "very rare", "legendary"]
+        dc = [13, 13, 13, 15, 15, 17, 17, 18, 18, 19]
+        bonus = [5, 5, 5, 7, 7, 9, 9, 10, 10, 11]
+        rows = [{"id": f"item.spell-scroll-{i}", "kind": "item", "name": f"Scroll {i}",
+                 "spellScrollLevel": i, "rarity": rarity[i], "spellSaveDc": dc[i],
+                 "spellAttackBonus": bonus[i], "source": {"pages": [242]}}
+                for i in range(10)]
+        result = Crosswalk(LEGACY, rows).table("Spell Scrolls; Spell Scroll", {"rows": [[]] * 10})
+        self.assertEqual("publisher-verified-normalized-collection", result["status"])
+        self.assertEqual(10, result["nativeRecordCount"])
+        rows[-1]["spellSaveDc"] = 18
+        with self.assertRaises(ValueError):
+            Crosswalk(LEGACY, rows).table("Spell Scrolls; Spell Scroll", {})

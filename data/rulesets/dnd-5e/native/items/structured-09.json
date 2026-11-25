@@ -578,7 +578,10 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 11} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 1,
+    "spellSaveDc": 13,
+    "spellAttackBonus": 5,
     "catalogReferences": [
+      "rulebook.page-242",
       "skill.arcana"
     ],
     "source": {
@@ -587,7 +590,9 @@
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        242
+      ],
       "candidatePage": 239,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -612,7 +617,10 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 12} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 2,
+    "spellSaveDc": 13,
+    "spellAttackBonus": 5,
     "catalogReferences": [
+      "rulebook.page-242",
       "skill.arcana"
     ],
     "source": {
@@ -621,7 +629,9 @@
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        242
+      ],
       "candidatePage": 239,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -646,7 +656,10 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 13} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 3,
+    "spellSaveDc": 15,
+    "spellAttackBonus": 7,
     "catalogReferences": [
+      "rulebook.page-242",
       "skill.arcana"
     ],
     "source": {
@@ -655,7 +668,9 @@
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        242
+      ],
       "candidatePage": 239,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -680,7 +695,10 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 14} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 4,
+    "spellSaveDc": 15,
+    "spellAttackBonus": 7,
     "catalogReferences": [
+      "rulebook.page-242",
       "skill.arcana"
     ],
     "source": {
@@ -689,7 +707,9 @@
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        242
+      ],
       "candidatePage": 239,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -714,7 +734,10 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 15} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 5,
+    "spellSaveDc": 17,
+    "spellAttackBonus": 9,
     "catalogReferences": [
+      "rulebook.page-242",
       "skill.arcana"
     ],
     "source": {
@@ -723,7 +746,9 @@
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        242
+      ],
       "candidatePage": 239,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -748,7 +773,10 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 16} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 6,
+    "spellSaveDc": 17,
+    "spellAttackBonus": 9,
     "catalogReferences": [
+      "rulebook.page-242",
       "skill.arcana"
     ],
     "source": {
@@ -757,7 +785,9 @@
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        242
+      ],
       "candidatePage": 239,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -782,7 +812,10 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 17} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 7,
+    "spellSaveDc": 18,
+    "spellAttackBonus": 10,
     "catalogReferences": [
+      "rulebook.page-242",
       "skill.arcana"
     ],
     "source": {
@@ -791,7 +824,9 @@
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        242
+      ],
       "candidatePage": 239,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -816,7 +851,10 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 18} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 8,
+    "spellSaveDc": 18,
+    "spellAttackBonus": 10,
     "catalogReferences": [
+      "rulebook.page-242",
       "skill.arcana"
     ],
     "source": {
@@ -825,7 +863,9 @@
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        242
+      ],
       "candidatePage": 239,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -850,7 +890,10 @@
       "A wizard spell on a spell scroll can be copied just as spells in spellbooks can be copied. When a spell is copied from a spell scroll, the copier must succeed on a {@dc 19} Intelligence ({@skill Arcana}) check. If the check succeeds, the spell is successfully copied. Whether the check succeeds or fails, the spell scroll is destroyed."
     ],
     "spellScrollLevel": 9,
+    "spellSaveDc": 19,
+    "spellAttackBonus": 11,
     "catalogReferences": [
+      "rulebook.page-242",
       "skill.arcana"
     ],
     "source": {
@@ -859,7 +902,9 @@
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        242
+      ],
       "candidatePage": 239,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -883,14 +928,20 @@
       "A spell cast from this scroll has a save DC of 13 and an attack bonus of {@hit 5}."
     ],
     "spellScrollLevel": 0,
-    "catalogReferences": [],
+    "spellSaveDc": 13,
+    "spellAttackBonus": 5,
+    "catalogReferences": [
+      "rulebook.page-242"
+    ],
     "source": {
       "release": "srd-5.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
       "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        242
+      ],
       "candidatePage": 239,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",

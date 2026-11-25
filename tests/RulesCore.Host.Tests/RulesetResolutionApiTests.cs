@@ -369,6 +369,13 @@ public sealed class RulesetResolutionApiTests
             Assert.Equal("acid", Assert.Single(resistanceArmor.GetProperty("resist").EnumerateArray()).GetString());
             Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(prefix + "/item.shield-of-acid-resistance")).StatusCode);
         }
+        var scrollCantrip = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/item.spell-scroll-cantrip")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal(13, scrollCantrip.GetProperty("spellSaveDc").GetInt32());
+        Assert.Equal(5, scrollCantrip.GetProperty("spellAttackBonus").GetInt32());
+        var scrollNinth = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/item.spell-scroll-9th-level")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal(19, scrollNinth.GetProperty("spellSaveDc").GetInt32());
+        Assert.Equal(11, scrollNinth.GetProperty("spellAttackBonus").GetInt32());
+        Assert.Contains("rulebook.page-242", scrollNinth.GetProperty("catalogReferences").GetRawText());
         var legacyIllusions = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/item.deck-of-illusions")).GetProperty("rule").GetProperty("definition");
         var modernIllusions = (await client.GetFromJsonAsync<JsonElement>(animals + "/item.deck-of-illusions")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("Beholder", legacyIllusions.GetProperty("entries").GetRawText());
