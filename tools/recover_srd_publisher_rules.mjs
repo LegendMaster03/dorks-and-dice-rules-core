@@ -43,6 +43,63 @@ function legacyPublisherTables(pageMap,metadata,items){
  return rows;
 }
 
+function legacyPublisherRules(pageMap,metadata){
+ const page=n=>pageMap.get(n).textLayout;
+ // Remove only column/layout artifacts; preserve publisher wording and headings.
+ const left=n=>page(n).split("\n").filter(l=>!/^\s{20,}/.test(l)).map(l=>l.trim().split(/ {4,}/)[0]).filter(Boolean);
+ const right=n=>page(n).split("\n").map(l=>l.match(/ {4,}(\S.*)$/)?.[1]??"").filter(l=>l&&!l.startsWith("System Reference Document"));
+ const clean=lines=>lines.join(" ").replace(/[\u00ad]/g,"").replace(/[-\u2010\u2011]{2,}/g,"-").replace(/\s+/g," ").trim();
+ const section=(lines,start,end)=>{
+  const i=lines.indexOf(start),j=end===undefined?lines.length:lines.indexOf(end,i+1);
+  if(i<0||j<=i)throw Error("Missing publisher section boundary "+start);
+  return lines.slice(i+1,j);
+ };
+ const paras=(lines,starts)=>{
+  const offsets=[0,...starts.map(s=>{
+   const i=lines.findIndex(l=>l.startsWith(s));if(i<=0)throw Error("Missing paragraph boundary "+s);return i;
+  }),lines.length];
+  if(offsets.some((v,i)=>i&&v<=offsets[i-1]))throw Error("Unexpected paragraph ordering");
+  return offsets.slice(0,-1).map((i,j)=>clean(lines.slice(i,offsets[j+1])));
+ };
+ const node=(name,entries)=>({type:"entries",name,entries});
+ const row=(id,name,nums,entries,refs)=>({id,kind:"rule",name,entries,catalogReferences:[...new Set([...nums.map(n=>pageMap.get(n).id),...refs])].sort(),source:metadata(nums)});
+ const p195=left(195),p196=left(196),p204=left(204),p260=left(260);
+ const detect=[...section(p195,"Detecting and Disabling a Trap"),...right(195)];
+ const trapEntries=[
+  ...paras(section(p195,"Traps","Traps in Play"),["A trap can be either"]),
+  node("Traps in Play",[
+   ...paras(section(p195,"Traps in Play","Triggering a Trap"),[]),
+   node("Triggering a Trap",paras(section(p195,"Triggering a Trap","Detecting and Disabling a Trap"),[])),
+   node("Detecting and Disabling a Trap",paras(detect,["A trap’s description","You might call","Any character can attempt","In most cases","You should allow","Foiling traps","Traps are often designed"])),
+   node("Trap Effects",paras(section(p196,"Trap Effects","Trap Save DCs and Attack Bonuses"),["The attack bonus","A trap intended"])),
+   node("Complex Traps",paras(section(p196,"Complex Traps"),["When a complex trap","For example"])),
+   node("Sample Traps",["The magical and mechanical traps presented here vary in deadliness and are presented in alphabetical order."])
+  ])
+ ];
+ const sample=clean(section(right(196),"Sample Traps","Collapsing Roof"));
+ if(sample!==trapEntries[2].entries.at(-1).entries[0])throw Error("Publisher sample-trap introduction mismatch");
+ const poisonStart=p204.indexOf("Poisons"),poisonEnd=p204.indexOf("Poisons",poisonStart+1);
+ if(poisonStart<0||poisonEnd<=poisonStart)throw Error("Missing poison section boundaries");
+ const poisonLines=p204.slice(poisonStart+1,poisonEnd);
+ const poisonEntries=paras(poisonLines,["Poisons come in","Contact.","Ingested.","Inhaled.","Injury."]);
+ if(!poisonEntries.at(-1).endsWith("exposed to its effects."))throw Error("Incomplete poison types");
+ const legendaryEntries=[
+  ...paras(section(p260,"Legendary Creatures","Legendary Actions"),["If a creature assumes"]),
+  node("Legendary Actions",paras(section(p260,"Legendary Actions","A Legendary Creature’s Lair"),[])),
+  node("A Legendary Creature’s Lair",[
+   ...paras(section(p260,"A Legendary Creature’s Lair","Lair Actions"),[]),
+   node("Lair Actions",paras(section(p260,"Lair Actions","Regional Effects"),[])),
+   node("Regional Effects",[clean([...section(p260,"Regional Effects"),...right(260)])])
+  ])
+ ];
+ if(!legendaryEntries.at(-1).entries.at(-1).entries[0].endsWith("legendary creature dies."))throw Error("Incomplete regional effects");
+ return [
+  row("rule.traps","Traps",[195,196],trapEntries,["table.trap-save-dcs-and-attack-bonuses","table.damage-severity-by-level","trap.collapsing-roof","trap.falling-net","trap.fire-breathing-statue","trap.pits","trap.poison-darts","trap.poison-needle","trap.rolling-sphere","trap.sphere-of-annihilation","skill.perception","skill.investigation","skill.arcana","spell.glyph-of-warding","spell.symbol","spell.dispel-magic","item.thieves-tools"]),
+  row("rule.poison-types","Poisons",[204],poisonEntries,["table.poisons"]),
+  row("rule.legendary-creatures","Legendary Creatures",[260],legendaryEntries,["condition.incapacitated","status.surprised"])
+ ];
+}
+
 function recoverPublisherRules(manifest,pages,tag,knownIds,items){
  const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
  const pageMap=new Map(pages.map(p=>[p.page,p]));
@@ -61,13 +118,14 @@ function recoverPublisherRules(manifest,pages,tag,knownIds,items){
    rows.push({id:"item-group."+slug(d.name),kind:"item-group",name:d.name,scfType:d.scfType,rarity:"none",focus:d.classes,items:d.forms.map(([,name])=>name+"|SRD51"),entries:d.entries,catalogReferences:[...refs,...d.classes.map(n=>"class."+slug(n)),...d.pages.map(n=>pageMap.get(n).id)].sort(),source:metadata(d.pages)});
   }
   rows.push(...legacyPublisherTables(pageMap,metadata,items));
+  rows.push(...legacyPublisherRules(pageMap,metadata));
  }else{
   const page=pageMap.get(90),entry="Each weapon has a mastery property, which is usable only by a character who has a feature, such as Weapon Mastery, that unlocks the property for the character. The properties are defined below.";
   const names=["Cleave","Graze","Nick","Push","Sap","Slow","Topple","Vex"];
   if(!page.textLayout.includes("Mastery Properties")||names.some(n=>!page.textLayout.includes(n)))throw Error("Missing mastery section");
   rows.push({id:"rule.weapon-mastery-properties",kind:"rule",name:"Mastery Properties",aliases:["Weapon Mastery Properties"],entries:[entry],properties:names.map(n=>"item-mastery."+slug(n)),catalogReferences:[page.id,...names.map(n=>"item-mastery."+slug(n))].sort(),source:metadata([90])});
  }
- const known=new Set([...knownIds,...pages.map(p=>p.id)]);
+ const known=new Set([...knownIds,...pages.map(p=>p.id),...rows.map(r=>r.id)]);
  for(const r of rows)for(const id of r.catalogReferences)if(!known.has(id))throw Error("Missing publisher recovery reference "+id);
  return rows;
 }
@@ -77,7 +135,7 @@ for(const [pack,tag,files] of [["dnd-5e","51",["053-077","178-202","203-227","22
  const base="data/rulesets/"+pack+"/",native=base+"native/";
  const pages=files.flatMap(f=>read(native+"rulebook/pages-"+f+".json"));
  const load=dir=>fs.readdirSync(path.join(root,native,dir)).filter(f=>f.endsWith(".json")).flatMap(f=>read(native+dir+"/"+f));
- const items=load("items"),knownIds=[...items,...load("classes")].map(x=>x.id);
+ const items=load("items"),knownIds=[...items,...load("classes"),...load("spells"),...["skills.json","conditions.json","supplementary-rules.json"].flatMap(f=>read(native+f))].map(x=>x.id);
  const rows=recoverPublisherRules(read(base+"manifest.json"),pages,tag,knownIds,items),body=JSON.stringify(rows,null,2)+"\n",target=path.join(root,native+"publisher-recovered-rules.json");
  if(process.argv.includes("--check")){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale publisher recovery "+pack);}
  else fs.writeFileSync(target,body);

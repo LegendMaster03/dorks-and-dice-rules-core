@@ -447,6 +447,30 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/table.airborne-and-waterborne-vehicles")).StatusCode);
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(animals + "/table.waterborne-vehicles")).StatusCode);
 
+        // Publisher-only rules/tables preserve edition-local source mechanics.
+        var legacyTrapRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.traps")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("table.damage-severity-by-level", legacyTrapRule.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("trap.collapsing-roof", legacyTrapRule.GetProperty("catalogReferences").GetRawText());
+        var legacyTrapSeverity = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/table.damage-severity-by-level")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal("24d10", legacyTrapSeverity.GetProperty("rows")[3][3].GetString());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(animals + "/table.damage-severity-by-level")).StatusCode);
+        var legacyPoisonPrices = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/table.poisons")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal(14, legacyPoisonPrices.GetProperty("rows").GetArrayLength());
+        Assert.Contains("item.crawler-mucus-contact", legacyPoisonPrices.GetProperty("catalogReferences").GetRawText());
+        var legacyMonsterPb = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/table.proficiency-bonus-by-challenge-rating")).GetProperty("rule").GetProperty("definition");
+        var modernMonsterPb = (await client.GetFromJsonAsync<JsonElement>(animals + "/table.proficiency-bonus-by-challenge-rating")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal(34, legacyMonsterPb.GetProperty("rows").GetArrayLength());
+        Assert.Equal(8, modernMonsterPb.GetProperty("rows").GetArrayLength());
+        var legacyMonsterXp = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/table.experience-points-by-challenge-rating")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal("155,000", legacyMonsterXp.GetProperty("rows")[33][1].GetString());
+        var legacySentientCommunication = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/table.sentient-item-s-communication")).GetProperty("rule").GetProperty("definition");
+        var modernSentientCommunication = (await client.GetFromJsonAsync<JsonElement>(animals + "/table.sentient-item-s-communication")).GetProperty("rule").GetProperty("definition");
+        Assert.Equal("d100", legacySentientCommunication.GetProperty("colLabels")[0].GetString());
+        Assert.Equal("1d10", modernSentientCommunication.GetProperty("colLabels")[0].GetString());
+        var legacyLegendary = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.legendary-creatures")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("initiative count 20", legacyLegendary.GetProperty("entries").GetRawText());
+        Assert.Contains("condition.incapacitated", legacyLegendary.GetProperty("catalogReferences").GetRawText());
+
         // Supplementary actions, glossary and contagions preserve edition-specific categories.
         var oldCoreActions = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=action&limit=1");
         var newCoreActions = await client.GetFromJsonAsync<JsonElement>(animals + "?category=action&limit=1");

@@ -90,3 +90,7 @@ The pinned source and the current upstream repository default-branch source at `
 ## Embedded equipment-table completion
 
 The book projection now covers all pinned embedded table occurrences or records their existing separate catalog representation. Added eight legacy and eleven modern equipment and service tables, preserving local item identities, grouped rows and publisher locators. Native counts at this checkpoint: 2,582 legacy, 2,989 modern, 153 Fate (5,724 total). The modern Ranger Druidic Focus eligibility is corrected. See [structured book rules and tables](srd-structured-book-promotion.md) for reconciliation scope and limitations. Remaining publisher-only content, broader typed-field/source fidelity, consumer acceptance and distribution approval remain separate.
+
+## Publisher-only recovery checkpoint
+
+The legacy publisher recovery now includes ten missing tables and three descriptive rule sections, in addition to the prior three focus groups. Legacy native records total 2,595; modern 2,989; Fate 153 (5,737 imported records). Publisher-only table coverage is not yet exhaustive; the new definitions preserve edition-local rules and do not change executable mechanics or first-party content.
