@@ -14,7 +14,10 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.longbow",
+      "baseitem.shortbow"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -46,7 +49,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.shield"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -83,7 +88,9 @@
     "entries": [
       "{#itemEntry Dragon Scale Mail|SRD52}"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -110,7 +117,9 @@
     "entries": [
       "While you are within 5 feet of this brazier, you can take a {@action Magic|SRD52} action to summon a {@creature Fire Elemental|SRD52}. The elemental appears in an unoccupied space as close to the brazier as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}. The brazier can't be used this way again until the next dawn."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.fire-elemental"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -172,7 +181,9 @@
     "entries": [
       "{#itemEntry Dragon Scale Mail|SRD52}"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -206,7 +217,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.magic-missile"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -356,7 +369,19 @@
       "tinderbox|srd52",
       "waterskin|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.backpack",
+      "item.ball-bearings",
+      "item.bell",
+      "item.candle",
+      "item.crowbar",
+      "item.hooded-lantern",
+      "item.oil",
+      "item.rations",
+      "item.rope",
+      "item.tinderbox",
+      "item.waterskin"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -597,7 +622,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.gate"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -632,7 +659,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.dimension-door"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -803,6 +832,8 @@
       "contact"
     ],
     "catalogReferences": [
+      "condition.paralyzed",
+      "condition.poisoned",
       "rulebook.page-197"
     ],
     "source": {
@@ -859,7 +890,9 @@
     "entries": [
       "While gently swinging this censer, you can take a {@action Magic|SRD52} action to summon an {@creature Air Elemental|SRD52}. The elemental appears in an unoccupied space as close to the censer as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}. The censer can't be used this way again until the next dawn."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.air-elemental"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -888,7 +921,13 @@
     "entries": [
       "As a {@action Utilize|SRD52} action, you can wrap a Chain around an unwilling creature within 5 feet of yourself that has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition if you succeed on a {@dc 13} Strength ({@skill Athletics|SRD52}) check. If the creature's legs are bound, the creature has the {@condition Restrained|SRD52} condition until it escapes. Escaping the Chain requires the creature to make a successful {@dc 18} Dexterity ({@skill Acrobatics|SRD52}) check as an action. Bursting the Chain requires a successful {@dc 20} Strength ({@skill Athletics|SRD52}) check as an action."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.grappled",
+      "condition.incapacitated",
+      "condition.restrained",
+      "skill.acrobatics",
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1004,7 +1043,9 @@
     "attachedSpells": [
       "knock|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.knock"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1038,7 +1079,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.scorching-ray"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1138,7 +1181,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.web"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1197,7 +1242,10 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.perception",
+      "skill.stealth"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1228,7 +1276,9 @@
     "entries": [
       "This cloak has 3 charges and regains {@dice 1d3} expended charges daily at dawn. While wearing the cloak, you can take a {@action Magic|SRD52} action to pull its hood over your head and expend 1 charge to give yourself the {@condition Invisible|SRD52} condition for 1 hour. The effect ends early if you pull the hood down (no action required) or cease wearing the hood."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1300,7 +1350,11 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.bat",
+      "skill.stealth",
+      "spell.polymorph"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1453,7 +1507,9 @@
     "entries": [
       "{#itemEntry Dragon Scale Mail|SRD52}"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1579,7 +1635,9 @@
     "attachedSpells": [
       "scrying|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.scrying"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1612,7 +1670,10 @@
       "detect thoughts|srd52",
       "scrying|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.detect-thoughts",
+      "spell.scrying"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1651,7 +1712,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.scrying",
+      "spell.suggestion"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1683,7 +1747,9 @@
     "attachedSpells": [
       "scrying|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.scrying"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",

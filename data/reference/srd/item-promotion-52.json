@@ -4,7 +4,7 @@
     "item": 464,
     "itemGroup": 25,
     "baseitem": 93,
-    "itemProperty": 12,
+    "itemProperty": 9,
     "itemMastery": 8,
     "magicvariant": 41
   },
@@ -18,6 +18,21 @@
       "path": "items-base.json",
       "pointer": "/baseitem/122",
       "reason": "obsolete legacy duplicate; retain modern weapon mastery definition"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/5",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/7",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
+    },
+    {
+      "path": "items-base.json",
+      "pointer": "/itemProperty/19",
+      "reason": "legacy firearm metadata, not a distinct official SRD weapon property"
     },
     {
       "path": "items-base.json",
@@ -245,5 +260,56 @@
   "publisherOnly": [
     "item.plate-armor-of-etherealness"
   ],
-  "nativeCount": 644
+  "unresolvedReferences": [
+    {
+      "id": "item.bag-of-holding",
+      "kind": "item",
+      "raw": "Heward's Handy Haversack|SRD52",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "item.figurine-of-wondrous-power-ebony-fly",
+      "kind": "creature",
+      "raw": "Giant Fly|SRD52",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "item.figurine-of-wondrous-power-ivory-goats",
+      "kind": "item",
+      "raw": "+1 Lance|SRD52",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "item.figurine-of-wondrous-power-ivory-goats",
+      "kind": "item",
+      "raw": "+2 Longsword|SRD52",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "item.portable-hole",
+      "kind": "item",
+      "raw": "Heward's Handy Haversack|SRD52",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "baseitem.firearm-bullets-10",
+      "kind": "item",
+      "raw": "firearm bullet|srd52",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "baseitem.musket",
+      "kind": "item",
+      "raw": "firearm bullet|srd52",
+      "reason": "missing-or-ambiguous"
+    },
+    {
+      "id": "baseitem.pistol",
+      "kind": "item",
+      "raw": "firearm bullet|srd52",
+      "reason": "missing-or-ambiguous"
+    }
+  ],
+  "resolvedReferenceCount": 1096,
+  "nativeCount": 641
 }

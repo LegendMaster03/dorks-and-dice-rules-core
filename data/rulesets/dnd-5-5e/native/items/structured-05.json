@@ -67,7 +67,10 @@
       "A creature that can touch the bands, including the one {@condition Restrained|SRD52}, can take an action to make a {@dc 20} Strength ({@skill Athletics|SRD52}) check to break the iron bands. On a successful check, the item is destroyed, and the {@condition Restrained|SRD52} creature is freed. On a failed check, any further attempts made by that creature automatically fail until 24 hours have elapsed.",
       "Once the bands are used, they can't be used again until the next dawn."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.restrained",
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -96,7 +99,9 @@
       "You can take a {@action Magic|SRD52} action to remove the flask's stopper and release the creature in the flask. The creature then obeys your commands for 1 hour, understanding those commands even if it doesn't know the language in which the commands are given. If you issue no commands or give the creature a command that is likely to result in its death or imprisonment, it defends itself but otherwise takes no actions. At the end of the duration, the creature acts in accordance with its normal disposition and alignment.",
       "An {@spell Identify|SRD52} spell reveals if the flask contains a creature, but the only way to determine the type of creature is to open the flask. A newly discovered Iron Flask might already contain a creature chosen by the DM."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.identify"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -159,7 +164,11 @@
     "entries": [
       "Iron Spikes come in bundles of ten. As a {@action Utilize|SRD52} action, you can use a blunt object, such as a {@item Light Hammer|SRD52}, to hammer a spike into wood, earth, or a similar material. You can do so to jam a door shut or to then tie a {@item Rope|SRD52} or {@item Chain|SRD52} to the Spike."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.light-hammer",
+      "item.chain",
+      "item.rope"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -194,7 +203,12 @@
         "quantity": 10
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.light-hammer",
+      "item.chain",
+      "item.iron-spike",
+      "item.rope"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -240,7 +254,11 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.javelin",
+      "item-mastery.slow",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -370,7 +388,9 @@
         "dim": 45
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.oil"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -409,7 +429,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -438,7 +460,10 @@
     "entries": [
       "A Lock comes with a key. Without the key, a creature can use {@item Thieves' Tools|SRD52} to pick this Lock with a successful {@dc 15} Dexterity ({@skill Sleight of Hand|SRD52}) check."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.thieves-tools",
+      "skill.sleight-of-hand"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -471,6 +496,8 @@
       "injury"
     ],
     "catalogReferences": [
+      "condition.poisoned",
+      "condition.unconscious",
       "rulebook.page-198"
     ],
     "source": {
@@ -555,7 +582,11 @@
         "dim": 40
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.mace",
+      "condition.frightened",
+      "item-mastery.sap"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -592,7 +623,10 @@
       "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. The bonus increases to +3 when you use the weapon to attack a Construct.",
       "When you roll a 20 on an attack roll made with this weapon, the target takes an extra 7 Bludgeoning damage, or 14 Bludgeoning damage if it's a Construct. If a Construct has 25 {@variantrule Hit Points|SRD52} or fewer after taking this damage, it is destroyed."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.mace",
+      "item-mastery.sap"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -631,7 +665,11 @@
     "entries": [
       "This magic weapon has 3 charges and regains {@dice 1d3} expended charges daily at dawn. While holding the weapon, you can take a {@action Magic|SRD52} action and expend 1 charge to release a wave of terror from it. Each creature of your choice within 30 feet of you must succeed on a {@dc 15} Wisdom saving throw or have the {@condition Frightened|SRD52} condition for 1 minute. While {@condition Frightened|SRD52} in this way, a creature must spend its turns trying to move as far away from you as it can, and it can't make {@action Opportunity Attack|SRD52|Opportunity Attacks}. For its action, it can use only the {@action Dash|SRD52} action or try to escape from an effect that prevents it from moving. If it has nowhere it can move, the creature can take the {@action Dodge|SRD52} action. At the end of each of its turns, a creature repeats the save, ending the effect on itself on a success."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.mace",
+      "condition.frightened",
+      "item-mastery.sap"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -691,7 +729,10 @@
     "poisonTypes": [
       "inhaled"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -721,7 +762,14 @@
       "As a {@action Utilize|SRD52} action, you can use Manacles to bind an unwilling Small or Medium creature within 5 feet of yourself that has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition if you succeed on a {@dc 13} Dexterity ({@skill Sleight of Hand|SRD52}) check. While bound, a creature has {@variantrule Disadvantage|SRD52} on attack rolls, and the creature is {@condition Restrained|SRD52} if the Manacles are attached to a chain or hook that is fixed in place. Escaping the Manacles requires a successful {@dc 20} Dexterity ({@skill Sleight of Hand|SRD52}) check as an action. Bursting them requires a successful {@dc 25} Strength ({@skill Athletics|SRD52}) check as an action.",
       "Each set of Manacles comes with a key. Without the key, a creature can use {@item Thieves' Tools|SRD52} to pick the Manacles' lock with a successful {@dc 15} Dexterity ({@skill Sleight of Hand|SRD52}) check."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.grappled",
+      "condition.incapacitated",
+      "condition.restrained",
+      "item.thieves-tools",
+      "skill.athletics",
+      "skill.sleight-of-hand"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -810,7 +858,9 @@
       "To create a clay golem, you must spend 30 days, working without interruption with the manual at hand and resting no more than 8 hours per day. You must also pay 65,000 gp to purchase supplies.",
       "Once you finish creating the golem, the book is consumed in eldritch flames. The golem becomes animate when the ashes of the manual are sprinkled on it. It is under your control, and it understands and obeys your spoken commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.clay-golem"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -840,7 +890,9 @@
       "To create a flesh golem, you must spend 60 days, working without interruption with the manual at hand and resting no more than 8 hours per day. You must also pay 50,000 gp to purchase supplies.",
       "Once you finish creating the golem, the book is consumed in eldritch flames. The golem becomes animate when the ashes of the manual are sprinkled on it. It is under your control, and it understands and obeys your spoken commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.flesh-golem"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -901,7 +953,9 @@
       "To create an iron golem, you must spend 120 days, working without interruption with the manual at hand and resting no more than 8 hours per day. You must also pay 100,000 gp to purchase supplies.",
       "Once you finish creating the golem, the book is consumed in eldritch flames. The golem becomes animate when the ashes of the manual are sprinkled on it. It is under your control, and it understands and obeys your spoken commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.iron-golem"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -962,7 +1016,9 @@
       "To create a stone golem, you must spend 90 days, working without interruption with the manual at hand and resting no more than 8 hours per day. You must also pay 80,000 gp to purchase supplies.",
       "Once you finish creating the golem, the book is consumed in eldritch flames. The golem becomes animate when the ashes of the manual are sprinkled on it. It is under your control, and it understands and obeys your spoken commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.stone-golem"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -990,7 +1046,9 @@
     "entries": [
       "If you consult an accurate Map, you gain a +5 bonus to Wisdom ({@skill Survival|SRD52}) checks you make to find your way in the place represented on it."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.survival"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1096,7 +1154,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.detect-thoughts"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1128,7 +1188,9 @@
     "poisonTypes": [
       "ingested"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1221,7 +1283,9 @@
       "In a similar way, you can take a {@action Magic|SRD52} action and use a second command word to free one creature trapped in the mirror. The freed creature appears, along with its possessions, in the unoccupied space nearest to the mirror and facing away from it.",
       "Placing the mirror inside an extradimensional space created by a {@item Bag of Holding|SRD52}, Portable Hole, or similar item instantly destroys both items and opens a gate to the Astral Plane. The gate originates where the one item was placed inside the other. Any creature within 10 feet of the gate and not behind {@variantrule Cover|SRD52|Total Cover} is sucked through it to a random location on the Astral Plane. The gate then closes. The gate is one-way only and can't be reopened."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.bag-of-holding"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1328,7 +1392,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1364,7 +1430,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.fireball"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1460,7 +1528,14 @@
         "wind walk|srd52"
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.bless",
+      "spell.cure-wounds",
+      "spell.greater-restoration",
+      "spell.guardian-of-faith",
+      "spell.shining-smite",
+      "spell.wind-walk"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1490,7 +1565,10 @@
       "When you take the {@action Attack|SRD52} action, you can replace one of your attacks with throwing a Net. Target a creature you can see within 15 feet of yourself. The target must succeed on a Dexterity saving throw ({@dc 8} plus your Dexterity modifier and {@variantrule Proficiency|SRD52|Proficiency Bonus}) or have the {@condition Restrained|SRD52} condition until it escapes. The target succeeds automatically if it is Huge or larger.",
       "To escape, the target or a creature within 5 feet of it must take an action to make a {@dc 10} Strength ({@skill Athletics|SRD52}) check, freeing the {@condition Restrained|SRD52} creature on a success. Destroying the Net (AC 10; 5 HP; {@variantrule Immunity|SRD52} to Bludgeoning, Poison, and Psychic damage) also frees the target, ending the effect."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.restrained",
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1602,7 +1680,9 @@
     "attachedSpells": [
       "etherealness|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.etherealness"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1665,7 +1745,10 @@
     "attachedSpells": [
       "freedom of movement|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.freedom-of-movement",
+      "spell.grease"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1697,7 +1780,10 @@
     "poisonTypes": [
       "contact"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned",
+      "condition.unconscious"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",

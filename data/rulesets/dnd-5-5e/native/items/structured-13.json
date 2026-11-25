@@ -1,101 +1,5 @@
 [
   {
-    "id": "item-mastery.topple",
-    "kind": "item-mastery",
-    "name": "Topple",
-    "entries": [
-      "If you hit a creature with this weapon, you can force the creature to make a Constitution saving throw ({@dc 8} plus the ability modifier used to make the attack roll and your {@variantrule Proficiency|SRD52|Proficiency Bonus}). On a failed save, the creature has the {@condition Prone|SRD52} condition."
-    ],
-    "catalogReferences": [],
-    "source": {
-      "release": "srd-5.2.1",
-      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
-      "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
-      "candidatePage": 90,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "items-base.json",
-        "pointer": "/itemMastery/6"
-      },
-      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
-    }
-  },
-  {
-    "id": "item-mastery.vex",
-    "kind": "item-mastery",
-    "name": "Vex",
-    "entries": [
-      "If you hit a creature with this weapon and deal damage to the creature, you have {@variantrule Advantage|SRD52} on your next attack roll against that creature before the end of your next turn."
-    ],
-    "catalogReferences": [],
-    "source": {
-      "release": "srd-5.2.1",
-      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
-      "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
-      "candidatePage": 90,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "items-base.json",
-        "pointer": "/itemMastery/7"
-      },
-      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
-    }
-  },
-  {
-    "id": "magic-variant.1-ammunition",
-    "kind": "magic-variant",
-    "name": "+1 Ammunition",
-    "type": "GV|SRD52",
-    "requires": [
-      {
-        "type": "A|SRD52"
-      },
-      {
-        "type": "AF|SRD52"
-      }
-    ],
-    "ammo": true,
-    "entries": [
-      "You have a +1 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
-      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity {@note ({@table Magic Item Values by Rarity; Magic Item Rarities and Values|SRD52|200 GP})}."
-    ],
-    "inherits": {
-      "namePrefix": "+1 ",
-      "source": "SRD52",
-      "page": 209,
-      "rarity": "uncommon",
-      "bonusWeapon": "+1",
-      "entries": [
-        "You have a {=bonusWeapon} bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical."
-      ]
-    },
-    "catalogReferences": [],
-    "source": {
-      "release": "srd-5.2.1",
-      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
-      "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
-      "candidatePage": 209,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "magicvariants.json",
-        "pointer": "/magicvariant/30"
-      },
-      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
-    }
-  },
-  {
     "id": "magic-variant.1-armor",
     "kind": "magic-variant",
     "name": "+1 Armor",
@@ -792,7 +696,10 @@
         }
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.identify",
+      "spell.remove-curse"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -851,7 +758,10 @@
         }
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.identify",
+      "spell.remove-curse"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -910,7 +820,10 @@
         }
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.identify",
+      "spell.remove-curse"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1104,7 +1017,9 @@
         }
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.remove-curse"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1310,7 +1225,10 @@
         }
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.restrained",
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1463,7 +1381,9 @@
         "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.prone"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1542,7 +1462,11 @@
         }
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.stunned",
+      "item-group.belt-of-giant-strength",
+      "item.gauntlets-of-ogre-power"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1677,7 +1601,10 @@
         }
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "spell.wish"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1721,7 +1648,9 @@
         "If the armor normally imposes disadvantage on Dexterity ({@skill Stealth|SRD52}) checks or has a Strength requirement, the mithral version of the armor doesn't."
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.stealth"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1927,7 +1856,9 @@
         "When you attack a creature with this weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 14 Slashing damage and gains 1 {@condition Exhaustion|SRD52} level."
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.exhaustion"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2166,10 +2097,10 @@
       "While you're wearing this armor, you can take a {@action Magic|SRD52} action and use a command word to gain the effect of the {@spell Etherealness|SRD52} spell. The spell ends immediately if you remove the armor or take a {@action Magic|SRD52} action to repeat the command word. This property of the armor can't be used again until the next dawn."
     ],
     "catalogReferences": [
-      "rulebook.page-234",
-      "spell.etherealness",
       "baseitem.half-plate-armor",
-      "baseitem.plate-armor"
+      "baseitem.plate-armor",
+      "rulebook.page-234",
+      "spell.etherealness"
     ],
     "source": {
       "release": "srd-5.2.1",

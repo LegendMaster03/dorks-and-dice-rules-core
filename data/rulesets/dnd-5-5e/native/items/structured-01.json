@@ -361,7 +361,10 @@
     "attachedSpells": [
       "plane shift|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana",
+      "spell.plane-shift"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -392,7 +395,10 @@
     "entries": [
       "While holding this Shield, you can take a {@variantrule Bonus Action|SRD52} to cause it to animate. The Shield leaps into the air and hovers in your space to protect you as if you were wielding it, leaving your hands free. The Shield remains animate for 1 minute, until you take a {@variantrule Bonus Action|SRD52} to end this effect, or until you die or have the {@condition Incapacitated|SRD52} condition, at which point the Shield falls to the ground or into your hand if you have one free."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.shield",
+      "condition.incapacitated"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -420,7 +426,9 @@
     "entries": [
       "As a {@variantrule Bonus Action|SRD52}, you can drink a vial of Antitoxin to gain {@variantrule Advantage|SRD52} on saving throws to avoid or end the {@condition Poisoned|SRD52} condition for 1 hour."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -524,7 +532,10 @@
         "dim": 60
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.grappled",
+      "skill.investigation"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -564,7 +575,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.plate-armor"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -597,7 +610,9 @@
       "You gain a +2 bonus to {@variantrule Armor Class|SRD52} against ranged attack rolls while you wield this Shield. This bonus is in addition to the Shield's normal bonus to AC.",
       "Whenever an attacker makes a ranged attack roll against a target within 5 feet of you, you can take a {@variantrule Reaction|SRD52} to become the target of the attack instead."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.shield"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -629,7 +644,9 @@
     "poisonTypes": [
       "ingested"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -753,7 +770,13 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned",
+      "monster.bulette",
+      "monster.mummy",
+      "monster.mummy-lord",
+      "monster.treant"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -783,7 +806,10 @@
       "Inanimate objects can be stored in the bag, which can hold a cubic foot of such material. However, once each day, the bag swallows any objects inside it and spits them out into another plane of existence. The DM determines the time and plane.",
       "If the bag is pierced or torn, it is destroyed, and anything contained within it is transported to a random location on the Astral Plane."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.bag-of-holding",
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -898,7 +924,16 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.badger",
+      "monster.boar",
+      "monster.dire-wolf",
+      "monster.giant-badger",
+      "monster.giant-elk",
+      "monster.giant-rat",
+      "monster.panther",
+      "monster.weasel"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -974,7 +1009,16 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.brown-bear",
+      "monster.giant-boar",
+      "monster.giant-goat",
+      "monster.goat",
+      "monster.lion",
+      "monster.mastiff",
+      "monster.owl",
+      "monster.rat"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1050,7 +1094,16 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.ape",
+      "monster.axe-beak",
+      "monster.baboon",
+      "monster.black-bear",
+      "monster.giant-hyena",
+      "monster.giant-weasel",
+      "monster.jackal",
+      "monster.tiger"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1079,7 +1132,9 @@
     "entries": [
       "As a {@action Utilize|SRD52} action, you can spill Ball Bearings from their pouch. They spread to cover a level, 10-foot-square area within 10 feet of yourself. A creature that enters this area for the first time on a turn must succeed on a {@dc 10} Dexterity saving throw or have the {@condition Prone|SRD52} condition. It takes 10 minutes to recover the Ball Bearings."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.prone"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1401,7 +1456,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned",
+      "skill.persuasion"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1606,7 +1664,9 @@
     "entries": [
       "{#itemEntry Dragon Scale Mail|SRD52}"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1701,7 +1761,9 @@
     "entries": [
       "{#itemEntry Dragon Scale Mail|SRD52}"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1730,7 +1792,12 @@
     "entries": [
       "A Book contains fiction or nonfiction. If you consult an accurate nonfiction Book about its topic, you gain a +5 bonus to Intelligence ({@skill Arcana|SRD52}, {@skill History|SRD52}, {@skill Nature|SRD52}, or {@skill Religion|SRD52}) checks you make about that topic."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana",
+      "skill.history",
+      "skill.nature",
+      "skill.religion"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1760,7 +1827,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.stealth"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1796,7 +1865,9 @@
         "levitate|srd52"
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.levitate"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1946,7 +2017,9 @@
       "While this bowl is filled with water and you are within 5 feet of it, you can take a {@action Magic|SRD52} action to summon a {@creature Water Elemental|SRD52}. The elemental appears in an unoccupied space as close to the bowl as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}. The bowl can't be used this way again until the next dawn.",
       "The bowl is about 1 foot in diameter and half as deep. It holds about 3 gallons."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.water-elemental"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",

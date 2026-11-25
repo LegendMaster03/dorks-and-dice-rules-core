@@ -70,7 +70,13 @@
       }
     },
     "catalogReferences": [
-      "rulebook.page-216"
+      "rulebook.page-216",
+      "spell.mage-armor",
+      "spell.private-sanctum",
+      "spell.resilient-sphere",
+      "spell.shield",
+      "spell.tiny-hut",
+      "spell.wall-of-force"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -122,7 +128,10 @@
       "gate|srd52",
       "plane shift|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.gate",
+      "spell.plane-shift"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -152,7 +161,10 @@
       "The tower is 20 feet on a side and 30 feet high, with arrow slits on all sides and a battlement atop it. Its interior is divided into two floors, with a ladder, staircase, or ramp (your choice) connecting them. This ladder, staircase, or ramp ends at a trapdoor leading to the roof. When created, the tower has a single door at ground level on the side facing you. The door opens only at your command, which you can issue as a {@variantrule Bonus Action|SRD52}. It is immune to the {@spell Knock|SRD52} spell and similar magic.",
       "{@action Magic|SRD52} prevents the tower from being tipped over. The roof, the door, and the walls each have AC 20; HP 100; {@variantrule Immunity|SRD52} to Bludgeoning, Piercing, and Slashing damage except that which is dealt by siege equipment; and {@variantrule Resistance|SRD52} to all other damage. Shrinking the tower back down to statuette form doesn't repair damage to the tower. Only a {@spell Wish|SRD52} spell can repair the tower (this use of the spell counts as replicating a spell of level 8 or lower). Each casting of Wish causes the tower to regain all its {@variantrule Hit Points|SRD52}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.knock",
+      "spell.wish"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -195,7 +207,14 @@
       "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
       "You can take a {@variantrule Bonus Action|SRD52} to magically coat the blade with poison. The poison remains for 1 minute or until an attack using this weapon hits a creature. That creature must succeed on a {@dc 15} Constitution saving throw or take {@damage 2d10} Poison damage and have the {@condition Poisoned|SRD52} condition for 1 minute. The weapon can't be used this way again until the next dawn."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.dagger",
+      "condition.poisoned",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -251,7 +270,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.prone"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -426,7 +447,41 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.adult-red-dragon",
+      "monster.archmage",
+      "monster.assassin",
+      "monster.bandit-captain",
+      "monster.berserker",
+      "monster.bugbear-warrior",
+      "monster.cloud-giant",
+      "monster.druid",
+      "monster.erinyes",
+      "monster.ettin",
+      "monster.fire-giant",
+      "monster.frost-giant",
+      "monster.gnoll-warrior",
+      "monster.goblin-warrior",
+      "monster.guardian-naga",
+      "monster.hill-giant",
+      "monster.hobgoblin-warrior",
+      "monster.incubus",
+      "monster.iron-golem",
+      "monster.knight",
+      "monster.kobold-warrior",
+      "monster.lich",
+      "monster.medusa",
+      "monster.night-hag",
+      "monster.ogre",
+      "monster.oni",
+      "monster.priest",
+      "monster.succubus",
+      "monster.troll",
+      "monster.warrior-veteran",
+      "monster.wyvern",
+      "skill.investigation",
+      "spell.dispel-magic"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -753,9 +808,16 @@
       "wish|srd52"
     ],
     "catalogReferences": [
+      "monster.avatar-of-death",
+      "monster.knight",
       "rulebook.page-231",
       "rulebook.page-232",
-      "rulebook.page-233"
+      "rulebook.page-233",
+      "skill.history",
+      "skill.insight",
+      "skill.intimidation",
+      "skill.persuasion",
+      "spell.wish"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -838,7 +900,10 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -895,7 +960,19 @@
       "perfume|srd52",
       "tinderbox|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.chest",
+      "item.fine-clothes",
+      "item.ink",
+      "item.ink-pen",
+      "item.lamp",
+      "item.map-or-scroll-case",
+      "item.oil",
+      "item.paper",
+      "item.parchment",
+      "item.perfume",
+      "item.tinderbox"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -950,7 +1027,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.costume"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1073,7 +1152,17 @@
       },
       "waterskin|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.backpack",
+      "item.caltrops",
+      "item.crowbar",
+      "item.oil",
+      "item.rations",
+      "item.rope",
+      "item.tinderbox",
+      "item.torch",
+      "item.waterskin"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1100,7 +1189,9 @@
     "entries": [
       "This powder resembles fine sand. There is enough of it for one use. When you take a {@action Utilize|SRD52} action to throw the dust into the air, you and each creature and object within a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you have the {@condition Invisible|SRD52} condition for {@dice 2d4} minutes. The duration is the same for all subjects, and the dust is consumed when its magic takes effect. Immediately after an affected creature makes an attack roll, deals damage, or casts a spell, the {@condition Invisible|SRD52} condition ends for that creature."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1128,7 +1219,9 @@
       "This small packet contains {@dice 1d6 + 4} pinches of dust. As a {@action Utilize|SRD52} action, you can sprinkle a pinch of the dust over water, turning up to a 15-foot {@variantrule Cube [Area of Effect]|SRD52|Cube} of water into one marble-sized pellet, which floats or rests near where the dust was sprinkled. The pellet's weight is negligible. A creature can take a {@action Utilize|SRD52} action to smash the pellet against a hard surface, causing the pellet to shatter and release the water the dust absorbed. Doing so destroys the pellet and ends its magic.",
       "As a {@action Utilize|SRD52} action, you can sprinkle a pinch of the dust on an Elemental within 5 feet of yourself that is composed mostly of water (such as a {@creature Water Elemental|SRD52} or a Water Weird). Such a creature exposed to a pinch of the dust makes a {@dc 13} Constitution saving throw, taking {@damage 10d6} Necrotic damage on a failed save or half as much damage on a successful one."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.water-elemental"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1157,7 +1250,12 @@
       "As a {@action Utilize|SRD52} action, you can throw the dust into the air, forcing yourself and every creature in a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you to make a {@dc 15} Constitution saving throw. Constructs, Elementals, Oozes, Plants, and Undead succeed on the save automatically.",
       "On a failed save, a creature begins sneezing uncontrollably; it has the {@condition Incapacitated|SRD52} condition and is suffocating. The creature repeats the save at the end of each of its turns, ending the effect on itself on a success. The effect also ends on any creature targeted by a {@spell Lesser Restoration|SRD52} spell."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "item.dust-of-disappearance",
+      "spell.identify",
+      "spell.lesser-restoration"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1205,7 +1303,13 @@
     "entries": [
       "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. It has {@itemProperty T|SRD52|Thrown} with a normal range of 20 feet and a long range of 60 feet. When you hit with a ranged attack using this weapon, it deals an extra {@damage 1d8} Force damage, or an extra {@damage 2d8} Force damage if the target is a Giant. Immediately after hitting or missing, the weapon flies back to your hand."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.warhammer",
+      "item-mastery.push",
+      "item-property.t",
+      "item-property.v",
+      "item.belt-of-dwarvenkind"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1265,7 +1369,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.efreeti",
+      "spell.wish"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1292,7 +1399,9 @@
     "entries": [
       "This gem contains a mote of elemental energy. When you take a {@action Utilize|SRD52} action to break the gem, an {@creature Air Elemental|SRD52} is summoned, and the gem ceases to be magical. The elemental appears in an unoccupied space as close to the broken gem as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.air-elemental"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1319,7 +1428,9 @@
     "entries": [
       "This gem contains a mote of elemental energy. When you take a {@action Utilize|SRD52} action to break the gem, a {@creature Water Elemental|SRD52} is summoned, and the gem ceases to be magical. The elemental appears in an unoccupied space as close to the broken gem as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.water-elemental"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1346,7 +1457,9 @@
     "entries": [
       "This gem contains a mote of elemental energy. When you take a {@action Utilize|SRD52} action to break the gem, a {@creature Fire Elemental|SRD52} is summoned, and the gem ceases to be magical. The elemental appears in an unoccupied space as close to the broken gem as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.fire-elemental"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1373,7 +1486,9 @@
     "entries": [
       "This gem contains a mote of elemental energy. When you take a {@action Utilize|SRD52} action to break the gem, an {@creature Earth Elemental|SRD52} is summoned, and the gem ceases to be magical. The elemental appears in an unoccupied space as close to the broken gem as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.earth-elemental"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1429,7 +1544,12 @@
       "When you drink this potion, you are cured of all magical contagions. In addition, the following conditions end on you: {@condition Blinded|SRD52}, {@condition Deafened|SRD52}, {@condition Paralyzed|SRD52}, and {@condition Poisoned|SRD52}.",
       "The clear, red liquid has tiny bubbles of light in it."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.blinded",
+      "condition.deafened",
+      "condition.paralyzed",
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1458,7 +1578,9 @@
     "entries": [
       "For an Emblem to be an effective Holy Symbol, it must be borne on fabric (such as a tabard or banner) or a {@item Shield|SRD52}."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.shield"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1508,7 +1630,18 @@
       "tinderbox|srd52",
       "waterskin|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.backpack",
+      "item.bedroll",
+      "item.bell",
+      "item.bullseye-lantern",
+      "item.costume",
+      "item.mirror",
+      "item.oil",
+      "item.rations",
+      "item.tinderbox",
+      "item.waterskin"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1540,7 +1673,10 @@
     "poisonTypes": [
       "inhaled"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned",
+      "condition.unconscious"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1570,7 +1706,9 @@
       "Each minute the bottle remains open, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases by 10 feet until it reaches its maximum size of 120 feet.",
       "Closing the bottle causes the cloud to become fixed in place until it disperses after 10 minutes. A strong wind (such as that created by the {@spell Gust of Wind|SRD52} spell) disperses the cloud after 1 minute."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.gust-of-wind"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1647,7 +1785,16 @@
       },
       "waterskin|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.backpack",
+      "item.bedroll",
+      "item.oil",
+      "item.rations",
+      "item.rope",
+      "item.tinderbox",
+      "item.torch",
+      "item.waterskin"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1688,7 +1835,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.charm-person"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1715,7 +1864,9 @@
     "entries": [
       "These crystal lenses fit over the eyes. While wearing them, your vision improves significantly out to a range of 1 foot, granting you {@sense Darkvision|SRD52} within that range and {@variantrule Advantage|SRD52} on Intelligence ({@skill Investigation|SRD52}) checks made to examine something within that range."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.investigation"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1745,7 +1896,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.perception"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1807,7 +1960,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-group.figurine-of-wondrous-power",
+      "monster.griffon"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1843,7 +1999,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-group.figurine-of-wondrous-power"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1879,7 +2037,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-group.figurine-of-wondrous-power",
+      "monster.lion"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1943,7 +2104,12 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.frightened",
+      "item-group.figurine-of-wondrous-power",
+      "monster.giant-goat",
+      "monster.riding-horse"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1979,7 +2145,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-group.figurine-of-wondrous-power",
+      "monster.elephant"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2016,7 +2185,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-group.figurine-of-wondrous-power",
+      "monster.nightmare"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2052,7 +2224,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-group.figurine-of-wondrous-power",
+      "monster.mastiff"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2088,7 +2263,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-group.figurine-of-wondrous-power",
+      "monster.giant-owl"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2127,7 +2305,11 @@
     "attachedSpells": [
       "animal messenger|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-group.figurine-of-wondrous-power",
+      "monster.raven",
+      "spell.animal-messenger"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2272,7 +2454,10 @@
       "When the box becomes a vessel, its weight becomes that of a normal vessel its size, and anything that was stored in the box remains in the boat.",
       "Statistics for the {@item Rowboat|SRD52} and {@item Keelboat|SRD52} appear in the {@book Player's Handbook|SRD52}. If either vessel is reduced to 0 {@variantrule Hit Points|SRD52}, the Folding Boat is destroyed."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.keelboat",
+      "item.rowboat"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",

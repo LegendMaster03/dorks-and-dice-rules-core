@@ -89,7 +89,15 @@
       }
     },
     "catalogReferences": [
-      "rulebook.page-218"
+      "condition.charmed",
+      "rulebook.page-218",
+      "spell.cure-wounds",
+      "spell.daylight",
+      "spell.death-ward",
+      "spell.detect-magic",
+      "spell.disintegrate",
+      "spell.scrying",
+      "spell.suggestion"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -124,7 +132,9 @@
     "poisonTypes": [
       "ingested"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -241,7 +251,9 @@
     "entries": [
       "Perfume comes in a 4-ounce vial. For 1 hour after applying Perfume to yourself, you have {@variantrule Advantage|SRD52} on Charisma ({@skill Persuasion|SRD52}) checks made to influence an Indifferent Humanoid within 5 feet of yourself."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.persuasion"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -271,7 +283,9 @@
       "While wearing this pendant, you can take a {@action Magic|SRD52} action to regain {@dice 2d4 + 2} {@variantrule Hit Points|SRD52}. Once used, this property can't be used again until the next dawn.",
       "In addition, you have {@variantrule Advantage|SRD52} on saving throws to avoid or end the {@condition Poisoned|SRD52} condition while you wear this pendant."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -303,7 +317,9 @@
     "entries": [
       "This delicate silver chain has a brilliant-cut black gem pendant. While you wear it, you have {@variantrule Immunity|SRD52} to the {@condition Poisoned|SRD52} condition and Poison damage."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -378,7 +394,9 @@
       "The next time you see a creature within 10 minutes after drinking this philter, you are {@condition charmed|SRD52} by that creature and have the {@condition Charmed|SRD52} condition for 1 hour.",
       "This rose-hued, effervescent liquid contains one easy-to-miss bubble shaped like a heart."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.charmed"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -411,7 +429,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.frightened"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -447,7 +467,11 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.giant-rat",
+      "monster.rat",
+      "monster.swarm-of-rats"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -575,7 +599,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.basic-poison"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -604,7 +630,9 @@
     "entries": [
       "A Pole is 10 feet long. You can use it to touch something up to 10 feet away. If you must make a Strength ({@skill Athletics|SRD52}) check as part of a High or {@variantrule Long Jump|SRD52}, you can use the Pole to vault, giving yourself {@variantrule Advantage|SRD52} on the check."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -662,7 +690,10 @@
       "If the hole is folded up, a creature within the hole's extradimensional space can take an action to make a {@dc 10} Strength ({@skill Athletics|SRD52}) check. On a successful check, the creature forces its way out and appears within 5 feet of the Portable Hole. A closed Portable Hole holds enough air for 1 hour of breathing, divided by the number of breathing creatures inside.",
       "Placing a Portable Hole inside an extradimensional space created by a {@item Bag of Holding|SRD52}, {@item Heward's Handy Haversack|SRD52}, or similar item instantly destroys both items and opens a gate to the Astral Plane. The gate originates where the one item was placed inside the other. Any creature within 10 feet of the gate and not behind {@variantrule Cover|SRD52|Total Cover} is sucked through it and deposited in a random location on the Astral Plane. The gate then closes. The gate is one-way only and can't be reopened."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.bag-of-holding",
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -754,7 +785,9 @@
     "attachedSpells": [
       "animal friendship|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.animal-friendship"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -786,7 +819,9 @@
     "attachedSpells": [
       "clairvoyance|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.clairvoyance"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -820,7 +855,9 @@
       "When you drink this potion, you gain a {@variantrule Climb Speed|SRD52} equal to your {@variantrule Speed|SRD52} for 1 hour. During this time, you have {@variantrule Advantage|SRD52} on Strength ({@skill Athletics|SRD52}) checks to climb.",
       "This potion is separated into brown, silver, and gray layers resembling bands of stone. Shaking the bottle fails to mix the colors."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -917,7 +954,9 @@
     "attachedSpells": [
       "enlarge/reduce|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.enlarge-reduce"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1113,7 +1152,9 @@
     "attachedSpells": [
       "gaseous form|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.gaseous-form"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1173,7 +1214,9 @@
     "attachedSpells": [
       "enlarge/reduce|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.enlarge-reduce"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1234,7 +1277,9 @@
     "attachedSpells": [
       "bless|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.bless"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1296,7 +1341,9 @@
     "entries": [
       "This potion's container looks empty but feels as though it holds liquid. When you drink the potion, you have the {@condition Invisible|SRD52} condition for 1 hour. The effect ends early if you make an attack roll, deal damage, or cast a spell."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1432,7 +1479,9 @@
     "attachedSpells": [
       "detect thoughts|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.detect-thoughts"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1492,7 +1541,11 @@
       "This concoction looks, smells, and tastes like a {@item Potion of Healing|SRD52} or another beneficial potion. However, it is actually poison masked by illusion magic. {@spell Identify|SRD52} reveals its true nature.",
       "If you drink this potion, you take {@damage 4d6} Poison damage and must succeed on a {@dc 13} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 1 hour."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned",
+      "item.potion-of-healing",
+      "spell.identify"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1617,7 +1670,9 @@
     "attachedSpells": [
       "haste|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.haste"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",

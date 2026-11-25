@@ -36,7 +36,17 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.club",
+      "baseitem.greatclub",
+      "baseitem.quarterstaff",
+      "item.barrel",
+      "item.chest",
+      "item.ladder",
+      "item.pole",
+      "item.portable-ram",
+      "item.torch"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -91,7 +101,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.map"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -189,7 +201,10 @@
     "dmgType": "B",
     "club": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.slow",
+      "item-property.l"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -244,7 +259,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.climber-s-kit",
+      "skill.acrobatics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -299,7 +317,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.rations"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -368,7 +388,12 @@
     "dmgType": "P",
     "dagger": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -407,7 +432,11 @@
     "dmg1": "1d4",
     "dmgType": "P",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.vex",
+      "item-property.f",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -576,7 +605,9 @@
     "dmg1": "1d8",
     "dmgType": "B",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.sap"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -665,7 +696,12 @@
     "dmgType": "S",
     "polearm": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -720,7 +756,12 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.glass-bottle",
+      "item.magnifying-glass",
+      "item.spyglass",
+      "item.vial"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -759,7 +800,11 @@
     "dmgType": "S",
     "axe": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -797,7 +842,10 @@
     "dmgType": "B",
     "club": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.push",
+      "item-property.2h"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -836,7 +884,11 @@
     "dmgType": "S",
     "sword": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -876,7 +928,12 @@
     "dmgType": "S",
     "polearm": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -948,7 +1005,13 @@
     "crossbow": true,
     "weapon": true,
     "ammoType": "bolt|srd52",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "item-mastery.vex",
+      "item-property.a",
+      "item-property.l",
+      "item-property.ld"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -988,7 +1051,11 @@
     "dmgType": "S",
     "axe": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.vex",
+      "item-property.l",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1031,7 +1098,14 @@
     "crossbow": true,
     "weapon": true,
     "ammoType": "bolt|srd52",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "item-mastery.push",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h",
+      "item-property.ld"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1148,7 +1222,10 @@
     "dmgType": "P",
     "spear": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.slow",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1203,7 +1280,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-group.arcane-focus",
+      "item-group.holy-symbol"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1249,7 +1329,11 @@
     "entries": [
       "A Lance requires two hands to wield when you aren't mounted."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.h",
+      "item-property.r"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1333,7 +1417,20 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.hide-armor",
+      "baseitem.leather-armor",
+      "baseitem.sling",
+      "baseitem.studded-leather-armor",
+      "baseitem.whip",
+      "item.backpack",
+      "item.crossbow-bolt-case",
+      "item.map-or-scroll-case",
+      "item.parchment",
+      "item.pouch",
+      "item.quiver",
+      "item.waterskin"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1375,7 +1472,13 @@
     "crossbow": true,
     "weapon": true,
     "ammoType": "bolt|srd52",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.ld"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1415,7 +1518,11 @@
     "dmgType": "B",
     "hammer": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.nick",
+      "item-property.l",
+      "item-property.t"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1457,7 +1564,13 @@
     "bow": true,
     "weapon": true,
     "ammoType": "arrow|srd52",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1496,7 +1609,10 @@
     "dmg2": "1d10",
     "sword": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.sap",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1629,7 +1745,9 @@
     "dmgType": "B",
     "mace": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.sap"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1684,7 +1802,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.block-and-tackle"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1723,7 +1843,11 @@
     "dmgType": "B",
     "hammer": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.2h",
+      "item-property.h"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1758,7 +1882,9 @@
     "dmgType": "P",
     "mace": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.sap"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1800,7 +1926,12 @@
     "firearm": true,
     "weapon": true,
     "ammoType": "firearm bullet|srd52",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.ld"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1832,7 +1963,9 @@
       "Blowgun needles are used with a weapon that has the ammunition property to make a ranged attack. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack (you need a free hand to load a one-handed weapon). At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.",
       "Needles are typically stored in a {@item Pouch|SRD52} (bought separately)."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.pouch"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1870,7 +2003,10 @@
         "quantity": 50
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.needle",
+      "item.pouch"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1983,7 +2119,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-group.druidic-focus",
+      "item-group.holy-symbol"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2071,7 +2210,12 @@
     "dmg1": "1d10",
     "dmgType": "P",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.push",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",

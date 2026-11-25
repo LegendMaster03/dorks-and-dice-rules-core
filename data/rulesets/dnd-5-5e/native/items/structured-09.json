@@ -18,7 +18,9 @@
       }
     ],
     "spellScrollLevel": 9,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -49,7 +51,9 @@
     "entries": [
       "While holding this Shield, you have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects, and spell attack rolls have {@variantrule Disadvantage|SRD52} against you."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.shield"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -117,7 +121,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana",
+      "spell.gate"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -303,7 +310,13 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.charm-person",
+      "spell.command",
+      "spell.comprehend-languages"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -415,7 +428,13 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.burning-hands",
+      "spell.fireball",
+      "spell.wall-of-fire"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -532,7 +551,14 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.cone-of-cold",
+      "spell.fog-cloud",
+      "spell.ice-storm",
+      "spell.wall-of-ice"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -631,7 +657,13 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.cure-wounds",
+      "spell.lesser-restoration",
+      "spell.mass-cure-wounds"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -780,7 +812,19 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.cone-of-cold",
+      "spell.fireball",
+      "spell.globe-of-invulnerability",
+      "spell.hold-monster",
+      "spell.levitate",
+      "spell.lightning-bolt",
+      "spell.magic-missile",
+      "spell.ray-of-enfeeblement",
+      "spell.wall-of-force"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -832,7 +876,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -947,7 +994,13 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.giant-insect",
+      "spell.gust-of-wind",
+      "spell.insect-plague"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1155,7 +1208,29 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.arcane-lock",
+      "spell.conjure-elemental",
+      "spell.detect-magic",
+      "spell.dispel-magic",
+      "spell.enlarge-reduce",
+      "spell.fireball",
+      "spell.flaming-sphere",
+      "spell.ice-storm",
+      "spell.invisibility",
+      "spell.knock",
+      "spell.light",
+      "spell.lightning-bolt",
+      "spell.mage-hand",
+      "spell.passwall",
+      "spell.plane-shift",
+      "spell.protection-from-evil-and-good",
+      "spell.telekinesis",
+      "spell.wall-of-fire",
+      "spell.web"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1197,7 +1272,12 @@
       "On your turn, you can mentally command the snake (no action required) if it is within 60 feet of you and you don't have the {@condition Incapacitated|SRD52} condition. You decide what action the snake takes and where it moves during its turn, or you can issue it a general command, such as to attack your enemies or guard a location. Absent commands from you, the snake defends itself.",
       "As a {@variantrule Bonus Action|SRD52}, you can command the snake to revert to staff form in its current space, and you can't use the staff's property again for 1 hour. If the snake is reduced to 0 {@variantrule Hit Points|SRD52}, it dies and reverts to its staff form; the staff then shatters and is destroyed. If the snake reverts to staff form before losing all its {@variantrule Hit Points|SRD52}, it regains all of them."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.incapacitated",
+      "item-mastery.topple",
+      "item-property.v",
+      "monster.giant-constrictor-snake"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1335,7 +1415,19 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v",
+      "spell.animal-friendship",
+      "spell.awaken",
+      "spell.barkskin",
+      "spell.detect-magic",
+      "spell.locate-animals-or-plants",
+      "spell.pass-without-trace",
+      "spell.speak-with-animals",
+      "spell.speak-with-plants",
+      "spell.wall-of-thorns"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1411,7 +1503,12 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.deafened",
+      "condition.stunned",
+      "item-mastery.topple",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1466,7 +1563,10 @@
       "This staff has 3 charges and regains {@dice 1d3} expended charges daily at dawn.",
       "The staff can be wielded as a magic Quarterstaff. On a hit, it deals damage as a normal Quarterstaff , and you can expend 1 charge to deal an extra {@damage 2d10} Necrotic damage to the target and force it to make a {@dc 15} Constitution saving throw. On a failed save, the target has {@variantrule Disadvantage|SRD52} for 1 hour on any ability check or saving throw that uses Strength or Constitution."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1493,7 +1593,9 @@
     "entries": [
       "While touching this 5-pound stone to the ground, you can take a {@action Magic|SRD52} action to summon an {@creature Earth Elemental|SRD52}. The elemental appears in an unoccupied space you choose within 30 feet of yourself, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}. The stone can't be used this way again until the next dawn."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "monster.earth-elemental"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1614,7 +1716,12 @@
         "dim": 30
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-mastery.sap",
+      "item-property.f",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1696,7 +1803,10 @@
     "entries": [
       "While holding or wearing this talisman, you have {@variantrule Advantage|SRD52} on any Intelligence ({@skill Arcana|SRD52}) check you make to control a {@item Sphere of Annihilation|SRD52}. In addition, when you start your turn in control of a {@item Sphere of Annihilation|SRD52}, you can take a {@action Magic|SRD52} action to move it 10 feet plus a number of additional feet equal to 10 times your Intelligence modifier. This movement doesn't have to be in a straight line."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.sphere-of-annihilation",
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1919,7 +2029,12 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.greatclub",
+      "condition.prone",
+      "item-mastery.push",
+      "item-property.2h"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1948,7 +2063,12 @@
     "entries": [
       "A Tinderbox is a small container holding flint, fire steel, and tinder (usually dry cloth soaked in light oil) used to kindle a fire. Using it to light a {@item Candle|SRD52}, {@item Lamp|SRD52}, {@item Hooded Lantern|SRD52|Lantern}, or {@item Torch|SRD52}—or anything else with exposed fuel—takes a {@variantrule Bonus Action|SRD52}. Lighting any other fire takes 1 minute."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.candle",
+      "item.hooded-lantern",
+      "item.lamp",
+      "item.torch"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2108,7 +2228,9 @@
     "poisonTypes": [
       "ingested"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2189,7 +2311,13 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.trident",
+      "item-mastery.topple",
+      "item-property.t",
+      "item-property.v",
+      "spell.dominate-beast"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2662,7 +2790,9 @@
     "poisonTypes": [
       "ingested"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.poisoned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2826,7 +2956,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.hold-monster",
+      "spell.hold-person"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2865,7 +2998,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.invisible"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2942,7 +3077,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.command",
+      "spell.fear"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -2993,7 +3131,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.fireball"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -3044,7 +3184,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.lightning-bolt"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -3085,7 +3227,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.detect-magic"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -3130,7 +3274,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.magic-missile"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -3174,7 +3320,9 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.paralyzed"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",

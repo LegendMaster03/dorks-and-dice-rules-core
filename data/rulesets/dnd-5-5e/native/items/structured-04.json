@@ -79,7 +79,9 @@
         "dim": 60
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.blinded"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -145,7 +147,9 @@
     "entries": [
       "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}. You can also take a {@variantrule Bonus Action|SRD52} to cause the armor to assume the appearance of a normal set of clothing or some other kind of armor. You decide what it looks like—including color, style, and accessories—but the armor retains its normal bulk and weight. The illusory appearance lasts until you use this property again or doff the armor."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.studded-leather-armor"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -241,7 +245,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -271,7 +277,9 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.sleight-of-hand"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -389,7 +397,9 @@
     "entries": [
       "{#itemEntry Dragon Scale Mail|SRD52}"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -418,7 +428,9 @@
     "entries": [
       "As a {@action Utilize|SRD52} action, you can throw the Grappling Hook at a railing, a ledge, or another catch within 50 feet of yourself, and the hook catches on if you succeed on a {@dc 13} Dexterity ({@skill Acrobatics|SRD52}) check. If you tied a Rope to the hook, you can then climb it."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.acrobatics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -455,7 +467,9 @@
     "entries": [
       "{#itemEntry Dragon Scale Mail|SRD52}"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -491,7 +505,9 @@
         "disguise self|srd52"
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.disguise-self"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -611,7 +627,30 @@
       "polymorph|srd52",
       "stinking cloud|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.dagger",
+      "condition.petrified",
+      "condition.poisoned",
+      "condition.stunned",
+      "item.caltrops",
+      "item.grappling-hook",
+      "item.rope",
+      "monster.camel",
+      "monster.constrictor-snake",
+      "monster.elephant",
+      "monster.mule",
+      "monster.swarm-of-bats",
+      "skill.arcana",
+      "spell.enlarge-reduce",
+      "spell.faerie-fire",
+      "spell.fireball",
+      "spell.gust-of-wind",
+      "spell.invisibility",
+      "spell.lightning-bolt",
+      "spell.phantasmal-force",
+      "spell.polymorph",
+      "spell.stinking-cloud"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -676,7 +715,10 @@
     "entries": [
       "A Healer's Kit has ten uses. As a {@action Utilize|SRD52} action, you can expend one of its uses to stabilize an {@condition Unconscious|SRD52} creature that has 0 {@variantrule Hit Points|SRD52} without needing to make a Wisdom ({@skill Medicine|SRD52}) check."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.unconscious",
+      "skill.medicine"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -765,7 +807,12 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.daylight",
+      "spell.fireball",
+      "spell.prismatic-spray",
+      "spell.wall-of-fire"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -797,7 +844,9 @@
         "comprehend languages|srd52"
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.comprehend-languages"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -838,7 +887,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.detect-thoughts",
+      "spell.suggestion"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -876,7 +928,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.teleport"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -931,7 +985,12 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.antitoxin",
+      "item.candle",
+      "item.healer-s-kit",
+      "item.potion-of-healing"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -971,7 +1030,10 @@
       ],
       "weightless": true
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.bag-of-holding",
+      "item.portable-hole"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1071,7 +1133,10 @@
     "optionalfeatures": [
       "replicate magic item|tce"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.horn",
+      "condition.deafened"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1102,7 +1167,12 @@
       "A brass horn summons 3 {@creature Berserker|SRD52|Berserkers}. To use the brass horn, you must have {@variantrule Proficiency|SRD52} with all Simple weapons.",
       "If you blow the horn without meeting its requirement, the summoned {@creature Berserker|SRD52|Berserkers} attack you. If you meet the requirement, they are {@variantrule Friendly [Attitude]|SRD52|Friendly} to you and your allies and follow your commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.horn",
+      "condition.charmed",
+      "condition.frightened",
+      "monster.berserker"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1133,7 +1203,12 @@
       "A bronze horn summons 4 {@creature Berserker|SRD52|Berserkers}. To use the bronze horn, you must have training with all Medium armor.",
       "If you blow the horn without meeting its requirement, the summoned {@creature Berserker|SRD52|Berserkers} attack you. If you meet the requirement, they are {@variantrule Friendly [Attitude]|SRD52|Friendly} to you and your allies and follow your commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.horn",
+      "condition.charmed",
+      "condition.frightened",
+      "monster.berserker"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1164,7 +1239,12 @@
       "A iron horn summons 5 {@creature Berserker|SRD52|Berserkers}. To use the iron horn, you must have {@variantrule Proficiency|SRD52} with all Martial weapons.",
       "If you blow the horn without meeting its requirement, the summoned {@creature Berserker|SRD52|Berserkers} attack you. If you meet the requirement, they are {@variantrule Friendly [Attitude]|SRD52|Friendly} to you and your allies and follow your commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.horn",
+      "condition.charmed",
+      "condition.frightened",
+      "monster.berserker"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1194,7 +1274,12 @@
       "You can take a {@action Magic|SRD52} action to blow this horn. In response, warrior spirits from the plane of Ysgard appear in unoccupied spaces within 60 feet of you. Each spirit uses the {@creature Berserker|SRD52} stat block and returns to Ysgard after 1 hour or when it drops to 0 {@variantrule Hit Points|SRD52}. The spirits look like living, breathing warriors, and they have {@variantrule Immunity|SRD52} to the {@condition Charmed|SRD52} and {@condition Frightened|SRD52} conditions. Once you use the horn, it can't be used again until 7 days have passed.",
       "A silver horn summons 2 {@creature Berserker|SRD52|Berserkers}. They are {@variantrule Friendly [Attitude]|SRD52|Friendly} to you and your allies and follow your commands."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.horn",
+      "condition.charmed",
+      "condition.frightened",
+      "monster.berserker"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1222,7 +1307,9 @@
       "These horseshoes come in a set of four. As a {@action Magic|SRD52} action, you can touch one of the horseshoes to the hoof of a horse or similar creature, whereupon the horseshoe affixes itself to the hoof. Removing a horseshoe also takes a {@action Magic|SRD52} action.",
       "While all four shoes are affixed to the hooves of a horse or similar creature, they allow the creature to move normally while floating 4 inches above a surface. This effect means the creature can cross or stand above nonsolid or unstable surfaces, such as water or lava. The creature leaves no tracks and ignores {@variantrule Difficult Terrain|SRD52}. In addition, the creature can travel for up to 12 hours a day without gaining {@condition Exhaustion|SRD52} levels from extended travel."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.exhaustion"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1279,7 +1366,9 @@
     "entries": [
       "As a {@action Utilize|SRD52} action, you can set a Hunting Trap, which is a sawtooth steel ring that snaps shut when a creature steps on a pressure plate in the center. The trap is affixed by a heavy chain to an immobile object, such as a tree or a spike driven into the ground. A creature that steps on the plate must succeed on a {@dc 13} Dexterity saving throw or take {@damage 1d4} Piercing damage and have its {@variantrule Speed|SRD52} reduced to 0 until the start of its next turn. Thereafter, until the creature breaks free of the trap, its movement is limited by the length of the chain (typically 3 feet). A creature can use its action to make a {@dc 13} Strength ({@skill Athletics|SRD52}) check, freeing itself or another creature within its reach on a success. Each failed check deals 1 Piercing damage to the trapped creature."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1307,7 +1396,9 @@
     "entries": [
       "This iron rod has a button on one end. You can take a {@action Utilize|SRD52} action to press the button, which causes the rod to become magically fixed in place. Until you or another creature takes a {@action Utilize|SRD52} action to push the button again, the rod doesn't move, even if it defies gravity. The rod can hold up to 8,000 pounds of weight. More weight causes the rod to deactivate and fall. A creature can take a {@action Utilize|SRD52} action to make a {@dc 30} Strength ({@skill Athletics|SRD52}) check, moving the fixed rod up to 10 feet on a successful check."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1363,7 +1454,9 @@
     "entries": [
       "Using {@item Ink|SRD52}, an Ink Pen is used to write or draw."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.ink"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1453,7 +1546,9 @@
       "{#itemEntry Ioun Stone|SRD52}",
       "While this dark-blue rhomboid orbits your head, you have {@variantrule Advantage|SRD52} on {@variantrule Initiative|SRD52} rolls and Wisdom ({@skill Perception|SRD52}) checks."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.perception"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",

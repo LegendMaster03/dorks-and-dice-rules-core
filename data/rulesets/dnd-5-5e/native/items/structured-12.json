@@ -22,7 +22,11 @@
     "firearm": true,
     "weapon": true,
     "ammoType": "firearm bullet|srd52",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.vex",
+      "item-property.a",
+      "item-property.ld"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -108,7 +112,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.jug",
+      "item.lamp"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -146,7 +153,10 @@
     "dmgType": "B",
     "dmg2": "1d8",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -185,7 +195,10 @@
     "rapier": true,
     "sword": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.vex",
+      "item-property.f"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -312,7 +325,11 @@
     "dmgType": "S",
     "sword": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -430,7 +447,12 @@
     "bow": true,
     "weapon": true,
     "ammoType": "arrow|srd52",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "item-mastery.vex",
+      "item-property.2h",
+      "item-property.a"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -469,7 +491,11 @@
     "dmgType": "P",
     "sword": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.vex",
+      "item-property.f",
+      "item-property.l"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -506,7 +532,10 @@
     "dmg1": "1d4",
     "dmgType": "S",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.nick",
+      "item-property.l"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -544,7 +573,11 @@
     "dmgType": "B",
     "weapon": true,
     "ammoType": "sling bullet|srd52",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.sling-bullet",
+      "item-mastery.slow",
+      "item-property.a"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -576,7 +609,9 @@
       "Sling bullets are used with a weapon that has the ammunition property to make a ranged attack. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack (you need a free hand to load a one-handed weapon). At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.",
       "Sling Bullets are typically stored in a {@item Pouch|SRD52} (bought separately)."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.pouch"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -614,7 +649,10 @@
         "quantity": 20
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.sling-bullet",
+      "item.pouch"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -669,7 +707,23 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.club",
+      "baseitem.firearm-bullets-10",
+      "baseitem.greatclub",
+      "baseitem.hide-armor",
+      "baseitem.quarterstaff",
+      "baseitem.sling-bullets-20",
+      "baseitem.whip",
+      "item.ball-bearings",
+      "item.bucket",
+      "item.caltrops",
+      "item.chain",
+      "item.crowbar",
+      "item.grappling-hook",
+      "item.iron-pot",
+      "item.iron-spikes"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -710,7 +764,11 @@
     "dmg2": "1d8",
     "spear": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.sap",
+      "item-property.t",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -780,7 +838,10 @@
     "dmgType": "B",
     "dmg2": "1d8",
     "staff": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -864,7 +925,21 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.musket",
+      "baseitem.pistol",
+      "item.bell",
+      "item.bullseye-lantern",
+      "item.flask",
+      "item.hooded-lantern",
+      "item.hunting-trap",
+      "item.lock",
+      "item.manacles",
+      "item.mirror",
+      "item.shovel",
+      "item.signal-whistle",
+      "item.tinderbox"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -904,7 +979,11 @@
     "dmgType": "P",
     "dmg2": "1d10",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.t",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1019,7 +1098,10 @@
     "dmgType": "P",
     "dmg2": "1d10",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.sap",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1058,7 +1140,10 @@
     "dmg2": "1d10",
     "hammer": true,
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.push",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1113,7 +1198,20 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.padded-armor",
+      "item.basket",
+      "item.bedroll",
+      "item.blanket",
+      "item.fine-clothes",
+      "item.net",
+      "item.robe",
+      "item.rope",
+      "item.sack",
+      "item.string",
+      "item.tent",
+      "item.traveler-s-clothes"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1151,7 +1249,11 @@
     "dmg1": "1d4",
     "dmgType": "S",
     "weapon": true,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.slow",
+      "item-property.f",
+      "item-property.r"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1206,7 +1308,20 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.arrows-20",
+      "baseitem.bolts-20",
+      "baseitem.club",
+      "baseitem.greatclub",
+      "baseitem.musket",
+      "baseitem.needles-50",
+      "baseitem.pistol",
+      "baseitem.quarterstaff",
+      "baseitem.sling",
+      "item-group.arcane-focus",
+      "item-group.druidic-focus",
+      "item.ink-pen"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1244,7 +1359,10 @@
     "dmg1": "1d6",
     "dmgType": "B",
     "dmg2": "1d8",
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item-mastery.topple",
+      "item-property.v"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1324,72 +1442,6 @@
         "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
         "path": "items-base.json",
         "pointer": "/itemProperty/3"
-      },
-      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
-    }
-  },
-  {
-    "id": "item-property.af",
-    "kind": "item-property",
-    "name": "Ammunition",
-    "abbreviation": "AF",
-    "template": "{{prop_name}} ({{item.range}} ft.; {{item.ammoType}})",
-    "entries": [
-      {
-        "type": "entries",
-        "name": "Ammunition",
-        "entries": [
-          "Firearm Bullets are destroyed upon use in a modern firearm. Futuristic firearms use Energy Cells that become depleted but could possibly be recharged with the proper equipment, at the GM's discretion."
-        ]
-      }
-    ],
-    "catalogReferences": [],
-    "source": {
-      "release": "srd-5.2.1",
-      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
-      "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
-      "candidatePage": 72,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "items-base.json",
-        "pointer": "/itemProperty/5"
-      },
-      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
-    }
-  },
-  {
-    "id": "item-property.bf",
-    "kind": "item-property",
-    "name": "Burst Fire",
-    "abbreviation": "BF",
-    "template": "{{prop_name}}",
-    "entries": [
-      {
-        "type": "entries",
-        "name": "Burst Fire",
-        "entries": [
-          "As an action, you can expend 10 pieces of a Burst Fire weapon's ammunition to spray shots in a 10-foot {@variantrule Cube [Area of Effect]|SRD52|Cube} within the weapon's normal range. Each creature in that area must succeed on a {@dc 15} Dexterity saving throw or take damage. Roll the weapon's damage once, and apply it to each creature that failed the save."
-        ]
-      }
-    ],
-    "catalogReferences": [],
-    "source": {
-      "release": "srd-5.2.1",
-      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
-      "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
-      "candidatePage": 72,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "items-base.json",
-        "pointer": "/itemProperty/7"
       },
       "structuredStatus": "source-tagged structured item; official body and inventory review pending"
     }
@@ -1475,7 +1527,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.dagger",
+      "baseitem.shortsword"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1555,39 +1610,6 @@
         "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
         "path": "items-base.json",
         "pointer": "/itemProperty/17"
-      },
-      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
-    }
-  },
-  {
-    "id": "item-property.rld",
-    "kind": "item-property",
-    "name": "Reload",
-    "abbreviation": "RLD",
-    "template": "{{prop_name}} ({{item.reload}} shots)",
-    "entries": [
-      {
-        "type": "entries",
-        "name": "Reload",
-        "entries": [
-          "You can make a limited number of shots with a Reload weapon. You must then reload the weapon as an action or a {@variantrule Bonus Action|SRD52}."
-        ]
-      }
-    ],
-    "catalogReferences": [],
-    "source": {
-      "release": "srd-5.2.1",
-      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
-      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
-      "license": "CC-BY-4.0",
-      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
-      "candidatePage": 72,
-      "structuredSource": {
-        "provider": "CoolFireGiant/hewnhero-srd",
-        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
-        "path": "items-base.json",
-        "pointer": "/itemProperty/19"
       },
       "structuredStatus": "source-tagged structured item; official body and inventory review pending"
     }
@@ -1804,6 +1826,104 @@
         "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
         "path": "items-base.json",
         "pointer": "/itemMastery/5"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-mastery.topple",
+    "kind": "item-mastery",
+    "name": "Topple",
+    "entries": [
+      "If you hit a creature with this weapon, you can force the creature to make a Constitution saving throw ({@dc 8} plus the ability modifier used to make the attack roll and your {@variantrule Proficiency|SRD52|Proficiency Bonus}). On a failed save, the creature has the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "condition.prone"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 90,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemMastery/6"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "item-mastery.vex",
+    "kind": "item-mastery",
+    "name": "Vex",
+    "entries": [
+      "If you hit a creature with this weapon and deal damage to the creature, you have {@variantrule Advantage|SRD52} on your next attack roll against that creature before the end of your next turn."
+    ],
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 90,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "items-base.json",
+        "pointer": "/itemMastery/7"
+      },
+      "structuredStatus": "source-tagged structured item; official body and inventory review pending"
+    }
+  },
+  {
+    "id": "magic-variant.1-ammunition",
+    "kind": "magic-variant",
+    "name": "+1 Ammunition",
+    "type": "GV|SRD52",
+    "requires": [
+      {
+        "type": "A|SRD52"
+      },
+      {
+        "type": "AF|SRD52"
+      }
+    ],
+    "ammo": true,
+    "entries": [
+      "You have a +1 bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical.",
+      "This ammunition is typically found or sold in quantities of ten or twenty pieces. Ten pieces of this ammunition are equivalent in value to a potion of the same rarity {@note ({@table Magic Item Values by Rarity; Magic Item Rarities and Values|SRD52|200 GP})}."
+    ],
+    "inherits": {
+      "namePrefix": "+1 ",
+      "source": "SRD52",
+      "page": 209,
+      "rarity": "uncommon",
+      "bonusWeapon": "+1",
+      "entries": [
+        "You have a {=bonusWeapon} bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical."
+      ]
+    },
+    "catalogReferences": [],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [],
+      "candidatePage": 209,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/30"
       },
       "structuredStatus": "source-tagged structured item; official body and inventory review pending"
     }

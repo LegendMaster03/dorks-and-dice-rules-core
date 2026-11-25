@@ -50,7 +50,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.wish"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -148,7 +150,9 @@
         "water walk|srd52"
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.water-walk"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -177,7 +181,9 @@
       "While wearing this ring, you can take a {@action Magic|SRD52} action to gain X-ray vision with a range of 30 feet for 1 minute. To you, solid objects within that radius appear transparent and don't prevent light from passing through them. The vision can penetrate 1 foot of stone, 1 inch of common metal, or up to 3 feet of wood or dirt. Thicker substances or a thin sheet of lead block the vision.",
       "Whenever you use the ring again before taking a {@variantrule Long Rest|SRD52}, you must succeed on a {@dc 15} Constitution saving throw or gain 1 {@condition Exhaustion|SRD52} level."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.exhaustion"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -261,7 +267,12 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.blinded",
+      "skill.perception",
+      "spell.daylight",
+      "spell.light"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -298,7 +309,9 @@
         "dim": 60
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.stunned"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -338,7 +351,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.magic-missile"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -506,7 +521,21 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.dagger",
+      "item-group.spell-scroll",
+      "item.bullseye-lantern",
+      "item.mirror",
+      "item.pole",
+      "item.portable-ram",
+      "item.potion-of-healing",
+      "item.riding-saddle",
+      "item.rope",
+      "item.rowboat",
+      "item.sack",
+      "monster.mastiff",
+      "monster.riding-horse"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -614,7 +643,14 @@
         "see invisibility|srd52"
       ]
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.invisible",
+      "skill.perception",
+      "spell.detect-evil-and-good",
+      "spell.detect-magic",
+      "spell.detect-poison-and-disease",
+      "spell.see-invisibility"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -726,7 +762,11 @@
         "dim": 80
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.frightened",
+      "condition.paralyzed",
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -780,7 +820,10 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.heal",
+      "spell.resurrection"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -809,7 +852,9 @@
     "entries": [
       "You can take a {@action Magic|SRD52} action to present the rod and command obedience from each creature of your choice that you can see within 120 feet of yourself. Each target must succeed on a {@dc 15} Wisdom saving throw or have the {@condition Charmed|SRD52} condition for 8 hours. While {@condition Charmed|SRD52} in this way, the creature regards you as its trusted leader. If harmed by you or your allies or commanded to do something contrary to its nature, a target ceases to be {@condition Charmed|SRD52} in this way. Once used, this property can't be used again until the next dawn."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.charmed"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -869,7 +914,14 @@
       "As a {@action Utilize|SRD52} action, you can tie a knot with Rope if you succeed on a {@dc 10} Dexterity ({@skill Sleight of Hand|SRD52}) check. The Rope can be burst with a successful {@dc 20} Strength ({@skill Athletics|SRD52}) check.",
       "You can bind an unwilling creature with the Rope only if the creature has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition. If the creature's legs are bound, the creature has the {@condition Restrained|SRD52} condition until it escapes. Escaping the Rope requires the creature to make a successful {@dc 15} Dexterity ({@skill Acrobatics|SRD52}) check as an action."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.grappled",
+      "condition.incapacitated",
+      "condition.restrained",
+      "skill.acrobatics",
+      "skill.athletics",
+      "skill.sleight-of-hand"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -930,7 +982,11 @@
       "A target {@condition Restrained|SRD52} by the rope can take an action to make its choice of a {@dc 15} Strength ({@skill Athletics|SRD52}) or Dexterity ({@skill Acrobatics|SRD52}) check. On a successful check, the target is no longer {@condition Restrained|SRD52} by the rope. If you're still holding onto the rope when a target escapes from it, you can take a {@variantrule Reaction|SRD52} to command the rope to coil up in your hand; otherwise, the rope coils up in the target's space.",
       "The rope has AC 20, HP 20, and {@variantrule Immunity|SRD52} to Poison and Psychic damage. It regains 1 {@variantrule Hit Points|SRD52|Hit Point} every 5 minutes as long as it has at least 1 {@variantrule Hit Points|SRD52|Hit Point}. If the rope drops to 0 {@variantrule Hit Points|SRD52}, it is destroyed."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "condition.restrained",
+      "skill.acrobatics",
+      "skill.athletics"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1150,7 +1206,16 @@
       },
       "tinderbox|srd52"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.backpack",
+      "item.book",
+      "item.ink",
+      "item.ink-pen",
+      "item.lamp",
+      "item.oil",
+      "item.parchment",
+      "item.tinderbox"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1191,7 +1256,12 @@
     "entries": [
       "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon. In addition, you can make one attack with it as a {@variantrule Bonus Action|SRD52} on each of your turns."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1229,7 +1299,9 @@
         ]
       }
     },
-    "catalogReferences": [],
+    "catalogReferences": [
+      "spell.sending"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1259,7 +1331,10 @@
     "entries": [
       "While holding this Shield, you have {@variantrule Advantage|SRD52} on {@variantrule Initiative|SRD52} rolls and Wisdom ({@skill Perception|SRD52}) checks. The Shield is emblazoned with a symbol of an eye."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.shield",
+      "skill.perception"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1330,7 +1405,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.shield",
+      "spell.remove-curse"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1377,7 +1455,10 @@
         ]
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.shield",
+      "condition.prone"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1523,7 +1604,9 @@
     "entries": [
       "{#itemEntry Dragon Scale Mail|SRD52}"
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.scale-mail"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1613,7 +1696,12 @@
       "This viscous, milky-white substance can form a permanent adhesive bond between any two objects. It must be stored in a jar or flask that has been coated inside with {@item Oil of Slipperiness|SRD52}. When found, a container contains {@dice 1d6 + 1} ounces.",
       "One ounce of the glue can cover a 1-foot square surface. Applying an ounce of Sovereign Glue takes a {@action Utilize|SRD52} action, and the applied glue takes 1 minute to set. Once it has done so, the bond it creates can be broken only by the application of {@item Universal Solvent|SRD52} or {@item Oil of Etherealness|SRD52}, or with a {@spell Wish|SRD52} spell."
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "item.oil-of-etherealness",
+      "item.oil-of-slipperiness",
+      "item.universal-solvent",
+      "spell.wish"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1682,7 +1770,9 @@
       }
     ],
     "spellScrollLevel": 1,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1719,7 +1809,9 @@
       }
     ],
     "spellScrollLevel": 2,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1756,7 +1848,9 @@
       }
     ],
     "spellScrollLevel": 3,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1793,7 +1887,9 @@
       }
     ],
     "spellScrollLevel": 4,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1830,7 +1926,9 @@
       }
     ],
     "spellScrollLevel": 5,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1867,7 +1965,9 @@
       }
     ],
     "spellScrollLevel": 6,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1904,7 +2004,9 @@
       }
     ],
     "spellScrollLevel": 7,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1941,7 +2043,9 @@
       }
     ],
     "spellScrollLevel": 8,
-    "catalogReferences": [],
+    "catalogReferences": [
+      "skill.arcana"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
