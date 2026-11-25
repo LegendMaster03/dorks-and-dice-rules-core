@@ -9,6 +9,8 @@ on:
       - 'src/RulesCore.Content/**'
       - 'tools/inventory_srd_editions.py'
       - 'tools/report_srd_promotion.py'
+      - 'tools/audit_srd_native_references.py'
+      - 'tests/test_srd_native_reference_audit.py'
       - 'tools/promote_srd_bestiary.mjs'
       - 'tools/promote_srd_items.mjs'
       - 'tools/promote_srd_origins.mjs'
@@ -54,6 +56,10 @@ jobs:
         run: node tools/promote_srd_bestiary.mjs --check
       - name: Reconcile native promotion coverage (diagnostic only)
         run: python3 tools/report_srd_promotion.py --output build/srd-review/promotion-coverage.json
+      - name: Test semantic reference audit
+        run: python3 -m unittest discover -s tests -p test_srd_native_reference_audit.py
+      - name: Audit edition-local inline references (diagnostic only)
+        run: python3 tools/audit_srd_native_references.py --output build/srd-review/native-reference-audit.json
       - name: Publish review inventory to summary
         run: |
           echo '## Unreviewed SRD candidate inventory' >> "$GITHUB_STEP_SUMMARY"

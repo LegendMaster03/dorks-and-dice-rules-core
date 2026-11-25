@@ -30,7 +30,7 @@ def native_rows(root):
                 yield row
 
 
-def report(edition, candidates, native):
+def report(edition, candidates, native, decisions=()):
     by_id = {row["id"]: row for row in native}
     if len(by_id) != len(native):
         raise ValueError("Duplicate native identity: " + edition)
@@ -39,15 +39,25 @@ def report(edition, candidates, native):
         source = row.get("source", {})
         if source.get("release") != edition:
             continue
-        pointer = source.get("structuredSource")
-        if pointer:
-            linked[(pointer["path"], pointer["pointer"])].append(row["id"])
+        pointers = [source.get("structuredSource"), *source.get("additionalStructuredSources", [])]
+        for pointer in pointers:
+            if pointer:
+                key = pointer["path"], pointer["pointer"]
+                if row["id"] not in linked[key]:
+                    linked[key].append(row["id"])
     candidate_keys = {(row["source"]["path"], row["source"]["pointer"])
                       for row in candidates}
     missing_pointers = sorted(set(linked) - candidate_keys)
     if missing_pointers:
         raise ValueError("Native source pointers missing from edition: " + str(missing_pointers))
 
+    # Only exact, whole-occurrence decisions can change an unlinked candidate's
+    # disposition. A field exclusion is not an exclusion of the record.
+    reviewed = defaultdict(list)
+    for decision in decisions:
+        key = decision.get("path"), decision.get("pointer")
+        if key in candidate_keys and not decision.get("field"):
+            reviewed[key].append(decision)
     counts = defaultdict(Counter)
     occurrences = []
     for candidate in candidates:
@@ -64,11 +74,15 @@ def report(edition, candidates, native):
             if row and row.get("source", {}).get("release") == edition:
                 targets = [identity]
                 status = "publisher-name-match-only"
+        if status == "unreviewed" and reviewed[key]:
+            status = ("documented-deferred" if any(d["disposition"] == "deferred"
+                                                  for d in reviewed[key])
+                      else "documented-not-promoted")
         counts[kind][status] += 1
         occurrences.append({"candidateId": candidate["candidateId"],
                             "proposedIdentity": candidate["proposedIdentity"],
                             "source": source, "kind": kind, "status": status,
-                            "nativeIds": targets})
+                            "nativeIds": targets, "decisions": reviewed[key]})
     matched = {identity for entry in occurrences for identity in entry["nativeIds"]}
     unresolved = [{"entity": row["id"], "target": target}
                   for row in native for target in row.get("catalogReferences", [])
@@ -86,13 +100,32 @@ def report(edition, candidates, native):
     }
 
 
+def load_decisions(root, edition):
+    """Read documented dispositions, not inferred license approvals."""
+    tag = "51" if edition == "srd-5.1" else "52"
+    for group in ("item", "origins", "class", "feature", "general", "supplementary"):
+        filename = f"{group}-promotion-{tag}.json"
+        path = root / filename
+        if not path.exists():
+            continue
+        report_data = json.loads(path.read_text(encoding="utf-8"))
+        if report_data["edition"] != edition:
+            raise ValueError("Wrong edition promotion report: " + filename)
+        for section in ("excluded", "deferred"):
+            for row in report_data.get(section, []):
+                # Deity and vehicle records are explicitly awaiting further review.
+                deferred = section == "deferred" or row.get("path") in ("deities.json", "vehicles.json")
+                yield dict(row, disposition="deferred" if deferred else "not-promoted",
+                           evidence=filename)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     candidates = build()
     results = {edition: report(edition, candidates[edition], list(native_rows(
-        REPO / "data" / "rulesets" / package / "native")))
+        REPO / "data" / "rulesets" / package / "native")), list(load_decisions(ROOT, edition)))
         for edition, package in PACKAGES.items()}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(results, ensure_ascii=False, indent=2) + "\n",
