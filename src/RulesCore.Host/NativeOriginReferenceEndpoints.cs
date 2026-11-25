@@ -17,6 +17,14 @@ internal static class NativeOriginReferenceEndpoints
 
     internal static void Map(RouteGroupBuilder group)
     {
+        group.MapGet("/{rulesetId}/origins/methods/{scope}",
+            (string rulesetId, string scope, HttpRequest request, NativeCatalogRegistry registry,
+                NativePublicDistributionPolicy policy, NativeReferenceAccessPolicy access) =>
+                Read(rulesetId, request, registry, policy, access, catalog => Methods(catalog, scope)));
+        group.MapGet("/{rulesetId}/origins/component-sources/{targetId}",
+            (string rulesetId, string targetId, HttpRequest request, NativeCatalogRegistry registry,
+                NativePublicDistributionPolicy policy, NativeReferenceAccessPolicy access) =>
+                Read(rulesetId, request, registry, policy, access, catalog => ComponentSources(catalog, targetId)));
         group.MapGet("/{rulesetId}/origins/hierarchy/{family}",
             (string rulesetId, string family, HttpRequest request, NativeCatalogRegistry registry,
                 NativePublicDistributionPolicy policy, NativeReferenceAccessPolicy access) =>
@@ -56,6 +64,16 @@ internal static class NativeOriginReferenceEndpoints
         return project(catalog);
     }
 
+    private static IResult Methods(NativeCatalogSnapshot catalog, string scope)
+    {
+        if (scope == "all") return NativeOriginDiscoveryEndpoints.ProjectMethods(catalog, null);
+        if (!ValidId(scope) || !scope.StartsWith("creature-type.", StringComparison.Ordinal))
+            return Error(400, "invalid_creature_type");
+        if (!catalog.TryGetById(scope, out var type) || type?.Category != "creatureType")
+            return Error(404, "creature_type_not_found");
+        return NativeOriginDiscoveryEndpoints.ProjectMethods(catalog, scope);
+    }
+
     private static IResult Hierarchy(NativeCatalogSnapshot catalog, string family)
     {
         string[] categories = family switch
@@ -63,6 +81,9 @@ internal static class NativeOriginReferenceEndpoints
             "biological" => ["species", "ancestry"],
             "upbringing" => ["upbringing"],
             "construct-components" => ["construct-component"],
+            "characteristics" => ["origin-trait"],
+            "backgrounds" => ["background"],
+            "construct-options" => ["construct-design", "construct-enhancement", "construct-power-source", "construct-material", "crafting-recipe"],
             _ => []
         };
         if (categories.Length == 0) return Error(404, "origin_family_not_found");
@@ -78,7 +99,14 @@ internal static class NativeOriginReferenceEndpoints
             acquisitionMethodIds = Strings(e.Definition, "acquisitionMethods"),
             status = Text(e.Definition, "status"),
             rulesStatus = Text(e.Definition, "rulesStatus"),
-            componentCategory = Text(e.Definition, "componentCategory")
+            componentCategory = Text(e.Definition, "componentCategory"),
+            ancestrySelectionRequired = RequiresAncestry(e.Definition),
+            capabilities = Strings(e.Definition, "provides"),
+            compatibleComponentCapabilities = Strings(e.Definition, "compatibleComponentCapabilities"),
+            producesDefinitionId = Text(e.Definition, "producesDefinitionId"),
+            characteristicFamily = e.Category != "origin-trait" ? null :
+                e.SourcePath.StartsWith("native/origination/biological/genes/", StringComparison.Ordinal) ? "biological" :
+                e.SourcePath.StartsWith("native/origination/construct-assembly/", StringComparison.Ordinal) ? "construct" : null
         }).ToArray();
         return Results.Ok(new { contractVersion = 1, rulesetId = catalog.RulesetId,
             fingerprint = catalog.Fingerprint, family, complete = true, rows });
@@ -104,6 +132,8 @@ internal static class NativeOriginReferenceEndpoints
             var parent = Text(current.Definition, "parent");
             if (parent is null)
             {
+                if (current.Definition.TryGetProperty("parent", out _))
+                    return Error(422, "origin_reference_lineage_invalid");
                 if (current.Category == "ancestry")
                     return Error(422, "origin_reference_lineage_incomplete");
                 break;
@@ -120,8 +150,58 @@ internal static class NativeOriginReferenceEndpoints
             traitOccurrences = Occurrences(catalog, e)
         }).ToArray();
         return Results.Ok(new { contractVersion = 1, rulesetId = catalog.RulesetId,
-            fingerprint = catalog.Fingerprint, sourceId, lineage, effectiveProjectionAvailable = false });
+            fingerprint = catalog.Fingerprint, sourceId, lineage, effectiveProjectionAvailable = false,
+            directReference = upbringing ? null : DirectReference(catalog, selected, chain) });
     }
+
+    private static bool RequiresAncestry(JsonElement definition) =>
+        definition.TryGetProperty("ancestrySelection", out var selection) &&
+        selection.ValueKind == JsonValueKind.Object &&
+        selection.TryGetProperty("required", out var required) && required.ValueKind == JsonValueKind.True;
+
+    // Reuse the existing source deconstructor; never construct a character or
+    // claim that a reference selection grants a trait. Values are restricted to
+    // a unique fixed intrinsic offer and unresolved choices remain visible.
+    private static object? DirectReference(NativeCatalogSnapshot catalog, NativeRuleEntity selected,
+        IReadOnlyList<NativeRuleEntity> chain)
+    {
+        if (selected.Definition.TryGetProperty("selectable", out var selectable) &&
+            selectable.ValueKind == JsonValueKind.False ||
+            selected.Category == "species" && RequiresAncestry(selected.Definition))
+            return null;
+        var (proposal, issues) = new NativeOriginSourceDeconstructor(catalog).Deconstruct(
+            new NativeOriginProposal("reference", NativeOriginIntent.Direct,
+                new("rule.creature-origination", "biological"), [], [], [],
+                SelectedSpeciesId: chain[0].Id,
+                SelectedAncestryId: selected.Category == "ancestry" ? selected.Id : null));
+        var candidates = proposal.Candidates.Select(candidate => new
+        {
+            sourceId = candidate.Identity.Occurrence.Source.Id,
+            path = candidate.Identity.Occurrence.OccurrencePath,
+            slot = candidate.Identity.IntrinsicSlotId,
+            offeredValue = candidate.OfferedValue,
+            authoredParameters = candidate.OfferedParameters,
+            requiredChoices = candidate.RequiredChoices,
+            unresolvedEvidence = candidate.UnresolvedEvidence,
+            sourceRestriction = candidate.SelectionBasis.Eligibility == NativeOriginEligibility.Restricted
+                ? candidate.SelectionBasis.Explanation : null
+        }).ToArray();
+        var fixedValues = issues.Count != 0 ? [] : proposal.Candidates
+            .Where(c => c.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic &&
+                c.SelectionBasis.Eligibility != NativeOriginEligibility.Restricted)
+            .GroupBy(c => c.Identity.IntrinsicSlotId, StringComparer.Ordinal)
+            .Where(g => g.Key is "creatureType" or "size" or "walkingSpeedFeet" &&
+                g.Count() == 1 && g.Single().SelectionBasis.Eligibility == NativeOriginEligibility.Eligible &&
+                g.Single().OfferedValue is not null &&
+                (g.Single().RequiredChoices?.Count ?? 0) == 0 &&
+                (g.Single().UnresolvedEvidence?.Count ?? 0) == 0)
+            .Select(g => new FixedIntrinsic(g.Key!, g.Single().OfferedValue!.Value,
+                g.Single().Identity.Occurrence.Source.Id, g.Single().Identity.Occurrence.OccurrencePath))
+            .ToArray();
+        return new { methodId = "biological", referenceOnly = true, candidates, fixedValues, issues };
+    }
+
+    private sealed record FixedIntrinsic(string Slot, JsonElement Value, string SourceId, string Path);
 
     private sealed record TraitOccurrence(string SourceId, string Path, int Index,
         string? CanonicalTraitId, string? LocalId, JsonElement Trait);
@@ -143,7 +223,8 @@ internal static class NativeOriginReferenceEndpoints
         if (!ValidId(traitId)) return Error(400, "invalid_rule_id");
         if (!catalog.TryGetById(traitId, out var trait) || trait?.Category != "origin-trait")
             return Error(404, "origin_trait_not_found");
-        if (!TryFamily(catalog, ["species", "ancestry", "construct-component"], out var members))
+        if (!TryFamily(catalog, ["species", "ancestry", "construct-component", "construct-design",
+            "construct-enhancement", "construct-power-source", "construct-material"], out var members))
             return Error(422, "origin_reference_family_limit");
         var sources = new List<SourceLink>();
         foreach (var e in members)
@@ -151,7 +232,7 @@ internal static class NativeOriginReferenceEndpoints
             foreach (var occurrence in Occurrences(catalog, e))
                 if (occurrence.CanonicalTraitId == traitId)
                     sources.Add(new(e.Id, e.Name, e.Category, occurrence.Path, "biological-occurrence"));
-            if (e.Category == "construct-component" &&
+            if (e.Category.StartsWith("construct-", StringComparison.Ordinal) &&
                 e.Definition.TryGetProperty("operationalOriginTraitIds", out var ids) &&
                 ids.ValueKind == JsonValueKind.Array)
             {
@@ -175,7 +256,7 @@ internal static class NativeOriginReferenceEndpoints
         if (!catalog.TryGetById(componentId, out var component) || component?.Category != "construct-component")
             return Error(404, "construct_component_not_found");
         if (!TryFamily(catalog, ["crafting-recipe", "construct-design", "construct-enhancement",
-            "construct-power-source"], out var members))
+            "construct-power-source", "construct-material"], out var members))
             return Error(422, "origin_reference_family_limit");
         var configuration = new NativeConstructAssemblyEvaluator(catalog).DiscoverComponent(componentId);
         if (configuration is null) return Error(404, "construct_component_not_found");
@@ -186,7 +267,44 @@ internal static class NativeOriginReferenceEndpoints
             fingerprint = catalog.Fingerprint, componentId,
             componentCategory = Text(component.Definition, "componentCategory"),
             sourcePath = component.SourcePath, definition = component.Definition,
-            configuration, recipes, materialCompatibilityAvailable = false });
+            configuration, recipes, materialCompatibilityAvailable = false,
+            materialAssignmentOptions = configuration.MaterialSlots.Count == 0 ? [] : members
+                .Where(e => e.Category == "construct-material")
+                .Select(e => new { id = e.Id, name = e.Name }).ToArray() });
+    }
+
+    private static IResult ComponentSources(NativeCatalogSnapshot catalog, string targetId)
+    {
+        if (!ValidId(targetId)) return Error(400, "invalid_rule_id");
+        if (!catalog.TryGetById(targetId, out var target) || target is null ||
+            target.Category is not ("construct-design" or "construct-enhancement" or
+                "construct-power-source" or "construct-material" or "crafting-recipe"))
+            return Error(404, "construct_reference_target_not_found");
+        if (!TryFamily(catalog, ["construct-component", "construct-design", "construct-enhancement",
+            "construct-power-source", "construct-material", "crafting-recipe"], out var members))
+            return Error(422, "origin_reference_family_limit");
+        var evaluator = new NativeConstructAssemblyEvaluator(catalog);
+        var sources = new List<SourceLink>();
+        foreach (var e in members.Where(e => e.Category == "construct-component"))
+        {
+            var config = evaluator.DiscoverComponent(e.Id);
+            if (config is null) continue;
+            void Link(string path, string relation) => sources.Add(new(e.Id, e.Name, e.Category, path, relation));
+            if (config.Designs.Any(x => x.Id == targetId)) Link("/provides", "compatible-design");
+            if (config.Enhancements.Any(x => x.Id == targetId)) Link("/provides", "compatible-enhancement");
+            if (config.PowerSources.Any(x => x.Id == targetId)) Link("/powerSourceSlot", "compatible-power-source");
+            if (target.Category == "construct-material" && config.MaterialSlots.Count != 0)
+                Link("/materialSlots", "material-assignment-candidate");
+            if (config.DefaultRecipeId == targetId) Link("/craftingRecipeId", "default-recipe");
+            if (config.ConstructionVariants.Any(x => x.RecipeId == targetId))
+                Link("/constructionVariants", "variant-recipe");
+        }
+        // A recipe can produce an option rather than a component.
+        if (target.Category == "crafting-recipe" && Text(target.Definition, "producesDefinitionId") is string output &&
+            catalog.TryGetById(output, out var product) && product is not null)
+            sources.Add(new(product.Id, product.Name, product.Category, "/producesDefinitionId", "recipe-output"));
+        return Results.Ok(new { contractVersion = 1, rulesetId = catalog.RulesetId,
+            fingerprint = catalog.Fingerprint, targetId, complete = true, sources });
     }
 
     // Complete-family semantics: never return a silently truncated tree or reverse lookup.

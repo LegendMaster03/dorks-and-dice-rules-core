@@ -22,52 +22,7 @@ public static class NativeOriginDiscoveryEndpoints
             if (creatureTypeId is not null &&
                 (string.IsNullOrWhiteSpace(creatureTypeId) || creatureTypeId.Length > 160))
                 return Error(400, "invalid_creature_type");
-            const string ruleId = "rule.creature-origination";
-            if (!catalog.TryGetById(ruleId, out var rule) || rule is null ||
-                !rule.Definition.TryGetProperty("methodDefinitions", out var definitions) ||
-                definitions.ValueKind != JsonValueKind.Array)
-                return Error(422, "native_origination_methods_unavailable");
-            var validator = new NativeOriginContractValidator(catalog);
-            var availability = new NativeOriginMethodAvailabilityEvaluator(catalog);
-            var methods = definitions.EnumerateArray()
-                .Where(x => x.ValueKind == JsonValueKind.Object)
-                .Select(x => String(x, "id")).Where(id => !string.IsNullOrWhiteSpace(id))
-                .Distinct(StringComparer.Ordinal).Select(id =>
-                    validator.FindMethod(new(ruleId, id!)))
-                .Where(method => method is not null).Select(method =>
-                {
-                    var defaults = creatureTypeId is null ? null :
-                        availability.Resolve(creatureTypeId, method!.Reference);
-                    // Native listing and type defaults are not executable support.
-                    // This describes the existing transport, not new process rules.
-                    var support = method!.Reference.MethodId switch
-                    {
-                        "biological" => "initial-preview",
-                        "construct-assembly" => "assembly-preview",
-                        _ when method.Stage == "post-origination" &&
-                            method.Operation == "replace-complete-species-and-ancestry-configuration"
-                            => "verified-reconstruction-plan",
-                        _ => "reference-only"
-                    };
-                    return new
-                    {
-                        method.Reference, method.Name, method.Specializes, method.Stage,
-                        method.CreatesNewIndividual, method.Operation, support,
-                        defaultAvailability = defaults?.Status switch
-                        {
-                            NativeOriginMethodDefaultStatus.Available => "available",
-                            NativeOriginMethodDefaultStatus.NotGranted => "not-granted",
-                            NativeOriginMethodDefaultStatus.Unresolved => "unresolved",
-                            _ => null
-                        },
-                        definingCreatureTypeId = defaults?.DefiningCreatureTypeId
-                    };
-                }).ToArray();
-            return Results.Ok(new
-            {
-                contractVersion = 1, rulesetId = catalog.RulesetId,
-                fingerprint = catalog.Fingerprint, previewOnly = true, methods
-            });
+            return ProjectMethods(catalog, creatureTypeId);
         });
 
         group.MapGet("/origins/choice-catalog", (string fingerprint, string catalogId,
@@ -131,6 +86,57 @@ public static class NativeOriginDiscoveryEndpoints
                 fingerprint = catalog.Fingerprint, previewOnly = true, configuration
             });
         });
+    }
+
+    /// <summary>Shared read-only method projection for delegated discovery and private reference.</summary>
+    internal static IResult ProjectMethods(NativeCatalogSnapshot catalog, string? creatureTypeId)
+    {
+    const string ruleId = "rule.creature-origination";
+    if (!catalog.TryGetById(ruleId, out var rule) || rule is null ||
+        !rule.Definition.TryGetProperty("methodDefinitions", out var definitions) ||
+        definitions.ValueKind != JsonValueKind.Array)
+        return Error(422, "native_origination_methods_unavailable");
+    var validator = new NativeOriginContractValidator(catalog);
+    var availability = new NativeOriginMethodAvailabilityEvaluator(catalog);
+    var methods = definitions.EnumerateArray()
+        .Where(x => x.ValueKind == JsonValueKind.Object)
+        .Select(x => String(x, "id")).Where(id => !string.IsNullOrWhiteSpace(id))
+        .Distinct(StringComparer.Ordinal).Select(id =>
+            validator.FindMethod(new(ruleId, id!)))
+        .Where(method => method is not null).Select(method =>
+        {
+            var defaults = creatureTypeId is null ? null :
+                availability.Resolve(creatureTypeId, method!.Reference);
+            // Native listing and type defaults are not executable support.
+            // This describes the existing transport, not new process rules.
+            var support = method!.Reference.MethodId switch
+            {
+                "biological" => "initial-preview",
+                "construct-assembly" => "assembly-preview",
+                _ when method.Stage == "post-origination" &&
+                    method.Operation == "replace-complete-species-and-ancestry-configuration"
+                    => "verified-reconstruction-plan",
+                _ => "reference-only"
+            };
+            return new
+            {
+                method.Reference, method.Name, method.Specializes, method.Stage,
+                method.CreatesNewIndividual, method.Operation, support,
+                defaultAvailability = defaults?.Status switch
+                {
+                    NativeOriginMethodDefaultStatus.Available => "available",
+                    NativeOriginMethodDefaultStatus.NotGranted => "not-granted",
+                    NativeOriginMethodDefaultStatus.Unresolved => "unresolved",
+                    _ => null
+                },
+                definingCreatureTypeId = defaults?.DefiningCreatureTypeId
+            };
+        }).ToArray();
+    return Results.Ok(new
+    {
+        contractVersion = 1, rulesetId = catalog.RulesetId,
+        fingerprint = catalog.Fingerprint, previewOnly = true, methods
+    });
     }
 
     private static IEnumerable<NativeRuleEntity> All(NativeCatalogSnapshot catalog, string category)

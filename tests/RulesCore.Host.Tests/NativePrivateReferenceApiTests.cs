@@ -170,6 +170,20 @@ public sealed class NativePrivateReferenceApiTests
             .GetProperty("damageType").GetProperty("lookup").GetString());
         var wood = await Read("source/ancestry.elf.wood");
         Assert.False(wood.GetProperty("effectiveProjectionAvailable").GetBoolean());
+        var speed = wood.GetProperty("directReference").GetProperty("fixedValues").EnumerateArray()
+            .Single(x => x.GetProperty("slot").GetString() == "walkingSpeedFeet");
+        Assert.Equal(35, speed.GetProperty("value").GetInt32());
+        Assert.Equal("ancestry.elf.wood", speed.GetProperty("sourceId").GetString());
+        Assert.Equal(JsonValueKind.Null, (await Read("source/species.dragonborn")).GetProperty("directReference").ValueKind);
+        var red = await Read("source/ancestry.dragonborn.red");
+        var breath = red.GetProperty("directReference").GetProperty("candidates").EnumerateArray()
+            .Single(x => x.GetProperty("sourceId").GetString() == "species.dragonborn" && x.GetProperty("path").GetString() == "/traits/2");
+        Assert.Equal("fire", breath.GetProperty("authoredParameters").GetProperty("damageType").GetString());
+        var methods = await Read("methods/all");
+        Assert.Contains(methods.GetProperty("methods").EnumerateArray(), x =>
+            x.GetProperty("reference").GetProperty("methodId").GetString() == "rite-of-rebirth" &&
+            x.GetProperty("stage").GetString() == "post-origination" && !x.GetProperty("createsNewIndividual").GetBoolean());
+        Assert.True((await Read("hierarchy/characteristics")).GetProperty("complete").GetBoolean());
         Assert.Equal(30, wood.GetProperty("lineage")[0].GetProperty("definition").GetProperty("walkingSpeedFeet").GetInt32());
         Assert.Equal(35, wood.GetProperty("lineage")[1].GetProperty("definition").GetProperty("walkingSpeedFeet").GetInt32());
         Assert.True(wood.GetProperty("lineage")[1].GetProperty("definition").GetProperty("overridesAncestorWalkingSpeed").GetBoolean());
@@ -182,6 +196,12 @@ public sealed class NativePrivateReferenceApiTests
                 x.GetProperty("path").GetString() == "/traits/0");
         var component = await Read("component/construct-component.locomotion-unit");
         Assert.Equal("locomotion", component.GetProperty("componentCategory").GetString());
+        Assert.Contains(component.GetProperty("materialAssignmentOptions").EnumerateArray(),
+            x => x.GetProperty("id").GetString() == "construct-material.steel");
+        var componentReverse = await Read("component-sources/crafting-recipe.construct-component.locomotion-unit");
+        Assert.Contains(componentReverse.GetProperty("sources").EnumerateArray(), x =>
+            x.GetProperty("sourceId").GetString() == "construct-component.locomotion-unit" &&
+            x.GetProperty("relation").GetString() == "default-recipe");
         Assert.Contains(component.GetProperty("recipes").EnumerateArray(),
             x => x.GetProperty("id").GetString() == "crafting-recipe.construct-component.locomotion-unit");
         Assert.Contains((await Read("trait-sources/trait.construct.ordinary-ground-movement"))
