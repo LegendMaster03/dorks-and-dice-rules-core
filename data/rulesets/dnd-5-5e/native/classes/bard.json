@@ -765,6 +765,8 @@
     ],
     "subclassTitle": "Bard Subclass",
     "catalogReferences": [
+      "baseitem.dagger",
+      "baseitem.leather-armor",
       "class-feature.bard.ability-score-improvement.12",
       "class-feature.bard.ability-score-improvement.16",
       "class-feature.bard.ability-score-improvement.4",
@@ -783,6 +785,7 @@
       "class-feature.bard.subclass-feature.6",
       "class-feature.bard.superior-inspiration.18",
       "class-feature.bard.words-of-creation.20",
+      "item.entertainer-s-pack",
       "rulebook.page-031",
       "rulebook.page-033",
       "rulebook.page-034",

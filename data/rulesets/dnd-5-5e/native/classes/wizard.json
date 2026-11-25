@@ -513,6 +513,8 @@
     ],
     "subclassTitle": "Wizard Subclass",
     "catalogReferences": [
+      "baseitem.dagger",
+      "baseitem.quarterstaff",
       "class-feature.wizard.ability-score-improvement.12",
       "class-feature.wizard.ability-score-improvement.16",
       "class-feature.wizard.ability-score-improvement.4",
@@ -529,6 +531,8 @@
       "class-feature.wizard.subclass-feature.14",
       "class-feature.wizard.subclass-feature.6",
       "class-feature.wizard.wizard-subclass.3",
+      "item.robe",
+      "item.scholar-s-pack",
       "rulebook.page-077",
       "rulebook.page-079",
       "rulebook.page-080",

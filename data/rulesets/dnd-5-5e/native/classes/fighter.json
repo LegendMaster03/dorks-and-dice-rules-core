@@ -279,6 +279,15 @@
     ],
     "subclassTitle": "Fighter Subclass",
     "catalogReferences": [
+      "baseitem.arrows-20",
+      "baseitem.chain-mail",
+      "baseitem.flail",
+      "baseitem.greatsword",
+      "baseitem.javelin",
+      "baseitem.longbow",
+      "baseitem.scimitar",
+      "baseitem.shortsword",
+      "baseitem.studded-leather-armor",
       "class-feature.fighter.ability-score-improvement.12",
       "class-feature.fighter.ability-score-improvement.14",
       "class-feature.fighter.ability-score-improvement.16",
@@ -306,6 +315,8 @@
       "class-feature.fighter.three-extra-attacks.20",
       "class-feature.fighter.two-extra-attacks.11",
       "class-feature.fighter.weapon-mastery.1",
+      "item.dungeoneer-s-pack",
+      "item.quiver",
       "rulebook.page-047"
     ],
     "source": {

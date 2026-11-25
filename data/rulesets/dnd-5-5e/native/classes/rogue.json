@@ -441,6 +441,11 @@
     ],
     "subclassTitle": "Rogue Subclass",
     "catalogReferences": [
+      "baseitem.arrows-20",
+      "baseitem.dagger",
+      "baseitem.leather-armor",
+      "baseitem.shortbow",
+      "baseitem.shortsword",
       "class-feature.rogue.ability-score-improvement.10",
       "class-feature.rogue.ability-score-improvement.12",
       "class-feature.rogue.ability-score-improvement.16",
@@ -467,6 +472,9 @@
       "class-feature.rogue.thieves-cant.1",
       "class-feature.rogue.uncanny-dodge.5",
       "class-feature.rogue.weapon-mastery.1",
+      "item.burglar-s-pack",
+      "item.quiver",
+      "item.thieves-tools",
       "rulebook.page-061"
     ],
     "source": {

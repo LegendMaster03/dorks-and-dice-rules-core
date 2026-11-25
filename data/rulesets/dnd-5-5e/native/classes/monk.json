@@ -500,6 +500,8 @@
     ],
     "subclassTitle": "Monk Subclass",
     "catalogReferences": [
+      "baseitem.dagger",
+      "baseitem.spear",
       "class-feature.monk.ability-score-improvement.12",
       "class-feature.monk.ability-score-improvement.16",
       "class-feature.monk.ability-score-improvement.4",
@@ -528,6 +530,7 @@
       "class-feature.monk.unarmored-defense.1",
       "class-feature.monk.unarmored-movement.2",
       "class-feature.monk.uncanny-metabolism.2",
+      "item.explorer-s-pack",
       "rulebook.page-049"
     ],
     "source": {

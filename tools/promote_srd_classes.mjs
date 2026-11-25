@@ -248,7 +248,7 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  }
  const spells=fs.readdirSync(path.join(root,base+"native/spells")).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(base+"native/spells/"+f));
  report.literalSpellRelationships=linkSpellRelationships(Object.values(groups).flat(),spells,"SRD"+tag);
- if(tag==="51")report.literalCharacterRelationships=linkCharacterRelationships(Object.values(groups).flat(),characterRelationshipCatalog(root,base,read),"SRD"+tag);
+ report.literalCharacterRelationships=linkCharacterRelationships(Object.values(groups).flat(),characterRelationshipCatalog(root,base,read),"SRD"+tag);
  const outputs=Object.entries(groups).map(([name,records])=>[base+"native/classes/"+name+".json",json(records)]);
  outputs.push(["data/reference/srd/class-promotion-"+tag+".json",json(report)]);
  for(const [file,body] of outputs){

@@ -306,6 +306,8 @@
     ],
     "subclassTitle": "Barbarian Subclass",
     "catalogReferences": [
+      "baseitem.greataxe",
+      "baseitem.handaxe",
       "class-feature.barbarian.ability-score-improvement.12",
       "class-feature.barbarian.ability-score-improvement.16",
       "class-feature.barbarian.ability-score-improvement.4",
@@ -332,6 +334,7 @@
       "class-feature.barbarian.subclass-feature.6",
       "class-feature.barbarian.unarmored-defense.1",
       "class-feature.barbarian.weapon-mastery.1",
+      "item.explorer-s-pack",
       "rulebook.page-028"
     ],
     "source": {

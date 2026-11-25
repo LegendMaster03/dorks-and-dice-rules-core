@@ -518,6 +518,9 @@
     ],
     "subclassTitle": "Cleric Subclass",
     "catalogReferences": [
+      "baseitem.chain-shirt",
+      "baseitem.mace",
+      "baseitem.shield",
       "class-feature.cleric.ability-score-improvement.12",
       "class-feature.cleric.ability-score-improvement.16",
       "class-feature.cleric.ability-score-improvement.4",
@@ -534,6 +537,8 @@
       "class-feature.cleric.spellcasting.1",
       "class-feature.cleric.subclass-feature.17",
       "class-feature.cleric.subclass-feature.6",
+      "item-group.holy-symbol",
+      "item.priest-s-pack",
       "rulebook.page-036",
       "rulebook.page-038",
       "rulebook.page-039",
