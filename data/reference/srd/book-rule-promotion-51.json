@@ -229,6 +229,28 @@
       "pages": [
         99
       ]
+    },
+    {
+      "id": "rule.attunement",
+      "pointer": "/data/12/entries/1",
+      "pages": [
+        206
+      ]
+    },
+    {
+      "id": "rule.wearing-and-wielding-items",
+      "pointer": "/data/12/entries/2",
+      "pages": [
+        206
+      ]
+    },
+    {
+      "id": "rule.activating-an-item",
+      "pointer": "/data/12/entries/3",
+      "pages": [
+        206,
+        207
+      ]
     }
   ],
   "corrections": [
@@ -265,9 +287,21 @@
     {
       "id": "rule.resting",
       "reason": "Restore published short-rest healing wording and long-rest sleep/light-activity wording from p.87; do not import later errata into the pinned SRD."
+    },
+    {
+      "id": "rule.attunement",
+      "reason": "Restore explicit class membership prerequisite from p.206 and the publisher's spellcasting-class monster exception."
+    },
+    {
+      "id": "rule.wearing-and-wielding-items",
+      "reason": "Restore published size/anatomy and paired-item wording on p.206."
+    },
+    {
+      "id": "rule.activating-an-item",
+      "reason": "Restore publisher pp.206–207 activation, consumable, command-word, spell-level and charge wording; retain the published Use an Item label with the local Use an Object action reference."
     }
   ],
-  "nativeCount": 31,
+  "nativeCount": 34,
   "tableInventory": {
     "total": 30,
     "counts": {

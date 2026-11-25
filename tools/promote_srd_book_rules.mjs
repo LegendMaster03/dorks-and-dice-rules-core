@@ -368,6 +368,46 @@ function projectLegacyEquipmentTables(book,existing,pages,metadata,rows,report){
  }
 }
 
+function legacyMagicItemEntries(name,entries){
+ const replace=(s,a,b)=>{if(!s.includes(a))throw Error("Legacy magic item source changed: "+a);return s.replace(a,b);};
+ const child=n=>{const result=entries.find(x=>x?.name===n);if(!result)throw Error("Missing magic item subsection "+n);return result.entries;};
+ if(name==="Attunement"){
+  entries[0]=replace(entries[0],"If the prerequisite is to be a spellcaster, a creature qualifies if it can cast at least one spell using its traits or features, not using a magic item or the like. (If the class is a spellcasting class, a monster qualifies if that creature has spell slots and uses that class's spell list.)","If the prerequisite is a class, a creature must be a member of that class to attune to the item. (If the class is a spellcasting class, a monster qualifies if it has spell slots and uses that class's spell list.) If the prerequisite is to be a spellcaster, a creature qualifies if it can cast at least one spell using its traits or features, not using a magic item or the like.");
+  entries[3]=replace(entries[3],"end its attunement to an item first","end its attunement to an item first");
+  entries[4]=replace(entries[4],"A creature can also voluntarily","A creature can also voluntarily");
+ }
+ if(name==="Wearing and Wielding Items"){
+  entries[0]=replace(entries[0],"A weapon must be held in hand.","A weapon must be held.");
+  entries[2]=replace(entries[2],"armor made by the drow might fit elves only. Dwarves might make items usable only by dwarf-sized and dwarf-shaped characters.","drow-made armor might fit elves only. Dwarves might make items usable only by dwarf-sized and dwarf-shaped folk.");
+  entries[3]=replace(entries[3],"non-humanoid","nonhumanoid");
+  entries[3]=replace(entries[3],"has no way to wear magic boots.","can't wear boots.");
+  const multi=child("Multiple Items of the Same Kind");
+  multi[0]=replace(multi[0],"or be able to layer two cloaks","or to layer two cloaks");
+  const paired=child("Paired Items");
+  paired[0]=replace(paired[0],"pairs-such as boots, bracers, gauntlets, and gloves-impart","pairs—such as boots, bracers, gauntlets, and gloves—impart");
+  paired[0]=replace(paired[0],"boot of elven kind","boot of elvenkind");
+  paired[0]=replace(paired[0],"from either item.","from either.");
+ }
+ if(name==="Activating an Item"){
+  entries[0]=replace(entries[0],"something in particular, such as holding the item and uttering a command word, reading the item if it is a scroll, or drinking it if it is a potion.","something special, such as holding the item and uttering a command word.");
+  entries[1]=replace(entries[1],"{@action Use an Item|srd51}","Use an Item");
+  const command=child("Command Word");
+  command[0]=replace(command[0],"must be spoken audibly for the item to operate. A magic item that requires the user to speak a command word can't be activated in the area of any effect that prevents sound, such as the area created by the silence spell.","must be spoken for an item to work. A magic item that requires a command word can't be activated in an area where sound is prevented, as in the area of the silence spell.");
+  const consumables=child("Consumables");
+  consumables[0]=replace(consumables[0],"loses its magic and no longer functions.","loses its magic.");
+  const spells=child("Spells");
+  spells[0]=replace(spells[0],"from the item, often by expending charges from it. The spell is cast at the lowest possible spell and caster level,","from the item. The spell is cast at the lowest possible spell level,");
+  spells[0]=replace(spells[0],"requires no components unless","requires no components, unless");
+  spells[0]=replace(spells[0]," Certain items make exceptions to these rules, changing the casting time, duration, or other parts of a spell."," Many items, such as potions, bypass the casting of a spell and confer the spell's effects, with their usual duration. Certain items make exceptions to these rules, changing the casting time, duration, or other parts of a spell.");
+  spells.splice(1,1);
+  spells[1]=replace(spells[1],"and your proficiency bonus does apply.","and your proficiency bonus does apply.");
+  const charges=child("Charges");
+  charges[0]=replace(charges[0],"have charges that you expend","have charges that must be expended");
+  charges[0]=replace(charges[0],"or when a creature attunes to the item","as well as when a creature attunes to it");
+ }
+ return entries;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -522,7 +562,10 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Resting","/data/7/entries/3",[87],[]],
   ["Cover","/data/8/entries/4",[96],[]],
   ["Mounted Combat","/data/8/entries/6",[99],["condition.prone","action.dash","action.disengage","action.dodge","reaction-option.opportunity-attack"]],
-  ["Underwater Combat","/data/8/entries/7",[99],[]]
+  ["Underwater Combat","/data/8/entries/7",[99],[]],
+  ["Attunement","/data/12/entries/1",[206],["rule.resting","item.ring-of-protection"]],
+  ["Wearing and Wielding Items","/data/12/entries/2",[206],[]],
+  ["Activating an Item","/data/12/entries/3",[206,207],["action.use-an-object","spell.silence","spell.identify","status.concentration","rule.attunement"]]
  ]:[
   ["Travel Pace","/data/10/entries/0",[192],["table.travel-pace","condition.exhaustion","spell.wind-walk","item-group.carpet-of-flying","glossary.difficult-terrain"]],
   ["Creating a Background","/data/10/entries/1",[192,193],[]],
@@ -538,6 +581,9 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Crafting Magic Items","/data/11/entries/8",[206,207],["skill.arcana","rule.brewing-potions-of-healing","rule.scribing-spell-scrolls","rule.crafting-nonmagical-items"]]
  ];
  const extraCorrections={
+  "Attunement":"Restore explicit class membership prerequisite from p.206 and the publisher's spellcasting-class monster exception.",
+  "Wearing and Wielding Items":"Restore published size/anatomy and paired-item wording on p.206.",
+  "Activating an Item":"Restore publisher pp.206–207 activation, consumable, command-word, spell-level and charge wording; retain the published Use an Item label with the local Use an Object action reference.",
   "Advantage and Disadvantage":"Restore the original reroll-only wording and unrestricted Inspiration wording from pp.76–77; remove later source additions.",
   "Resting":"Restore published short-rest healing wording and long-rest sleep/light-activity wording from p.87; do not import later errata into the pinned SRD.",
   "Combat Encounters":"Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
@@ -561,6 +607,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
    return x;
   };
   let content=project(node.entries);
+  if(tag==="51")content=legacyMagicItemEntries(name,content);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");
    content[4]=content[4].replace("advantage on checks related to the character's personality, ideals, or bonds","advantage");

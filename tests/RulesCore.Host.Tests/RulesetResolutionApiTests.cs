@@ -471,6 +471,21 @@ public sealed class RulesetResolutionApiTests
         Assert.Contains("initiative count 20", legacyLegendary.GetProperty("entries").GetRawText());
         Assert.Contains("condition.incapacitated", legacyLegendary.GetProperty("catalogReferences").GetRawText());
 
+        // Edition-specific magic item procedures and canonical crafting tables.
+        var legacyMagicAttunement = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.attunement")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("a creature must be a member of that class", legacyMagicAttunement.GetProperty("entries")[0].GetString());
+        var legacyMagicActivation = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.activating-an-item")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("lowest possible spell level", legacyMagicActivation.GetProperty("entries").GetRawText());
+        Assert.DoesNotContain("spell and caster level", legacyMagicActivation.GetProperty("entries").GetRawText());
+        var modernMagicActivation = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.activating-a-magic-item")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("spoken or signed", modernMagicActivation.GetProperty("entries").GetRawText());
+        Assert.Contains("spell and caster level", modernMagicActivation.GetProperty("entries").GetRawText());
+        var modernMagicCrafting = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.crafting-magic-items")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("table.magic-item-tools", modernMagicCrafting.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("table.magic-item-crafting-time-and-cost", modernMagicCrafting.GetProperty("catalogReferences").GetRawText());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/rule.crafting-magic-items")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(animals + "/rule.activating-an-item")).StatusCode);
+
         // Supplementary actions, glossary and contagions preserve edition-specific categories.
         var oldCoreActions = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=action&limit=1");
         var newCoreActions = await client.GetFromJsonAsync<JsonElement>(animals + "?category=action&limit=1");
