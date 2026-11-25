@@ -995,7 +995,9 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Armor","/data/4/entries/8",[62,63,64],["table.donning-and-doffing-armor","equipment-option.don-or-doff-a-shield","skill.stealth"]],
   ["Weapons","/data/4/entries/9",[64,65,66],["rule.making-an-attack","combat-option.two-weapon-fighting","reaction-option.opportunity-attack","condition.restrained"]],
   ["Adventuring Gear","/data/4/entries/10",[66,67,68,69,70],["rule.the-environment","rule.casting-a-spell","item-group.arcane-focus","item-group.druidic-focus","item-group.holy-symbol"]],
-  ["Tools","/data/4/entries/11",[70,71],["rule.proficiency-bonus","rule.ability-checks","rule.mounts-and-vehicles","class.bard"]]
+  ["Tools","/data/4/entries/11",[70,71],["rule.proficiency-bonus","rule.ability-checks","rule.mounts-and-vehicles","class.bard"]],
+  ["Racial Traits","/data/1/entries/0",[3],["rule.movement","rule.weapons","rule.languages","rule.the-order-of-combat"]],
+  ["Customizing NPCs","/data/44/entries/1",[395],["rule.racial-traits","rule.armor","rule.weapons","rule.casting-a-spell"]]
  ]:[
   ["Travel Pace","/data/10/entries/0",[192],["table.travel-pace","condition.exhaustion","spell.wind-walk","item-group.carpet-of-flying","glossary.difficult-terrain"]],
   ["Creating a Background","/data/10/entries/1",[192,193],[]],
@@ -1048,9 +1050,14 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Weapons","/data/6/entries/2",[89,90,91],["rule.weapon-mastery-properties","glossary.improvised-weapons","glossary.disadvantage","glossary.proficiency","action.attack","glossary.bonus-action","reaction-option.opportunity-attack"]],
   ["Armor","/data/6/entries/3",[92],["glossary.armor-class","glossary.armor-training","glossary.d20-test","glossary.disadvantage","skill.stealth","equipment-option.don-or-doff-a-shield"]],
   ["Tools","/data/6/entries/4",[93,94],["rule.proficiency","rule.crafting-nonmagical-items","rule.brewing-potions-of-healing","rule.scribing-spell-scrolls","action.utilize","glossary.advantage"]],
-  ["Adventuring Gear","/data/6/entries/5",[94,95,96,97,98,99,100],["rule.casting-spells","glossary.spellcasting-focus","action.utilize","glossary.bonus-action","item-group.spell-scroll","item-property.a"]]
+  ["Adventuring Gear","/data/6/entries/5",[94,95,96,97,98,99,100],["rule.casting-spells","glossary.spellcasting-focus","action.utilize","glossary.bonus-action","item-group.spell-scroll","item-property.a"]],
+  ["Character Backgrounds","/data/4/entries/0",[83],["background.acolyte","background.criminal","background.sage","background.soldier","rule.create-your-character","rule.feat-descriptions","rule.tools"]],
+  ["Character Species","/data/4/entries/2",[83,84],["species.dragonborn","species.dwarf","species.elf","species.gnome","species.goliath","species.halfling","species.human","species.orc","species.tiefling","glossary.creature-type","glossary.size"]],
+  ["Feat Descriptions","/data/5/entries/0",[87],["rule.level-advancement"]],
+  ["Glossary Conventions","/data/9/entries/0",[176],["condition.prone"]]
  ];
  const modernGameplayCorrections={
+  "Glossary Conventions":"Reuse the existing publisher-corrected abbreviation table rather than duplicating it (p.176).",
 "Weapons":"Reference existing nine weapon properties and eight masteries; preserve separate range and improvised-weapon rules (pp.89–91).",
 "Armor":"Restore malformed AC label and retain training, strength, stealth and shield rules (p.92).",
 "Tools":"Index all seventeen artisan tools and eight other tool entries; retain group guidance for gaming sets and musical instruments (pp.93–94).",
@@ -1081,6 +1088,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   "Damage and Healing": "Restore publisher opening and local damage, knockout, rest and stabilization references (pp.16–18)."
 };
  const extraCorrections={
+  "Customizing NPCs":"Remove two non-publisher DMG navigation references while preserving all published customization rules (p.395).",
   "Armor":"Reuse canonical armor descriptions after exact comparison and retain proficiency, AC, speed, stealth and don/doff rules (pp.62–64).",
   "Weapons":"Reuse canonical weapon properties and special weapon definitions; reconcile original property wording (pp.64–66).",
   "Adventuring Gear":"Use existing item/group/pack identities rather than duplicate their descriptive bodies; retain potion administration action cost (pp.66–70).",
@@ -1123,6 +1131,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
     if(x.type==="table"){
      if(tag==="51"&&name==="Ability Checks"&&!x.caption)return legacySkillList(x,existing,local);
      if(tag==="52"&&name==="Proficiency"&&x.caption==="Skills")return modernSkillsList(x,existing,local);
+   if(tag==="52"&&name==="Glossary Conventions"&&!x.caption){local.add("table.glossary-abbreviations");return "See the Glossary Abbreviations table.";}
      const id="table."+slug(x.caption);
      if(!known.has(id)&&!rows.some(r=>r.id===id))throw Error("Unprojected book table "+id);
      local.add(id);return "See the "+x.caption+" table.";
@@ -1135,6 +1144,12 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   let content=project(entryRange?node.entries.slice(...entryRange):node.entries);
   if(tag==="51")content=legacyEquipmentEntries(name,legacyEconomyEntries(name,legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local)),existing,local);
   else content=modernEquipmentEntries(name,modernToolboxMonsterEntries(name,modernCharacterEconomySpellEntries(name,modernGameplayEntries(name,modernMagicItemEntries(name,content),existing,local),existing,local),existing,local),existing,local);
+  if(name==="Customizing NPCs"){
+   const armor=content.find(x=>x?.name==="Armor and Weapon Swaps"),magic=content.find(x=>x?.name==="Magic Items");
+   const a=", as explained in the Dungeon Master's Guide.",b=" Magic items, as well as adjusting a creature's challenge rating, are described in the Dungeon Master's Guide.";
+   if(!armor?.entries[0].endsWith(a)||!magic?.entries[0].endsWith(b))throw Error("NPC customization source changed");
+   armor.entries[0]=armor.entries[0].replace(a,".");magic.entries[0]=magic.entries[0].replace(b,"");
+  }
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");
    content[4]=content[4].replace("advantage on checks related to the character's personality, ideals, or bonds","advantage");

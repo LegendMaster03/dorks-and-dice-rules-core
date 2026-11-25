@@ -772,6 +772,35 @@
         99,
         100
       ]
+    },
+    {
+      "id": "rule.character-backgrounds",
+      "pointer": "/data/4/entries/0",
+      "pages": [
+        83
+      ]
+    },
+    {
+      "id": "rule.character-species",
+      "pointer": "/data/4/entries/2",
+      "pages": [
+        83,
+        84
+      ]
+    },
+    {
+      "id": "rule.feat-descriptions",
+      "pointer": "/data/5/entries/0",
+      "pages": [
+        87
+      ]
+    },
+    {
+      "id": "rule.glossary-conventions",
+      "pointer": "/data/9/entries/0",
+      "pages": [
+        176
+      ]
     }
   ],
   "corrections": [
@@ -898,9 +927,13 @@
     {
       "id": "rule.adventuring-gear",
       "reason": "Index the eighty-one gear headings and retain ammunition, focus group and equipment-specific scroll instructions (pp.94–100)."
+    },
+    {
+      "id": "rule.glossary-conventions",
+      "reason": "Reuse the existing publisher-corrected abbreviation table rather than duplicating it (p.176)."
     }
   ],
-  "nativeCount": 109,
+  "nativeCount": 113,
   "tableInventory": {
     "total": 59,
     "counts": {

@@ -12831,5 +12831,291 @@
       },
       "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
     }
+  },
+  {
+    "id": "rule.character-backgrounds",
+    "kind": "rule",
+    "name": "Character Backgrounds",
+    "entries": [
+      "Your character's background is a collection of characteristics that represent the place and occupation that were most formative before your character embarked on a life of adventure.",
+      {
+        "type": "entries",
+        "name": "Parts of a Background",
+        "entries": [
+          "A background includes the following parts.",
+          {
+            "type": "entries",
+            "name": "Ability Scores",
+            "entries": [
+              "A background lists three of your character's ability scores. Increase one by 2 and another one by 1, or increase all three by 1. None of these increases can raise a score above 20."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Feat",
+            "entries": [
+              "A background gives your character a specified Origin feat (described in Feats)."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Skill Proficiencies",
+            "entries": [
+              "A background gives your character proficiency in two specified skills."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Tool Proficiency",
+            "entries": [
+              "Each background gives a character proficiency with one tool—either a specific tool or one chosen from the Artisan's Tools category. Tools are detailed in \"Equipment\"."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Equipment",
+            "entries": [
+              "Each background offers a choice between a package of equipment and 50 GP."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "background.acolyte",
+      "background.criminal",
+      "background.sage",
+      "background.soldier",
+      "rule.create-your-character",
+      "rule.feat-descriptions",
+      "rule.tools",
+      "rulebook.page-083"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        83
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/0"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.character-species",
+    "kind": "rule",
+    "name": "Character Species",
+    "entries": [
+      "When you choose your character's species, you determine whether your character is a human or a member of a fantastical species, such as dragonborn or gnome.",
+      "The peoples of the multiverse hail from different worlds and include many kinds of sapient life forms. A player character's species is the set of game traits that an adventurer gains from being one of those life forms.",
+      "Some species can trace their origin to a single world, plane of existence, or god, while other species first appeared in multiple realms at once. Whatever a species' genesis, its members have spread across the multiverse and contribute to many different cultures.",
+      "Members of most species live for about 80 years, with exceptions noted in the text about the species in \"Character Origins\". Regardless of life span, members of all species reach physical maturity at about the same age. Your character can be any age that isn't beyond their species' normal life span.",
+      {
+        "type": "entries",
+        "name": "Parts of a Species",
+        "entries": [
+          "A species includes the following parts.",
+          {
+            "type": "entries",
+            "name": "Creature Type",
+            "entries": [
+              "A character's species determines the character's creature type, which is described in the Rules Glossary. Every species in \"Character Origins\" is Humanoid; playable non-Humanoid species appear in other books."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Size",
+            "entries": [
+              "Your character's species determines the character's size. Individuals within a species cover a wide range of heights, and some species include such diversity of size that you can choose whether your character is Small or Medium."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Speed",
+            "entries": [
+              "Your character's species determines the character's Speed."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Special Traits",
+            "entries": [
+              "Each species gives a character special traits—unique characteristics based on the species' physiology or magical nature. When you choose a species, your character gets all the special traits listed for it. Some traits involve making a choice from a handful of options."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "glossary.creature-type",
+      "glossary.size",
+      "rulebook.page-083",
+      "rulebook.page-084",
+      "species.dragonborn",
+      "species.dwarf",
+      "species.elf",
+      "species.gnome",
+      "species.goliath",
+      "species.halfling",
+      "species.human",
+      "species.orc",
+      "species.tiefling"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        83,
+        84
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/4",
+        "entryPointer": "/data/4/entries/2"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.feat-descriptions",
+    "kind": "rule",
+    "name": "Feat Descriptions",
+    "entries": [
+      "The feats that follow are organized by category— Origin, General, Fighting Style, or Epic Boon—and alphabetized in each category.",
+      {
+        "type": "entries",
+        "name": "Parts of a Feat",
+        "entries": [
+          "The description of a feat contains the following parts, which are presented after the feat's name.",
+          {
+            "type": "entries",
+            "name": "Category",
+            "entries": [
+              "A feat is a member of a category, which is noted in the feat. If you're instructed to choose a feat from a specific category, such as the Origin category, that category must appear under the feat's name. If you're instructed to choose a feat and no category is specified, you can choose from any category."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Prerequisite",
+            "entries": [
+              "To take a feat, you must meet any prerequisite in its description unless a feature allows you to take the feat without the prerequisite. If a prerequisite includes a class, you must have at least 1 level in that class to take the feat."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Benefit",
+            "entries": [
+              "The benefits of a feat are detailed after any prerequisites are listed. If you have a feat, you gain its benefits."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Repeatable",
+            "entries": [
+              "A feat can be taken only once unless its description states otherwise in a \"Repeatable\" subsection."
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "rule.level-advancement",
+      "rulebook.page-087"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        87
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/5",
+        "entryPointer": "/data/5/entries/0"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
+    "id": "rule.glossary-conventions",
+    "kind": "rule",
+    "name": "Glossary Conventions",
+    "entries": [
+      "The glossary uses the following conventions:",
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
+          {
+            "type": "item",
+            "name": "Tags in Brackets",
+            "entry": "Some entries have a tag in brackets after the entry's name, as in \"Attack [Action].\" A tag—Action, Area of Effect, Attitude, Condition, or Hazard—indicates that a rule is part of a family of rules. The tags also have glossary entries."
+          },
+          {
+            "type": "item",
+            "name": "\"You\"",
+            "entry": "The game's rules—in this glossary and elsewhere—often talk about something happening to you in the game world. That \"you\" refers to the creature or object that the rule applies to in a particular moment of play. For example, the \"you\" in the {@condition Prone|srd52} condition is a creature that currently has that condition."
+          },
+          {
+            "type": "item",
+            "name": "\"See Also\"",
+            "entry": "Some glossary entries include a See also section that points to other entries in the glossary, to other parts of this document, or both."
+          },
+          {
+            "type": "item",
+            "name": "No Obsolete Terms",
+            "entry": "The glossary contains definitions of current rules terms only. If you're looking for a term from an earlier version of the fifth edition rules, consult the index."
+          },
+          {
+            "type": "item",
+            "name": "Abbreviations",
+            "entry": "The abbreviations listed below appear in this glossary and elsewhere in the rules."
+          }
+        ]
+      },
+      "See the Glossary Abbreviations table."
+    ],
+    "catalogReferences": [
+      "condition.prone",
+      "rulebook.page-176",
+      "table.glossary-abbreviations"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        176
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/9",
+        "entryPointer": "/data/9/entries/0"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
   }
 ]

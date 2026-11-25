@@ -490,6 +490,20 @@
         70,
         71
       ]
+    },
+    {
+      "id": "rule.racial-traits",
+      "pointer": "/data/1/entries/0",
+      "pages": [
+        3
+      ]
+    },
+    {
+      "id": "rule.customizing-npcs",
+      "pointer": "/data/44/entries/1",
+      "pages": [
+        395
+      ]
     }
   ],
   "corrections": [
@@ -622,9 +636,13 @@
     {
       "id": "rule.tools",
       "reason": "Reuse canonical concrete tool identities; preserve group proficiency guidance and omit the commercial card-game example (pp.70–71)."
+    },
+    {
+      "id": "rule.customizing-npcs",
+      "reason": "Remove two non-publisher DMG navigation references while preserving all published customization rules (p.395)."
     }
   ],
-  "nativeCount": 62,
+  "nativeCount": 64,
   "tableInventory": {
     "total": 30,
     "counts": {
