@@ -235,20 +235,20 @@ def verify(image_id, pair, control):
     require(observed_registration[PUBLIC] == observed_registration[PRIVATE], "Running ruleset registration drift")
     fingerprints = reviewed_fingerprints()
     require(observed_registration[PUBLIC] <= fingerprints.keys(), "Running ruleset has no reviewed fingerprint")
-    expected = {key: fingerprints[key] for key in observed_registration[PUBLIC]}
+    expected_fingerprints = {key: fingerprints[key] for key in observed_registration[PUBLIC]}
     checks = [(BACKEND, PUBLIC, "/ready", "200"), (pair, PRIVATE, "/ready", "200"),
               (BACKEND, PUBLIC, "/ready/all", "200"), (pair, PRIVATE, "/ready/all", "200"),
               (BACKEND, PUBLIC, "/api/private/rulesets", "404"), (pair, PRIVATE, "/api/rulesets", "404"),
               (pair, PRIVATE, "/api/private/rulesets", "401"), (BACKEND, PUBLIC, "/api/rules", "404"),
               (BACKEND, PUBLIC, "/api/rulesets/first-party-001/rules", "404")]
-    for network, host, path, expected in checks:
+    for network, host, path, expected_status in checks:
         _, status = probe(network, host, path)
-        require(status == expected, f"Ingress failed: {host}{path} expected {expected}")
+        require(status == expected_status, f"Ingress failed: {host}{path} expected {expected_status}")
     body, status = probe(BACKEND, PUBLIC, "/api/rulesets")
     require(status == "200" and json.loads(body) == {"rulesets": []}, "Anonymous distribution is not closed")
     for name in (PUBLIC, PRIVATE):
         # JsonConsole writes catalog initialization messages to stdout.
-        require_ruleset_fingerprints(command("docker", "logs", name), expected)
+        require_ruleset_fingerprints(command("docker", "logs", name), expected_fingerprints)
     validate_members(pair, inspect("network", pair), {PRIVATE, WIKI})
     validate_members(control, inspect("network", control), {SITE, PRIVATE})
 

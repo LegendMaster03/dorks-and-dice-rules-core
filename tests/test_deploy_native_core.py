@@ -127,6 +127,48 @@ class DeploymentBoundaryTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 release.require_ruleset_fingerprints(bad, expected)
 
+    def test_verify_checks_registered_fingerprints_after_http_probes(self):
+        fingerprints = {"first-party-001": "a" * 64, "dnd-5e": "b" * 64,
+                        "dnd-5-5e": "c" * 64, "fate-condensed": "d" * 64}
+        env = {"RULES_CORE_EXPECTED_FINGERPRINT": fingerprints["first-party-001"],
+               "RULES_CORE_EXPECTED_FINGERPRINTS": json.dumps(fingerprints)}
+        for additional in ("", "dnd-5e,dnd-5-5e,fate-condensed"):
+            selected = {"first-party-001"} | set(filter(None, additional.split(",")))
+            log = "\n".join(
+                f"Native rules catalog ready: ruleset {key}, records 2, fingerprint {fingerprints[key]}"
+                for key in sorted(selected))
+
+            def inspect(kind, name):
+                if kind == "network":
+                    return {"Containers": {}}
+                networks = {release.BACKEND: {}} if name == release.PUBLIC else {"pair": {}, "control": {}}
+                return {"Image": "candidate", "State": {"Running": True},
+                        "NetworkSettings": {"Networks": networks},
+                        "HostConfig": {"PortBindings": {}},
+                        "Config": {"Env": ["ToolHost__BaseUrl=http://dorks-and-dice-site:8080",
+                                           "Rulesets__AdditionalRulesetsCsv=" + additional]}}
+
+            def probe(network, name, path):
+                if path in ("/ready", "/ready/all"):
+                    return "", "200"
+                if name == release.PUBLIC and path == "/api/rulesets":
+                    return '{"rulesets":[]}', "200"
+                if name == release.PRIVATE and path == "/api/private/rulesets":
+                    return "", "401"
+                return "", "404"
+
+            with self.subTest(additional=additional), patch.dict(release.os.environ, env, clear=True), \
+                    patch.object(release, "inspect", side_effect=inspect), \
+                    patch.object(release, "probe", side_effect=probe), \
+                    patch.object(release, "command", return_value=log) as command:
+                release.verify("candidate", "pair", "control")
+                self.assertEqual([(("docker", "logs", release.PUBLIC),),
+                                  (("docker", "logs", release.PRIVATE),)],
+                                 command.call_args_list)
+                command.return_value = log.replace(fingerprints["first-party-001"], "e" * 64)
+                with self.assertRaisesRegex(RuntimeError, "Ruleset catalog fingerprint mismatch"):
+                    release.verify("candidate", "pair", "control")
+
     def test_image_must_match_commit_and_be_unprivileged(self):
         sha = "c" * 40
         image = {"Config": {"User": "1654",
