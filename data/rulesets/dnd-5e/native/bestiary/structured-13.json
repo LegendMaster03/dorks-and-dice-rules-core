@@ -73,7 +73,7 @@
       {
         "name": "Multiattack (Humanoid or Hybrid Form Only)",
         "entries": [
-          "The werewolf makes two attacks: two with its spear (humanoid form) or one with its bite and one with its claws (hybrid form)."
+          "The werewolf makes two attacks: one with its bite and one with its claws or spear."
         ]
       },
       {
@@ -111,6 +111,7 @@
     ],
     "catalogReferences": [
       "rulebook.page-328",
+      "rulebook.page-329",
       "skill.perception"
     ],
     "source": {
@@ -120,7 +121,8 @@
       "license": "CC-BY-4.0",
       "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
       "pages": [
-        328
+        328,
+        329
       ],
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",
@@ -130,7 +132,7 @@
       },
       "candidatePage": 328,
       "structuredStatus": "publisher-name-locator-matched; stat-block body review pending",
-      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."
+      "adaptation": "Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded. Restore the published Multiattack wording (SRD 5.1 p. 329); retain the individual action form restrictions without inferring an erratum."
     }
   },
   {

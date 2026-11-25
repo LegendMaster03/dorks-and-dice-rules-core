@@ -73,6 +73,18 @@ function generate(candidates, spells, conditions, skills, pages, existing, sourc
             row.action=JSON.parse(after);
             report.corrections.push({id,reason:"Publisher uses plain lycanthropy curse wording; the referenced player-character variant rule is absent from SRD 5.1.",pages:[lycanthropePages[candidate.name]]});
         }
+        // SRD 5.1 p. 329 has an internally ambiguous form restriction. Preserve it.
+        const correctWerewolf=tag==="51"&&candidate.name==="Werewolf";
+        if(correctWerewolf){
+            const action=row.action.find(entry=>entry.name==="Multiattack (Humanoid or Hybrid Form Only)");
+            const before="The werewolf makes two attacks: two with its spear (humanoid form) or one with its bite and one with its claws (hybrid form).";
+            const after="The werewolf makes two attacks: one with its bite and one with its claws or spear.";
+            if(!action||action.entries.length!==1||action.entries[0]!==before)
+                throw Error("Expected Werewolf Multiattack source absent: "+id);
+            // Copy instead of mutating the pinned candidate's nested action array.
+            row.action=row.action.map(entry=>entry===action?{...entry,entries:[after]}:entry);
+            report.corrections.push({id,from:before,to:after,reason:"Restore the published Multiattack wording (SRD 5.1 p. 329); retain the individual action form restrictions without inferring an erratum.",pages:[329]});
+        }
         // Official SRD 5.2.1 p.109 supplies immunities omitted by the structured source.
         if(tag==="52"&&candidate.name==="Animated Object"){
             row.immune=["poison","psychic"];
@@ -89,6 +101,13 @@ function generate(candidates, spells, conditions, skills, pages, existing, sourc
             .find(p=>p && names.some(name=>comparable(p.textLayout).includes(name)));
         if (!publisherPage) report.unmatchedPublisherLocators.push({id,candidatePage:candidate.page});
         const refs=new Set(publisherPage?[publisherPage.id]:[]);
+        if(correctWerewolf){
+            const actionPage=pageMap.get(329);
+            const leftColumn=actionPage?.textLayout.split("\n").map(line=>line.split(/ {5,}/,1)[0]).join(" ")??"";
+            if(!comparable(leftColumn).includes(comparable(row.action[0].entries[0])))
+                throw Error("Publisher Werewolf Multiattack evidence absent: "+id);
+            refs.add(actionPage.id);
+        }
         for (const match of JSON.stringify(row).matchAll(/\{@(spell|creature|condition|skill|item|feat) ([^}]+)\}/g)) {
             const [name,edition] = match[2].split("|");
             const target=match[1]==="item"?itemIds.get(slug(name)):idFor(match[1],name);
@@ -113,6 +132,10 @@ function generate(candidates, spells, conditions, skills, pages, existing, sourc
             candidatePage:candidate.page,
             structuredStatus:publisherPage?"publisher-name-locator-matched; stat-block body review pending":"source-tagged; publisher locator and body review pending",
             adaptation:"Pinned edition-specific stat block; external media, fluff, derived metadata and generated variants excluded."};
+        if(correctWerewolf){
+            row.source.pages=[...new Set([...row.source.pages,329])].sort((a,b)=>a-b);
+            row.source.adaptation+=" "+"Restore the published Multiattack wording (SRD 5.1 p. 329); retain the individual action form restrictions without inferring an erratum.";
+        }
         result.push(row);report.imported.push(id);
     }
     report.publisherOnly=existing.filter(row=>!identities.has(row.id)).map(row=>row.id);

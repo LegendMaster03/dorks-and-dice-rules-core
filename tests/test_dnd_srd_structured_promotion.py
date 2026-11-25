@@ -37,3 +37,16 @@ class DndSrdStructuredPromotionTests(unittest.TestCase):
         self.assertIn("other than the grappler", modern["Grappled"])
         self.assertIn("can't move", old["Stunned"])
         self.assertNotIn("Speed 0", modern["Stunned"])
+
+    def test_legacy_werewolf_publisher_multiattack(self):
+        werewolf = next(row for row in records("dnd-5e", "bestiary/structured-13.json")
+                        if row["id"] == "monster.werewolf")
+        self.assertEqual([
+            "Multiattack (Humanoid or Hybrid Form Only)",
+            "Bite (Wolf or Hybrid Form Only)",
+            "Claws (Hybrid Form Only)",
+            "Spear (Humanoid Form Only)",
+        ], [action["name"] for action in werewolf["action"]])
+        self.assertEqual(["The werewolf makes two attacks: one with its bite and one with its claws or spear."], werewolf["action"][0]["entries"])
+        self.assertIn("rulebook.page-329", werewolf["catalogReferences"])
+        self.assertIn(329, werewolf["source"]["pages"])

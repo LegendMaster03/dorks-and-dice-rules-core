@@ -446,6 +446,15 @@
       "pages": [
         329
       ]
+    },
+    {
+      "id": "monster.werewolf",
+      "from": "The werewolf makes two attacks: two with its spear (humanoid form) or one with its bite and one with its claws (hybrid form).",
+      "to": "The werewolf makes two attacks: one with its bite and one with its claws or spear.",
+      "reason": "Restore the published Multiattack wording (SRD 5.1 p. 329); retain the individual action form restrictions without inferring an erratum.",
+      "pages": [
+        329
+      ]
     }
   ],
   "unmatchedPublisherLocators": [],
