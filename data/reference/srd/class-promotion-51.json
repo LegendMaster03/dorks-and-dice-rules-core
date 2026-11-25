@@ -1622,5 +1622,26 @@
   ],
   "resolvedProgressionReferences": 337,
   "referenceStatus": "Explicit feature progression references verified; other semantic references and full body fidelity pending.",
-  "nativeCount": 361
+  "nativeCount": 361,
+  "classSpellLists": {
+    "counts": {
+      "Bard": 112,
+      "Cleric": 105,
+      "Druid": 105,
+      "Paladin": 31,
+      "Ranger": 37,
+      "Sorcerer": 120,
+      "Warlock": 64,
+      "Wizard": 204
+    },
+    "total": 778,
+    "excludedSourceMemberships": [
+      {
+        "className": "Monk",
+        "spell": "Astral Projection",
+        "reason": "Feature-specific access, not a published base class list"
+      }
+    ],
+    "status": "Publisher class-list membership reconciled; feature grants, preparation and spell execution are separate."
+  }
 }
