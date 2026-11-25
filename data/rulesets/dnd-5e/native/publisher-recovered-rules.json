@@ -126,5 +126,789 @@
       ],
       "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
     }
+  },
+  {
+    "id": "table.trap-save-dcs-and-attack-bonuses",
+    "kind": "table",
+    "name": "Trap Save DCs and Attack Bonuses",
+    "colLabels": [
+      "Trap Danger",
+      "Save DC",
+      "Attack Bonus"
+    ],
+    "rows": [
+      [
+        "Setback",
+        "10–11",
+        "+3 to +5"
+      ],
+      [
+        "Dangerous",
+        "12–15",
+        "+6 to +8"
+      ],
+      [
+        "Deadly",
+        "16–20",
+        "+9 to +12"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-196"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        196
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "table.damage-severity-by-level",
+    "kind": "table",
+    "name": "Damage Severity by Level",
+    "colLabels": [
+      "Character Level",
+      "Setback",
+      "Dangerous",
+      "Deadly"
+    ],
+    "rows": [
+      [
+        "1st–4th",
+        "1d10",
+        "2d10",
+        "4d10"
+      ],
+      [
+        "5th–10th",
+        "2d10",
+        "4d10",
+        "10d10"
+      ],
+      [
+        "11th–16th",
+        "4d10",
+        "10d10",
+        "18d10"
+      ],
+      [
+        "17th–20th",
+        "10d10",
+        "18d10",
+        "24d10"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-196"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        196
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "table.hit-dice-by-size",
+    "kind": "table",
+    "name": "Hit Dice by Size",
+    "colLabels": [
+      "Monster Size",
+      "Hit Die",
+      "Average HP per Die"
+    ],
+    "rows": [
+      [
+        "Tiny",
+        "d4",
+        "2½"
+      ],
+      [
+        "Small",
+        "d6",
+        "3½"
+      ],
+      [
+        "Medium",
+        "d8",
+        "4½"
+      ],
+      [
+        "Large",
+        "d10",
+        "5½"
+      ],
+      [
+        "Huge",
+        "d12",
+        "6½"
+      ],
+      [
+        "Gargantuan",
+        "d20",
+        "10½"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-256"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        256
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "table.proficiency-bonus-by-challenge-rating",
+    "kind": "table",
+    "name": "Proficiency Bonus by Challenge Rating",
+    "colLabels": [
+      "Challenge",
+      "Proficiency Bonus"
+    ],
+    "rows": [
+      [
+        "0",
+        "+2"
+      ],
+      [
+        "1/8",
+        "+2"
+      ],
+      [
+        "1/4",
+        "+2"
+      ],
+      [
+        "1/2",
+        "+2"
+      ],
+      [
+        "1",
+        "+2"
+      ],
+      [
+        "2",
+        "+2"
+      ],
+      [
+        "3",
+        "+2"
+      ],
+      [
+        "4",
+        "+2"
+      ],
+      [
+        "5",
+        "+3"
+      ],
+      [
+        "6",
+        "+3"
+      ],
+      [
+        "7",
+        "+3"
+      ],
+      [
+        "8",
+        "+3"
+      ],
+      [
+        "9",
+        "+4"
+      ],
+      [
+        "10",
+        "+4"
+      ],
+      [
+        "11",
+        "+4"
+      ],
+      [
+        "12",
+        "+4"
+      ],
+      [
+        "13",
+        "+5"
+      ],
+      [
+        "14",
+        "+5"
+      ],
+      [
+        "15",
+        "+5"
+      ],
+      [
+        "16",
+        "+5"
+      ],
+      [
+        "17",
+        "+6"
+      ],
+      [
+        "18",
+        "+6"
+      ],
+      [
+        "19",
+        "+6"
+      ],
+      [
+        "20",
+        "+6"
+      ],
+      [
+        "21",
+        "+7"
+      ],
+      [
+        "22",
+        "+7"
+      ],
+      [
+        "23",
+        "+7"
+      ],
+      [
+        "24",
+        "+7"
+      ],
+      [
+        "25",
+        "+8"
+      ],
+      [
+        "26",
+        "+8"
+      ],
+      [
+        "27",
+        "+8"
+      ],
+      [
+        "28",
+        "+8"
+      ],
+      [
+        "29",
+        "+9"
+      ],
+      [
+        "30",
+        "+9"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-256"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        256
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "table.experience-points-by-challenge-rating",
+    "kind": "table",
+    "name": "Experience Points by Challenge Rating",
+    "colLabels": [
+      "Challenge",
+      "XP"
+    ],
+    "rows": [
+      [
+        "0",
+        "0 or 10"
+      ],
+      [
+        "1/8",
+        "25"
+      ],
+      [
+        "1/4",
+        "50"
+      ],
+      [
+        "1/2",
+        "100"
+      ],
+      [
+        "1",
+        "200"
+      ],
+      [
+        "2",
+        "450"
+      ],
+      [
+        "3",
+        "700"
+      ],
+      [
+        "4",
+        "1,100"
+      ],
+      [
+        "5",
+        "1,800"
+      ],
+      [
+        "6",
+        "2,300"
+      ],
+      [
+        "7",
+        "2,900"
+      ],
+      [
+        "8",
+        "3,900"
+      ],
+      [
+        "9",
+        "5,000"
+      ],
+      [
+        "10",
+        "5,900"
+      ],
+      [
+        "11",
+        "7,200"
+      ],
+      [
+        "12",
+        "8,400"
+      ],
+      [
+        "13",
+        "10,000"
+      ],
+      [
+        "14",
+        "11,500"
+      ],
+      [
+        "15",
+        "13,000"
+      ],
+      [
+        "16",
+        "15,000"
+      ],
+      [
+        "17",
+        "18,000"
+      ],
+      [
+        "18",
+        "20,000"
+      ],
+      [
+        "19",
+        "22,000"
+      ],
+      [
+        "20",
+        "25,000"
+      ],
+      [
+        "21",
+        "33,000"
+      ],
+      [
+        "22",
+        "41,000"
+      ],
+      [
+        "23",
+        "50,000"
+      ],
+      [
+        "24",
+        "62,000"
+      ],
+      [
+        "25",
+        "75,000"
+      ],
+      [
+        "26",
+        "90,000"
+      ],
+      [
+        "27",
+        "105,000"
+      ],
+      [
+        "28",
+        "120,000"
+      ],
+      [
+        "29",
+        "135,000"
+      ],
+      [
+        "30",
+        "155,000"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-258"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        258
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "table.poisons",
+    "kind": "table",
+    "name": "Poisons",
+    "colLabels": [
+      "Item",
+      "Type",
+      "Price per Dose"
+    ],
+    "rows": [
+      [
+        "Assassin’s blood",
+        "Ingested",
+        "150 gp"
+      ],
+      [
+        "Burnt othur fumes",
+        "Inhaled",
+        "500 gp"
+      ],
+      [
+        "Crawler mucus",
+        "Contact",
+        "200 gp"
+      ],
+      [
+        "Drow poison",
+        "Injury",
+        "200 gp"
+      ],
+      [
+        "Essence of ether",
+        "Inhaled",
+        "300 gp"
+      ],
+      [
+        "Malice",
+        "Inhaled",
+        "250 gp"
+      ],
+      [
+        "Midnight tears",
+        "Ingested",
+        "1,500 gp"
+      ],
+      [
+        "Oil of taggit",
+        "Contact",
+        "400 gp"
+      ],
+      [
+        "Pale tincture",
+        "Ingested",
+        "250 gp"
+      ],
+      [
+        "Purple worm poison",
+        "Injury",
+        "2,000 gp"
+      ],
+      [
+        "Serpent venom",
+        "Injury",
+        "200 gp"
+      ],
+      [
+        "Torpor",
+        "Ingested",
+        "600 gp"
+      ],
+      [
+        "Truth serum",
+        "Ingested",
+        "150 gp"
+      ],
+      [
+        "Wyvern poison",
+        "Injury",
+        "1,200 gp"
+      ]
+    ],
+    "catalogReferences": [
+      "item.assassin-s-blood",
+      "item.burnt-othur-fumes",
+      "item.crawler-mucus-contact",
+      "item.drow-poison",
+      "item.essence-of-ether",
+      "item.malice",
+      "item.midnight-tears",
+      "item.oil-of-taggit",
+      "item.pale-tincture",
+      "item.purple-worm-poison",
+      "item.serpent-venom",
+      "item.torpor",
+      "item.truth-serum",
+      "item.wyvern-poison",
+      "rulebook.page-204"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        204
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "table.sentient-item-s-alignment",
+    "kind": "table",
+    "name": "Sentient Item's Alignment",
+    "colLabels": [
+      "d100",
+      "Alignment"
+    ],
+    "rows": [
+      [
+        "01–15",
+        "Lawful good"
+      ],
+      [
+        "16–35",
+        "Neutral good"
+      ],
+      [
+        "36–50",
+        "Chaotic good"
+      ],
+      [
+        "51–63",
+        "Lawful neutral"
+      ],
+      [
+        "64–73",
+        "Neutral"
+      ],
+      [
+        "74–85",
+        "Chaotic neutral"
+      ],
+      [
+        "86–89",
+        "Lawful evil"
+      ],
+      [
+        "90–96",
+        "Neutral evil"
+      ],
+      [
+        "97–00",
+        "Chaotic evil"
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-251"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        251
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "table.sentient-item-s-senses",
+    "kind": "table",
+    "name": "Sentient Item's Senses",
+    "colLabels": [
+      "d4",
+      "Senses"
+    ],
+    "rows": [
+      [
+        "1",
+        "Hearing and normal vision out to 30 feet."
+      ],
+      [
+        "2",
+        "Hearing and normal vision out to 60 feet"
+      ],
+      [
+        "3",
+        "Hearing and normal vision out to 120 feet."
+      ],
+      [
+        "4",
+        "Hearing and darkvision out to 120 feet."
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-251"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        251
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "table.sentient-item-s-communication",
+    "kind": "table",
+    "name": "Sentient Item's Communication",
+    "colLabels": [
+      "d100",
+      "Communication"
+    ],
+    "rows": [
+      [
+        "01–60",
+        "The item communicates by transmitting emotion to the creature carrying or wielding it."
+      ],
+      [
+        "61–90",
+        "The item can speak, read, and understand one or more languages."
+      ],
+      [
+        "91–00",
+        "The item can speak, read, and understand one or more languages. In addition, the item can communicate telepathically with any character that carries or wields it."
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-251"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        251
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "table.sentient-item-s-special-purpose",
+    "kind": "table",
+    "name": "Sentient Item's Special Purpose",
+    "colLabels": [
+      "d10",
+      "Purpose"
+    ],
+    "rows": [
+      [
+        "1",
+        "Aligned: The item seeks to defeat or destroy those of a diametrically opposed alignment. (Such an item is never neutral.)"
+      ],
+      [
+        "2",
+        "Bane: The item seeks to defeat or destroy creatures of a particular kind, such as fiends, shapechangers, trolls, or wizards."
+      ],
+      [
+        "3",
+        "Protector: The item seeks to defend a particular race or kind of creature, such as elves or druids."
+      ],
+      [
+        "4",
+        "Crusader: The item seeks to defeat, weaken, or destroy the servants of a particular deity."
+      ],
+      [
+        "5",
+        "Templar: The item seeks to defend the servants and interests of a particular deity."
+      ],
+      [
+        "6",
+        "Destroyer: The item craves destruction and goads its user to fight arbitrarily."
+      ],
+      [
+        "7",
+        "Glory Seeker: The item seeks renown as the greatest magic item in the world, by establishing its user as a famous or notorious figure."
+      ],
+      [
+        "8",
+        "Lore Seeker: The item craves knowledge or is determined to solve a mystery, learn a secret, or unravel a cryptic prophecy."
+      ],
+      [
+        "9",
+        "Destiny Seeker: The item is convinced that it and its wielder have key roles to play in future events."
+      ],
+      [
+        "10",
+        "Creator Seeker: The item seeks its creator and wants to understand why it was created."
+      ]
+    ],
+    "catalogReferences": [
+      "rulebook.page-252"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        252
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
   }
 ]

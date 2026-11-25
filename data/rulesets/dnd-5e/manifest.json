@@ -76,8 +76,8 @@
     "representation": "One explicitly published variant and seven source-listed barding configurations derived from published armor rules."
   },
   "publisherRecoveredRules": {
-    "nativeRecords": 3,
-    "representation": "Publisher-only structured equipment group or rules section with local catalog references."
+    "nativeRecords": 13,
+    "representation": "Publisher-only structured equipment groups, rule sections and tables with local catalog references; remaining publisher coverage review pending."
   },
   "numberedItemVariantImport": {
     "nativeRecords": 159,
