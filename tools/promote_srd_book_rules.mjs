@@ -52,6 +52,7 @@ const selections={
   ["Standard Languages","/data/2/entries/1/entries/3/entries/6/entries/2",20,10],
   ["Rare Languages","/data/2/entries/1/entries/3/entries/6/entries/4",20,5],
   ["Level 1 Hit Points by Class","/data/2/entries/1/entries/6/entries/2/entries/4/entries/1",22,4],
+  ["Fixed Hit Points by Class","/data/2/entries/2/entries/3/entries/1/items/1/entries/1",23,4],
   ["Hirelings","/data/6/entries/9/entries/1",102,3],
   ["Spellcasting Services","/data/6/entries/10/entries/1",102,7],
   ["Spell Preparation by Class","/data/7/entries/0/entries/1/entries/1",104,8],

@@ -178,6 +178,12 @@
       "rowCount": 4
     },
     {
+      "id": "table.fixed-hit-points-by-class",
+      "pointer": "/data/2/entries/2/entries/3/entries/1/items/1/entries/1",
+      "page": 23,
+      "rowCount": 4
+    },
+    {
       "id": "table.hirelings",
       "pointer": "/data/6/entries/9/entries/1",
       "page": 102,
@@ -303,13 +309,13 @@
       "reason": "Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
     }
   ],
-  "nativeCount": 45,
+  "nativeCount": 46,
   "tableInventory": {
     "total": 59,
     "counts": {
-      "projected": 38,
+      "projected": 39,
       "existing-catalog-representation": 2,
-      "pending-review": 19
+      "pending-review": 18
     },
     "occurrences": [
       {
@@ -491,7 +497,8 @@
         "caption": "Fixed Hit Points by Class",
         "context": "Adjust Hit Points and Hit Point Dice",
         "rows": 4,
-        "disposition": "pending-review"
+        "disposition": "projected",
+        "nativeId": "table.fixed-hit-points-by-class"
       },
       {
         "pointer": "/data/2/entries/3/entries/2/entries/2",

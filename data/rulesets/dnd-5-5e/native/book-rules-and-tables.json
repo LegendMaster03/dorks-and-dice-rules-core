@@ -2507,6 +2507,66 @@
     }
   },
   {
+    "id": "table.fixed-hit-points-by-class",
+    "kind": "table",
+    "name": "Fixed Hit Points by Class",
+    "colLabels": [
+      "Class",
+      "Hit Points per Level"
+    ],
+    "rows": [
+      [
+        "{@class Barbarian|srd52}",
+        "7 + Con. modifier"
+      ],
+      [
+        "{@class Fighter|srd52}, {@class Paladin|srd52}, or {@class Ranger|srd52}",
+        "6 + Con. modifier"
+      ],
+      [
+        "{@class Bard|srd52}, {@class Cleric|srd52}, {@class Druid|srd52}, {@class Monk|srd52}, {@class Rogue|srd52}, or {@class Warlock|srd52}",
+        "5 + Con. modifier"
+      ],
+      [
+        "{@class Sorcerer|srd52} or {@class Wizard|srd52}",
+        "4 + Con. modifier"
+      ]
+    ],
+    "catalogReferences": [
+      "class.barbarian",
+      "class.bard",
+      "class.cleric",
+      "class.druid",
+      "class.fighter",
+      "class.monk",
+      "class.paladin",
+      "class.ranger",
+      "class.rogue",
+      "class.sorcerer",
+      "class.warlock",
+      "class.wizard",
+      "rulebook.page-023"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        23
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "book/book-srd52.json",
+        "pointer": "/data/2",
+        "entryPointer": "/data/2/entries/2/entries/3/entries/1/items/1/entries/1"
+      },
+      "structuredStatus": "Selected nested book definition; publisher page locator and targeted fidelity review; not whole-chapter certification."
+    }
+  },
+  {
     "id": "table.hirelings",
     "kind": "table",
     "name": "Hirelings",
