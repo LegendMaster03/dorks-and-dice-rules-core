@@ -531,6 +531,19 @@ public sealed class RulesetResolutionApiTests
         Assert.Contains("table.standard-languages", legacyLanguageProcedure.GetProperty("catalogReferences").GetRawText());
         Assert.Contains("common in your campaign", legacyLanguageProcedure.GetProperty("entries").GetRawText());
 
+        var legacyAdvancement = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.beyond-1st-level")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("table.character-advancement", legacyAdvancement.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("1 additional Hit Die", legacyAdvancement.GetProperty("entries").GetRawText());
+        var legacyCurrency = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.equipment")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("table.standard-exchange-rates", legacyCurrency.GetProperty("catalogReferences").GetRawText());
+        Assert.Contains("fifty coins weigh a pound", legacyCurrency.GetProperty("entries").GetRawText());
+        var legacyVehicleProcedure = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.mounts-and-vehicles")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("five times its base carrying capacity", legacyVehicleProcedure.GetProperty("entries").GetRawText());
+        Assert.Contains("table.waterborne-vehicles", legacyVehicleProcedure.GetProperty("catalogReferences").GetRawText());
+        var legacyExpenses = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.expenses")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("10 to 50 gold pieces", legacyExpenses.GetProperty("entries").GetRawText());
+        Assert.Contains("table.services", legacyExpenses.GetProperty("catalogReferences").GetRawText());
+
         // Legacy travel and downtime must retain their own published procedures.
         var legacyTravelRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.movement")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("table.travel-pace", legacyTravelRule.GetProperty("catalogReferences").GetRawText());

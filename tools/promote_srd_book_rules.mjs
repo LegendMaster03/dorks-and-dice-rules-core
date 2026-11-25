@@ -566,6 +566,19 @@ function legacyAbilityAndOriginsEntries(name,entries,existing,local){
  return entries;
 }
 
+function legacyEconomyEntries(name,entries){
+ const find=(arr,name)=>{for(const n of arr){if(n&&typeof n==="object"){if(n.name===name)return n;if(n.entries){const v=find(n.entries,name);if(v)return v;}}}};
+ const replace=(s,a,b)=>{if(!s.includes(a))throw Error("Changed source: "+a);return s.replace(a,b);};
+ if(name==="Mounts and Vehicles"){
+  const barding=find(entries,"Barding");barding.entries[0]=replace(barding.entries[0],"Armor table in this chapter","Armor table");
+ }
+ if(name==="Expenses"){
+  const spells=find(entries,"Spellcasting Services");
+  spells.entries[1]=replace(spells.entries[1],"{@filter 1st|spells|level=1} or {@filter 2nd|spells|level=2}","1st or 2nd");
+ }
+ return entries;
+}
+
 function generateBookRules(book,manifest,src,pages,tag,known,existing){
  const rows=[],report={edition:manifest.officialPageImport.release,tables:[],rules:[],corrections:[],nativeCount:0};
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -741,7 +754,13 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Alignment","/data/3/entries/7",[58,59],[]],
   ["Languages","/data/3/entries/8",[59],["language.primordial","language.thieves-cant","language.druidic"]],
   ["Inspiration","/data/3/entries/9",[59,60],["rule.advantage-and-disadvantage","rule.ability-checks","rule.saving-throws","rule.making-an-attack"]],
-  ["Backgrounds","/data/3/entries/10",[60],["background.acolyte","rule.languages","rule.ability-checks"]]
+  ["Backgrounds","/data/3/entries/10",[60],["background.acolyte","rule.languages","rule.ability-checks"]],
+  ["Beyond 1st Level","/data/3",[56],["rule.proficiency-bonus","rule.using-each-ability","rule.multiclassing"],[0,6]],
+  ["Equipment","/data/4",[62],[],[0,7]],
+  ["Selling Treasure","/data/4/entries/7",[62],["table.trade-goods"]],
+  ["Mounts and Vehicles","/data/4/entries/12",[71,72],["table.armor","rule.mounted-combat","rule.using-each-ability","rule.movement"]],
+  ["Trade Goods","/data/4/entries/13",[72],[]],
+  ["Expenses","/data/4/entries/14",[72,73,74],["skill.survival","rule.between-adventures","spell.cure-wounds","spell.identify","spell.secret-chest"]]
  ]:[
   ["Travel Pace","/data/10/entries/0",[192],["table.travel-pace","condition.exhaustion","spell.wind-walk","item-group.carpet-of-flying","glossary.difficult-terrain"]],
   ["Creating a Background","/data/10/entries/1",[192,193],[]],
@@ -763,6 +782,8 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   ["Sentient Magic Items","/data/11/entries/9",[207,208],["condition.charmed","rule.the-next-dawn","rule.attunement"]]
  ];
  const extraCorrections={
+  "Mounts and Vehicles":"Restore publisher barding table navigation (p.71).",
+  "Expenses":"Replace source-specific spell filter navigation with published spell-level labels (p.74).",
   "Using Each Ability":"Reuse all 18 canonical skill descriptions after exact normalized body checks; restore publisher environmental navigation (pp.79–83).",
   "Alignment":"Restore publisher-specific fictional multiverse alignment paragraphs and remove later source rewrites (pp.58–59).",
   "Languages":"Restore publisher standard-language selection rule (p.59).",
@@ -785,7 +806,7 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
   "Resting":"Restore published short-rest healing wording and long-rest sleep/light-activity wording from p.87; do not import later errata into the pinned SRD.",
   "Combat Encounters":"Restore Giant Rat and Druid encounter examples and remove the commercial Monster Manual navigation from pp.202–203."
  };
- for(const [name,pointer,nums,refs] of extraRules){
+ for(const [name,pointer,nums,refs,entryRange] of extraRules){
   const node=get(pointer);
   if(node.name!==name||nums.some(n=>!pageMap.has(n)))throw Error("Unreviewed book rule "+name);
   if(name!=="Advantage and Disadvantage"&&!nums.some(n=>norm(pageMap.get(n).textLayout).includes(norm(name))))throw Error("Missing book rule heading "+name);
@@ -804,8 +825,9 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
    }
    return x;
   };
-  let content=project(node.entries);
-  if(tag==="51")content=legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local);
+  if(entryRange&&(entryRange[0]!==0||entryRange[1]>node.entries.length||node.entries.slice(...entryRange).some(x=>typeof x!=="string"&&x.type!=="table")))throw Error("Unexpected chapter introduction "+name);
+  let content=project(entryRange?node.entries.slice(...entryRange):node.entries);
+  if(tag==="51")content=legacyEconomyEntries(name,legacyAbilityAndOriginsEntries(name,legacyCombatAndCastingEntries(name,legacyAdditionalEntries(name,legacyGameplayEntries(name,legacyMagicItemEntries(name,content)))),existing,local));
   else content=modernMagicItemEntries(name,content);
   if(name==="Advantage and Disadvantage"){
    content[3]=content[3].replaceAll("reroll or replace","reroll");
@@ -831,8 +853,10 @@ function generateBookRules(book,manifest,src,pages,tag,known,existing){
    raw.entries[1]=raw.entries[1].replace("{@item +1 Plate Armor|srd52|+1 Armor (Plate Armor)}","+1 Armor (Plate Armor)");
   }
   const id="rule."+slug(name);
-  rows.push({id,kind:"rule",name,entries:content,catalogReferences:[...local].sort(),source:metadata(pointer,nums)});
-  report.rules.push({id,pointer,pages:nums});
+  const source=metadata(pointer,nums);
+  if(entryRange)source.structuredSource.entryRange=entryRange;
+  rows.push({id,kind:"rule",name,entries:content,catalogReferences:[...local].sort(),source});
+  report.rules.push({id,pointer,pages:nums,...(entryRange?{entryRange}:{})});
   if(extraCorrections[name]&&(tag==="51"||!["Attunement","Wearing and Wielding Items","Activating an Item"].includes(name)))report.corrections.push({id,reason:extraCorrections[name]});
   if(tag==="52"&&name==="Magic Item Rarity")report.corrections.push({id,reason:"Restore the published generic planar city example and +1 plate armor display label from pp.205–206."});
  }

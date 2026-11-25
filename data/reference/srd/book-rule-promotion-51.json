@@ -400,6 +400,59 @@
       "pages": [
         60
       ]
+    },
+    {
+      "id": "rule.beyond-1st-level",
+      "pointer": "/data/3",
+      "pages": [
+        56
+      ],
+      "entryRange": [
+        0,
+        6
+      ]
+    },
+    {
+      "id": "rule.equipment",
+      "pointer": "/data/4",
+      "pages": [
+        62
+      ],
+      "entryRange": [
+        0,
+        7
+      ]
+    },
+    {
+      "id": "rule.selling-treasure",
+      "pointer": "/data/4/entries/7",
+      "pages": [
+        62
+      ]
+    },
+    {
+      "id": "rule.mounts-and-vehicles",
+      "pointer": "/data/4/entries/12",
+      "pages": [
+        71,
+        72
+      ]
+    },
+    {
+      "id": "rule.trade-goods",
+      "pointer": "/data/4/entries/13",
+      "pages": [
+        72
+      ]
+    },
+    {
+      "id": "rule.expenses",
+      "pointer": "/data/4/entries/14",
+      "pages": [
+        72,
+        73,
+        74
+      ]
     }
   ],
   "corrections": [
@@ -508,9 +561,17 @@
     {
       "id": "rule.backgrounds",
       "reason": "Restore publisher introduction and navigation; reference the existing Acolyte definition (p.60)."
+    },
+    {
+      "id": "rule.mounts-and-vehicles",
+      "reason": "Restore publisher barding table navigation (p.71)."
+    },
+    {
+      "id": "rule.expenses",
+      "reason": "Replace source-specific spell filter navigation with published spell-level labels (p.74)."
     }
   ],
-  "nativeCount": 52,
+  "nativeCount": 58,
   "tableInventory": {
     "total": 30,
     "counts": {
