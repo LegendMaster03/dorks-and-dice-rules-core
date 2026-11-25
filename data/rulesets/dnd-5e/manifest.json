@@ -74,5 +74,9 @@
     "sourceVersionOccurrences": 25,
     "excluded": 17,
     "representation": "One explicitly published variant and seven source-listed barding configurations derived from published armor rules."
+  },
+  "publisherRecoveredRules": {
+    "nativeRecords": 3,
+    "representation": "Publisher-only structured equipment group or rules section with local catalog references."
   }
 }

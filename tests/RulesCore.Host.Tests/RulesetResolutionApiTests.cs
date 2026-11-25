@@ -318,6 +318,16 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal(HttpStatusCode.OK, (await client.GetAsync(animals + "/magical-contagion.cackle-fever")).StatusCode);
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/magical-contagion.cackle-fever")).StatusCode);
 
+        // Recover missing publisher group identities without duplicating the concrete focus items.
+        foreach (var (focus, formCount) in new[] { ("arcane-focus", 5), ("druidic-focus", 4), ("holy-symbol", 3) })
+        {
+            var group = await client.GetFromJsonAsync<JsonElement>(oldRules + "/item-group." + focus);
+            Assert.Equal(formCount, group.GetProperty("rule").GetProperty("definition").GetProperty("items").GetArrayLength());
+        }
+        var mastery = await client.GetFromJsonAsync<JsonElement>(animals + "/rule.weapon-mastery-properties");
+        Assert.Equal(8, mastery.GetProperty("rule").GetProperty("definition").GetProperty("properties").GetArrayLength());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/rule.weapon-mastery-properties")).StatusCode);
+
         // A vehicle profile belongs to its existing magic item, not a second item identity.
         foreach (var prefix in new[] { oldRules, animals })
         {

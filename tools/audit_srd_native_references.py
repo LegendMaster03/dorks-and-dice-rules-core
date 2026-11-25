@@ -28,9 +28,10 @@ KINDS = {
     "class": ("class",),
     "race": ("race", "subrace", "species"),
     "optfeature": ("optional-feature",),
+    "optionalfeature": ("optional-feature",),
     "status": ("status",),
     "table": ("table",),
-    "variantrule": ("glossary", "rule"),
+    "variantrule": ("glossary", "rule", "status"),
     "vehicle": ("vehicle",),
     "deity": ("deity",),
     "object": ("object",),
@@ -44,7 +45,8 @@ CONTEXT = {"classfeature", "subclassfeature"}
 NON_ENTITY = {"b", "bold", "i", "italic", "u", "s", "strike", "dice", "damage", "hit",
               "dc", "h", "atk", "atkr", "actsave", "actsavefail", "actsavesuccess",
               "recharge", "chance", "note", "color", "highlight", "sup", "sub",
-              "unit", "scaledice", "scaledamage", "d20", "ability", "skillcheck"}
+              "unit", "scaledice", "scaledamage", "d20", "ability", "skillcheck",
+              "hityourspellattack", "actresponse", "actsavefailby"}
 
 def normalize(value):
     return " ".join(unicodedata.normalize("NFKC", str(value)).replace("’", "'").casefold().split())
@@ -73,6 +75,11 @@ class Index:
         for row in rows:
             kind, name, identity = row["kind"], row["name"], row["id"]
             self.names[kind, normalize(name)].add(identity)
+            for alias in row.get("aliases", []):
+                if isinstance(alias, str):
+                    self.names[kind, normalize(alias)].add(identity)
+            if kind == "item-property" and row.get("abbreviation"):
+                self.names[kind, normalize(row["abbreviation"])].add(identity)
             if kind == "deity":
                 self.pantheons[normalize(row["pantheon"]), normalize(name)].add(identity)
             if kind == "class-feature":
@@ -122,6 +129,12 @@ class Index:
         targets = sorted({i for category in candidates for i in self.names[category, key]})
         if targets:
             return self.result(targets)
+        # A compound table label may contain the publisher heading plus an alias.
+        # Only exact component matches are considered, and ambiguity is preserved.
+        if kind == "table" and "; " in name:
+            targets = sorted({i for part in name.split("; ") for i in self.names["table", normalize(part)]})
+            if targets:
+                return self.result(targets)
         variants = sorted({i for category in candidates for i in self.variants[category, key]})
         if variants:
             return ("named-variant-candidate" if len(variants) == 1 else "ambiguous",

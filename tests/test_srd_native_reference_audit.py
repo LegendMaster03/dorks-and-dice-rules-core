@@ -77,3 +77,25 @@ class NativeReferenceAuditTests(unittest.TestCase):
         refs = audit(rows, "SRD51")["occurrences"]
         self.assertEqual(["deity.celtic.oghma"], refs[0]["targets"])
         self.assertEqual("missing", refs[1]["status"])
+
+    def test_reference_aliases_respect_category_and_edition(self):
+        rows = [
+            {"id": "item-property.2h", "kind": "item-property", "name": "Two-Handed", "abbreviation": "2H"},
+            {"id": "rule.weapon-mastery-properties", "kind": "rule", "name": "Mastery Properties",
+             "aliases": ["Weapon Mastery Properties"]},
+            {"id": "status.concentration", "kind": "status", "name": "Concentration"},
+            {"id": "table.spell-scroll-costs", "kind": "table", "name": "Spell Scroll Costs"},
+            {"id": "optional-feature.eldritch-mind", "kind": "optional-feature", "name": "Eldritch Mind"},
+            {"id": "rule.test", "kind": "rule", "name": "Test",
+             "entries": ["{@itemProperty 2H|SRD52|Two-Handed} "
+                         "{@variantrule Weapon Mastery Properties|SRD52} "
+                         "{@variantrule Concentration|SRD52} "
+                         "{@table Scribing Spell Scrolls; Spell Scroll Costs|SRD52} "
+                         "{@optionalfeature Eldritch Mind|SRD52} "
+                         "{@itemProperty 2H|SRD51}"]},
+        ]
+        refs = audit(rows, "SRD52")["occurrences"]
+        self.assertEqual(["item-property.2h", "rule.weapon-mastery-properties",
+                          "status.concentration", "table.spell-scroll-costs",
+                          "optional-feature.eldritch-mind"], [r["targets"][0] for r in refs[:5]])
+        self.assertEqual("foreign-source", refs[5]["status"])

@@ -74,5 +74,9 @@
     "nativeRecords": 14,
     "sourceVersionOccurrences": 10,
     "representation": "Publisher-backed finite spell-summon choices, with scaling formulas preserved; distinct parent links."
+  },
+  "publisherRecoveredRules": {
+    "nativeRecords": 1,
+    "representation": "Publisher-only structured equipment group or rules section with local catalog references."
   }
 }

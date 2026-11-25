@@ -1,0 +1,130 @@
+[
+  {
+    "id": "item-group.arcane-focus",
+    "kind": "item-group",
+    "name": "Arcane Focus",
+    "scfType": "arcane",
+    "rarity": "none",
+    "focus": [
+      "Sorcerer",
+      "Warlock",
+      "Wizard"
+    ],
+    "items": [
+      "Crystal|SRD51",
+      "Orb|SRD51",
+      "Rod|SRD51",
+      "Staff|SRD51",
+      "Wand|SRD51"
+    ],
+    "entries": [
+      "An arcane focus is a special item—an orb, a crystal, a rod, a specially constructed staff, a wand-like length of wood, or some similar item—designed to channel the power of arcane spells. A sorcerer, warlock, or wizard can use such an item as a spellcasting focus."
+    ],
+    "catalogReferences": [
+      "baseitem.crystal",
+      "baseitem.orb",
+      "baseitem.rod",
+      "baseitem.staff",
+      "baseitem.wand",
+      "class.sorcerer",
+      "class.warlock",
+      "class.wizard",
+      "rulebook.page-066",
+      "rulebook.page-067",
+      "rulebook.page-069"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        66,
+        67,
+        69
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "item-group.druidic-focus",
+    "kind": "item-group",
+    "name": "Druidic Focus",
+    "scfType": "druid",
+    "rarity": "none",
+    "focus": [
+      "Druid"
+    ],
+    "items": [
+      "Sprig of mistletoe|SRD51",
+      "Totem|SRD51",
+      "Wooden staff|SRD51",
+      "Yew wand|SRD51"
+    ],
+    "entries": [
+      "A druidic focus might be a sprig of mistletoe or holly, a wand or scepter made of yew or another special wood, a staff drawn whole out of a living tree, or a totem object incorporating feathers, fur, bones, and teeth from sacred animals. A druid can use such an object as a spellcasting focus."
+    ],
+    "catalogReferences": [
+      "baseitem.wooden-staff",
+      "class.druid",
+      "item.sprig-of-mistletoe",
+      "item.totem",
+      "item.yew-wand",
+      "rulebook.page-067",
+      "rulebook.page-069"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        67,
+        69
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  },
+  {
+    "id": "item-group.holy-symbol",
+    "kind": "item-group",
+    "name": "Holy Symbol",
+    "scfType": "holy",
+    "rarity": "none",
+    "focus": [
+      "Cleric",
+      "Paladin"
+    ],
+    "items": [
+      "Amulet|SRD51",
+      "Emblem|SRD51",
+      "Reliquary|SRD51"
+    ],
+    "entries": [
+      "A holy symbol is a representation of a god or pantheon. It might be an amulet depicting a symbol representing a deity, the same symbol carefully engraved or inlaid as an emblem on a shield, or a tiny box holding a fragment of a sacred relic. Appendix PH-B, Fantasy-Historical Pantheons, lists symbols commonly associated with many gods in the multiverse. A cleric or paladin can use a holy symbol as a spellcasting focus. To use the symbol in this way, the caster must hold it in hand, wear it visibly, or bear it on a shield."
+    ],
+    "catalogReferences": [
+      "class.cleric",
+      "class.paladin",
+      "item.amulet",
+      "item.emblem",
+      "item.reliquary",
+      "rulebook.page-067",
+      "rulebook.page-069"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        67,
+        69
+      ],
+      "structuredStatus": "Publisher-only definition recovered; no corresponding standalone structured source record."
+    }
+  }
+]
