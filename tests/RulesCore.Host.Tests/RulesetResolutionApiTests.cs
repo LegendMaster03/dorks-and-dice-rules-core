@@ -151,6 +151,27 @@ public sealed class RulesetResolutionApiTests
             "/api/rulesets/dnd-5e/rules/monster.assassin");
         Assert.Contains("baseitem.studded-leather-armor", oldAssassin.GetProperty("rule").GetProperty("definition").GetRawText());
 
+        // Character creation categories and edition-specific payloads stay isolated.
+        const string oldRules = "/api/rulesets/dnd-5e/rules";
+        var oldRaces = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=race&limit=1");
+        var modernSpecies = await client.GetFromJsonAsync<JsonElement>(animals + "?category=species&limit=1");
+        Assert.Equal(9, oldRaces.GetProperty("total").GetInt32());
+        Assert.Equal(9, modernSpecies.GetProperty("total").GetInt32());
+        var oldHuman = await client.GetFromJsonAsync<JsonElement>(oldRules + "/race.human");
+        Assert.Equal(1, oldHuman.GetProperty("rule").GetProperty("definition").GetProperty("ability")[0].GetProperty("str").GetInt32());
+        var modernHuman = await client.GetFromJsonAsync<JsonElement>(animals + "/species.human");
+        Assert.False(modernHuman.GetProperty("rule").GetProperty("definition").TryGetProperty("ability", out _));
+        Assert.True(modernHuman.GetProperty("rule").GetProperty("definition").TryGetProperty("feats", out _));
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/species.human")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(animals + "/race.human")).StatusCode);
+        var hill = await client.GetFromJsonAsync<JsonElement>(oldRules + "/subrace.dwarf.hill");
+        Assert.Contains("race.dwarf", hill.GetProperty("rule").GetProperty("definition").GetProperty("catalogReferences").GetRawText());
+        var oldBackgrounds = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=background&limit=1");
+        var modernBackgrounds = await client.GetFromJsonAsync<JsonElement>(animals + "?category=background&limit=1");
+        Assert.Equal(1, oldBackgrounds.GetProperty("total").GetInt32());
+        Assert.Equal(4, modernBackgrounds.GetProperty("total").GetInt32());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync("/api/rulesets/fate-condensed/rules/species.human")).StatusCode);
+
         // The foreign catalogs expose original typed spell fields and entries,
         // not just publisher layout strings.
         foreach (var id in ids.Take(2))
