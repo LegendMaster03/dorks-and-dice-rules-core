@@ -2,7 +2,7 @@
   "edition": "srd-5.2.1",
   "templateCount": 12,
   "counts": {
-    "Ammunition": 12,
+    "Ammunition": 15,
     "Armor": 36,
     "Shield": 3,
     "Weapon": 114
@@ -14,12 +14,7 @@
       "reason": "Duplicate generic +1 weapon template occurrence; one concrete Longsword identity."
     }
   ],
-  "deferred": [
-    {
-      "name": "Firearm Bullet",
-      "reason": "Publisher permits any ammunition, but pinned base corpus supplies only a ten-piece pack; recover individual base identity before generating variants."
-    }
-  ],
+  "deferred": [],
   "excludedBases": [
     {
       "name": "Arrows (20)",
@@ -42,5 +37,5 @@
       "reason": "Ammunition pack; numbered magic item is one piece, not a whole pack."
     }
   ],
-  "nativeCount": 165
+  "nativeCount": 168
 }

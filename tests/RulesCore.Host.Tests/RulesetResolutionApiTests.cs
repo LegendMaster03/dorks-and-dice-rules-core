@@ -202,7 +202,7 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal("fire", fireDefinition.GetProperty("variantSelection").GetProperty("sharedResistance").GetString());
 
         var modernItems = await client.GetFromJsonAsync<JsonElement>(animals + "?category=item&limit=1");
-        Assert.Equal(630, modernItems.GetProperty("total").GetInt32());
+        Assert.Equal(633, modernItems.GetProperty("total").GetInt32());
         // Concrete numbered items retain the original edition-local equipment and template.
         foreach (var prefix in new[] { "/api/rulesets/dnd-5e/rules", animals })
         {
@@ -236,6 +236,21 @@ public sealed class RulesetResolutionApiTests
             .GetProperty("mastery")[0].GetString());
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(
             "/api/rulesets/dnd-5e/rules/baseitem.musket")).StatusCode);
+        var bullet = await client.GetFromJsonAsync<JsonElement>(animals + "/baseitem.firearm-bullet");
+        var bulletDefinition = bullet.GetProperty("rule").GetProperty("definition");
+        Assert.Equal(0.2, bulletDefinition.GetProperty("weight").GetDouble());
+        Assert.Equal(30, bulletDefinition.GetProperty("value").GetInt32());
+        foreach (var bonus in new[] { 1, 2, 3 })
+        {
+            var id = "/item." + bonus + "-firearm-bullet";
+            var enhancedBullet = await client.GetFromJsonAsync<JsonElement>(animals + id);
+            var definition = enhancedBullet.GetProperty("rule").GetProperty("definition");
+            Assert.Equal("baseitem.firearm-bullet", definition.GetProperty("baseItemId").GetString());
+            Assert.Equal("+" + bonus, definition.GetProperty("bonusWeapon").GetString());
+            Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync("/api/rulesets/dnd-5e/rules" + id)).StatusCode);
+        }
+        Assert.Contains("baseitem.firearm-bullet", modernWeapon.GetProperty("rule").GetProperty("definition")
+            .GetProperty("catalogReferences").GetRawText());
         var cube = await client.GetFromJsonAsync<JsonElement>(animals + "/item.cube-of-force");
         var cubeDefinition = cube.GetProperty("rule").GetProperty("definition");
         Assert.Contains("tiny hut|srd52", cubeDefinition.GetProperty("attachedSpells").GetRawText());

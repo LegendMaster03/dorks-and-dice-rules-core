@@ -571,7 +571,9 @@
         "quantity": 10
       }
     ],
-    "catalogReferences": [],
+    "catalogReferences": [
+      "baseitem.firearm-bullet"
+    ],
     "source": {
       "release": "srd-5.2.1",
       "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
@@ -1927,6 +1929,7 @@
     "weapon": true,
     "ammoType": "firearm bullet|srd52",
     "catalogReferences": [
+      "baseitem.firearm-bullet",
       "item-mastery.slow",
       "item-property.2h",
       "item-property.a",

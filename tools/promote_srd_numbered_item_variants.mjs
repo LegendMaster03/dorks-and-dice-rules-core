@@ -2,7 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
-function generateEnhancements(base,templates,src,manifest,tag,officialUrl,known){
+function generateEnhancements(base,templates,src,manifest,tag,officialUrl,known,unit){
  const clone=x=>JSON.parse(JSON.stringify(x));
  const slug=s=>s.normalize("NFKC").replace(/[’‘]/g,"'").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
  const edition="SRD"+tag,records=[],report={edition:manifest.officialPageImport.release,templateCount:0,counts:{},mergedTemplates:[],deferred:[],excludedBases:[],nativeCount:0};
@@ -17,6 +17,11 @@ function generateEnhancements(base,templates,src,manifest,tag,officialUrl,known)
   if(category==="Shield")return type==="S";
   return ["M","R"].includes(type)&&b.weapon===true&&["simple","martial"].includes(b.weaponCategory)&&!b.net;
  };
+ if(tag==="52"){
+  const index=base.baseitem.findIndex(b=>b.name==="Firearm Bullets (10)"&&b.source===edition);
+  if(index<0||unit?.id!=="baseitem.firearm-bullet")throw Error("Missing reviewed firearm bullet unit");
+  selected.push({b:{name:unit.name,source:edition,type:unit.type,weight:unit.weight,bulletFirearm:unit.bulletFirearm},index,supplemental:true});
+ }
  const lookup=new Map(templates.magicvariant.map((t,index)=>[t.source+"|"+t.name,{t,index}]));
  const ids=new Set();
  for(const category of categories){
@@ -30,7 +35,7 @@ function generateEnhancements(base,templates,src,manifest,tag,officialUrl,known)
    const rarity=(category==="Armor"?["rare","very rare","legendary"]:["uncommon","rare","very rare"])[bonus-1];
    if(t.inherits.rarity!==rarity)throw Error("Unexpected enhancement rarity");
    report.templateCount++;
-   for(const {b,index:baseIndex} of selected.filter(({b})=>eligible(b,category))){
+   for(const {b,index:baseIndex,supplemental} of selected.filter(({b})=>eligible(b,category))){
     const name=`+${bonus} ${b.name}`,id="item."+slug(name),baseId="baseitem."+slug(b.name);
     if(ids.has(id)||known?.has(id))throw Error("Concrete enhancement collision "+id);
     ids.add(id);
@@ -47,6 +52,7 @@ function generateEnhancements(base,templates,src,manifest,tag,officialUrl,known)
     row.catalogReferences=[...refs].sort();
     const templatePointer={provider:src.provider,commit:src.commit,path:"magicvariants.json",pointer:"/magicvariant/"+index};
     row.source={release:manifest.officialPageImport.release,url:officialUrl,pdfSha256:manifest.officialPageImport.pdfSha256,license:manifest.license,attribution:manifest.attribution,pages:[page],structuredSource:templatePointer,additionalStructuredSources:[{provider:src.provider,commit:src.commit,path:"items-base.json",pointer:"/baseitem/"+baseIndex}],structuredStatus:"Derived numbered enhancement from the official generic item entry and edition-local base equipment; not an independent publisher item."};
+    if(supplemental)row.source.upstreamStructuredSource=clone(unit.source.upstreamStructuredSource);
     if(tag==="52"&&name==="+1 Longsword"){
      const duplicate=lookup.get(edition+"|+1 Longsword");
      if(!duplicate||duplicate.t.inherits.bonusWeapon!=="+1")throw Error("Expected duplicate modern template");
@@ -61,7 +67,8 @@ function generateEnhancements(base,templates,src,manifest,tag,officialUrl,known)
  }
  for(const {b} of selected)if(["A","AF"].includes(b.type?.split("|")[0])&&!eligible(b,"Ammunition"))report.excludedBases.push({name:b.name,reason:"Ammunition pack; numbered magic item is one piece, not a whole pack."});
  if(tag==="51")report.excludedBases.push({name:"Net",reason:"Legacy net has no damage roll and is excluded by the source enhancement template."});
- if(tag==="52")report.deferred.push({name:"Firearm Bullet",reason:"Publisher permits any ammunition, but pinned base corpus supplies only a ten-piece pack; recover individual base identity before generating variants."});
+ // Keep existing generated chunks stable; append recovered individual bullets.
+ if(tag==="52")records.sort((a,b)=>Number(a.baseItemId==="baseitem.firearm-bullet")-Number(b.baseItemId==="baseitem.firearm-bullet"));
  report.nativeCount=records.length;return {records,report};
 }
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
@@ -72,8 +79,9 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
  const dir="data/rulesets/"+pack+"/native/",manifest=read("data/rulesets/"+pack+"/manifest.json");
  const itemFiles=fs.readdirSync(path.join(root,dir,"items")).filter(f=>/^structured-\d+\.json$/.test(f));
  const pages=fs.readdirSync(path.join(root,dir,"rulebook")).filter(f=>/^pages-\d+-\d+\.json$/.test(f)).flatMap(f=>read(dir+"rulebook/"+f));
- const known=new Set([...itemFiles.flatMap(f=>read(dir+"items/"+f)).map(r=>r.id),...pages.map(r=>r.id),...read(dir+"supplementary-rules.json").map(r=>r.id)]);
- const {records,report}=generateEnhancements(base,templates,src,manifest,tag,pages[0].source.url,known);
+ const items=itemFiles.flatMap(f=>read(dir+"items/"+f));
+ const known=new Set([...items.map(r=>r.id),...pages.map(r=>r.id),...read(dir+"supplementary-rules.json").map(r=>r.id)]);
+ const {records,report}=generateEnhancements(base,templates,src,manifest,tag,pages[0].source.url,known,items.find(r=>r.id==="baseitem.firearm-bullet"));
  const outputs=new Map();
  for(let i=0;i<records.length;i+=40)outputs.set(dir+"items/numbered-variants-"+String(i/40+1).padStart(2,"0")+".json",json(records.slice(i,i+40)));
  outputs.set("data/reference/srd/numbered-item-variant-promotion-"+tag+".json",json(report));

@@ -1,0 +1,18 @@
+{
+  "provider": "5etools-mirror-3/5etools-src",
+  "commit": "2512db75eb48ef06f6190b086a82430887906dca",
+  "path": "data/items-base.json",
+  "pointer": "/baseitem/59",
+  "definition": {
+    "name": "Firearm Bullet",
+    "source": "XPHB",
+    "page": 222,
+    "srd52": true,
+    "edition": "one",
+    "type": "A|XPHB",
+    "rarity": "none",
+    "weight": 0.2,
+    "value": 30,
+    "bulletFirearm": true
+  }
+}

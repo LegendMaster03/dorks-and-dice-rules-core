@@ -23,6 +23,7 @@
     "weapon": true,
     "ammoType": "firearm bullet|srd52",
     "catalogReferences": [
+      "baseitem.firearm-bullet",
       "item-mastery.vex",
       "item-property.a",
       "item-property.ld"

@@ -3,7 +3,7 @@
   "counts": {
     "item": 464,
     "itemGroup": 25,
-    "baseitem": 93,
+    "baseitem": 94,
     "itemProperty": 9,
     "itemMastery": 8,
     "magicvariant": 41
@@ -292,27 +292,9 @@
       "kind": "item",
       "raw": "+2 Longsword|SRD52",
       "reason": "missing-or-ambiguous"
-    },
-    {
-      "id": "baseitem.firearm-bullets-10",
-      "kind": "item",
-      "raw": "firearm bullet|srd52",
-      "reason": "missing-or-ambiguous"
-    },
-    {
-      "id": "baseitem.musket",
-      "kind": "item",
-      "raw": "firearm bullet|srd52",
-      "reason": "missing-or-ambiguous"
-    },
-    {
-      "id": "baseitem.pistol",
-      "kind": "item",
-      "raw": "firearm bullet|srd52",
-      "reason": "missing-or-ambiguous"
     }
   ],
-  "resolvedReferenceCount": 1102,
+  "resolvedReferenceCount": 1107,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",
@@ -321,5 +303,5 @@
       "reason": "Verified vehicle profile integrated with canonical magic item; duplicate prose not separately imported."
     }
   ],
-  "nativeCount": 641
+  "nativeCount": 642
 }

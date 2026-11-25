@@ -57,7 +57,7 @@ function reconcileNamedTemplate(row,tag){
  if(!reason)return null;
  row.inherits=h;return {page,reason};
 }
-function generate(files, sourceManifest, packageManifest, tag, officialUrl, externalIds, vehicles) {
+function generate(files, sourceManifest, packageManifest, tag, officialUrl, externalIds, vehicles, supplement) {
     const records=[], report={edition:packageManifest.officialPageImport.release, counts:{}, excluded:[], corrections:[], publisherOnly:[]};
     const source="SRD"+tag;
     const reference = (page)=>"rulebook.page-"+String(page).padStart(3,"0");
@@ -150,6 +150,21 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
             catalogReferences:[reference(234),"spell.etherealness","baseitem.half-plate-armor","baseitem.plate-armor"],
             source:{release:packageManifest.officialPageImport.release,url:officialUrl,pdfSha256:packageManifest.officialPageImport.pdfSha256,license:packageManifest.license,attribution:packageManifest.attribution,pages:[234],structuredStatus:"publisher-only missing definition recovered"}});
         report.publisherOnly.push(id);
+        // Recover a unit from the upstream SRD-marked definition, corroborated by
+        // the official ammunition table (p.96) and the pinned pack occurrence.
+        const packIndex=files["items-base.json"].baseitem.findIndex(b=>b.name==="Firearm Bullets (10)"&&b.source===source);
+        const pack=files["items-base.json"].baseitem[packIndex], unit=supplement.definition;
+        if(!pack||unit.name!=="Firearm Bullet"||unit.srd52!==true||unit.source!=="XPHB"||unit.type!=="A|XPHB"||
+            pack.packContents?.[0]?.quantity!==10||unit.weight*10!==pack.weight||unit.value*10!==pack.value)
+            throw Error("Firearm bullet unit does not agree with reviewed pack");
+        const bulletId="baseitem.firearm-bullet";
+        records.push({id:bulletId,kind:"baseitem",name:unit.name,edition:unit.edition,type:"A|SRD52",
+            rarity:unit.rarity,weight:unit.weight,value:unit.value,bulletFirearm:unit.bulletFirearm,
+            catalogReferences:[reference(91),reference(96)],
+            source:{...metadata(pack,"items-base.json","baseitem",packIndex,[91,96]),
+                upstreamStructuredSource:{provider:supplement.provider,commit:supplement.commit,path:supplement.path,pointer:supplement.pointer},
+                structuredStatus:"Individual ammunition derived from official pack quantity, weight and cost; upstream structured unit corroborates fields. Commercial-source prose not promoted."}});
+        report.counts.baseitem++;
     }
     if(new Set(records.map(r=>r.id)).size!==records.length)throw Error("Duplicate item identity");
     const known = new Set([...records.map(r=>r.id),...externalIds]);
@@ -221,7 +236,7 @@ for(const [pack,tag] of [["dnd-5e","51"],["dnd-5-5e","52"]]){
     const native=base+"native/";
     const externalIds=["spells","bestiary"].flatMap(folder=>fs.readdirSync(path.join(root,native,folder)).filter(f=>f.endsWith(".json")).sort().flatMap(f=>read(native+folder+"/"+f).map(row=>row.id)));
     externalIds.push(...read(native+"skills.json").map(row=>row.id),...read(native+"conditions.json").map(row=>row.id));
-    const {records,report}=generate(inputs,sourceManifest,manifest,tag,officialUrl,externalIds,read("data/reference/srd/structured/vehicles.json"));
+    const {records,report}=generate(inputs,sourceManifest,manifest,tag,officialUrl,externalIds,read("data/reference/srd/structured/vehicles.json"),read("data/reference/srd/upstream-firearm-bullet-52.json"));
     const outputs=new Map();
     for(let i=0;i<records.length;i+=50)outputs.set(dir+"structured-"+String(i/50+1).padStart(2,"0")+".json",json(records.slice(i,i+50)));
     outputs.set("data/reference/srd/item-promotion-"+tag+".json",json(report));
