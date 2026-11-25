@@ -371,6 +371,10 @@
       "reason": "Verify all 22 playing-card mappings and named effect sections against SRD 5.1 pp.216–218; remove non-SRD A Question of Enmity inset."
     },
     {
+      "id": "item.mace-of-smiting",
+      "reason": "Restore the published 2d6/4d6 critical-hit damage on SRD 5.1 p.229; remove the non-publisher editorial note."
+    },
+    {
       "id": "item.orb-of-dragonkind",
       "reason": "Remove non-SRD setting names and foreign creature link; retain official artifact mechanics"
     },
@@ -456,7 +460,7 @@
     },
     {
       "id": "magic-variant.vicious-weapon",
-      "reason": "Restore published 2d6 damage on a natural 20 instead of fixed 7; remove editorial note."
+      "reason": "Restore published 2d6 damage on a natural 20 instead of fixed 7 in both template and inherited entries; remove editorial note."
     },
     {
       "id": "item.apparatus-of-the-crab",
@@ -471,7 +475,7 @@
     "item-group.armor-of-resistance"
   ],
   "unresolvedReferences": [],
-  "resolvedReferenceCount": 1261,
+  "resolvedReferenceCount": 1262,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",

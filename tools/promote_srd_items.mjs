@@ -49,7 +49,9 @@ function reconcileNamedTemplate(row,tag){
   reason="Restore published 4d6 slashing damage instead of fixed 14; remove editorial note.";
  }else if(!modern&&name==="Vicious Weapon"){
   h.entries=["When you roll a 20 on your attack roll with this magic weapon, your critical hit deals an extra {@damage 2d6} damage of the weapon's type."];
-  reason="Restore published 2d6 damage on a natural 20 instead of fixed 7; remove editorial note.";
+  if(!row.entries?.some(s=>typeof s==="string"&&s.includes("{@link this is incorrect|")))throw Error("Unexpected Vicious Weapon top-level entries");
+  row.entries=[...h.entries];
+  reason="Restore published 2d6 damage on a natural 20 instead of fixed 7 in both template and inherited entries; remove editorial note.";
  }else if(modern&&name==="Dancing Sword"){
   row.requires=["Greatsword","Longsword","Rapier","Scimitar","Shortsword"].map(name=>({name,source:"SRD52"}));
   reason="Use the five explicitly listed eligible weapons rather than a generic sword tag.";
@@ -260,6 +262,13 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
                     const serialized=JSON.stringify(row);
                     const corrected=serialized.replace(/Heward's Handy Haversack/gi,match=>match[0]==="h"?"handy haversack":"Handy Haversack");
                     if(serialized!==corrected){Object.assign(row,JSON.parse(corrected));addCorrection(id,"Use official Handy Haversack name");}
+                }
+                if(tag==="51"&&kind==="item"&&name==="Mace of Smiting"){
+                    const published=publisherPages.find(p=>p.page===229)?.textLayout??"";
+                    if(!published.includes("target takes an extra 2d6")||!published.includes("bludgeoning damage, or 4d6 bludgeoning damage if")||
+                       row.entries.length!==3||!row.entries[1].includes("extra 7 bludgeoning damage")||!row.entries[2].includes("{@link this is incorrect|"))throw Error("Unexpected Mace of Smiting source");
+                    row.entries=[row.entries[0],"When you roll a 20 on an attack roll made with this weapon, the target takes an extra {@damage 2d6} bludgeoning damage, or {@damage 4d6} bludgeoning damage if it's a construct. If a construct has 25 hit points or fewer after taking this damage, it is destroyed."];
+                    pages=[229];addCorrection(id,"Restore the published 2d6/4d6 critical-hit damage on SRD 5.1 p.229; remove the non-publisher editorial note.");
                 }
                 if(tag==="51"&&kind==="item"&&name==="Crawler Mucus (Contact)"){
                     const before=row.entries[0];

@@ -1248,8 +1248,7 @@
       "net": true
     },
     "entries": [
-      "When you roll a 20 with this magic weapon, the target takes an extra 7 damage of the weapon's type.",
-      "{@note Note: According to the SRD, it is an extra {@damage 2d6} damage, although {@link this is incorrect|https://rpg.stackexchange.com/a/174522/53884}.}"
+      "When you roll a 20 on your attack roll with this magic weapon, your critical hit deals an extra {@damage 2d6} damage of the weapon's type."
     ],
     "inherits": {
       "namePrefix": "Vicious ",

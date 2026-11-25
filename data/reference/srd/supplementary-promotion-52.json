@@ -105,6 +105,10 @@
   ],
   "corrections": [
     {
+      "id": "glossary.player-character",
+      "reason": "Remove non-publisher hyperlink and restore the printed Character Creation cross-reference on SRD 5.2.1 p.186."
+    },
+    {
       "id": "equipment-option.don-or-doff-a-shield",
       "reason": "Publisher p.92 explicitly specifies Utilize action."
     }

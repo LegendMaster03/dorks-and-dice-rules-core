@@ -2855,7 +2855,7 @@
     "kind": "glossary",
     "name": "Player Character",
     "entries": [
-      "A player character is a character controlled by a {@link player|https://coveryourtracks.eff.org}."
+      "A player character is a character controlled by a player. See also “Character Creation.”"
     ],
     "catalogReferences": [
       "rulebook.page-186"

@@ -60,6 +60,11 @@ function generate(input,manifest,src,pages,tag){
  if(!locs.some(n=>norm(pageByNumber.get(n).textLayout).includes(norm(needle))))throw Error("Missing publisher locator "+name+" "+needle+" "+locs);
  const r={id:kind+"."+slug(name),kind,name};
  for(const [k,v] of Object.entries(c))if(!omit.has(k))r[k]=JSON.parse(JSON.stringify(v));
+ if(modern&&kind==="glossary"&&name==="Player Character"){
+ if(r.entries?.length!==1||!r.entries[0].includes("{@link player|https://coveryourtracks.eff.org}")||!pageByNumber.get(186).textLayout.includes("player. See also “Character Creation.”"))throw Error("Unexpected Player Character source");
+ r.entries=["A player character is a character controlled by a player. See also “Character Creation.”"];
+ report.corrections.push({id:r.id,reason:"Remove non-publisher hyperlink and restore the printed Character Creation cross-reference on SRD 5.2.1 p.186."});
+ }
  if(array==="object"){for(const k of ["size","objectType","ac","hp","immune"])delete r[k];report.corrections.push({id:r.id,reason:"Publisher general object-damage rules, not a generic creature-like stat block; remove renderer-only envelope."});}
  if(!modern&&name==="Madness"){
  const going=r.entries.find(x=>x?.name==="Going Mad");
