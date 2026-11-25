@@ -142,8 +142,23 @@ function enrichSpell(row, candidate, index, manifest, tag) {
             }
         }
     }
+
+    if(tag==="51"&&row.id==="spell.find-familiar"){
+        const official=row.officialTextLayout.replace(/[’‘]/g,"'").replace(/\s+/g," ");
+        const original="When the familiar drops to 0 hit points, it disappears, leaving behind no physical form. It reappears after you cast this spell again. As an action, you can temporarily dismiss the familiar to a pocket dimension. Alternatively, you can dismiss it forever. As an action while it is temporarily dismissed, you can cause it to reappear in any unoccupied space within 30 feet of you. Whenever the familiar drops to 0 hit points or disappears into the pocket dimension, it leaves behind in its space anything it was wearing or carrying.";
+        const dismissal="As an action, you can temporarily dismiss your familiar. It disappears into a pocket dimension where it awaits your summons. Alternatively, you can dismiss it forever. As an action while it is temporarily dismissed, you can cause it to reappear in any unoccupied space within 30 feet of you.";
+        if(result.entries.length!==7||result.entries[1]!=="{@note Additional {@filter animal form choices|bestiary|Miscellaneous=Familiar} may be available at the DM's discretion.}"||
+           result.entries[3]!==original||!official.includes(dismissal)||
+           !official.includes("When the familiar drops to 0 hit points, it disappears, leaving behind no physical form. It reappears after you cast this spell again")||
+           official.includes("anything it was wearing or carrying"))
+            throw Error("Legacy Find Familiar evidence changed");
+        result.entries=[result.entries[0],result.entries[2],"When the familiar drops to 0 hit points, it disappears, leaving behind no physical form. It reappears after you cast this spell again.",result.entries[4],dismissal,result.entries[5],result.entries[6]];
+    }
     // Explicit publisher-confirmed corrections, including nested entries.
     const bodyCorrections=[
+["51","spell.prismatic-wall",[3],"{@spell Antimagic field} has no effect on the wall, and {@spell dispel magic} can affect only the violet layer.","A rod of cancellation destroys a prismatic wall, but an {@spell antimagic field} has no effect on it.","A rod of cancellation destroys a prismatic wall, but an antimagic field has no effect on it."],
+["51","spell.prismatic-wall",[10,"entries",0],"the DM's choosing","the GM's choosing","the GM's choosing"],
+["51","spell.sleet-storm",[2],"If a creature starts its turn in the spell's area and is {@status concentration||concentrating} on a spell,","If a creature is {@status concentration||concentrating} in the spell's area,","If a creature is concentrating in the spell's area,"],
   [
     "51",
     "spell.levitate",

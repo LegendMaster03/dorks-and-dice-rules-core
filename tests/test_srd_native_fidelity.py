@@ -74,3 +74,17 @@ class NativeFidelityTests(unittest.TestCase):
                 self.assertEqual("exact-normalized-text", spell_body(rows[identity])["status"])
         self.assertIn("source gap remains", rows["spell.telekinesis"]["source"]["structuredStatus"])
         self.assertTrue(rows["spell.telekinesis"]["entries"][2]["entries"][2].endswith("simple tool,"))
+
+    def test_legacy_familiar_wall_and_sleet_publisher_rules(self):
+        import json
+        root = Path(__file__).resolve().parents[1] / "data/rulesets/dnd-5e/native/spells"
+        rows = {r["id"]: r for path in root.glob("spells-*.json") for r in json.loads(path.read_text())}
+        familiar = rows["spell.find-familiar"]
+        self.assertEqual("exact-normalized-text", spell_body(familiar)["status"])
+        self.assertNotIn("wearing or carrying", str(familiar["entries"]))
+        wall = rows["spell.prismatic-wall"]["entries"]
+        self.assertIn("A rod of cancellation destroys a prismatic wall", wall[3])
+        self.assertNotIn("can affect only the violet layer", wall[3])
+        sleet = rows["spell.sleet-storm"]["entries"][2]
+        self.assertIn("concentrating} in the spell's area", sleet)
+        self.assertNotIn("starts its turn", sleet)
