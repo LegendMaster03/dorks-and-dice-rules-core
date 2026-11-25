@@ -1120,7 +1120,8 @@
     "scfType": "druid",
     "rarity": "none",
     "focus": [
-      "Druid"
+      "Druid",
+      "Ranger"
     ],
     "items": [
       "Sprig of mistletoe|SRD52",
@@ -1130,7 +1131,8 @@
     "catalogReferences": [
       "baseitem.wooden-staff",
       "item.sprig-of-mistletoe",
-      "item.yew-wand"
+      "item.yew-wand",
+      "rulebook.page-097"
     ],
     "source": {
       "release": "srd-5.2.1",
@@ -1138,7 +1140,9 @@
       "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
       "license": "CC-BY-4.0",
       "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
-      "pages": [],
+      "pages": [
+        97
+      ],
       "candidatePage": 93,
       "structuredSource": {
         "provider": "CoolFireGiant/hewnhero-srd",

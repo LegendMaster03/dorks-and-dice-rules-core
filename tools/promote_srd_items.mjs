@@ -147,6 +147,10 @@ function generate(files, sourceManifest, packageManifest, tag, officialUrl, exte
                         row.entries=row.entries.map(s=>s.replace("Lolth's Sting","Spider's Sting"));pages=[198];addCorrection(id,"Correct modern poison name");
                     }
                 }
+                if(tag==="52"&&kind==="itemGroup"&&name==="Druidic Focus"){
+                    if(JSON.stringify(row.focus)!=='["Druid"]')throw Error("Unexpected source Druidic Focus eligibility");
+                    row.focus=["Druid","Ranger"];pages=[97];addCorrection(id,"Restore Ranger as an eligible user of a Druidic Focus, as printed on SRD 5.2.1 p.97.");
+                }
                 const templateCorrection=reconcileNamedTemplate(row,tag);
                 if(templateCorrection){pages=[templateCorrection.page];addCorrection(id,templateCorrection.reason);}
                 if(candidate._copy)throw Error("Unexpected unresolved copy: "+id);

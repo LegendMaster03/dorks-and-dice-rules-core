@@ -37,3 +37,5 @@ The existing equipment-variant generator now materializes 123 SRD 5.1 and 404 SR
 ### Modern equipment table reconciliation
 
 SRD 5.2.1 p.95 publishes Burglar's Pack at 42 lb. and 16 GP; p.96 confirms the structured contents. The pinned structured source instead reports 47.5 lb. The generator preserves the published weight, price and contents and adds both page references. This is a publisher-defined pack weight, not a recomputation of the individual component weights.
+
+SRD 5.2.1 p.97 explicitly permits Druids and Rangers to use a Druidic Focus. Corrected the pinned group eligibility from Druid-only to both classes, preserving the three existing focus forms and adding the publisher page reference.

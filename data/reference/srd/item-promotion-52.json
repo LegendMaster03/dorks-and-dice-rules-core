@@ -273,6 +273,10 @@
       "reason": "Verify all 100 Trinkets rows against publisher pp.26–27; restore GM wording and page references."
     },
     {
+      "id": "item-group.druidic-focus",
+      "reason": "Restore Ranger as an eligible user of a Druidic Focus, as printed on SRD 5.2.1 p.97."
+    },
+    {
       "id": "magic-variant.dancing-sword",
       "reason": "Use the five explicitly listed eligible weapons rather than a generic sword tag."
     },
@@ -302,7 +306,7 @@
       "reason": "missing-or-ambiguous"
     }
   ],
-  "resolvedReferenceCount": 1111,
+  "resolvedReferenceCount": 1112,
   "mergedOccurrences": [
     {
       "id": "item.apparatus-of-the-crab",
