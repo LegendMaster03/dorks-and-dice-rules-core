@@ -100,6 +100,42 @@ function legacyPublisherRules(pageMap,metadata){
  ];
 }
 
+function legacySentientMagicItems(pageMap,metadata){
+ const page=n=>pageMap.get(n).textLayout;
+ const left=n=>page(n).split("\n").filter(l=>!/^\s{20,}/.test(l)).map(l=>l.trim().split(/ {4,}/)[0]).filter(Boolean);
+ const right=n=>page(n).split("\n").map(l=>l.match(/ {4,}(\S.*)$/)?.[1]??"").filter(l=>l&&!l.startsWith("System Reference Document"));
+ const clean=lines=>lines.join(" ").replace(/\u00ad/g,"").replace(/[-\u2010\u2011]{2,}/g,"-").replace(/\s+/g," ").trim();
+ const section=(lines,start,end)=>{const i=lines.indexOf(start),j=end===undefined?lines.length:lines.findIndex((l,k)=>k>i&&(typeof end==="string"?l===end:end.test(l)));if(i<0||j<=i)throw Error("Missing sentient item section boundary "+start);return lines.slice(i+1,j);};
+ const split=(lines,starts)=>{const offsets=[0,...starts.map(s=>lines.findIndex(l=>l.startsWith(s))),lines.length];if(offsets.some((v,i)=>i&&v<=offsets[i-1]))throw Error("Missing sentient item paragraph boundary");return offsets.slice(0,-1).map((i,j)=>clean(lines.slice(i,offsets[j+1])));};
+ const node=(name,entries)=>({type:"entries",name,entries});
+ const l251=left(251),r251=right(251),l252=left(252);
+ const refs=["condition.charmed","rule.attunement","rulebook.page-251","rulebook.page-252","table.sentient-item-s-alignment","table.sentient-item-s-communication","table.sentient-item-s-senses","table.sentient-item-s-special-purpose"];
+ const conflict=section(l252,"Conflict"),first=conflict.findIndex(l=>l.startsWith("• ")),second=conflict.findIndex(l=>l.startsWith("If its wielder refuses")),last=conflict.findIndex(l=>l.startsWith("If a sentient item attempts"));
+ if(first<1||second<=first||last<=second)throw Error("Missing sentient conflict boundaries");
+ const list=lines=>({type:"list",items:clean(lines).split("• ").slice(1).map(s=>s.trim())});
+ const demands=list(conflict.slice(first,second)),responses=list(conflict.slice(second+2,last));
+ if(demands.items.length!==4||responses.items.length!==3)throw Error("Unexpected sentient conflict option counts");
+ // The saving-throw paragraph crosses columns; only the first right-column
+ // continuation before Artifacts belongs to this rule. Ignore left-only table headings.
+ const tail=page(252).split("\n").slice(0,9).filter(l=>!l.trim().startsWith("d10")).map(l=>l.trim().split(/ {4,}/).at(-1));
+ const control=clean([...conflict.slice(last),...tail]);
+ if(!control.includes("DC equal to 12 + the item’s Charisma modifier")||!control.endsWith("until the next dawn."))throw Error("Incomplete sentient item control rule");
+ const purpose=clean([...section(r251,"Special Purpose"),...l252.slice(0,l252.findIndex(l=>/^d10\s+Purpose/.test(l)))]);
+ if(!purpose.endsWith("roll on the following table."))throw Error("Incomplete sentient item purpose rule");
+ return {id:"rule.sentient-magic-items",kind:"rule",name:"Sentient Magic Items",entries:[
+  ...split(section(l251,"Sentient Magic Items","Creating Sentient Magic Items"),["Most sentient items","Sentient magic items function"]),
+  node("Creating Sentient Magic Items",[
+   clean(section(l251,"Creating Sentient Magic Items")),
+   node("Abilities",[clean(section(r251,"Abilities","Communication"))]),
+   node("Communication",[clean(section(r251,"Communication",/^d100\s+Communication/)),"See the Sentient Item's Communication table."]),
+   node("Senses",[clean(section(r251,"Senses",/^d4\s+Senses/)),"See the Sentient Item's Senses table."]),
+   node("Alignment",[clean(section(r251,"Alignment",/^d100\s+Alignment/)),"See the Sentient Item's Alignment table."]),
+   node("Special Purpose",[purpose,"See the Sentient Item's Special Purpose table."])
+  ]),
+  node("Conflict",[clean(conflict.slice(0,first)),demands,clean(conflict.slice(second,second+2)),responses,control])
+ ],catalogReferences:refs.sort(),source:metadata([251,252])};
+}
+
 function recoverPublisherRules(manifest,pages,tag,knownIds,items){
  const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
  const pageMap=new Map(pages.map(p=>[p.page,p]));
@@ -119,6 +155,7 @@ function recoverPublisherRules(manifest,pages,tag,knownIds,items){
   }
   rows.push(...legacyPublisherTables(pageMap,metadata,items));
   rows.push(...legacyPublisherRules(pageMap,metadata));
+  rows.push(legacySentientMagicItems(pageMap,metadata));
  }else{
   const page=pageMap.get(90),entry="Each weapon has a mastery property, which is usable only by a character who has a feature, such as Weapon Mastery, that unlocks the property for the character. The properties are defined below.";
   const names=["Cleave","Graze","Nick","Push","Sap","Slow","Topple","Vex"];
@@ -135,7 +172,7 @@ for(const [pack,tag,files] of [["dnd-5e","51",["053-077","178-202","203-227","22
  const base="data/rulesets/"+pack+"/",native=base+"native/";
  const pages=files.flatMap(f=>read(native+"rulebook/pages-"+f+".json"));
  const load=dir=>fs.readdirSync(path.join(root,native,dir)).filter(f=>f.endsWith(".json")).flatMap(f=>read(native+dir+"/"+f));
- const items=load("items"),knownIds=[...items,...load("classes"),...load("spells"),...["skills.json","conditions.json","supplementary-rules.json"].flatMap(f=>read(native+f))].map(x=>x.id);
+ const items=load("items"),knownIds=[...items,...load("classes"),...load("spells"),...["skills.json","conditions.json","supplementary-rules.json","book-rules-and-tables.json"].flatMap(f=>read(native+f))].map(x=>x.id);
  const rows=recoverPublisherRules(read(base+"manifest.json"),pages,tag,knownIds,items),body=JSON.stringify(rows,null,2)+"\n",target=path.join(root,native+"publisher-recovered-rules.json");
  if(process.argv.includes("--check")){if(fs.readFileSync(target,"utf8")!==body)throw Error("Stale publisher recovery "+pack);}
  else fs.writeFileSync(target,body);

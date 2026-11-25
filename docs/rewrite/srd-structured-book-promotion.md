@@ -43,3 +43,7 @@ Three SRD 5.1 book rules are projected from the structured source on publisher p
 ## Modern item identification, categories, rarity and sentience
 
 Six SRD 5.2.1 rules reuse the pinned book nodes and publisher pp.102–103, 204–208. The equipment-level Attunement rule complements the short glossary definition with the procedure, limits and ending conditions. Item categories retain potion Bonus Action timing, focus eligibility and ammunition behavior. Rarity uses the generic planar city example printed by the publisher, not named setting locations. Sentient item rules retain the trait and conflict procedures, including DC 12 plus the item's Charisma modifier and the 1d12-hour control duration. Seven existing canonical tables are referenced rather than duplicated. This is descriptive content with targeted source review, not executable item mechanics or exhaustive fidelity certification.
+
+## Legacy sentient-item procedures
+
+The pinned legacy book does not include the publisher's sentient magic item procedure. Recover the section from official pp.251–252, retaining all four existing legacy table references rather than copying their rows. The conflict starts with contested Charisma checks, not the modern DC-based saving throw. Attempted control uses a separate saving throw of DC 12 plus the item's Charisma modifier, 1d12-hour duration, a repeat save on damage and next-dawn reuse. The extractor checks heading boundaries, four demands, three possible responses and the complete cross-column control paragraph. This remains descriptive content.

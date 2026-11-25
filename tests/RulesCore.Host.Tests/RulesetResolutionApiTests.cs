@@ -471,6 +471,11 @@ public sealed class RulesetResolutionApiTests
         Assert.Contains("initiative count 20", legacyLegendary.GetProperty("entries").GetRawText());
         Assert.Contains("condition.incapacitated", legacyLegendary.GetProperty("catalogReferences").GetRawText());
 
+        var legacySentientRule = (await client.GetFromJsonAsync<JsonElement>(oldRules + "/rule.sentient-magic-items")).GetProperty("rule").GetProperty("definition");
+        Assert.Contains("Charisma check contested by the", legacySentientRule.GetProperty("entries").GetRawText());
+        Assert.Contains("DC equal to 12", legacySentientRule.GetProperty("entries").GetRawText());
+        Assert.Contains("table.sentient-item-s-special-purpose", legacySentientRule.GetProperty("catalogReferences").GetRawText());
+
         // Modern identification, rarity and sentient-item rules reuse canonical references.
         var modernItemAttunement = (await client.GetFromJsonAsync<JsonElement>(animals + "/rule.attunement")).GetProperty("rule").GetProperty("definition");
         Assert.Contains("glossary.short-rest", modernItemAttunement.GetProperty("catalogReferences").GetRawText());
