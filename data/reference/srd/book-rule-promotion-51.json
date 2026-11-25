@@ -1,0 +1,77 @@
+{
+  "edition": "srd-5.1",
+  "tables": [
+    {
+      "id": "table.character-advancement",
+      "pointer": "/data/3/entries/5",
+      "page": 56,
+      "rowCount": 20
+    },
+    {
+      "id": "table.multiclassing-prerequisites",
+      "pointer": "/data/3/entries/6/entries/3/entries/1",
+      "page": 56,
+      "rowCount": 12
+    },
+    {
+      "id": "table.multiclassing-proficiencies",
+      "pointer": "/data/3/entries/6/entries/7/entries/1",
+      "page": 57,
+      "rowCount": 12
+    },
+    {
+      "id": "table.multiclass-spellcaster-spell-slots-per-spell-level",
+      "pointer": "/data/3/entries/6/entries/8/entries/4/entries/4",
+      "page": 58,
+      "rowCount": 20
+    },
+    {
+      "id": "table.standard-exchange-rates",
+      "pointer": "/data/4/entries/6",
+      "page": 62,
+      "rowCount": 5
+    },
+    {
+      "id": "table.ability-scores-and-modifiers",
+      "pointer": "/data/6/entries/4/entries/5",
+      "page": 76,
+      "rowCount": 8
+    },
+    {
+      "id": "table.typical-difficulty-classes",
+      "pointer": "/data/6/entries/7/entries/2",
+      "page": 77,
+      "rowCount": 6
+    },
+    {
+      "id": "table.travel-pace",
+      "pointer": "/data/7/entries/1/entries/2/entries/2/entries/4",
+      "page": 84,
+      "rowCount": 3
+    },
+    {
+      "id": "table.size-categories",
+      "pointer": "/data/8/entries/1/entries/9/entries/2",
+      "page": 92,
+      "rowCount": 6
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule.multiclassing",
+      "pointer": "/data/3/entries/6",
+      "pages": [
+        56,
+        57,
+        58
+      ]
+    }
+  ],
+  "corrections": [
+    {
+      "id": "rule.multiclassing",
+      "reason": "Remove non-SRD Eldritch Knight/Arcane Trickster spell-slot contributions; retain legacy half-caster rounding down and modern rounding up as printed. Normalize book navigation; canonicalize nested tables."
+    }
+  ],
+  "nativeCount": 10
+}

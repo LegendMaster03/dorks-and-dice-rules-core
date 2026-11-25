@@ -22,6 +22,8 @@ on:
       - 'tools/promote_srd_classes.mjs'
       - 'tools/promote_srd_features.mjs'
       - 'tools/promote_srd_general.mjs'
+      - 'tools/promote_srd_book_rules.mjs'
+      - 'data/reference/srd/book-rule-promotion-*.json'
       - 'tools/promote_srd_supplementary.mjs'
       - 'tools/promote_srd_deities.mjs'
       - 'data/reference/srd/deity-promotion-*.json'
@@ -51,6 +53,8 @@ jobs:
         run: node tools/promote_srd_deities.mjs --check
       - name: Verify supplementary rule source projection
         run: node tools/promote_srd_supplementary.mjs --check
+      - name: Verify selected structured book rules and tables
+        run: node tools/promote_srd_book_rules.mjs --check
       - name: Verify structured general-rule source projection
         run: node tools/promote_srd_general.mjs --check
       - name: Verify structured feats and optional features source projection

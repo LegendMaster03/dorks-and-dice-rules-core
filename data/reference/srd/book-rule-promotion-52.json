@@ -1,0 +1,113 @@
+{
+  "edition": "srd-5.2.1",
+  "tables": [
+    {
+      "id": "table.ability-modifiers",
+      "pointer": "/data/1/entries/1/entries/3/entries/1",
+      "page": 6,
+      "rowCount": 16
+    },
+    {
+      "id": "table.typical-difficulty-classes",
+      "pointer": "/data/1/entries/2/entries/2/entries/3/entries/1",
+      "page": 6,
+      "rowCount": 6
+    },
+    {
+      "id": "table.proficiency-bonus",
+      "pointer": "/data/1/entries/3/entries/2",
+      "page": 8,
+      "rowCount": 8
+    },
+    {
+      "id": "table.travel-pace",
+      "pointer": "/data/1/entries/6/entries/6/entries/3/entries/1",
+      "page": 12,
+      "rowCount": 3
+    },
+    {
+      "id": "table.ability-score-point-costs",
+      "pointer": "/data/2/entries/1/entries/4/entries/1/entries/3/entries/1",
+      "page": 21,
+      "rowCount": 8
+    },
+    {
+      "id": "table.standard-array-by-class",
+      "pointer": "/data/2/entries/1/entries/4/entries/2/entries/2",
+      "page": 21,
+      "rowCount": 12
+    },
+    {
+      "id": "table.ability-scores-and-modifiers",
+      "pointer": "/data/2/entries/1/entries/4/entries/4/entries/1",
+      "page": 21,
+      "rowCount": 10
+    },
+    {
+      "id": "table.character-advancement",
+      "pointer": "/data/2/entries/2/entries/2",
+      "page": 23,
+      "rowCount": 20
+    },
+    {
+      "id": "table.starting-equipment-at-higher-levels",
+      "pointer": "/data/2/entries/3/entries/2/entries/2",
+      "page": 24,
+      "rowCount": 4
+    },
+    {
+      "id": "table.multiclass-spellcaster-spell-slots-per-spell-level",
+      "pointer": "/data/2/entries/4/entries/6/entries/4/entries/1",
+      "page": 26,
+      "rowCount": 20
+    },
+    {
+      "id": "table.coin-values",
+      "pointer": "/data/6/entries/1/entries/2",
+      "page": 89,
+      "rowCount": 5
+    },
+    {
+      "id": "table.xp-budget-per-character",
+      "pointer": "/data/10/entries/7/entries/2/entries/2/entries/1",
+      "page": 202,
+      "rowCount": 20
+    },
+    {
+      "id": "table.hit-dice-by-size",
+      "pointer": "/data/13/entries/1/entries/8",
+      "page": 255,
+      "rowCount": 6
+    },
+    {
+      "id": "table.experience-points-by-challenge-rating",
+      "pointer": "/data/13/entries/1/entries/20/entries/2",
+      "page": 256,
+      "rowCount": 34
+    },
+    {
+      "id": "table.proficiency-bonus-by-challenge-rating",
+      "pointer": "/data/13/entries/1/entries/20/entries/3/entries/1",
+      "page": 256,
+      "rowCount": 8
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule.multiclassing",
+      "pointer": "/data/2/entries/4",
+      "pages": [
+        24,
+        25,
+        26
+      ]
+    }
+  ],
+  "corrections": [
+    {
+      "id": "rule.multiclassing",
+      "reason": "Remove non-SRD Eldritch Knight/Arcane Trickster spell-slot contributions; retain legacy half-caster rounding down and modern rounding up as printed. Normalize book navigation; canonicalize nested tables."
+    }
+  ],
+  "nativeCount": 16
+}

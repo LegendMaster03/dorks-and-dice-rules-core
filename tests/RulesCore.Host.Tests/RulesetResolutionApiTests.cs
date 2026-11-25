@@ -364,6 +364,26 @@ public sealed class RulesetResolutionApiTests
         var oldChain = await client.GetFromJsonAsync<JsonElement>(oldRules + "/optional-feature.pact-of-the-chain");
         Assert.True(oldChain.GetProperty("rule").GetProperty("definition").GetProperty("additionalSpells")[0].GetProperty("innate").GetProperty("_").TryGetProperty("ritual", out _));
 
+        // Book tables use edition-local published layouts and spell-slot rules.
+        foreach (var prefix in new[] { oldRules, animals })
+        {
+            var advancementTable = await client.GetFromJsonAsync<JsonElement>(prefix + "/table.character-advancement");
+            var advancementDefinition = advancementTable.GetProperty("rule").GetProperty("definition");
+            Assert.Equal(20, advancementDefinition.GetProperty("rows").GetArrayLength());
+            Assert.Equal(prefix == oldRules ? "Experience Points" : "Level", advancementDefinition.GetProperty("colLabels")[0].GetString());
+            var multiclassRule = await client.GetFromJsonAsync<JsonElement>(prefix + "/rule.multiclassing");
+            var multiclassDefinition = multiclassRule.GetProperty("rule").GetProperty("definition");
+            var multiclassEntries = multiclassDefinition.GetProperty("entries").GetRawText();
+            Assert.Contains(prefix == oldRules ? "rounded down" : "round up", multiclassEntries);
+            Assert.DoesNotContain("Eldritch Knight", multiclassEntries);
+            Assert.DoesNotContain("Arcane Trickster", multiclassEntries);
+            Assert.Contains("table.multiclass-spellcaster-spell-slots-per-spell-level", multiclassDefinition.GetProperty("catalogReferences").GetRawText());
+        }
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(oldRules + "/table.xp-budget-per-character")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(animals + "/table.multiclassing-prerequisites")).StatusCode);
+        var xpBudgetTable = await client.GetFromJsonAsync<JsonElement>(animals + "/table.xp-budget-per-character");
+        Assert.Equal(20, xpBudgetTable.GetProperty("rule").GetProperty("definition").GetProperty("rows").GetArrayLength());
+
         // Supplementary actions, glossary and contagions preserve edition-specific categories.
         var oldCoreActions = await client.GetFromJsonAsync<JsonElement>(oldRules + "?category=action&limit=1");
         var newCoreActions = await client.GetFromJsonAsync<JsonElement>(animals + "?category=action&limit=1");
