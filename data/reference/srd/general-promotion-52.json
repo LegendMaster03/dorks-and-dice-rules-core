@@ -1,0 +1,269 @@
+{
+  "edition": "srd-5.2.1",
+  "sourceCounts": {
+    "action": 17,
+    "language": 19,
+    "sense": 4
+  },
+  "nativeCounts": {
+    "action": 12,
+    "language": 19,
+    "sense": 4
+  },
+  "deferred": [
+    {
+      "name": "Don or Doff a Shield",
+      "path": "actions.json",
+      "pointer": "/action/11",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "End Concentration",
+      "path": "actions.json",
+      "pointer": "/action/13",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "Escape a Grapple",
+      "path": "actions.json",
+      "pointer": "/action/15",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "Opportunity Attack",
+      "path": "actions.json",
+      "pointer": "/action/24",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "Two-Weapon Fighting",
+      "path": "actions.json",
+      "pointer": "/action/34",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    }
+  ],
+  "corrections": [],
+  "pendingReferences": [
+    {
+      "id": "action.attack",
+      "reference": "variantrule|Unarmed Strike|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.dash",
+      "reference": "variantrule|Speed|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.dash",
+      "reference": "variantrule|Fly Speed|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.dash",
+      "reference": "variantrule|Swim Speed|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.disengage",
+      "reference": "action|Opportunity Attack|srd52|Opportunity Attacks",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.dodge",
+      "reference": "variantrule|Disadvantage|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.dodge",
+      "reference": "variantrule|Saving Throw|srd52|saving throws",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.dodge",
+      "reference": "variantrule|Advantage|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.dodge",
+      "reference": "condition|Incapacitated|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.dodge",
+      "reference": "variantrule|Speed|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.help",
+      "reference": "variantrule|Advantage|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.hide",
+      "reference": "skill|Stealth|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.hide",
+      "reference": "variantrule|Heavily Obscured|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.hide",
+      "reference": "variantrule|Cover|srd52|Three-Quarters Cover or Total Cover",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.hide",
+      "reference": "condition|Invisible|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.hide",
+      "reference": "skill|Perception|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.influence",
+      "reference": "skill|Deception|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.influence",
+      "reference": "skill|Intimidation|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.influence",
+      "reference": "skill|Performance|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.influence",
+      "reference": "skill|Persuasion|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.influence",
+      "reference": "skill|Animal Handling|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.magic",
+      "reference": "action|Magic|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.ready",
+      "reference": "variantrule|Reaction|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.ready",
+      "reference": "variantrule|Speed|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.search",
+      "reference": "skill|Insight|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.search",
+      "reference": "skill|Medicine|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.search",
+      "reference": "skill|Perception|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.search",
+      "reference": "skill|Survival|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.study",
+      "reference": "skill|Arcana|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.study",
+      "reference": "skill|History|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.study",
+      "reference": "skill|Investigation|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.study",
+      "reference": "skill|Nature|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.study",
+      "reference": "skill|Religion|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.utilize",
+      "reference": "action|Attack|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "sense.blindsight",
+      "reference": "variantrule|Cover|srd52|Total Cover",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "sense.blindsight",
+      "reference": "condition|Blinded|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "sense.blindsight",
+      "reference": "variantrule|Darkness|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "sense.blindsight",
+      "reference": "condition|Invisible|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "sense.darkvision",
+      "reference": "variantrule|Dim Light|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "sense.darkvision",
+      "reference": "variantrule|Bright Light|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "sense.darkvision",
+      "reference": "variantrule|Darkness|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "sense.truesight",
+      "reference": "variantrule|Darkness|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "sense.truesight",
+      "reference": "condition|Invisible|srd52",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "sense.truesight",
+      "reference": "variantrule|Saving Throw|srd52|saving throws",
+      "reason": "inline semantic reconciliation pending"
+    }
+  ],
+  "nativeCount": 35
+}

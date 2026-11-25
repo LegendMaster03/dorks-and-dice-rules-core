@@ -1,0 +1,1037 @@
+[
+  {
+    "id": "action.attack",
+    "kind": "action",
+    "name": "Attack",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "The most common action to take in combat is the Attack action, whether you are swinging a sword, firing an arrow from a bow, or brawling with your fists.",
+      "With this action, you make one melee or ranged attack. See the \"{@book Making an Attack|srd51|9|making an attack}\" section for the rules that govern attacks.",
+      "Certain features, such as the Extra Attack feature of the fighter, allow you to make more than one attack with this action."
+    ],
+    "seeAlsoAction": [
+      "Disarm|SRD51",
+      "Grapple",
+      "Mark|SRD51",
+      "Shove",
+      "Shove Aside|SRD51",
+      "Two-Weapon Fighting"
+    ],
+    "catalogReferences": [
+      "rulebook.page-093"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        93
+      ],
+      "candidatePage": 192,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/1"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "action.cast-a-spell",
+    "kind": "action",
+    "name": "Cast a Spell",
+    "time": [
+      "Varies"
+    ],
+    "entries": [
+      "Spellcasters such as wizards and clerics, as well as many monsters, have access to spells and can use them to great effect in combat. Each spell has a casting time, which specifies whether the caster must use an action, a reaction, minutes, or even hours to cast the spell. Casting a spell is, therefore, not necessarily an action. Most spells do have a casting time of 1 action, so a spellcaster often uses his or her action in combat to cast such a spell. See {@book chapter 10|srd51|10|casting a spell} for the rules on spellcasting."
+    ],
+    "catalogReferences": [
+      "rulebook.page-093"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        93
+      ],
+      "candidatePage": 192,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/3"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "action.dash",
+    "kind": "action",
+    "name": "Dash",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "When you take the Dash action, you gain extra movement for the current turn. The increase equals your speed, after applying any modifiers. With a speed of 30 feet, for example, you can move up to 60 feet on your turn if you dash.",
+      "Any increase or decrease to your speed changes this additional movement by the same amount. If your speed of 30 feet is reduced to 15 feet, for instance, you can move up to 30 feet this turn if you dash."
+    ],
+    "catalogReferences": [
+      "rulebook.page-093"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        93
+      ],
+      "candidatePage": 192,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/4"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "action.disengage",
+    "kind": "action",
+    "name": "Disengage",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "If you take the Disengage action, your movement doesn't provoke opportunity attacks for the rest of the turn."
+    ],
+    "catalogReferences": [
+      "rulebook.page-093"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        93
+      ],
+      "candidatePage": 192,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/6"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "action.dodge",
+    "kind": "action",
+    "name": "Dodge",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "When you take the Dodge action, you focus entirely on avoiding attacks. Until the start of your next turn, any attack roll made against you has disadvantage if you can see the attacker, and you make Dexterity saving throws with advantage. You lose this benefit if you are incapacitated (as explained in the appendix) or if your speed drops to 0."
+    ],
+    "catalogReferences": [
+      "rulebook.page-093"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        93
+      ],
+      "candidatePage": 192,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/8"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "action.help",
+    "kind": "action",
+    "name": "Help",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "You can lend your aid to another creature in the completion of a task. When you take the Help action, the creature you aid gains advantage on the next ability check it makes to perform the task you are helping with, provided that it makes the check before the start of your next turn.",
+      "Alternatively, you can aid a friendly creature in attacking a creature within 5 feet of you. You feint, distract the target, or in some other way team up to make your ally's attack more effective. If your ally attacks the target before your next turn, the first attack roll is made with advantage."
+    ],
+    "catalogReferences": [
+      "rulebook.page-093"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        93
+      ],
+      "candidatePage": 192,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/17"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "action.hide",
+    "kind": "action",
+    "name": "Hide",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "When you take the Hide action, you make a Dexterity ({@skill Stealth}) check in an attempt to hide, following the rules in {@book chapter 7|srd51|7|hiding} for hiding. If you succeed, you gain certain benefits, as described in the \"{@book Unseen Attackers and Targets|SRD51|9|unseen attackers and targets}\" section in the Player's Handbook."
+    ],
+    "catalogReferences": [
+      "rulebook.page-093"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        93
+      ],
+      "candidatePage": 192,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/19"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "action.ready",
+    "kind": "action",
+    "name": "Ready",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "Sometimes you want to get the jump on a foe or wait for a particular circumstance before you act. To do so, you can take the Ready action on your turn, which lets you act using your reaction before the start of your next turn.",
+      "First, you decide what perceivable circumstance will trigger your reaction. Then, you choose the action you will take in response to that trigger, or you choose to move up to your speed in response to it. Examples include \"If the cultist steps on the trapdoor, I'll pull the lever that opens it,\" and \"If the goblin steps next to me, I move away.\"",
+      "When the trigger occurs, you can either take your reaction right after the trigger finishes or ignore the trigger. Remember that you can take only one reaction per round.",
+      "When you ready a spell, you cast it as normal but hold its energy, which you release with your reaction when the trigger occurs. To be readied, a spell must have a casting time of 1 action, and holding onto the spell's magic requires {@status concentration} (explained in {@book chapter 10|srd51|10|concentration}). If your {@status concentration} is broken, the spell dissipates without taking effect. For example, if you are {@status concentration||concentrating} on the web spell and ready magic missile, your web spell ends, and if you take damage before you release magic missile with your reaction, your {@status concentration} might be broken.",
+      "You have until the start of your next turn to use a readied action."
+    ],
+    "catalogReferences": [
+      "rulebook.page-093"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        93
+      ],
+      "candidatePage": 193,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/26"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "action.search",
+    "kind": "action",
+    "name": "Search",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "When you take the Search action, you devote your attention to finding something. Depending on the nature of your search, the DM might have you make a Wisdom ({@skill Perception}) check or an Intelligence ({@skill Investigation}) check."
+    ],
+    "catalogReferences": [
+      "rulebook.page-094"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        94
+      ],
+      "candidatePage": 193,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/28"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "action.use-an-object",
+    "kind": "action",
+    "name": "Use an Object",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "entries": [
+      "You normally interact with an object while doing something else, such as when you draw a sword as part of an attack. When an object requires your action for its use, you take the Use an Object action. This action is also useful when you want to interact with more than one object on your turn."
+    ],
+    "catalogReferences": [
+      "rulebook.page-094"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        94
+      ],
+      "candidatePage": 193,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "actions.json",
+        "pointer": "/action/35"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.abyssal",
+    "kind": "language",
+    "name": "Abyssal",
+    "type": "exotic",
+    "typicalSpeakers": [
+      "Demons"
+    ],
+    "script": "Infernal",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/0"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.celestial",
+    "kind": "language",
+    "name": "Celestial",
+    "type": "exotic",
+    "typicalSpeakers": [
+      "Celestials"
+    ],
+    "script": "Celestial",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/2"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.common",
+    "kind": "language",
+    "name": "Common",
+    "type": "standard",
+    "typicalSpeakers": [
+      "Humans"
+    ],
+    "script": "Common",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/4"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.deep-speech",
+    "kind": "language",
+    "name": "Deep Speech",
+    "type": "exotic",
+    "typicalSpeakers": [
+      "Aboleths, cloakers"
+    ],
+    "script": "none",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/7"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.draconic",
+    "kind": "language",
+    "name": "Draconic",
+    "type": "exotic",
+    "typicalSpeakers": [
+      "Dragons, dragonborn"
+    ],
+    "script": "Draconic",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/9"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.druidic",
+    "kind": "language",
+    "name": "Druidic",
+    "type": "secret",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/11"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.dwarvish",
+    "kind": "language",
+    "name": "Dwarvish",
+    "type": "standard",
+    "typicalSpeakers": [
+      "Dwarves"
+    ],
+    "script": "Dwarvish",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/13"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.elvish",
+    "kind": "language",
+    "name": "Elvish",
+    "type": "standard",
+    "typicalSpeakers": [
+      "Elves"
+    ],
+    "script": "Elvish",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/15"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.giant",
+    "kind": "language",
+    "name": "Giant",
+    "type": "standard",
+    "typicalSpeakers": [
+      "Ogres, giants"
+    ],
+    "script": "Dwarvish",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/17"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.gnomish",
+    "kind": "language",
+    "name": "Gnomish",
+    "type": "standard",
+    "typicalSpeakers": [
+      "Gnomes"
+    ],
+    "script": "Dwarvish",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/19"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.goblin",
+    "kind": "language",
+    "name": "Goblin",
+    "type": "standard",
+    "typicalSpeakers": [
+      "Goblinoids"
+    ],
+    "script": "Dwarvish",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/21"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.halfling",
+    "kind": "language",
+    "name": "Halfling",
+    "type": "standard",
+    "typicalSpeakers": [
+      "Halflings"
+    ],
+    "script": "Common",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/23"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.infernal",
+    "kind": "language",
+    "name": "Infernal",
+    "type": "exotic",
+    "typicalSpeakers": [
+      "Devils"
+    ],
+    "script": "Infernal",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/25"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.orc",
+    "kind": "language",
+    "name": "Orc",
+    "type": "standard",
+    "typicalSpeakers": [
+      "Orcs"
+    ],
+    "script": "Dwarvish",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/27"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.primordial",
+    "kind": "language",
+    "name": "Primordial",
+    "dialects": [
+      "Auran",
+      "Aquan",
+      "Ignan",
+      "Terran"
+    ],
+    "type": "exotic",
+    "typicalSpeakers": [
+      "Elementals"
+    ],
+    "script": "Dwarvish",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/29"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.sylvan",
+    "kind": "language",
+    "name": "Sylvan",
+    "type": "exotic",
+    "typicalSpeakers": [
+      "Fey creatures"
+    ],
+    "script": "Elvish",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/31"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.thieves-cant",
+    "kind": "language",
+    "name": "Thieves' Cant",
+    "type": "secret",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/33"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "language.undercommon",
+    "kind": "language",
+    "name": "Undercommon",
+    "type": "exotic",
+    "typicalSpeakers": [
+      "Underworld traders"
+    ],
+    "script": "Elvish",
+    "catalogReferences": [
+      "rulebook.page-059"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        59
+      ],
+      "candidatePage": 59,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "languages.json",
+        "pointer": "/language/35"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "sense.blindsight",
+    "kind": "sense",
+    "name": "Blindsight",
+    "entries": [
+      "A creature with blindsight can perceive its surroundings without relying on sight, within a specific radius. Creatures without eyes, such as oozes, and creatures with echolocation or heightened senses, such as bats and true dragons, have this sense."
+    ],
+    "catalogReferences": [
+      "rulebook.page-086"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        86
+      ],
+      "candidatePage": 86,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "senses.json",
+        "pointer": "/sense/0"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "sense.darkvision",
+    "kind": "sense",
+    "name": "Darkvision",
+    "entries": [
+      "Many creatures in fantasy gaming worlds, especially those that dwell underground, have darkvision. Within a specified range, a creature with darkvision can see in darkness as if the darkness were dim light, so areas of darkness are only lightly obscured as far as that creature is concerned. However, the creature can't discern color in darkness, only shades of gray."
+    ],
+    "catalogReferences": [
+      "rulebook.page-086"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        86
+      ],
+      "candidatePage": 86,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "senses.json",
+        "pointer": "/sense/2"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "sense.tremorsense",
+    "kind": "sense",
+    "name": "Tremorsense",
+    "entries": [
+      "A monster with tremorsense can detect and pinpoint the origin of vibrations within a specific radius, provided that the monster and the source of the vibrations are in contact with the same ground or substance. Tremorsense can't be used to detect flying or incorporeal creatures. Many burrowing creatures, such as ankhegs and umber hulks, have this special sense."
+    ],
+    "catalogReferences": [
+      "rulebook.page-257"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        257
+      ],
+      "candidatePage": 257,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "senses.json",
+        "pointer": "/sense/4"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  },
+  {
+    "id": "sense.truesight",
+    "kind": "sense",
+    "name": "Truesight",
+    "entries": [
+      "A creature with truesight can, out to a specific range, see in normal and magical darkness, see {@condition invisible} creatures and objects, automatically detect visual illusions and succeed on saving throws against them, and perceives the original form of a shapechanger or a creature that is transformed by magic. Furthermore, the creature can see into the Ethereal Plane."
+    ],
+    "catalogReferences": [
+      "rulebook.page-086"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        86
+      ],
+      "candidatePage": 86,
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "senses.json",
+        "pointer": "/sense/6"
+      },
+      "structuredStatus": "pinned edition-specific structured record; publisher name or equivalent locator verified; body and semantic reconciliation pending"
+    }
+  }
+]

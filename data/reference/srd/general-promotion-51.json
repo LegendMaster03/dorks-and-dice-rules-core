@@ -1,0 +1,112 @@
+{
+  "edition": "srd-5.1",
+  "sourceCounts": {
+    "action": 20,
+    "language": 18,
+    "sense": 4
+  },
+  "nativeCounts": {
+    "action": 10,
+    "language": 18,
+    "sense": 4
+  },
+  "deferred": [
+    {
+      "name": "Activate an Item",
+      "path": "actions.json",
+      "pointer": "/action/0",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "Don or Doff a Shield",
+      "path": "actions.json",
+      "pointer": "/action/10",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "End Concentration",
+      "path": "actions.json",
+      "pointer": "/action/12",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "Escape a Grapple",
+      "path": "actions.json",
+      "pointer": "/action/14",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "Grapple",
+      "path": "actions.json",
+      "pointer": "/action/16",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "Opportunity Attack",
+      "path": "actions.json",
+      "pointer": "/action/23",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "Other Activity",
+      "path": "actions.json",
+      "pointer": "/action/25",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "Shove",
+      "path": "actions.json",
+      "pointer": "/action/30",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "Stabilize a Creature",
+      "path": "actions.json",
+      "pointer": "/action/31",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    },
+    {
+      "name": "Two-Weapon Fighting",
+      "path": "actions.json",
+      "pointer": "/action/33",
+      "reason": "supplementary action, reaction, or attack option; distinct representation requires review"
+    }
+  ],
+  "corrections": [
+    {
+      "id": "action.use-an-object",
+      "reason": "Use the publisher action title Use an Object (p.94), rather than the source label Use an Item."
+    },
+    {
+      "id": "language.druidic",
+      "reason": "Remove source-added typical-speaker list for secret language; publisher p.59 does not supply it."
+    },
+    {
+      "id": "language.thieves-cant",
+      "reason": "Remove source-added typical-speaker list for secret language; publisher p.59 does not supply it."
+    }
+  ],
+  "pendingReferences": [
+    {
+      "id": "action.hide",
+      "reference": "skill|Stealth",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.search",
+      "reference": "skill|Perception",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "action.search",
+      "reference": "skill|Investigation",
+      "reason": "inline semantic reconciliation pending"
+    },
+    {
+      "id": "sense.truesight",
+      "reference": "condition|invisible",
+      "reason": "inline semantic reconciliation pending"
+    }
+  ],
+  "nativeCount": 32
+}
