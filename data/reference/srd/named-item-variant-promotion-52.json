@@ -1,0 +1,122 @@
+{
+  "edition": "srd-5.2.1",
+  "templateCount": 28,
+  "counts": {
+    "Adamantine Armor": 8,
+    "Ammunition of Slaying": 5,
+    "Armor of Vulnerability (Bludgeoning)": 12,
+    "Armor of Vulnerability (Piercing)": 12,
+    "Armor of Vulnerability (Slashing)": 12,
+    "Berserker Axe": 3,
+    "Dancing Sword": 5,
+    "Defender": 28,
+    "Demon Armor": 12,
+    "Dragon Slayer": 38,
+    "Dwarven Plate": 2,
+    "Elven Chain": 2,
+    "Energy Bow": 2,
+    "Flame Tongue": 28,
+    "Frost Brand": 6,
+    "Giant Slayer": 38,
+    "Hammer of Thunderbolts": 2,
+    "Holy Avenger": 38,
+    "Luck Blade": 7,
+    "Mithral Armor": 8,
+    "Nine Lives Stealer": 38,
+    "Oathbow": 2,
+    "Sword of Life Stealing": 6,
+    "Sword of Sharpness": 4,
+    "Sword of Wounding": 6,
+    "Vicious Weapon": 38,
+    "Vorpal Sword": 4,
+    "Weapon of Warning": 38
+  },
+  "excludedBases": [
+    {
+      "templateId": "magic-variant.ammunition-of-slaying",
+      "baseItemId": "baseitem.arrows-20",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.ammunition-of-slaying",
+      "baseItemId": "baseitem.bolts-20",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.ammunition-of-slaying",
+      "baseItemId": "baseitem.firearm-bullets-10",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.ammunition-of-slaying",
+      "baseItemId": "baseitem.needles-50",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.ammunition-of-slaying",
+      "baseItemId": "baseitem.sling-bullets-20",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.dragon-slayer",
+      "baseItemId": "baseitem.staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.dragon-slayer",
+      "baseItemId": "baseitem.wooden-staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.giant-slayer",
+      "baseItemId": "baseitem.staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.giant-slayer",
+      "baseItemId": "baseitem.wooden-staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.holy-avenger",
+      "baseItemId": "baseitem.staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.holy-avenger",
+      "baseItemId": "baseitem.wooden-staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.nine-lives-stealer",
+      "baseItemId": "baseitem.staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.nine-lives-stealer",
+      "baseItemId": "baseitem.wooden-staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.vicious-weapon",
+      "baseItemId": "baseitem.staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.vicious-weapon",
+      "baseItemId": "baseitem.wooden-staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.weapon-of-warning",
+      "baseItemId": "baseitem.staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    },
+    {
+      "templateId": "magic-variant.weapon-of-warning",
+      "baseItemId": "baseitem.wooden-staff",
+      "reason": "Not an individual ammunition, eligible armor, or damage-dealing simple/martial weapon."
+    }
+  ],
+  "nativeCount": 404
+}

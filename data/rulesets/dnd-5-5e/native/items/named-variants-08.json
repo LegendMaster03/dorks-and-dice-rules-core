@@ -1,0 +1,2653 @@
+[
+  {
+    "id": "item.nine-lives-stealer-handaxe",
+    "kind": "item",
+    "name": "Nine Lives Stealer Handaxe",
+    "baseItem": "Handaxe|SRD52",
+    "baseItemId": "baseitem.handaxe",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "range": "20/60",
+    "weapon": true,
+    "axe": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.handaxe",
+      "item-mastery.vex",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/70"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-heavy-crossbow",
+    "kind": "item",
+    "name": "Nine Lives Stealer Heavy Crossbow",
+    "baseItem": "Heavy Crossbow|SRD52",
+    "baseItemId": "baseitem.heavy-crossbow",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "R|SRD52",
+    "weight": 18,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "H|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "range": "100/400",
+    "weapon": true,
+    "ammoType": "bolt|srd52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "baseitem.heavy-crossbow",
+      "item-mastery.push",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h",
+      "item-property.ld",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/72"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-javelin",
+    "kind": "item",
+    "name": "Nine Lives Stealer Javelin",
+    "baseItem": "Javelin|SRD52",
+    "baseItemId": "baseitem.javelin",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "30/120",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.javelin",
+      "item-mastery.slow",
+      "item-property.t",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/78"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-lance",
+    "kind": "item",
+    "name": "Nine Lives Stealer Lance",
+    "baseItem": "Lance|SRD52",
+    "baseItemId": "baseitem.lance",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      {
+        "uid": "2H|SRD52",
+        "note": "unless mounted"
+      }
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.lance",
+      "item-mastery.topple",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/82"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-light-crossbow",
+    "kind": "item",
+    "name": "Nine Lives Stealer Light Crossbow",
+    "baseItem": "Light Crossbow|SRD52",
+    "baseItemId": "baseitem.light-crossbow",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "R|SRD52",
+    "weight": 5,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "range": "80/320",
+    "weapon": true,
+    "ammoType": "bolt|srd52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "baseitem.light-crossbow",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.ld",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/88"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-light-hammer",
+    "kind": "item",
+    "name": "Nine Lives Stealer Light Hammer",
+    "baseItem": "Light Hammer|SRD52",
+    "baseItemId": "baseitem.light-hammer",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.light-hammer",
+      "item-mastery.nick",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/90"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-longbow",
+    "kind": "item",
+    "name": "Nine Lives Stealer Longbow",
+    "baseItem": "Longbow|SRD52",
+    "baseItemId": "baseitem.longbow",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "range": "150/600",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.longbow",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/92"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-longsword",
+    "kind": "item",
+    "name": "Nine Lives Stealer Longsword",
+    "baseItem": "Longsword|SRD52",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/94"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-mace",
+    "kind": "item",
+    "name": "Nine Lives Stealer Mace",
+    "baseItem": "Mace|SRD52",
+    "baseItemId": "baseitem.mace",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.mace",
+      "item-mastery.sap",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/100"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-maul",
+    "kind": "item",
+    "name": "Nine Lives Stealer Maul",
+    "baseItem": "Maul|SRD52",
+    "baseItemId": "baseitem.maul",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.maul",
+      "item-mastery.topple",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/104"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-morningstar",
+    "kind": "item",
+    "name": "Nine Lives Stealer Morningstar",
+    "baseItem": "Morningstar|SRD52",
+    "baseItemId": "baseitem.morningstar",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.morningstar",
+      "item-mastery.sap",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/106"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-musket",
+    "kind": "item",
+    "name": "Nine Lives Stealer Musket",
+    "baseItem": "Musket|SRD52",
+    "baseItemId": "baseitem.musket",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "R|SRD52",
+    "weight": 10,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "P",
+    "range": "40/120",
+    "weapon": true,
+    "ammoType": "firearm bullet|srd52",
+    "firearm": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.firearm-bullet",
+      "baseitem.musket",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.ld",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/108"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-pike",
+    "kind": "item",
+    "name": "Nine Lives Stealer Pike",
+    "baseItem": "Pike|SRD52",
+    "baseItemId": "baseitem.pike",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 18,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.pike",
+      "item-mastery.push",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/121"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-pistol",
+    "kind": "item",
+    "name": "Nine Lives Stealer Pistol",
+    "baseItem": "Pistol|SRD52",
+    "baseItemId": "baseitem.pistol",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "R|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "range": "30/90",
+    "weapon": true,
+    "ammoType": "firearm bullet|srd52",
+    "firearm": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.firearm-bullet",
+      "baseitem.pistol",
+      "item-mastery.vex",
+      "item-property.a",
+      "item-property.ld",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/123"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-quarterstaff",
+    "kind": "item",
+    "name": "Nine Lives Stealer Quarterstaff",
+    "baseItem": "Quarterstaff|SRD52",
+    "baseItemId": "baseitem.quarterstaff",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmg2": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.quarterstaff",
+      "item-mastery.topple",
+      "item-property.v",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/129"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-rapier",
+    "kind": "item",
+    "name": "Nine Lives Stealer Rapier",
+    "baseItem": "Rapier|SRD52",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "item-mastery.vex",
+      "item-property.f",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/131"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-scimitar",
+    "kind": "item",
+    "name": "Nine Lives Stealer Scimitar",
+    "baseItem": "Scimitar|SRD52",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/139"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-shortbow",
+    "kind": "item",
+    "name": "Nine Lives Stealer Shortbow",
+    "baseItem": "Shortbow|SRD52",
+    "baseItemId": "baseitem.shortbow",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "80/320",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.shortbow",
+      "item-mastery.vex",
+      "item-property.2h",
+      "item-property.a",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/145"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-shortsword",
+    "kind": "item",
+    "name": "Nine Lives Stealer Shortsword",
+    "baseItem": "Shortsword|SRD52",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "item-mastery.vex",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/147"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-sickle",
+    "kind": "item",
+    "name": "Nine Lives Stealer Sickle",
+    "baseItem": "Sickle|SRD52",
+    "baseItemId": "baseitem.sickle",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.sickle",
+      "item-mastery.nick",
+      "item-property.l",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/149"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-sling",
+    "kind": "item",
+    "name": "Nine Lives Stealer Sling",
+    "baseItem": "Sling|SRD52",
+    "baseItemId": "baseitem.sling",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "R|SRD52",
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "range": "30/120",
+    "weapon": true,
+    "ammoType": "sling bullet|srd52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.sling",
+      "baseitem.sling-bullet",
+      "item-mastery.slow",
+      "item-property.a",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/151"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-spear",
+    "kind": "item",
+    "name": "Nine Lives Stealer Spear",
+    "baseItem": "Spear|SRD52",
+    "baseItemId": "baseitem.spear",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmg2": "1d8",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.spear",
+      "item-mastery.sap",
+      "item-property.t",
+      "item-property.v",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/159"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-trident",
+    "kind": "item",
+    "name": "Nine Lives Stealer Trident",
+    "baseItem": "Trident|SRD52",
+    "baseItemId": "baseitem.trident",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.trident",
+      "item-mastery.topple",
+      "item-property.t",
+      "item-property.v",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/169"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-war-pick",
+    "kind": "item",
+    "name": "Nine Lives Stealer War Pick",
+    "baseItem": "War Pick|SRD52",
+    "baseItemId": "baseitem.war-pick",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.war-pick",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/175"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-warhammer",
+    "kind": "item",
+    "name": "Nine Lives Stealer Warhammer",
+    "baseItem": "Warhammer|SRD52",
+    "baseItemId": "baseitem.warhammer",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 5,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.warhammer",
+      "item-mastery.push",
+      "item-property.v",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/177"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.nine-lives-stealer-whip",
+    "kind": "item",
+    "name": "Nine Lives Stealer Whip",
+    "baseItem": "Whip|SRD52",
+    "baseItemId": "baseitem.whip",
+    "variantOf": "magic-variant.nine-lives-stealer",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "R|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+2",
+    "charges": "{@dice 1d8 + 1}",
+    "entries": [
+      "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.",
+      {
+        "type": "entries",
+        "name": "Life Stealing",
+        "entries": [
+          "The weapon has {@dice 1d8 + 1} charges. When you attack a creature that has fewer than 100 {@variantrule Hit Points|SRD52} with this weapon and roll a 20 on the {@dice d20} for the attack roll, the creature must succeed on a {@dc 15} Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.whip",
+      "item-mastery.slow",
+      "item-property.f",
+      "item-property.r",
+      "magic-variant.nine-lives-stealer",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/63"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/181"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.oath-longbow",
+    "kind": "item",
+    "name": "Oath Longbow",
+    "baseItem": "Longbow|SRD52",
+    "baseItemId": "baseitem.longbow",
+    "variantOf": "magic-variant.oathbow",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "range": "150/600",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "When you nock an arrow on this bow, it whispers in Elvish, \"Swift defeat to my enemies.\" When you use this weapon to make a ranged attack, you can utter or sign the following command words: \"Swift death to you who have wronged me.\" The target of your attack becomes your sworn enemy until it dies or until dawn 7 days later. You can have only one such sworn enemy at a time. When your sworn enemy dies, you can choose a new one after the next dawn.",
+      "When you make a ranged attack roll with this weapon against your sworn enemy, you have {@variantrule Advantage|SRD52} on the roll. In addition, your target gains no benefit from {@variantrule Cover|SRD52|Half Cover} or {@variantrule Cover|SRD52|Three-Quarters Cover}, and you suffer no {@variantrule Disadvantage|SRD52} due to long range. If the attack hits, your sworn enemy takes an extra {@damage 3d6} Piercing damage.",
+      "While your sworn enemy lives, you have {@variantrule Disadvantage|SRD52} on attack rolls with all other weapons."
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.longbow",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h",
+      "magic-variant.oathbow",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/64"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/92"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.oath-shortbow",
+    "kind": "item",
+    "name": "Oath Shortbow",
+    "baseItem": "Shortbow|SRD52",
+    "baseItemId": "baseitem.shortbow",
+    "variantOf": "magic-variant.oathbow",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "80/320",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "When you nock an arrow on this bow, it whispers in Elvish, \"Swift defeat to my enemies.\" When you use this weapon to make a ranged attack, you can utter or sign the following command words: \"Swift death to you who have wronged me.\" The target of your attack becomes your sworn enemy until it dies or until dawn 7 days later. You can have only one such sworn enemy at a time. When your sworn enemy dies, you can choose a new one after the next dawn.",
+      "When you make a ranged attack roll with this weapon against your sworn enemy, you have {@variantrule Advantage|SRD52} on the roll. In addition, your target gains no benefit from {@variantrule Cover|SRD52|Half Cover} or {@variantrule Cover|SRD52|Three-Quarters Cover}, and you suffer no {@variantrule Disadvantage|SRD52} due to long range. If the attack hits, your sworn enemy takes an extra {@damage 3d6} Piercing damage.",
+      "While your sworn enemy lives, you have {@variantrule Disadvantage|SRD52} on attack rolls with all other weapons."
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.shortbow",
+      "item-mastery.vex",
+      "item-property.2h",
+      "item-property.a",
+      "magic-variant.oathbow",
+      "rulebook.page-233"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        233
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/64"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/145"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.glaive-of-life-stealing",
+    "kind": "item",
+    "name": "Glaive of Life Stealing",
+    "baseItem": "Glaive|SRD52",
+    "baseItemId": "baseitem.glaive",
+    "variantOf": "magic-variant.sword-of-life-stealing",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "When you attack a creature with this magic weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 15 Necrotic damage if it isn't a Construct or an Undead, and you gain {@variantrule Temporary Hit Points|SRD52} equal to the amount of Necrotic damage taken."
+    ],
+    "catalogReferences": [
+      "baseitem.glaive",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.sword-of-life-stealing",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/65"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/54"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.greatsword-of-life-stealing",
+    "kind": "item",
+    "name": "Greatsword of Life Stealing",
+    "baseItem": "Greatsword|SRD52",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.sword-of-life-stealing",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "When you attack a creature with this magic weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 15 Necrotic damage if it isn't a Construct or an Undead, and you gain {@variantrule Temporary Hit Points|SRD52} equal to the amount of Necrotic damage taken."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.sword-of-life-stealing",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/65"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/62"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.longsword-of-life-stealing",
+    "kind": "item",
+    "name": "Longsword of Life Stealing",
+    "baseItem": "Longsword|SRD52",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.sword-of-life-stealing",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "When you attack a creature with this magic weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 15 Necrotic damage if it isn't a Construct or an Undead, and you gain {@variantrule Temporary Hit Points|SRD52} equal to the amount of Necrotic damage taken."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.sword-of-life-stealing",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/65"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/94"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.rapier-of-life-stealing",
+    "kind": "item",
+    "name": "Rapier of Life Stealing",
+    "baseItem": "Rapier|SRD52",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.sword-of-life-stealing",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "When you attack a creature with this magic weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 15 Necrotic damage if it isn't a Construct or an Undead, and you gain {@variantrule Temporary Hit Points|SRD52} equal to the amount of Necrotic damage taken."
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "item-mastery.vex",
+      "item-property.f",
+      "magic-variant.sword-of-life-stealing",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/65"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/131"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.scimitar-of-life-stealing",
+    "kind": "item",
+    "name": "Scimitar of Life Stealing",
+    "baseItem": "Scimitar|SRD52",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.sword-of-life-stealing",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "When you attack a creature with this magic weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 15 Necrotic damage if it isn't a Construct or an Undead, and you gain {@variantrule Temporary Hit Points|SRD52} equal to the amount of Necrotic damage taken."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.sword-of-life-stealing",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/65"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/139"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.shortsword-of-life-stealing",
+    "kind": "item",
+    "name": "Shortsword of Life Stealing",
+    "baseItem": "Shortsword|SRD52",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.sword-of-life-stealing",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "When you attack a creature with this magic weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 15 Necrotic damage if it isn't a Construct or an Undead, and you gain {@variantrule Temporary Hit Points|SRD52} equal to the amount of Necrotic damage taken."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "item-mastery.vex",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.sword-of-life-stealing",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/65"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/147"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.glaive-of-sharpness",
+    "kind": "item",
+    "name": "Glaive of Sharpness",
+    "baseItem": "Glaive|SRD52",
+    "baseItemId": "baseitem.glaive",
+    "variantOf": "magic-variant.sword-of-sharpness",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "When you attack an object with this magic weapon and hit, maximize your weapon damage dice against the target.",
+      "When you attack a creature with this weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 14 Slashing damage and gains 1 {@condition Exhaustion|SRD52} level."
+    ],
+    "catalogReferences": [
+      "baseitem.glaive",
+      "condition.exhaustion",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.sword-of-sharpness",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/66"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/54"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.greatsword-of-sharpness",
+    "kind": "item",
+    "name": "Greatsword of Sharpness",
+    "baseItem": "Greatsword|SRD52",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.sword-of-sharpness",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "When you attack an object with this magic weapon and hit, maximize your weapon damage dice against the target.",
+      "When you attack a creature with this weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 14 Slashing damage and gains 1 {@condition Exhaustion|SRD52} level."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "condition.exhaustion",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.sword-of-sharpness",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/66"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/62"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.longsword-of-sharpness",
+    "kind": "item",
+    "name": "Longsword of Sharpness",
+    "baseItem": "Longsword|SRD52",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.sword-of-sharpness",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "When you attack an object with this magic weapon and hit, maximize your weapon damage dice against the target.",
+      "When you attack a creature with this weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 14 Slashing damage and gains 1 {@condition Exhaustion|SRD52} level."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "condition.exhaustion",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.sword-of-sharpness",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/66"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/94"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.scimitar-of-sharpness",
+    "kind": "item",
+    "name": "Scimitar of Sharpness",
+    "baseItem": "Scimitar|SRD52",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.sword-of-sharpness",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "When you attack an object with this magic weapon and hit, maximize your weapon damage dice against the target.",
+      "When you attack a creature with this weapon and roll a 20 on the {@dice d20} for the attack roll, that target takes an extra 14 Slashing damage and gains 1 {@condition Exhaustion|SRD52} level."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "condition.exhaustion",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.sword-of-sharpness",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/66"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/139"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.glaive-of-wounding",
+    "kind": "item",
+    "name": "Glaive of Wounding",
+    "baseItem": "Glaive|SRD52",
+    "baseItemId": "baseitem.glaive",
+    "variantOf": "magic-variant.sword-of-wounding",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "When you hit a creature with an attack using this magic weapon, the target takes an extra {@damage 2d6} Necrotic damage and must succeed on a {@dc 15} Constitution saving throw or be unable to regain {@variantrule Hit Points|SRD52} for 1 hour. The target repeats the save at the end of each of its turns, ending the effect on itself on a success."
+    ],
+    "catalogReferences": [
+      "baseitem.glaive",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.sword-of-wounding",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/67"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/54"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.greatsword-of-wounding",
+    "kind": "item",
+    "name": "Greatsword of Wounding",
+    "baseItem": "Greatsword|SRD52",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.sword-of-wounding",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "entries": [
+      "When you hit a creature with an attack using this magic weapon, the target takes an extra {@damage 2d6} Necrotic damage and must succeed on a {@dc 15} Constitution saving throw or be unable to regain {@variantrule Hit Points|SRD52} for 1 hour. The target repeats the save at the end of each of its turns, ending the effect on itself on a success."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.sword-of-wounding",
+      "rulebook.page-248"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        248
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/67"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/62"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  }
+]

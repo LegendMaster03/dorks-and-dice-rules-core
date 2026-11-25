@@ -1,0 +1,2474 @@
+[
+  {
+    "id": "item.defender-spear",
+    "kind": "item",
+    "name": "Defender Spear",
+    "baseItem": "Spear|SRD52",
+    "baseItemId": "baseitem.spear",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmg2": "1d8",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.spear",
+      "item-mastery.sap",
+      "item-property.t",
+      "item-property.v",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/159"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-trident",
+    "kind": "item",
+    "name": "Defender Trident",
+    "baseItem": "Trident|SRD52",
+    "baseItemId": "baseitem.trident",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.trident",
+      "item-mastery.topple",
+      "item-property.t",
+      "item-property.v",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/169"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-war-pick",
+    "kind": "item",
+    "name": "Defender War Pick",
+    "baseItem": "War Pick|SRD52",
+    "baseItemId": "baseitem.war-pick",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.war-pick",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/175"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-warhammer",
+    "kind": "item",
+    "name": "Defender Warhammer",
+    "baseItem": "Warhammer|SRD52",
+    "baseItemId": "baseitem.warhammer",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 5,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.warhammer",
+      "item-mastery.push",
+      "item-property.v",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/177"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-whip",
+    "kind": "item",
+    "name": "Defender Whip",
+    "baseItem": "Whip|SRD52",
+    "baseItemId": "baseitem.whip",
+    "variantOf": "magic-variant.defender",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "R|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The first time you attack with the weapon on each of your turns, you can transfer some or all of the weapon's bonus to your {@variantrule Armor Class|SRD52}. For example, you could reduce the bonus to your attack rolls and damage rolls to +1 and gain a +2 bonus to {@variantrule Armor Class|SRD52}. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the weapon to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.whip",
+      "item-mastery.slow",
+      "item-property.f",
+      "item-property.r",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/50"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/181"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-breastplate",
+    "kind": "item",
+    "name": "Demon Breastplate",
+    "baseItem": "Breastplate|SRD52",
+    "baseItemId": "baseitem.breastplate",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 14,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.breastplate",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/17"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-chain-mail",
+    "kind": "item",
+    "name": "Demon Chain Mail",
+    "baseItem": "Chain Mail|SRD52",
+    "baseItemId": "baseitem.chain-mail",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "HA|SRD52",
+    "weight": 55,
+    "ac": 16,
+    "strength": "13",
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.chain-mail",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/27"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-chain-shirt",
+    "kind": "item",
+    "name": "Demon Chain Shirt",
+    "baseItem": "Chain Shirt|SRD52",
+    "baseItemId": "baseitem.chain-shirt",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 13,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.chain-shirt",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/29"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-half-plate-armor",
+    "kind": "item",
+    "name": "Demon Half Plate Armor",
+    "baseItem": "Half Plate Armor|SRD52",
+    "baseItemId": "baseitem.half-plate-armor",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "MA|SRD52",
+    "weight": 40,
+    "ac": 15,
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.half-plate-armor",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/66"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-hide-armor",
+    "kind": "item",
+    "name": "Demon Hide Armor",
+    "baseItem": "Hide Armor|SRD52",
+    "baseItemId": "baseitem.hide-armor",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "MA|SRD52",
+    "weight": 12,
+    "ac": 12,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.hide-armor",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/74"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-leather-armor",
+    "kind": "item",
+    "name": "Demon Leather Armor",
+    "baseItem": "Leather Armor|SRD52",
+    "baseItemId": "baseitem.leather-armor",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "LA|SRD52",
+    "weight": 10,
+    "ac": 11,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.leather-armor",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/84"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-padded-armor",
+    "kind": "item",
+    "name": "Demon Padded Armor",
+    "baseItem": "Padded Armor|SRD52",
+    "baseItemId": "baseitem.padded-armor",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "LA|SRD52",
+    "weight": 8,
+    "ac": 11,
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.padded-armor",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/115"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-plate-armor",
+    "kind": "item",
+    "name": "Demon Plate Armor",
+    "baseItem": "Plate Armor|SRD52",
+    "baseItemId": "baseitem.plate-armor",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "HA|SRD52",
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/125"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-ring-mail",
+    "kind": "item",
+    "name": "Demon Ring Mail",
+    "baseItem": "Ring Mail|SRD52",
+    "baseItemId": "baseitem.ring-mail",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "HA|SRD52",
+    "weight": 40,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.ring-mail",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/133"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-scale-mail",
+    "kind": "item",
+    "name": "Demon Scale Mail",
+    "baseItem": "Scale Mail|SRD52",
+    "baseItemId": "baseitem.scale-mail",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "MA|SRD52",
+    "weight": 45,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/137"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-splint-armor",
+    "kind": "item",
+    "name": "Demon Splint Armor",
+    "baseItem": "Splint Armor|SRD52",
+    "baseItemId": "baseitem.splint-armor",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "HA|SRD52",
+    "weight": 60,
+    "ac": 17,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.splint-armor",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/161"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.demon-studded-leather-armor",
+    "kind": "item",
+    "name": "Demon Studded Leather Armor",
+    "baseItem": "Studded Leather Armor|SRD52",
+    "baseItemId": "baseitem.studded-leather-armor",
+    "variantOf": "magic-variant.demon-armor",
+    "type": "LA|SRD52",
+    "weight": 13,
+    "ac": 12,
+    "armor": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusAc": "+1",
+    "grantsLanguage": true,
+    "unarmedStrike": {
+      "damage": "1d8",
+      "damageType": "S",
+      "bonusWeapon": "+1"
+    },
+    "entries": [
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a +1 bonus to the attack and damage rolls of your Unarmed Strikes.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.studded-leather-armor",
+      "magic-variant.demon-armor",
+      "rulebook.page-218",
+      "spell.remove-curse"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/51"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/165"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-battleaxe",
+    "kind": "item",
+    "name": "Dragon Slayer Battleaxe",
+    "baseItem": "Battleaxe|SRD52",
+    "baseItemId": "baseitem.battleaxe",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.battleaxe",
+      "item-mastery.topple",
+      "item-property.v",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/9"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-blowgun",
+    "kind": "item",
+    "name": "Dragon Slayer Blowgun",
+    "baseItem": "Blowgun|SRD52",
+    "baseItemId": "baseitem.blowgun",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "R|SRD52",
+    "weight": 1,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1",
+    "dmgType": "P",
+    "range": "25/100",
+    "weapon": true,
+    "ammoType": "needle|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.blowgun",
+      "baseitem.needle",
+      "item-mastery.vex",
+      "item-property.a",
+      "item-property.ld",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/11"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-club",
+    "kind": "item",
+    "name": "Dragon Slayer Club",
+    "baseItem": "Club|SRD52",
+    "baseItemId": "baseitem.club",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.club",
+      "item-mastery.slow",
+      "item-property.l",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/31"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-dagger",
+    "kind": "item",
+    "name": "Dragon Slayer Dagger",
+    "baseItem": "Dagger|SRD52",
+    "baseItemId": "baseitem.dagger",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 1,
+    "weaponCategory": "simple",
+    "property": [
+      "F|SRD52",
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.dagger",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/41"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-dart",
+    "kind": "item",
+    "name": "Dragon Slayer Dart",
+    "baseItem": "Dart|SRD52",
+    "baseItemId": "baseitem.dart",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "R|SRD52",
+    "weight": 0.25,
+    "weaponCategory": "simple",
+    "property": [
+      "F|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.dart",
+      "item-mastery.vex",
+      "item-property.f",
+      "item-property.t",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/43"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-flail",
+    "kind": "item",
+    "name": "Dragon Slayer Flail",
+    "baseItem": "Flail|SRD52",
+    "baseItemId": "baseitem.flail",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.flail",
+      "item-mastery.sap",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/50"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-glaive",
+    "kind": "item",
+    "name": "Dragon Slayer Glaive",
+    "baseItem": "Glaive|SRD52",
+    "baseItemId": "baseitem.glaive",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.glaive",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/54"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-greataxe",
+    "kind": "item",
+    "name": "Dragon Slayer Greataxe",
+    "baseItem": "Greataxe|SRD52",
+    "baseItemId": "baseitem.greataxe",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 7,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.greataxe",
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/58"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-greatclub",
+    "kind": "item",
+    "name": "Dragon Slayer Greatclub",
+    "baseItem": "Greatclub|SRD52",
+    "baseItemId": "baseitem.greatclub",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "simple",
+    "property": [
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.greatclub",
+      "item-mastery.push",
+      "item-property.2h",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/60"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-greatsword",
+    "kind": "item",
+    "name": "Dragon Slayer Greatsword",
+    "baseItem": "Greatsword|SRD52",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/62"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-halberd",
+    "kind": "item",
+    "name": "Dragon Slayer Halberd",
+    "baseItem": "Halberd|SRD52",
+    "baseItemId": "baseitem.halberd",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.halberd",
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/64"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-hand-crossbow",
+    "kind": "item",
+    "name": "Dragon Slayer Hand Crossbow",
+    "baseItem": "Hand Crossbow|SRD52",
+    "baseItemId": "baseitem.hand-crossbow",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "R|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "L|SRD52",
+      "LD|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "30/120",
+    "weapon": true,
+    "ammoType": "bolt|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "baseitem.hand-crossbow",
+      "item-mastery.vex",
+      "item-property.a",
+      "item-property.l",
+      "item-property.ld",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/68"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-handaxe",
+    "kind": "item",
+    "name": "Dragon Slayer Handaxe",
+    "baseItem": "Handaxe|SRD52",
+    "baseItemId": "baseitem.handaxe",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "range": "20/60",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.handaxe",
+      "item-mastery.vex",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/70"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-heavy-crossbow",
+    "kind": "item",
+    "name": "Dragon Slayer Heavy Crossbow",
+    "baseItem": "Heavy Crossbow|SRD52",
+    "baseItemId": "baseitem.heavy-crossbow",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "R|SRD52",
+    "weight": 18,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "H|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "range": "100/400",
+    "weapon": true,
+    "ammoType": "bolt|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "baseitem.heavy-crossbow",
+      "item-mastery.push",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h",
+      "item-property.ld",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/72"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-javelin",
+    "kind": "item",
+    "name": "Dragon Slayer Javelin",
+    "baseItem": "Javelin|SRD52",
+    "baseItemId": "baseitem.javelin",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "30/120",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.javelin",
+      "item-mastery.slow",
+      "item-property.t",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/78"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-lance",
+    "kind": "item",
+    "name": "Dragon Slayer Lance",
+    "baseItem": "Lance|SRD52",
+    "baseItemId": "baseitem.lance",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      {
+        "uid": "2H|SRD52",
+        "note": "unless mounted"
+      }
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.lance",
+      "item-mastery.topple",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/82"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-light-crossbow",
+    "kind": "item",
+    "name": "Dragon Slayer Light Crossbow",
+    "baseItem": "Light Crossbow|SRD52",
+    "baseItemId": "baseitem.light-crossbow",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "R|SRD52",
+    "weight": 5,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "range": "80/320",
+    "weapon": true,
+    "ammoType": "bolt|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "baseitem.light-crossbow",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.ld",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/88"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-light-hammer",
+    "kind": "item",
+    "name": "Dragon Slayer Light Hammer",
+    "baseItem": "Light Hammer|SRD52",
+    "baseItemId": "baseitem.light-hammer",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.light-hammer",
+      "item-mastery.nick",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/90"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-longbow",
+    "kind": "item",
+    "name": "Dragon Slayer Longbow",
+    "baseItem": "Longbow|SRD52",
+    "baseItemId": "baseitem.longbow",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "range": "150/600",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.longbow",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/92"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-longsword",
+    "kind": "item",
+    "name": "Dragon Slayer Longsword",
+    "baseItem": "Longsword|SRD52",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/94"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-mace",
+    "kind": "item",
+    "name": "Dragon Slayer Mace",
+    "baseItem": "Mace|SRD52",
+    "baseItemId": "baseitem.mace",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.mace",
+      "item-mastery.sap",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/100"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-maul",
+    "kind": "item",
+    "name": "Dragon Slayer Maul",
+    "baseItem": "Maul|SRD52",
+    "baseItemId": "baseitem.maul",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.maul",
+      "item-mastery.topple",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/104"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-morningstar",
+    "kind": "item",
+    "name": "Dragon Slayer Morningstar",
+    "baseItem": "Morningstar|SRD52",
+    "baseItemId": "baseitem.morningstar",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.morningstar",
+      "item-mastery.sap",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/106"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  }
+]

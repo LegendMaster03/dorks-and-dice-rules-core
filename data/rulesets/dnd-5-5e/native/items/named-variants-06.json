@@ -1,0 +1,2674 @@
+[
+  {
+    "id": "item.giant-slayer-pistol",
+    "kind": "item",
+    "name": "Giant Slayer Pistol",
+    "baseItem": "Pistol|SRD52",
+    "baseItemId": "baseitem.pistol",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "R|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "range": "30/90",
+    "weapon": true,
+    "ammoType": "firearm bullet|srd52",
+    "firearm": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.firearm-bullet",
+      "baseitem.pistol",
+      "condition.prone",
+      "item-mastery.vex",
+      "item-property.a",
+      "item-property.ld",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/123"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-quarterstaff",
+    "kind": "item",
+    "name": "Giant Slayer Quarterstaff",
+    "baseItem": "Quarterstaff|SRD52",
+    "baseItemId": "baseitem.quarterstaff",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmg2": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.quarterstaff",
+      "condition.prone",
+      "item-mastery.topple",
+      "item-property.v",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/129"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-rapier",
+    "kind": "item",
+    "name": "Giant Slayer Rapier",
+    "baseItem": "Rapier|SRD52",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "condition.prone",
+      "item-mastery.vex",
+      "item-property.f",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/131"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-scimitar",
+    "kind": "item",
+    "name": "Giant Slayer Scimitar",
+    "baseItem": "Scimitar|SRD52",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "condition.prone",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/139"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-shortbow",
+    "kind": "item",
+    "name": "Giant Slayer Shortbow",
+    "baseItem": "Shortbow|SRD52",
+    "baseItemId": "baseitem.shortbow",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "80/320",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.shortbow",
+      "condition.prone",
+      "item-mastery.vex",
+      "item-property.2h",
+      "item-property.a",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/145"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-shortsword",
+    "kind": "item",
+    "name": "Giant Slayer Shortsword",
+    "baseItem": "Shortsword|SRD52",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "condition.prone",
+      "item-mastery.vex",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/147"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-sickle",
+    "kind": "item",
+    "name": "Giant Slayer Sickle",
+    "baseItem": "Sickle|SRD52",
+    "baseItemId": "baseitem.sickle",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.sickle",
+      "condition.prone",
+      "item-mastery.nick",
+      "item-property.l",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/149"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-sling",
+    "kind": "item",
+    "name": "Giant Slayer Sling",
+    "baseItem": "Sling|SRD52",
+    "baseItemId": "baseitem.sling",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "R|SRD52",
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "range": "30/120",
+    "weapon": true,
+    "ammoType": "sling bullet|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.sling",
+      "baseitem.sling-bullet",
+      "condition.prone",
+      "item-mastery.slow",
+      "item-property.a",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/151"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-spear",
+    "kind": "item",
+    "name": "Giant Slayer Spear",
+    "baseItem": "Spear|SRD52",
+    "baseItemId": "baseitem.spear",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmg2": "1d8",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.spear",
+      "condition.prone",
+      "item-mastery.sap",
+      "item-property.t",
+      "item-property.v",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/159"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-trident",
+    "kind": "item",
+    "name": "Giant Slayer Trident",
+    "baseItem": "Trident|SRD52",
+    "baseItemId": "baseitem.trident",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.trident",
+      "condition.prone",
+      "item-mastery.topple",
+      "item-property.t",
+      "item-property.v",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/169"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-war-pick",
+    "kind": "item",
+    "name": "Giant Slayer War Pick",
+    "baseItem": "War Pick|SRD52",
+    "baseItemId": "baseitem.war-pick",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.war-pick",
+      "condition.prone",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/175"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-warhammer",
+    "kind": "item",
+    "name": "Giant Slayer Warhammer",
+    "baseItem": "Warhammer|SRD52",
+    "baseItemId": "baseitem.warhammer",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "M|SRD52",
+    "weight": 5,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.warhammer",
+      "condition.prone",
+      "item-mastery.push",
+      "item-property.v",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/177"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.giant-slayer-whip",
+    "kind": "item",
+    "name": "Giant Slayer Whip",
+    "baseItem": "Whip|SRD52",
+    "baseItemId": "baseitem.whip",
+    "variantOf": "magic-variant.giant-slayer",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "R|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "When you hit a Giant with this weapon, the Giant takes an extra {@damage 2d6} damage of the weapon's type and must succeed on a {@dc 15} Strength saving throw or have the {@condition Prone|SRD52} condition."
+    ],
+    "catalogReferences": [
+      "baseitem.whip",
+      "condition.prone",
+      "item-mastery.slow",
+      "item-property.f",
+      "item-property.r",
+      "magic-variant.giant-slayer",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/58"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/181"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.maul-of-thunderbolts",
+    "kind": "item",
+    "name": "Maul of Thunderbolts",
+    "baseItem": "Maul|SRD52",
+    "baseItemId": "baseitem.maul",
+    "variantOf": "magic-variant.hammer-of-thunderbolts",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+1",
+    "charges": 5,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4 + 1}",
+    "ability": {
+      "str": 4
+    },
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon has 5 charges. You can expend 1 charge and make a ranged attack with the weapon, hurling it as if it had {@itemProperty T|SRD52|Thrown} with a normal range of 20 feet and a long range of 60 feet.",
+      "If the attack hits, the weapon unleashes a thunderclap audible out to 300 feet. The target and every creature within 30 feet of it other than you must succeed on a {@dc 17} Constitution saving throw or have the {@condition Stunned|SRD52} condition until the end of your next turn. Immediately after hitting or missing, the weapon flies back to your hand. The weapon regains {@dice 1d4 + 1} expended charges daily at dawn.",
+      {
+        "type": "entries",
+        "name": "Giant's Bane",
+        "entries": [
+          "While you are attuned to the weapon and wearing either a {@item Belt of Giant Strength|SRD52} or {@item Gauntlets of Ogre Power|SRD52} to which you are also attuned, you gain the following benefits:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Giants' Bane",
+                "entries": [
+                  "When you roll a 20 on the {@dice d20} for an attack roll made with this weapon against a Giant, the creature must succeed on a {@dc 17} Constitution saving throw or die."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Might of Giants",
+                "entries": [
+                  "The Strength score bestowed by your {@item Belt of Giant Strength|SRD52} or {@item Gauntlets of Ogre Power|SRD52} increases by 4, to a maximum of 30."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.maul",
+      "condition.stunned",
+      "item-group.belt-of-giant-strength",
+      "item-mastery.topple",
+      "item-property.2h",
+      "item-property.h",
+      "item.gauntlets-of-ogre-power",
+      "magic-variant.hammer-of-thunderbolts",
+      "rulebook.page-224"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        224
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/59"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/104"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.warhammer-of-thunderbolts",
+    "kind": "item",
+    "name": "Warhammer of Thunderbolts",
+    "baseItem": "Warhammer|SRD52",
+    "baseItemId": "baseitem.warhammer",
+    "variantOf": "magic-variant.hammer-of-thunderbolts",
+    "type": "M|SRD52",
+    "weight": 5,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+1",
+    "charges": 5,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4 + 1}",
+    "ability": {
+      "str": 4
+    },
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon has 5 charges. You can expend 1 charge and make a ranged attack with the weapon, hurling it as if it had {@itemProperty T|SRD52|Thrown} with a normal range of 20 feet and a long range of 60 feet.",
+      "If the attack hits, the weapon unleashes a thunderclap audible out to 300 feet. The target and every creature within 30 feet of it other than you must succeed on a {@dc 17} Constitution saving throw or have the {@condition Stunned|SRD52} condition until the end of your next turn. Immediately after hitting or missing, the weapon flies back to your hand. The weapon regains {@dice 1d4 + 1} expended charges daily at dawn.",
+      {
+        "type": "entries",
+        "name": "Giant's Bane",
+        "entries": [
+          "While you are attuned to the weapon and wearing either a {@item Belt of Giant Strength|SRD52} or {@item Gauntlets of Ogre Power|SRD52} to which you are also attuned, you gain the following benefits:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Giants' Bane",
+                "entries": [
+                  "When you roll a 20 on the {@dice d20} for an attack roll made with this weapon against a Giant, the creature must succeed on a {@dc 17} Constitution saving throw or die."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Might of Giants",
+                "entries": [
+                  "The Strength score bestowed by your {@item Belt of Giant Strength|SRD52} or {@item Gauntlets of Ogre Power|SRD52} increases by 4, to a maximum of 30."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.warhammer",
+      "condition.stunned",
+      "item-group.belt-of-giant-strength",
+      "item-mastery.push",
+      "item-property.v",
+      "item.gauntlets-of-ogre-power",
+      "magic-variant.hammer-of-thunderbolts",
+      "rulebook.page-224"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        224
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/59"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/177"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-battleaxe",
+    "kind": "item",
+    "name": "Holy Avenger Battleaxe",
+    "baseItem": "Battleaxe|SRD52",
+    "baseItemId": "baseitem.battleaxe",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.battleaxe",
+      "item-mastery.topple",
+      "item-property.v",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/9"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-blowgun",
+    "kind": "item",
+    "name": "Holy Avenger Blowgun",
+    "baseItem": "Blowgun|SRD52",
+    "baseItemId": "baseitem.blowgun",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "R|SRD52",
+    "weight": 1,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1",
+    "dmgType": "P",
+    "range": "25/100",
+    "weapon": true,
+    "ammoType": "needle|srd52",
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.blowgun",
+      "baseitem.needle",
+      "item-mastery.vex",
+      "item-property.a",
+      "item-property.ld",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/11"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-club",
+    "kind": "item",
+    "name": "Holy Avenger Club",
+    "baseItem": "Club|SRD52",
+    "baseItemId": "baseitem.club",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.club",
+      "item-mastery.slow",
+      "item-property.l",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/31"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-dagger",
+    "kind": "item",
+    "name": "Holy Avenger Dagger",
+    "baseItem": "Dagger|SRD52",
+    "baseItemId": "baseitem.dagger",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 1,
+    "weaponCategory": "simple",
+    "property": [
+      "F|SRD52",
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.dagger",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/41"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-dart",
+    "kind": "item",
+    "name": "Holy Avenger Dart",
+    "baseItem": "Dart|SRD52",
+    "baseItemId": "baseitem.dart",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "R|SRD52",
+    "weight": 0.25,
+    "weaponCategory": "simple",
+    "property": [
+      "F|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.dart",
+      "item-mastery.vex",
+      "item-property.f",
+      "item-property.t",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/43"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-flail",
+    "kind": "item",
+    "name": "Holy Avenger Flail",
+    "baseItem": "Flail|SRD52",
+    "baseItemId": "baseitem.flail",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.flail",
+      "item-mastery.sap",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/50"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-glaive",
+    "kind": "item",
+    "name": "Holy Avenger Glaive",
+    "baseItem": "Glaive|SRD52",
+    "baseItemId": "baseitem.glaive",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.glaive",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/54"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-greataxe",
+    "kind": "item",
+    "name": "Holy Avenger Greataxe",
+    "baseItem": "Greataxe|SRD52",
+    "baseItemId": "baseitem.greataxe",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 7,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.greataxe",
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/58"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-greatclub",
+    "kind": "item",
+    "name": "Holy Avenger Greatclub",
+    "baseItem": "Greatclub|SRD52",
+    "baseItemId": "baseitem.greatclub",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "simple",
+    "property": [
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.greatclub",
+      "item-mastery.push",
+      "item-property.2h",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/60"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-greatsword",
+    "kind": "item",
+    "name": "Holy Avenger Greatsword",
+    "baseItem": "Greatsword|SRD52",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/62"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-halberd",
+    "kind": "item",
+    "name": "Holy Avenger Halberd",
+    "baseItem": "Halberd|SRD52",
+    "baseItemId": "baseitem.halberd",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.halberd",
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/64"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-hand-crossbow",
+    "kind": "item",
+    "name": "Holy Avenger Hand Crossbow",
+    "baseItem": "Hand Crossbow|SRD52",
+    "baseItemId": "baseitem.hand-crossbow",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "R|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "L|SRD52",
+      "LD|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "30/120",
+    "weapon": true,
+    "ammoType": "bolt|srd52",
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "baseitem.hand-crossbow",
+      "item-mastery.vex",
+      "item-property.a",
+      "item-property.l",
+      "item-property.ld",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/68"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-handaxe",
+    "kind": "item",
+    "name": "Holy Avenger Handaxe",
+    "baseItem": "Handaxe|SRD52",
+    "baseItemId": "baseitem.handaxe",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "range": "20/60",
+    "weapon": true,
+    "axe": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.handaxe",
+      "item-mastery.vex",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/70"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-heavy-crossbow",
+    "kind": "item",
+    "name": "Holy Avenger Heavy Crossbow",
+    "baseItem": "Heavy Crossbow|SRD52",
+    "baseItemId": "baseitem.heavy-crossbow",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "R|SRD52",
+    "weight": 18,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "H|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "range": "100/400",
+    "weapon": true,
+    "ammoType": "bolt|srd52",
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "baseitem.heavy-crossbow",
+      "item-mastery.push",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h",
+      "item-property.ld",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/72"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-javelin",
+    "kind": "item",
+    "name": "Holy Avenger Javelin",
+    "baseItem": "Javelin|SRD52",
+    "baseItemId": "baseitem.javelin",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "30/120",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.javelin",
+      "item-mastery.slow",
+      "item-property.t",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/78"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-lance",
+    "kind": "item",
+    "name": "Holy Avenger Lance",
+    "baseItem": "Lance|SRD52",
+    "baseItemId": "baseitem.lance",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      {
+        "uid": "2H|SRD52",
+        "note": "unless mounted"
+      }
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.lance",
+      "item-mastery.topple",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/82"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-light-crossbow",
+    "kind": "item",
+    "name": "Holy Avenger Light Crossbow",
+    "baseItem": "Light Crossbow|SRD52",
+    "baseItemId": "baseitem.light-crossbow",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "R|SRD52",
+    "weight": 5,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "range": "80/320",
+    "weapon": true,
+    "ammoType": "bolt|srd52",
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.bolt",
+      "baseitem.light-crossbow",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.ld",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/88"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-light-hammer",
+    "kind": "item",
+    "name": "Holy Avenger Light Hammer",
+    "baseItem": "Light Hammer|SRD52",
+    "baseItemId": "baseitem.light-hammer",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.light-hammer",
+      "item-mastery.nick",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/90"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-longbow",
+    "kind": "item",
+    "name": "Holy Avenger Longbow",
+    "baseItem": "Longbow|SRD52",
+    "baseItemId": "baseitem.longbow",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "range": "150/600",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.longbow",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/92"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-longsword",
+    "kind": "item",
+    "name": "Holy Avenger Longsword",
+    "baseItem": "Longsword|SRD52",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/94"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-mace",
+    "kind": "item",
+    "name": "Holy Avenger Mace",
+    "baseItem": "Mace|SRD52",
+    "baseItemId": "baseitem.mace",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.mace",
+      "item-mastery.sap",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/100"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-maul",
+    "kind": "item",
+    "name": "Holy Avenger Maul",
+    "baseItem": "Maul|SRD52",
+    "baseItemId": "baseitem.maul",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.maul",
+      "item-mastery.topple",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/104"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-morningstar",
+    "kind": "item",
+    "name": "Holy Avenger Morningstar",
+    "baseItem": "Morningstar|SRD52",
+    "baseItemId": "baseitem.morningstar",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.morningstar",
+      "item-mastery.sap",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/106"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-musket",
+    "kind": "item",
+    "name": "Holy Avenger Musket",
+    "baseItem": "Musket|SRD52",
+    "baseItemId": "baseitem.musket",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "R|SRD52",
+    "weight": 10,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "P",
+    "range": "40/120",
+    "weapon": true,
+    "ammoType": "firearm bullet|srd52",
+    "firearm": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.firearm-bullet",
+      "baseitem.musket",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.ld",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/108"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.holy-avenger-pike",
+    "kind": "item",
+    "name": "Holy Avenger Pike",
+    "baseItem": "Pike|SRD52",
+    "baseItemId": "baseitem.pike",
+    "variantOf": "magic-variant.holy-avenger",
+    "type": "M|SRD52",
+    "weight": 18,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "legendary",
+    "reqAttune": "by a paladin",
+    "reqAttuneTags": [
+      {
+        "class": "paladin"
+      }
+    ],
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+      "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.pike",
+      "item-mastery.push",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.holy-avenger",
+      "rulebook.page-226"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        226
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/60"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/121"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  }
+]

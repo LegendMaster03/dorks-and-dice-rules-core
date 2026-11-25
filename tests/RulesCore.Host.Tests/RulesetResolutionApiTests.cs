@@ -202,7 +202,7 @@ public sealed class RulesetResolutionApiTests
         Assert.Equal("fire", fireDefinition.GetProperty("variantSelection").GetProperty("sharedResistance").GetString());
 
         var modernItems = await client.GetFromJsonAsync<JsonElement>(animals + "?category=item&limit=1");
-        Assert.Equal(633, modernItems.GetProperty("total").GetInt32());
+        Assert.Equal(1037, modernItems.GetProperty("total").GetInt32());
         // Concrete numbered items retain the original edition-local equipment and template.
         foreach (var prefix in new[] { "/api/rulesets/dnd-5e/rules", animals })
         {
@@ -236,6 +236,30 @@ public sealed class RulesetResolutionApiTests
             .GetProperty("mastery")[0].GetString());
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(
             "/api/rulesets/dnd-5e/rules/baseitem.musket")).StatusCode);
+        // Derived named configurations inherit reviewed templates without adding executable effects.
+        foreach (var prefix in new[] { "/api/rulesets/dnd-5e/rules", animals })
+        {
+            var dancing = await client.GetFromJsonAsync<JsonElement>(prefix + "/item.dancing-longsword");
+            var definition = dancing.GetProperty("rule").GetProperty("definition");
+            Assert.Equal("magic-variant.dancing-sword", definition.GetProperty("variantOf").GetString());
+            Assert.Equal("baseitem.longsword", definition.GetProperty("baseItemId").GetString());
+            Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(prefix + "/item.dancing-glaive")).StatusCode);
+            var mithral = await client.GetFromJsonAsync<JsonElement>(prefix + "/item.mithral-plate-armor");
+            var mithralDefinition = mithral.GetProperty("rule").GetProperty("definition");
+            Assert.Equal(18, mithralDefinition.GetProperty("ac").GetInt32());
+            Assert.Equal(JsonValueKind.Null, mithralDefinition.GetProperty("strength").ValueKind);
+            Assert.False(mithralDefinition.GetProperty("stealth").GetBoolean());
+            Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(prefix + "/item.mithral-hide-armor")).StatusCode);
+        }
+        var energy = await client.GetFromJsonAsync<JsonElement>(animals + "/item.energy-longbow");
+        Assert.Equal("O", energy.GetProperty("rule").GetProperty("definition").GetProperty("dmgType").GetString());
+        var demon = await client.GetFromJsonAsync<JsonElement>(animals + "/item.demon-plate-armor");
+        var demonDefinition = demon.GetProperty("rule").GetProperty("definition");
+        Assert.Equal("+1", demonDefinition.GetProperty("bonusAc").GetString());
+        Assert.False(demonDefinition.TryGetProperty("bonusWeapon", out _));
+        Assert.Equal("1d8", demonDefinition.GetProperty("unarmedStrike").GetProperty("damage").GetString());
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync(animals + "/item.staff-of-warning")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync("/api/rulesets/dnd-5e/rules/item.energy-longbow")).StatusCode);
         var bullet = await client.GetFromJsonAsync<JsonElement>(animals + "/baseitem.firearm-bullet");
         var bulletDefinition = bullet.GetProperty("rule").GetProperty("definition");
         Assert.Equal(0.2, bulletDefinition.GetProperty("weight").GetDouble());

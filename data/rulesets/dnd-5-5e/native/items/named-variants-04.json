@@ -1,0 +1,2529 @@
+[
+  {
+    "id": "item.dragon-slayer-musket",
+    "kind": "item",
+    "name": "Dragon Slayer Musket",
+    "baseItem": "Musket|SRD52",
+    "baseItemId": "baseitem.musket",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "R|SRD52",
+    "weight": 10,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "P",
+    "range": "40/120",
+    "weapon": true,
+    "ammoType": "firearm bullet|srd52",
+    "firearm": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.firearm-bullet",
+      "baseitem.musket",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.ld",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/108"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-pike",
+    "kind": "item",
+    "name": "Dragon Slayer Pike",
+    "baseItem": "Pike|SRD52",
+    "baseItemId": "baseitem.pike",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 18,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.pike",
+      "item-mastery.push",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/121"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-pistol",
+    "kind": "item",
+    "name": "Dragon Slayer Pistol",
+    "baseItem": "Pistol|SRD52",
+    "baseItemId": "baseitem.pistol",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "R|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "LD|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "range": "30/90",
+    "weapon": true,
+    "ammoType": "firearm bullet|srd52",
+    "firearm": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.firearm-bullet",
+      "baseitem.pistol",
+      "item-mastery.vex",
+      "item-property.a",
+      "item-property.ld",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/123"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-quarterstaff",
+    "kind": "item",
+    "name": "Dragon Slayer Quarterstaff",
+    "baseItem": "Quarterstaff|SRD52",
+    "baseItemId": "baseitem.quarterstaff",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmg2": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.quarterstaff",
+      "item-mastery.topple",
+      "item-property.v",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/129"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-rapier",
+    "kind": "item",
+    "name": "Dragon Slayer Rapier",
+    "baseItem": "Rapier|SRD52",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "item-mastery.vex",
+      "item-property.f",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/131"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-scimitar",
+    "kind": "item",
+    "name": "Dragon Slayer Scimitar",
+    "baseItem": "Scimitar|SRD52",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/139"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-shortbow",
+    "kind": "item",
+    "name": "Dragon Slayer Shortbow",
+    "baseItem": "Shortbow|SRD52",
+    "baseItemId": "baseitem.shortbow",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "80/320",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.shortbow",
+      "item-mastery.vex",
+      "item-property.2h",
+      "item-property.a",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/145"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-shortsword",
+    "kind": "item",
+    "name": "Dragon Slayer Shortsword",
+    "baseItem": "Shortsword|SRD52",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "item-mastery.vex",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/147"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-sickle",
+    "kind": "item",
+    "name": "Dragon Slayer Sickle",
+    "baseItem": "Sickle|SRD52",
+    "baseItemId": "baseitem.sickle",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.sickle",
+      "item-mastery.nick",
+      "item-property.l",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/149"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-sling",
+    "kind": "item",
+    "name": "Dragon Slayer Sling",
+    "baseItem": "Sling|SRD52",
+    "baseItemId": "baseitem.sling",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "R|SRD52",
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "range": "30/120",
+    "weapon": true,
+    "ammoType": "sling bullet|srd52",
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.sling",
+      "baseitem.sling-bullet",
+      "item-mastery.slow",
+      "item-property.a",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/151"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-spear",
+    "kind": "item",
+    "name": "Dragon Slayer Spear",
+    "baseItem": "Spear|SRD52",
+    "baseItemId": "baseitem.spear",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmg2": "1d8",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.spear",
+      "item-mastery.sap",
+      "item-property.t",
+      "item-property.v",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/159"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-trident",
+    "kind": "item",
+    "name": "Dragon Slayer Trident",
+    "baseItem": "Trident|SRD52",
+    "baseItemId": "baseitem.trident",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "T|SRD52",
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.trident",
+      "item-mastery.topple",
+      "item-property.t",
+      "item-property.v",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/169"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-war-pick",
+    "kind": "item",
+    "name": "Dragon Slayer War Pick",
+    "baseItem": "War Pick|SRD52",
+    "baseItemId": "baseitem.war-pick",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.war-pick",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/175"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-warhammer",
+    "kind": "item",
+    "name": "Dragon Slayer Warhammer",
+    "baseItem": "Warhammer|SRD52",
+    "baseItemId": "baseitem.warhammer",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 5,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.warhammer",
+      "item-mastery.push",
+      "item-property.v",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/177"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-whip",
+    "kind": "item",
+    "name": "Dragon Slayer Whip",
+    "baseItem": "Whip|SRD52",
+    "baseItemId": "baseitem.whip",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F|SRD52",
+      "R|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+      "The weapon deals an extra {@damage 3d6} damage of the weapon's type if the target is a Dragon."
+    ],
+    "catalogReferences": [
+      "baseitem.whip",
+      "item-mastery.slow",
+      "item-property.f",
+      "item-property.r",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/52"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/181"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dwarven-half-plate-armor",
+    "kind": "item",
+    "name": "Dwarven Half Plate Armor",
+    "baseItem": "Half Plate Armor|SRD52",
+    "baseItemId": "baseitem.half-plate-armor",
+    "variantOf": "magic-variant.dwarven-plate",
+    "type": "MA|SRD52",
+    "weight": 40,
+    "ac": 15,
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "While wearing this armor, you gain a +2 bonus to {@variantrule Armor Class|SRD52}. In addition, if an effect moves you against your will along the ground, you can take a {@variantrule Reaction|SRD52} to reduce the distance you are moved by up to 10 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.half-plate-armor",
+      "magic-variant.dwarven-plate",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/53"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/66"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dwarven-plate-armor",
+    "kind": "item",
+    "name": "Dwarven Plate Armor",
+    "baseItem": "Plate Armor|SRD52",
+    "baseItemId": "baseitem.plate-armor",
+    "variantOf": "magic-variant.dwarven-plate",
+    "type": "HA|SRD52",
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "very rare",
+    "bonusAc": "+2",
+    "entries": [
+      "While wearing this armor, you gain a +2 bonus to {@variantrule Armor Class|SRD52}. In addition, if an effect moves you against your will along the ground, you can take a {@variantrule Reaction|SRD52} to reduce the distance you are moved by up to 10 feet."
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "magic-variant.dwarven-plate",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/53"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/125"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.elven-chain-mail",
+    "kind": "item",
+    "name": "Elven Chain Mail",
+    "baseItem": "Chain Mail|SRD52",
+    "baseItemId": "baseitem.chain-mail",
+    "variantOf": "magic-variant.elven-chain",
+    "type": "HA|SRD52",
+    "weight": 55,
+    "ac": 16,
+    "strength": "13",
+    "stealth": true,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "grantsProficiency": true,
+    "entries": [
+      "You gain a +1 bonus to {@variantrule Armor Class|SRD52} while you wear this armor. You are considered trained with this armor even if you lack training with Medium or Heavy armor."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-mail",
+      "magic-variant.elven-chain",
+      "rulebook.page-220"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        220
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/54"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/27"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.elven-chain-shirt",
+    "kind": "item",
+    "name": "Elven Chain Shirt",
+    "baseItem": "Chain Shirt|SRD52",
+    "baseItemId": "baseitem.chain-shirt",
+    "variantOf": "magic-variant.elven-chain",
+    "type": "MA|SRD52",
+    "weight": 20,
+    "ac": 13,
+    "armor": true,
+    "rarity": "rare",
+    "bonusAc": "+1",
+    "grantsProficiency": true,
+    "entries": [
+      "You gain a +1 bonus to {@variantrule Armor Class|SRD52} while you wear this armor. You are considered trained with this armor even if you lack training with Medium or Heavy armor."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-shirt",
+      "magic-variant.elven-chain",
+      "rulebook.page-220"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        220
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/54"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/29"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.energy-longbow",
+    "kind": "item",
+    "name": "Energy Longbow",
+    "baseItem": "Longbow|SRD52",
+    "baseItemId": "baseitem.longbow",
+    "variantOf": "magic-variant.energy-bow",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "A|SRD52",
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "O",
+    "range": "150/600",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+1",
+    "light": [
+      {
+        "bright": 20,
+        "dim": 40
+      }
+    ],
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon, which has no string. Each time you pull your arm back in a firing motion, a magical arrow made of golden energy appears nocked and ready to fire. An arrow produced by this weapon deals Force damage instead of Piercing damage on a hit, and it disappears after it hits or misses its target. Until it disappears, the arrow emits {@variantrule Bright Light|SRD52} in a 20-foot radius and {@variantrule Dim Light|SRD52} for an additional 20 feet.",
+      "This weapon has the following additional properties.",
+      {
+        "type": "entries",
+        "name": "Arrow of Restraint",
+        "entries": [
+          "Whenever you use this weapon to make a ranged attack against a creature, you can try to restrain the target instead of dealing damage to it. If the arrow hits, the target must succeed on a {@dc 15} Strength saving throw or have the {@condition Restrained|SRD52} condition for 1 minute. As an action, a creature {@condition Restrained|SRD52} by an arrow can make a {@dc 20} Strength ({@skill Athletics|SRD52}) check to try to break the restraint, ending the effect on itself on a successful check."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Arrow of Transport",
+        "entries": [
+          "As a {@action Magic|SRD52} action, you can fire one energy arrow from this weapon at a target you can see within 60 feet of yourself. The target can be either a willing Medium or smaller creature or an object that isn't being worn or carried, provided the object is small enough to fit inside a 5-foot {@variantrule Cube [Area of Effect]|SRD52|Cube}. The arrow teleports the target to an unoccupied space you can see within 10 feet of you."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Energy Ladder",
+        "entries": [
+          "As a {@action Magic|SRD52} action, you can loose a flurry of energy arrows from this weapon at a wall up to 60 feet away from yourself. The arrows become glowing rungs that stick out of the wall, forming a magical ladder up to 60 feet long on the wall. This ladder lasts for 1 minute before disappearing."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.longbow",
+      "condition.restrained",
+      "item-mastery.slow",
+      "item-property.2h",
+      "item-property.a",
+      "item-property.h",
+      "magic-variant.energy-bow",
+      "rulebook.page-220",
+      "skill.athletics"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        220
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/55"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/92"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.energy-shortbow",
+    "kind": "item",
+    "name": "Energy Shortbow",
+    "baseItem": "Shortbow|SRD52",
+    "baseItemId": "baseitem.shortbow",
+    "variantOf": "magic-variant.energy-bow",
+    "type": "R|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "O",
+    "range": "80/320",
+    "weapon": true,
+    "ammoType": "arrow|srd52",
+    "rarity": "very rare",
+    "reqAttune": true,
+    "bonusWeapon": "+1",
+    "light": [
+      {
+        "bright": 20,
+        "dim": 40
+      }
+    ],
+    "entries": [
+      "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon, which has no string. Each time you pull your arm back in a firing motion, a magical arrow made of golden energy appears nocked and ready to fire. An arrow produced by this weapon deals Force damage instead of Piercing damage on a hit, and it disappears after it hits or misses its target. Until it disappears, the arrow emits {@variantrule Bright Light|SRD52} in a 20-foot radius and {@variantrule Dim Light|SRD52} for an additional 20 feet.",
+      "This weapon has the following additional properties.",
+      {
+        "type": "entries",
+        "name": "Arrow of Restraint",
+        "entries": [
+          "Whenever you use this weapon to make a ranged attack against a creature, you can try to restrain the target instead of dealing damage to it. If the arrow hits, the target must succeed on a {@dc 15} Strength saving throw or have the {@condition Restrained|SRD52} condition for 1 minute. As an action, a creature {@condition Restrained|SRD52} by an arrow can make a {@dc 20} Strength ({@skill Athletics|SRD52}) check to try to break the restraint, ending the effect on itself on a successful check."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Arrow of Transport",
+        "entries": [
+          "As a {@action Magic|SRD52} action, you can fire one energy arrow from this weapon at a target you can see within 60 feet of yourself. The target can be either a willing Medium or smaller creature or an object that isn't being worn or carried, provided the object is small enough to fit inside a 5-foot {@variantrule Cube [Area of Effect]|SRD52|Cube}. The arrow teleports the target to an unoccupied space you can see within 10 feet of you."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Energy Ladder",
+        "entries": [
+          "As a {@action Magic|SRD52} action, you can loose a flurry of energy arrows from this weapon at a wall up to 60 feet away from yourself. The arrows become glowing rungs that stick out of the wall, forming a magical ladder up to 60 feet long on the wall. This ladder lasts for 1 minute before disappearing."
+        ]
+      }
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "baseitem.shortbow",
+      "condition.restrained",
+      "item-mastery.vex",
+      "item-property.2h",
+      "item-property.a",
+      "magic-variant.energy-bow",
+      "rulebook.page-220",
+      "skill.athletics"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        220
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/55"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/145"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-battleaxe",
+    "kind": "item",
+    "name": "Flame Tongue Battleaxe",
+    "baseItem": "Battleaxe|SRD52",
+    "baseItemId": "baseitem.battleaxe",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.battleaxe",
+      "item-mastery.topple",
+      "item-property.v",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/9"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-club",
+    "kind": "item",
+    "name": "Flame Tongue Club",
+    "baseItem": "Club|SRD52",
+    "baseItemId": "baseitem.club",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.club",
+      "item-mastery.slow",
+      "item-property.l",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/31"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-dagger",
+    "kind": "item",
+    "name": "Flame Tongue Dagger",
+    "baseItem": "Dagger|SRD52",
+    "baseItemId": "baseitem.dagger",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 1,
+    "weaponCategory": "simple",
+    "property": [
+      "F|SRD52",
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "P",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.dagger",
+      "item-mastery.nick",
+      "item-property.f",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/41"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-flail",
+    "kind": "item",
+    "name": "Flame Tongue Flail",
+    "baseItem": "Flail|SRD52",
+    "baseItemId": "baseitem.flail",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.flail",
+      "item-mastery.sap",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/50"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-glaive",
+    "kind": "item",
+    "name": "Flame Tongue Glaive",
+    "baseItem": "Glaive|SRD52",
+    "baseItemId": "baseitem.glaive",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.glaive",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/54"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-greataxe",
+    "kind": "item",
+    "name": "Flame Tongue Greataxe",
+    "baseItem": "Greataxe|SRD52",
+    "baseItemId": "baseitem.greataxe",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 7,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.greataxe",
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/58"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-greatclub",
+    "kind": "item",
+    "name": "Flame Tongue Greatclub",
+    "baseItem": "Greatclub|SRD52",
+    "baseItemId": "baseitem.greatclub",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "simple",
+    "property": [
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.greatclub",
+      "item-mastery.push",
+      "item-property.2h",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/60"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-greatsword",
+    "kind": "item",
+    "name": "Flame Tongue Greatsword",
+    "baseItem": "Greatsword|SRD52",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Graze|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-mastery.graze",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/62"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-halberd",
+    "kind": "item",
+    "name": "Flame Tongue Halberd",
+    "baseItem": "Halberd|SRD52",
+    "baseItemId": "baseitem.halberd",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Cleave|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.halberd",
+      "item-mastery.cleave",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/64"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-handaxe",
+    "kind": "item",
+    "name": "Flame Tongue Handaxe",
+    "baseItem": "Handaxe|SRD52",
+    "baseItemId": "baseitem.handaxe",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "range": "20/60",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.handaxe",
+      "item-mastery.vex",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/70"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-javelin",
+    "kind": "item",
+    "name": "Flame Tongue Javelin",
+    "baseItem": "Javelin|SRD52",
+    "baseItemId": "baseitem.javelin",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Slow|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "range": "30/120",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.javelin",
+      "item-mastery.slow",
+      "item-property.t",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/78"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-lance",
+    "kind": "item",
+    "name": "Flame Tongue Lance",
+    "baseItem": "Lance|SRD52",
+    "baseItemId": "baseitem.lance",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      {
+        "uid": "2H|SRD52",
+        "note": "unless mounted"
+      }
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.lance",
+      "item-mastery.topple",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/82"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-light-hammer",
+    "kind": "item",
+    "name": "Flame Tongue Light Hammer",
+    "baseItem": "Light Hammer|SRD52",
+    "baseItemId": "baseitem.light-hammer",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L|SRD52",
+      "T|SRD52"
+    ],
+    "mastery": [
+      "Nick|SRD52"
+    ],
+    "dmg1": "1d4",
+    "dmgType": "B",
+    "range": "20/60",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.light-hammer",
+      "item-mastery.nick",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/90"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-longsword",
+    "kind": "item",
+    "name": "Flame Tongue Longsword",
+    "baseItem": "Longsword|SRD52",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-mastery.sap",
+      "item-property.v",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/94"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-mace",
+    "kind": "item",
+    "name": "Flame Tongue Mace",
+    "baseItem": "Mace|SRD52",
+    "baseItemId": "baseitem.mace",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.mace",
+      "item-mastery.sap",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/100"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-maul",
+    "kind": "item",
+    "name": "Flame Tongue Maul",
+    "baseItem": "Maul|SRD52",
+    "baseItemId": "baseitem.maul",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 10,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.maul",
+      "item-mastery.topple",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/104"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-morningstar",
+    "kind": "item",
+    "name": "Flame Tongue Morningstar",
+    "baseItem": "Morningstar|SRD52",
+    "baseItemId": "baseitem.morningstar",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.morningstar",
+      "item-mastery.sap",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/106"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-pike",
+    "kind": "item",
+    "name": "Flame Tongue Pike",
+    "baseItem": "Pike|SRD52",
+    "baseItemId": "baseitem.pike",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 18,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.pike",
+      "item-mastery.push",
+      "item-property.2h",
+      "item-property.h",
+      "item-property.r",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/121"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-quarterstaff",
+    "kind": "item",
+    "name": "Flame Tongue Quarterstaff",
+    "baseItem": "Quarterstaff|SRD52",
+    "baseItemId": "baseitem.quarterstaff",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M|SRD52",
+    "weight": 4,
+    "weaponCategory": "simple",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Topple|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmg2": "1d8",
+    "dmgType": "B",
+    "weapon": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "While holding this magic weapon, you can take a {@variantrule Bonus Action|SRD52} and use a command word to cause flames to engulf the damage-dealing part of the weapon. These flames shed {@variantrule Bright Light|SRD52} in a 40-foot radius and {@variantrule Dim Light|SRD52} for an additional 40 feet. While the weapon is ablaze, it deals an extra {@damage 2d6} Fire damage on a hit. The flames last until you take a {@variantrule Bonus Action|SRD52} to issue the command again or until you drop, stow, or sheathe the weapon."
+    ],
+    "catalogReferences": [
+      "baseitem.quarterstaff",
+      "item-mastery.topple",
+      "item-property.v",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.2.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf",
+      "pdfSha256": "8974902d109d6e63672d7c490bde9ccf052410503d9cfa768237154fbc5e3d87",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/56"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/129"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  }
+]

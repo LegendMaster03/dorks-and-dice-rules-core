@@ -1,0 +1,2258 @@
+[
+  {
+    "id": "item.adamantine-breastplate",
+    "kind": "item",
+    "name": "Adamantine Breastplate",
+    "baseItem": "Breastplate|SRD51",
+    "baseItemId": "baseitem.breastplate",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "MA",
+    "weight": 20,
+    "ac": 14,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any critical hit against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.breastplate",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-207"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        207
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/12"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/16"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-chain-mail",
+    "kind": "item",
+    "name": "Adamantine Chain Mail",
+    "baseItem": "Chain Mail|SRD51",
+    "baseItemId": "baseitem.chain-mail",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "HA",
+    "weight": 55,
+    "ac": 16,
+    "strength": "13",
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any critical hit against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-mail",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-207"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        207
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/12"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/26"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-chain-shirt",
+    "kind": "item",
+    "name": "Adamantine Chain Shirt",
+    "baseItem": "Chain Shirt|SRD51",
+    "baseItemId": "baseitem.chain-shirt",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "MA",
+    "weight": 20,
+    "ac": 13,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any critical hit against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.chain-shirt",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-207"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        207
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/12"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/28"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-half-plate-armor",
+    "kind": "item",
+    "name": "Adamantine Half Plate Armor",
+    "baseItem": "Half Plate Armor|SRD51",
+    "baseItemId": "baseitem.half-plate-armor",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "MA",
+    "weight": 40,
+    "ac": 15,
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any critical hit against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.half-plate-armor",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-207"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        207
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/12"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/65"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-plate-armor",
+    "kind": "item",
+    "name": "Adamantine Plate Armor",
+    "baseItem": "Plate Armor|SRD51",
+    "baseItemId": "baseitem.plate-armor",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "HA",
+    "weight": 65,
+    "ac": 18,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any critical hit against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.plate-armor",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-207"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        207
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/12"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/124"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-ring-mail",
+    "kind": "item",
+    "name": "Adamantine Ring Mail",
+    "baseItem": "Ring Mail|SRD51",
+    "baseItemId": "baseitem.ring-mail",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "HA",
+    "weight": 40,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any critical hit against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.ring-mail",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-207"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        207
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/12"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/132"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-scale-mail",
+    "kind": "item",
+    "name": "Adamantine Scale Mail",
+    "baseItem": "Scale Mail|SRD51",
+    "baseItemId": "baseitem.scale-mail",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "MA",
+    "weight": 45,
+    "ac": 14,
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any critical hit against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.scale-mail",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-207"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        207
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/12"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/136"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.adamantine-splint-armor",
+    "kind": "item",
+    "name": "Adamantine Splint Armor",
+    "baseItem": "Splint Armor|SRD51",
+    "baseItemId": "baseitem.splint-armor",
+    "variantOf": "magic-variant.adamantine-armor",
+    "type": "HA",
+    "weight": 60,
+    "ac": 17,
+    "strength": "15",
+    "stealth": true,
+    "armor": true,
+    "rarity": "uncommon",
+    "entries": [
+      "This suit of armor is reinforced with adamantine, one of the hardest substances in existence. While you're wearing it, any critical hit against you becomes a normal hit."
+    ],
+    "catalogReferences": [
+      "baseitem.splint-armor",
+      "magic-variant.adamantine-armor",
+      "rulebook.page-207"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        207
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/12"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/160"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.arrow-of-slaying",
+    "kind": "item",
+    "name": "Arrow of Slaying",
+    "baseItem": "Arrow|SRD51",
+    "baseItemId": "baseitem.arrow",
+    "variantOf": "magic-variant.arrow-of-slaying",
+    "type": "A",
+    "weight": 0.05,
+    "arrow": true,
+    "rarity": "very rare",
+    "entries": [
+      "An arrow of slaying is a magic weapon meant to slay a particular kind of creature. Some are more focused than others; for example, there are both arrows of dragon slaying and arrows of blue dragon slaying. If a creature belonging to the type, race, or group associated with an arrow of slaying takes damage from the arrow, the creature must make a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} piercing damage on a failed save, or half as much extra damage on a successful one.",
+      "Once an arrow of slaying deals its extra damage to a creature, it becomes a nonmagical arrow.",
+      "Other types of magic ammunition of this kind exist, such as bolts of slaying meant for a crossbow, though arrows are most common."
+    ],
+    "catalogReferences": [
+      "baseitem.arrow",
+      "magic-variant.arrow-of-slaying",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/13"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/2"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.blowgun-needle-of-slaying",
+    "kind": "item",
+    "name": "Blowgun Needle of Slaying",
+    "baseItem": "Blowgun Needle|SRD51",
+    "baseItemId": "baseitem.blowgun-needle",
+    "variantOf": "magic-variant.arrow-of-slaying",
+    "type": "A",
+    "weight": 0.02,
+    "rarity": "very rare",
+    "entries": [
+      "An arrow of slaying is a magic weapon meant to slay a particular kind of creature. Some are more focused than others; for example, there are both arrows of dragon slaying and arrows of blue dragon slaying. If a creature belonging to the type, race, or group associated with an arrow of slaying takes damage from the arrow, the creature must make a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} piercing damage on a failed save, or half as much extra damage on a successful one.",
+      "Once an arrow of slaying deals its extra damage to a creature, it becomes a nonmagical arrow.",
+      "Other types of magic ammunition of this kind exist, such as bolts of slaying meant for a crossbow, though arrows are most common."
+    ],
+    "catalogReferences": [
+      "baseitem.blowgun-needle",
+      "magic-variant.arrow-of-slaying",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/13"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/12"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.crossbow-bolt-of-slaying",
+    "kind": "item",
+    "name": "Crossbow Bolt of Slaying",
+    "baseItem": "Crossbow Bolt|SRD51",
+    "baseItemId": "baseitem.crossbow-bolt",
+    "variantOf": "magic-variant.arrow-of-slaying",
+    "type": "A",
+    "weight": 0.075,
+    "bolt": true,
+    "rarity": "very rare",
+    "entries": [
+      "An arrow of slaying is a magic weapon meant to slay a particular kind of creature. Some are more focused than others; for example, there are both arrows of dragon slaying and arrows of blue dragon slaying. If a creature belonging to the type, race, or group associated with an arrow of slaying takes damage from the arrow, the creature must make a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} piercing damage on a failed save, or half as much extra damage on a successful one.",
+      "Once an arrow of slaying deals its extra damage to a creature, it becomes a nonmagical arrow.",
+      "Other types of magic ammunition of this kind exist, such as bolts of slaying meant for a crossbow, though arrows are most common."
+    ],
+    "catalogReferences": [
+      "baseitem.crossbow-bolt",
+      "magic-variant.arrow-of-slaying",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/13"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/36"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.sling-bullet-of-slaying",
+    "kind": "item",
+    "name": "Sling Bullet of Slaying",
+    "baseItem": "Sling Bullet|SRD51",
+    "baseItemId": "baseitem.sling-bullet",
+    "variantOf": "magic-variant.arrow-of-slaying",
+    "type": "A",
+    "weight": 0.075,
+    "rarity": "very rare",
+    "entries": [
+      "An arrow of slaying is a magic weapon meant to slay a particular kind of creature. Some are more focused than others; for example, there are both arrows of dragon slaying and arrows of blue dragon slaying. If a creature belonging to the type, race, or group associated with an arrow of slaying takes damage from the arrow, the creature must make a {@dc 17} Constitution saving throw, taking an extra {@damage 6d10} piercing damage on a failed save, or half as much extra damage on a successful one.",
+      "Once an arrow of slaying deals its extra damage to a creature, it becomes a nonmagical arrow.",
+      "Other types of magic ammunition of this kind exist, such as bolts of slaying meant for a crossbow, though arrows are most common."
+    ],
+    "catalogReferences": [
+      "baseitem.sling-bullet",
+      "magic-variant.arrow-of-slaying",
+      "rulebook.page-209"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        209
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/13"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/152"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.berserker-battleaxe",
+    "kind": "item",
+    "name": "Berserker Battleaxe",
+    "baseItem": "Battleaxe|SRD51",
+    "baseItemId": "baseitem.battleaxe",
+    "variantOf": "magic-variant.berserker-axe",
+    "type": "M",
+    "weight": 4,
+    "weaponCategory": "martial",
+    "property": [
+      "V"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack and damage rolls made with this magic weapon. In addition, while you are attuned to this weapon, your hit point maximum increases by 1 for each level you have attained.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This axe is cursed, and becoming attuned to it extends the curse to you. As long as you remain cursed, you are unwilling to part with the axe, keeping it within reach at all times. You also have disadvantage on attack rolls with weapons other than this one, unless no foe is within 60 feet of you that you can see or hear."
+        ]
+      },
+      "Whenever a hostile creature damages you while the axe is in your possession, you must succeed on a {@dc 15} Wisdom saving throw or go berserk. While berserk, you must use your action each round to attack the creature nearest to you with the axe. If you can make extra attacks as part of the {@action Attack} action, you use those extra attacks, moving to attack the next nearest creature after you fell your current target. If you have multiple possible targets, you attack one at random. You are berserk until you start your turn with no creatures within 60 feet of you that you can see or hear."
+    ],
+    "catalogReferences": [
+      "baseitem.battleaxe",
+      "item-property.v",
+      "magic-variant.berserker-axe",
+      "rulebook.page-211"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/14"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/8"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.berserker-greataxe",
+    "kind": "item",
+    "name": "Berserker Greataxe",
+    "baseItem": "Greataxe|SRD51",
+    "baseItemId": "baseitem.greataxe",
+    "variantOf": "magic-variant.berserker-axe",
+    "type": "M",
+    "weight": 7,
+    "weaponCategory": "martial",
+    "property": [
+      "H",
+      "2H"
+    ],
+    "dmg1": "1d12",
+    "dmgType": "S",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack and damage rolls made with this magic weapon. In addition, while you are attuned to this weapon, your hit point maximum increases by 1 for each level you have attained.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This axe is cursed, and becoming attuned to it extends the curse to you. As long as you remain cursed, you are unwilling to part with the axe, keeping it within reach at all times. You also have disadvantage on attack rolls with weapons other than this one, unless no foe is within 60 feet of you that you can see or hear."
+        ]
+      },
+      "Whenever a hostile creature damages you while the axe is in your possession, you must succeed on a {@dc 15} Wisdom saving throw or go berserk. While berserk, you must use your action each round to attack the creature nearest to you with the axe. If you can make extra attacks as part of the {@action Attack} action, you use those extra attacks, moving to attack the next nearest creature after you fell your current target. If you have multiple possible targets, you attack one at random. You are berserk until you start your turn with no creatures within 60 feet of you that you can see or hear."
+    ],
+    "catalogReferences": [
+      "baseitem.greataxe",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.berserker-axe",
+      "rulebook.page-211"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/14"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/57"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.berserker-handaxe",
+    "kind": "item",
+    "name": "Berserker Handaxe",
+    "baseItem": "Handaxe|SRD51",
+    "baseItemId": "baseitem.handaxe",
+    "variantOf": "magic-variant.berserker-axe",
+    "type": "M",
+    "weight": 2,
+    "weaponCategory": "simple",
+    "property": [
+      "L",
+      "T"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "range": "20/60",
+    "weapon": true,
+    "axe": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "curse": true,
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack and damage rolls made with this magic weapon. In addition, while you are attuned to this weapon, your hit point maximum increases by 1 for each level you have attained.",
+      {
+        "type": "entries",
+        "name": "Curse",
+        "entries": [
+          "This axe is cursed, and becoming attuned to it extends the curse to you. As long as you remain cursed, you are unwilling to part with the axe, keeping it within reach at all times. You also have disadvantage on attack rolls with weapons other than this one, unless no foe is within 60 feet of you that you can see or hear."
+        ]
+      },
+      "Whenever a hostile creature damages you while the axe is in your possession, you must succeed on a {@dc 15} Wisdom saving throw or go berserk. While berserk, you must use your action each round to attack the creature nearest to you with the axe. If you can make extra attacks as part of the {@action Attack} action, you use those extra attacks, moving to attack the next nearest creature after you fell your current target. If you have multiple possible targets, you attack one at random. You are berserk until you start your turn with no creatures within 60 feet of you that you can see or hear."
+    ],
+    "catalogReferences": [
+      "baseitem.handaxe",
+      "item-property.l",
+      "item-property.t",
+      "magic-variant.berserker-axe",
+      "rulebook.page-211"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        211
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/14"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/69"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dancing-greatsword",
+    "kind": "item",
+    "name": "Dancing Greatsword",
+    "baseItem": "Greatsword|SRD51",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.dancing-sword",
+    "type": "M",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H",
+      "2H"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "You can use a bonus action to toss this magic sword into the air and speak the command word. When you do so, the sword begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of it. The sword uses your attack roll and ability score modifier to damage rolls.",
+      "While the sword hovers, you can use a bonus action to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same bonus action, you can cause the sword to attack one creature within 5 feet of it.",
+      "After the hovering sword attacks for the fourth time, it flies up to 30 feet and tries to return to your hand. If you have no hand free, it falls to the ground at your feet. If the sword has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or move more than 30 feet away from it."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.dancing-sword",
+      "rulebook.page-215"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        215
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/15"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/61"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dancing-longsword",
+    "kind": "item",
+    "name": "Dancing Longsword",
+    "baseItem": "Longsword|SRD51",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.dancing-sword",
+    "type": "M",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "You can use a bonus action to toss this magic sword into the air and speak the command word. When you do so, the sword begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of it. The sword uses your attack roll and ability score modifier to damage rolls.",
+      "While the sword hovers, you can use a bonus action to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same bonus action, you can cause the sword to attack one creature within 5 feet of it.",
+      "After the hovering sword attacks for the fourth time, it flies up to 30 feet and tries to return to your hand. If you have no hand free, it falls to the ground at your feet. If the sword has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or move more than 30 feet away from it."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-property.v",
+      "magic-variant.dancing-sword",
+      "rulebook.page-215"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        215
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/15"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/93"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dancing-rapier",
+    "kind": "item",
+    "name": "Dancing Rapier",
+    "baseItem": "Rapier|SRD51",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.dancing-sword",
+    "type": "M",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "You can use a bonus action to toss this magic sword into the air and speak the command word. When you do so, the sword begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of it. The sword uses your attack roll and ability score modifier to damage rolls.",
+      "While the sword hovers, you can use a bonus action to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same bonus action, you can cause the sword to attack one creature within 5 feet of it.",
+      "After the hovering sword attacks for the fourth time, it flies up to 30 feet and tries to return to your hand. If you have no hand free, it falls to the ground at your feet. If the sword has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or move more than 30 feet away from it."
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "item-property.f",
+      "magic-variant.dancing-sword",
+      "rulebook.page-215"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        215
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/15"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/130"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dancing-scimitar",
+    "kind": "item",
+    "name": "Dancing Scimitar",
+    "baseItem": "Scimitar|SRD51",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.dancing-sword",
+    "type": "M",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "You can use a bonus action to toss this magic sword into the air and speak the command word. When you do so, the sword begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of it. The sword uses your attack roll and ability score modifier to damage rolls.",
+      "While the sword hovers, you can use a bonus action to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same bonus action, you can cause the sword to attack one creature within 5 feet of it.",
+      "After the hovering sword attacks for the fourth time, it flies up to 30 feet and tries to return to your hand. If you have no hand free, it falls to the ground at your feet. If the sword has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or move more than 30 feet away from it."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.dancing-sword",
+      "rulebook.page-215"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        215
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/15"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/138"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dancing-shortsword",
+    "kind": "item",
+    "name": "Dancing Shortsword",
+    "baseItem": "Shortsword|SRD51",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.dancing-sword",
+    "type": "M",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "entries": [
+      "You can use a bonus action to toss this magic sword into the air and speak the command word. When you do so, the sword begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of it. The sword uses your attack roll and ability score modifier to damage rolls.",
+      "While the sword hovers, you can use a bonus action to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same bonus action, you can cause the sword to attack one creature within 5 feet of it.",
+      "After the hovering sword attacks for the fourth time, it flies up to 30 feet and tries to return to your hand. If you have no hand free, it falls to the ground at your feet. If the sword has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or move more than 30 feet away from it."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.dancing-sword",
+      "rulebook.page-215"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        215
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/15"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/146"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-greatsword",
+    "kind": "item",
+    "name": "Defender Greatsword",
+    "baseItem": "Greatsword|SRD51",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.defender",
+    "type": "M",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H",
+      "2H"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack and damage rolls made with this magic weapon.",
+      "The first time you attack with the sword on each of your turns, you can transfer some or all of the sword's bonus to your Armor Class, instead of using the bonus on any attacks that turn. For example, you could reduce the bonus to your attack and damage rolls to +1 and gain a +2 bonus to AC. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the sword to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/16"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/61"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-longsword",
+    "kind": "item",
+    "name": "Defender Longsword",
+    "baseItem": "Longsword|SRD51",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.defender",
+    "type": "M",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack and damage rolls made with this magic weapon.",
+      "The first time you attack with the sword on each of your turns, you can transfer some or all of the sword's bonus to your Armor Class, instead of using the bonus on any attacks that turn. For example, you could reduce the bonus to your attack and damage rolls to +1 and gain a +2 bonus to AC. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the sword to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-property.v",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/16"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/93"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-rapier",
+    "kind": "item",
+    "name": "Defender Rapier",
+    "baseItem": "Rapier|SRD51",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.defender",
+    "type": "M",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack and damage rolls made with this magic weapon.",
+      "The first time you attack with the sword on each of your turns, you can transfer some or all of the sword's bonus to your Armor Class, instead of using the bonus on any attacks that turn. For example, you could reduce the bonus to your attack and damage rolls to +1 and gain a +2 bonus to AC. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the sword to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "item-property.f",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/16"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/130"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-scimitar",
+    "kind": "item",
+    "name": "Defender Scimitar",
+    "baseItem": "Scimitar|SRD51",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.defender",
+    "type": "M",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack and damage rolls made with this magic weapon.",
+      "The first time you attack with the sword on each of your turns, you can transfer some or all of the sword's bonus to your Armor Class, instead of using the bonus on any attacks that turn. For example, you could reduce the bonus to your attack and damage rolls to +1 and gain a +2 bonus to AC. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the sword to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/16"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/138"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.defender-shortsword",
+    "kind": "item",
+    "name": "Defender Shortsword",
+    "baseItem": "Shortsword|SRD51",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.defender",
+    "type": "M",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "legendary",
+    "reqAttune": true,
+    "bonusWeapon": "+3",
+    "entries": [
+      "You gain a +3 bonus to attack and damage rolls made with this magic weapon.",
+      "The first time you attack with the sword on each of your turns, you can transfer some or all of the sword's bonus to your Armor Class, instead of using the bonus on any attacks that turn. For example, you could reduce the bonus to your attack and damage rolls to +1 and gain a +2 bonus to AC. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the sword to gain a bonus to AC from it."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.defender",
+      "rulebook.page-218"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        218
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/16"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/146"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-greatsword",
+    "kind": "item",
+    "name": "Dragon Slayer Greatsword",
+    "baseItem": "Greatsword|SRD51",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H",
+      "2H"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
+      "When you hit a dragon with this weapon, the dragon takes an extra {@damage 3d6} damage of the weapon's type. For the purpose of this weapon, \"dragon\" refers to any creature with the dragon type, including dragon turtles and wyverns."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/17"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/61"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-longsword",
+    "kind": "item",
+    "name": "Dragon Slayer Longsword",
+    "baseItem": "Longsword|SRD51",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
+      "When you hit a dragon with this weapon, the dragon takes an extra {@damage 3d6} damage of the weapon's type. For the purpose of this weapon, \"dragon\" refers to any creature with the dragon type, including dragon turtles and wyverns."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-property.v",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/17"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/93"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-rapier",
+    "kind": "item",
+    "name": "Dragon Slayer Rapier",
+    "baseItem": "Rapier|SRD51",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
+      "When you hit a dragon with this weapon, the dragon takes an extra {@damage 3d6} damage of the weapon's type. For the purpose of this weapon, \"dragon\" refers to any creature with the dragon type, including dragon turtles and wyverns."
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "item-property.f",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/17"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/130"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-scimitar",
+    "kind": "item",
+    "name": "Dragon Slayer Scimitar",
+    "baseItem": "Scimitar|SRD51",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
+      "When you hit a dragon with this weapon, the dragon takes an extra {@damage 3d6} damage of the weapon's type. For the purpose of this weapon, \"dragon\" refers to any creature with the dragon type, including dragon turtles and wyverns."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/17"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/138"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.dragon-slayer-shortsword",
+    "kind": "item",
+    "name": "Dragon Slayer Shortsword",
+    "baseItem": "Shortsword|SRD51",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.dragon-slayer",
+    "type": "M",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "bonusWeapon": "+1",
+    "entries": [
+      "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
+      "When you hit a dragon with this weapon, the dragon takes an extra {@damage 3d6} damage of the weapon's type. For the purpose of this weapon, \"dragon\" refers to any creature with the dragon type, including dragon turtles and wyverns."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.dragon-slayer",
+      "rulebook.page-219"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        219
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/17"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/146"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-greatsword",
+    "kind": "item",
+    "name": "Flame Tongue Greatsword",
+    "baseItem": "Greatsword|SRD51",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H",
+      "2H"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "You can use a bonus action to speak this magic sword's command word, causing flames to erupt from the blade. These flames shed bright light in a 40-foot radius and dim light for an additional 40 feet. While the sword is ablaze, it deals an extra {@damage 2d6} fire damage to any target it hits. The flames last until you use a bonus action to speak the command word again or until you drop or sheathe the sword."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/18"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/61"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-longsword",
+    "kind": "item",
+    "name": "Flame Tongue Longsword",
+    "baseItem": "Longsword|SRD51",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "You can use a bonus action to speak this magic sword's command word, causing flames to erupt from the blade. These flames shed bright light in a 40-foot radius and dim light for an additional 40 feet. While the sword is ablaze, it deals an extra {@damage 2d6} fire damage to any target it hits. The flames last until you use a bonus action to speak the command word again or until you drop or sheathe the sword."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-property.v",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/18"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/93"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-rapier",
+    "kind": "item",
+    "name": "Flame Tongue Rapier",
+    "baseItem": "Rapier|SRD51",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "You can use a bonus action to speak this magic sword's command word, causing flames to erupt from the blade. These flames shed bright light in a 40-foot radius and dim light for an additional 40 feet. While the sword is ablaze, it deals an extra {@damage 2d6} fire damage to any target it hits. The flames last until you use a bonus action to speak the command word again or until you drop or sheathe the sword."
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "item-property.f",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/18"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/130"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-scimitar",
+    "kind": "item",
+    "name": "Flame Tongue Scimitar",
+    "baseItem": "Scimitar|SRD51",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "You can use a bonus action to speak this magic sword's command word, causing flames to erupt from the blade. These flames shed bright light in a 40-foot radius and dim light for an additional 40 feet. While the sword is ablaze, it deals an extra {@damage 2d6} fire damage to any target it hits. The flames last until you use a bonus action to speak the command word again or until you drop or sheathe the sword."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/18"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/138"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.flame-tongue-shortsword",
+    "kind": "item",
+    "name": "Flame Tongue Shortsword",
+    "baseItem": "Shortsword|SRD51",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.flame-tongue",
+    "type": "M",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "rare",
+    "reqAttune": true,
+    "light": [
+      {
+        "bright": 40,
+        "dim": 80
+      }
+    ],
+    "entries": [
+      "You can use a bonus action to speak this magic sword's command word, causing flames to erupt from the blade. These flames shed bright light in a 40-foot radius and dim light for an additional 40 feet. While the sword is ablaze, it deals an extra {@damage 2d6} fire damage to any target it hits. The flames last until you use a bonus action to speak the command word again or until you drop or sheathe the sword."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.flame-tongue",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/18"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/146"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.frost-brand-greatsword",
+    "kind": "item",
+    "name": "Frost Brand Greatsword",
+    "baseItem": "Greatsword|SRD51",
+    "baseItemId": "baseitem.greatsword",
+    "variantOf": "magic-variant.frost-brand",
+    "type": "M",
+    "weight": 6,
+    "weaponCategory": "martial",
+    "property": [
+      "H",
+      "2H"
+    ],
+    "dmg1": "2d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "resist": [
+      "fire"
+    ],
+    "light": [
+      {
+        "bright": 10,
+        "dim": 20
+      }
+    ],
+    "entries": [
+      "When you hit with an attack using this magic sword, the target takes an extra {@damage 1d6} cold damage. In addition, while you hold the sword, you have resistance to fire damage.",
+      "In freezing temperatures, the blade sheds bright light in a 10-foot radius and dim light for an additional 10 feet.",
+      "When you draw this weapon, you can extinguish all nonmagical flames within 30 feet of you. This property can be used no more than once per hour."
+    ],
+    "catalogReferences": [
+      "baseitem.greatsword",
+      "item-property.2h",
+      "item-property.h",
+      "magic-variant.frost-brand",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/19"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/61"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.frost-brand-longsword",
+    "kind": "item",
+    "name": "Frost Brand Longsword",
+    "baseItem": "Longsword|SRD51",
+    "baseItemId": "baseitem.longsword",
+    "variantOf": "magic-variant.frost-brand",
+    "type": "M",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "V"
+    ],
+    "dmg1": "1d8",
+    "dmg2": "1d10",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "resist": [
+      "fire"
+    ],
+    "light": [
+      {
+        "bright": 10,
+        "dim": 20
+      }
+    ],
+    "entries": [
+      "When you hit with an attack using this magic sword, the target takes an extra {@damage 1d6} cold damage. In addition, while you hold the sword, you have resistance to fire damage.",
+      "In freezing temperatures, the blade sheds bright light in a 10-foot radius and dim light for an additional 10 feet.",
+      "When you draw this weapon, you can extinguish all nonmagical flames within 30 feet of you. This property can be used no more than once per hour."
+    ],
+    "catalogReferences": [
+      "baseitem.longsword",
+      "item-property.v",
+      "magic-variant.frost-brand",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/19"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/93"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.frost-brand-rapier",
+    "kind": "item",
+    "name": "Frost Brand Rapier",
+    "baseItem": "Rapier|SRD51",
+    "baseItemId": "baseitem.rapier",
+    "variantOf": "magic-variant.frost-brand",
+    "type": "M",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "resist": [
+      "fire"
+    ],
+    "light": [
+      {
+        "bright": 10,
+        "dim": 20
+      }
+    ],
+    "entries": [
+      "When you hit with an attack using this magic sword, the target takes an extra {@damage 1d6} cold damage. In addition, while you hold the sword, you have resistance to fire damage.",
+      "In freezing temperatures, the blade sheds bright light in a 10-foot radius and dim light for an additional 10 feet.",
+      "When you draw this weapon, you can extinguish all nonmagical flames within 30 feet of you. This property can be used no more than once per hour."
+    ],
+    "catalogReferences": [
+      "baseitem.rapier",
+      "item-property.f",
+      "magic-variant.frost-brand",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/19"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/130"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.frost-brand-scimitar",
+    "kind": "item",
+    "name": "Frost Brand Scimitar",
+    "baseItem": "Scimitar|SRD51",
+    "baseItemId": "baseitem.scimitar",
+    "variantOf": "magic-variant.frost-brand",
+    "type": "M",
+    "weight": 3,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "S",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "resist": [
+      "fire"
+    ],
+    "light": [
+      {
+        "bright": 10,
+        "dim": 20
+      }
+    ],
+    "entries": [
+      "When you hit with an attack using this magic sword, the target takes an extra {@damage 1d6} cold damage. In addition, while you hold the sword, you have resistance to fire damage.",
+      "In freezing temperatures, the blade sheds bright light in a 10-foot radius and dim light for an additional 10 feet.",
+      "When you draw this weapon, you can extinguish all nonmagical flames within 30 feet of you. This property can be used no more than once per hour."
+    ],
+    "catalogReferences": [
+      "baseitem.scimitar",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.frost-brand",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/19"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/138"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  },
+  {
+    "id": "item.frost-brand-shortsword",
+    "kind": "item",
+    "name": "Frost Brand Shortsword",
+    "baseItem": "Shortsword|SRD51",
+    "baseItemId": "baseitem.shortsword",
+    "variantOf": "magic-variant.frost-brand",
+    "type": "M",
+    "weight": 2,
+    "weaponCategory": "martial",
+    "property": [
+      "F",
+      "L"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "weapon": true,
+    "sword": true,
+    "rarity": "very rare",
+    "reqAttune": true,
+    "resist": [
+      "fire"
+    ],
+    "light": [
+      {
+        "bright": 10,
+        "dim": 20
+      }
+    ],
+    "entries": [
+      "When you hit with an attack using this magic sword, the target takes an extra {@damage 1d6} cold damage. In addition, while you hold the sword, you have resistance to fire damage.",
+      "In freezing temperatures, the blade sheds bright light in a 10-foot radius and dim light for an additional 10 feet.",
+      "When you draw this weapon, you can extinguish all nonmagical flames within 30 feet of you. This property can be used no more than once per hour."
+    ],
+    "catalogReferences": [
+      "baseitem.shortsword",
+      "item-property.f",
+      "item-property.l",
+      "magic-variant.frost-brand",
+      "rulebook.page-223"
+    ],
+    "source": {
+      "release": "srd-5.1",
+      "url": "https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1.pdf",
+      "pdfSha256": "2504d2a0abb0a4d491a939be4f17910a2dde0312570ab8d208080225ccf0a1f0",
+      "license": "CC-BY-4.0",
+      "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode.",
+      "pages": [
+        223
+      ],
+      "structuredSource": {
+        "provider": "CoolFireGiant/hewnhero-srd",
+        "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+        "path": "magicvariants.json",
+        "pointer": "/magicvariant/19"
+      },
+      "additionalStructuredSources": [
+        {
+          "provider": "CoolFireGiant/hewnhero-srd",
+          "commit": "d06d1dadee357857767b1e4da985df6609509bcf",
+          "path": "items-base.json",
+          "pointer": "/baseitem/146"
+        }
+      ],
+      "structuredStatus": "Derived named configuration; publisher eligibility verified, template body fidelity status inherited. Conditional effects are descriptive, not executed."
+    }
+  }
+]
