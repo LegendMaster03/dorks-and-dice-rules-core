@@ -10,7 +10,21 @@ namespace RulesCore.Mechanics;
 /// </summary>
 internal sealed record NativeCraftingQuotedSelection(
     string SourceDefinitionId, IReadOnlyDictionary<string, string>? MaterialSlots,
-    string? ConstructionVariantId = null);
+    string? ConstructionVariantId = null, string? InstanceId = null);
+
+// Presentation-only copies of already validated recipe operations and external
+// ingredient prices. No performer readiness, resource expenditure or grant.
+public sealed record NativeCraftingQuotedStage(string StepId, string CompetencyId,
+    int MinimumRanks, IReadOnlyList<string> Dependencies,
+    IReadOnlyList<NativeCraftingMaterialQuantity> Inputs,
+    IReadOnlyList<NativeCraftingMaterialQuantity> Outputs);
+public sealed record NativeCraftingQuotedRecipe(string? InstanceId, string SourceDefinitionId,
+    string RecipeId, IReadOnlyList<NativeCraftingQuotedStage> Stages);
+public sealed record NativeCraftingQuotedIngredient(string DefinitionId, long Quantity,
+    int? UnitCost, long? KnownCost);
+public sealed record NativeCraftingQuotePresentation(string Status,
+    IReadOnlyList<NativeCraftingQuotedRecipe> Recipes,
+    IReadOnlyList<NativeCraftingQuotedIngredient> Ingredients);
 
 internal sealed record NativeCraftingResourceQuote(
     long KnownCost, IReadOnlyDictionary<string, long> RequiredResources,
@@ -24,6 +38,7 @@ internal sealed record NativeCraftingResourceQuote(
     // author-verified material accounting. Ordinary quotes remain partial.
     public bool IsPhysicalMassComplete { get; init; }
     public IReadOnlyList<string> ProductsWithUncertifiedMass { get; init; } = [];
+    public NativeCraftingQuotePresentation? Presentation { get; init; }
 }
 
 /// <summary>
@@ -43,6 +58,15 @@ internal static class NativeCraftingResourceQuoter
         long knownRetainedMassPounds = 0;
         var unresolvedMass = new SortedSet<string>(StringComparer.Ordinal);
         var uncertifiedProducts = new List<string>();
+        var recipeViews = new List<NativeCraftingQuotedRecipe>();
+        var ingredientViews = new List<NativeCraftingQuotedIngredient>();
+        // Presentation is bounded independently of the existing evaluator.
+        // A large legal quotation keeps its original mechanical result; only
+        // the detailed presentation becomes unavailable, never silently truncated.
+        const int maxPresentationStages = 2048;
+        const int maxPresentationEntries = 32768;
+        int presentationStages = 0, presentationEntries = 0;
+        bool presentationAvailable = true;
 
         void Issue(string code, string path, NativeOriginIssueSeverity severity, string detail) =>
             issues.Add(new(code, path, severity, detail));
@@ -214,6 +238,26 @@ internal static class NativeCraftingResourceQuoter
             }
             if (issues.Count != before) continue;
 
+            // Copy the already resolved material-slot quantities and the
+            // dependency-ordered stage structure; do not re-evaluate or price.
+            if (presentationAvailable)
+            {
+                presentationStages += operations.Count;
+                presentationEntries += operations.Sum(x =>
+                    x.Dependencies.Count + x.Inputs.Count + x.Outputs.Count);
+                if (presentationStages > maxPresentationStages ||
+                    presentationEntries > maxPresentationEntries)
+                {
+                    presentationAvailable = false;
+                    recipeViews.Clear();
+                }
+                else
+                    recipeViews.Add(new(selection.InstanceId, selection.SourceDefinitionId,
+                        resolved.RecipeId, operations.Select(step => new NativeCraftingQuotedStage(
+                            step.StepId, step.CompetencyId, step.MinimumRanks, step.Dependencies,
+                            step.Inputs, step.Outputs)).ToArray()));
+            }
+
             // Retention authoring is independent of purchase pricing. Only
             // ingredients explicitly retained in the finished product contribute
             // to this known partial mass; missing mass data does not become zero.
@@ -337,16 +381,31 @@ internal static class NativeCraftingResourceQuoter
                     "method.startingResourceUnitCosts." + pair.Key,
                     NativeOriginIssueSeverity.Unresolved,
                     "A required external recipe ingredient has no authorized starting value.");
+                if (presentationAvailable && required.Count <= maxPresentationEntries)
+                    ingredientViews.Add(new(pair.Key, pair.Value, null, null));
                 continue;
             }
-            try { knownCost = checked(knownCost + checked(pair.Value * unitPrice)); }
+            long? lineCost = null;
+            try
+            {
+                var evaluated = checked(pair.Value * unitPrice);
+                knownCost = checked(knownCost + evaluated);
+                lineCost = evaluated;
+            }
             catch (OverflowException)
             {
                 Issue("crafting-quote-price-overflow", pair.Key,
                     NativeOriginIssueSeverity.Invalid,
                     "The total starting-resource value exceeds supported quantities.");
             }
+            if (presentationAvailable && required.Count <= maxPresentationEntries)
+                ingredientViews.Add(new(pair.Key, pair.Value, unitPrice, lineCost));
         }
+        presentationAvailable = presentationAvailable && required.Count <= maxPresentationEntries;
+        var presentation = presentationAvailable
+            ? new NativeCraftingQuotePresentation(issues.Count == 0 && recipeViews.Count == selections.Count
+                ? "resolved" : "partial", recipeViews.ToArray(), ingredientViews.ToArray())
+            : new NativeCraftingQuotePresentation("unavailable", [], []);
         return new(knownCost, required.ToFrozenDictionary(StringComparer.Ordinal), issues)
         {
             KnownRetainedMaterialMassPounds = knownRetainedMassPounds,
@@ -355,7 +414,8 @@ internal static class NativeCraftingResourceQuoter
                 uncertifiedProducts.Count == 0 && unresolvedMass.Count == 0 &&
                 !issues.Any(x => x.Severity is NativeOriginIssueSeverity.Invalid
                     or NativeOriginIssueSeverity.Unresolved),
-            ProductsWithUncertifiedMass = uncertifiedProducts.ToArray()
+            ProductsWithUncertifiedMass = uncertifiedProducts.ToArray(),
+            Presentation = presentation
         };
     }
 

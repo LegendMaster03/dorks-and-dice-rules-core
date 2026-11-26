@@ -167,7 +167,13 @@ public static class NativeMechanicsEndpoints
                 fingerprint = snapshot.Fingerprint, category,
                 total = page.Total, offset = page.Offset, limit = page.Limit,
                 options = page.Items.Select(item => new {
-                    id = item.Id, name = item.Name, kind = item.Category
+                    id = item.Id, name = item.Name, kind = item.Category,
+                    // Bounded role facet for the component browser; do not
+                    // disclose source bodies or infer roles from names.
+                    componentCategory = item.Category == "construct-component" &&
+                        item.Definition.TryGetProperty("componentCategory", out var role) &&
+                        role.ValueKind == JsonValueKind.String && role.GetString() is { Length: <= 160 } label
+                            ? label : null
                 }).ToArray()
             });
         });

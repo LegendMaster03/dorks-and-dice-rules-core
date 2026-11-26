@@ -118,9 +118,16 @@ public static class NativeOriginDiscoveryEndpoints
                         => "verified-reconstruction-plan",
                     _ => "reference-only"
                 };
+                // The current initial allowance is authored method metadata, not
+                // a player-supplied price, an exception, or permission to activate.
+                int? initialConstructionAllowance = method.Reference.MethodId == "construct-assembly" &&
+                    method.AuthoredDefinition.TryGetProperty("initialConstructionAllowance", out var cap) &&
+                    cap.ValueKind == JsonValueKind.Number && cap.TryGetInt32(out var amount) && amount >= 0
+                        ? amount : null;
                 return new
                 {
                     method.Reference, method.Name, method.Specializes, method.Stage,
+                    initialConstructionAllowance,
                     method.CreatesNewIndividual, method.Operation, support,
                     defaultAvailability = defaults?.Status switch
                     {

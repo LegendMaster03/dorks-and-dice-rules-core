@@ -9,6 +9,9 @@ namespace RulesCore.Mechanics;
 /// </summary>
 public sealed record NativeConstructConfigurationOption(string Id, string Name);
 public sealed record NativeConstructConfigurationVariant(string Id, string RecipeId, string? BodySize);
+public sealed record NativeConstructPowerSourcePresentation(
+    string Id, string Name, string? Description, string? RulesStatus,
+    string? OperatingPrinciple, int? RatedOutput, int? RatedOverdriveOutput);
 public sealed record NativeConstructComponentConfiguration(
     string DefinitionId, string Name, IReadOnlyList<string> MaterialSlots,
     string? DefaultRecipeId, IReadOnlyList<NativeConstructConfigurationVariant> ConstructionVariants,
@@ -19,7 +22,13 @@ public sealed record NativeConstructComponentConfiguration(
     IReadOnlyList<NativeConstructConfigurationOption> Designs,
     IReadOnlyList<NativeConstructConfigurationOption> Enhancements,
     IReadOnlyList<NativeConstructConfigurationOption> PowerSources,
-    IReadOnlyList<NativeOriginContractIssue> Issues);
+    IReadOnlyList<NativeOriginContractIssue> Issues)
+{
+    public string? ComponentCategory { get; init; }
+    // These are catalog-authored descriptions and rated values, not proof
+    // of fuel, usable stored energy, current output, or a gameplay transaction.
+    public IReadOnlyList<NativeConstructPowerSourcePresentation> PowerSourceDetails { get; init; } = [];
+}
 
 public sealed partial class NativeConstructAssemblyEvaluator
 {
@@ -122,9 +131,30 @@ public sealed partial class NativeConstructAssemblyEvaluator
         var designs = Options("construct-design");
         var enhancements = Options("construct-enhancement");
         var sources = sourceRequired ? Options("construct-power-source") : [];
+        static string? BoundedText(JsonElement definition, string key, int limit)
+        {
+            var value = Text(definition, key);
+            return !string.IsNullOrWhiteSpace(value) && value.Length <= limit ? value : null;
+        }
+        var sourceDetails = new List<NativeConstructPowerSourcePresentation>();
+        foreach (var option in sources)
+        {
+            if (!catalog.TryGetById(option.Id, out var source) || source is null) continue;
+            var definition = source.Definition;
+            sourceDetails.Add(new(option.Id, option.Name,
+                BoundedText(definition, "description", 4000),
+                BoundedText(definition, "rulesStatus", 2000),
+                BoundedText(definition, "operatingPrinciple", 160),
+                Number(definition, "powerOutput", option.Id, Issue),
+                Number(definition, "overdrivePowerOutput", option.Id, Issue)));
+        }
         return new(definitionId, component.Name, materialSlots, defaultRecipe?.RecipeId,
             variants, modes, baseCapabilities, needs, mountInterfaces, acceptsMountInterfaces,
             sourceRequired, continuous, designs, enhancements, sources,
-            issues.Distinct().ToArray());
+            issues.Distinct().ToArray())
+        {
+            ComponentCategory = BoundedText(raw, "componentCategory", 160),
+            PowerSourceDetails = sourceDetails.ToArray()
+        };
     }
 }
