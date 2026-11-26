@@ -76,6 +76,17 @@ public sealed class NativeBasicConstructStartingTests
         Assert.True(assessed.IsAuthorized,
             string.Join("; ", assessed.Issues.Select(x => x.Code)));
         Assert.Equal(163, assessed.KnownConstructionCost);
+        var quote = Assert.IsType<NativeCraftingQuotePresentation>(assessed.ManufacturingQuote);
+        Assert.Equal("resolved", quote.Status);
+        Assert.Equal(10, quote.Recipes.Sum(x => x.Stages.Count));
+        Assert.Equal(assessed.KnownConstructionCost, quote.Ingredients.Sum(x => x.KnownCost ?? 0));
+        Assert.All(quote.Ingredients, x => Assert.NotNull(x.UnitCost));
+        Assert.Equal(assessed.RequiredConstructionResources!.Count, quote.Ingredients.Count);
+        Assert.All(quote.Ingredients, x => Assert.Equal(
+            assessed.RequiredConstructionResources[x.DefinitionId], x.Quantity));
+        Assert.DoesNotContain(quote.Ingredients, x => x.DefinitionId == "crafting-material.activated-medium");
+        Assert.Contains(quote.Recipes, x => x.InstanceId == "generator" &&
+            x.SourceDefinitionId == "construct-power-source.mechanical-engine");
         Assert.Equal("medium", assessed.DerivedCreatureSize);
         var network = Assert.Single(assessed.PowerNetworks!);
         Assert.Equal(8, network.AvailableOutput);
@@ -251,6 +262,14 @@ public sealed class NativeBasicConstructStartingTests
             .Single(x => x.Identity.IntrinsicSlotId == "creatureType")
             .EffectiveValue!.Value.GetString());
         Assert.NotNull(result.Assembly.RequiredConstructionResources);
+        var quote = Assert.IsType<NativeCraftingQuotePresentation>(result.Assembly.ManufacturingQuote);
+        Assert.Equal("resolved", quote.Status);
+        Assert.Equal(result.Assembly.KnownConstructionCost, quote.Ingredients.Sum(x => x.KnownCost ?? 0));
+        Assert.Equal(result.Assembly.RequiredConstructionResources!.Count, quote.Ingredients.Count);
+        Assert.All(quote.Ingredients, x => Assert.Equal(
+            result.Assembly.RequiredConstructionResources[x.DefinitionId], x.Quantity));
+        Assert.All(quote.Recipes, x => Assert.Contains(proposed.Components,
+            component => component.InstanceId == x.InstanceId));
         Assert.True(result.Assembly.KnownRetainedMaterialMassPounds.HasValue);
         Assert.True(baseline.KnownRetainedMaterialMassPounds.HasValue);
 

@@ -106,7 +106,7 @@ public sealed partial class NativeConstructAssemblyEvaluator(NativeCatalogSnapsh
                     "A manufacturing variant needs an authored recipe-input construction method.");
             if (recipeCostMethod.HasValue)
                 recipeSelections.Add(new(definition.Id, instance.Materials,
-                    instance.ConstructionVariantId));
+                    instance.ConstructionVariantId, instance.InstanceId));
             var cost = recipeCostMethod.HasValue ? 0 :
                 Number(raw, "constructionCost", path, Issue);
             var baseDemand = Number(raw, "powerDemand", path, Issue);
@@ -169,7 +169,7 @@ public sealed partial class NativeConstructAssemblyEvaluator(NativeCatalogSnapsh
                     return;
                 }
                 if (recipeCostMethod.HasValue)
-                    recipeSelections.Add(new(option.Id, instance.Materials));
+                    recipeSelections.Add(new(option.Id, instance.Materials, InstanceId: instance.InstanceId));
                 else
                 {
                     var optionCost = Number(option.Definition, "constructionCost",
@@ -251,7 +251,7 @@ public sealed partial class NativeConstructAssemblyEvaluator(NativeCatalogSnapsh
                             NativeOriginIssueSeverity.Invalid,
                             "The selected source is not compatible with this housing.");
                     if (recipeCostMethod.HasValue)
-                        recipeSelections.Add(new(source.Id, instance.Materials));
+                        recipeSelections.Add(new(source.Id, instance.Materials, InstanceId: instance.InstanceId));
                     else
                     {
                         var sourceCost = Number(source.Definition,
@@ -662,6 +662,7 @@ public sealed partial class NativeConstructAssemblyEvaluator(NativeCatalogSnapsh
             catalog, request.Components, Issue);
         long knownCost = knownMaterialCost + knownModificationCost;
         IReadOnlyDictionary<string, long>? requiredIngredients = null;
+        NativeCraftingQuotePresentation? manufacturingQuote = null;
         long? retainedMaterialMass = null;
         bool massComplete = false;
         IReadOnlyList<string>? missingMassMaterials = null;
@@ -672,6 +673,7 @@ public sealed partial class NativeConstructAssemblyEvaluator(NativeCatalogSnapsh
                 catalog, costMethod, recipeSelections);
             knownCost = quote.KnownCost;
             requiredIngredients = quote.RequiredResources;
+            manufacturingQuote = quote.Presentation;
             retainedMaterialMass = quote.KnownRetainedMaterialMassPounds;
             massComplete = quote.IsPhysicalMassComplete;
             missingMassMaterials = quote.UnresolvedRetainedMassMaterials;
@@ -872,6 +874,7 @@ public sealed partial class NativeConstructAssemblyEvaluator(NativeCatalogSnapsh
         return new(status, knownCost, states, failures, issues, powerStates)
         {
             RequiredConstructionResources = requiredIngredients,
+            ManufacturingQuote = manufacturingQuote,
             DerivedCreatureSize = derivedSize?.Size,
             KnownRetainedMaterialMassPounds = retainedMaterialMass,
             UnresolvedRetainedMassMaterials = missingMassMaterials,
@@ -1084,6 +1087,8 @@ public sealed record NativeConstructAssemblyResult(
     // Native recipe-input quotation exposes the sourced ingredient bill.
     // It is advisory for initial creation, not an inventory withdrawal.
     public IReadOnlyDictionary<string, long>? RequiredConstructionResources { get; init; }
+    // Optional bounded details from the existing resource quoter.
+    public NativeCraftingQuotePresentation? ManufacturingQuote { get; init; }
     // A verified body-defining construction variant, not independent player size.
     public string? DerivedCreatureSize { get; init; }
     // Partial material evidence only. Retained unpriced/unquantified material

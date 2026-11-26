@@ -1773,9 +1773,13 @@ public sealed class NativeMechanicsApiTests
             x.GetProperty("reference").GetProperty("methodId").GetString() == "construct-assembly");
         Assert.Equal("available", construct.GetProperty("defaultAvailability").GetString());
         Assert.Equal("assembly-preview", construct.GetProperty("support").GetString());
+        Assert.Equal(200, construct.GetProperty("initialConstructionAllowance").GetInt32());
+        Assert.Equal(JsonValueKind.Null, construct.GetProperty("stage").ValueKind);
+        Assert.Contains("ordinary crafting recipes", construct.GetProperty("description").GetString()!);
         var plant = Assert.Single(methods, x =>
             x.GetProperty("reference").GetProperty("methodId").GetString() == "plant-reproduction");
         Assert.Equal("reference-only", plant.GetProperty("support").GetString());
+        Assert.Equal(JsonValueKind.Null, plant.GetProperty("initialConstructionAllowance").ValueKind);
         Assert.False(construct.TryGetProperty("authoredDefinition", out _));
 
         var (presetStatus, presetBody) = await Get("/presets");
@@ -1788,11 +1792,16 @@ public sealed class NativeMechanicsApiTests
         var tiefling = Assert.Single(presets, x => x.GetProperty("id").GetString() == "species.tiefling");
         Assert.False(tiefling.GetProperty("selectable").GetBoolean());
         Assert.True(tiefling.GetProperty("ancestrySelectionRequired").GetBoolean());
+        var elf = Assert.Single(presets, x => x.GetProperty("id").GetString() == "species.elf");
+        Assert.Equal(JsonValueKind.Null, elf.GetProperty("description").ValueKind);
+        Assert.False(elf.TryGetProperty("reviewNotes", out _));
+        Assert.False(elf.TryGetProperty("definition", out _));
 
         var (frameStatus, frameBody) = await Get("/construct/components/construct-component.structural-frame/configuration");
         Assert.Equal(HttpStatusCode.OK, frameStatus);
         var frame = frameBody.GetProperty("configuration");
         Assert.Equal("frame", Assert.Single(frame.GetProperty("materialSlots").EnumerateArray()).GetString());
+        Assert.False(string.IsNullOrWhiteSpace(frame.GetProperty("componentCategory").GetString()));
         var medium = Assert.Single(frame.GetProperty("constructionVariants").EnumerateArray(),
             x => x.GetProperty("id").GetString() == "medium");
         Assert.Equal("medium", medium.GetProperty("bodySize").GetString());
@@ -1807,6 +1816,12 @@ public sealed class NativeMechanicsApiTests
         Assert.True(housing.GetProperty("powerSourceRequired").GetBoolean());
         Assert.Contains(housing.GetProperty("powerSources").EnumerateArray(),
             x => x.GetProperty("id").GetString() == "construct-power-source.solar-crystal");
+        var solar = Assert.Single(housing.GetProperty("powerSourceDetails").EnumerateArray(),
+            x => x.GetProperty("id").GetString() == "construct-power-source.solar-crystal");
+        Assert.Equal(8, solar.GetProperty("ratedOutput").GetInt32());
+        Assert.Equal(12, solar.GetProperty("ratedOverdriveOutput").GetInt32());
+        Assert.Equal("solar-recharge", solar.GetProperty("operatingPrinciple").GetString());
+        Assert.False(string.IsNullOrWhiteSpace(solar.GetProperty("rulesStatus").GetString()));
         Assert.Equal(HttpStatusCode.NotFound,
             (await Get("/construct/components/species.human/configuration")).Item1);
         Assert.Equal(HttpStatusCode.Conflict, (await Get("/presets", "stale")).Item1);
@@ -1851,6 +1866,13 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal(HttpStatusCode.OK, discovery.StatusCode);
         var first = await discovery.Content.ReadFromJsonAsync<JsonElement>();
         Assert.True(first.GetProperty("previewOnly").GetBoolean());
+        var quote = first.GetProperty("result").GetProperty("assembly").GetProperty("manufacturingQuote");
+        Assert.Equal("resolved", quote.GetProperty("status").GetString());
+        Assert.Equal(163, quote.GetProperty("ingredients").EnumerateArray()
+            .Sum(x => x.GetProperty("knownCost").GetInt64()));
+        Assert.Contains(quote.GetProperty("recipes").EnumerateArray(),
+            x => x.GetProperty("instanceId").GetString() == "generator" &&
+                x.GetProperty("sourceDefinitionId").GetString() == "construct-power-source.mechanical-engine");
         var offers = first.GetProperty("result").GetProperty("origin")
             .GetProperty("evaluatedProposal").GetProperty("candidates")
             .Deserialize<NativeOriginCandidate[]>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
