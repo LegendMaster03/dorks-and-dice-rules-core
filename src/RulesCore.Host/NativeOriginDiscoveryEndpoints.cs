@@ -162,7 +162,7 @@ public static class NativeOriginDiscoveryEndpoints
 
     // Project only authored player-facing description text, never review notes,
     // source bodies, or private definitions. Missing or oversized text stays absent.
-    private static string? BoundedDescription(JsonElement definition) =>
+    internal static string? BoundedDescription(JsonElement definition) =>
         String(definition, "description") is { Length: > 0 and <= 4000 } description &&
         !string.IsNullOrWhiteSpace(description) ? description : null;
 
