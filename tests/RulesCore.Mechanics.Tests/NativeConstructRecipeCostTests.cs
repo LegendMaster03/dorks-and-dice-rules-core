@@ -242,6 +242,15 @@ public sealed class NativeConstructRecipeCostTests
         var result = Evaluate(fixture);
         Assert.Equal(expected, result.Status);
         Assert.Contains(result.Issues, x => x.Code == expectedIssue);
+        var quote = Assert.IsType<NativeCraftingQuotePresentation>(result.ManufacturingQuote);
+        Assert.Equal("partial", quote.Status);
+        if (variant == "unpriced-ore")
+        {
+            var ore = Assert.Single(quote.Ingredients, x => x.DefinitionId == "crafting-material.ore");
+            Assert.Equal(2, ore.Quantity);
+            Assert.Null(ore.UnitCost);
+            Assert.Null(ore.KnownCost);
+        }
     }
 
     [Fact]

@@ -262,6 +262,14 @@ public sealed class NativeBasicConstructStartingTests
             .Single(x => x.Identity.IntrinsicSlotId == "creatureType")
             .EffectiveValue!.Value.GetString());
         Assert.NotNull(result.Assembly.RequiredConstructionResources);
+        var quote = Assert.IsType<NativeCraftingQuotePresentation>(result.Assembly.ManufacturingQuote);
+        Assert.Equal("resolved", quote.Status);
+        Assert.Equal(result.Assembly.KnownConstructionCost, quote.Ingredients.Sum(x => x.KnownCost ?? 0));
+        Assert.Equal(result.Assembly.RequiredConstructionResources!.Count, quote.Ingredients.Count);
+        Assert.All(quote.Ingredients, x => Assert.Equal(
+            result.Assembly.RequiredConstructionResources[x.DefinitionId], x.Quantity));
+        Assert.All(quote.Recipes, x => Assert.Contains(proposed.Components,
+            component => component.InstanceId == x.InstanceId));
         Assert.True(result.Assembly.KnownRetainedMaterialMassPounds.HasValue);
         Assert.True(baseline.KnownRetainedMaterialMassPounds.HasValue);
 
