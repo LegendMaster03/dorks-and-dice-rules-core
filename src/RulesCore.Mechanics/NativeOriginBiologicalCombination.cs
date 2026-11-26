@@ -1,3 +1,6 @@
+using System.Text.Json;
+using RulesCore.Content;
+
 namespace RulesCore.Mechanics;
 
 /// <summary>
@@ -21,7 +24,17 @@ public sealed record NativeOriginBiologicalCharacteristicGroup(
     NativeOriginCharacteristicKind Kind,
     string CharacteristicId,
     IReadOnlyList<NativeOriginBiologicalOffer> Offers,
-    IReadOnlyList<NativeOriginEffectiveGrant> Expressions);
+    IReadOnlyList<NativeOriginEffectiveGrant> Expressions,
+    NativeOriginBiologicalCharacteristicPresentation? Presentation = null);
+
+/// <summary>
+/// Bounded player-facing metadata from the canonical native definition.
+/// Recombination keys are authored permission evidence, not a proof that a
+/// particular selected composition passes the construction reconciler.
+/// </summary>
+public sealed record NativeOriginBiologicalCharacteristicPresentation(
+    string Name, string? Description, string? Category,
+    IReadOnlyList<string> RecombinableParameters);
 
 /// <summary>
 /// Source-preserving Combine output for biological origination. Availability,
@@ -44,14 +57,17 @@ public sealed record NativeOriginBiologicalCombination(
     string ProposalId,
     IReadOnlyList<NativeOriginBiologicalCharacteristicGroup> Characteristics,
     bool ExplicitTransmissionPlan = false,
-    IReadOnlyList<NativeOriginBiologicalInheritedInstance>? InheritedInstances = null);
+    IReadOnlyList<NativeOriginBiologicalInheritedInstance>? InheritedInstances = null,
+    int? MaxInheritedInstancesPerKind = null,
+    int? MaxExpressedInstancesPerKind = null);
 
 internal static class NativeOriginBiologicalCombinationProjector
 {
     private const string RuleId = "rule.creature-origination";
 
     public static NativeOriginBiologicalCombination? Build(
-        NativeOriginConstructionResult result)
+        NativeOriginConstructionResult result, NativeCatalogSnapshot catalog,
+        int? maxInherited, int? maxExpressed)
     {
         var proposal = result.EvaluatedProposal;
         if (proposal.Intent != NativeOriginIntent.Mixed ||
@@ -127,7 +143,8 @@ internal static class NativeOriginBiologicalCombinationProjector
                         proposed.Contains(candidate.Id)))
                     .ToArray();
                 return new NativeOriginBiologicalCharacteristicGroup(
-                    group.Key.Kind, group.Key.Id, candidateOffers, expressions);
+                    group.Key.Kind, group.Key.Id, candidateOffers, expressions,
+                    Presentation(catalog, group.Key.Kind, group.Key.Id));
             })
             .ToArray();
         var inheritedInstances = (result.Profile?.Underlying.BiologicalGenes ?? [])
@@ -151,6 +168,52 @@ internal static class NativeOriginBiologicalCombinationProjector
             .OrderBy(instance => instance.Gene.Id, StringComparer.Ordinal)
             .ToArray();
         return new NativeOriginBiologicalCombination(proposal.Id, groups,
-            proposal.BiologicalTransmission is not null, inheritedInstances);
+            proposal.BiologicalTransmission is not null, inheritedInstances,
+            maxInherited, maxExpressed);
+    }
+
+    // Do not expose the full native definition or internal authoring notes.
+    // The canonical definition, not the submitted offer, owns these fields.
+    private static NativeOriginBiologicalCharacteristicPresentation? Presentation(
+        NativeCatalogSnapshot catalog, NativeOriginCharacteristicKind kind, string id)
+    {
+        if (kind != NativeOriginCharacteristicKind.Trait ||
+            !catalog.TryGetById(id, out var entity) || entity is null ||
+            entity.Category != "origin-trait" ||
+            entity.Definition.ValueKind != JsonValueKind.Object ||
+            !entity.Definition.TryGetProperty("trait", out var trait) ||
+            trait.ValueKind != JsonValueKind.Object)
+            return null;
+
+        static string? Text(JsonElement source, string key, int maximum) =>
+            source.TryGetProperty(key, out var item) &&
+            item.ValueKind == JsonValueKind.String &&
+            item.GetString() is { Length: > 0 } value && value.Length <= maximum &&
+            !string.IsNullOrWhiteSpace(value) ? value : null;
+
+        var name = Text(trait, "name", 160) ?? Text(entity.Definition, "name", 160);
+        if (name is null) return null;
+        string[] keys = [];
+        if (entity.Definition.TryGetProperty("originComposition", out var composition) &&
+            composition.ValueKind == JsonValueKind.Object &&
+            composition.TryGetProperty("recombinableParameters", out var parameters) &&
+            parameters.ValueKind == JsonValueKind.Array &&
+            parameters.GetArrayLength() <= 32 &&
+            parameters.EnumerateArray().All(x => x.ValueKind == JsonValueKind.String &&
+                x.GetString() is { Length: > 0 and <= 160 } value &&
+                !string.IsNullOrWhiteSpace(value)))
+            keys = parameters.EnumerateArray().Select(x => x.GetString()!)
+                .Distinct(StringComparer.Ordinal).ToArray();
+
+        // Presentation grouping is not a mechanic or inheritance rule.
+        // Prefer explicit authored category; otherwise recognize typed fields
+        // and leave unclassified definitions to the consumer's generic group.
+        var category = Text(entity.Definition, "category", 160) ??
+            (trait.TryGetProperty("sense", out _) ? "Senses" :
+             trait.TryGetProperty("spell", out _) ? "Innate magic" :
+             trait.TryGetProperty("damageResistance", out _) ? "Defenses" :
+             trait.TryGetProperty("activation", out _) ? "Active abilities" : null);
+        return new(name, Text(trait, "description", 4000) ??
+            Text(entity.Definition, "description", 4000), category, keys);
     }
 }
