@@ -51,6 +51,7 @@ public static class NativeOriginDiscoveryEndpoints
                 .Select(entity => new
                 {
                     entity.Id, entity.Name, kind = entity.Category,
+                    description = BoundedDescription(entity.Definition),
                     parentId = String(entity.Definition, "parent"),
                     selectable = !entity.Definition.TryGetProperty("selectable", out var flag) ||
                         flag.ValueKind != JsonValueKind.False,
@@ -127,6 +128,7 @@ public static class NativeOriginDiscoveryEndpoints
                 return new
                 {
                     method.Reference, method.Name, method.Specializes, method.Stage,
+                    description = BoundedDescription(method.AuthoredDefinition),
                     initialConstructionAllowance,
                     method.CreatesNewIndividual, method.Operation, support,
                     defaultAvailability = defaults?.Status switch
@@ -157,6 +159,12 @@ public static class NativeOriginDiscoveryEndpoints
         value.ValueKind == JsonValueKind.Object &&
         value.TryGetProperty(key, out var item) && item.ValueKind == JsonValueKind.String
             ? item.GetString() : null;
+
+    // Project only authored player-facing description text, never review notes,
+    // source bodies, or private definitions. Missing or oversized text stays absent.
+    private static string? BoundedDescription(JsonElement definition) =>
+        String(definition, "description") is { Length: > 0 and <= 4000 } description &&
+        !string.IsNullOrWhiteSpace(description) ? description : null;
 
     private static string[] Strings(JsonElement value, string key) =>
         value.TryGetProperty(key, out var items) && items.ValueKind == JsonValueKind.Array
