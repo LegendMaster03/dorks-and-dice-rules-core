@@ -968,7 +968,11 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         return outcome with
         {
             BiologicalCombination = NativeOriginBiologicalCombinationProjector.Build(
-                outcome, catalog, maxInherited, maxExpressed),
+                outcome, catalog, maxInherited, maxExpressed,
+                transmission.Explicit && transmission.Issues.Count == 0 &&
+                geneIssues.Count == 0 && maxExpressed is not null
+                    ? _synergies.DiscoverInherited(inheritedGenes)
+                    : null),
             CreationAllocation = creationAllocation
         };
 

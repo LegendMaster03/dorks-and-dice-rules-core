@@ -53,13 +53,25 @@ public sealed record NativeOriginBiologicalInheritedInstance(
     public bool IsLatent => ExpressionGrantIds.Count == 0;
 }
 
+/// <summary>
+/// Read-only candidate pools for a native authored inherited interaction.
+/// A full distinct input selection is still checked by the same evaluator,
+/// including competing expressions, dependencies and allocation.
+/// </summary>
+public sealed record NativeOriginBiologicalInteractionInput(
+    int Count, IReadOnlyList<string> CandidateIds);
+public sealed record NativeOriginBiologicalInteractionOption(
+    string RuleOwnerId, string InteractionId, string ResultTraitId, string ResultName,
+    IReadOnlyList<NativeOriginBiologicalInteractionInput> Inputs);
+
 public sealed record NativeOriginBiologicalCombination(
     string ProposalId,
     IReadOnlyList<NativeOriginBiologicalCharacteristicGroup> Characteristics,
     bool ExplicitTransmissionPlan = false,
     IReadOnlyList<NativeOriginBiologicalInheritedInstance>? InheritedInstances = null,
     int? MaxInheritedInstancesPerKind = null,
-    int? MaxExpressedInstancesPerKind = null);
+    int? MaxExpressedInstancesPerKind = null,
+    IReadOnlyList<NativeOriginBiologicalInteractionOption>? InteractionOptions = null);
 
 internal static class NativeOriginBiologicalCombinationProjector
 {
@@ -67,7 +79,8 @@ internal static class NativeOriginBiologicalCombinationProjector
 
     public static NativeOriginBiologicalCombination? Build(
         NativeOriginConstructionResult result, NativeCatalogSnapshot catalog,
-        int? maxInherited, int? maxExpressed)
+        int? maxInherited, int? maxExpressed,
+        IReadOnlyList<NativeOriginBiologicalInteractionOption>? interactionOptions)
     {
         var proposal = result.EvaluatedProposal;
         if (proposal.Intent != NativeOriginIntent.Mixed ||
@@ -169,7 +182,7 @@ internal static class NativeOriginBiologicalCombinationProjector
             .ToArray();
         return new NativeOriginBiologicalCombination(proposal.Id, groups,
             proposal.BiologicalTransmission is not null, inheritedInstances,
-            maxInherited, maxExpressed);
+            maxInherited, maxExpressed, interactionOptions);
     }
 
     // Do not expose the full native definition or internal authoring notes.
