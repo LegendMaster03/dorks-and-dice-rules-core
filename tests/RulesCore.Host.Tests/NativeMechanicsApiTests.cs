@@ -1774,6 +1774,8 @@ public sealed class NativeMechanicsApiTests
         Assert.Equal("available", construct.GetProperty("defaultAvailability").GetString());
         Assert.Equal("assembly-preview", construct.GetProperty("support").GetString());
         Assert.Equal(200, construct.GetProperty("initialConstructionAllowance").GetInt32());
+        Assert.Equal(JsonValueKind.Null, construct.GetProperty("stage").ValueKind);
+        Assert.Contains("ordinary crafting recipes", construct.GetProperty("description").GetString()!);
         var plant = Assert.Single(methods, x =>
             x.GetProperty("reference").GetProperty("methodId").GetString() == "plant-reproduction");
         Assert.Equal("reference-only", plant.GetProperty("support").GetString());
@@ -1790,6 +1792,10 @@ public sealed class NativeMechanicsApiTests
         var tiefling = Assert.Single(presets, x => x.GetProperty("id").GetString() == "species.tiefling");
         Assert.False(tiefling.GetProperty("selectable").GetBoolean());
         Assert.True(tiefling.GetProperty("ancestrySelectionRequired").GetBoolean());
+        var elf = Assert.Single(presets, x => x.GetProperty("id").GetString() == "species.elf");
+        Assert.Equal(JsonValueKind.Null, elf.GetProperty("description").ValueKind);
+        Assert.False(elf.TryGetProperty("reviewNotes", out _));
+        Assert.False(elf.TryGetProperty("definition", out _));
 
         var (frameStatus, frameBody) = await Get("/construct/components/construct-component.structural-frame/configuration");
         Assert.Equal(HttpStatusCode.OK, frameStatus);
