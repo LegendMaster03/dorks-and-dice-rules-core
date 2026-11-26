@@ -3944,6 +3944,45 @@ public sealed class NativeMechanicsApiTests
     }
 
     [Fact]
+    public async Task LifeExperienceOptionSummariesExposeOnlyBoundedAuthoredHierarchy()
+    {
+        await using var fixture = new Fixture();
+        await fixture.StartAsync("PublicOnly", "character-sheet", ordinary: true, realNativeContent: true);
+        var fingerprint = fixture.App.Services.GetRequiredService<NativeCatalogStore>().Snapshot!.Fingerprint;
+        async Task<JsonElement[]> GetOptions(string category)
+        {
+            using var response = await fixture.Client.SendAsync(fixture.Authenticated(HttpMethod.Get,
+                $"/api/mechanics/v1/catalog/options?fingerprint={fingerprint}&category={category}"));
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var page = await response.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.True(page.GetProperty("includesLifeExperienceHierarchy").GetBoolean());
+            var options = page.GetProperty("options").EnumerateArray().ToArray();
+            foreach (var option in options)
+            {
+                Assert.Equal(new[] { "description", "parentId", "selectable" }, option.GetProperty("lifeExperience")
+                    .EnumerateObject().Select(property => property.Name).OrderBy(name => name, StringComparer.Ordinal).ToArray());
+                Assert.False(option.TryGetProperty("definition", out _));
+            }
+            return options;
+        }
+
+        var upbringings = await GetOptions("upbringing");
+        var wood = Assert.Single(upbringings, item => item.GetProperty("id").GetString() == "upbringing.elf.wood")
+            .GetProperty("lifeExperience");
+        Assert.True(wood.GetProperty("selectable").GetBoolean());
+        Assert.Equal("upbringing.elf.general", wood.GetProperty("parentId").GetString());
+        var general = Assert.Single(upbringings, item => item.GetProperty("id").GetString() == "upbringing.elf.general")
+            .GetProperty("lifeExperience");
+        Assert.False(general.GetProperty("selectable").GetBoolean());
+
+        var entertainer = Assert.Single(await GetOptions("background"),
+            item => item.GetProperty("id").GetString() == "background.entertainer").GetProperty("lifeExperience");
+        Assert.True(entertainer.GetProperty("selectable").GetBoolean());
+        Assert.Equal(JsonValueKind.Null, entertainer.GetProperty("parentId").ValueKind);
+        Assert.Contains("performing for audiences", entertainer.GetProperty("description").GetString()!);
+    }
+
+    [Fact]
     public async Task NativeOptionSummarySearchRejectsUnsafeAndStaleQueries()
     {
         await using var fixture = new Fixture();

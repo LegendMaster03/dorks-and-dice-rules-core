@@ -167,8 +167,10 @@ public static class NativeMechanicsEndpoints
                 contractVersion = 1, rulesetId = snapshot.RulesetId,
                 fingerprint = snapshot.Fingerprint, category,
                 total = page.Total, offset = page.Offset, limit = page.Limit,
+                includesLifeExperienceHierarchy = category is "upbringing" or "background",
                 options = page.Items.Select(item => new {
                     id = item.Id, name = item.Name, kind = item.Category,
+                    lifeExperience = LifeExperienceOption(item),
                     // Bounded role facet for the component browser; do not
                     // disclose source bodies or infer roles from names.
                     componentCategory = item.Category == "construct-component" &&
@@ -455,6 +457,28 @@ public static class NativeMechanicsEndpoints
             return result.Status is "resolved" ? Results.Ok(result)
                 : Results.Json(result, statusCode: 422);
         });
+    }
+
+    private sealed record LifeExperienceOptionSummary(string? ParentId, bool Selectable, string? Description);
+
+    private static LifeExperienceOptionSummary? LifeExperienceOption(NativeRuleEntity entity)
+    {
+        if (entity.Category is not ("upbringing" or "background")) return null;
+
+        var selectable = entity.Definition.TryGetProperty("selectable", out var flag) &&
+            flag.ValueKind == JsonValueKind.True;
+        string? parentId = null;
+        if (entity.Definition.TryGetProperty("parent", out var parent))
+        {
+            if (entity.Category == "upbringing" && parent.ValueKind == JsonValueKind.String &&
+                parent.GetString() is { Length: > 0 and <= 160 } candidate &&
+                !string.IsNullOrWhiteSpace(candidate))
+                parentId = candidate;
+            else
+                selectable = false;
+        }
+
+        return new(parentId, selectable, NativeOriginDiscoveryEndpoints.BoundedDescription(entity.Definition));
     }
 
     private static bool SingleQueryValue(HttpRequest request, string key, out string? result)
