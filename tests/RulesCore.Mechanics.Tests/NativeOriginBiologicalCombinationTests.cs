@@ -62,10 +62,65 @@ public sealed class NativeOriginBiologicalCombinationTests
             Assert.Empty(offer.EffectiveGrantIds);
         });
         Assert.Empty(breath.Expressions);
+        Assert.Equal("Breath Weapon", breath.Presentation!.Name);
+        Assert.Contains("Breath Weapon", breath.Presentation.Description!);
+        Assert.Equal("Active abilities", breath.Presentation.Category);
+        Assert.Equal(new[] { "damageType", "area" }, breath.Presentation.RecombinableParameters);
+        // Legacy manifestation-only proposals do not run explicit capacity evaluation.
+        Assert.Null(pool.MaxInheritedInstancesPerKind);
+        Assert.Null(pool.MaxExpressedInstancesPerKind);
         Assert.Contains(pool.Characteristics, x =>
             x.Kind == NativeOriginCharacteristicKind.Intrinsic &&
             x.CharacteristicId == "creatureType");
         Assert.Empty(result.Profile!.Underlying.InherentGrants);
+    }
+
+    [Fact]
+    public void ExplicitTransmissionProjectsNativeCapacityAndOneComposedPhenotype()
+    {
+        var proposal = Biological(Parent("red", "ancestry.dragonborn.red"),
+            Parent("bronze", "ancestry.dragonborn.bronze")) with
+        { BiologicalTransmission = new([]) };
+        var initial = Evaluate(proposal);
+        var pool = initial.BiologicalCombination!;
+        Assert.Equal(2, pool.MaxInheritedInstancesPerKind);
+        Assert.Equal(1, pool.MaxExpressedInstancesPerKind);
+        var breath = Assert.Single(pool.Characteristics, g => g.CharacteristicId == "trait.breath-weapon");
+        var red = Assert.Single(breath.Offers, o => o.Candidate.ContributorId == "red").Candidate;
+        var bronze = Assert.Single(breath.Offers, o => o.Candidate.ContributorId == "bronze").Candidate;
+        var foundation = initial.EvaluatedProposal.Candidates.Where(c => c.ContributorId == "red" &&
+            c.Identity.IntrinsicSlotId is "creatureType" or "size" or "walkingSpeedFeet").ToArray();
+        Assert.Equal(3, foundation.Length);
+        var parameters = new Dictionary<string, JsonElement>
+        {
+            ["damageType"] = red.OfferedParameters!["damageType"],
+            ["area"] = bronze.OfferedParameters!["area"]
+        };
+        var sources = new Dictionary<string, string> { ["damageType"] = red.Id, ["area"] = bronze.Id };
+        var selected = foundation.Append(red).Append(bronze).ToArray();
+        var result = Evaluate(proposal with
+        {
+            BiologicalTransmission = new(selected.Select(c => c.Id).ToArray()),
+            Manifestations = selected.Select((c, i) => new NativeOriginManifestation("selected-" + i, c.Id,
+                SelectedValue: c.Identity.Kind == NativeOriginCharacteristicKind.Intrinsic ? c.OfferedValue : null)).ToArray(),
+            Relationships = [new("compose-breath", NativeOriginRelationshipKind.Substitution,
+                [red.Id, bronze.Id], AuthoredRuleReference: "trait.breath-weapon")],
+            Resolutions = [new("compose-breath", NativeOriginResolutionAction.Replace,
+                new(NativeOriginAdjudication.Supported, NativeRuleReference: "trait.breath-weapon"),
+                red.Id, parameters, sources)]
+        });
+        Assert.True(result.IsMechanicallyAuthorized,
+            string.Join("; ", result.Issues.Select(i => i.Code + ": " + i.Detail)));
+        var group = Assert.Single(result.BiologicalCombination!.Characteristics, g => g.CharacteristicId == "trait.breath-weapon");
+        var grant = Assert.Single(group.Expressions);
+        Assert.Equal("fire", grant.Parameters!["damageType"].GetString());
+        Assert.Equal("cone", grant.Parameters["area"].GetProperty("shape").GetString());
+        Assert.Equal(2, grant.SourceCandidateIds.Count);
+        var genes = result.BiologicalCombination.InheritedInstances!.Where(g =>
+            g.Gene.Identity.MechanicalDefinitionId == "trait.breath-weapon").ToArray();
+        Assert.Equal(2, genes.Length);
+        Assert.Equal("fire", Assert.Single(genes, g => g.Gene.SourceCandidateId == red.Id).Gene.Parameters!["damageType"].GetString());
+        Assert.Equal("lightning", Assert.Single(genes, g => g.Gene.SourceCandidateId == bronze.Id).Gene.Parameters!["damageType"].GetString());
     }
 
     [Fact]

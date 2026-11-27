@@ -28,7 +28,7 @@ public sealed class NativeOriginInheritedCombinationTests
         throw new InvalidOperationException("First-party native ruleset missing.");
     }
 
-    private static NativeCatalogSnapshot CatalogWithUnfamiliarTrait(
+    private static NativeCatalogSnapshot CatalogWithAdditionalDefinition(
         DirectoryInfo temporary, string mechanics)
     {
         var source = new DirectoryInfo(AppContext.BaseDirectory);
@@ -177,6 +177,74 @@ public sealed class NativeOriginInheritedCombinationTests
     }
 
     [Fact]
+    public void NativeInteractionDiscoveryUsesOnlyDistinctConfiguredInheritedInputs()
+    {
+        var temporary = Directory.CreateTempSubdirectory("origin-native-interaction-");
+        try
+        {
+            const string owner = "rule.fixture.inherited-interaction";
+            var catalog = CatalogWithAdditionalDefinition(temporary, JsonSerializer.Serialize(new
+            {
+                id = owner, kind = "rule", name = "Test-only inherited interaction",
+                originSynergies = new[] { new
+                {
+                    id = "double-power", inputEvidence = "inherited-gene",
+                    resultTraitId = "trait.amphibious",
+                    inputs = new[] { new
+                    {
+                        anyOf = new[] { new { mechanicalDefinitionId = "trait.powerful-build" } },
+                        count = 2
+                    } }
+                } }
+            }));
+            var (proposal, genes) = Choose(catalog);
+            var latent = proposal with
+            {
+                BiologicalTransmission = proposal.BiologicalTransmission! with { Combinations = null }
+            };
+            var one = latent with
+            {
+                BiologicalTransmission = latent.BiologicalTransmission! with
+                {
+                    CandidateIds = latent.BiologicalTransmission.CandidateIds
+                        .Where(id => id != genes[0].Id).ToArray()
+                }
+            };
+            Assert.Empty(Evaluate(catalog, one).BiologicalCombination!.InteractionOptions!);
+            var discovered = Evaluate(catalog, latent);
+            var option = Assert.Single(discovered.BiologicalCombination!.InteractionOptions!);
+            Assert.Equal(owner, option.RuleOwnerId);
+            Assert.Equal("double-power", option.InteractionId);
+            Assert.Equal("trait.amphibious", option.ResultTraitId);
+            Assert.Equal(2, Assert.Single(option.Inputs).Count);
+            Assert.Equal(genes.Select(g => g.Id).OrderBy(id => id, StringComparer.Ordinal),
+                option.Inputs[0].CandidateIds);
+            Assert.DoesNotContain(discovered.Profile!.Underlying.InherentGrants,
+                g => g.Identity.MechanicalDefinitionId == "trait.amphibious");
+            var selected = latent with
+            {
+                BiologicalTransmission = latent.BiologicalTransmission! with
+                {
+                    Combinations = [new(option.RuleOwnerId, option.InteractionId, option.Inputs[0].CandidateIds)]
+                }
+            };
+            var expressed = Evaluate(catalog, selected);
+            Assert.True(expressed.IsMechanicallyAuthorized,
+                string.Join("; ", expressed.Issues.Select(i => i.Code + ": " + i.Detail)));
+            Assert.Single(expressed.Profile!.Underlying.InherentGrants, g =>
+                g.Identity.MechanicalDefinitionId == "trait.amphibious");
+            // The ordinary authored discovery never includes an unauthenticated
+            // or even scope-verified table-only interaction.
+            var tableOnly = Evaluate(Catalog(), latent with { TableDecisions = [Rule()] }, new Authority());
+            Assert.Empty(tableOnly.BiologicalCombination!.InteractionOptions!);
+        }
+        finally
+        {
+            temporary.Delete(recursive: true);
+        }
+    }
+
+    [Fact]
     public void CombinedExpressionMustSatisfyAnAuthenticatedFinalParameterLink()
     {
         var catalog = Catalog();
@@ -217,7 +285,7 @@ public sealed class NativeOriginInheritedCombinationTests
         try
         {
             using var payload = JsonDocument.Parse(trait);
-            var catalog = CatalogWithUnfamiliarTrait(temporary, JsonSerializer.Serialize(new
+            var catalog = CatalogWithAdditionalDefinition(temporary, JsonSerializer.Serialize(new
             {
                 id = resultId, kind = "origin-trait", name = "Unfamiliar Effect",
                 trait = payload.RootElement

@@ -360,14 +360,46 @@ internal sealed class NativeOriginSynergyEvaluator(NativeCatalogSnapshot catalog
         (identity.Kind, identity.Kind == NativeOriginCharacteristicKind.Trait
             ? identity.MechanicalDefinitionId ?? "" : identity.IntrinsicSlotId ?? "");
 
+    /// <summary>
+    /// Return only authored native rules for which the authenticated genotype
+    /// contains a distinct matching input set. Never enumerate combinatorial
+    /// subsets, choose the player's inputs, or expose table-only rulings.
+    /// Null denotes an unavailable/oversized discovery, not an empty catalog.
+    /// </summary>
+    public IReadOnlyList<NativeOriginBiologicalInteractionOption>? DiscoverInherited(
+        IReadOnlyList<NativeOriginBiologicalGeneInstance> genes)
+    {
+        if (genes.Count < 2) return [];
+        if (genes.Count > 512 || genes.Select(g => g.Id).Distinct(StringComparer.Ordinal).Count() != genes.Count ||
+            genes.Select(g => g.SourceCandidateId).Distinct(StringComparer.Ordinal).Count() != genes.Count)
+            return null;
+        var issues = new List<NativeOriginContractIssue>();
+        var rules = ReadRules(issues, null).Where(rule => rule.Inherited).ToArray();
+        var options = new List<NativeOriginBiologicalInteractionOption>();
+        foreach (var rule in rules)
+        {
+            if (!TrySelectInheritedInputs(rule, genes, out _, exactSelection: false)) continue;
+            if (!catalog.TryGetById(rule.ResultTraitId, out var result) || result is null ||
+                string.IsNullOrWhiteSpace(result.Name) || result.Name.Length > 160 ||
+                rule.OwnerId.Length > 160 || rule.Id.Length > 160 || options.Count >= 100)
+                return null;
+            var inputs = rule.Inputs.Select(input => new NativeOriginBiologicalInteractionInput(
+                input.Count, genes.Where(g => input.Alternatives.Any(selector => MatchesInherited(selector, g)))
+                    .Select(g => g.SourceCandidateId).OrderBy(id => id, StringComparer.Ordinal).ToArray())).ToArray();
+            options.Add(new(rule.OwnerId, rule.Id, rule.ResultTraitId, result.Name, inputs));
+        }
+        return options.OrderBy(o => o.RuleOwnerId, StringComparer.Ordinal)
+            .ThenBy(o => o.InteractionId, StringComparer.Ordinal).ToArray();
+    }
+
     private static bool TrySelectInheritedInputs(Rule rule,
         IReadOnlyList<NativeOriginBiologicalGeneInstance> selected,
-        out NativeOriginBiologicalGeneInstance[] ordered)
+        out NativeOriginBiologicalGeneInstance[] ordered, bool exactSelection = true)
     {
         ordered = [];
         var slots = rule.Inputs.SelectMany(input =>
             Enumerable.Repeat(input.Alternatives, input.Count)).ToArray();
-        if (slots.Length != selected.Count) return false;
+        if (exactSelection ? slots.Length != selected.Count : slots.Length > selected.Count) return false;
         var occupants = new Dictionary<string, int>(StringComparer.Ordinal);
         var genes = selected.OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
         bool Assign(int slot, HashSet<string> visited)

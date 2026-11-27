@@ -694,7 +694,7 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
         }
         // Finalize the genotype before issuing any derived phenotype. A latent
         // inherited gene is not an effective input to ordinary synergies.
-        var (inheritedGenes, geneIssues, _, maxExpressed) = _inheritance.Evaluate(
+        var (inheritedGenes, geneIssues, maxInherited, maxExpressed) = _inheritance.Evaluate(
             proposal, transmission, resolved, verifiedManifested,
             request.TrustedScope is null ? null : authority, Verified);
         issues.AddRange(geneIssues);
@@ -967,7 +967,12 @@ public sealed class NativeOriginConstructionEngine(NativeCatalogSnapshot catalog
                 .ThenBy(x => x.Code, StringComparer.Ordinal).Distinct().ToArray());
         return outcome with
         {
-            BiologicalCombination = NativeOriginBiologicalCombinationProjector.Build(outcome),
+            BiologicalCombination = NativeOriginBiologicalCombinationProjector.Build(
+                outcome, catalog, maxInherited, maxExpressed,
+                transmission.Explicit && transmission.Issues.Count == 0 &&
+                geneIssues.Count == 0 && maxExpressed is not null
+                    ? _synergies.DiscoverInherited(inheritedGenes)
+                    : null),
             CreationAllocation = creationAllocation
         };
 
