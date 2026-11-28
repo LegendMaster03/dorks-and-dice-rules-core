@@ -45,6 +45,10 @@ public static class NativeMechanicsEndpoints
             return await next(invocation);
         });
 
+        // Both experiments inherit the existing endpoint filter and therefore
+        // the delegated/private authorization boundary of the mechanics API.
+        group.MapExperimentalCombatEndpoints();
+
         // Raw native definitions remain on the private, source-scoped surface.
         // The ordinary delegated surface serves calculations, not unrestricted content.
         if (privateTunnel) group.MapNativeCharacterCatalog();
@@ -99,6 +103,9 @@ public static class NativeMechanicsEndpoints
                 schemaVersion = catalog.SchemaVersion,
                 fingerprint = catalog.Fingerprint,
                 capabilities = new { characterProjection = true, resourceResolution = true,
+                    actionBudgetComparison = "experimental-opt-in",
+                    combatAttackCheck = "preview-no-damage",
+                    combatDamagePreview = "arithmetic-no-commit",
                     conditionValueIsolation = true,
                     nativeCatalogSearch = privateTunnel, nativeCatalogBatchResolve = privateTunnel,
                     nativeOptionSearch = true, advancementEligibility = "supported-subset",

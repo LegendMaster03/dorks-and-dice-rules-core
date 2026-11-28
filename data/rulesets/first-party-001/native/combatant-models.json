@@ -1,0 +1,131 @@
+{
+  "_meta": {
+    "role": "Native design declarations for the two combatant classifications and generalized mechanics; not an executable combat system or a per-creature migration.",
+    "designAuthority": "Owner-approved direction dated 2026-11-12; individual mechanisms remain subject to design.",
+    "reference": "docs/rewrite/combatant-models-design-20261112.md",
+    "sourceBoundary": "The existing Kaiju Fighting Lite rules are design reference material. These records do not reproduce the source, adopt its named procedures as universal mechanics, or distribute its licensed text."
+  },
+  "entries": [
+    {
+      "id": "rule.combatant-models",
+      "name": "Standard and Complex Combatant Classification",
+      "kind": "rule",
+      "status": "approved-design-data; executable-contract-pending",
+      "scope": "An individual creature's statblock or combatant mechanics, independent of the encounter's other participants.",
+      "modelIds": [
+        "combatant-model.standard",
+        "combatant-model.complex"
+      ],
+      "sharedFoundation": {
+        "oneEncounter": true,
+        "mixedModelsSupported": true,
+        "interoperability": "Combatants of different models participate in the same encounter, use compatible timing and target/effect interactions, and can affect one another. Model-specific vitality, components, behaviors, and defeat rules may differ.",
+        "initiative": "Both standard initiative and the optional Block Initiative are compatible; combatant model does not select initiative mode.",
+        "sharedGame": "A model selection does not create an independent edition or contradictory set of game rules."
+      },
+      "independentDimensions": [
+        "creature size",
+        "creature type",
+        "boss or encounter role",
+        "challenge rating or power",
+        "player-selected level of tactical engagement",
+        "number of allied combatants"
+      ],
+      "notYetDecided": [
+        "Final per-statblock model selector and serialization schema",
+        "How optional Complex capabilities compose, overlap, and take precedence",
+        "Complete native attack, action, damage, targeting, and defeat execution contracts",
+        "Migration/explicit classification of preexisting bestiary entries and consumer APIs"
+      ]
+    },
+    {
+      "id": "combatant-model.standard",
+      "name": "Standard Combatant",
+      "kind": "combatant-model",
+      "status": "approved-classification; detailed-mechanics-pending",
+      "sharedRuleId": "rule.combatant-models",
+      "description": "The ordinary statblock/combatant model. It participates fully in the shared encounter and retains normal creature-specific actions, traits, reactions, and other expressly granted abilities.",
+      "ordinaryVitality": "Ordinary Hit Points remain the expected baseline, subject to explicit creature and general-rule exceptions.",
+      "specialFeatures": "A Standard Combatant may have explicit triggered traits or other special abilities. The eventual boundary between those features and a Complex model has not yet been specified.",
+      "notImplied": [
+        "Absence of meaningful tactics or special features",
+        "Small size or weak combat power",
+        "An alternative ruleset for the encounter"
+      ]
+    },
+    {
+      "id": "combatant-model.complex",
+      "name": "Complex Combatant",
+      "kind": "combatant-model",
+      "status": "approved-classification; capability-schema-pending",
+      "sharedRuleId": "rule.combatant-models",
+      "description": "A statblock/combatant model that can define additional, creature-specific combat subsystems while remaining interoperable with Standard Combatants.",
+      "optionalCapabilityFamilies": [
+        {
+          "key": "targetable-components",
+          "scope": "Individual targetable or destructible creature features or equipment, if explicitly defined."
+        },
+        {
+          "key": "alternative-vitality",
+          "scope": "Distinct damage/health pools or other damage pathways, if explicitly defined. Ordinary HP may also be retained."
+        },
+        {
+          "key": "behavior-state-transitions",
+          "ruleId": "rule.combatant-behavior-states",
+          "scope": "Event- or condition-driven changes to available behavior, capabilities, or tactics."
+        },
+        {
+          "key": "special-defeat-conditions",
+          "scope": "Explicit requirements or sequences for defeat beyond the ordinary vitality outcome, if defined."
+        }
+      ],
+      "notMandatory": [
+        "Large or greater creature size",
+        "Kaiju anatomy, climbing, or other size-qualified rules",
+        "Targetable parts or multiple health pools",
+        "Rage or Rampage",
+        "A fixed sequence of phases",
+        "A special finishing blow",
+        "Boss status"
+      ],
+      "configurationPolicy": "Optional capabilities are not automatic grants. Which are available, and how they interact, must be declared by applicable native rules and combatant definitions; the precise schema is still open."
+    },
+    {
+      "id": "rule.combatant-behavior-states",
+      "name": "Combatant Behavior and State Transitions",
+      "kind": "rule",
+      "status": "approved-generalization; transition-contract-pending",
+      "scope": "Creature-defined state and behavior changes, particularly for Complex Combatants; this does not establish a universal mandatory behavior profile.",
+      "triggerPolicy": "Each actual behavior transition requires an explicitly defined trigger. Damage thresholds, component changes, conditions, environment, choices, and other events are candidates, not universal thresholds.",
+      "outcomePolicy": "A transition may alter tactics, permissions, actions, defenses, resources, targets, or other expressly defined creature capabilities; it does not automatically apply a generic Rage or Rampage effect.",
+      "ragePolicy": "Rage or Rampage is only one possible creature-specific behavior. Other rage variants or wholly different state changes are permitted when authored.",
+      "sequencePolicy": "No global fixed phase ladder. Triggered states may be independent, conditional, reversible, or sequential when a creature's rules explicitly say so.",
+      "notYetDecided": [
+        "Trigger/event representation and evaluation order",
+        "State duration, stacking, concurrency, priority, and restoration",
+        "Source-qualified effects and changes to action availability",
+        "Eligibility of ordinary Standard Combatant features for this engine",
+        "Persistence and cross-tool event contracts"
+      ]
+    },
+    {
+      "id": "rule.combatant-size-qualified-mechanics",
+      "name": "Size-Qualified Combat Mechanics",
+      "kind": "rule",
+      "status": "approved-separation; detailed-eligibility-pending",
+      "scope": "Mechanics whose fictional or physical requirements arise from creature dimensions, anatomy, or an explicit ability, rather than the Standard/Complex classification.",
+      "principle": "No size-based ability is implicitly granted by the Complex classification. Creature size and relevant morphology or grants qualify the actual mechanic according to its own rule.",
+      "exampleMechanicsForSeparateReview": [
+        "Climbing onto, occupying, or traversing a sufficiently large creature",
+        "Interactions with body-scale anatomical targets or terrain-like creature surfaces",
+        "Exceptional reach, movement, trampling, or displacement defined by creature size and ability"
+      ],
+      "notYetDecided": [
+        "Applicable size categories and size differences for each mechanic",
+        "Anatomy and movement prerequisites",
+        "Specific action costs, reactions, and opposing checks",
+        "How targetable components interact with size-qualified positioning"
+      ]
+    }
+  ]
+}
